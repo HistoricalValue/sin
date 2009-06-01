@@ -1,5 +1,5 @@
-#include "WorldGreeter.h"
+#include "MHNmain/WorldGreeter.h"
 
 int main(int argc, char *argv[]) {
-    return WorldGreeter().Greet();
+    return MHNmain::WorldGreeter().Greet();
 }
