@@ -1,4 +1,4 @@
-#include "MHNMain/Testers.h"
+#include "MHNmain/Testers.h"
 #include <cassert>
 
 namespace MHNMain {
@@ -38,7 +38,7 @@ namespace MHNMain {
     { }
     ////////////////////////////////
     void MHN_VisitableTree_Tester::operator ()(void) const {
-        struct Data &data(*static_cast<struct Data *>(data));
+        struct Data &data(*static_cast<struct Data *>(this->data));
         register size_t i;
         for (i = 0; i < NUM_TESTS; ++i)
             if (!data.tests[i](&data))
