@@ -3,6 +3,6 @@
 #include "MHNMain/Testers.h"
 
 int main(int argc, char *argv[]) {
-    MHNMain::MHN_VisitableTree_Tester()();
+    MHNMain::MHN_VisitableTree_Tester::GetInstance()();
     return MHNmain::WorldGreeter().Greet();
 }
