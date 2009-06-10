@@ -17,6 +17,13 @@ namespace MHN {
         return parent;
     }
     ////////////////////////////////
+    VisitableTree const &VisitableTree::operator [](size_t _index) const {
+        return *kids[_index];
+    }
     ////////////////////////////////
+    VisitableTree &VisitableTree::operator <<(VisitableTree const *_kid) {
+        kids.push_back(_kid);
+        return *this;
+    }
     ////////////////////////////////
 } // namespace MHN

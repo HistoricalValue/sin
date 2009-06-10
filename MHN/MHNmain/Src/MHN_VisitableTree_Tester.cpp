@@ -3,7 +3,7 @@
 
 namespace MHNMain {
     // MHN_VisitorTree_Tester ////////////////////////////////
-#define NUM_TESTS 3
+#define NUM_TESTS 4
     struct Data {
         typedef bool (*test_t)(Data *);
         test_t tests[NUM_TESTS];
@@ -22,10 +22,20 @@ namespace MHNMain {
         MHN::VisitableTree().acceptVisitor(MHN::Visitor());
         return true;
     }
+    bool test003(Data *d) {
+        // Test 3
+        MHN::VisitableTree parent, kid0(&parent), kid1(&parent), kid2(&parent);
+        parent << &kid0 << &kid1 << &kid2;
+        return
+            &parent[0]  ==  &kid0   &&
+            &parent[1]  ==  &kid1   &&
+            &parent[2]  ==  &kid2
+        ;
+    }
     // TODO add more tests
     struct Data Data = {
         // tests
-        {test000, test001, test002}
+        {test000, test001, test002, test003}
     };
     ////////////////////////////////
     MHN_VisitableTree_Tester *const MHN_VisitableTree_Tester::

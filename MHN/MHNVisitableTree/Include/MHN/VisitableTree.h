@@ -3,6 +3,7 @@
 
 #include <cstdlib>
 #include "MHN/Visitor.h"
+#include <vector>
 
 namespace MHN {
     /** A minimal tree-like container, which keeps references to all relatives,
@@ -10,6 +11,7 @@ namespace MHN {
       */
     class VisitableTree {
         VisitableTree const *parent;
+        std::vector<VisitableTree const *> kids;
     public:
         VisitableTree(
             VisitableTree const *_parent =
@@ -22,7 +24,7 @@ namespace MHN {
         /** get child at index _index_ */
         VisitableTree const &operator[](size_t index) const;
         /** append a child */
-        void operator<<(VisitableTree const *_child);
+        VisitableTree &operator<<(VisitableTree const *_child);
 
         /** accept a visitor */
         virtual void acceptVisitor(Visitor const &_visitor) const;
