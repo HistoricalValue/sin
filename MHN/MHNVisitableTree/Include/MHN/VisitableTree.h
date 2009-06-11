@@ -23,6 +23,8 @@ namespace MHN {
         VisitableTree const *getParent(void) const;
         /** get child at index _index_ */
         VisitableTree const &operator[](size_t index) const;
+        /** get number of kids */
+        size_t numberOfKids(void) const;
         /** append a child */
         VisitableTree &operator<<(VisitableTree const *_child);
 

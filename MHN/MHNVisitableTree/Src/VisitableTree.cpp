@@ -26,4 +26,8 @@ namespace MHN {
         return *this;
     }
     ////////////////////////////////
+    size_t VisitableTree::numberOfKids(void) const { 
+        return kids.size();
+    }
+    ////////////////////////////////
 } // namespace MHN

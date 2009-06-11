@@ -27,9 +27,10 @@ namespace MHNMain {
         MHN::VisitableTree parent, kid0(&parent), kid1(&parent), kid2(&parent);
         parent << &kid0 << &kid1 << &kid2;
         return
-            &parent[0]  ==  &kid0   &&
-            &parent[1]  ==  &kid1   &&
-            &parent[2]  ==  &kid2
+            &parent[0]              ==  &kid0   &&
+            &parent[1]              ==  &kid1   &&
+            &parent[2]              ==  &kid2   &&
+            parent.numberOfKids()   ==  3
         ;
     }
     // TODO add more tests
