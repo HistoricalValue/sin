@@ -8,6 +8,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "SINmain", "SINmain\Projects
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "SinParser", "SinParser\Projects\VS\SinParser.vcproj", "{42D01C3B-D8A9-4DD0-9994-EC4E377B04B6}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "SinAST", "SinAST\Projects\VS\SinAST.vcproj", "{E935FBB8-4670-4ED5-B84E-CE44E3F54B3E}"
+EndProject
 Global
 	GlobalSection(SubversionScc) = preSolution
 		Svn-Managed = True
@@ -26,6 +28,10 @@ Global
 		{42D01C3B-D8A9-4DD0-9994-EC4E377B04B6}.Debug|Win32.Build.0 = Debug|Win32
 		{42D01C3B-D8A9-4DD0-9994-EC4E377B04B6}.Release|Win32.ActiveCfg = Release|Win32
 		{42D01C3B-D8A9-4DD0-9994-EC4E377B04B6}.Release|Win32.Build.0 = Release|Win32
+		{E935FBB8-4670-4ED5-B84E-CE44E3F54B3E}.Debug|Win32.ActiveCfg = Debug|Win32
+		{E935FBB8-4670-4ED5-B84E-CE44E3F54B3E}.Debug|Win32.Build.0 = Debug|Win32
+		{E935FBB8-4670-4ED5-B84E-CE44E3F54B3E}.Release|Win32.ActiveCfg = Release|Win32
+		{E935FBB8-4670-4ED5-B84E-CE44E3F54B3E}.Release|Win32.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

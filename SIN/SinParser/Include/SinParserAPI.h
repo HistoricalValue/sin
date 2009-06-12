@@ -8,9 +8,8 @@
 
 
 #include "SinParser.hpp"
-extern FILE* yyin;
-//extern int PrepareForFile(const char * filePath);
-extern void yyparse();
+extern int PrepareForFile(const char * filePath);
+extern int yyparse();
 
 
 namespace SP {	//SinParser
@@ -21,9 +20,8 @@ namespace SP {	//SinParser
 		~SinParserAPI () {}
 
 		int ParseFile (const std::string & fileName) {
-			//PrepareForFile(fileName.c_str());
-			yyparse();
-			return 0;
+			PrepareForFile(fileName.c_str());
+			return yyparse();
 		}
 
 		//int ParseString ()

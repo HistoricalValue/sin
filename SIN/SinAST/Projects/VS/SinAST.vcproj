@@ -2,9 +2,9 @@
 <VisualStudioProject
 	ProjectType="Visual C++"
 	Version="9,00"
-	Name="SINVisitableTree"
-	ProjectGUID="{9DEC78AD-C97D-4F36-93EB-198464EFBCD4}"
-	RootNamespace="SIN"
+	Name="SinAST"
+	ProjectGUID="{E935FBB8-4670-4ED5-B84E-CE44E3F54B3E}"
+	RootNamespace="SinAST"
 	Keyword="Win32Proj"
 	TargetFrameworkVersion="196613"
 	>
@@ -41,7 +41,6 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="0"
-				AdditionalIncludeDirectories="..\..\Include"
 				PreprocessorDefinitions="WIN32;_DEBUG;_LIB"
 				MinimalRebuild="true"
 				BasicRuntimeChecks="3"
@@ -149,14 +148,6 @@
 			Filter="cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx"
 			UniqueIdentifier="{4FC737F1-C7A5-4376-A066-2A32D752A2FF}"
 			>
-			<File
-				RelativePath="..\..\Src\VisitableTree.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\Src\Visitor.cpp"
-				>
-			</File>
 		</Filter>
 		<Filter
 			Name="Header Files"
@@ -164,11 +155,11 @@
 			UniqueIdentifier="{93995380-89BD-4b04-88EB-625FBE52EBFB}"
 			>
 			<File
-				RelativePath="..\..\Include\SIN\VisitableTree.h"
+				RelativePath="..\..\Include\ASTNode.h"
 				>
 			</File>
 			<File
-				RelativePath="..\..\Include\SIN\Visitor.h"
+				RelativePath="..\..\Include\TreeNode.h"
 				>
 			</File>
 		</Filter>
