@@ -4,7 +4,7 @@
 	Version="9,00"
 	Name="SinParser"
 	ProjectGUID="{42D01C3B-D8A9-4DD0-9994-EC4E377B04B6}"
-	RootNamespace="SinParser"
+	RootNamespace="SINParser"
 	Keyword="Win32Proj"
 	TargetFrameworkVersion="196613"
 	>

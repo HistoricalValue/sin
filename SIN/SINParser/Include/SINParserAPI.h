@@ -1,5 +1,5 @@
-#ifndef __SP_SIN_PARSER_API_H__
-#define __SP_SIN_PARSER_API_H__
+#ifndef __SIN_PARSER_API_H__
+#define __SIN_PARSER_API_H__
 
 #include <string>
 #include <stdio.h>
@@ -7,17 +7,17 @@
 #include <iostream>
 
 
-#include "SinParser.hpp"
+#include "SINParser.h"
 extern int PrepareForFile(const char * filePath);
 extern int yyparse();
 
 
-namespace SP {	//SinParser
+namespace SIN {
 
-	class SinParserAPI {
+	class ParserAPI {
 	public:
-		SinParserAPI (void) {}
-		~SinParserAPI () {}
+		ParserAPI (void) {}
+		~ParserAPI () {}
 
 		int ParseFile (const std::string & fileName) {
 			PrepareForFile(fileName.c_str());
@@ -28,9 +28,9 @@ namespace SP {	//SinParser
 		
 	private:
 
+	}; // class ParserAPI
 
+} // namespace SIN
 
-	};
-}	//end of namespace SP
+#endif // __SIN_PARSER_API_H__
 
-#endif //__SP_SIN_PARSER_API_H__

@@ -4,7 +4,7 @@
  */
 
 %{
-	#include "SinParser.hpp" /* <- will be generated from parser.y */
+	#include "SINParser.h" /* <- will be generated from parser.y */
 %}
  
 /* Flex options */
