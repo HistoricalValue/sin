@@ -2,7 +2,7 @@
 <VisualStudioProject
 	ProjectType="Visual C++"
 	Version="9,00"
-	Name="SinAST"
+	Name="SINAST"
 	ProjectGUID="{E935FBB8-4670-4ED5-B84E-CE44E3F54B3E}"
 	RootNamespace="SINAST"
 	Keyword="Win32Proj"
@@ -41,6 +41,7 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="0"
+				AdditionalIncludeDirectories="..\..\Include"
 				PreprocessorDefinitions="WIN32;_DEBUG;_LIB"
 				MinimalRebuild="true"
 				BasicRuntimeChecks="3"
@@ -148,6 +149,10 @@
 			Filter="cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx"
 			UniqueIdentifier="{4FC737F1-C7A5-4376-A066-2A32D752A2FF}"
 			>
+			<File
+				RelativePath="..\..\Src\TreeNode.cpp"
+				>
+			</File>
 		</Filter>
 		<Filter
 			Name="Header Files"

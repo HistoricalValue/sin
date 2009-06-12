@@ -9,7 +9,7 @@ namespace SIN {
 	};
 
 
-}	//end of namespace SIN
+} // namespace SIN
 
 
 #endif //__SIN_AST_NODE_H__

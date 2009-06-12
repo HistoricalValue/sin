@@ -1,71 +1,57 @@
 #ifndef __SIN_TREE_NODE_H__
 #define __SIN_TREE_NODE_H__
 
-
 #include <vector>
 
 namespace SIN {
+
     /** A minimal tree-like container, which keeps references to all relatives,
       * keeps sorted children and is visitable.
       */
-
-
 	class TreeNode {
 	public:
 		TreeNode(void);
 		virtual ~TreeNode();
 
 
+        /** get number of children */
+        size_t NumberOfChildren(void) const;
 		/** get child at index _index_ or 0x00 if there is no child for that
           * index */
-        TreeNode *operator[](size_t index);
-        
-		
-		/** get number of kids */
-        size_t NumberOfKids(void) const;
+        TreeNode *operator[](size_t _index);
         
 		
 		/** append a child (returns self) */
-        TreeNode & operator<<(TreeNode *_child);
+        TreeNode &operator<<(TreeNode *_child);
 
         
 		/** get parent or 0x00 if this tree has no parent */
-        TreeNode * GetParent(void);
-		void SetParent(const TreeNode * _parent) {parent = _parent};
-		TreeNode * operator *(void) { return GetParent(); }
-
-
+        TreeNode *GetParent(void) const;
+        TreeNode *operator *(void) const { return GetParent(); }
+        /** set this node's parent */
+		void SetParent(TreeNode * _parent);
         
 		
-		/** get the next (right) sibling of this tree or 0x00 if
-          * there isn't any */
-        TreeNode * GetRightSibling(void);
-		void SetNextSilBling(const TreeNode * right) { rightSibling = right; }
-		TreeNode * operator +(void) { return GetNextSibling(); }
+		/** get this node's right (next) sibling or 0x00 if there isn't any */
+        TreeNode *GetRightSibling(void) const;
+        TreeNode *operator +(void) const { return GetRightSibling(); }
+        /** set this node's right (next) sibling */
+		void SetRightSibling(TreeNode *_right);
         
 		
-		/** get the previous (left) sibling of this tree or 0x00 if
-          * there isn't any */
-        TreeNode * GetLeftSibling(void);
-		void SetPreviousSibling(const TreeNode *prev) { leftSibling = left; }
-		TreeNode * operator -(void) { return GetPreviousSibling(); }
+		/** get this node's left (previous) sibling or 0x00 if there isn't any */
+        TreeNode *GetLeftSibling(void) const;
+        TreeNode *operator -(void) const { return GetLeftSibling(); }
+        /** sets this node's left (previous) sibling */
+		void SetLeftSibling(TreeNode *_left);
 
 
-
-		//AcceptBuck(TreeVisitor);
-		//AcceptAST(TreeVisitor);
-
-
-
-
-
-
-	private:
-		TreeNode * parent, *leftSibling, *rightSibling;
+    private:
+		TreeNode *parent, *leftSibling, *rightSibling;
 		std::vector<TreeNode *>	children;
+	}; // class TreeNode
 
-	};
-}	//end of namespace SIN
+} // namespace SIN
 
 
-#endif __SIN_TREE_NODE_H__
+#endif //__SIN_TREE_NODE_H__
