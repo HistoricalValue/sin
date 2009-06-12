@@ -22,9 +22,7 @@
 #ifdef __cplusplus
 
 #include <stdlib.h>
-#ifndef YY_NO_UNISTD_H
-	#include <unistd.h>
-#endif
+#include <unistd.h>
 
 /* Use prototypes in function declarations. */
 #define YY_USE_PROTOS

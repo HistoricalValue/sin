@@ -69,7 +69,15 @@
 
 
 	#include <stdio.h>
+	#include <assert.h>
+	#include <iostream>
+	
 	int yyerror (char* yaccProvidedMessage);
+	
+	int PrepareForFile(const char * filePath);
+	int PrepareForString(const char * str);
+	
+	
 	int yylex (void);
 
 	extern int yylineno;
@@ -414,8 +422,8 @@ static const yytype_int8 yyrhs[] =
 /* YYRLINE[YYN] -- source line where rule number YYN was defined.  */
 static const yytype_uint8 yyrline[] =
 {
-       0,    29,    29,    30,    33,    34,    35,    36,    37,    38,
-      39,    40,    43,    45,    46,    49,    52,    53
+       0,    37,    37,    38,    41,    42,    43,    44,    45,    46,
+      47,    48,    51,    53,    54,    57,    60,    61
 };
 #endif
 
@@ -1547,6 +1555,23 @@ int yyerror (char* yaccProvidedMessage)
 	fprintf(stderr, "INPUT NOT VALID\n");
 	return 0;
 }
+
+
+int PrepareForFile(const char * filePath) {
+	assert (filePath);
+	if (!(yyin = fopen(filePath, "r"))) {
+			fprintf(stderr, "Cannot read file: %s\n", filePath);
+			return 1;
+	}
+	return 0;
+}
+
+int PrepareForString(const char * str) {
+	//yy_scan_string(const char * str);
+	return 0;
+}
+
+
 
 //**********************************************************************
 /*

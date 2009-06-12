@@ -5,7 +5,15 @@
 
 %{
 	#include <stdio.h>
+	#include <assert.h>
+	#include <iostream>
+	
 	int yyerror (char* yaccProvidedMessage);
+	
+	int PrepareForFile(const char * filePath);
+	int PrepareForString(const char * str);
+	
+	
 	int yylex (void);
 
 	extern int yylineno;
@@ -61,6 +69,23 @@ int yyerror (char* yaccProvidedMessage)
 	fprintf(stderr, "INPUT NOT VALID\n");
 	return 0;
 }
+
+
+int PrepareForFile(const char * filePath) {
+	assert (filePath);
+	if (!(yyin = fopen(filePath, "r"))) {
+			fprintf(stderr, "Cannot read file: %s\n", filePath);
+			return 1;
+	}
+	return 0;
+}
+
+int PrepareForString(const char * str) {
+	//yy_scan_string(const char * str);
+	//return 0;
+}
+
+
 
 //**********************************************************************
 /*

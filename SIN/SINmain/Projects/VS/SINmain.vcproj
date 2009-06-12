@@ -41,7 +41,7 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="0"
-				AdditionalIncludeDirectories="..\..\Include;..\..\..\SINVisitableTree\Include"
+				AdditionalIncludeDirectories="&quot;.\..\..\Include&quot;;&quot;.\..\..\..\SinParser\Include&quot;"
 				PreprocessorDefinitions="WIN32;_DEBUG;_CONSOLE"
 				MinimalRebuild="true"
 				BasicRuntimeChecks="3"
@@ -168,10 +168,6 @@
 		</Configuration>
 	</Configurations>
 	<References>
-		<ProjectReference
-			ReferencedProjectIdentifier="{9DEC78AD-C97D-4F36-93EB-198464EFBCD4}"
-			RelativePathToProject=".\SINVisitableTree\Projects\VS\SINVisitableTree.vcproj"
-		/>
 	</References>
 	<Files>
 		<Filter
@@ -183,28 +179,12 @@
 				RelativePath="..\..\Src\main.cpp"
 				>
 			</File>
-			<File
-				RelativePath="..\..\Src\SIN_VisitableTree_Tester.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\Src\WorldGreeter.cpp"
-				>
-			</File>
 		</Filter>
 		<Filter
 			Name="Header Files"
 			Filter="h;hpp;hxx;hm;inl;inc;xsd"
 			UniqueIdentifier="{93995380-89BD-4b04-88EB-625FBE52EBFB}"
 			>
-			<File
-				RelativePath="..\..\Include\SINMain\Testers.h"
-				>
-			</File>
-			<File
-				RelativePath="..\..\Include\SINmain\WorldGreeter.h"
-				>
-			</File>
 		</Filter>
 		<Filter
 			Name="Resource Files"

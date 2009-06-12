@@ -2,8 +2,9 @@
 Microsoft Visual Studio Solution File, Format Version 10.00
 # Visual Studio 2008
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "SINmain", "SINmain\Projects\VS\SINmain.vcproj", "{2FF2E5DD-6B8C-4A02-AC93-58B45636D824}"
-EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "SINVisitableTree", "SINVisitableTree\Projects\VS\SINVisitableTree.vcproj", "{9DEC78AD-C97D-4F36-93EB-198464EFBCD4}"
+	ProjectSection(ProjectDependencies) = postProject
+		{42D01C3B-D8A9-4DD0-9994-EC4E377B04B6} = {42D01C3B-D8A9-4DD0-9994-EC4E377B04B6}
+	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "SinParser", "SinParser\Projects\VS\SinParser.vcproj", "{42D01C3B-D8A9-4DD0-9994-EC4E377B04B6}"
 EndProject
@@ -21,10 +22,6 @@ Global
 		{2FF2E5DD-6B8C-4A02-AC93-58B45636D824}.Debug|Win32.Build.0 = Debug|Win32
 		{2FF2E5DD-6B8C-4A02-AC93-58B45636D824}.Release|Win32.ActiveCfg = Release|Win32
 		{2FF2E5DD-6B8C-4A02-AC93-58B45636D824}.Release|Win32.Build.0 = Release|Win32
-		{9DEC78AD-C97D-4F36-93EB-198464EFBCD4}.Debug|Win32.ActiveCfg = Debug|Win32
-		{9DEC78AD-C97D-4F36-93EB-198464EFBCD4}.Debug|Win32.Build.0 = Debug|Win32
-		{9DEC78AD-C97D-4F36-93EB-198464EFBCD4}.Release|Win32.ActiveCfg = Release|Win32
-		{9DEC78AD-C97D-4F36-93EB-198464EFBCD4}.Release|Win32.Build.0 = Release|Win32
 		{42D01C3B-D8A9-4DD0-9994-EC4E377B04B6}.Debug|Win32.ActiveCfg = Debug|Win32
 		{42D01C3B-D8A9-4DD0-9994-EC4E377B04B6}.Debug|Win32.Build.0 = Debug|Win32
 		{42D01C3B-D8A9-4DD0-9994-EC4E377B04B6}.Release|Win32.ActiveCfg = Release|Win32

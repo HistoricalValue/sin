@@ -183,6 +183,14 @@
 				RelativePath="..\..\Include\SinParser.hpp"
 				>
 			</File>
+			<File
+				RelativePath="..\..\Include\SinParserAPI.h"
+				>
+			</File>
+			<File
+				RelativePath="..\..\Include\unistd.h"
+				>
+			</File>
 		</Filter>
 		<Filter
 			Name="Resource Files"
