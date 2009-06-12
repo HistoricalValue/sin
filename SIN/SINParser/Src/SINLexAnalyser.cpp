@@ -1,5 +1,5 @@
 
-#line 3 "SINLexAnalyser.cpp"
+//#line 3 "SINLexAnalyser.cpp"
 
 #define  YY_INT_ALIGNED short int
 
@@ -1382,7 +1382,7 @@ extern int isatty (int );
         b->yy_bs_column = 0;
     }
 
-        b->yy_is_interactive = file ? (isatty( fileno(file) ) > 0) : 0;
+        b->yy_is_interactive = 0;//file ? (isatty( fileno(file) ) > 0) : 0;
     
 	errno = oerrno;
 }

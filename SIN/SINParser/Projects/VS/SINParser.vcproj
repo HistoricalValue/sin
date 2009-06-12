@@ -2,7 +2,7 @@
 <VisualStudioProject
 	ProjectType="Visual C++"
 	Version="9,00"
-	Name="SinParser"
+	Name="SINParser"
 	ProjectGUID="{42D01C3B-D8A9-4DD0-9994-EC4E377B04B6}"
 	RootNamespace="SINParser"
 	Keyword="Win32Proj"
@@ -25,7 +25,7 @@
 			>
 			<Tool
 				Name="VCPreBuildEventTool"
-				CommandLine="flex -L -o.\..\..\Src\SinLexAnalyser.cpp .\..\..\Src\SinLexAnalyser.l&#x0D;&#x0A;bison -l -y --defines=.\..\..\Include\SinParser.hpp -o.\..\..\Src\SinParser.cpp .\..\..\Src\SinParser.y"
+				CommandLine=""
 			/>
 			<Tool
 				Name="VCCustomBuildTool"
@@ -154,11 +154,11 @@
 				Name="Parser"
 				>
 				<File
-					RelativePath="..\..\Src\SinParser.cpp"
+					RelativePath="..\..\Src\SINParser.cpp"
 					>
 				</File>
 				<File
-					RelativePath="..\..\Src\SinParser.y"
+					RelativePath="..\..\Src\SINParser.y"
 					>
 				</File>
 			</Filter>
@@ -166,11 +166,11 @@
 				Name="Scanner"
 				>
 				<File
-					RelativePath="..\..\Src\SinLexAnalyser.cpp"
+					RelativePath="..\..\Src\SINLexAnalyser.cpp"
 					>
 				</File>
 				<File
-					RelativePath="..\..\Src\SinLexAnalyser.l"
+					RelativePath="..\..\Src\SINLexAnalyser.l"
 					>
 				</File>
 			</Filter>
@@ -181,11 +181,11 @@
 			UniqueIdentifier="{93995380-89BD-4b04-88EB-625FBE52EBFB}"
 			>
 			<File
-				RelativePath="..\..\Include\SinParser.hpp"
+				RelativePath="..\..\Include\SINParser.h"
 				>
 			</File>
 			<File
-				RelativePath="..\..\Include\SinParserAPI.h"
+				RelativePath="..\..\Include\SINParserAPI.h"
 				>
 			</File>
 			<File
