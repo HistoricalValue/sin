@@ -4,7 +4,7 @@
 	Version="9,00"
 	Name="SinAST"
 	ProjectGUID="{E935FBB8-4670-4ED5-B84E-CE44E3F54B3E}"
-	RootNamespace="SinAST"
+	RootNamespace="SINAST"
 	Keyword="Win32Proj"
 	TargetFrameworkVersion="196613"
 	>
