@@ -25,6 +25,7 @@
 			>
 			<Tool
 				Name="VCPreBuildEventTool"
+				CommandLine="flex -L -o.\..\..\Src\SinLexAnalyser.cpp .\..\..\Src\SinLexAnalyser.l&#x0D;&#x0A;bison -l -y --defines=.\..\..\Include\SinParser.hpp -o.\..\..\Src\SinParser.cpp .\..\..\Src\SinParser.y"
 			/>
 			<Tool
 				Name="VCCustomBuildTool"

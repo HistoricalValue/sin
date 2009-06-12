@@ -82,7 +82,7 @@ int PrepareForFile(const char * filePath) {
 
 int PrepareForString(const char * str) {
 	//yy_scan_string(const char * str);
-	//return 0;
+	return 0;
 }
 
 
