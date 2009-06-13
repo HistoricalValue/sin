@@ -18,7 +18,7 @@ namespace SIN {
         size_t NumberOfChildren(void) const;
 		/** get child at index _index_ or 0x00 if there is no child for that
           * index */
-        TreeNode *operator[](size_t _index);
+        TreeNode *operator[](size_t _index) const;
         
 		
 		/** append a child (returns self) */
