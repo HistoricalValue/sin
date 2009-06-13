@@ -4,7 +4,7 @@
 	Version="9,00"
 	Name="SINAST"
 	ProjectGUID="{E935FBB8-4670-4ED5-B84E-CE44E3F54B3E}"
-	RootNamespace="SINAST"
+	RootNamespace="SIN"
 	Keyword="Win32Proj"
 	TargetFrameworkVersion="196613"
 	>
@@ -150,7 +150,7 @@
 			UniqueIdentifier="{4FC737F1-C7A5-4376-A066-2A32D752A2FF}"
 			>
 			<File
-				RelativePath="..\..\Src\TreeNode.cpp"
+				RelativePath="..\..\Src\SINTreeNode.cpp"
 				>
 			</File>
 		</Filter>
@@ -160,11 +160,11 @@
 			UniqueIdentifier="{93995380-89BD-4b04-88EB-625FBE52EBFB}"
 			>
 			<File
-				RelativePath="..\..\Include\ASTNode.h"
+				RelativePath="..\..\Include\SINASTNode.h"
 				>
 			</File>
 			<File
-				RelativePath="..\..\Include\TreeNode.h"
+				RelativePath="..\..\Include\SINTreeNode.h"
 				>
 			</File>
 		</Filter>
