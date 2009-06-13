@@ -32,22 +32,26 @@ namespace SIN {
 		void SetParent(TreeNode * _parent);
         
 		
-		/** get this node's right (next) sibling or 0x00 if there isn't any */
-        TreeNode *GetRightSibling(void) const;
-        TreeNode *operator +(void) const { return GetRightSibling(); }
-        /** set this node's right (next) sibling */
-		void SetRightSibling(TreeNode *_right);
+		/** get this node's next (right) sibling or 0x00 if there isn't any */
+        TreeNode *GetNext(void) const;
+        TreeNode *operator +(void) const { return GetNext(); }
+        TreeNode *GetRightSibling(void) const { return GetNext(); } // for santa
+        /** set this node's next (right) sibling */
+		void SetNext(TreeNode *_next);
+        void SetRightSibling(TreeNode *_right) { SetNext(_right); } // for santa
         
 		
-		/** get this node's left (previous) sibling or 0x00 if there isn't any */
-        TreeNode *GetLeftSibling(void) const;
-        TreeNode *operator -(void) const { return GetLeftSibling(); }
-        /** sets this node's left (previous) sibling */
-		void SetLeftSibling(TreeNode *_left);
+		/** get this node's previous (left) sibling or 0x00 if there isn't any */
+        TreeNode *GetPrevious(void) const;
+        TreeNode *operator -(void) const { return GetPrevious(); }
+        TreeNode *GetLeftSibling(void) const { return GetPrevious(); } // for santa
+        /** sets this node's previous (left) sibling */
+		void SetPrevious(TreeNode *_previous);
+        void SetLeftSibling(TreeNode *_left) { SetPrevious(_left); } // for santa
 
 
     private:
-		TreeNode *parent, *leftSibling, *rightSibling;
+		TreeNode *parent, *previous, *next;
 		std::vector<TreeNode *>	children;
 	}; // class TreeNode
 
