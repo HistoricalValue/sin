@@ -41,7 +41,7 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="0"
-				AdditionalIncludeDirectories="..\..\Include"
+				AdditionalIncludeDirectories="&quot;..\..\Include&quot;;&quot;.\..\..\..\Common\Include&quot;"
 				PreprocessorDefinitions="WIN32;_DEBUG;_LIB"
 				MinimalRebuild="true"
 				BasicRuntimeChecks="3"
@@ -160,11 +160,11 @@
 			UniqueIdentifier="{93995380-89BD-4b04-88EB-625FBE52EBFB}"
 			>
 			<File
-				RelativePath="..\..\Include\ASTTreeVisitor.h"
+				RelativePath="..\..\Include\SINASTNode.h"
 				>
 			</File>
 			<File
-				RelativePath="..\..\Include\SINASTNode.h"
+				RelativePath="..\..\Include\SINASTVisitor.h"
 				>
 			</File>
 			<File
