@@ -9,17 +9,6 @@ class SINASTVisitor;	//forward declaration
 
 namespace SIN {
 
-
-	enum ConstValueType {
-		CONST_NUMBER = 0,
-		CONST_STRING,
-		CONST_NIL,
-		CONST_TRUE,
-		CONST_FALSE
-	};
-
-
-
 	template <unsigned TypeValue, class Value>
 	class ValueHolder {
 	public:
@@ -44,9 +33,28 @@ namespace SIN {
 
 
 
-
-
 	///--------------------------------------------
+	template<unsigned TypeId, unsigned TypeValue, class Value>
+	class ASTNode : public TreeNode, public ValueHolder<TypeValue, Value> {
+	public :
+
+		//-------------------------
+		enum { Type = TypeId } ;
+		virtual unsigned GetType () { return Type; }
+
+		ASTNode (void) : TreeNode() {}
+		virtual ~ ASTNode(){}
+
+		//******************************************************************
+		// Visitor support
+		//
+		virtual void Accept(SINASTVisitor *);
+	};
+
+
+
+
+	/*///--------------------------------------------
 	class ASTNode : public TreeNode {
 	public :
 		
@@ -56,13 +64,13 @@ namespace SIN {
 
 		virtual void Accept(SINASTVisitor *) = 0;
 		
-	};
+	};*/
 
 
 
 
 	///--------------------------------------------
-	template<unsigned TypeId, unsigned TypeValue, class Value>
+	/*template<unsigned TypeId, unsigned TypeValue, class Value>
 	class LeafASTNode : public ASTNode, public ValueHolder<TypeValue, Value> {
 	public :
 
@@ -75,7 +83,11 @@ namespace SIN {
 		// Visitor support
 		//
 		virtual void Accept(SINASTVisitor *);
-	};
+	};*/
+
+
+	
+
 
 
 } // namespace SIN

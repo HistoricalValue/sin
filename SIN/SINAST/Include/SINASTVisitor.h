@@ -7,12 +7,17 @@
 
 
 #include "SINASTNode.h"
+#include "SINASTCommon.h"
 
 namespace SIN {
 	class SINASTVisitor { 
 	public :
 
-		virtual void VisitLeaf (LeafASTNode *) = 0;
+		virtual void VisitAdd (AddASTNode *) = 0;
+		virtual void VisitSub (SubASTNode *) = 0;
+		virtual void VisitMul (MulASTNode *) = 0;
+		virtual void VisitDiv (DivASTNode *) = 0;
+
 		virtual ~SINASTVisitor() {}
 	};
 }
