@@ -2,9 +2,9 @@
 <VisualStudioProject
 	ProjectType="Visual C++"
 	Version="9,00"
-	Name="SINAST"
-	ProjectGUID="{E935FBB8-4670-4ED5-B84E-CE44E3F54B3E}"
-	RootNamespace="SIN"
+	Name="SINCommon"
+	ProjectGUID="{24375CE7-D218-4936-AC99-552B1B4C2E98}"
+	RootNamespace="SINCommon"
 	Keyword="Win32Proj"
 	TargetFrameworkVersion="196613"
 	>
@@ -41,7 +41,7 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="0"
-				AdditionalIncludeDirectories="..\..\Include;.\..\..\..\Common\Include;.\..\..\..\SINCommon\Include"
+				AdditionalIncludeDirectories="..\..\Include;..\..\..\Common\Include"
 				PreprocessorDefinitions="WIN32;_DEBUG;_LIB"
 				MinimalRebuild="true"
 				BasicRuntimeChecks="3"
@@ -150,15 +150,7 @@
 			UniqueIdentifier="{4FC737F1-C7A5-4376-A066-2A32D752A2FF}"
 			>
 			<File
-				RelativePath="..\..\Src\ASTVisitor.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\Src\SINASTNode.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\Src\SINTreeNode.cpp"
+				RelativePath="..\..\Src\SINCommon.cpp"
 				>
 			</File>
 		</Filter>
@@ -168,19 +160,7 @@
 			UniqueIdentifier="{93995380-89BD-4b04-88EB-625FBE52EBFB}"
 			>
 			<File
-				RelativePath="..\..\Include\SINASTCommon.h"
-				>
-			</File>
-			<File
-				RelativePath="..\..\Include\SINASTNode.h"
-				>
-			</File>
-			<File
-				RelativePath="..\..\Include\SINASTVisitor.h"
-				>
-			</File>
-			<File
-				RelativePath="..\..\Include\SINTreeNode.h"
+				RelativePath="..\..\Include\SINCommon.h"
 				>
 			</File>
 		</Filter>

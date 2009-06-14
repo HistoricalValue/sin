@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="windows-1253"?>
 <VisualStudioProject
 	ProjectType="Visual C++"
-	Version="9.00"
+	Version="9,00"
 	Name="SINmain"
 	ProjectGUID="{2FF2E5DD-6B8C-4A02-AC93-58B45636D824}"
 	RootNamespace="SIN"
@@ -41,7 +41,7 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="0"
-				AdditionalIncludeDirectories="&quot;.\..\..\Include&quot;;&quot;.\..\..\..\SINParser\Include&quot;;&quot;.\..\..\..\SINAST\Include&quot;;&quot;.\..\..\..\Common\Include&quot;"
+				AdditionalIncludeDirectories=".\..\..\Include;.\..\..\..\SINParser\Include;.\..\..\..\SINAST\Include;.\..\..\..\Common\Include;.\..\..\..\Tests\SINAST\Include"
 				PreprocessorDefinitions="WIN32;_DEBUG;_CONSOLE"
 				MinimalRebuild="true"
 				BasicRuntimeChecks="3"
@@ -168,6 +168,18 @@
 		</Configuration>
 	</Configurations>
 	<References>
+		<ProjectReference
+			ReferencedProjectIdentifier="{FC837156-BD49-4E48-BB57-6DD82135BA28}"
+			RelativePathToProject=".\Tests\SINAST\Projects\VS\SINAST_Test.vcproj"
+		/>
+		<ProjectReference
+			ReferencedProjectIdentifier="{24375CE7-D218-4936-AC99-552B1B4C2E98}"
+			RelativePathToProject=".\SINCommon\Projects\VS\SINCommon.vcproj"
+		/>
+		<ProjectReference
+			ReferencedProjectIdentifier="{E935FBB8-4670-4ED5-B84E-CE44E3F54B3E}"
+			RelativePathToProject=".\SINAST\Projects\VS\SINAST.vcproj"
+		/>
 	</References>
 	<Files>
 		<Filter

@@ -15,6 +15,12 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "SINAST", "SINAST\Projects\V
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Common", "Common\Projects\VS\Common.vcproj", "{67ADD475-BC3E-4485-A405-872A093C62F3}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{4BE23EA1-8B76-4CF4-A08E-7733F4ABCD23}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "SINAST_Test", "Tests\SINAST\Projects\VS\SINAST_Test.vcproj", "{FC837156-BD49-4E48-BB57-6DD82135BA28}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "SINCommon", "SINCommon\Projects\VS\SINCommon.vcproj", "{24375CE7-D218-4936-AC99-552B1B4C2E98}"
+EndProject
 Global
 	GlobalSection(SubversionScc) = preSolution
 		Svn-Managed = True
@@ -41,8 +47,19 @@ Global
 		{67ADD475-BC3E-4485-A405-872A093C62F3}.Debug|Win32.Build.0 = Debug|Win32
 		{67ADD475-BC3E-4485-A405-872A093C62F3}.Release|Win32.ActiveCfg = Release|Win32
 		{67ADD475-BC3E-4485-A405-872A093C62F3}.Release|Win32.Build.0 = Release|Win32
+		{FC837156-BD49-4E48-BB57-6DD82135BA28}.Debug|Win32.ActiveCfg = Debug|Win32
+		{FC837156-BD49-4E48-BB57-6DD82135BA28}.Debug|Win32.Build.0 = Debug|Win32
+		{FC837156-BD49-4E48-BB57-6DD82135BA28}.Release|Win32.ActiveCfg = Release|Win32
+		{FC837156-BD49-4E48-BB57-6DD82135BA28}.Release|Win32.Build.0 = Release|Win32
+		{24375CE7-D218-4936-AC99-552B1B4C2E98}.Debug|Win32.ActiveCfg = Debug|Win32
+		{24375CE7-D218-4936-AC99-552B1B4C2E98}.Debug|Win32.Build.0 = Debug|Win32
+		{24375CE7-D218-4936-AC99-552B1B4C2E98}.Release|Win32.ActiveCfg = Release|Win32
+		{24375CE7-D218-4936-AC99-552B1B4C2E98}.Release|Win32.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{FC837156-BD49-4E48-BB57-6DD82135BA28} = {4BE23EA1-8B76-4CF4-A08E-7733F4ABCD23}
 	EndGlobalSection
 EndGlobal

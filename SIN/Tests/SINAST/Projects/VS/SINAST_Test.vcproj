@@ -2,9 +2,9 @@
 <VisualStudioProject
 	ProjectType="Visual C++"
 	Version="9,00"
-	Name="SINAST"
-	ProjectGUID="{E935FBB8-4670-4ED5-B84E-CE44E3F54B3E}"
-	RootNamespace="SIN"
+	Name="SINAST_Test"
+	ProjectGUID="{FC837156-BD49-4E48-BB57-6DD82135BA28}"
+	RootNamespace="SIN::Tests::AST"
 	Keyword="Win32Proj"
 	TargetFrameworkVersion="196613"
 	>
@@ -41,7 +41,7 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="0"
-				AdditionalIncludeDirectories="..\..\Include;.\..\..\..\Common\Include;.\..\..\..\SINCommon\Include"
+				AdditionalIncludeDirectories="..\..\..\..\SINAST\Include;..\..\..\..\Common\Include;..\..\..\..\SINCommon\Include"
 				PreprocessorDefinitions="WIN32;_DEBUG;_LIB"
 				MinimalRebuild="true"
 				BasicRuntimeChecks="3"
@@ -142,6 +142,10 @@
 		</Configuration>
 	</Configurations>
 	<References>
+		<ProjectReference
+			ReferencedProjectIdentifier="{E935FBB8-4670-4ED5-B84E-CE44E3F54B3E}"
+			RelativePathToProject=".\SINAST\Projects\VS\SINAST.vcproj"
+		/>
 	</References>
 	<Files>
 		<Filter
@@ -150,15 +154,7 @@
 			UniqueIdentifier="{4FC737F1-C7A5-4376-A066-2A32D752A2FF}"
 			>
 			<File
-				RelativePath="..\..\Src\ASTVisitor.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\Src\SINASTNode.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\Src\SINTreeNode.cpp"
+				RelativePath="..\..\Src\SINAST_Tester.cpp"
 				>
 			</File>
 		</Filter>
@@ -168,19 +164,7 @@
 			UniqueIdentifier="{93995380-89BD-4b04-88EB-625FBE52EBFB}"
 			>
 			<File
-				RelativePath="..\..\Include\SINASTCommon.h"
-				>
-			</File>
-			<File
-				RelativePath="..\..\Include\SINASTNode.h"
-				>
-			</File>
-			<File
-				RelativePath="..\..\Include\SINASTVisitor.h"
-				>
-			</File>
-			<File
-				RelativePath="..\..\Include\SINTreeNode.h"
+				RelativePath="..\..\Include\SINASTTester.h"
 				>
 			</File>
 		</Filter>
