@@ -33,9 +33,24 @@ namespace SIN {
 
 
 
+
+	///--------------------------------------------
+	class ASTNode : public TreeNode {
+	public :
+		
+		//Constructor and destructor 
+		ASTNode (void) : TreeNode() {}
+		virtual ~ASTNode() {}
+
+		virtual void Accept(SINASTVisitor *) = 0;
+		
+	};
+
+
+
 	///--------------------------------------------
 	template<unsigned TypeId, unsigned TypeValue, class Value>
-	class ASTNode : public TreeNode, public ValueHolder<TypeValue, Value> {
+	class LeafASTNode : public ASTNode, public ValueHolder<TypeValue, Value> {
 	public :
 
 		//-------------------------
@@ -51,27 +66,10 @@ namespace SIN {
 		virtual void Accept(SINASTVisitor *);
 	};
 
-
-
-
-	/*///--------------------------------------------
-	class ASTNode : public TreeNode {
-	public :
-		
-		//Constructor and destructor 
-		ASTNode (void) : TreeNode() {}
-		virtual ~ASTNode() {}
-
-		virtual void Accept(SINASTVisitor *) = 0;
-		
-	};*/
-
-
-
-
+	
 	///--------------------------------------------
-	/*template<unsigned TypeId, unsigned TypeValue, class Value>
-	class LeafASTNode : public ASTNode, public ValueHolder<TypeValue, Value> {
+	template<unsigned TypeId, unsigned TypeValue, class Value>
+	class OpASTNode : public ASTNode, public ValueHolder<TypeValue, Value> {
 	public :
 
 		//-------------------------
@@ -83,7 +81,7 @@ namespace SIN {
 		// Visitor support
 		//
 		virtual void Accept(SINASTVisitor *);
-	};*/
+	};
 
 
 	
