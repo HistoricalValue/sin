@@ -1,5 +1,8 @@
+#include <assert.h>
+
 #include "SINASTNode.h"
 #include "SINASTVisitor.h"
+
 
 
 //-------------------------------------------------------------------------------------------------
@@ -8,6 +11,7 @@
     NAME##ASTNode::NAME##ASTNode(VALTYPE const &_val): ConstASTNode<TYPE, VALTYPE>(_val) {  \
     }                                                                                       \
     void NAME##ASTNode::Accept(ASTVisitor *_visitor_p) {                                    \
+		assert (_visitor_p);																\
         static_cast<ASTVisitor &>(*_visitor_p).Visit(*this);                                \
     }
 
@@ -19,6 +23,7 @@
     NAME##ASTNode::NAME##ASTNode(void): ConstASTNode<TYPE, VALTYPE>(VALUE) {                \
     }                                                                                       \
     void NAME##ASTNode::Accept(ASTVisitor *_visitor_p) {                                    \
+		assert (_visitor_p);																\
         static_cast<ASTVisitor &>(*_visitor_p).Visit(*this);                                \
     }
 
@@ -34,6 +39,7 @@
     OPNAME##ASTNode::~OPNAME##ASTNode(void) {                   \
     }                                                           \
     void OPNAME##ASTNode::Accept(ASTVisitor *_visitor_p) {      \
+		assert (_visitor_p);									\
         static_cast<ASTVisitor &>(*_visitor_p).Visit(*this);    \
     }
 
