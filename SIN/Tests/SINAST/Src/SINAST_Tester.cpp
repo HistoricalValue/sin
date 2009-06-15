@@ -24,17 +24,15 @@
 #define SINTESTSAST_TESTRUN(NAME)   \
     test_##NAME();
 
-#define SINTESTSAST_TEMPL_HELPER(CLASSNAME,__VA_ARGS__) CLASSNAME<__VA_ARGS__>
-
 namespace SIN {
     namespace Tests {
         namespace AST {
             static std::ostream &Out = std::cout;
 
-            SINTESTSAST_TESTDEF(TreeNode01, {
+            SINTESTSAST_TESTDEF(TreeNode01,
                 // round 1
                 TRY(TreeNode().GetParent() == 0x00);
-            });
+            )
             SINTESTSAST_TESTDEF(TreeNode02,
                 // round 2
                 SIN::TreeNode parent;
@@ -57,8 +55,8 @@ namespace SIN {
                 TRY(kid2.GetNext()             ==  0x00u);
                 TRY(kid2.GetPrevious()         ==  0x00u);
                 TRY(kid2.NumberOfChildren()     ==  0x00u);
-            );
-            SINTESTSAST_TESTDEF(TreeNode03, {
+            )
+            SINTESTSAST_TESTDEF(TreeNode03,
                 // round 3
                 SIN::TreeNode parent;
                 SIN::TreeNode kid0;
@@ -88,7 +86,7 @@ namespace SIN {
                 TRY(kid2.GetPrevious()         ==  &kid1);
                 TRY(kid2.NumberOfChildren()     ==  0x00u);
                 TRY(kid2[0]                 ==  0x00u);
-            });
+            )
 
             typedef ValueHolder<CONST_NUMBER, int> ValueHolderNum;
             SINTESTSAST_TESTDEF(ValueHolder, 
@@ -100,7 +98,7 @@ namespace SIN {
                 TRY(vh.GetValue() == 12);
 //                TRY(vh == 12);
                 TRY(vh.GetValueStr() == "12");
-            );
+            )
 
             SINTESTSAST_TESTDEF(ConstNodes,
                 Number_t num_val = 0xfaceful;
@@ -117,7 +115,7 @@ namespace SIN {
                 TRY(nil.GetValue() == NIL);
                 TRY(tru.GetValue() == TRUE);
                 TRY(fls.GetValue() == FALSE);
-            );
+            )
 
             SINTESTSAST_TESTDEF(OpNodes,
                 AddASTNode add;
@@ -131,9 +129,9 @@ namespace SIN {
                 GeASTNode  ge;
                 EqASTNode  eq;
                 NeASTNode  ne;
-                OrASTNode  or;
-                AndASTNode and;
-            );
+                OrASTNode  or_;
+                AndASTNode and_;
+            )
 
             void test(void) {
                 SINTESTSAST_TESTRUN(TreeNode01);

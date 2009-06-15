@@ -1,5 +1,6 @@
 #include "SINTreeNode.h"
 #include <cassert>
+#include <stdexcept>
 
 namespace SIN {
 	//-----------------------------------------------------------------------	
@@ -22,7 +23,7 @@ namespace SIN {
         try {
             result = children.at(_index);
         }
-        catch(std::out_of_range) { }
+        catch(std::out_of_range e) { }
         return result;
     }
 

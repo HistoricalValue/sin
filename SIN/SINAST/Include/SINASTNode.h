@@ -71,7 +71,7 @@ namespace SIN {
 	class ConstASTNode : public ASTNode, public ValueHolder<_ValueType, _ValueT> {
 	public :
         typedef typename ValueHolder<_ValueType, _ValueT>::Value Value;
-        ConstASTNode(Value const &_value): ASTNode(), ValueHolder(_value) { }
+        ConstASTNode(Value const &_value): ASTNode(), ValueHolder<_ValueType, _ValueT>(_value) { }
         virtual void Accept(ASTVisitor *) = 0;
 	};
 
