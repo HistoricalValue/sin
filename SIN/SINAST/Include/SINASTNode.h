@@ -53,6 +53,7 @@ namespace SIN {
 
 
 	//-----------------------------------------------------------------------
+
 	class ASTNode : public TreeNode {
 	public :
 		
@@ -118,6 +119,7 @@ namespace SIN {
 
 
 	//-----------------------------------------------------------------------
+
     class FalseASTNode : public ConstASTNode<CONST_FALSE, Boolean_t> {
     public:
         FalseASTNode(void);
