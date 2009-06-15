@@ -20,7 +20,7 @@ namespace SIN {
             ? 0 : 1;
     }
     ////////////////////////////////
-    int ParserAPI::ParseText(std::string const &_input) {
+    int ParserAPI::ParseText(char const *_input) {
         assert(!"Not implemented yet");
         throw std::string("Not implemented yet");
         return 1;

@@ -16,7 +16,7 @@ namespace SIN {
 		~ParserAPI();
 
 		int ParseFile(const std::string &_fileName);
-        int ParseText(const std::string &_input);
+        int ParseText(const char *_input);
 	}; // class ParserAPI
 
 } // namespace SIN
