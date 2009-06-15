@@ -82,7 +82,7 @@ namespace SIN {
 
     class NumberASTNode : public ConstASTNode<CONST_NUMBER, Number_t> {
     public:
-        NumberASTNode(Number_t const &_value);
+        NumberASTNode(Number_t const &_value = 0);
         virtual void Accept(ASTVisitor *);
     }; // class NumberASTNode
 
@@ -92,7 +92,7 @@ namespace SIN {
     
 	class StringASTNode : public ConstASTNode<CONST_STRING, String_t> {
     public:
-        StringASTNode(String_t const &_value);
+        StringASTNode(String_t const &_value = "");
         virtual void Accept(ASTVisitor *);
     }; // class StringASTNode
 

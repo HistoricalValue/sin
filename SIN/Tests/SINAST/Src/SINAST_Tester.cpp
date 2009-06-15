@@ -24,6 +24,54 @@
 #define SINTESTSAST_TESTRUN(NAME)   \
     test_##NAME();
 
+#define SINTESTSAST_TREENODE_SUPERTEST(CLASSNAME) { \
+    TRY(CLASSNAME().GetParent() == 0x00);           \
+    CLASSNAME parent;                               \
+    CLASSNAME kid0;                                 \
+    CLASSNAME kid1;                                 \
+    CLASSNAME kid2;                                 \
+    TRY(parent.GetParent()         ==  0x00u);      \
+    TRY(parent.GetNext()           ==  0x00u);      \
+    TRY(parent.GetPrevious()       ==  0x00u);      \
+    TRY(parent.NumberOfChildren()   ==  0x00u);     \
+    TRY(kid0.GetParent()           ==  0x00u);      \
+    TRY(kid0.GetNext()             ==  0x00u);      \
+    TRY(kid0.GetPrevious()         ==  0x00u);      \
+    TRY(kid0.NumberOfChildren()     ==  0x00u);     \
+    TRY(kid1.GetParent()           ==  0x00u);      \
+    TRY(kid1.GetNext()             ==  0x00u);      \
+    TRY(kid1.GetPrevious()         ==  0x00u);      \
+    TRY(kid1.NumberOfChildren()     ==  0x00u);     \
+    TRY(kid2.GetParent()           ==  0x00u);      \
+    TRY(kid2.GetNext()             ==  0x00u);      \
+    TRY(kid2.GetPrevious()         ==  0x00u);      \
+    TRY(kid2.NumberOfChildren()     ==  0x00u);     \
+    parent << &kid0 << &kid1 << &kid2;              \
+    TRY(parent[0]               ==  &kid0);         \
+    TRY(parent[1]               ==  &kid1);         \
+    TRY(parent[2]               ==  &kid2);         \
+    TRY(parent[666]             ==  0x00u);         \
+    TRY(parent.GetParent()         ==  0x00u);      \
+    TRY(parent.GetNext()           ==  0x00u);      \
+    TRY(parent.GetPrevious()       ==  0x00u);      \
+    TRY(parent.NumberOfChildren()   ==  0x03u);     \
+    TRY(kid0.GetParent()           ==  &parent);    \
+    TRY(kid0.GetNext()             ==  &kid1);      \
+    TRY(kid0.GetPrevious()         ==  0x00u);      \
+    TRY(kid0.NumberOfChildren()     ==  0x00u);     \
+    TRY(kid0[0]                 ==  0x00u);         \
+    TRY(kid1.GetParent()           ==  &parent);    \
+    TRY(kid1.GetNext()             ==  &kid2);      \
+    TRY(kid1.GetPrevious()         ==  &kid0);      \
+    TRY(kid1.NumberOfChildren()     ==  0x00u);     \
+    TRY(kid1[0]                 ==  0x00u);         \
+    TRY(kid2.GetParent()           ==  &parent);    \
+    TRY(kid2.GetNext()             ==  0x00u);      \
+    TRY(kid2.GetPrevious()         ==  &kid1);      \
+    TRY(kid2.NumberOfChildren()     ==  0x00u);     \
+    TRY(kid2[0]                 ==  0x00u);       } \
+    TRY(true)
+
 namespace SIN {
     namespace Tests {
         namespace AST {
@@ -133,6 +181,28 @@ namespace SIN {
                 AndASTNode and_;
             )
 
+            SINTESTSAST_TESTDEF(AllNodes,
+                SINTESTSAST_TREENODE_SUPERTEST(TreeNode);
+                SINTESTSAST_TREENODE_SUPERTEST(NumberASTNode);
+                SINTESTSAST_TREENODE_SUPERTEST(StringASTNode);
+                SINTESTSAST_TREENODE_SUPERTEST(NilASTNode);
+                SINTESTSAST_TREENODE_SUPERTEST(TrueASTNode);
+                SINTESTSAST_TREENODE_SUPERTEST(FalseASTNode);
+                SINTESTSAST_TREENODE_SUPERTEST(AddASTNode);
+                SINTESTSAST_TREENODE_SUPERTEST(SubASTNode);
+                SINTESTSAST_TREENODE_SUPERTEST(MulASTNode);
+                SINTESTSAST_TREENODE_SUPERTEST(DivASTNode);
+                SINTESTSAST_TREENODE_SUPERTEST(ModASTNode);
+                SINTESTSAST_TREENODE_SUPERTEST(LtASTNode );
+                SINTESTSAST_TREENODE_SUPERTEST(GtASTNode );
+                SINTESTSAST_TREENODE_SUPERTEST(LeASTNode );
+                SINTESTSAST_TREENODE_SUPERTEST(GeASTNode );
+                SINTESTSAST_TREENODE_SUPERTEST(EqASTNode );
+                SINTESTSAST_TREENODE_SUPERTEST(NeASTNode );
+                SINTESTSAST_TREENODE_SUPERTEST(OrASTNode );
+                SINTESTSAST_TREENODE_SUPERTEST(AndASTNode);
+            )
+
             void test(void) {
                 SINTESTSAST_TESTRUN(TreeNode01);
                 SINTESTSAST_TESTRUN(TreeNode02);
@@ -140,6 +210,7 @@ namespace SIN {
                 SINTESTSAST_TESTRUN(ValueHolder);
                 SINTESTSAST_TESTRUN(ConstNodes);
                 SINTESTSAST_TESTRUN(OpNodes);
+                SINTESTSAST_TESTRUN(AllNodes);
             }
         }
     }
