@@ -11,6 +11,19 @@ namespace SIN {
 
     class ASTVisitor;	//forward declaration
 
+
+	#define SINASTNODE_OPNODE_DECL(NAME, OPNAME)            \
+    class NAME##ASTNode : public OpASTNode<OP_##OPNAME> {   \
+    public:                                                 \
+        NAME##ASTNode(void);                                \
+        ~NAME##ASTNode(void);                               \
+        void Accept(ASTVisitor *);                          \
+    }
+
+
+
+	//-----------------------------------------------------------------------
+
 	template <enum ConstNodeType _ValueType, typename _ValueT>
 	class ValueHolder {
 	public:
@@ -39,7 +52,7 @@ namespace SIN {
 
 
 
-	///--------------------------------------------
+	//-----------------------------------------------------------------------
 	class ASTNode : public TreeNode {
 	public :
 		
@@ -50,7 +63,10 @@ namespace SIN {
 		virtual void Accept(ASTVisitor *) = 0;
 	};
 
-	///--------------------------------------------
+
+
+	//-----------------------------------------------------------------------	
+	
 	template <enum ConstNodeType _ValueType, typename _ValueT>
 	class ConstASTNode : public ASTNode, public ValueHolder<_ValueType, _ValueT> {
 	public :
@@ -59,23 +75,39 @@ namespace SIN {
         virtual void Accept(ASTVisitor *) = 0;
 	};
 
+
+
+	//-----------------------------------------------------------------------
+
     class NumberASTNode : public ConstASTNode<CONST_NUMBER, Number_t> {
     public:
         NumberASTNode(Number_t const &_value);
         virtual void Accept(ASTVisitor *);
     }; // class NumberASTNode
 
-    class StringASTNode : public ConstASTNode<CONST_STRING, String_t> {
+
+
+	//-----------------------------------------------------------------------
+    
+	class StringASTNode : public ConstASTNode<CONST_STRING, String_t> {
     public:
         StringASTNode(String_t const &_value);
         virtual void Accept(ASTVisitor *);
     }; // class StringASTNode
 
-    class NilASTNode : public ConstASTNode<CONST_NIL, Nil_t> {
+
+
+	//-----------------------------------------------------------------------
+    
+	class NilASTNode : public ConstASTNode<CONST_NIL, Nil_t> {
     public:
         NilASTNode(void);
         virtual void Accept(ASTVisitor *);
     }; // class NilASTNode
+
+
+
+	//-----------------------------------------------------------------------
 
     class TrueASTNode : public ConstASTNode<CONST_TRUE, Boolean_t> {
     public:
@@ -83,28 +115,26 @@ namespace SIN {
         virtual void Accept(ASTVisitor *);
     }; // class TrueASTNode
 
+
+
+	//-----------------------------------------------------------------------
     class FalseASTNode : public ConstASTNode<CONST_FALSE, Boolean_t> {
     public:
         FalseASTNode(void);
         virtual void Accept(ASTVisitor *);
     }; // class FalseASTNode
 
+
     
-	///--------------------------------------------
-    template <enum SIN::OpValueType>
+	//-----------------------------------------------------------------------
+    
+	template <enum SIN::OpValueType>
     class OpASTNode : public ASTNode {
     public:
         OpASTNode(void): ASTNode() { }
         virtual ~OpASTNode(void) { }
         virtual void Accept(ASTVisitor *) = 0;
     };
-#define SINASTNODE_OPNODE_DECL(NAME, OPNAME)                \
-    class NAME##ASTNode : public OpASTNode<OP_##OPNAME> {   \
-    public:                                                 \
-        NAME##ASTNode(void);                                \
-        ~NAME##ASTNode(void);                               \
-        void Accept(ASTVisitor *);                          \
-    }
     SINASTNODE_OPNODE_DECL(Add,ADD);
     SINASTNODE_OPNODE_DECL(Sub,SUB);
     SINASTNODE_OPNODE_DECL(Mul,MUL);

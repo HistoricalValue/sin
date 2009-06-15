@@ -1,12 +1,19 @@
 #include "SINASTNode.h"
 #include "SINASTVisitor.h"
 
+
+//-------------------------------------------------------------------------------------------------
+
 #define SINASTNODE_DEFAULT_CONSTNODE_DEFS(NAME, TYPE, VALTYPE)                              \
     NAME##ASTNode::NAME##ASTNode(VALTYPE const &_val): ConstASTNode<TYPE, VALTYPE>(_val) {  \
     }                                                                                       \
     void NAME##ASTNode::Accept(ASTVisitor *_visitor_p) {                                    \
         static_cast<ASTVisitor &>(*_visitor_p).Visit(*this);                                \
     }
+
+
+
+//-------------------------------------------------------------------------------------------------	
 
 #define SINASTNODE_DEFAULT_VALUELESS_CONSTNODE_DEFS(NAME, TYPE, VALTYPE, VALUE)             \
     NAME##ASTNode::NAME##ASTNode(void): ConstASTNode<TYPE, VALTYPE>(VALUE) {                \
@@ -15,6 +22,10 @@
         static_cast<ASTVisitor &>(*_visitor_p).Visit(*this);                                \
     }
 
+
+
+//-------------------------------------------------------------------------------------------------
+
 #define SINASTNODE_DEFAULT_OPNODE_DEFS(OPNAME, OPTYPE)          \
     OPNAME##ASTNode::OPNAME##ASTNode(void):                     \
         OpASTNode()                                             \
@@ -22,17 +33,22 @@
     }                                                           \
     OPNAME##ASTNode::~OPNAME##ASTNode(void) {                   \
     }                                                           \
-    void OPNAME##ASTNode::Accept(ASTVisitor *_visitor_p) {           \
+    void OPNAME##ASTNode::Accept(ASTVisitor *_visitor_p) {      \
         static_cast<ASTVisitor &>(*_visitor_p).Visit(*this);    \
     }
 
+
+
 namespace SIN {
-    ///--------- ConstNodes ---------
+
+	
+	///--------- ConstNodes ---------
     SINASTNODE_DEFAULT_CONSTNODE_DEFS(           Number, CONST_NUMBER, Number_t         );
     SINASTNODE_DEFAULT_CONSTNODE_DEFS(           String, CONST_STRING, String_t         );
     SINASTNODE_DEFAULT_VALUELESS_CONSTNODE_DEFS( Nil   , CONST_NIL   , Nil_t    , NIL   );
     SINASTNODE_DEFAULT_VALUELESS_CONSTNODE_DEFS( True  , CONST_TRUE  , Boolean_t, TRUE  );
     SINASTNODE_DEFAULT_VALUELESS_CONSTNODE_DEFS( False , CONST_FALSE , Boolean_t, FALSE );
+
 
 
     ///--------- OpNodes -----------
