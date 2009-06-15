@@ -41,7 +41,7 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="0"
-				AdditionalIncludeDirectories="..\..\..\..\SINAST\Include;..\..\..\..\Common\Include;..\..\..\..\SINCommon\Include"
+				AdditionalIncludeDirectories="..\..\..\SINTest\Include;..\..\..\..\SINAST\Include;..\..\..\..\Common\Include;..\..\..\..\SINCommon\Include"
 				PreprocessorDefinitions="WIN32;_DEBUG;_LIB"
 				MinimalRebuild="true"
 				BasicRuntimeChecks="3"
