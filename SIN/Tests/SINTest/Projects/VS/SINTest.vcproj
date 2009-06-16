@@ -21,6 +21,7 @@
 			OutputDirectory="$(SolutionDir)$(ConfigurationName)"
 			IntermediateDirectory="$(ConfigurationName)"
 			ConfigurationType="4"
+			InheritedPropertySheets="..\..\..\..\Scripts\VS\test_debug.vsprops"
 			CharacterSet="1"
 			>
 			<Tool
@@ -83,6 +84,7 @@
 			OutputDirectory="$(SolutionDir)$(ConfigurationName)"
 			IntermediateDirectory="$(ConfigurationName)"
 			ConfigurationType="4"
+			InheritedPropertySheets="..\..\..\..\Scripts\VS\test_release.vsprops"
 			CharacterSet="1"
 			WholeProgramOptimization="1"
 			>

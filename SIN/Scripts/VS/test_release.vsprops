@@ -1,0 +1,12 @@
+<?xml version="1.0"?>
+<VisualStudioPropertySheet 
+	ProjectType="Visual C++" 
+	Version="8.00" 
+	Name="test_release"
+	>
+	<Tool
+		Name="VCCLCompilerTool"
+		AdditionalIncludeDirectories=".\..\..\Include;.\..\..\..\..\Common\Include;.\..\..\..\..\SINAST;.\..\..\..\..\SINCommon\Include;.\..\..\..\..\SINParser\Include"
+	/>
+
+</VisualStudioPropertySheet>

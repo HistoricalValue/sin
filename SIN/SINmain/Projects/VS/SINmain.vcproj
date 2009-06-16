@@ -21,6 +21,7 @@
 			OutputDirectory="$(SolutionDir)$(ConfigurationName)"
 			IntermediateDirectory="$(ConfigurationName)"
 			ConfigurationType="1"
+			InheritedPropertySheets="..\..\..\Scripts\VS\common_debug.vsprops"
 			CharacterSet="1"
 			>
 			<Tool
@@ -41,7 +42,7 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="0"
-				AdditionalIncludeDirectories=".\..\..\Include;.\..\..\..\SINParser\Include;.\..\..\..\SINAST\Include;.\..\..\..\Common\Include;.\..\..\..\Tests\SINAST\Include"
+				AdditionalIncludeDirectories="&quot;.\..\..\..\Tests\SINAST\Include&quot;;"
 				PreprocessorDefinitions="WIN32;_DEBUG;_CONSOLE"
 				MinimalRebuild="true"
 				BasicRuntimeChecks="3"
@@ -96,6 +97,7 @@
 			OutputDirectory="$(SolutionDir)$(ConfigurationName)"
 			IntermediateDirectory="$(ConfigurationName)"
 			ConfigurationType="1"
+			InheritedPropertySheets="..\..\..\Scripts\VS\common_release.vsprops"
 			CharacterSet="1"
 			WholeProgramOptimization="1"
 			>

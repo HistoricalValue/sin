@@ -21,6 +21,7 @@
 			OutputDirectory="$(SolutionDir)$(ConfigurationName)"
 			IntermediateDirectory="$(ConfigurationName)"
 			ConfigurationType="4"
+			InheritedPropertySheets="..\..\..\Scripts\VS\common_debug.vsprops"
 			CharacterSet="1"
 			>
 			<Tool
@@ -42,7 +43,7 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="0"
-				AdditionalIncludeDirectories="..\..\Include"
+				AdditionalIncludeDirectories=""
 				PreprocessorDefinitions="WIN32;_DEBUG;_LIB;YY_NO_UNISTD_H;YY_NEVER_INTERACTIVE;_CRT_SECURE_NO_WARNINGS."
 				MinimalRebuild="true"
 				BasicRuntimeChecks="3"
@@ -84,6 +85,7 @@
 			OutputDirectory="$(SolutionDir)$(ConfigurationName)"
 			IntermediateDirectory="$(ConfigurationName)"
 			ConfigurationType="4"
+			InheritedPropertySheets="..\..\..\Scripts\VS\common_release.vsprops"
 			CharacterSet="1"
 			WholeProgramOptimization="1"
 			>
