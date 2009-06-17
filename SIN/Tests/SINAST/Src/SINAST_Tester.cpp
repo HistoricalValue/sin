@@ -79,7 +79,7 @@ namespace SIN {
 
             SINTESTSAST_TESTDEF(TreeNode,
                 SINTESTSAST_TREENODE_SUPERTEST(TreeNode);
-            );
+            )
 
             typedef ValueHolder<CONST_NUMBER, int> ValueHolderNum;
             SINTESTSAST_TESTDEF(ValueHolder, 
