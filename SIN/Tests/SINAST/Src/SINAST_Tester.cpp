@@ -77,64 +77,9 @@ namespace SIN {
         namespace AST {
             static std::ostream &Out = std::cout;
 
-            SINTESTSAST_TESTDEF(TreeNode01,
-                // round 1
-                TRY(TreeNode().GetParent() == 0x00);
-            )
-            SINTESTSAST_TESTDEF(TreeNode02,
-                // round 2
-                SIN::TreeNode parent;
-                SIN::TreeNode kid0;
-                SIN::TreeNode kid1;
-                SIN::TreeNode kid2;
-                TRY(parent.GetParent()         ==  0x00u);
-                TRY(parent.GetNext()           ==  0x00u);
-                TRY(parent.GetPrevious()       ==  0x00u);
-                TRY(parent.NumberOfChildren()   ==  0x00u);
-                TRY(kid0.GetParent()           ==  0x00u);
-                TRY(kid0.GetNext()             ==  0x00u);
-                TRY(kid0.GetPrevious()         ==  0x00u);
-                TRY(kid0.NumberOfChildren()     ==  0x00u);
-                TRY(kid1.GetParent()           ==  0x00u);
-                TRY(kid1.GetNext()             ==  0x00u);
-                TRY(kid1.GetPrevious()         ==  0x00u);
-                TRY(kid1.NumberOfChildren()     ==  0x00u);
-                TRY(kid2.GetParent()           ==  0x00u);
-                TRY(kid2.GetNext()             ==  0x00u);
-                TRY(kid2.GetPrevious()         ==  0x00u);
-                TRY(kid2.NumberOfChildren()     ==  0x00u);
-            )
-            SINTESTSAST_TESTDEF(TreeNode03,
-                // round 3
-                SIN::TreeNode parent;
-                SIN::TreeNode kid0;
-                SIN::TreeNode kid1;
-                SIN::TreeNode kid2;
-                parent << &kid0 << &kid1 << &kid2;
-                TRY(parent[0]               ==  &kid0);
-                TRY(parent[1]               ==  &kid1);
-                TRY(parent[2]               ==  &kid2);
-                TRY(parent[666]             ==  0x00u);
-                TRY(parent.GetParent()         ==  0x00u);
-                TRY(parent.GetNext()           ==  0x00u);
-                TRY(parent.GetPrevious()       ==  0x00u);
-                TRY(parent.NumberOfChildren()   ==  0x03u);
-                TRY(kid0.GetParent()           ==  &parent);
-                TRY(kid0.GetNext()             ==  &kid1);
-                TRY(kid0.GetPrevious()         ==  0x00u);
-                TRY(kid0.NumberOfChildren()     ==  0x00u);
-                TRY(kid0[0]                 ==  0x00u);
-                TRY(kid1.GetParent()           ==  &parent);
-                TRY(kid1.GetNext()             ==  &kid2);
-                TRY(kid1.GetPrevious()         ==  &kid0);
-                TRY(kid1.NumberOfChildren()     ==  0x00u);
-                TRY(kid1[0]                 ==  0x00u);
-                TRY(kid2.GetParent()           ==  &parent);
-                TRY(kid2.GetNext()             ==  0x00u);
-                TRY(kid2.GetPrevious()         ==  &kid1);
-                TRY(kid2.NumberOfChildren()     ==  0x00u);
-                TRY(kid2[0]                 ==  0x00u);
-            )
+            SINTESTSAST_TESTDEF(TreeNode,
+                SINTESTSAST_TREENODE_SUPERTEST(TreeNode);
+            );
 
             typedef ValueHolder<CONST_NUMBER, int> ValueHolderNum;
             SINTESTSAST_TESTDEF(ValueHolder, 
@@ -144,7 +89,7 @@ namespace SIN {
                 TRY(vh.GetValueStr() == "23");
                 vh.SetValue(12);
                 TRY(vh.GetValue() == 12);
-//                TRY(vh == 12);
+                //TRY(vh == 12);
                 TRY(vh.GetValueStr() == "12");
             )
 
@@ -204,9 +149,7 @@ namespace SIN {
             )
 
             void test(void) {
-                SINTESTSAST_TESTRUN(TreeNode01);
-                SINTESTSAST_TESTRUN(TreeNode02);
-                SINTESTSAST_TESTRUN(TreeNode03);
+                SINTESTSAST_TESTRUN(TreeNode);
                 SINTESTSAST_TESTRUN(ValueHolder);
                 SINTESTSAST_TESTRUN(ConstNodes);
                 SINTESTSAST_TESTRUN(OpNodes);

@@ -3,12 +3,12 @@
 
 #include <string>
 
-/** method-assert: must be run from inside a method of a Test */
-#define ASSERT(COND) do{register bool cond=(COND); Assert(cond, #COND, __FILE__, __LINE__);}while(false)
 /** method-fail: must be run from inside a method of a Test */
-#define FAIL(MSG,COND) SetFailureFile(__FILE__); SetFailureLine(__LINE__); Fail(MSG, #COND);
+#define FAIL(MSG,COND) Fail(MSG, #COND, __FILE__, __LINE__)
 /** method-try: must be run from inside a method of a Test */
-#define TRY(COND) do{register bool cond=(COND); if (!cond) { FAIL("Condition failed",COND); }}while(false)
+#define TRY(COND) do{ register bool cond=(COND); if (!cond) FAIL("Condition failed",COND); } while(false)
+/** method-assert: must be run from inside a method of a Test */
+#define ASSERT(COND) do{ register bool cond=(COND); if (!cond) FAIL("Assertion failed",COND); } while(false)
 
 /** Simple test-definition: declares and defines a Test class which only implements TestLogic() */
 #define TESTFOR(NAME, TESTCODE)                     \
@@ -37,13 +37,9 @@ namespace SIN {
             Test(std::string const &test_name = nextTestName());
             virtual ~Test(void);
 
-            void Assert(
-                bool cond,
-                std::string const &cond_str,
-                std::string const &file,
-                unsigned int line);
             void Run(void);
-            void Fail(std::string const &message = "", std::string const &condition = "");
+            void Fail(std::string const &message = "", std::string const &condition = "",
+                std::string const &_file = "", unsigned long int _line = 0x00ul);
 
             /** returns true if the test is successful (false if there are failures) */
             bool Status(void) const;

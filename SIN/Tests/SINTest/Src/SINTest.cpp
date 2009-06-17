@@ -22,22 +22,6 @@ namespace SIN {
         Test::~Test(void) {
         }
 
-        void Test::Assert(
-            bool cond,
-            std::string const &cond_str,
-            std::string const &file,
-            unsigned int line
-        ) {
-            if (!cond) {
-                successful = false;
-                failure_message = "Assertion failed";
-                failed_condition = cond_str;
-                failure_file = file;
-                failure_line = line;
-                throw this;
-            }
-        }
-
         void Test::Run(void) {
             try {
                 TestLogic();
@@ -45,10 +29,11 @@ namespace SIN {
             }
         }
 
-        void Test::Fail(std::string const &message, std::string const &condition) {
-            successful = false;
-            failure_message = message;
-            failed_condition = condition;
+        void Test::Fail(std::string const &message, std::string const &condition,
+            std::string const &_file, unsigned long int _line
+        ) {
+            SetFailureFile(_file), SetFailureLine(_line), successful = false, failure_message = message,
+                failed_condition = condition;
             throw this;
         }
 
