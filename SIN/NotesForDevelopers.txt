@@ -49,11 +49,11 @@
   - SIN::LOgging::RecordPrinter (#include "SINRecordPrinter.h" / project SINLogging)
 * To acquire a logger for your class or module you can do this:
         =================================================================
-        SIN::Logger &logger = SIN::LoggerManager::GetLogger("Some::Classs::Somewhere");
+        SIN::Logger &logger = SIN::LoggerManager::SingletonGetInstance()->GetLogger("Some::Classs::Somewhere");
         =================================================================
   - You should not call this code in global/static scope, though. If you need your
     logger to be globally visible in a module, you can use the InstanceProxy<T>
-    utility, found in "Common.h" / project Common.
+    utility, found in "Common.h" / project Common (or a simple pointer).
 * To write to a logger use one of the logger.something(message_str) methods (other than
   logger.Message()) to log a message with the appropriate severity indication.
 * Loggers aquired through LoggerManager.GetLogger are made using the default LoggerManager::DefaultLoggerFactory,
@@ -72,3 +72,4 @@
 
 ====== Writing tests ======
 * Look at SIN::Test and the existing Testers
+
