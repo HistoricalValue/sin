@@ -1,3 +1,4 @@
+
 /*
  * University of Crete, Greece
  * HY - 340: Languages and Compilers
@@ -19,46 +20,231 @@
 	extern int yylineno;
 	extern char* yytext;
 	extern FILE* yyin;
+
 %}
+
+
 
 %start program
 
-%token ID INTEGER
+/*Token types*/
+%union {
+    char *stringValue;
+    double realValue;
+};
+ 
+%token IF ELSE WHILE FOR FUNCTION RETURN BREAK CONTINUE LOCAL GLOBAL TRUE FALSE NIL
+%token ASSIGN ADD MIN MUL DIV MOD EQ NOTEQ INCR DECR GT LT GE LE AND OR NOT
+%token '[' ']' '{' '}' '(' ')' ';' ':' '.' ',' DOUBLEDOT
+%token <realV>   NUMBER
+%token <stringV> ID STRING
 
-%right      '='
-%left       ','
-%left	    '+' '-'
-%left	    '*' '/'
-%nonassoc	UMINUS
-%left       '(' ')'
+%left		ASSIGN
+%left		OR
+%left		AND
+%nonassoc	EQ NOTEQ
+%nonassoc	GT GE LT LE
+%left		ADD MIN
+%left		MUL DIV MOD
+%right		NOT INCR DECR UMINUS
+%left		'.'
+%left		'[' ']'
+%left		'{' '}'
+%left		'(' ')'
 
 %%
 
-program: 		assignments expressions
-				| /* empty */
-				;
- 
-expression:		INTEGER
-				| ID
-				| expression '+' expression
-				| expression '-' expression
-				| expression '*' expression
-				| expression '/' expression
-				| '(' expression ')'
-				| '-' expression %prec UMINUS
+program:		stmts {}
 				;
 
-expr:			expression '\n'
 
-expressions: 	expressions expr
-				| expr
+
+stmts:			stmt stmts
+				|
 				;
 
-assignment: 	ID '=' expression '\n'
+
+
+stmt:			expr ';'			{}
+				|	ifstmt			{}
+				|	whilestmt		{}
+				|	forstmt			{}			
+				|	returnstmt		{}
+				|	BREAK ';'		{}
+				|	CONTINUE ';'	{}
+				|	block			{}
+				|	funcdef			{}
+				|	';'				{}
+				|	error  			{}
+				;
+
+
+
+expr:			assignexpr 					{}
+				|	expr	ADD		expr	{}
+				|	expr	MIN		expr	{}
+				|	expr	MUL		expr	{}
+				|	expr	DIV		expr	{}
+				|	expr	MOD		expr	{}
+				|	expr	GT		expr	{}
+				|	expr	GE		expr	{}
+				|	expr	LT		expr	{}
+				|	expr	LE		expr	{}
+				|	expr	EQ		expr	{}
+				|	expr	NOTEQ	expr	{}
+				|	expr	AND		expr	{}
+				|	expr	OR		expr	{}
+				|	expr	NOT		expr	{}
+				|	term					{}
+				;
+
+
+
+term:			'(' expr ')'{}
+				|	MIN		expr %prec UMINUS	{}	
+				|	NOT		expr				{}
+				|	INCR	lvalue				{}
+				|	lvalue	INCR				{}
+				|	DECR	lvalue				{}
+				|	lvalue	DECR				{}
+				|	primary						{}
+				;
+
+
+
+assignexpr:		lvalue ASSIGN expr				{}
+				;
+
+
+
+primary:		lvalue							{}
+				|	call						{}
+				|	objectdef					{}
+				|	'(' funcdef ')'				{}
+				|	const
+				;
+
+
+
+lvalue:			ID 								{}
+				|	LOCAL ID					{}
+				|	GLOBAL ID					{}
+				|	member						{}
+				;
+
+
+    
+member:			lvalue '.' ID					{}
+				|	lvalue	'[' expr ']'		{}
+				|	call	'.' ID				{}
+				|	call	'[' expr ']'		{}
+				;
+
+
+
+	
+call:			call callsuffix						{}
+				|	lvalue callsuffix				{}
+				|	'(' funcdef ')' '(' elist ')'	{}
+				;
+
+
+
+callsuffix:		normalcall							{}
+				|	methodcall						{}
+				;
+
+
+
+normalcall:		'(' elist ')'						{}
 				;
 				
-assignments: 	assignments assignment
-				| /* empty */
+				
+				
+methodcall:		DOUBLEDOT ID '(' elist ')'			{/*equivalent to lvalue.id(lvalue, elist)*/}	
+				;
+
+
+
+elist:			expr elists							{}
+				| 									{}
+				;
+
+
+
+elists:			',' expr elists						{}
+				|									{}
+				;
+
+
+
+objectdef:		'[' ']'
+				|	'[' objectlist ']'
+				;
+			
+			
+			
+objectlist:	 	expr objectlists
+				|	expr ':' expr objectlists
+				;
+
+
+
+objectlists:	',' expr objectlists
+				|	',' expr ':' expr objectlists
+				|
+				;
+
+
+
+block:			'{' {} stmtd '}' 
+				;
+
+
+
+stmtd:			stmt stmtd	{}
+				|			{}
+				;
+
+
+
+funcdef:		FUNCTION ID	'(' idlist ')' block 
+				|	FUNCTION '(' idlist ')' block 
+				;
+
+
+const:			NUMBER 				{}
+				|	STRING 			{}
+				|	NIL 			{}
+				|	TRUE 			{}
+				|	FALSE			{}
+				;
+
+
+idlist:			ID idlists			{}
+				|	/*empty*/		{}
+				;
+
+
+
+idlists:		',' ID idlists	    {}
+				|	    {}
+				;
+
+
+
+ifstmt:			IF '(' expr	')' stmt {}
+				|	IF '(' expr ')' stmt ELSE stmt 
+				;
+
+whilestmt:		WHILE '(' expr ')' stmt {}
+				;
+
+forstmt:		FOR '(' elist ';' expr ';' elist ')' stmt
+				;
+
+returnstmt:		RETURN ';' {}
+				|	RETURN expr ';' {}
 				;
 
 %%
@@ -84,23 +270,3 @@ int PrepareForString(const char * str) {
 	//yy_scan_string(const char * str);
 	return 0;
 }
-
-
-
-//**********************************************************************
-/*
-int main(int argc, char** argv)
-{
-	if (argc > 1) {
-		if (!(yyin = fopen(argv[1], "r"))) {
-				fprintf(stderr, "Cannot read file: %s\n", argv[1]);
-				return 1;
-		}
-	}
-	else
-		yyin = stdin;
-
-	yyparse();
-	return 0;
-}
-*/
