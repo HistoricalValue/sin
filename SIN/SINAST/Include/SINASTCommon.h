@@ -39,7 +39,7 @@ namespace SIN {
 
 	//typedef LeafASTNode<5, ConstNodeType::LEAF_FUNCTION, void>			FunctionASTNode;
 	//typedef LeafASTNode<6, ConstNodeType::LEAF_RETURN, void>			ReturnASTNode;
-	//typedef LeafASTNode<7, ConstNodeType::LEAF_ID, std::string>			IdASTNode;
+	//typedef LeafASTNode<7, ConstNodeType::LEAF_ID, String>			IdASTNode;
 	
 
 	//

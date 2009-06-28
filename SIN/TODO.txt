@@ -1,0 +1,2 @@
+* SIN::Tests::Test::nextTestName() : fix static member initialisation
+* Add default severity in LoggingManager

@@ -1,22 +1,19 @@
 #include "SINTest.h"
 #include <cstring>
 #include <cstdio>
-
-#define SINTESTS_DEFAULT_TEST_NAME_BASE "SIN::Tests::Test#"
-#define ULONG_MAX_STR "4294967295"
+#include "SINNamer.h"
 
 namespace SIN {
     namespace Tests {
-        unsigned long int Test::test_counter = 0x00ul;
-        const char *Test::nextTestName(void) {
-            static char next_name[] = SINTESTS_DEFAULT_TEST_NAME_BASE ULONG_MAX_STR;
-            static const size_t base_offset = strlen(SINTESTS_DEFAULT_TEST_NAME_BASE);
-            static const size_t max_num_len = strlen(ULONG_MAX_STR);
-            sprintf(next_name + base_offset, "%0*lu", max_num_len, test_counter++);
-            return next_name;
+        const char *Test::nextTestName(void) { // TODO fix static initialisation
+            static Namer *namer = new Namer("Test:");
+            return namer->Next();
         }
 
-        Test::Test(std::string const &_name): name(_name) {
+        Test::Test(String const &_name): name(_name), successful(true), 
+        failure_message("No failure"), failed_condition("false"),
+        failure_file("/dev/null"), failure_line(-1)
+        {
         }
 
         Test::~Test(void) {
@@ -25,12 +22,12 @@ namespace SIN {
         void Test::Run(void) {
             try {
                 TestLogic();
-            } catch(Test *) {
+            } catch(Test const *) {
             }
         }
 
-        void Test::Fail(std::string const &message, std::string const &condition,
-            std::string const &_file, unsigned long int _line
+        void Test::Fail(String const &message, String const &condition,
+            String const &_file, unsigned long int _line
         ) {
             SetFailureFile(_file), SetFailureLine(_line), successful = false, failure_message = message,
                 failed_condition = condition;
@@ -42,23 +39,23 @@ namespace SIN {
             return successful;
         }
 
-        std::string const &Test::Name(void) const {
+        String const &Test::Name(void) const {
             return name;
         }
 
-        std::string const &Test::FailureMessage(void) const {
+        String const &Test::FailureMessage(void) const {
             return failure_message;
         }
 
-        std::string const &Test::FailedCondition(void) const {
+        String const &Test::FailedCondition(void) const {
             return failed_condition;
         }
 
-        std::string const &Test::GetFailureFile(void) const {
+        String const &Test::GetFailureFile(void) const {
             return failure_file;
         }
 
-        void Test::SetFailureFile(std::string const &_failure_file) {
+        void Test::SetFailureFile(String const &_failure_file) {
             failure_file = _failure_file;
         }
 

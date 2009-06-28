@@ -1,12 +1,12 @@
-<?xml version="1.0"?>
-<VisualStudioPropertySheet 
-	ProjectType="Visual C++" 
-	Version="8.00" 
+<?xml version="1.0" encoding="windows-1253"?>
+<VisualStudioPropertySheet
+	ProjectType="Visual C++"
+	Version="8.00"
 	Name="test_release"
 	>
 	<Tool
 		Name="VCCLCompilerTool"
-		AdditionalIncludeDirectories=".\..\..\Include;.\..\..\..\..\Common\Include;.\..\..\..\..\SINAST;.\..\..\..\..\SINCommon\Include;.\..\..\..\..\SINParser\Include"
+		AdditionalIncludeDirectories=".\..\..\..\SINTest\Include;.\..\..\Include;.\..\..\..\..\Common\Include;.\..\..\..\..\SINAST;.\..\..\..\..\SINCommon\Include;.\..\..\..\..\SINParser\Include;.\..\..\..\..\SINLogging\Include"
+		PreprocessorDefinitions="_CRT_SECURE_NO_WARNINGS"
 	/>
-
 </VisualStudioPropertySheet>

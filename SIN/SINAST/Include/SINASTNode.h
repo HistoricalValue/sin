@@ -3,9 +3,10 @@
 
 #include <string>
 #include "Common.h"
-#include "SINCommon.h"
+#include "SINTypes.h"
 #include "SINASTCommon.h"
 #include "SINTreeNode.h"
+#include "SINString.h"
 
 namespace SIN {
 
@@ -43,7 +44,7 @@ namespace SIN {
         void operator =(const Value &_value) { SetValue(_value); }
 
 		const Value &GetValue(void) const { return value; }
-		const std::string GetValueStr (void) const { return string_cast(value); }
+		const String GetValueStr (void) const { return string_cast(value); }
 
 	private:
 		Value value;

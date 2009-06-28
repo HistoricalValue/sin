@@ -1,28 +1,19 @@
 #include "SINASTNode.h"
 #include <iostream>
 #include <cassert>
-#include "SINCommon.h"
+#include "SINConstants.h"
 #include "SINASTCommon.h"
 #include "SINTest.h"
 #include "SINTreeNode.h"
+#include "SINOutputStream.h"
+#include "SINTestingCommon.h"
+#include "SINLogger.h"
+#include "SINLoggerManager.h"
+#include "Common.h"
 
-#define SINTESTSAST_RUN(NAME)                                                                       \
-    NAME##Test __test_##NAME;                                                                       \
-    __test_##NAME.Run();                                                                            \
-    Out << __test_##NAME.Name() << ":  ";                                                           \
-    if (__test_##NAME.Status())                                                                     \
-        Out << "ok";                                                                                \
-    else                                                                                            \
-        Out << "FAIL'D:" <<                                                                         \
-        __test_##NAME.GetFailureFile() << ':' << __test_##NAME.GetFailureLine() <<                  \
-        ": " << __test_##NAME.FailureMessage() << " [" << __test_##NAME.FailedCondition()           \
-        << "]"; \
-    Out << std::endl;
-
-#define SINTESTSAST_TESTDEF(NAME,TESTCODE) \
-    static void test_##NAME(void) { TESTFOR(NAME, TESTCODE); SINTESTSAST_RUN(NAME); }
-#define SINTESTSAST_TESTRUN(NAME)   \
-    test_##NAME();
+#define SINTESTSAST_RUN(NAME)               SINTESTS_RUNTEST(NAME)
+#define SINTESTSAST_TESTDEF(NAME,TESTCODE)  SINTESTS_TESTDEF(NAME,TESTCODE)
+#define SINTESTSAST_TESTRUN(NAME)           SINTESTS_CALLTEST(NAME)
 
 #define SINTESTSAST_TREENODE_SUPERTEST(CLASSNAME) { \
     TRY(CLASSNAME().GetParent() == 0x00);           \
@@ -75,7 +66,7 @@
 namespace SIN {
     namespace Tests {
         namespace AST {
-            static std::ostream &Out = std::cout;
+            static InstanceProxy<Logger> logger;
 
             SINTESTSAST_TESTDEF(TreeNode,
                 SINTESTSAST_TREENODE_SUPERTEST(TreeNode);
@@ -149,6 +140,7 @@ namespace SIN {
             )
 
             void test(void) {
+                logger = LoggerManager::SingletonGetInstance()->GetLogger("SIN::Tests::AST");
                 SINTESTSAST_TESTRUN(TreeNode);
                 SINTESTSAST_TESTRUN(ValueHolder);
                 SINTESTSAST_TESTRUN(ConstNodes);

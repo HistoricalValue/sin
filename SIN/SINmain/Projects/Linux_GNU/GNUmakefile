@@ -1,22 +1,11 @@
-LIBNAME = SINmain
-
-ifndef LIBNAME
-$(error Set LIBNAME in your GNUmakefile)
-endif
-
 SIN_BASE_DIR=../../../
 include $(SIN_BASE_DIR)/Linux_static_lib_base.mk
-
-sin: $(LIBS)
+export
+.PHONY:sin clean_all
+SUBPROJECT_RELATIVE_PATH_TO_SIN_BASE_DIR_RUBY_SHELL_ESCAPED_CODE='puts(Pathname('\''$(SIN_BASE_DIR)'\'').relative_path_from(Pathname('\''$(PROJ)/Projects/Linux_GNU/'\'')))'
+sin: 
+	$(foreach PROJ,$(PROJECTS),(cd '$(PROJ)'/Projects/Linux_GNU/ && printf 'include $$(SIN_BASE_DIR)/Linux_static_lib_base.mk\n' | $(MAKE) -f - SIN_BASE_DIR='$(shell ruby -r pathname -e $(SUBPROJECT_RELATIVE_PATH_TO_SIN_BASE_DIR_RUBY_SHELL_ESCAPED_CODE) )' linux_static_lib_all ) && ) true
 	$(CXX) $(CXXFLAGS) $(LDFLAGS) -o$@ 
 
-lib%Test.a:
-	cd $(SIN_BASE_DIR)/Tests/$*/Projects/Linux_GNU/ && $(MAKE) $@
-lib%.a:
-	cd $(SIN_BASE_DIR)/$*/Projects/Linux_GNU/ && $(MAKE) $@
-libSINTest.a:
-	cd $(SIN_BASE_DIR)/Tests/SINTest/Projects/Linux_GNU/ && $(MAKE) $@
-
-.PHONY:clean
 clean_all:
-	$(foreach PRJ,$(PROJECTS), pushd $(PRJ)/Projects/Linux_GNU/ && $(MAKE) clean && popd &&)  true 
+	$(foreach PROJ,$(PROJECTS),(cd '$(PROJ)'/Projects/Linux_GNU/ && printf 'include $$(SIN_BASE_DIR)/Linux_static_lib_base.mk\n' | $(MAKE) -f - SIN_BASE_DIR='$(shell ruby -r pathname -e $(SUBPROJECT_RELATIVE_PATH_TO_SIN_BASE_DIR_RUBY_SHELL_ESCAPED_CODE) )' linux_static_lib_clean ) && )  true 

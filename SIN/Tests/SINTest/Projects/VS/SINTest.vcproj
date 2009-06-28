@@ -165,6 +165,10 @@
 				RelativePath="..\..\Include\SINTest.h"
 				>
 			</File>
+			<File
+				RelativePath="..\..\Include\SINTestingCommon.h"
+				>
+			</File>
 		</Filter>
 		<Filter
 			Name="Resource Files"

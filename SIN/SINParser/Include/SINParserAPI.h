@@ -6,7 +6,7 @@
 #include <assert.h>
 #include <iostream>
 #include "SINParser.h"
-
+#include "SINString.h"
 
 namespace SIN {
 
@@ -15,7 +15,7 @@ namespace SIN {
 		ParserAPI(void);
 		~ParserAPI();
 
-		int ParseFile(const std::string &_fileName);
+		int ParseFile(const String &_fileName);
         int ParseText(const char *_input);
 	}; // class ParserAPI
 

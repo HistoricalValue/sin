@@ -152,7 +152,31 @@
 			UniqueIdentifier="{4FC737F1-C7A5-4376-A066-2A32D752A2FF}"
 			>
 			<File
+				RelativePath="..\..\Src\SIN.cpp"
+				>
+			</File>
+			<File
 				RelativePath="..\..\Src\SINCommon.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\Src\SINInputStream.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\Src\SINNamer.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\Src\SINOutputStream.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\Src\SINStream.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\Src\SINString.cpp"
 				>
 			</File>
 		</Filter>
@@ -162,7 +186,43 @@
 			UniqueIdentifier="{93995380-89BD-4b04-88EB-625FBE52EBFB}"
 			>
 			<File
-				RelativePath="..\..\Include\SINCommon.h"
+				RelativePath="..\..\Include\SIN.h"
+				>
+			</File>
+			<File
+				RelativePath="..\..\Include\SINAssert.h"
+				>
+			</File>
+			<File
+				RelativePath="..\..\Include\SINConstants.h"
+				>
+			</File>
+			<File
+				RelativePath="..\..\Include\SINFileOutputStream.h"
+				>
+			</File>
+			<File
+				RelativePath="..\..\Include\SINInputStream.h"
+				>
+			</File>
+			<File
+				RelativePath="..\..\Include\SINNamer.h"
+				>
+			</File>
+			<File
+				RelativePath="..\..\Include\SINOutputStream.h"
+				>
+			</File>
+			<File
+				RelativePath="..\..\Include\SINStream.h"
+				>
+			</File>
+			<File
+				RelativePath="..\..\Include\SINString.h"
+				>
+			</File>
+			<File
+				RelativePath="..\..\Include\SINTypes.h"
 				>
 			</File>
 		</Filter>

@@ -1,0 +1,74 @@
+===== Using strings and output streams ======
+* Instead of std::string we use SIN::String (#include "SINString.h" / project SINCommon)
+* To define a string conversion method for a type we declare "extern String const string_cast(OurType const &)".
+  Note that "string_cast" is a global function and not a member of anything.
+* String overloads operator << so that appending "__obj__" to a string equals appending the result
+  of "string_cast(__obj__)" to the string.
+  - So, inside a string_cast() definition one can easily write the same code that would write for
+    overloading operator << for the std::ostream. Exmple:
+        =================================================================
+        struct Lollipop { int length, duration; };
+        SIN::String const string_cast(Lollipop const &lolli) {
+            return String() << lolli.length << ', ' << lolli.duration;
+            // or
+            return string_cast(lolli.length) << ', ' << lolli.duration;
+        }
+        =================================================================
+* Overloading operator << for an output stream is something else (has different semantics).
+* SIN::String is pretty handy for on the fly string generation:
+        =================================================================
+        printf("%s\n", String("This is a lolli: ") << lolli.length << ', ' << lolli.duration);
+        =================================================================
+        
+====== Using STDOUT and output streams ======
+* std::cout is replaced by SIN::STDOUT (#include "SINConstants.h" / project SINCommon)
+* std::ostream is replaced by SIN::OutputStream (#include "SINOutputStream.h" / project SINCommon)
+* There is also a SIN::InputStream but has no use yet.
+* Overloading operator << for an OutputStream (as a global function) has the meaning of writing
+  data to a stream -- not necessarily textual data.
+  - Still you can write the same code you would for std::ostream:
+    =================================================================
+    OutputStream &operator <<(OutputStream &o, struct Lollipop const &lolli) {
+        return o << lolli.length << ', ' << lolli.duration;
+    }
+    =================================================================
+* STDOUT is not meant to be used directly. It's supposed to be used where an OutputStream instance
+  (or reference) would be required. To use it directly, cast it to an OutputStream reference.
+* You should never have to use STDOUT directly though (perhaps for quick and temporary debugging purposes only).
+* There is also another constant/global stream, VOIDOUT, which is used in the same way as STDOUT but it
+  does not write to anything.
+
+====== Using Loggers ======
+* Using Loggers is a good idea because we can turn them on and off as we wish,
+  without having to hunt printf's all over the place. They also make it easy to
+  redirect everything from STDOUT to logging files.
+* Logging related classes are:
+  - SIN::LoggerManager (#include "SINLoggerManager.h" / project SINLogging)
+  - SIN::Logger        (#include "SINLogger.h" / project SINLogging)
+  - SIN::Logging::Record (#include "SINRecord.h" / project SINLogging)
+  - SIN::LOgging::RecordPrinter (#include "SINRecordPrinter.h" / project SINLogging)
+* To acquire a logger for your class or module you can do this:
+        =================================================================
+        SIN::Logger &logger = SIN::LoggerManager::GetLogger("Some::Classs::Somewhere");
+        =================================================================
+  - You should not call this code in global/static scope, though. If you need your
+    logger to be globally visible in a module, you can use the InstanceProxy<T>
+    utility, found in "Common.h" / project Common.
+* To write to a logger use one of the logger.something(message_str) methods (other than
+  logger.Message()) to log a message with the appropriate severity indication.
+* Loggers aquired through LoggerManager.GetLogger are made using the default LoggerManager::DefaultLoggerFactory,
+  which simply create a logger that write to STDOUT.
+* You can subclass and create your own Logger and tell the LoggerManager to use that
+  instead, with LoggerManager.SetLogger(name, logger).
+* For convenience there are the LoggerManager.Make*Logger methods, which cover the most common Logger cases.
+* === To use a custom Logger ===
+  - Subclass Logger.
+  - Call SetLogger(name, logger).
+  - (it would be good if your logger used the given LoggerPrinter to print records)
+
+
+====== Asserting ======
+* Use SINASSERT (#include "SINAssert.h" / project SINCommon)
+
+====== Writing tests ======
+* Look at SIN::Test and the existing Testers

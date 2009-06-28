@@ -1,5 +1,5 @@
 #include <assert.h>
-
+#include "SINConstants.h"
 #include "SINASTNode.h"
 #include "SINASTVisitor.h"
 

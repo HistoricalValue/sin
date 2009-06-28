@@ -13,7 +13,7 @@ namespace SIN {
     ParserAPI::~ParserAPI(void) {
     }
     ////////////////////////////////
-    int ParserAPI::ParseFile(std::string const &_filepath) {
+    int ParserAPI::ParseFile(String const &_filepath) {
         return
             PrepareForFile(_filepath.c_str()) == 0 &&
             yyparse() == 0
@@ -22,7 +22,7 @@ namespace SIN {
     ////////////////////////////////
     int ParserAPI::ParseText(char const *_input) {
         assert(!"Not implemented yet");
-        throw std::string("Not implemented yet");
+        throw String("Not implemented yet");
         return 1;
     }
     ////////////////////////////////
