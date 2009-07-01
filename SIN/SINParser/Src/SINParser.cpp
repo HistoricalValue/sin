@@ -72,6 +72,9 @@
 	#include <assert.h>
 	#include <iostream>
 	
+	#include "SINASTNode.h"
+	#include "SINParserManageExpression.h"
+	
 	int yyerror (char* yaccProvidedMessage);
 	
 	int PrepareForFile(const char * filePath);
@@ -196,6 +199,10 @@ typedef union YYSTYPE
 
     char *stringValue;
     double realValue;
+
+
+
+    class SIN::ASTNode *AST;
 
 
 
@@ -530,18 +537,18 @@ static const yytype_int8 yyrhs[] =
 };
 
 /* YYRLINE[YYN] -- source line where rule number YYN was defined.  */
-static const yytype_uint8 yyrline[] =
+static const yytype_uint16 yyrline[] =
 {
-       0,    57,    57,    62,    63,    68,    69,    70,    71,    72,
-      73,    74,    75,    76,    77,    78,    83,    84,    85,    86,
-      87,    88,    89,    90,    91,    92,    93,    94,    95,    96,
-      97,    98,   103,   104,   105,   106,   107,   108,   109,   110,
-     115,   120,   121,   122,   123,   124,   129,   130,   131,   132,
-     137,   138,   139,   140,   146,   147,   148,   153,   154,   159,
-     164,   169,   170,   175,   176,   181,   182,   187,   188,   193,
-     194,   195,   200,   200,   205,   206,   211,   212,   216,   217,
-     218,   219,   220,   224,   225,   230,   231,   236,   237,   240,
-     243,   246,   247
+       0,    69,    69,    74,    75,    80,    81,    82,    83,    84,
+      85,    86,    87,    88,    89,    90,    95,    96,    97,    98,
+      99,   100,   101,   102,   103,   104,   105,   106,   107,   108,
+     109,   110,   115,   116,   117,   118,   119,   120,   121,   122,
+     127,   132,   133,   134,   135,   136,   141,   142,   143,   144,
+     149,   150,   151,   152,   158,   159,   160,   165,   166,   171,
+     176,   181,   182,   187,   188,   193,   194,   199,   200,   205,
+     206,   207,   212,   212,   217,   218,   223,   224,   228,   229,
+     230,   231,   232,   236,   237,   242,   243,   248,   249,   252,
+     255,   258,   259
 };
 #endif
 
@@ -1713,82 +1720,82 @@ yyreduce:
 
   case 16:
 
-    {}
+    {	(yyval.AST) = SIN::Manage_Expression_AssignExpression((yyvsp[(1) - (1)].AST));				}
     break;
 
   case 17:
 
-    {}
+    {	(yyval.AST) = SIN::Manage_Expression_ExpressionADDExpression((yyvsp[(1) - (3)].AST), (yyvsp[(3) - (3)].AST));	}
     break;
 
   case 18:
 
-    {}
+    {	(yyval.AST) = SIN::Manage_Expression_ExpressionMINExpression((yyvsp[(1) - (3)].AST), (yyvsp[(3) - (3)].AST));	}
     break;
 
   case 19:
 
-    {}
+    {	(yyval.AST) = SIN::Manage_Expression_ExpressionMULExpression((yyvsp[(1) - (3)].AST), (yyvsp[(3) - (3)].AST));	}
     break;
 
   case 20:
 
-    {}
+    {	(yyval.AST) = SIN::Manage_Expression_ExpressionDIVExpression((yyvsp[(1) - (3)].AST), (yyvsp[(3) - (3)].AST));	}
     break;
 
   case 21:
 
-    {}
+    {	(yyval.AST) = SIN::Manage_Expression_ExpressionMODExpression((yyvsp[(1) - (3)].AST), (yyvsp[(3) - (3)].AST));	}
     break;
 
   case 22:
 
-    {}
+    {	(yyval.AST) = SIN::Manage_Expression_ExpressionGTExpression((yyvsp[(1) - (3)].AST), (yyvsp[(3) - (3)].AST));		}
     break;
 
   case 23:
 
-    {}
+    {	(yyval.AST) = SIN::Manage_Expression_ExpressionGEExpression((yyvsp[(1) - (3)].AST), (yyvsp[(3) - (3)].AST));		}
     break;
 
   case 24:
 
-    {}
+    {	(yyval.AST) = SIN::Manage_Expression_ExpressionLTExpression((yyvsp[(1) - (3)].AST), (yyvsp[(3) - (3)].AST));		}
     break;
 
   case 25:
 
-    {}
+    {	(yyval.AST) = SIN::Manage_Expression_ExpressionLEExpression((yyvsp[(1) - (3)].AST), (yyvsp[(3) - (3)].AST));		}
     break;
 
   case 26:
 
-    {}
+    {	(yyval.AST) = SIN::Manage_Expression_ExpressionEQExpression((yyvsp[(1) - (3)].AST), (yyvsp[(3) - (3)].AST));		}
     break;
 
   case 27:
 
-    {}
+    {	(yyval.AST) = SIN::Manage_Expression_ExpressionNOTEQExpression((yyvsp[(1) - (3)].AST), (yyvsp[(3) - (3)].AST));	}
     break;
 
   case 28:
 
-    {}
+    {	(yyval.AST) = SIN::Manage_Expression_ExpressionANDExpression((yyvsp[(1) - (3)].AST), (yyvsp[(3) - (3)].AST));	}
     break;
 
   case 29:
 
-    {}
+    {	(yyval.AST) = SIN::Manage_Expression_ExpressionORExpression((yyvsp[(1) - (3)].AST), (yyvsp[(3) - (3)].AST));		}
     break;
 
   case 30:
 
-    {}
+    {	(yyval.AST) = SIN::Manage_Expression_ExpressionNOTExpression((yyvsp[(1) - (3)].AST), (yyvsp[(3) - (3)].AST));	}
     break;
 
   case 31:
 
-    {}
+    {	(yyval.AST) = SIN::Manage_Expression_Term((yyvsp[(1) - (1)].AST));							}
     break;
 
   case 32:

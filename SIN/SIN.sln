@@ -7,6 +7,9 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "SINmain", "SINmain\Projects
 	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "SINParser", "SINParser\Projects\VS\SINParser.vcproj", "{42D01C3B-D8A9-4DD0-9994-EC4E377B04B6}"
+	ProjectSection(ProjectDependencies) = postProject
+		{24375CE7-D218-4936-AC99-552B1B4C2E98} = {24375CE7-D218-4936-AC99-552B1B4C2E98}
+	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "SINAST", "SINAST\Projects\VS\SINAST.vcproj", "{E935FBB8-4670-4ED5-B84E-CE44E3F54B3E}"
 	ProjectSection(ProjectDependencies) = postProject

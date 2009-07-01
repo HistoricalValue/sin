@@ -9,6 +9,9 @@
 	#include <assert.h>
 	#include <iostream>
 	
+	#include "SINASTNode.h"
+	#include "SINParserManageExpression.h"
+	
 	int yyerror (char* yaccProvidedMessage);
 	
 	int PrepareForFile(const char * filePath);
@@ -32,6 +35,12 @@
     char *stringValue;
     double realValue;
 };
+
+/*Non terminal types*/
+%union {
+    class SIN::ASTNode *AST;
+};
+
  
 %token IF ELSE WHILE FOR FUNCTION RETURN BREAK CONTINUE LOCAL GLOBAL TRUE FALSE NIL
 %token ASSIGN ADD MIN MUL DIV MOD EQ NOTEQ INCR DECR GT LT GE LE AND OR NOT
@@ -51,6 +60,9 @@
 %left		'[' ']'
 %left		'{' '}'
 %left		'(' ')'
+
+%type <AST> expr assignexpr term
+
 
 %%
 
@@ -80,22 +92,22 @@ stmt:			expr ';'			{}
 
 
 
-expr:			assignexpr 					{}
-				|	expr	ADD		expr	{}
-				|	expr	MIN		expr	{}
-				|	expr	MUL		expr	{}
-				|	expr	DIV		expr	{}
-				|	expr	MOD		expr	{}
-				|	expr	GT		expr	{}
-				|	expr	GE		expr	{}
-				|	expr	LT		expr	{}
-				|	expr	LE		expr	{}
-				|	expr	EQ		expr	{}
-				|	expr	NOTEQ	expr	{}
-				|	expr	AND		expr	{}
-				|	expr	OR		expr	{}
-				|	expr	NOT		expr	{}
-				|	term					{}
+expr:			assignexpr 					{	$$ = SIN::Manage_Expression_AssignExpression($1);				}
+				|	expr	ADD		expr	{	$$ = SIN::Manage_Expression_ExpressionADDExpression($1, $3);	}
+				|	expr	MIN		expr	{	$$ = SIN::Manage_Expression_ExpressionMINExpression($1, $3);	}
+				|	expr	MUL		expr	{	$$ = SIN::Manage_Expression_ExpressionMULExpression($1, $3);	}
+				|	expr	DIV		expr	{	$$ = SIN::Manage_Expression_ExpressionDIVExpression($1, $3);	}
+				|	expr	MOD		expr	{	$$ = SIN::Manage_Expression_ExpressionMODExpression($1, $3);	}
+				|	expr	GT		expr	{	$$ = SIN::Manage_Expression_ExpressionGTExpression($1, $3);		}
+				|	expr	GE		expr	{	$$ = SIN::Manage_Expression_ExpressionGEExpression($1, $3);		}
+				|	expr	LT		expr	{	$$ = SIN::Manage_Expression_ExpressionLTExpression($1, $3);		}
+				|	expr	LE		expr	{	$$ = SIN::Manage_Expression_ExpressionLEExpression($1, $3);		}
+				|	expr	EQ		expr	{	$$ = SIN::Manage_Expression_ExpressionEQExpression($1, $3);		}
+				|	expr	NOTEQ	expr	{	$$ = SIN::Manage_Expression_ExpressionNOTEQExpression($1, $3);	}
+				|	expr	AND		expr	{	$$ = SIN::Manage_Expression_ExpressionANDExpression($1, $3);	}
+				|	expr	OR		expr	{	$$ = SIN::Manage_Expression_ExpressionORExpression($1, $3);		}
+				|	expr	NOT		expr	{	$$ = SIN::Manage_Expression_ExpressionNOTExpression($1, $3);	}
+				|	term					{	$$ = SIN::Manage_Expression_Term($1);							}
 				;
 
 

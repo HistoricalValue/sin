@@ -26,7 +26,7 @@
 			>
 			<Tool
 				Name="VCPreBuildEventTool"
-				CommandLine=""
+				CommandLine="flex -L -o.\..\..\Src\SinLexAnalyser.cpp .\..\..\Src\SinLexAnalyser.l&#x0D;&#x0A;bison -l -y --defines=.\..\..\Include\SinParser.hpp -o.\..\..\Src\SinParser.cpp .\..\..\Src\SinParser.y&#x0D;&#x0A;"
 			/>
 			<Tool
 				Name="VCCustomBuildTool"
@@ -156,6 +156,10 @@
 				RelativePath="..\..\Src\SINParserAPI.cpp"
 				>
 			</File>
+			<File
+				RelativePath="..\..\Src\SINParserManageExpression.cpp"
+				>
+			</File>
 			<Filter
 				Name="Parser"
 				>
@@ -192,6 +196,10 @@
 			</File>
 			<File
 				RelativePath="..\..\Include\SINParserAPI.h"
+				>
+			</File>
+			<File
+				RelativePath="..\..\Include\SINParserManageExpression.h"
 				>
 			</File>
 			<File
