@@ -43,10 +43,12 @@
 
  
 %token IF ELSE WHILE FOR FUNCTION RETURN BREAK CONTINUE LOCAL GLOBAL TRUE FALSE NIL
-%token ASSIGN ADD MIN MUL DIV MOD EQ NOTEQ INCR DECR GT LT GE LE AND OR NOT
+%token ASSIGN ADD MIN MUL DIV MOD EQ NOTEQ INCR DECR GT LT GE LE AND OR NOT 
+%token DOT_LT DOT_GT DOT_TILDE DOT_EXCl_MARK DOT_NUM_SIGN DOT_AT
 %token '[' ']' '{' '}' '(' ')' ';' ':' '.' ',' DOUBLEDOT
 %token <realV>   NUMBER
 %token <stringV> ID STRING
+
 
 %left		ASSIGN
 %left		OR
@@ -61,7 +63,7 @@
 %left		'{' '}'
 %left		'(' ')'
 
-%type <AST> expr assignexpr term
+%type <AST> expr assignexpr term metaexpr
 
 
 %%
@@ -87,7 +89,7 @@ stmt:			expr ';'			{}
 				|	block			{}
 				|	funcdef			{}
 				|	';'				{}
-				|	error  			{}
+				|	error  			{yyclearin;}
 				;
 
 
@@ -107,12 +109,22 @@ expr:			assignexpr 					{	$$ = SIN::Manage_Expression_AssignExpression($1);				}
 				|	expr	AND		expr	{	$$ = SIN::Manage_Expression_ExpressionANDExpression($1, $3);	}
 				|	expr	OR		expr	{	$$ = SIN::Manage_Expression_ExpressionORExpression($1, $3);		}
 				|	expr	NOT		expr	{	$$ = SIN::Manage_Expression_ExpressionNOTExpression($1, $3);	}
+				|	metaexpr
 				|	term					{	$$ = SIN::Manage_Expression_Term($1);							}
 				;
+				
+				
+				
+metaexpr:		DOT_LT	expr  DOT_GT			{}
+				|	DOT_TILDE		const		{/*i am not sure if this is corect*/}
+				|	DOT_EXCl_MARK	metaexpr	{}
+				|	DOT_NUM_SIGN	STRING		{}
+				|	DOT_AT			metaexpr	{}
+				;
+				
+				
 
-
-
-term:			'(' expr ')'{}
+term:			'(' expr ')'					{}
 				|	MIN		expr %prec UMINUS	{}	
 				|	NOT		expr				{}
 				|	INCR	lvalue				{}
@@ -121,7 +133,7 @@ term:			'(' expr ')'{}
 				|	lvalue	DECR				{}
 				|	primary						{}
 				;
-
+				
 
 
 assignexpr:		lvalue ASSIGN expr				{}
@@ -263,9 +275,7 @@ returnstmt:		RETURN ';' {}
 
 int yyerror (char* yaccProvidedMessage)
 {
-	fprintf(stderr, "%s: at line %d, before token: %s\n", yaccProvidedMessage, yylineno, yytext);
-	fprintf(stderr, "INPUT NOT VALID\n");
-	return 0;
+	fprintf(stderr, ">|%s|<: at line %d, before token: >|%s|<\n", yaccProvidedMessage, yylineno, yytext);
 }
 
 

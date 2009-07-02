@@ -69,11 +69,17 @@
      AND = 285,
      OR = 286,
      NOT = 287,
-     DOUBLEDOT = 288,
-     NUMBER = 289,
-     ID = 290,
-     STRING = 291,
-     UMINUS = 292
+     DOT_LT = 288,
+     DOT_GT = 289,
+     DOT_TILDE = 290,
+     DOT_EXCl_MARK = 291,
+     DOT_NUM_SIGN = 292,
+     DOT_AT = 293,
+     DOUBLEDOT = 294,
+     NUMBER = 295,
+     ID = 296,
+     STRING = 297,
+     UMINUS = 298
    };
 #endif
 /* Tokens.  */
@@ -107,11 +113,17 @@
 #define AND 285
 #define OR 286
 #define NOT 287
-#define DOUBLEDOT 288
-#define NUMBER 289
-#define ID 290
-#define STRING 291
-#define UMINUS 292
+#define DOT_LT 288
+#define DOT_GT 289
+#define DOT_TILDE 290
+#define DOT_EXCl_MARK 291
+#define DOT_NUM_SIGN 292
+#define DOT_AT 293
+#define DOUBLEDOT 294
+#define NUMBER 295
+#define ID 296
+#define STRING 297
+#define UMINUS 298
 
 
 
@@ -123,6 +135,10 @@ typedef union YYSTYPE
 
     char *stringValue;
     double realValue;
+
+
+
+    class SIN::ASTNode *AST;
 
 
 

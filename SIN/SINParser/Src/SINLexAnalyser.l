@@ -49,6 +49,13 @@ lineComm		\/\/.*
 "="				{ return ASSIGN; }
 
 
+".<"			{ return DOT_LT;		}
+".>"			{ return DOT_GT;		}
+".~"			{ return DOT_TILDE;		}
+".!"			{ return DOT_EXCl_MARK; }
+".@"			{ return DOT_AT;		}
+".#"			{ return DOT_NUM_SIGN;	}
+
 
 "if"			{ return IF;		}
 "else"			{ return ELSE;		}
