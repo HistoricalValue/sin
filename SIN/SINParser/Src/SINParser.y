@@ -279,7 +279,7 @@ returnstmt:		RETURN ';' {}
 
 int yyerror (char* yaccProvidedMessage)
 {
-	fprintf(stderr, ">|%s|<: at line %d, before token: >|%s|<\n", yaccProvidedMessage, yylineno, yytext);
+	fprintf(stderr, "%s: at line %d, before token: >%s<\n", yaccProvidedMessage, yylineno, yytext);
 	return -1;
 }
 

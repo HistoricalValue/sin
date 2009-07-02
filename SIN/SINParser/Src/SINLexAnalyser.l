@@ -16,7 +16,7 @@ id				{letter}({letter}|{underscore}|{digit})*
 
 
 string			\"([^"\n]|\\\")*\"
-number			{digit}+(\.{digit}*)?
+number			{digit}+(\.{digit}+)?
 lineComm		\/\/.*
 
 %%
@@ -36,11 +36,19 @@ lineComm		\/\/.*
 
 
 
-"+"				{ return ADD; }
-"-"				{ return MIN; }
-"*"				{ return MUL; }
-"/"				{ return DIV; }
-"%"				{ return MOD; }
+"+"				{ return ADD;	}
+"-"				{ return MIN;	}
+"*"				{ return MUL;	}
+"/"				{ return DIV;	}
+"%"				{ return MOD;	}
+"<"				{ return LT;	}
+">"				{ return GT;	}
+"<="			{ return LE;	}
+">="			{ return GE;	}
+"=="			{ return EQ;	}
+"!="			{ return NOTEQ;	}
+"++"			{ return INCR;	}
+"--"			{ return DECR;	}
 "="				{ return ASSIGN; }
 
 
@@ -65,6 +73,9 @@ lineComm		\/\/.*
 "true"			{ return TRUE;		}
 "false"			{ return FALSE;		}
 "nil"			{ return NIL;		}
+"not"			{ return NOT;		}
+"and"			{ return AND;		}
+"or"			{ return OR;		}	
 
 
 {ws}			{/*We do not do nothing in this case*/}

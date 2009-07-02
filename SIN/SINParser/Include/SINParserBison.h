@@ -128,22 +128,22 @@
 
 
 
-//#if ! defined YYSTYPE && ! defined YYSTYPE_IS_DECLARED
+#if ! defined YYSTYPE && ! defined YYSTYPE_IS_DECLARED
 typedef union YYSTYPE
 {
 
 
     char *		stringValue;
     double		realValue;
-//    SIN::ASTNode *	AST;
+    SIN::ASTNode *	AST;
 
 
 
 } YYSTYPE;
-//# define YYSTYPE_IS_TRIVIAL 1
-//# define yystype YYSTYPE /* obsolescent; will be withdrawn */
-//# define YYSTYPE_IS_DECLARED 1
-//#endif
+# define YYSTYPE_IS_TRIVIAL 1
+# define yystype YYSTYPE /* obsolescent; will be withdrawn */
+# define YYSTYPE_IS_DECLARED 1
+#endif
 
 extern YYSTYPE yylval;
 
