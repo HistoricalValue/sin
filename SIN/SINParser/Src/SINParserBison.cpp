@@ -72,14 +72,23 @@
 	#include <assert.h>
 	#include <iostream>
 	
+	
+	// Bison assumes alloca is the memory allocation
+	// function.
+	//
+	#ifndef	alloca
+	#define alloca malloc
+	#endif
+
+
+
 	#include "SINASTNode.h"
 	#include "SINParserManageExpression.h"
 	
-	int yyerror (char* yaccProvidedMessage);
 	
+	int yyerror (char* yaccProvidedMessage);
 	int PrepareForFile(const char * filePath);
 	int PrepareForString(const char * str);
-	
 	
 	int yylex (void);
 
@@ -209,12 +218,9 @@ typedef union YYSTYPE
 {
 
 
-    char *stringValue;
-    double realValue;
-
-
-
-    class SIN::ASTNode *AST;
+    char *		stringValue;
+    double		realValue;
+    SIN::ASTNode *	AST;
 
 
 
@@ -553,16 +559,16 @@ static const yytype_int8 yyrhs[] =
 /* YYRLINE[YYN] -- source line where rule number YYN was defined.  */
 static const yytype_uint16 yyrline[] =
 {
-       0,    71,    71,    76,    77,    82,    83,    84,    85,    86,
-      87,    88,    89,    90,    91,    92,    97,    98,    99,   100,
-     101,   102,   103,   104,   105,   106,   107,   108,   109,   110,
-     111,   112,   113,   118,   119,   120,   121,   122,   127,   128,
-     129,   130,   131,   132,   133,   134,   139,   144,   145,   146,
-     147,   148,   153,   154,   155,   156,   161,   162,   163,   164,
-     170,   171,   172,   177,   178,   183,   188,   193,   194,   199,
-     200,   205,   206,   211,   212,   217,   218,   219,   224,   224,
-     229,   230,   235,   236,   240,   241,   242,   243,   244,   248,
-     249,   254,   255,   260,   261,   264,   267,   270,   271
+       0,    75,    75,    80,    81,    86,    87,    88,    89,    90,
+      91,    92,    93,    94,    95,    96,   101,   102,   103,   104,
+     105,   106,   107,   108,   109,   110,   111,   112,   113,   114,
+     115,   116,   117,   122,   123,   124,   125,   126,   131,   132,
+     133,   134,   135,   136,   137,   138,   143,   148,   149,   150,
+     151,   152,   157,   158,   159,   160,   165,   166,   167,   168,
+     174,   175,   176,   181,   182,   187,   192,   197,   198,   203,
+     204,   209,   210,   215,   216,   221,   222,   223,   228,   228,
+     233,   234,   239,   240,   244,   245,   246,   247,   248,   252,
+     253,   258,   259,   264,   265,   268,   271,   274,   275
 };
 #endif
 
@@ -577,7 +583,7 @@ static const char *const yytname[] =
   "DECR", "GT", "LT", "GE", "LE", "AND", "OR", "NOT", "DOT_LT", "DOT_GT",
   "DOT_TILDE", "DOT_EXCl_MARK", "DOT_NUM_SIGN", "DOT_AT", "'['", "']'",
   "'{'", "'}'", "'('", "')'", "';'", "':'", "'.'", "','", "DOUBLEDOT",
-  "NUMBER", "ID", "STRING", "UMINUS", "$accept", "program", "stmts",
+  "NUMBER", "ID", "STRING", "UMINUS", "$accept", "SinCode", "stmts",
   "stmt", "expr", "metaexpr", "term", "assignexpr", "primary", "lvalue",
   "member", "call", "callsuffix", "normalcall", "methodcall", "elist",
   "elists", "objectdef", "objectlist", "objectlists", "block", "$@1",
@@ -1768,82 +1774,87 @@ yyreduce:
 
   case 16:
 
-    {	(yyval.AST) = SIN::Manage_Expression_AssignExpression((yyvsp[(1) - (1)].AST));				}
+    {	/*$$ = SIN::Manage_Expression_AssignExpression($1);*/				}
     break;
 
   case 17:
 
-    {	(yyval.AST) = SIN::Manage_Expression_ExpressionADDExpression((yyvsp[(1) - (3)].AST), (yyvsp[(3) - (3)].AST));	}
+    {	/*$$ = SIN::Manage_Expression_ExpressionADDExpression($1, $3);*/	}
     break;
 
   case 18:
 
-    {	(yyval.AST) = SIN::Manage_Expression_ExpressionMINExpression((yyvsp[(1) - (3)].AST), (yyvsp[(3) - (3)].AST));	}
+    {	/*$$ = SIN::Manage_Expression_ExpressionMINExpression($1, $3);*/	}
     break;
 
   case 19:
 
-    {	(yyval.AST) = SIN::Manage_Expression_ExpressionMULExpression((yyvsp[(1) - (3)].AST), (yyvsp[(3) - (3)].AST));	}
+    {	/*$$ = SIN::Manage_Expression_ExpressionMULExpression($1, $3);*/	}
     break;
 
   case 20:
 
-    {	(yyval.AST) = SIN::Manage_Expression_ExpressionDIVExpression((yyvsp[(1) - (3)].AST), (yyvsp[(3) - (3)].AST));	}
+    {	/*$$ = SIN::Manage_Expression_ExpressionDIVExpression($1, $3);*/	}
     break;
 
   case 21:
 
-    {	(yyval.AST) = SIN::Manage_Expression_ExpressionMODExpression((yyvsp[(1) - (3)].AST), (yyvsp[(3) - (3)].AST));	}
+    {	/*$$ = SIN::Manage_Expression_ExpressionMODExpression($1, $3);*/	}
     break;
 
   case 22:
 
-    {	(yyval.AST) = SIN::Manage_Expression_ExpressionGTExpression((yyvsp[(1) - (3)].AST), (yyvsp[(3) - (3)].AST));		}
+    {	/*$$ = SIN::Manage_Expression_ExpressionGTExpression($1, $3);*/		}
     break;
 
   case 23:
 
-    {	(yyval.AST) = SIN::Manage_Expression_ExpressionGEExpression((yyvsp[(1) - (3)].AST), (yyvsp[(3) - (3)].AST));		}
+    {	/*$$ = SIN::Manage_Expression_ExpressionGEExpression($1, $3);*/		}
     break;
 
   case 24:
 
-    {	(yyval.AST) = SIN::Manage_Expression_ExpressionLTExpression((yyvsp[(1) - (3)].AST), (yyvsp[(3) - (3)].AST));		}
+    {	/*$$ = SIN::Manage_Expression_ExpressionLTExpression($1, $3);*/		}
     break;
 
   case 25:
 
-    {	(yyval.AST) = SIN::Manage_Expression_ExpressionLEExpression((yyvsp[(1) - (3)].AST), (yyvsp[(3) - (3)].AST));		}
+    {	/*$$ = SIN::Manage_Expression_ExpressionLEExpression($1, $3);*/		}
     break;
 
   case 26:
 
-    {	(yyval.AST) = SIN::Manage_Expression_ExpressionEQExpression((yyvsp[(1) - (3)].AST), (yyvsp[(3) - (3)].AST));		}
+    {	/*$$ = SIN::Manage_Expression_ExpressionEQExpression($1, $3);*/		}
     break;
 
   case 27:
 
-    {	(yyval.AST) = SIN::Manage_Expression_ExpressionNOTEQExpression((yyvsp[(1) - (3)].AST), (yyvsp[(3) - (3)].AST));	}
+    {	/*$$ = SIN::Manage_Expression_ExpressionNOTEQExpression($1, $3);*/	}
     break;
 
   case 28:
 
-    {	(yyval.AST) = SIN::Manage_Expression_ExpressionANDExpression((yyvsp[(1) - (3)].AST), (yyvsp[(3) - (3)].AST));	}
+    {	/*$$ = SIN::Manage_Expression_ExpressionANDExpression($1, $3);*/	}
     break;
 
   case 29:
 
-    {	(yyval.AST) = SIN::Manage_Expression_ExpressionORExpression((yyvsp[(1) - (3)].AST), (yyvsp[(3) - (3)].AST));		}
+    {	/*$$ = SIN::Manage_Expression_ExpressionORExpression($1, $3);*/		}
     break;
 
   case 30:
 
-    {	(yyval.AST) = SIN::Manage_Expression_ExpressionNOTExpression((yyvsp[(1) - (3)].AST), (yyvsp[(3) - (3)].AST));	}
+    {	/*$$ = SIN::Manage_Expression_ExpressionNOTExpression($1, $3);*/	}
+    break;
+
+  case 31:
+
+    {}
     break;
 
   case 32:
 
-    {	(yyval.AST) = SIN::Manage_Expression_Term((yyvsp[(1) - (1)].AST));							}
+    {	/*$$ = SIN::Manage_Expression_Term($1);*/							}
     break;
 
   case 33:
@@ -2328,6 +2339,7 @@ yyreturn:
 int yyerror (char* yaccProvidedMessage)
 {
 	fprintf(stderr, ">|%s|<: at line %d, before token: >|%s|<\n", yaccProvidedMessage, yylineno, yytext);
+	return -1;
 }
 
 

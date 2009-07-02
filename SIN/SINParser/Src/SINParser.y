@@ -9,14 +9,23 @@
 	#include <assert.h>
 	#include <iostream>
 	
+	
+	// Bison assumes alloca is the memory allocation
+	// function.
+	//
+	#ifndef	alloca
+	#define alloca malloc
+	#endif
+
+
+
 	#include "SINASTNode.h"
 	#include "SINParserManageExpression.h"
 	
-	int yyerror (char* yaccProvidedMessage);
 	
+	int yyerror (char* yaccProvidedMessage);
 	int PrepareForFile(const char * filePath);
 	int PrepareForString(const char * str);
-	
 	
 	int yylex (void);
 
@@ -26,21 +35,18 @@
 
 %}
 
-
-
-%start program
-
 /*Token types*/
 %union {
-    char *stringValue;
-    double realValue;
+    char *		stringValue;
+    double		realValue;
+    SIN::ASTNode *	AST;
 };
 
-/*Non terminal types*/
-%union {
-    class SIN::ASTNode *AST;
-};
 
+%start SinCode
+
+
+%type <AST> expr assignexpr term metaexpr
  
 %token IF ELSE WHILE FOR FUNCTION RETURN BREAK CONTINUE LOCAL GLOBAL TRUE FALSE NIL
 %token ASSIGN ADD MIN MUL DIV MOD EQ NOTEQ INCR DECR GT LT GE LE AND OR NOT 
@@ -63,12 +69,10 @@
 %left		'{' '}'
 %left		'(' ')'
 
-%type <AST> expr assignexpr term metaexpr
-
 
 %%
 
-program:		stmts {}
+SinCode:		stmts {}
 				;
 
 
@@ -94,23 +98,23 @@ stmt:			expr ';'			{}
 
 
 
-expr:			assignexpr 					{	$$ = SIN::Manage_Expression_AssignExpression($1);				}
-				|	expr	ADD		expr	{	$$ = SIN::Manage_Expression_ExpressionADDExpression($1, $3);	}
-				|	expr	MIN		expr	{	$$ = SIN::Manage_Expression_ExpressionMINExpression($1, $3);	}
-				|	expr	MUL		expr	{	$$ = SIN::Manage_Expression_ExpressionMULExpression($1, $3);	}
-				|	expr	DIV		expr	{	$$ = SIN::Manage_Expression_ExpressionDIVExpression($1, $3);	}
-				|	expr	MOD		expr	{	$$ = SIN::Manage_Expression_ExpressionMODExpression($1, $3);	}
-				|	expr	GT		expr	{	$$ = SIN::Manage_Expression_ExpressionGTExpression($1, $3);		}
-				|	expr	GE		expr	{	$$ = SIN::Manage_Expression_ExpressionGEExpression($1, $3);		}
-				|	expr	LT		expr	{	$$ = SIN::Manage_Expression_ExpressionLTExpression($1, $3);		}
-				|	expr	LE		expr	{	$$ = SIN::Manage_Expression_ExpressionLEExpression($1, $3);		}
-				|	expr	EQ		expr	{	$$ = SIN::Manage_Expression_ExpressionEQExpression($1, $3);		}
-				|	expr	NOTEQ	expr	{	$$ = SIN::Manage_Expression_ExpressionNOTEQExpression($1, $3);	}
-				|	expr	AND		expr	{	$$ = SIN::Manage_Expression_ExpressionANDExpression($1, $3);	}
-				|	expr	OR		expr	{	$$ = SIN::Manage_Expression_ExpressionORExpression($1, $3);		}
-				|	expr	NOT		expr	{	$$ = SIN::Manage_Expression_ExpressionNOTExpression($1, $3);	}
-				|	metaexpr
-				|	term					{	$$ = SIN::Manage_Expression_Term($1);							}
+expr:			assignexpr 					{	/*$$ = SIN::Manage_Expression_AssignExpression($1);*/				}
+				|	expr	ADD		expr	{	/*$$ = SIN::Manage_Expression_ExpressionADDExpression($1, $3);*/	}
+				|	expr	MIN		expr	{	/*$$ = SIN::Manage_Expression_ExpressionMINExpression($1, $3);*/	}
+				|	expr	MUL		expr	{	/*$$ = SIN::Manage_Expression_ExpressionMULExpression($1, $3);*/	}
+				|	expr	DIV		expr	{	/*$$ = SIN::Manage_Expression_ExpressionDIVExpression($1, $3);*/	}
+				|	expr	MOD		expr	{	/*$$ = SIN::Manage_Expression_ExpressionMODExpression($1, $3);*/	}
+				|	expr	GT		expr	{	/*$$ = SIN::Manage_Expression_ExpressionGTExpression($1, $3);*/		}
+				|	expr	GE		expr	{	/*$$ = SIN::Manage_Expression_ExpressionGEExpression($1, $3);*/		}
+				|	expr	LT		expr	{	/*$$ = SIN::Manage_Expression_ExpressionLTExpression($1, $3);*/		}
+				|	expr	LE		expr	{	/*$$ = SIN::Manage_Expression_ExpressionLEExpression($1, $3);*/		}
+				|	expr	EQ		expr	{	/*$$ = SIN::Manage_Expression_ExpressionEQExpression($1, $3);*/		}
+				|	expr	NOTEQ	expr	{	/*$$ = SIN::Manage_Expression_ExpressionNOTEQExpression($1, $3);*/	}
+				|	expr	AND		expr	{	/*$$ = SIN::Manage_Expression_ExpressionANDExpression($1, $3);*/	}
+				|	expr	OR		expr	{	/*$$ = SIN::Manage_Expression_ExpressionORExpression($1, $3);*/		}
+				|	expr	NOT		expr	{	/*$$ = SIN::Manage_Expression_ExpressionNOTExpression($1, $3);*/	}
+				|	metaexpr				{}
+				|	term					{	/*$$ = SIN::Manage_Expression_Term($1);*/							}
 				;
 				
 				
@@ -276,6 +280,7 @@ returnstmt:		RETURN ';' {}
 int yyerror (char* yaccProvidedMessage)
 {
 	fprintf(stderr, ">|%s|<: at line %d, before token: >|%s|<\n", yaccProvidedMessage, yylineno, yytext);
+	return -1;
 }
 
 

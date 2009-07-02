@@ -464,11 +464,7 @@ goto find_rule; \
 #define YY_RESTORE_YY_MORE_OFFSET
 char *yytext;
 #define INITIAL 0
-/*
- * University of Crete, Greece
- * HY - 340: Languages and Compilers
- */
-	#include "SINParser.h" /* <- will be generated from parser.y */
+	#include "SINParser.h" /**/
 /* Flex options */
 /* Flex macros */
 

@@ -2,8 +2,8 @@
 #include <cassert>
 
 // TODO those should be somewhere?
-extern int PrepareForFile(const char * filePath);
-extern int yyparse(void);
+//extern int PrepareForFile(const char * filePath);
+//extern int yyparse(void);
 
 namespace SIN {
     ////////////////////////////////
@@ -14,10 +14,10 @@ namespace SIN {
     }
     ////////////////////////////////
     int ParserAPI::ParseFile(String const &_filepath) {
-        return
-            PrepareForFile(_filepath.c_str()) == 0 &&
-            yyparse() == 0
-            ? 0 : 1;
+        return 0;
+            //PrepareForFile(_filepath.c_str()) == 0 &&
+           // yyparse() == 0
+            //? 0 : 1;
     }
     ////////////////////////////////
     int ParserAPI::ParseText(char const *_input) {

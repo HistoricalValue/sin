@@ -5,7 +5,7 @@
 #include <stdio.h>
 #include <assert.h>
 #include <iostream>
-#include "SINParser.h"
+//#include "SINParser.h"
 #include "SINString.h"
 
 namespace SIN {
