@@ -1,6 +1,6 @@
 #include "SIN.h"
 #include "SINASTTester.h"
-#include "SinParserTester.h"
+#include "SINParserTester.h"
 #include "SINCommonTester.h"
 #include "SINLoggingTester.h"
 

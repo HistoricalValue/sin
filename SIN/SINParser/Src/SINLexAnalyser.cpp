@@ -481,6 +481,7 @@ goto find_rule; \
 char *yytext;
 #define INITIAL 0
 	#include "SINParser.h" /**/
+    #define YY_NEVER_INTERACTIVE 1
 /* Flex options */
 /* Flex macros */
 

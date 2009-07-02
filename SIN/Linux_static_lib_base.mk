@@ -10,7 +10,8 @@ PROJECTS = $(addprefix $(SIN_BASE_DIR)/, \
         $(addsuffix _Test,$(addprefix Tests/SIN,\
                 AST \
                 Common \
-                Logging)) \
+                Logging \
+                Parser )) \
         Tests/SINTest \
         SINParser \
         SINAST \

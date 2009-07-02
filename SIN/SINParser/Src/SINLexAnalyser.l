@@ -1,5 +1,6 @@
 %{
 	#include "SINParser.h" /**/
+	#define YY_NEVER_INTERACTIVE 1
 %}
  
 /* Flex options */
