@@ -27,7 +27,7 @@ namespace SIN {
 			
 			SIN_TESTS_PARSER_TESTDEF(ParserFileTest,
 				ParserAPI test;
-				test.ParseFile(FILE_PATH);
+				TRY(test.ParseFile(FILE_PATH) == 0);
 			)
 
 			void test(void) { 
