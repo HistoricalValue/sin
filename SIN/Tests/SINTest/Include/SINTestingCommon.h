@@ -17,7 +17,7 @@ namespace SIN {
         test_result_str << "FAIL'D:" <<                                                             \
         __test_##NAME.GetFailureFile() << ':' << __test_##NAME.GetFailureLine() <<                  \
         ": " << __test_##NAME.FailureMessage() << " [" << __test_##NAME.FailedCondition()           \
-        << "]";                                                                                    \
+        << "]";																						\
     logger->Notice(test_result_str);
 
 #define SINTESTS_TESTDEF(NAME,TESTCODE) \

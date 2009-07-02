@@ -2,9 +2,9 @@
 <VisualStudioProject
 	ProjectType="Visual C++"
 	Version="9.00"
-	Name="SINTest"
-	ProjectGUID="{08AAB630-4E5E-474A-8AC9-09ADC1EDC5CB}"
-	RootNamespace="SINTest"
+	Name="SINParser_Test"
+	ProjectGUID="{94EE40BB-80A6-4EE6-A8F9-AE4C83AADA7C}"
+	RootNamespace="SINParser_Test"
 	Keyword="Win32Proj"
 	TargetFrameworkVersion="196613"
 	>
@@ -42,7 +42,7 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="0"
-				AdditionalIncludeDirectories="..\..\Include"
+				AdditionalIncludeDirectories=""
 				PreprocessorDefinitions="WIN32;_DEBUG;_LIB"
 				MinimalRebuild="true"
 				BasicRuntimeChecks="3"
@@ -84,7 +84,7 @@
 			OutputDirectory="$(SolutionDir)$(ConfigurationName)"
 			IntermediateDirectory="$(ConfigurationName)"
 			ConfigurationType="4"
-			InheritedPropertySheets="..\..\..\..\Scripts\VS\test_includes_debug.vsprops"
+			InheritedPropertySheets="..\..\..\..\Scripts\VS\test_release.vsprops"
 			CharacterSet="1"
 			WholeProgramOptimization="1"
 			>
@@ -152,7 +152,7 @@
 			UniqueIdentifier="{4FC737F1-C7A5-4376-A066-2A32D752A2FF}"
 			>
 			<File
-				RelativePath="..\..\Src\SINTest.cpp"
+				RelativePath="..\..\Src\SINParserTester.cpp"
 				>
 			</File>
 		</Filter>
@@ -162,11 +162,7 @@
 			UniqueIdentifier="{93995380-89BD-4b04-88EB-625FBE52EBFB}"
 			>
 			<File
-				RelativePath="..\..\Include\SINTest.h"
-				>
-			</File>
-			<File
-				RelativePath="..\..\Include\SINTestingCommon.h"
+				RelativePath="..\..\Include\SinParserTester.h"
 				>
 			</File>
 		</Filter>
@@ -175,6 +171,10 @@
 			Filter="rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav"
 			UniqueIdentifier="{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}"
 			>
+			<File
+				RelativePath="..\..\Resource\sin_grammar_test.sin"
+				>
+			</File>
 		</Filter>
 	</Files>
 	<Globals>

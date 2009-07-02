@@ -15,7 +15,7 @@ namespace SIN {
     };
 
     /** SIN internal constant values' representation types */
-    typedef signed long int Number_t;
+    typedef        double   Number_t;
     typedef String          String_t;
     typedef Nil             Nil_t;
     typedef unsigned char   Boolean_t;

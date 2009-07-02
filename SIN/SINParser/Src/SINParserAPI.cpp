@@ -1,6 +1,11 @@
 #include "SINParserAPI.h"
 #include <cassert>
 
+
+#include "SINASTNode.h"
+#include "SINParserBison.h"
+
+
 // TODO those should be somewhere?
 extern int PrepareForFile(const char * filePath);
 extern int yyparse(void);

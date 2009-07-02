@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="windows-1253"?>
 <VisualStudioProject
 	ProjectType="Visual C++"
-	Version="9,00"
+	Version="9.00"
 	Name="SINmain"
 	ProjectGUID="{2FF2E5DD-6B8C-4A02-AC93-58B45636D824}"
 	RootNamespace="SIN"
@@ -21,7 +21,7 @@
 			OutputDirectory="$(SolutionDir)$(ConfigurationName)"
 			IntermediateDirectory="$(ConfigurationName)"
 			ConfigurationType="1"
-			InheritedPropertySheets="..\..\..\Scripts\VS\common_debug.vsprops"
+			InheritedPropertySheets="..\..\..\Scripts\VS\common_debug.vsprops;..\..\..\Scripts\VS\test_includes_debug.vsprops"
 			CharacterSet="1"
 			>
 			<Tool
@@ -42,7 +42,7 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="0"
-				AdditionalIncludeDirectories=".\..\..\..\Tests\SINAST_Test\Include;.\..\..\..\Tests\SINCommon_Test\Include;.\..\..\..\Tests\SINLogging_Test\Include"
+				AdditionalIncludeDirectories="&quot;.\..\..\..\Tests\SINParser_Test\Include&quot;;&quot;.\..\..\..\Tests\SINAST_Test\Include&quot;;&quot;.\..\..\..\Tests\SINCommon_Test\Include&quot;;&quot;.\..\..\..\Tests\SINLogging_Test\Include&quot;"
 				PreprocessorDefinitions="WIN32;_DEBUG;_CONSOLE"
 				MinimalRebuild="true"
 				BasicRuntimeChecks="3"
@@ -97,7 +97,7 @@
 			OutputDirectory="$(SolutionDir)$(ConfigurationName)"
 			IntermediateDirectory="$(ConfigurationName)"
 			ConfigurationType="1"
-			InheritedPropertySheets="..\..\..\Scripts\VS\common_release.vsprops"
+			InheritedPropertySheets="..\..\..\Scripts\VS\common_release.vsprops;..\..\..\Scripts\VS\test_includes_release.vsprops"
 			CharacterSet="1"
 			WholeProgramOptimization="1"
 			>
@@ -118,7 +118,7 @@
 			/>
 			<Tool
 				Name="VCCLCompilerTool"
-				AdditionalIncludeDirectories="..\..\Include"
+				AdditionalIncludeDirectories=""
 				PreprocessorDefinitions="WIN32;NDEBUG;_CONSOLE"
 				RuntimeLibrary="2"
 				UsePrecompiledHeader="0"
@@ -198,6 +198,10 @@
 			ReferencedProjectIdentifier="{6CA9A3FC-38A7-4A25-BB0E-D3DEF9C569B7}"
 			RelativePathToProject=".\SINLogging\Projects\VS\SINLogging.vcproj"
 		/>
+		<ProjectReference
+			ReferencedProjectIdentifier="{94EE40BB-80A6-4EE6-A8F9-AE4C83AADA7C}"
+			RelativePathToProject=".\Tests\SINParser_Test\Projects\VS\SINParser_Test.vcproj"
+		/>
 	</References>
 	<Files>
 		<Filter
@@ -235,6 +239,14 @@
 			</File>
 			<File
 				RelativePath="..\..\..\Scripts\VS\test_debug.vsprops"
+				>
+			</File>
+			<File
+				RelativePath="..\..\..\Scripts\VS\test_includes_debug.vsprops"
+				>
+			</File>
+			<File
+				RelativePath="..\..\..\Scripts\VS\test_includes_release.vsprops"
 				>
 			</File>
 			<File

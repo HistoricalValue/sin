@@ -1,13 +1,16 @@
+#include "SIN.h"
 #include "SINASTTester.h"
+#include "SinParserTester.h"
 #include "SINCommonTester.h"
 #include "SINLoggingTester.h"
-#include "SIN.h"
+
 
 int main(int argc, char *argv[]) {
     if (SIN::Initialise()) {
         SIN::Tests::AST::test();
         SIN::Tests::Common::test();
         SIN::Tests::Logging::test();
+		SIN::Tests::Parser::test();
     }
     return 0;
 }
