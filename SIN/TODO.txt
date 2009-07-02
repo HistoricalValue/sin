@@ -1,3 +1,4 @@
 * SIN::Tests::Test::nextTestName() : fix static member initialisation
 * Add default severity in LoggingManager
 * Add error querying method in parser
+* Make ASTNode subclasses give an appropriate name to their ASTNode ancestor

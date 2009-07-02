@@ -10,7 +10,7 @@
 #include "SINASTCommon.h"
 
 
-#define SINASTVISITOR_VISIT_SIGNATURE(NODENAME) virtual void Visit(NODENAME##ASTNode &) = 0
+#define SINASTVISITOR_VISIT_SIGNATURE(NODENAME) virtual void Visit(NODENAME##ASTNode const&) = 0
 
 
 namespace SIN {
@@ -18,6 +18,7 @@ namespace SIN {
 	public :
 		virtual ~ASTVisitor() {}
 
+        SINASTVISITOR_VISIT_SIGNATURE(       );
         SINASTVISITOR_VISIT_SIGNATURE(Number );
         SINASTVISITOR_VISIT_SIGNATURE(String );
         SINASTVISITOR_VISIT_SIGNATURE(Nil    );

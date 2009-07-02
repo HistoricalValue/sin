@@ -7,6 +7,7 @@
 #include "SINASTCommon.h"
 #include "SINTreeNode.h"
 #include "SINString.h"
+#include "SINNamer.h"
 
 namespace SIN {
 
@@ -25,19 +26,15 @@ namespace SIN {
 
 	//-----------------------------------------------------------------------
 
-	template <enum ConstNodeType _ValueType, typename _ValueT>
+	template <typename _ValueT>
 	class ValueHolder {
 	public:
         typedef _ValueT Value;
 		//--------------------------
 		ValueHolder(void) {}
 		ValueHolder(const Value & val) : value(val) {}
-        ValueHolder(const ValueHolder<_ValueType, _ValueT> &other): value(other.value) { }
+        ValueHolder(const ValueHolder<_ValueT> &other): value(other.value) { }
 		~ValueHolder() {}
-
-		//-------------------------
-		enum ConstNodeType GetType(void) const { return _ValueType; }
-
 
 		//-------------------------
 		void SetValue(const Value &v) { value = v; }
@@ -57,12 +54,18 @@ namespace SIN {
 
 	class ASTNode : public TreeNode {
 	public :
-		
 		//Constructor and destructor 
-		ASTNode (void) : TreeNode() {}
-		virtual ~ASTNode() {}
+		ASTNode(void);
+        ASTNode(String const &name);
+		virtual ~ASTNode(void);
 
-		virtual void Accept(ASTVisitor *) = 0;
+        String const &Name(void) const;
+
+		virtual void Accept(ASTVisitor *) const;
+
+    private:
+        String const name;
+        static Namer namer;
 	};
 
 
@@ -70,10 +73,10 @@ namespace SIN {
 	//-----------------------------------------------------------------------	
 	
 	template <enum ConstNodeType _ValueType, typename _ValueT>
-	class ConstASTNode : public ASTNode, public ValueHolder<_ValueType, _ValueT> {
+	class ConstASTNode : public ASTNode, public ValueHolder<_ValueT> {
 	public :
-        typedef typename ValueHolder<_ValueType, _ValueT>::Value Value;
-        ConstASTNode(Value const &_value): ASTNode(), ValueHolder<_ValueType, _ValueT>(_value) { }
+        typedef typename ValueHolder<_ValueT>::Value Value;
+        ConstASTNode(Value const &_value): ASTNode(), ValueHolder<_ValueT>(_value) { }
         virtual void Accept(ASTVisitor *) = 0;
 	};
 

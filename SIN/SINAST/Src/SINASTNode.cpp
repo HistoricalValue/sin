@@ -2,7 +2,7 @@
 #include "SINConstants.h"
 #include "SINASTNode.h"
 #include "SINASTVisitor.h"
-
+#include "SINAssert.h"
 
 
 //-------------------------------------------------------------------------------------------------
@@ -11,7 +11,7 @@
     NAME##ASTNode::NAME##ASTNode(VALTYPE const &_val): ConstASTNode<TYPE, VALTYPE>(_val) {  \
     }                                                                                       \
     void NAME##ASTNode::Accept(ASTVisitor *_visitor_p) {                                    \
-		assert (_visitor_p);																\
+		assert(_visitor_p);																\
         static_cast<ASTVisitor &>(*_visitor_p).Visit(*this);                                \
     }
 
@@ -47,7 +47,22 @@
 
 namespace SIN {
 
-	
+    ///--------- SIN AST ---------
+    ASTNode::ASTNode(void): name(namer++) {
+    }
+    ASTNode::ASTNode(String const &_name): name(_name) {
+    }
+    ASTNode::~ASTNode(void) {
+    }
+    String const &ASTNode::Name(void) const {
+        return name;
+    }
+    void ASTNode::Accept(ASTVisitor *_v) const {
+        SINASSERT(_v);
+        _v->Visit(*this);
+    }
+    Namer ASTNode::namer("ASTNode-");
+
 	///--------- ConstNodes ---------
     SINASTNODE_DEFAULT_CONSTNODE_DEFS(           Number, CONST_NUMBER, Number_t         )
     SINASTNODE_DEFAULT_CONSTNODE_DEFS(           String, CONST_STRING, String_t         )

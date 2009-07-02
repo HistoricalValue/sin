@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="windows-1253"?>
 <VisualStudioProject
 	ProjectType="Visual C++"
-	Version="9.00"
+	Version="9,00"
 	Name="SINmain"
 	ProjectGUID="{2FF2E5DD-6B8C-4A02-AC93-58B45636D824}"
 	RootNamespace="SIN"
@@ -225,6 +225,14 @@
 			Filter="rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav"
 			UniqueIdentifier="{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}"
 			>
+			<File
+				RelativePath="..\..\..\NotesForDevelopers.txt"
+				>
+			</File>
+			<File
+				RelativePath="..\..\..\TODO.txt"
+				>
+			</File>
 		</Filter>
 		<Filter
 			Name="Properties Scripts"

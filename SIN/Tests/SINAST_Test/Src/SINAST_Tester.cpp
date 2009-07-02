@@ -72,10 +72,9 @@ namespace SIN {
                 SINTESTSAST_TREENODE_SUPERTEST(TreeNode);
             )
 
-            typedef ValueHolder<CONST_NUMBER, int> ValueHolderNum;
+            typedef ValueHolder<int> ValueHolderNum;
             SINTESTSAST_TESTDEF(ValueHolder, 
                 ValueHolderNum vh(23);
-                TRY(vh.GetType() == CONST_NUMBER);
                 TRY(vh.GetValue() == 23);
                 TRY(vh.GetValueStr() == "23");
                 vh.SetValue(12);
@@ -139,6 +138,11 @@ namespace SIN {
                 SINTESTSAST_TREENODE_SUPERTEST(AndASTNode);
             )
 
+            SINTESTSAST_TESTDEF(Naming,
+                ASTNode n("LOOOA");
+                ASSERT(n.Name() == "LOOOA");
+            )
+
             void test(void) {
                 logger = LoggerManager::SingletonGetInstance()->GetLogger("SIN::Tests::AST");
                 SINTESTSAST_TESTRUN(TreeNode);
@@ -146,6 +150,7 @@ namespace SIN {
                 SINTESTSAST_TESTRUN(ConstNodes);
                 SINTESTSAST_TESTRUN(OpNodes);
                 SINTESTSAST_TESTRUN(AllNodes);
+                SINTESTSAST_TESTRUN(Naming);
             }
         }
     }
