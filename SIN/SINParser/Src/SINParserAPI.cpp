@@ -2,22 +2,25 @@
 #include <cassert>
 
 // TODO those should be somewhere?
-//extern int PrepareForFile(const char * filePath);
-//extern int yyparse(void);
+extern int PrepareForFile(const char * filePath);
+extern int yyparse(void);
 
 namespace SIN {
     ////////////////////////////////
     ParserAPI::ParserAPI(void) {
     }
+
+
     ////////////////////////////////
     ParserAPI::~ParserAPI(void) {
     }
-    ////////////////////////////////
+    
+	
+	////////////////////////////////
     int ParserAPI::ParseFile(String const &_filepath) {
-        return 0;
-            //PrepareForFile(_filepath.c_str()) == 0 &&
-           // yyparse() == 0
-            //? 0 : 1;
+        if (PrepareForFile(_filepath.c_str()) == 0 && yyparse() == 0)
+			return 0;
+		return -1;
     }
     ////////////////////////////////
     int ParserAPI::ParseText(char const *_input) {
