@@ -19,6 +19,11 @@ namespace SIN {
 		/** get child at index _index_ or 0x00 if there is no child for that
           * index */
         TreeNode *operator[](size_t _index) const;
+		/** returns tha width of this node's tree of descendats.
+		  * (In other words, the number of columns required to represent
+		  *  the tree which has this node as root, in a tree-like
+		  *  representation). */
+		size_t WidthOfDescendantsTree(void) const;
         
 		
 		/** append a child (returns self) */
@@ -50,9 +55,16 @@ namespace SIN {
         void SetLeftSibling(TreeNode *_left) { SetPrevious(_left); } // for santa
 
 
+	protected:
+		void UpdateWidthOfDescendantsTree(void);
+
     private:
 		TreeNode *parent, *previous, *next;
 		std::vector<TreeNode *>	children;
+		typedef std::vector<TreeNode *> children_type;
+		typedef children_type::iterator children_iterator;
+		typedef children_type::const_iterator children_const_iterator;
+		size_t width_of_descendants_tree;
 	}; // class TreeNode
 
 } // namespace SIN
