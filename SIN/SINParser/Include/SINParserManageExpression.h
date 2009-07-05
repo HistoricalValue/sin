@@ -1,27 +1,27 @@
 #ifndef __SIN_PARSER_MANAGE_EXPRESSION_H__
 #define __SIN_PARSER_MANAGE_EXPRESSION_H__
 
-#include "SINTypes.h"
 #include "SINASTNode.h"
 
 namespace SIN{
 
-	ASTNode *Manage_Expression_AssignExpression			(ASTNode *_p1);
-	ASTNode *Manage_Expression_ExpressionADDExpression	(ASTNode *_p1, ASTNode *_p2);
-	ASTNode *Manage_Expression_ExpressionMINExpression	(ASTNode *_p1, ASTNode *_p2);
-	ASTNode *Manage_Expression_ExpressionMULExpression	(ASTNode *_p1, ASTNode *_p2);
-	ASTNode *Manage_Expression_ExpressionDIVExpression	(ASTNode *_p1, ASTNode *_p2);
-	ASTNode *Manage_Expression_ExpressionMODExpression	(ASTNode *_p1, ASTNode *_p2);
-	ASTNode *Manage_Expression_ExpressionGTExpression	(ASTNode *_p1, ASTNode *_p2);
-	ASTNode *Manage_Expression_ExpressionGEExpression	(ASTNode *_p1, ASTNode *_p2);
-	ASTNode *Manage_Expression_ExpressionLTExpression	(ASTNode *_p1, ASTNode *_p2);
-	ASTNode *Manage_Expression_ExpressionLEExpression	(ASTNode *_p1, ASTNode *_p2);
-	ASTNode *Manage_Expression_ExpressionEQExpression	(ASTNode *_p1, ASTNode *_p2);
-	ASTNode *Manage_Expression_ExpressionNOTEQExpression(ASTNode *_p1, ASTNode *_p2);
-	ASTNode *Manage_Expression_ExpressionANDExpression	(ASTNode *_p1, ASTNode *_p2);
-	ASTNode *Manage_Expression_ExpressionORExpression	(ASTNode *_p1, ASTNode *_p2);
-	ASTNode *Manage_Expression_ExpressionNOTExpression	(ASTNode *_p1, ASTNode *_p2);
-	ASTNode *Manage_Expression_Term						(ASTNode *_p1);
+	void Manage_Expression_AssignExpression				(ASTNode *_assignexpr, ASTNode **_retexpr);
+	void Manage_Expression_ExpressionADDExpression		(ASTNode *_expr1, ASTNode *_expr2, ASTNode **_retexpr);
+	void Manage_Expression_ExpressionMINExpression		(ASTNode *_expr1, ASTNode *_expr2, ASTNode **_retexpr);
+	void Manage_Expression_ExpressionMULExpression		(ASTNode *_expr1, ASTNode *_expr2, ASTNode **_retexpr);
+	void Manage_Expression_ExpressionDIVExpression		(ASTNode *_expr1, ASTNode *_expr2, ASTNode **_retexpr);
+	void Manage_Expression_ExpressionMODExpression		(ASTNode *_expr1, ASTNode *_expr2, ASTNode **_retexpr);
+	void Manage_Expression_ExpressionGTExpression		(ASTNode *_expr1, ASTNode *_expr2, ASTNode **_retexpr);
+	void Manage_Expression_ExpressionGEExpression		(ASTNode *_expr1, ASTNode *_expr2, ASTNode **_retexpr);
+	void Manage_Expression_ExpressionLTExpression		(ASTNode *_expr1, ASTNode *_expr2, ASTNode **_retexpr);
+	void Manage_Expression_ExpressionLEExpression		(ASTNode *_expr1, ASTNode *_expr2, ASTNode **_retexpr);
+	void Manage_Expression_ExpressionEQExpression		(ASTNode *_expr1, ASTNode *_expr2, ASTNode **_retexpr);
+	void Manage_Expression_ExpressionNOTEQExpression	(ASTNode *_expr1, ASTNode *_expr2, ASTNode **_retexpr);
+	void Manage_Expression_ExpressionANDExpression		(ASTNode *_expr1, ASTNode *_expr2, ASTNode **_retexpr);
+	void Manage_Expression_ExpressionORExpression		(ASTNode *_expr1, ASTNode *_expr2, ASTNode **_retexpr);
+	void Manage_Expression_ExpressionNOTExpression		(ASTNode *_expr1, ASTNode *_expr2, ASTNode **_retexpr);
+	void Manage_Expression_MetaExpression				(ASTNode *_metaexpr, ASTNode **_retexpr);
+	void Manage_Expression_Term							(ASTNode *_term, ASTNode **_retexpr);
 
 } // namespace SIN
 

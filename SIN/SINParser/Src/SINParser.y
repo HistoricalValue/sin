@@ -20,13 +20,36 @@
 
 
 	#include "SINASTNode.h"
+	#include "SINParserManageSinCode.h"
+	#include "SINParserManageStatements.h"
+	#include "SINParserManageStatement.h"
 	#include "SINParserManageExpression.h"
-	
-	
+	#include "SINParserManageTerm.h"
+	#include "SINParserManageAssignExpression.h"
+	#include "SINParserManagePrimary.h"
+	#include "SINParserManageLValue.h"
+	#include "SINParserManageMember.h"
+	#include "SINParserManageCall.h"
+	#include "SINParserManageCallSuffix.h"
+	#include "SINParserManageNormalCall.h"
+	#include "SINParserManageMethodCall.h"
+	#include "SINParserManageExpressionList.h"
+	#include "SINParserManageObjectDefinition.h"
+	#include "SINParserManageObjectList.h"
+	#include "SINParserManageBlock.h"
+	#include "SINParserManageFunctionDefinition.h"
+	#include "SINParserManageConstant.h"
+	#include "SINParserManageIDList.h"
+	#include "SINParserManageIfStatement.h"
+	#include "SINParserManageWhileStatement.h"
+	#include "SINParserManageForStatement.h"
+	#include "SINParserManageReturnStatement.h"
+
+
 	int yyerror (char* yaccProvidedMessage);
 	int PrepareForFile(const char * filePath);
 	int PrepareForString(const char * str);
-	
+
 	int yylex (void);
 
 	extern int yylineno;
@@ -37,16 +60,26 @@
 
 /*Token types*/
 %union {
-    char *		stringValue;
-    double		realValue;
+    char *		stringV;
+    double		realV;
     SIN::ASTNode *	AST;
 };
 
 
 %start SinCode
 
-
+%type <AST>	SinCode stmts
+%type <AST> stmt ifstmt whilestmt forstmt returnstmt block
 %type <AST> expr assignexpr term metaexpr
+%type <AST> lvalue primary
+%type <AST> call objectdef funcdef const
+%type <AST> member
+%type <AST> callsuffix elist
+%type <AST> normalcall methodcall
+%type <AST> elists
+%type <AST> objectlist objectlists
+%type <AST> stmtd
+%type <AST> idlist idlists
  
 %token IF ELSE WHILE FOR FUNCTION RETURN BREAK CONTINUE LOCAL GLOBAL TRUE FALSE NIL
 %token ASSIGN ADD MIN MUL DIV MOD EQ NOTEQ INCR DECR GT LT GE LE AND OR NOT 
@@ -72,49 +105,49 @@
 
 %%
 
-SinCode:		stmts {}
+SinCode:		stmts {	SIN::Manage_SinCode($1, &($$));	}
 				;
 
 
 
-stmts:			stmt stmts
-				|
+stmts:			stmt stmts	{	SIN::Manage_Statements($1, $2, &($$));	}
+				|			{	SIN::Manage_Statements_Empty(&($$));	}
 				;
 
 
 
-stmt:			expr ';'			{}
-				|	ifstmt			{}
-				|	whilestmt		{}
-				|	forstmt			{}			
-				|	returnstmt		{}
-				|	BREAK ';'		{}
-				|	CONTINUE ';'	{}
-				|	block			{}
-				|	funcdef			{}
-				|	';'				{}
+stmt:			expr ';'			{	SIN::Manage_Statement_Expression($1, &($$));			}
+				|	ifstmt			{	SIN::Manage_Statement_IfStatement($1, &($$));			}
+				|	whilestmt		{	SIN::Manage_Statement_WhileStatement($1, &($$));		}
+				|	forstmt			{	SIN::Manage_Statement_ForStatement($1, &($$));			}
+				|	returnstmt		{	SIN::Manage_Statement_ReturnStatement($1, &($$));		}
+				|	BREAK ';'		{	SIN::Manage_Statement_Break(&($$));						}
+				|	CONTINUE ';'	{	SIN::Manage_Statement_Continue(&($$));					}
+				|	block			{	SIN::Manage_Statement_Block($1, &($$));					}
+				|	funcdef			{	SIN::Manage_Statement_FunctionDefinition($1, &($$));	}
+				|	';'				{	SIN::Manage_Statement_Semicolon(&($$));					}
 				|	error  			{yyclearin;}
 				;
 
 
 
-expr:			assignexpr 					{	/*$$ = SIN::Manage_Expression_AssignExpression($1);*/				}
-				|	expr	ADD		expr	{	/*$$ = SIN::Manage_Expression_ExpressionADDExpression($1, $3);*/	}
-				|	expr	MIN		expr	{	/*$$ = SIN::Manage_Expression_ExpressionMINExpression($1, $3);*/	}
-				|	expr	MUL		expr	{	/*$$ = SIN::Manage_Expression_ExpressionMULExpression($1, $3);*/	}
-				|	expr	DIV		expr	{	/*$$ = SIN::Manage_Expression_ExpressionDIVExpression($1, $3);*/	}
-				|	expr	MOD		expr	{	/*$$ = SIN::Manage_Expression_ExpressionMODExpression($1, $3);*/	}
-				|	expr	GT		expr	{	/*$$ = SIN::Manage_Expression_ExpressionGTExpression($1, $3);*/		}
-				|	expr	GE		expr	{	/*$$ = SIN::Manage_Expression_ExpressionGEExpression($1, $3);*/		}
-				|	expr	LT		expr	{	/*$$ = SIN::Manage_Expression_ExpressionLTExpression($1, $3);*/		}
-				|	expr	LE		expr	{	/*$$ = SIN::Manage_Expression_ExpressionLEExpression($1, $3);*/		}
-				|	expr	EQ		expr	{	/*$$ = SIN::Manage_Expression_ExpressionEQExpression($1, $3);*/		}
-				|	expr	NOTEQ	expr	{	/*$$ = SIN::Manage_Expression_ExpressionNOTEQExpression($1, $3);*/	}
-				|	expr	AND		expr	{	/*$$ = SIN::Manage_Expression_ExpressionANDExpression($1, $3);*/	}
-				|	expr	OR		expr	{	/*$$ = SIN::Manage_Expression_ExpressionORExpression($1, $3);*/		}
-				|	expr	NOT		expr	{	/*$$ = SIN::Manage_Expression_ExpressionNOTExpression($1, $3);*/	}
-				|	metaexpr				{}
-				|	term					{	/*$$ = SIN::Manage_Expression_Term($1);*/							}
+expr:			assignexpr 					{	SIN::Manage_Expression_AssignExpression($1, &($$));					}
+				|	expr	ADD		expr	{	SIN::Manage_Expression_ExpressionADDExpression($1, $3, &($$));		}
+				|	expr	MIN		expr	{	SIN::Manage_Expression_ExpressionMINExpression($1, $3, &($$));		}
+				|	expr	MUL		expr	{	SIN::Manage_Expression_ExpressionMULExpression($1, $3, &($$));		}
+				|	expr	DIV		expr	{	SIN::Manage_Expression_ExpressionDIVExpression($1, $3, &($$));		}
+				|	expr	MOD		expr	{	SIN::Manage_Expression_ExpressionMODExpression($1, $3, &($$));		}
+				|	expr	GT		expr	{	SIN::Manage_Expression_ExpressionGTExpression($1, $3, &($$));		}
+				|	expr	GE		expr	{	SIN::Manage_Expression_ExpressionGEExpression($1, $3, &($$));		}
+				|	expr	LT		expr	{	SIN::Manage_Expression_ExpressionLTExpression($1, $3, &($$));		}
+				|	expr	LE		expr	{	SIN::Manage_Expression_ExpressionLEExpression($1, $3, &($$));		}
+				|	expr	EQ		expr	{	SIN::Manage_Expression_ExpressionEQExpression($1, $3, &($$));		}
+				|	expr	NOTEQ	expr	{	SIN::Manage_Expression_ExpressionNOTEQExpression($1, $3, &($$));	}
+				|	expr	AND		expr	{	SIN::Manage_Expression_ExpressionANDExpression($1, $3, &($$));		}
+				|	expr	OR		expr	{	SIN::Manage_Expression_ExpressionORExpression($1, $3, &($$));		}
+				|	expr	NOT		expr	{	SIN::Manage_Expression_ExpressionNOTExpression($1, $3, &($$));		}
+				|	metaexpr				{	SIN::Manage_Expression_MetaExpression($1, &($$));					}
+				|	term					{	SIN::Manage_Expression_Term($1, &($$));								}
 				;
 				
 				
@@ -128,151 +161,151 @@ metaexpr:		DOT_LT	expr  DOT_GT			{}
 				
 				
 
-term:			'(' expr ')'					{}
-				|	MIN		expr %prec UMINUS	{}	
-				|	NOT		expr				{}
-				|	INCR	lvalue				{}
-				|	lvalue	INCR				{}
-				|	DECR	lvalue				{}
-				|	lvalue	DECR				{}
-				|	primary						{}
+term:			'(' expr ')'					{	SIN::Manage_Term_ExpressionParentheses($2, &($$));	}
+				|	MIN		expr %prec UMINUS	{	SIN::Manage_Term_MINExpression($2, &($$));			}	
+				|	NOT		expr				{	SIN::Manage_Term_NOTExpression($2, &($$));			}
+				|	INCR	lvalue				{	SIN::Manage_Term_INCRLValue($2, &($$));				}
+				|	lvalue	INCR				{	SIN::Manage_Term_LValueINCR($1, &($$));				}
+				|	DECR	lvalue				{	SIN::Manage_Term_DECRLValue($2, &($$));				}
+				|	lvalue	DECR				{	SIN::Manage_Term_LValueDECR($1, &($$));				}
+				|	primary						{	SIN::Manage_Term_Primary($1, &($$));				}
 				;
 				
 
 
-assignexpr:		lvalue ASSIGN expr				{}
+assignexpr:		lvalue ASSIGN expr				{	SIN::Manage_AssignExpression($1, $3, &($$));	}
 				;
 
 
 
-primary:		lvalue							{}
-				|	call						{}
-				|	objectdef					{}
-				|	'(' funcdef ')'				{}
-				|	const
+primary:		lvalue							{	SIN::Manage_Primary_LValue($1, &($$));							}
+				|	call						{	SIN::Manage_Primary_Call($1, &($$));							}
+				|	objectdef					{	SIN::Manage_Primary_ObjectDefinition($1, &($$));				}
+				|	'(' funcdef ')'				{	SIN::Manage_Primary_FunctionDefinitionParentheses($2, &($$));	}
+				|	const						{	SIN::Manage_Primary_Constant($1, &($$));						}
 				;
 
 
 
-lvalue:			ID 								{}
-				|	LOCAL ID					{}
-				|	GLOBAL ID					{}
-				|	member						{}
+lvalue:			ID 								{	SIN::Manage_LValue_ID(strdup(yytext), &($$));		}
+				|	LOCAL ID					{	SIN::Manage_LValue_LocalID(strdup(yytext), &($$));	}
+				|	GLOBAL ID					{	SIN::Manage_LValue_GlobalID(strdup(yytext), &($$));	}
+				|	member						{	SIN::Manage_LValue_Member($1, &($$));				}
 				;
 
 
     
-member:			lvalue '.' ID					{}
-				|	lvalue	'[' expr ']'		{}
-				|	call	'.' ID				{}
-				|	call	'[' expr ']'		{}
+member:			lvalue '.' ID					{	SIN::Manage_Member_LValueID($1, strdup(yytext), &($$));	}
+				|	lvalue	'[' expr ']'		{	SIN::Manage_Member_LValueExpression($1, $3, &($$));		}
+				|	call	'.' ID				{	SIN::Manage_Member_CallID($1, strdup(yytext), &($$));	}
+				|	call	'[' expr ']'		{	SIN::Manage_Member_CallExpression($1, $3, &($$));		}
 				;
 
 
 
 	
-call:			call callsuffix						{}
-				|	lvalue callsuffix				{}
-				|	'(' funcdef ')' '(' elist ')'	{}
+call:			call callsuffix						{	SIN::Manage_Call_CallCallSuffix($1, $2, &($$));						}
+				|	lvalue callsuffix				{	SIN::Manage_Call_LValueCallSuffix($1, $2, &($$));					}
+				|	'(' funcdef ')' '(' elist ')'	{	SIN::Manage_Call_FunctionDefinitionExpressionList($2, $5, &($$));	}
 				;
 
 
 
-callsuffix:		normalcall							{}
-				|	methodcall						{}
+callsuffix:		normalcall							{	SIN::Manage_CallSuffix_NormalCall($1, &($$));	}
+				|	methodcall						{	SIN::Manage_CallSuffix_MethodCall($1, &($$));	}
 				;
 
 
 
-normalcall:		'(' elist ')'						{}
+normalcall:		'(' elist ')'						{	SIN::Manage_NormalCall($2, &($$));	}
 				;
 				
 				
 				
-methodcall:		DOUBLEDOT ID '(' elist ')'			{/*equivalent to lvalue.id(lvalue, elist)*/}	
+methodcall:		DOUBLEDOT ID '(' elist ')'			{	SIN::Manage_MethodCall(strdup(yytext), $4, &($$));	}	/*equivalent to lvalue.id(lvalue, elist)*/
 				;
 
 
 
-elist:			expr elists							{}
-				| 									{}
+elist:			expr elists							{	SIN::Manage_ExpressionList($1, $2, &($$));	}
+				| 									{	SIN::Manage_ExpressionList_Empty(&($$));	}
 				;
 
 
 
-elists:			',' expr elists						{}
-				|									{}
+elists:			',' expr elists						{	SIN::Manage_ExpressionList($2, $3, &($$));	}
+				|									{	SIN::Manage_ExpressionList_Empty(&($$));	}
 				;
 
 
 
-objectdef:		'[' ']'
-				|	'[' objectlist ']'
+objectdef:		'[' ']'								{	SIN::Manage_ObjectDefinition_EmptyObject(&($$));	}
+				|	'[' objectlist ']'				{	SIN::Manage_ObjectDefinition_ObjectList($2, &($$));	}
 				;
 			
 			
 			
-objectlist:	 	expr objectlists
-				|	expr ':' expr objectlists
+objectlist:	 	expr objectlists					{	SIN::Manage_ObjectList_ExpressionObjectLists($1, $2, &($$));				}
+				|	expr ':' expr objectlists		{	SIN::Manage_ObjectList_ExpressionExpressionObjectLists($1, $3, $4, &($$));	}
 				;
 
 
 
-objectlists:	',' expr objectlists
-				|	',' expr ':' expr objectlists
-				|
+objectlists:	',' expr objectlists				{	SIN::Manage_ObjectList_ExpressionObjectLists($2, $3, &($$));				}
+				|	',' expr ':' expr objectlists	{	SIN::Manage_ObjectList_ExpressionExpressionObjectLists($2, $4, $5, &($$));	}
+				|									{	SIN::Manage_ObjectList_Empty(&($$));										}
 				;
 
 
 
-block:			'{' {} stmtd '}' 
+block:			'{' {} stmtd '}'					{	SIN::Manage_Block($3, &($$));	}
 				;
 
 
 
-stmtd:			stmt stmtd	{}
-				|			{}
+stmtd:			stmt stmtd	{	SIN::Manage_Statements($1, $2, &($$));	}
+				|			{	SIN::Manage_Statements_Empty(&($$));	}
 				;
 
 
 
-funcdef:		FUNCTION ID	'(' idlist ')' block 
-				|	FUNCTION '(' idlist ')' block 
+funcdef:		FUNCTION ID	'(' idlist ')' block	{	SIN::Manage_FunctionDefinition_Function(strdup(yytext), $4, $6, &($$));	}
+				|	FUNCTION '(' idlist ')' block	{	SIN::Manage_FunctionDefinition_LamdaFunction($3, $5, &($$));			}
 				;
 
 
-const:			NUMBER 				{}
-				|	STRING 			{}
-				|	NIL 			{}
-				|	TRUE 			{}
-				|	FALSE			{}
+const:			NUMBER 				{	SIN::Manage_Constant_Number(atoi(yytext), &($$));	}
+				|	STRING 			{	SIN::Manage_Constant_String(strdup(yytext), &($$));	}
+				|	NIL 			{	SIN::Manage_Constant_Nil(&($$));					}
+				|	TRUE 			{	SIN::Manage_Constant_True(&($$));					}
+				|	FALSE			{	SIN::Manage_Constant_False(&($$));					}
 				;
 
 
-idlist:			ID idlists			{}
-				|	/*empty*/		{}
-				;
-
-
-
-idlists:		',' ID idlists	    {}
-				|	    {}
+idlist:			ID idlists			{	SIN::Manage_IDList(strdup(yytext), $2, &($$));	}
+				|	/*empty*/		{	SIN::Manage_IDList_Empty(&($$));				}
 				;
 
 
 
-ifstmt:			IF '(' expr	')' stmt {}
-				|	IF '(' expr ')' stmt ELSE stmt 
+idlists:		',' ID idlists	    {	SIN::Manage_IDList(strdup(yytext), $3, &($$));	}
+				|				    {	SIN::Manage_IDList_Empty(&($$));				}
 				;
 
-whilestmt:		WHILE '(' expr ')' stmt {}
+
+
+ifstmt:			IF '(' expr	')' stmt						{	SIN::Manage_IfStatement_If($3, $5, &($$));			}
+				|	IF '(' expr ')' stmt ELSE stmt			{	SIN::Manage_IfStatement_IfElse($3, $5, $7, &($$));	}
 				;
 
-forstmt:		FOR '(' elist ';' expr ';' elist ')' stmt
+whilestmt:		WHILE '(' expr ')' stmt						{	SIN::Manage_WhileStatement($3, $5, &($$));	}
 				;
 
-returnstmt:		RETURN ';' {}
-				|	RETURN expr ';' {}
+forstmt:		FOR '(' elist ';' expr ';' elist ')' stmt	{	SIN::Manage_ForStatement($3, $5, $7, $9, &($$));	}
+				;
+
+returnstmt:		RETURN ';'			{	SIN::Manage_ReturnStatement_Return(&($$));					}
+				|	RETURN expr ';' {	SIN::Manage_ReturnStatement_ReturnExpression($2, &($$));	}
 				;
 
 %%

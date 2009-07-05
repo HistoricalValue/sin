@@ -3,6 +3,7 @@
 #include "SINParserTester.h"
 #include "SINCommonTester.h"
 #include "SINLoggingTester.h"
+#include "SINLoggerManager.h"
 
 
 int main(int argc, char *argv[]) {
@@ -11,6 +12,7 @@ int main(int argc, char *argv[]) {
         SIN::Tests::Common::test();
         SIN::Tests::Logging::test();
 		SIN::Tests::Parser::test();
+		system("pause");
     }
     return 0;
 }

@@ -133,8 +133,8 @@ typedef union YYSTYPE
 {
 
 
-    char *		stringValue;
-    double		realValue;
+    char *		stringV;
+    double		realV;
     SIN::ASTNode *	AST;
 
 
