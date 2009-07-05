@@ -4,6 +4,7 @@
 #include "SINCommonTester.h"
 #include "SINLoggingTester.h"
 #include "SINLoggerManager.h"
+#include "SINLogger.h"
 
 
 int main(int argc, char *argv[]) {

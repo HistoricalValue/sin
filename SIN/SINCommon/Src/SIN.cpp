@@ -24,8 +24,8 @@ namespace SIN {
 			///// Insert logger-specific initialisation here. For example:
 			// LoggerManager::SingletonGetInstance()->MakeVoidLogger("SIN::Tests::Parser::Manage");
 			// or
-			// LoggerManager::SingletonGetInstance()->GetLogger("SIN::Tests::Parser::Manage")
-			//		.SetCriticalSeverity(Logging::Record::SERIOUS);
+			 LoggerManager::SingletonGetInstance()->GetLogger("SIN::Tests::Parser::Manage")
+					.SetCriticalSeverity(Logging::Record::SERIOUS);
 		}
 		else
 			result = false;
