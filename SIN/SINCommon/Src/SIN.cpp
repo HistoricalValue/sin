@@ -14,10 +14,21 @@ namespace SIN {
 
 
     bool init_LoggerManager(void) {
+		register bool result = true;
         LoggerManager::SingletonCreate();
-        return
+		if (
             LoggerManager::SingletonCreated()               &&
             LoggerManager::SingletonGetInstance() != 0x00   &&
-            true;
+            true
+		) {
+			///// Insert logger-specific initialisation here. For example:
+			// LoggerManager::SingletonGetInstance()->MakeVoidLogger("SIN::Tests::Parser::Manage");
+			// or
+			// LoggerManager::SingletonGetInstance()->GetLogger("SIN::Tests::Parser::Manage")
+			//		.SetCriticalSeverity(Logging::Record::SERIOUS);
+		}
+		else
+			result = false;
+		return result;
     }
 } // namespace SIN
