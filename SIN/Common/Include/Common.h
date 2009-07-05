@@ -53,9 +53,16 @@ public:
     T &operator  *(void) const { assert(p != 0x00); return *p; }
     operator T *(void) const { return p; }
 
+	template <typename _FromType>
+	static InstanceProxy<_FromType> ProxyFor(_FromType &_obj) {
+		return InstanceProxy<_FromType>(&_obj);
+	}
     ///////////
     void operator =(T &_p) { (*this) = &_p; }
     T *operator ->(void) const { return &**this; }
+	template <typename _FromType>
+	static InstanceProxy<_FromType> ProxyFor(_FromType *_p)
+		{ return ProxyFor(*_p); }
 }; // class InstanceProxy<T>
 
 template <typename T>
@@ -67,9 +74,44 @@ public:
     T const &operator  *(void) const { assert(p != 0x00); return *p; }
     operator T const *(void) const { return p; }
 
+	template <typename _FromType>
+	static ConstInstanceProxy<_FromType> ProxyFor(_FromType const &_obj) {
+		return ConstInstanceProxy<_FromType>(&_obj);
+	}
     ///////////
     void operator =(T const &_p) { (*this) = &_p; }
     T const *operator ->(void) const { return &**this; }
+	template <typename _FromType>
+	static ConstInstanceProxy<_FromType> ProxyFor(_FromType const *_p)
+		{ return ProxyFor(*_p); }
 }; // class ConstInstanceProxy<T>
+
+template <typename _T>
+class Type {
+public:
+	Type(void) { }
+	Type(Type const &) { }
+	~Type(void) { }
+	typedef _T type;
+
+	template <typename _FromType>
+	static Type<_FromType> const MakeTypeFromObject(_FromType const &_dummy) {
+		return Type<_FromType>();
+	}
+
+	template <typename _FromType> _T cast(_FromType &_obj) const {
+		return static_cast<_T>(_obj);
+	}
+
+	template <typename _FromType> _T cast(_FromType const&_obj) const {
+		return static_cast<_T>(_obj);
+	}
+}; // class Type<T>
+
+#define FOREACH(ITERATOR_NAME,ITERATOR_TYPE,ITERABLE)	\
+	for (												\
+		ITERATOR_TYPE ITERATOR_NAME = ITERABLE.begin(); \
+		ITERATOR_NAME != ITERABLE.end();				\
+		++ITERATOR_NAME)
 
 #endif //__SIN_COMMON_H__
