@@ -8,6 +8,7 @@
 	#include <stdio.h>
 	#include <assert.h>
 	#include <iostream>
+	#include <string.h>
 	
 	
 	// Bison assumes alloca is the memory allocation
@@ -187,17 +188,17 @@ primary:		lvalue							{	SIN::Manage_Primary_LValue($1, &($$));							}
 
 
 
-lvalue:			ID 								{	SIN::Manage_LValue_ID(strdup(yytext), &($$));		}
-				|	LOCAL ID					{	SIN::Manage_LValue_LocalID(strdup(yytext), &($$));	}
-				|	GLOBAL ID					{	SIN::Manage_LValue_GlobalID(strdup(yytext), &($$));	}
+lvalue:			ID 								{	SIN::Manage_LValue_ID(yytext, &($$));		}
+				|	LOCAL ID					{	SIN::Manage_LValue_LocalID(yytext, &($$));	}
+				|	GLOBAL ID					{	SIN::Manage_LValue_GlobalID(yytext, &($$));	}
 				|	member						{	SIN::Manage_LValue_Member($1, &($$));				}
 				;
 
 
     
-member:			lvalue '.' ID					{	SIN::Manage_Member_LValueID($1, strdup(yytext), &($$));	}
+member:			lvalue '.' ID					{	SIN::Manage_Member_LValueID($1, yytext, &($$));	}
 				|	lvalue	'[' expr ']'		{	SIN::Manage_Member_LValueExpression($1, $3, &($$));		}
-				|	call	'.' ID				{	SIN::Manage_Member_CallID($1, strdup(yytext), &($$));	}
+				|	call	'.' ID				{	SIN::Manage_Member_CallID($1, yytext, &($$));	}
 				|	call	'[' expr ']'		{	SIN::Manage_Member_CallExpression($1, $3, &($$));		}
 				;
 
@@ -222,7 +223,7 @@ normalcall:		'(' elist ')'						{	SIN::Manage_NormalCall($2, &($$));	}
 				
 				
 				
-methodcall:		DOUBLEDOT ID '(' elist ')'			{	SIN::Manage_MethodCall(strdup(yytext), $4, &($$));	}	/*equivalent to lvalue.id(lvalue, elist)*/
+methodcall:		DOUBLEDOT ID '(' elist ')'			{	SIN::Manage_MethodCall(yytext, $4, &($$));	}	/*equivalent to lvalue.id(lvalue, elist)*/
 				;
 
 
@@ -269,26 +270,26 @@ stmtd:			stmt stmtd	{	SIN::Manage_Statements($1, $2, &($$));	}
 
 
 
-funcdef:		FUNCTION ID	'(' idlist ')' block	{	SIN::Manage_FunctionDefinition_Function(strdup(yytext), $4, $6, &($$));	}
+funcdef:		FUNCTION ID	'(' idlist ')' block	{	SIN::Manage_FunctionDefinition_Function(yytext, $4, $6, &($$));	}
 				|	FUNCTION '(' idlist ')' block	{	SIN::Manage_FunctionDefinition_LamdaFunction($3, $5, &($$));			}
 				;
 
 
 const:			NUMBER 				{	SIN::Manage_Constant_Number(atoi(yytext), &($$));	}
-				|	STRING 			{	SIN::Manage_Constant_String(strdup(yytext), &($$));	}
+				|	STRING 			{	SIN::Manage_Constant_String(yytext, &($$));	}
 				|	NIL 			{	SIN::Manage_Constant_Nil(&($$));					}
 				|	TRUE 			{	SIN::Manage_Constant_True(&($$));					}
 				|	FALSE			{	SIN::Manage_Constant_False(&($$));					}
 				;
 
 
-idlist:			ID idlists			{	SIN::Manage_IDList(strdup(yytext), $2, &($$));	}
+idlist:			ID idlists			{	SIN::Manage_IDList(yytext, $2, &($$));	}
 				|	/*empty*/		{	SIN::Manage_IDList_Empty(&($$));				}
 				;
 
 
 
-idlists:		',' ID idlists	    {	SIN::Manage_IDList(strdup(yytext), $3, &($$));	}
+idlists:		',' ID idlists	    {	SIN::Manage_IDList(yytext, $3, &($$));	}
 				|				    {	SIN::Manage_IDList_Empty(&($$));				}
 				;
 

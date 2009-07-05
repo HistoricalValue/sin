@@ -71,6 +71,7 @@
 	#include <stdio.h>
 	#include <assert.h>
 	#include <iostream>
+	#include <string.h>
 	
 	
 	// Bison assumes alloca is the memory allocation
@@ -582,16 +583,16 @@ static const yytype_int8 yyrhs[] =
 /* YYRLINE[YYN] -- source line where rule number YYN was defined.  */
 static const yytype_uint16 yyrline[] =
 {
-       0,   108,   108,   113,   114,   119,   120,   121,   122,   123,
-     124,   125,   126,   127,   128,   129,   134,   135,   136,   137,
-     138,   139,   140,   141,   142,   143,   144,   145,   146,   147,
-     148,   149,   150,   155,   156,   157,   158,   159,   164,   165,
-     166,   167,   168,   169,   170,   171,   176,   181,   182,   183,
-     184,   185,   190,   191,   192,   193,   198,   199,   200,   201,
-     207,   208,   209,   214,   215,   220,   225,   230,   231,   236,
-     237,   242,   243,   248,   249,   254,   255,   256,   261,   261,
-     266,   267,   272,   273,   277,   278,   279,   280,   281,   285,
-     286,   291,   292,   297,   298,   301,   304,   307,   308
+       0,   109,   109,   114,   115,   120,   121,   122,   123,   124,
+     125,   126,   127,   128,   129,   130,   135,   136,   137,   138,
+     139,   140,   141,   142,   143,   144,   145,   146,   147,   148,
+     149,   150,   151,   156,   157,   158,   159,   160,   165,   166,
+     167,   168,   169,   170,   171,   172,   177,   182,   183,   184,
+     185,   186,   191,   192,   193,   194,   199,   200,   201,   202,
+     208,   209,   210,   215,   216,   221,   226,   231,   232,   237,
+     238,   243,   244,   249,   250,   255,   256,   257,   262,   262,
+     267,   268,   273,   274,   278,   279,   280,   281,   282,   286,
+     287,   292,   293,   298,   299,   302,   305,   308,   309
 };
 #endif
 
@@ -1987,17 +1988,17 @@ yyreduce:
 
   case 52:
 
-    {	SIN::Manage_LValue_ID(strdup(yytext), &((yyval.AST)));		}
+    {	SIN::Manage_LValue_ID(yytext, &((yyval.AST)));		}
     break;
 
   case 53:
 
-    {	SIN::Manage_LValue_LocalID(strdup(yytext), &((yyval.AST)));	}
+    {	SIN::Manage_LValue_LocalID(yytext, &((yyval.AST)));	}
     break;
 
   case 54:
 
-    {	SIN::Manage_LValue_GlobalID(strdup(yytext), &((yyval.AST)));	}
+    {	SIN::Manage_LValue_GlobalID(yytext, &((yyval.AST)));	}
     break;
 
   case 55:
@@ -2007,7 +2008,7 @@ yyreduce:
 
   case 56:
 
-    {	SIN::Manage_Member_LValueID((yyvsp[(1) - (3)].AST), strdup(yytext), &((yyval.AST)));	}
+    {	SIN::Manage_Member_LValueID((yyvsp[(1) - (3)].AST), yytext, &((yyval.AST)));	}
     break;
 
   case 57:
@@ -2017,7 +2018,7 @@ yyreduce:
 
   case 58:
 
-    {	SIN::Manage_Member_CallID((yyvsp[(1) - (3)].AST), strdup(yytext), &((yyval.AST)));	}
+    {	SIN::Manage_Member_CallID((yyvsp[(1) - (3)].AST), yytext, &((yyval.AST)));	}
     break;
 
   case 59:
@@ -2057,7 +2058,7 @@ yyreduce:
 
   case 66:
 
-    {	SIN::Manage_MethodCall(strdup(yytext), (yyvsp[(4) - (5)].AST), &((yyval.AST)));	}
+    {	SIN::Manage_MethodCall(yytext, (yyvsp[(4) - (5)].AST), &((yyval.AST)));	}
     break;
 
   case 67:
@@ -2137,7 +2138,7 @@ yyreduce:
 
   case 82:
 
-    {	SIN::Manage_FunctionDefinition_Function(strdup(yytext), (yyvsp[(4) - (6)].AST), (yyvsp[(6) - (6)].AST), &((yyval.AST)));	}
+    {	SIN::Manage_FunctionDefinition_Function(yytext, (yyvsp[(4) - (6)].AST), (yyvsp[(6) - (6)].AST), &((yyval.AST)));	}
     break;
 
   case 83:
@@ -2152,7 +2153,7 @@ yyreduce:
 
   case 85:
 
-    {	SIN::Manage_Constant_String(strdup(yytext), &((yyval.AST)));	}
+    {	SIN::Manage_Constant_String(yytext, &((yyval.AST)));	}
     break;
 
   case 86:
@@ -2172,7 +2173,7 @@ yyreduce:
 
   case 89:
 
-    {	SIN::Manage_IDList(strdup(yytext), (yyvsp[(2) - (2)].AST), &((yyval.AST)));	}
+    {	SIN::Manage_IDList(yytext, (yyvsp[(2) - (2)].AST), &((yyval.AST)));	}
     break;
 
   case 90:
@@ -2182,7 +2183,7 @@ yyreduce:
 
   case 91:
 
-    {	SIN::Manage_IDList(strdup(yytext), (yyvsp[(3) - (3)].AST), &((yyval.AST)));	}
+    {	SIN::Manage_IDList(yytext, (yyvsp[(3) - (3)].AST), &((yyval.AST)));	}
     break;
 
   case 92:
