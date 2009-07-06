@@ -358,10 +358,6 @@
 					>
 				</File>
 				<File
-					RelativePath="..\..\Include\SINParserManageMetaExpression.h"
-					>
-				</File>
-				<File
 					RelativePath="..\..\Include\SINParserManageMethodCall.h"
 					>
 				</File>
