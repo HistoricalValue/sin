@@ -1,6 +1,5 @@
 SIN/SINmain/Projects/Linux_GNU/sin
 SIN/Common/Src/Common.d
-SIN/SINAST/Include/SINASTTreeVisualisationVisitor.h
 SIN/SINAST/Src/ASTVisitor.d
 SIN/SINAST/Src/SINASTNode.d
 SIN/SINAST/Src/SINTreeNode.d
