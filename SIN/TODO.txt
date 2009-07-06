@@ -2,3 +2,20 @@
 * Add default severity in LoggingManager
 * Add error querying method in parser
 * Make ASTNode subclasses give an appropriate name to their ASTNode ancestor
+
+
+* Delete AST nodes (some day)
+
+* Add unique ID for each ASTNode
+* AST Const nodes give correct string name
+
+
+==== QYESTIONS =====
+* What about native object pointers? Why are they needed for the AST?
+
+
+
+==== LOW PRIORITY ====
+* Functors 
+* Warnings
+

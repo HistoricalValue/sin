@@ -1,0 +1,539 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configurationDescriptor version="51">
+  <logicalFolder name="root" displayName="root" projectFiles="true">
+    <logicalFolder name="SIN" displayName="SIN" projectFiles="true">
+      <logicalFolder name="Common" displayName="Common" projectFiles="true">
+        <logicalFolder name="Include" displayName="Include" projectFiles="true">
+          <itemPath>../Common/Include/Common.h</itemPath>
+          <itemPath>../Common/Include/Logger.h</itemPath>
+        </logicalFolder>
+        <logicalFolder name="Src" displayName="Src" projectFiles="true">
+          <itemPath>../Common/Src/Common.cpp</itemPath>
+        </logicalFolder>
+      </logicalFolder>
+      <logicalFolder name="SINAST" displayName="SINAST" projectFiles="true">
+        <logicalFolder name="Include" displayName="Include" projectFiles="true">
+          <itemPath>../SINAST/Include/SINASTCommon.h</itemPath>
+          <itemPath>../SINAST/Include/SINASTNode.h</itemPath>
+          <itemPath>../SINAST/Include/SINASTTreeVisualisationVisitor.h</itemPath>
+          <itemPath>../SINAST/Include/SINASTVisitor.h</itemPath>
+          <itemPath>../SINAST/Include/SINTreeNode.h</itemPath>
+        </logicalFolder>
+        <logicalFolder name="Src" displayName="Src" projectFiles="true">
+          <itemPath>../SINAST/Src/ASTVisitor.cpp</itemPath>
+          <itemPath>../SINAST/Src/SINASTNode.cpp</itemPath>
+          <itemPath>../SINAST/Src/SINTreeNode.cpp</itemPath>
+        </logicalFolder>
+      </logicalFolder>
+      <logicalFolder name="SINCommon" displayName="SINCommon" projectFiles="true">
+        <logicalFolder name="Include" displayName="Include" projectFiles="true">
+          <itemPath>../SINCommon/Include/SIN.h</itemPath>
+          <itemPath>../SINCommon/Include/SINAssert.h</itemPath>
+          <itemPath>../SINCommon/Include/SINConstants.h</itemPath>
+          <itemPath>../SINCommon/Include/SINFileOutputStream.h</itemPath>
+          <itemPath>../SINCommon/Include/SINInputStream.h</itemPath>
+          <itemPath>../SINCommon/Include/SINNamer.h</itemPath>
+          <itemPath>../SINCommon/Include/SINOutputStream.h</itemPath>
+          <itemPath>../SINCommon/Include/SINStream.h</itemPath>
+          <itemPath>../SINCommon/Include/SINString.h</itemPath>
+          <itemPath>../SINCommon/Include/SINTypes.h</itemPath>
+        </logicalFolder>
+        <logicalFolder name="Src" displayName="Src" projectFiles="true">
+          <itemPath>../SINCommon/Src/SIN.cpp</itemPath>
+          <itemPath>../SINCommon/Src/SINCommon.cpp</itemPath>
+          <itemPath>../SINCommon/Src/SINInputStream.cpp</itemPath>
+          <itemPath>../SINCommon/Src/SINNamer.cpp</itemPath>
+          <itemPath>../SINCommon/Src/SINOutputStream.cpp</itemPath>
+          <itemPath>../SINCommon/Src/SINStream.cpp</itemPath>
+          <itemPath>../SINCommon/Src/SINString.cpp</itemPath>
+        </logicalFolder>
+      </logicalFolder>
+      <logicalFolder name="SINLogging" displayName="SINLogging" projectFiles="true">
+        <logicalFolder name="Include" displayName="Include" projectFiles="true">
+          <itemPath>../SINLogging/Include/SINLogger.h</itemPath>
+          <itemPath>../SINLogging/Include/SINLoggerManager.h</itemPath>
+          <itemPath>../SINLogging/Include/SINRecord.h</itemPath>
+          <itemPath>../SINLogging/Include/SINRecordPrinter.h</itemPath>
+        </logicalFolder>
+        <logicalFolder name="Src" displayName="Src" projectFiles="true">
+          <itemPath>../SINLogging/Src/SINLogger.cpp</itemPath>
+          <itemPath>../SINLogging/Src/SINLoggerManager.cpp</itemPath>
+          <itemPath>../SINLogging/Src/SINRecord.cpp</itemPath>
+          <itemPath>../SINLogging/Src/SINRecordPrinter.cpp</itemPath>
+        </logicalFolder>
+      </logicalFolder>
+      <logicalFolder name="SINmain" displayName="SINmain" projectFiles="true">
+        <logicalFolder name="Src" displayName="Src" projectFiles="true">
+          <itemPath>../SINmain/Src/main.cpp</itemPath>
+        </logicalFolder>
+      </logicalFolder>
+      <logicalFolder name="SINParser" displayName="SINParser" projectFiles="true">
+        <logicalFolder name="Include" displayName="Include" projectFiles="true">
+          <itemPath>../SINParser/Include/SINParser.h</itemPath>
+          <itemPath>../SINParser/Include/SINParserAPI.h</itemPath>
+          <itemPath>../SINParser/Include/SINParserBison.h</itemPath>
+          <itemPath>../SINParser/Include/SINParserManageExpression.h</itemPath>
+          <itemPath>../SINParser/Include/unistd.h</itemPath>
+        </logicalFolder>
+        <logicalFolder name="Src" displayName="Src" projectFiles="true">
+          <itemPath>../SINParser/Src/SINLexAnalyser.cpp</itemPath>
+          <itemPath>../SINParser/Src/SINParserAPI.cpp</itemPath>
+          <itemPath>../SINParser/Src/SINParserBison.cpp</itemPath>
+          <itemPath>../SINParser/Src/SINParserManageExpression.cpp</itemPath>
+        </logicalFolder>
+      </logicalFolder>
+      <logicalFolder name="Tests" displayName="Tests" projectFiles="true">
+        <logicalFolder name="SINAST_Test" displayName="SINAST_Test" projectFiles="true">
+          <logicalFolder name="Include" displayName="Include" projectFiles="true">
+            <itemPath>../Tests/SINAST_Test/Include/SINASTTester.h</itemPath>
+          </logicalFolder>
+          <logicalFolder name="Src" displayName="Src" projectFiles="true">
+            <itemPath>../Tests/SINAST_Test/Src/SINAST_Tester.cpp</itemPath>
+          </logicalFolder>
+        </logicalFolder>
+        <logicalFolder name="SINCommon_Test"
+                       displayName="SINCommon_Test"
+                       projectFiles="true">
+          <logicalFolder name="Include" displayName="Include" projectFiles="true">
+            <itemPath>../Tests/SINCommon_Test/Include/SINCommonTester.h</itemPath>
+          </logicalFolder>
+          <logicalFolder name="Src" displayName="Src" projectFiles="true">
+            <itemPath>../Tests/SINCommon_Test/Src/SINCommonTester.cpp</itemPath>
+          </logicalFolder>
+        </logicalFolder>
+        <logicalFolder name="SINLogging_Test"
+                       displayName="SINLogging_Test"
+                       projectFiles="true">
+          <logicalFolder name="Include" displayName="Include" projectFiles="true">
+            <itemPath>../Tests/SINLogging_Test/Include/SINLoggingTester.h</itemPath>
+          </logicalFolder>
+          <logicalFolder name="Src" displayName="Src" projectFiles="true">
+            <itemPath>../Tests/SINLogging_Test/Src/SINLoggingTester.cpp</itemPath>
+          </logicalFolder>
+        </logicalFolder>
+        <logicalFolder name="SINParser_Test"
+                       displayName="SINParser_Test"
+                       projectFiles="true">
+          <logicalFolder name="Include" displayName="Include" projectFiles="true">
+            <itemPath>../Tests/SINParser_Test/Include/SINParserTester.h</itemPath>
+          </logicalFolder>
+          <logicalFolder name="Src" displayName="Src" projectFiles="true">
+            <itemPath>../Tests/SINParser_Test/Src/SINParserTester.cpp</itemPath>
+          </logicalFolder>
+        </logicalFolder>
+        <logicalFolder name="SINTest" displayName="SINTest" projectFiles="true">
+          <logicalFolder name="Include" displayName="Include" projectFiles="true">
+            <itemPath>../Tests/SINTest/Include/SINTest.h</itemPath>
+            <itemPath>../Tests/SINTest/Include/SINTestingCommon.h</itemPath>
+          </logicalFolder>
+          <logicalFolder name="Src" displayName="Src" projectFiles="true">
+            <itemPath>../Tests/SINTest/Src/SINTest.cpp</itemPath>
+          </logicalFolder>
+        </logicalFolder>
+      </logicalFolder>
+    </logicalFolder>
+    <logicalFolder name="ExternalFiles"
+                   displayName="Important Files"
+                   projectFiles="false">
+      <itemPath>GNUmakefile</itemPath>
+    </logicalFolder>
+  </logicalFolder>
+  <sourceRootList>
+    <Elem>..</Elem>
+  </sourceRootList>
+  <projectmakefile>GNUmakefile</projectmakefile>
+  <confs>
+    <conf name="Debug" type="1">
+      <toolsSet>
+        <developmentServer>localhost</developmentServer>
+        <compilerSet>GNU|GNU</compilerSet>
+        <platform>2</platform>
+      </toolsSet>
+      <compileType>
+        <ccCompilerTool>
+          <includeDirectories>
+            <directoryPath>../Common/Include</directoryPath>
+            <directoryPath>../SINAST/Include</directoryPath>
+            <directoryPath>../SINCommon/Include</directoryPath>
+            <directoryPath>../SINLogging/Include</directoryPath>
+            <directoryPath>../SINmain/Include</directoryPath>
+            <directoryPath>../SINParser/Include</directoryPath>
+            <directoryPath>../Tests/SINAST_Test/Include</directoryPath>
+            <directoryPath>../Tests/SINCommon_Test/Include</directoryPath>
+            <directoryPath>../Tests/SINLogging_Test/Include</directoryPath>
+            <directoryPath>../Tests/SINParser_Test/Include</directoryPath>
+            <directoryPath>../Tests/SINTest/Include</directoryPath>
+          </includeDirectories>
+        </ccCompilerTool>
+        <linkerTool>
+          <linkerLibItems>
+          </linkerLibItems>
+        </linkerTool>
+      </compileType>
+      <item path="../Common/Include/Common.h">
+        <itemTool>3</itemTool>
+      </item>
+      <item path="../Common/Include/Logger.h">
+        <itemTool>3</itemTool>
+      </item>
+      <item path="../Common/Src/Common.cpp">
+        <itemTool>1</itemTool>
+      </item>
+      <item path="../SINAST/Include/SINASTCommon.h">
+        <itemTool>3</itemTool>
+      </item>
+      <item path="../SINAST/Include/SINASTNode.h">
+        <itemTool>3</itemTool>
+      </item>
+      <item path="../SINAST/Include/SINASTTreeVisualisationVisitor.h">
+        <itemTool>3</itemTool>
+      </item>
+      <item path="../SINAST/Include/SINASTVisitor.h">
+        <itemTool>3</itemTool>
+      </item>
+      <item path="../SINAST/Include/SINTreeNode.h">
+        <itemTool>3</itemTool>
+      </item>
+      <item path="../SINAST/Src/ASTVisitor.cpp">
+        <itemTool>1</itemTool>
+      </item>
+      <item path="../SINAST/Src/SINASTNode.cpp">
+        <itemTool>1</itemTool>
+      </item>
+      <item path="../SINAST/Src/SINTreeNode.cpp">
+        <itemTool>1</itemTool>
+      </item>
+      <item path="../SINCommon/Include/SIN.h">
+        <itemTool>3</itemTool>
+      </item>
+      <item path="../SINCommon/Include/SINAssert.h">
+        <itemTool>3</itemTool>
+      </item>
+      <item path="../SINCommon/Include/SINConstants.h">
+        <itemTool>3</itemTool>
+      </item>
+      <item path="../SINCommon/Include/SINFileOutputStream.h">
+        <itemTool>3</itemTool>
+      </item>
+      <item path="../SINCommon/Include/SINInputStream.h">
+        <itemTool>3</itemTool>
+      </item>
+      <item path="../SINCommon/Include/SINNamer.h">
+        <itemTool>3</itemTool>
+      </item>
+      <item path="../SINCommon/Include/SINOutputStream.h">
+        <itemTool>3</itemTool>
+      </item>
+      <item path="../SINCommon/Include/SINStream.h">
+        <itemTool>3</itemTool>
+      </item>
+      <item path="../SINCommon/Include/SINString.h">
+        <itemTool>3</itemTool>
+      </item>
+      <item path="../SINCommon/Include/SINTypes.h">
+        <itemTool>3</itemTool>
+      </item>
+      <item path="../SINCommon/Src/SIN.cpp">
+        <itemTool>1</itemTool>
+      </item>
+      <item path="../SINCommon/Src/SINCommon.cpp">
+        <itemTool>1</itemTool>
+      </item>
+      <item path="../SINCommon/Src/SINInputStream.cpp">
+        <itemTool>1</itemTool>
+      </item>
+      <item path="../SINCommon/Src/SINNamer.cpp">
+        <itemTool>1</itemTool>
+      </item>
+      <item path="../SINCommon/Src/SINOutputStream.cpp">
+        <itemTool>1</itemTool>
+      </item>
+      <item path="../SINCommon/Src/SINStream.cpp">
+        <itemTool>1</itemTool>
+      </item>
+      <item path="../SINCommon/Src/SINString.cpp">
+        <itemTool>1</itemTool>
+      </item>
+      <item path="../SINLogging/Include/SINLogger.h">
+        <itemTool>3</itemTool>
+      </item>
+      <item path="../SINLogging/Include/SINLoggerManager.h">
+        <itemTool>3</itemTool>
+      </item>
+      <item path="../SINLogging/Include/SINRecord.h">
+        <itemTool>3</itemTool>
+      </item>
+      <item path="../SINLogging/Include/SINRecordPrinter.h">
+        <itemTool>3</itemTool>
+      </item>
+      <item path="../SINLogging/Src/SINLogger.cpp">
+        <itemTool>1</itemTool>
+      </item>
+      <item path="../SINLogging/Src/SINLoggerManager.cpp">
+        <itemTool>1</itemTool>
+      </item>
+      <item path="../SINLogging/Src/SINRecord.cpp">
+        <itemTool>1</itemTool>
+      </item>
+      <item path="../SINLogging/Src/SINRecordPrinter.cpp">
+        <itemTool>1</itemTool>
+      </item>
+      <item path="../SINParser/Include/SINParser.h">
+        <itemTool>3</itemTool>
+      </item>
+      <item path="../SINParser/Include/SINParserAPI.h">
+        <itemTool>3</itemTool>
+      </item>
+      <item path="../SINParser/Include/SINParserBison.h">
+        <itemTool>3</itemTool>
+      </item>
+      <item path="../SINParser/Include/SINParserManageExpression.h">
+        <itemTool>3</itemTool>
+      </item>
+      <item path="../SINParser/Include/unistd.h">
+        <itemTool>3</itemTool>
+      </item>
+      <item path="../SINParser/Src/SINLexAnalyser.cpp">
+        <itemTool>1</itemTool>
+      </item>
+      <item path="../SINParser/Src/SINParserAPI.cpp">
+        <itemTool>1</itemTool>
+      </item>
+      <item path="../SINParser/Src/SINParserBison.cpp">
+        <itemTool>1</itemTool>
+      </item>
+      <item path="../SINParser/Src/SINParserManageExpression.cpp">
+        <itemTool>1</itemTool>
+      </item>
+      <item path="../SINmain/Src/main.cpp">
+        <itemTool>1</itemTool>
+      </item>
+      <item path="../Tests/SINAST_Test/Include/SINASTTester.h">
+        <itemTool>3</itemTool>
+      </item>
+      <item path="../Tests/SINAST_Test/Src/SINAST_Tester.cpp">
+        <itemTool>1</itemTool>
+      </item>
+      <item path="../Tests/SINCommon_Test/Include/SINCommonTester.h">
+        <itemTool>3</itemTool>
+      </item>
+      <item path="../Tests/SINCommon_Test/Src/SINCommonTester.cpp">
+        <itemTool>1</itemTool>
+      </item>
+      <item path="../Tests/SINLogging_Test/Include/SINLoggingTester.h">
+        <itemTool>3</itemTool>
+      </item>
+      <item path="../Tests/SINLogging_Test/Src/SINLoggingTester.cpp">
+        <itemTool>1</itemTool>
+      </item>
+      <item path="../Tests/SINParser_Test/Include/SINParserTester.h">
+        <itemTool>3</itemTool>
+      </item>
+      <item path="../Tests/SINParser_Test/Src/SINParserTester.cpp">
+        <itemTool>1</itemTool>
+      </item>
+      <item path="../Tests/SINTest/Include/SINTest.h">
+        <itemTool>3</itemTool>
+      </item>
+      <item path="../Tests/SINTest/Include/SINTestingCommon.h">
+        <itemTool>3</itemTool>
+      </item>
+      <item path="../Tests/SINTest/Src/SINTest.cpp">
+        <itemTool>1</itemTool>
+      </item>
+    </conf>
+    <conf name="Release" type="1">
+      <toolsSet>
+        <developmentServer>localhost</developmentServer>
+        <compilerSet>GNU|GNU</compilerSet>
+        <platform>2</platform>
+      </toolsSet>
+      <compileType>
+        <cCompilerTool>
+          <developmentMode>5</developmentMode>
+        </cCompilerTool>
+        <ccCompilerTool>
+          <developmentMode>5</developmentMode>
+        </ccCompilerTool>
+        <fortranCompilerTool>
+          <developmentMode>5</developmentMode>
+        </fortranCompilerTool>
+        <linkerTool>
+          <linkerLibItems>
+          </linkerLibItems>
+        </linkerTool>
+      </compileType>
+      <item path="../Common/Include/Common.h">
+        <itemTool>3</itemTool>
+      </item>
+      <item path="../Common/Include/Logger.h">
+        <itemTool>3</itemTool>
+      </item>
+      <item path="../Common/Src/Common.cpp">
+        <itemTool>1</itemTool>
+      </item>
+      <item path="../SINAST/Include/SINASTCommon.h">
+        <itemTool>3</itemTool>
+      </item>
+      <item path="../SINAST/Include/SINASTNode.h">
+        <itemTool>3</itemTool>
+      </item>
+      <item path="../SINAST/Include/SINASTTreeVisualisationVisitor.h">
+        <itemTool>3</itemTool>
+      </item>
+      <item path="../SINAST/Include/SINASTVisitor.h">
+        <itemTool>3</itemTool>
+      </item>
+      <item path="../SINAST/Include/SINTreeNode.h">
+        <itemTool>3</itemTool>
+      </item>
+      <item path="../SINAST/Src/ASTVisitor.cpp">
+        <itemTool>1</itemTool>
+      </item>
+      <item path="../SINAST/Src/SINASTNode.cpp">
+        <itemTool>1</itemTool>
+      </item>
+      <item path="../SINAST/Src/SINTreeNode.cpp">
+        <itemTool>1</itemTool>
+      </item>
+      <item path="../SINCommon/Include/SIN.h">
+        <itemTool>3</itemTool>
+      </item>
+      <item path="../SINCommon/Include/SINAssert.h">
+        <itemTool>3</itemTool>
+      </item>
+      <item path="../SINCommon/Include/SINConstants.h">
+        <itemTool>3</itemTool>
+      </item>
+      <item path="../SINCommon/Include/SINFileOutputStream.h">
+        <itemTool>3</itemTool>
+      </item>
+      <item path="../SINCommon/Include/SINInputStream.h">
+        <itemTool>3</itemTool>
+      </item>
+      <item path="../SINCommon/Include/SINNamer.h">
+        <itemTool>3</itemTool>
+      </item>
+      <item path="../SINCommon/Include/SINOutputStream.h">
+        <itemTool>3</itemTool>
+      </item>
+      <item path="../SINCommon/Include/SINStream.h">
+        <itemTool>3</itemTool>
+      </item>
+      <item path="../SINCommon/Include/SINString.h">
+        <itemTool>3</itemTool>
+      </item>
+      <item path="../SINCommon/Include/SINTypes.h">
+        <itemTool>3</itemTool>
+      </item>
+      <item path="../SINCommon/Src/SIN.cpp">
+        <itemTool>1</itemTool>
+      </item>
+      <item path="../SINCommon/Src/SINCommon.cpp">
+        <itemTool>1</itemTool>
+      </item>
+      <item path="../SINCommon/Src/SINInputStream.cpp">
+        <itemTool>1</itemTool>
+      </item>
+      <item path="../SINCommon/Src/SINNamer.cpp">
+        <itemTool>1</itemTool>
+      </item>
+      <item path="../SINCommon/Src/SINOutputStream.cpp">
+        <itemTool>1</itemTool>
+      </item>
+      <item path="../SINCommon/Src/SINStream.cpp">
+        <itemTool>1</itemTool>
+      </item>
+      <item path="../SINCommon/Src/SINString.cpp">
+        <itemTool>1</itemTool>
+      </item>
+      <item path="../SINLogging/Include/SINLogger.h">
+        <itemTool>3</itemTool>
+      </item>
+      <item path="../SINLogging/Include/SINLoggerManager.h">
+        <itemTool>3</itemTool>
+      </item>
+      <item path="../SINLogging/Include/SINRecord.h">
+        <itemTool>3</itemTool>
+      </item>
+      <item path="../SINLogging/Include/SINRecordPrinter.h">
+        <itemTool>3</itemTool>
+      </item>
+      <item path="../SINLogging/Src/SINLogger.cpp">
+        <itemTool>1</itemTool>
+      </item>
+      <item path="../SINLogging/Src/SINLoggerManager.cpp">
+        <itemTool>1</itemTool>
+      </item>
+      <item path="../SINLogging/Src/SINRecord.cpp">
+        <itemTool>1</itemTool>
+      </item>
+      <item path="../SINLogging/Src/SINRecordPrinter.cpp">
+        <itemTool>1</itemTool>
+      </item>
+      <item path="../SINParser/Include/SINParser.h">
+        <itemTool>3</itemTool>
+      </item>
+      <item path="../SINParser/Include/SINParserAPI.h">
+        <itemTool>3</itemTool>
+      </item>
+      <item path="../SINParser/Include/SINParserBison.h">
+        <itemTool>3</itemTool>
+      </item>
+      <item path="../SINParser/Include/SINParserManageExpression.h">
+        <itemTool>3</itemTool>
+      </item>
+      <item path="../SINParser/Include/unistd.h">
+        <itemTool>3</itemTool>
+      </item>
+      <item path="../SINParser/Src/SINLexAnalyser.cpp">
+        <itemTool>1</itemTool>
+      </item>
+      <item path="../SINParser/Src/SINParserAPI.cpp">
+        <itemTool>1</itemTool>
+      </item>
+      <item path="../SINParser/Src/SINParserBison.cpp">
+        <itemTool>1</itemTool>
+      </item>
+      <item path="../SINParser/Src/SINParserManageExpression.cpp">
+        <itemTool>1</itemTool>
+      </item>
+      <item path="../SINmain/Src/main.cpp">
+        <itemTool>1</itemTool>
+      </item>
+      <item path="../Tests/SINAST_Test/Include/SINASTTester.h">
+        <itemTool>3</itemTool>
+      </item>
+      <item path="../Tests/SINAST_Test/Src/SINAST_Tester.cpp">
+        <itemTool>1</itemTool>
+      </item>
+      <item path="../Tests/SINCommon_Test/Include/SINCommonTester.h">
+        <itemTool>3</itemTool>
+      </item>
+      <item path="../Tests/SINCommon_Test/Src/SINCommonTester.cpp">
+        <itemTool>1</itemTool>
+      </item>
+      <item path="../Tests/SINLogging_Test/Include/SINLoggingTester.h">
+        <itemTool>3</itemTool>
+      </item>
+      <item path="../Tests/SINLogging_Test/Src/SINLoggingTester.cpp">
+        <itemTool>1</itemTool>
+      </item>
+      <item path="../Tests/SINParser_Test/Include/SINParserTester.h">
+        <itemTool>3</itemTool>
+      </item>
+      <item path="../Tests/SINParser_Test/Src/SINParserTester.cpp">
+        <itemTool>1</itemTool>
+      </item>
+      <item path="../Tests/SINTest/Include/SINTest.h">
+        <itemTool>3</itemTool>
+      </item>
+      <item path="../Tests/SINTest/Include/SINTestingCommon.h">
+        <itemTool>3</itemTool>
+      </item>
+      <item path="../Tests/SINTest/Src/SINTest.cpp">
+        <itemTool>1</itemTool>
+      </item>
+    </conf>
+  </confs>
+</configurationDescriptor>

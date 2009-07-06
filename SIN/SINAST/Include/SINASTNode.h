@@ -12,6 +12,7 @@
 namespace SIN {
 
     class ASTVisitor;	//forward declaration
+	class ASTTreeVisualisationVisitor;
 
 
 	#define SINASTNODE_OPNODE_DECL(NAME, OPNAME)            \
@@ -62,6 +63,7 @@ namespace SIN {
         String const &Name(void) const;
 
 		virtual void Accept(ASTVisitor *) const;
+		virtual void Accept(ASTTreeVisualisationVisitor *) const;
 
     private:
         String const name;

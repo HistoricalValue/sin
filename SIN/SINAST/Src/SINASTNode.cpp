@@ -2,6 +2,7 @@
 #include "SINConstants.h"
 #include "SINASTNode.h"
 #include "SINASTVisitor.h"
+#include "SINASTTreeVisualisationVisitor.h"
 #include "SINAssert.h"
 
 
@@ -61,6 +62,11 @@ namespace SIN {
         SINASSERT(_v);
         _v->Visit(*this);
     }
+	void ASTNode::Accept(ASTTreeVisualisationVisitor *_v) const {
+		SINASSERT(_v);
+		_v->Visit(*this);
+	}
+
     Namer ASTNode::namer("ASTNode-");
 
 	///--------- ConstNodes ---------
