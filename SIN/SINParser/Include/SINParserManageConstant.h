@@ -5,7 +5,7 @@
 
 namespace SIN{
 
-	void Manage_Constant_Number	(int _number, ASTNode **_retconst);
+	void Manage_Constant_Number	(double _number, ASTNode **_retconst);
 	void Manage_Constant_String	(char *_string, ASTNode **_retconst);
 	void Manage_Constant_Nil	(ASTNode **_retconst);
 	void Manage_Constant_True	(ASTNode **_retconst);

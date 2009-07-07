@@ -10,7 +10,13 @@ namespace SIN{
 		*_retfuncdef = new ASTNode("Function");
 		StringASTNode *id = new StringASTNode(_id);
 
-		**_retfuncdef << id << _idlist << _block;
+		**_retfuncdef << id;	// To remove(No need to keep function names after we use unique IDs)
+		for(ASTNode *nxtID; _idlist != NULL; _idlist = nxtID){
+			**_retfuncdef << new ASTNode(*_idlist);
+			nxtID = static_cast<ASTNode*>(+(*_idlist));
+			delete _idlist;
+		}
+		**_retfuncdef << _block;
 	}
 
 	//---------------------------------------------------------------------
@@ -19,7 +25,12 @@ namespace SIN{
 	
 		*_retfuncdef = new ASTNode("Lamda Function");
 
-		**_retfuncdef << _idlist << _block;
+		for(ASTNode *nxtID; _idlist != NULL; _idlist = nxtID){
+			**_retfuncdef << new ASTNode(*_idlist);
+			nxtID = static_cast<ASTNode*>(+(*_idlist));
+			delete _idlist;
+		}
+		**_retfuncdef << _block;
 	}
 
 } // namespace SIN

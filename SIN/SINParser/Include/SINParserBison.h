@@ -70,7 +70,7 @@
      OR = 286,
      NOT = 287,
      DOT_LT = 288,
-     DOT_GT = 289,
+     GT_DOT = 289,
      DOT_TILDE = 290,
      DOT_EXCl_MARK = 291,
      DOT_NUM_SIGN = 292,
@@ -114,7 +114,7 @@
 #define OR 286
 #define NOT 287
 #define DOT_LT 288
-#define DOT_GT 289
+#define GT_DOT 289
 #define DOT_TILDE 290
 #define DOT_EXCl_MARK 291
 #define DOT_NUM_SIGN 292

@@ -1,4 +1,6 @@
 #include "SINParserManageStatement.h"
+#include "SINLoggerManager.h"
+#include "SINLogger.h"
 
 namespace SIN{
 
@@ -42,6 +44,9 @@ namespace SIN{
 
 	void Manage_Statement_Break (ASTNode **_retstmt){
 	
+		SIN::Logger &logger = SIN::LoggerManager::SingletonGetInstance()->GetLogger("SIN::Tests::Parser::Manage");
+		logger.Notice("Entered stmt : break Rule");
+
 		*_retstmt = new ASTNode("Break");
 	}
 

@@ -7,16 +7,17 @@ namespace SIN{
 
 	void Manage_Statements(ASTNode *_stmt, ASTNode *_stmts, ASTNode **_retstmts){
 	
-		*_retstmts = new ASTNode("Statements");
+		*_retstmts = _stmt;
 
-		**_retstmts << _stmt << _stmts;
+		if(_stmts != NULL)
+			(*_retstmts)->SetRightSibling(_stmts);
 	}
 
 	//---------------------------------------------------------------------
 
 	void Manage_Statements_Empty(ASTNode **_retstmts){
 	
-		*_retstmts = new ASTNode("Empty Statements");
+		*_retstmts = NULL;
 	}
 
 } // namespace SIN

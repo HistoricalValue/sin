@@ -8,8 +8,11 @@ namespace SIN{
 
 	//---------------------------------------------------------------------
 
-	void Manage_Constant_Number (int _number, ASTNode **_retconst){
+	void Manage_Constant_Number (double _number, ASTNode **_retconst){
 	
+		SIN::Logger &logger = SIN::LoggerManager::SingletonGetInstance()->GetLogger("SIN::Tests::Parser::Manage");
+		logger.Notice(SIN::String("Entered const : Number Rule. Number ") + SIN::string_cast(_number));
+
 		*_retconst = new NumberASTNode(_number);
 	}
 

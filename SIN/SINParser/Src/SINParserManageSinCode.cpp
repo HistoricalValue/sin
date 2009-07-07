@@ -9,7 +9,11 @@ namespace SIN{
 	
 		*_retsincode = new ASTNode("AST");
 
-		**_retsincode << _stmts;
+		for(ASTNode *nxtStmt; _stmts != NULL; _stmts = nxtStmt){
+			**_retsincode << new ASTNode(*_stmts);
+			nxtStmt = static_cast<ASTNode*>(+(*_stmts));
+			delete _stmts;
+		}
 	}
 
 } // namespace SIN

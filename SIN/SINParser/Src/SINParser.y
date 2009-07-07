@@ -84,7 +84,7 @@
  
 %token IF ELSE WHILE FOR FUNCTION RETURN BREAK CONTINUE LOCAL GLOBAL TRUE FALSE NIL
 %token ASSIGN ADD MIN MUL DIV MOD EQ NOTEQ INCR DECR GT LT GE LE AND OR NOT 
-%token DOT_LT DOT_GT DOT_TILDE DOT_EXCl_MARK DOT_NUM_SIGN DOT_AT
+%token DOT_LT GT_DOT DOT_TILDE DOT_EXCl_MARK DOT_NUM_SIGN DOT_AT
 %token '[' ']' '{' '}' '(' ')' ';' ':' '.' ',' DOUBLEDOT
 %token <realV>   NUMBER
 %token <stringV> ID STRING
@@ -153,8 +153,8 @@ expr:			assignexpr 					{	SIN::Manage_Expression_AssignExpression($1, &($$));			
 				
 				
 				
-metaexpr:		DOT_LT	expr  DOT_GT			{}
-				|	DOT_TILDE		const		{/*i am not sure if this is corect*/}
+metaexpr:		DOT_LT	expr  GT_DOT			{}
+				|	DOT_TILDE		ID			{/*i am not sure if this is corect*/}
 				|	DOT_EXCl_MARK	metaexpr	{}
 				|	DOT_NUM_SIGN	STRING		{}
 				|	DOT_AT			metaexpr	{}
@@ -275,7 +275,7 @@ funcdef:		FUNCTION ID	'(' idlist ')' block	{	SIN::Manage_FunctionDefinition_Func
 				;
 
 
-const:			NUMBER 				{	SIN::Manage_Constant_Number(atoi(yytext), &($$));	}
+const:			NUMBER 				{	SIN::Manage_Constant_Number(atof(yytext), &($$));	}
 				|	STRING 			{	SIN::Manage_Constant_String(yytext, &($$));	}
 				|	NIL 			{	SIN::Manage_Constant_Nil(&($$));					}
 				|	TRUE 			{	SIN::Manage_Constant_True(&($$));					}
@@ -284,13 +284,13 @@ const:			NUMBER 				{	SIN::Manage_Constant_Number(atoi(yytext), &($$));	}
 
 
 idlist:			ID idlists			{	SIN::Manage_IDList(yytext, $2, &($$));	}
-				|	/*empty*/		{	SIN::Manage_IDList_Empty(&($$));				}
+				|	/*empty*/		{	SIN::Manage_IDList_Empty(&($$));		}
 				;
 
 
 
 idlists:		',' ID idlists	    {	SIN::Manage_IDList(yytext, $3, &($$));	}
-				|				    {	SIN::Manage_IDList_Empty(&($$));				}
+				|				    {	SIN::Manage_IDList_Empty(&($$));		}
 				;
 
 

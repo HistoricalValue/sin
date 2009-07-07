@@ -54,7 +54,7 @@ lineComm		\/\/.*
 
 
 ".<"			{ return DOT_LT;		}
-".>"			{ return DOT_GT;		}
+">."			{ return GT_DOT;		}
 ".~"			{ return DOT_TILDE;		}
 ".!"			{ return DOT_EXCl_MARK; }
 ".@"			{ return DOT_AT;		}
