@@ -44,6 +44,7 @@ namespace SIN {
     extern String const string_cast(unsigned long int const  &_val);
     extern String const string_cast(float const              &_val);
     extern String const string_cast(double const             &_val);
+    extern String const string_cast(void * const             &_val);
 
     /** Writing a String to an OutpuStream */
     extern OutputStream &operator <<(OutputStream &, String const &);

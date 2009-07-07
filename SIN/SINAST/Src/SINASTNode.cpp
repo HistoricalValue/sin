@@ -66,7 +66,9 @@ namespace SIN {
 		SINASSERT(_v);
 		_v->Visit(*this);
 	}
-
+	String const string_cast(ASTNode const &_node) {
+		return string_cast(_node.Name());
+	}
     Namer ASTNode::namer("ASTNode-");
 
 	///--------- ConstNodes ---------

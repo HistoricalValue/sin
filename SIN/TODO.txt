@@ -5,10 +5,14 @@
 
 
 * Delete AST nodes (some day)
+* Add a method DestroyTree() somewhere.
 
 * Add unique ID for each ASTNode
 * AST Const nodes give correct string name
 
+
+ ---logging---
+ * Add a "set all record printers" method to LoggerManager
 
 ==== QYESTIONS =====
 * What about native object pointers? Why are they needed for the AST?

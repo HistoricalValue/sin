@@ -69,7 +69,7 @@ namespace SIN {
         String const name;
         static Namer namer;
 	};
-
+	extern String const string_cast(SIN::ASTNode const        &_val);
 
 
 	//-----------------------------------------------------------------------	

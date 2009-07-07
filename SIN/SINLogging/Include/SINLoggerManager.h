@@ -24,9 +24,9 @@ namespace SIN {
         }; // class DefaultLoggerFactory
         class StreamLogger : public Logger {
             OutputStream &out;
-            InstanceProxy<RecordPrinter> const &rp;
+            RecordPrinter rp;
         public:
-            StreamLogger(String const &name, enum Record::Severity const &report_level, OutputStream &out, InstanceProxy<RecordPrinter> const * const &rp);
+            StreamLogger(String const &name, enum Record::Severity const &report_level, OutputStream &out, RecordPrinter const &rp);
             virtual ~StreamLogger(void);
             virtual void Message(Record const &rec);
         }; // clss StreamLogger

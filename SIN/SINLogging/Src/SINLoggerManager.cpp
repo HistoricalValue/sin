@@ -11,7 +11,7 @@ namespace SIN {
     LoggerManager::DefaultLoggerFactory::~DefaultLoggerFactory(void) {
     }
     Logger *LoggerManager::DefaultLoggerFactory::MakeDefaultLogger(String const &_name) {
-        return new StreamLogger(_name, Logging::Record::FINEST, STDOUT, &rp);
+        return new StreamLogger(_name, Logging::Record::FINEST, STDOUT, *rp);
     }
     void LoggerManager::DefaultLoggerFactory::DestroyDefaultLogger(Logger *_logger) {
         delete _logger;
@@ -22,8 +22,8 @@ namespace SIN {
         String const &_name,
         enum Logging::Record::Severity const &_report_level,
         OutputStream &_out,
-        InstanceProxy<RecordPrinter> const * const &_rp):
-    Logger(_name, _report_level), out(_out), rp(*_rp)
+        RecordPrinter const &_rp):
+    Logger(_name, _report_level), out(_out), rp(_rp)
     {
     }
     LoggerManager::StreamLogger::~StreamLogger(void) {
@@ -31,7 +31,7 @@ namespace SIN {
     void LoggerManager::StreamLogger::Message(Record const &_record) {
         if (shouldLog(_record.Severity())) {
             out << name << ' ';
-            rp->PrintRecord(_record);
+            rp.PrintRecord(_record);
         }
     }
 
@@ -132,14 +132,21 @@ namespace SIN {
             _logger_name,
             new StreamLogger(
                 _logger_name,
-                GetLogger(_logger_name).GetCriticalSeverity(),
+                GetLogger(_logger_name).GetCriticalSeverity(), // TODO get critical severity properyl
                 _out,
-                &dlf_rp)
+                *dlf_rp)
             );
     }
     ////////////////
     Logger *LoggerManager::MakeVoidLogger(String const &_logger_name) {
-        return MakeStreamLogger(_logger_name, VOIDOUT);
+        return SetLogger(
+			_logger_name,
+			new StreamLogger(
+				_logger_name,
+				GetLogger(_logger_name).GetCriticalSeverity(), // TODO get critical severity properly
+				VOIDOUT,
+				Logging::RecordPrinter(VOIDOUT))
+			);
     }
     Logger *LoggerManager::MakeStdoutLogger(String const &_logger_name) {
         return MakeStreamLogger(_logger_name, STDOUT);

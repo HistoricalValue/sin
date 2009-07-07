@@ -65,6 +65,7 @@ namespace SIN {
     SINSTRING_STRING_CAST_DEF(unsigned long int  )
     SINSTRING_STRING_CAST_DEF(float              )
     SINSTRING_STRING_CAST_DEF(double             )
+	SINSTRING_STRING_CAST_DEF(void *             )
 
     // --- OutputStream << String
     OutputStream &operator <<(OutputStream &o, String const &s) {
