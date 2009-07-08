@@ -16,6 +16,7 @@ namespace SIN {
     namespace Tests {
         namespace Common {
             static InstanceProxy<Logger> logger;
+			static InstanceProxy<TestFactory> test_factory;
 
             SINTESTSCOMMON_TESTDEF(Types,
                 Number_t num;
@@ -48,8 +49,9 @@ namespace SIN {
                 ASSERT(bln == FALSE); ASSERT(!(bln == TRUE)); ASSERT(bln != TRUE); ASSERT(!bln == TRUE);
             )
 
-            void test(void) {
+            void test(InstanceProxy<TestFactory> const &tf) {
                 logger = LoggerManager::SingletonGetInstance()->GetLogger("SIN::Tests::Common");
+				test_factory = tf;
                 SINTESTSCOMMON_TESTRUN(Types);
             }
         } // namespace Common

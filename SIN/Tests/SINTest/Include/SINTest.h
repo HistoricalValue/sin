@@ -29,12 +29,10 @@ namespace SIN {
             String failed_condition;
             String failure_file;
             unsigned long failure_line;
-
-            static char const *nextTestName(void);
         protected:
             virtual void TestLogic(void) = 0;
         public:
-            Test(String const &test_name = nextTestName());
+            Test(String const &test_name);
             virtual ~Test(void);
 
             void Run(void);

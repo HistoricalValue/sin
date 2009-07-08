@@ -1,3 +1,5 @@
+#include "SINASTTester.h"
+
 #include "SINASTNode.h"
 #include <iostream>
 #include <cassert>
@@ -102,6 +104,7 @@ namespace SIN {
     namespace Tests {
         namespace AST {
             static InstanceProxy<Logger> logger;
+			static InstanceProxy<TestFactory> test_factory;
 
             SINTESTSAST_TESTDEF(TreeNode,
                 SINTESTSAST_TREENODE_SUPERTEST(TreeNode);
@@ -178,8 +181,9 @@ namespace SIN {
                 ASSERT(n.Name() == "LOOOA");
             )
 
-            void test(void) {
+            void test(InstanceProxy<TestFactory> const &tf) {
                 logger = LoggerManager::SingletonGetInstance()->GetLogger("SIN::Tests::AST");
+				test_factory = tf;
                 SINTESTSAST_TESTRUN(TreeNode);
                 SINTESTSAST_TESTRUN(ValueHolder);
                 SINTESTSAST_TESTRUN(ConstNodes);

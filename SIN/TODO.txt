@@ -10,6 +10,7 @@
 * Add unique ID for each ASTNode
 * AST Const nodes give correct string name
 
+* Rename SinParserTester.h
 
  ---logging---
  * Add a "set all record printers" method to LoggerManager

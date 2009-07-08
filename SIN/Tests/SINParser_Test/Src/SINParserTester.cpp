@@ -23,6 +23,7 @@ namespace SIN {
 	namespace Tests {
 		namespace Parser {
 			static InstanceProxy<SIN::Logger> logger;
+			static InstanceProxy<TestFactory> test_factory;
 			
 			
 			SIN_TESTS_PARSER_TESTDEF(ParserFileTest,
@@ -30,8 +31,9 @@ namespace SIN {
 				TRY(test.ParseFile(FILE_PATH) == 0);
 			)
 
-			void test(void) { 
+			void test(InstanceProxy<TestFactory> const &tf) { 
 				logger = LoggerManager::SingletonGetInstance()->GetLogger("SIN::Tests::Parser");
+				test_factory = tf;
 				SIN_TESTS_PARSER_TESTRUN(ParserFileTest);
 			}
 		}	//namespace Parser

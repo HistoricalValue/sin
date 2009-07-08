@@ -5,11 +5,7 @@
 
 namespace SIN {
     namespace Tests {
-        const char *Test::nextTestName(void) { // TODO fix static initialisation
-            static Namer *namer = new Namer("Test:");
-            return namer->Next();
-        }
-
+		//////////////// Test /////////////////////
         Test::Test(String const &_name): name(_name), successful(true), 
         failure_message("No failure"), failed_condition("false"),
         failure_file("/dev/null"), failure_line(-1)
@@ -66,6 +62,7 @@ namespace SIN {
         void  Test::SetFailureLine(unsigned long int _failure_line) {
             failure_line = _failure_line;
         }
+
 
     } // namespace Tests
 } // namespace SIN

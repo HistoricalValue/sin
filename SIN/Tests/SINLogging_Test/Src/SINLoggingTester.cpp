@@ -15,6 +15,7 @@ namespace SIN {
     namespace Tests {
         namespace Logging {
             static InstanceProxy<Logger> logger;
+			static InstanceProxy<TestFactory> test_factory;
             using SIN::Logging::Record;
 
             SINTESTS_TESTDEF(Record,
@@ -49,8 +50,9 @@ namespace SIN {
                 }
             )
 
-            void test(void) {
+            void test(InstanceProxy<TestFactory> const &tf) {
                 logger = LoggerManager::SingletonGetInstance()->GetLogger("SIN::Tests::Logging");
+				test_factory = tf;
                 SINTESTS_CALLTEST(Record);
             }
         } // namespace Logging
