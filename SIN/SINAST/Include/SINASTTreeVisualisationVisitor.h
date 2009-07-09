@@ -3,10 +3,16 @@
 
 #include "SINASTNode.h"
 #include "SINASTVisitor.h"
+#include "SINOutputStream.h"
+#include "Common.h"
 
 namespace SIN {
 	class ASTTreeVisualisationVisitor: public ASTVisitor {
+		Type<OutputStream>::ref out;
 	public:
+		ASTTreeVisualisationVisitor(Type<OutputStream>::ref out);
+		virtual ~ASTTreeVisualisationVisitor(void);
+		
 		void Visit(ASTNode const &);
 	}; // class ASTTreeVisualisationVisitor
 } // namespace SIN

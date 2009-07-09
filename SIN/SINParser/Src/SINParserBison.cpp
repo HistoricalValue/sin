@@ -110,7 +110,7 @@
 	#include "SINParserManageReturnStatement.h"
 
 
-	int yyerror (char* yaccProvidedMessage);
+	int yyerror (char const* yaccProvidedMessage);
 	int PrepareForFile(const char * filePath);
 	int PrepareForString(const char * str);
 
@@ -2435,7 +2435,7 @@ yyreturn:
 
 
 
-int yyerror (char* yaccProvidedMessage)
+int yyerror (char const* yaccProvidedMessage)
 {
 	fprintf(stderr, "%s: at line %d, before token: >%s<\n", yaccProvidedMessage, yylineno, yytext);
 	return -1;

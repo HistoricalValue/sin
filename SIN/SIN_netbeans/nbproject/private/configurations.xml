@@ -12,8 +12,8 @@
         <args></args>
         <rundir></rundir>
         <buildfirst>true</buildfirst>
-        <console-type>0</console-type>
-        <terminal-type>0</terminal-type>
+        <console-type>1</console-type>
+        <terminal-type>1</terminal-type>
         <environment>
         </environment>
       </runprofile>

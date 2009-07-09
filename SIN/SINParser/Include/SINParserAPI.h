@@ -6,6 +6,7 @@
 #include <assert.h>
 #include <iostream>
 #include "SINString.h"
+#include "SINASTNode.h"
 
 namespace SIN {
 
@@ -14,8 +15,12 @@ namespace SIN {
 		ParserAPI(void);
 		~ParserAPI();
 
+		// return !=0 on error
 		int ParseFile(const String &_fileName);
         int ParseText(const char *_input);
+
+		// If Parse* returned no error, this returns the produced AST
+		ASTNode *GetAST(void) const;
 	}; // class ParserAPI
 
 } // namespace SIN

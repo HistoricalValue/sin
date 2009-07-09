@@ -10,7 +10,9 @@
 
 //////// for quick tests and c++ questions ///////
 // (please restore to original before commits)
+#include "SINASTTreeVisualisationVisitor.h"
 static void quick_test(void) {
+	
 }
 ////////
 

@@ -21,6 +21,7 @@
         <logicalFolder name="Src" displayName="Src" projectFiles="true">
           <itemPath>../SINAST/Src/ASTVisitor.cpp</itemPath>
           <itemPath>../SINAST/Src/SINASTNode.cpp</itemPath>
+          <itemPath>../SINAST/Src/SINASTTreeVisualisationVisitor.cpp</itemPath>
           <itemPath>../SINAST/Src/SINTreeNode.cpp</itemPath>
         </logicalFolder>
       </logicalFolder>
@@ -90,7 +91,7 @@
           <itemPath>../SINParser/Include/SINParserManageObjectList.h</itemPath>
           <itemPath>../SINParser/Include/SINParserManagePrimary.h</itemPath>
           <itemPath>../SINParser/Include/SINParserManageReturnStatement.h</itemPath>
-          <itemPath>../SINParser/Include/SINParserManageSINCode.h</itemPath>
+          <itemPath>../SINParser/Include/SINParserManageSinCode.h</itemPath>
           <itemPath>../SINParser/Include/SINParserManageStatement.h</itemPath>
           <itemPath>../SINParser/Include/SINParserManageStatements.h</itemPath>
           <itemPath>../SINParser/Include/SINParserManageTerm.h</itemPath>
@@ -169,10 +170,14 @@
         <logicalFolder name="SINTest" displayName="SINTest" projectFiles="true">
           <logicalFolder name="Include" displayName="Include" projectFiles="true">
             <itemPath>../Tests/SINTest/Include/SINTest.h</itemPath>
+            <itemPath>../Tests/SINTest/Include/SINTestCollection.h</itemPath>
+            <itemPath>../Tests/SINTest/Include/SINTestFactory.h</itemPath>
             <itemPath>../Tests/SINTest/Include/SINTestingCommon.h</itemPath>
           </logicalFolder>
           <logicalFolder name="Src" displayName="Src" projectFiles="true">
             <itemPath>../Tests/SINTest/Src/SINTest.cpp</itemPath>
+            <itemPath>../Tests/SINTest/Src/SINTestCollection.cpp</itemPath>
+            <itemPath>../Tests/SINTest/Src/SINTestFactory.cpp</itemPath>
           </logicalFolder>
         </logicalFolder>
       </logicalFolder>
@@ -242,6 +247,9 @@
       <item path="../SINAST/Src/SINASTNode.cpp">
         <itemTool>1</itemTool>
       </item>
+      <item path="../SINAST/Src/SINASTTreeVisualisationVisitor.cpp">
+        <itemTool>1</itemTool>
+      </item>
       <item path="../SINAST/Src/SINTreeNode.cpp">
         <itemTool>1</itemTool>
       </item>
@@ -386,7 +394,7 @@
       <item path="../SINParser/Include/SINParserManageReturnStatement.h">
         <itemTool>3</itemTool>
       </item>
-      <item path="../SINParser/Include/SINParserManageSINCode.h">
+      <item path="../SINParser/Include/SINParserManageSinCode.h">
         <itemTool>3</itemTool>
       </item>
       <item path="../SINParser/Include/SINParserManageStatement.h">
@@ -515,10 +523,22 @@
       <item path="../Tests/SINTest/Include/SINTest.h">
         <itemTool>3</itemTool>
       </item>
+      <item path="../Tests/SINTest/Include/SINTestCollection.h">
+        <itemTool>3</itemTool>
+      </item>
+      <item path="../Tests/SINTest/Include/SINTestFactory.h">
+        <itemTool>3</itemTool>
+      </item>
       <item path="../Tests/SINTest/Include/SINTestingCommon.h">
         <itemTool>3</itemTool>
       </item>
       <item path="../Tests/SINTest/Src/SINTest.cpp">
+        <itemTool>1</itemTool>
+      </item>
+      <item path="../Tests/SINTest/Src/SINTestCollection.cpp">
+        <itemTool>1</itemTool>
+      </item>
+      <item path="../Tests/SINTest/Src/SINTestFactory.cpp">
         <itemTool>1</itemTool>
       </item>
     </conf>
@@ -570,6 +590,9 @@
       <item path="../SINAST/Src/SINASTNode.cpp">
         <itemTool>1</itemTool>
       </item>
+      <item path="../SINAST/Src/SINASTTreeVisualisationVisitor.cpp">
+        <itemTool>1</itemTool>
+      </item>
       <item path="../SINAST/Src/SINTreeNode.cpp">
         <itemTool>1</itemTool>
       </item>
@@ -714,7 +737,7 @@
       <item path="../SINParser/Include/SINParserManageReturnStatement.h">
         <itemTool>3</itemTool>
       </item>
-      <item path="../SINParser/Include/SINParserManageSINCode.h">
+      <item path="../SINParser/Include/SINParserManageSinCode.h">
         <itemTool>3</itemTool>
       </item>
       <item path="../SINParser/Include/SINParserManageStatement.h">
@@ -843,10 +866,22 @@
       <item path="../Tests/SINTest/Include/SINTest.h">
         <itemTool>3</itemTool>
       </item>
+      <item path="../Tests/SINTest/Include/SINTestCollection.h">
+        <itemTool>3</itemTool>
+      </item>
+      <item path="../Tests/SINTest/Include/SINTestFactory.h">
+        <itemTool>3</itemTool>
+      </item>
       <item path="../Tests/SINTest/Include/SINTestingCommon.h">
         <itemTool>3</itemTool>
       </item>
       <item path="../Tests/SINTest/Src/SINTest.cpp">
+        <itemTool>1</itemTool>
+      </item>
+      <item path="../Tests/SINTest/Src/SINTestCollection.cpp">
+        <itemTool>1</itemTool>
+      </item>
+      <item path="../Tests/SINTest/Src/SINTestFactory.cpp">
         <itemTool>1</itemTool>
       </item>
     </conf>

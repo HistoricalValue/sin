@@ -47,7 +47,7 @@
 	#include "SINParserManageReturnStatement.h"
 
 
-	int yyerror (char* yaccProvidedMessage);
+	int yyerror (char const* yaccProvidedMessage);
 	int PrepareForFile(const char * filePath);
 	int PrepareForString(const char * str);
 
