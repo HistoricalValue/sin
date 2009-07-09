@@ -86,32 +86,56 @@ public:
 		{ return ProxyFor(*_p); }
 }; // class ConstInstanceProxy<T>
 
-template <typename _T>
-class Type {
-public:
-	Type(void) { }
-	Type(Type const &) { }
-	~Type(void) { }
-	typedef _T type;
+template <typename _Type>
+_Type copy(_Type const &_o) { return _o; }
 
-	template <typename _FromType>
-	static Type<_FromType> const MakeTypeFromObject(_FromType const &_dummy) {
-		return Type<_FromType>();
-	}
+template <typename _Type>
+struct Type {
+	typedef _Type type;
+	typedef type const const_type;
+	typedef type& ref;
+	typedef type const& const_ref;
 
-	template <typename _FromType> _T cast(_FromType &_obj) const {
-		return static_cast<_T>(_obj);
-	}
+	template <typename _FromType> static Type<_FromType> ForType(_FromType const& _) { return Type<_FromType>(); }
 
-	template <typename _FromType> _T cast(_FromType const&_obj) const {
-		return static_cast<_T>(_obj);
-	}
+	template <typename _FromType> type Cast(_FromType const& _o) const { return _o; }
+	template <typename _FromType> ref CastRef(_FromType& _o) const { return _o; }
+	template <typename _FromType> const_ref CastConstRef(_FromType const& _o) { return _o; }
+	template <typename _FromType> const_type CastConst(_FromType const& _o) { return _o; }
 }; // class Type<T>
 
-#define FOREACH(ITERATOR_NAME,ITERATOR_TYPE,ITERABLE)	\
-	for (												\
-		ITERATOR_TYPE ITERATOR_NAME = ITERABLE.begin(); \
-		ITERATOR_NAME != ITERABLE.end();				\
-		++ITERATOR_NAME)
+namespace {
+struct __ForeachAnyHolder {
+private:
+	bool assign;
+public:
+	__ForeachAnyHolder& Assign(void) { assign = true; return *this; }
+	__ForeachAnyHolder& Read(void) { assign = false;  return *this; }
+	template <typename _FromType> typename Type<_FromType>::ref operator =(_FromType const& _from) {
+		static _FromType buf;
+		if (assign)
+			return buf = _from;
+		else
+			return buf;
+	}
+	template <typename _ToType> operator _ToType&(void) {
+		register bool previous_assign = assign;
+		register typename Type<_ToType>::ref result((*this).Read() = typename Type<_ToType>::type());
+		assign = previous_assign;
+		return result;
+	}
+	__ForeachAnyHolder(void): assign(true) { }
+	template <typename _FromType> __ForeachAnyHolder(_FromType const& _from): assign(true)
+		{ *this = _from; }
+};
+}
+// WARNING (Terms of use)
+// * Do not use for nested FOREACHes
+// * ITERABLE.begin() will be called NUMEROUS times -- must be neutral
+// --- Usage ----
+// std::list<int> lis; lis.push_back(1); lis.push_back(20; lis.pushback(3);
+// FOREACH(lis) std::cout << *ITER(lis) << std::endl;s
+#define ITER(ITERABLE) Type<void*>::ForType(ITERABLE.begin()).CastRef(__h__)
+#define FOREACH(ITERABLE) for (__ForeachAnyHolder __h__(ITERABLE.begin()); ITER(ITERABLE) != ITERABLE.end(); ++ITER(ITERABLE))
 
 #endif //__SIN_COMMON_H__
