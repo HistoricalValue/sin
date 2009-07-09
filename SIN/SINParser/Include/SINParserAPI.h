@@ -16,11 +16,15 @@ namespace SIN {
 		~ParserAPI();
 
 		// return !=0 on error
-		int ParseFile(const String &_fileName);
-        int ParseText(const char *_input);
+		int		ParseFile(const String &_fileName);
+        int		ParseText(const char *_input);
 
+		void	DeleteAST(void); //delete the fucking AST
+		
 		// If Parse* returned no error, this returns the produced AST
 		ASTNode *GetAST(void) const;
+
+		
 	}; // class ParserAPI
 
 } // namespace SIN

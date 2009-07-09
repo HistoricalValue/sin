@@ -29,6 +29,7 @@ namespace SIN {
 			SIN_TESTS_PARSER_TESTDEF(ParserFileTest,
 				ParserAPI test;
 				TRY(test.ParseFile(FILE_PATH) == 0);
+				test.GetAST();
 			)
 
 			void test(InstanceProxy<TestFactory> const &tf) { 

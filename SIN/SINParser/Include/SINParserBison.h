@@ -39,90 +39,90 @@
    /* Put the tokens into the symbol table, so that GDB and other debuggers
       know about them.  */
    enum yytokentype {
-     IF = 258,
-     ELSE = 259,
-     WHILE = 260,
-     FOR = 261,
-     FUNCTION = 262,
-     RETURN = 263,
-     BREAK = 264,
-     CONTINUE = 265,
-     LOCAL = 266,
-     GLOBAL = 267,
-     TRUE = 268,
-     FALSE = 269,
-     NIL = 270,
-     ASSIGN = 271,
-     ADD = 272,
-     MIN = 273,
-     MUL = 274,
-     DIV = 275,
-     MOD = 276,
-     EQ = 277,
-     NOTEQ = 278,
-     INCR = 279,
-     DECR = 280,
-     GT = 281,
-     LT = 282,
-     GE = 283,
-     LE = 284,
-     AND = 285,
-     OR = 286,
-     NOT = 287,
-     DOT_LT = 288,
-     GT_DOT = 289,
-     DOT_TILDE = 290,
-     DOT_EXCl_MARK = 291,
-     DOT_NUM_SIGN = 292,
-     DOT_AT = 293,
-     DOUBLEDOT = 294,
-     NUMBER = 295,
-     ID = 296,
-     STRING = 297,
+     NUMBER = 258,
+     ID = 259,
+     STRING = 260,
+     DOUBLEDOT = 261,
+     IF = 262,
+     ELSE = 263,
+     WHILE = 264,
+     FOR = 265,
+     FUNCTION = 266,
+     RETURN = 267,
+     BREAK = 268,
+     CONTINUE = 269,
+     LOCAL = 270,
+     GLOBAL = 271,
+     TRUE = 272,
+     FALSE = 273,
+     NIL = 274,
+     ASSIGN = 275,
+     ADD = 276,
+     MIN = 277,
+     MUL = 278,
+     DIV = 279,
+     MOD = 280,
+     EQ = 281,
+     NOTEQ = 282,
+     INCR = 283,
+     DECR = 284,
+     GT = 285,
+     LT = 286,
+     GE = 287,
+     LE = 288,
+     AND = 289,
+     OR = 290,
+     NOT = 291,
+     DOT_LT = 292,
+     GT_DOT = 293,
+     DOT_TILDE = 294,
+     DOT_EXCl_MARK = 295,
+     DOT_NUM_SIGN = 296,
+     DOT_AT = 297,
      UMINUS = 298
    };
 #endif
 /* Tokens.  */
-#define IF 258
-#define ELSE 259
-#define WHILE 260
-#define FOR 261
-#define FUNCTION 262
-#define RETURN 263
-#define BREAK 264
-#define CONTINUE 265
-#define LOCAL 266
-#define GLOBAL 267
-#define TRUE 268
-#define FALSE 269
-#define NIL 270
-#define ASSIGN 271
-#define ADD 272
-#define MIN 273
-#define MUL 274
-#define DIV 275
-#define MOD 276
-#define EQ 277
-#define NOTEQ 278
-#define INCR 279
-#define DECR 280
-#define GT 281
-#define LT 282
-#define GE 283
-#define LE 284
-#define AND 285
-#define OR 286
-#define NOT 287
-#define DOT_LT 288
-#define GT_DOT 289
-#define DOT_TILDE 290
-#define DOT_EXCl_MARK 291
-#define DOT_NUM_SIGN 292
-#define DOT_AT 293
-#define DOUBLEDOT 294
-#define NUMBER 295
-#define ID 296
-#define STRING 297
+#define NUMBER 258
+#define ID 259
+#define STRING 260
+#define DOUBLEDOT 261
+#define IF 262
+#define ELSE 263
+#define WHILE 264
+#define FOR 265
+#define FUNCTION 266
+#define RETURN 267
+#define BREAK 268
+#define CONTINUE 269
+#define LOCAL 270
+#define GLOBAL 271
+#define TRUE 272
+#define FALSE 273
+#define NIL 274
+#define ASSIGN 275
+#define ADD 276
+#define MIN 277
+#define MUL 278
+#define DIV 279
+#define MOD 280
+#define EQ 281
+#define NOTEQ 282
+#define INCR 283
+#define DECR 284
+#define GT 285
+#define LT 286
+#define GE 287
+#define LE 288
+#define AND 289
+#define OR 290
+#define NOT 291
+#define DOT_LT 292
+#define GT_DOT 293
+#define DOT_TILDE 294
+#define DOT_EXCl_MARK 295
+#define DOT_NUM_SIGN 296
+#define DOT_AT 297
 #define UMINUS 298
 
 

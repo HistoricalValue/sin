@@ -47,16 +47,21 @@
 	#include "SINParserManageReturnStatement.h"
 
 
+	////////////////////////////////////////////////////////////////////////
+	// functions definitions
+	
 	int yyerror (char const* yaccProvidedMessage);
 	int PrepareForFile(const char * filePath);
 	int PrepareForString(const char * str);
-
 	int yylex (void);
 
 	extern int yylineno;
 	extern char* yytext;
 	extern FILE* yyin;
 
+////////////////////////////////////////////////////////////////////////
+	//This is the root of the AStree
+	SIN::ASTNode * root = static_cast<SIN::ASTNode *>(0);	
 %}
 
 /*Token types*/
@@ -81,13 +86,19 @@
 %type <AST> objectlist objectlists
 %type <AST> stmtd
 %type <AST> idlist idlists
- 
+%token <realV>   NUMBER
+%token <stringV> ID STRING
+
+
+
+
+////////////////////////////////////////////////////////////////////////
+// Untyped tokens
+// 
+%token '[' ']' '{' '}' '(' ')' ';' ':' '.' ',' DOUBLEDOT
 %token IF ELSE WHILE FOR FUNCTION RETURN BREAK CONTINUE LOCAL GLOBAL TRUE FALSE NIL
 %token ASSIGN ADD MIN MUL DIV MOD EQ NOTEQ INCR DECR GT LT GE LE AND OR NOT 
 %token DOT_LT GT_DOT DOT_TILDE DOT_EXCl_MARK DOT_NUM_SIGN DOT_AT
-%token '[' ']' '{' '}' '(' ')' ';' ':' '.' ',' DOUBLEDOT
-%token <realV>   NUMBER
-%token <stringV> ID STRING
 
 
 %left		ASSIGN
@@ -106,7 +117,10 @@
 
 %%
 
-SinCode:		stmts {	SIN::Manage_SinCode($1, &($$));	}
+SinCode:		stmts	{	
+							SIN::Manage_SinCode($1, &($$));	
+							root = $$;
+						}
 				;
 
 
@@ -311,7 +325,7 @@ returnstmt:		RETURN ';'			{	SIN::Manage_ReturnStatement_Return(&($$));					}
 
 %%
 
-int yyerror (char* yaccProvidedMessage)
+int yyerror (char const* yaccProvidedMessage)
 {
 	fprintf(stderr, "%s: at line %d, before token: >%s<\n", yaccProvidedMessage, yylineno, yytext);
 	return -1;
@@ -320,6 +334,10 @@ int yyerror (char* yaccProvidedMessage)
 
 int PrepareForFile(const char * filePath) {
 	assert (filePath);
+	if (root != static_cast<SIN::ASTNode *>(0))
+		;//here we mast delete the old tree
+	root = static_cast<SIN::ASTNode *>(0);
+	
 	if (!(yyin = fopen(filePath, "r"))) {
 			fprintf(stderr, "Cannot read file: %s\n", filePath);
 			return 1;

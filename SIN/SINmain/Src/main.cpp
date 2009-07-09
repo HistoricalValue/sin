@@ -23,13 +23,19 @@ public:
 	virtual bool RunAll(void);
 }; // class MainTestCollection
 
+
+
 int main(int argc, char *argv[]) {
+
+
     if (SIN::Initialise()) {
 		MainTestCollection mtc;
 		mtc.RunAll();
         quick_test();
     }
-    return 0;
+    
+	
+	return 0;
 }
 
 ///// MainTestCollection ////////////////////
