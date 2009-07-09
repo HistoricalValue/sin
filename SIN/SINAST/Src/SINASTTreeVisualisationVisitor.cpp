@@ -3,7 +3,7 @@
 
 namespace SIN {
 
-	ASTTreeVisualisationVisitor::ASTTreeVisualisationVisitor(Type<OutputStream>::ref _out):
+	ASTTreeVisualisationVisitor::ASTTreeVisualisationVisitor(OutputStream& _out):
 	out(_out)
 	{ }
 

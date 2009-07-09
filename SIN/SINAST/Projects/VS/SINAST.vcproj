@@ -160,6 +160,10 @@
 				>
 			</File>
 			<File
+				RelativePath="..\..\Src\SINASTTreeVisualisationVisitor.cpp"
+				>
+			</File>
+			<File
 				RelativePath="..\..\Src\SINTreeNode.cpp"
 				>
 			</File>
@@ -175,6 +179,10 @@
 			</File>
 			<File
 				RelativePath="..\..\Include\SINASTNode.h"
+				>
+			</File>
+			<File
+				RelativePath="..\..\Include\SINASTTreeVisualisationVisitor.h"
 				>
 			</File>
 			<File

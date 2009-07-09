@@ -8,9 +8,9 @@
 
 namespace SIN {
 	class ASTTreeVisualisationVisitor: public ASTVisitor {
-		Type<OutputStream>::ref out;
+		OutputStream& out;
 	public:
-		ASTTreeVisualisationVisitor(Type<OutputStream>::ref out);
+		ASTTreeVisualisationVisitor(OutputStream& out);
 		virtual ~ASTTreeVisualisationVisitor(void);
 		
 		void Visit(ASTNode const &);
