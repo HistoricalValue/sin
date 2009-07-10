@@ -1,4 +1,5 @@
 #include "SIN.h"
+#include "Common.h"
 #include "SINASTTester.h"
 #include "SINParserTester.h"
 #include "SINCommonTester.h"
@@ -10,9 +11,24 @@
 
 //////// for quick tests and c++ questions ///////
 // (please restore to original before commits)
-#include "SINASTTreeVisualisationVisitor.h"
 static void quick_test(void) {
-	
+	SIN::LoggerManager::SingletonGetInstance()->MakeStdoutLogger("SIN::main::quick_test");
+	SIN::Logger &_out(SIN::LoggerManager::SingletonGetInstance()->GetLogger("SIN::main::quick_test"));
+	class __out {
+		SIN::Logger& out;
+	public:
+		__out(SIN::Logger& _out): out(_out) { }
+		__out& operator <<(SIN::String const& msg) {
+			out.Notice(msg);
+			return *this;
+		}
+	} out(_out);
+	// keep the above for convenience. ex:
+	// out << (SIN::String() << "This is" << " horrible " << (4));
+	  std::list<int> lis; lis.push_back(9); lis.push_back(8); lis.push_back(7); lis.push_back(6);
+  FOREACH(i, lis)
+      out << (SIN::string_cast(*ITER(i, lis)));
+  out << (SIN::String() << "This is" << " horrible " << (4));
 }
 ////////
 

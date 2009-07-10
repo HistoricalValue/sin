@@ -2,6 +2,7 @@
 #define __SIN_COMMON_H__
 
 #include <cassert>
+#include <cstring>
 
 #ifdef _MSC_VER
 #define snprintf _snprintf
@@ -104,38 +105,34 @@ struct Type {
 	template <typename _FromType> const_type CastConst(_FromType const& _o) { return _o; }
 }; // class Type<T>
 
-namespace {
-struct __ForeachAnyHolder {
-private:
-	bool assign;
+// A very very nasty AnyHolder
+template <const unsigned int _Size>
+class AnyHolder {
+	char memory[_Size];
 public:
-	__ForeachAnyHolder& Assign(void) { assign = true; return *this; }
-	__ForeachAnyHolder& Read(void) { assign = false;  return *this; }
-	template <typename _FromType> typename Type<_FromType>::ref operator =(_FromType const& _from) {
-		static _FromType buf;
-		if (assign)
-			return buf = _from;
-		else
-			return buf;
+	template <typename _FromType> AnyHolder(_FromType const& _holdee) {
+		memcpy(memory, &_holdee, sizeof(memory));
 	}
+	template <typename _ToType> operator _ToType*(void) {
+		assert(sizeof(_ToType) <= _Size);
+		return static_cast<_ToType*>(static_cast<void*>(memory + 0));
+	}
+
+	/////////////////////////
 	template <typename _ToType> operator _ToType&(void) {
-		register bool previous_assign = assign;
-		register typename Type<_ToType>::ref result((*this).Read() = typename Type<_ToType>::type());
-		assign = previous_assign;
-		return result;
+		return *static_cast<_ToType*>(*this);
 	}
-	__ForeachAnyHolder(void): assign(true) { }
-	template <typename _FromType> __ForeachAnyHolder(_FromType const& _from): assign(true)
-		{ *this = _from; }
 };
-}
-// WARNING (Terms of use)
-// * Do not use for nested FOREACHes
-// * ITERABLE.begin() will be called NUMEROUS times -- must be neutral
-// --- Usage ----
-// std::list<int> lis; lis.push_back(1); lis.push_back(20; lis.pushback(3);
-// FOREACH(lis) std::cout << *ITER(lis) << std::endl;s
-#define ITER(ITERABLE) Type<void*>::ForType(ITERABLE.begin()).CastRef(__h__)
-#define FOREACH(ITERABLE) for (__ForeachAnyHolder __h__(ITERABLE.begin()); ITER(ITERABLE) != ITERABLE.end(); ++ITER(ITERABLE))
+// Foreach - works like a charm
+// example:
+//  std::list<int> lis; lis.push_back(9); lis.push_back(8); lis.push_back(7); lis.push_back(6);
+//  FOREACH(i, lis)
+//      out.Notice(SIN::string_cast(*ITER(i, lis)));
+#define ITER(ITERATOR,ITERABLE) Type<void*>::ForType(ITERABLE.begin()).CastRef(ITERATOR)
+#define FOREACH(ITERATOR,ITERABLE)											\
+	for (																	\
+		AnyHolder<sizeof(ITERABLE.begin())> ITERATOR(ITERABLE.begin())	;	\
+		ITER(ITERATOR,ITERABLE) != ITERABLE.end()						;	\
+		++ITER(ITERATOR,ITERABLE)										)
 
 #endif //__SIN_COMMON_H__
