@@ -335,7 +335,7 @@ int yyerror (char const* yaccProvidedMessage)
 int PrepareForFile(const char * filePath) {
 	assert (filePath);
 	if (root != static_cast<SIN::ASTNode *>(0))
-		;//here we mast delete the old tree
+		;// TODO here we mast delete the old tree
 	root = static_cast<SIN::ASTNode *>(0);
 	
 	if (!(yyin = fopen(filePath, "r"))) {
@@ -345,7 +345,7 @@ int PrepareForFile(const char * filePath) {
 	return 0;
 }
 
-int PrepareForString(const char * str) {
-	//yy_scan_string(const char * str);
-	return 0;
-}
+//int PrepareForString(const char * str) {
+//	//yy_scan_string(const char * str);
+//	return 0;
+//}
