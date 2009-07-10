@@ -20,8 +20,8 @@ namespace SIN {
         return critical_severity;
     }
 
-    void Logger::SetRecordPrinter(Logging::RecordPrinter *const &_rp) {
-        rp = _rp;
+    void Logger::SetRecordPrinter(Logging::RecordPrinter *const &_rp_p) {
+        rp_p = _rp_p;
     }
 
 } // namespcace SIN

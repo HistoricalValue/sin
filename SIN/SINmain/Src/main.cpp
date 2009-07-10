@@ -27,14 +27,13 @@ public:
 
 int main(int argc, char *argv[]) {
 
-
     if (SIN::Initialise()) {
 		MainTestCollection mtc;
 		mtc.RunAll();
         quick_test();
     }
-    
-	
+
+	SIN::CleanUp();
 	return 0;
 }
 

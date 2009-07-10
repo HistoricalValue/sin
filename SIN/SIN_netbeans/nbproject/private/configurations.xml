@@ -10,8 +10,8 @@
       </gdbdebugger>
       <runprofile version="5">
         <args></args>
-        <rundir></rundir>
-        <buildfirst>true</buildfirst>
+        <rundir>./../SINmain/Projects/Linux_GNU/</rundir>
+        <buildfirst>false</buildfirst>
         <console-type>1</console-type>
         <terminal-type>1</terminal-type>
         <environment>

@@ -1,26 +1,45 @@
-* SIN::Tests::Test::nextTestName() : fix static member initialisation
-* Add default severity in LoggingManager
-* Add error querying method in parser
-* Make ASTNode subclasses give an appropriate name to their ASTNode ancestor
+*[004] Make ASTNode subclasses give an appropriate name to their ASTNode ancestor
+
+*[005] Implement FileOutputStream-s
 
 
-* Delete AST nodes (some day)
-* Add a method DestroyTree() somewhere.
+*[006] Delete AST nodes (some day)
+*[007] Add a method DestroyTree() somewhere.
 
-* Add unique ID for each ASTNode
-* AST Const nodes give correct string name
+*[008] Add unique ID for each ASTNode
+*[009] AST Const nodes give correct string name
 
-* Rename SinParserTester.h
+---logging---
+*[010] LoggerFactory base should internally keep a list of produced loggers
+  and validate them at destruction time (make sure the pointers are correct)
+*[011] Add a "set all record printers" method to LoggerManager
 
- ---logging---
- * Add a "set all record printers" method to LoggerManager
+
+----- Parser (for santa) -----
+*[012] FIX YYPARSE'S ARGUMENTS!!
+  - ASTNode *& root   <--- return result in there
+*[013] Investigate the parser's auto-destruction callbacks on error and stuff
+*[014] Add error querying method in parser
+
+
+
+
 
 ==== QYESTIONS =====
 * What about native object pointers? Why are they needed for the AST?
 
-
-
 ==== LOW PRIORITY ====
-* Functors 
-* Warnings
+* SIN Functors
+* "compile time" Warnings
 
+
+
+
+
+===== DONE ====
+*[001] Rename SinParserTester.h
+  [ rudolf| has the correct name already]
+*[002] SIN::Tests::Test::nextTestName() : fix static member initialisation
+  [ rudolf| introduced class TestFactory]
+*[003] Add default severity in LoggingManager
+  [ rudolf| default severity property added (along with much refactoring again)]

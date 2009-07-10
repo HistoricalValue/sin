@@ -14,10 +14,10 @@ namespace SIN {
         Logger(String const &name, enum Logging::Record::Severity const &critical_severity);
         enum Logging::Record::Severity critical_severity;
         bool shouldLog(enum Logging::Record::Severity const &_this_severity) const;
-        InstanceProxy<Logging::RecordPrinter> rp;
+        InstanceProxy<Logging::RecordPrinter> rp_p;
     public:
-        void SetCriticalSeverity(enum Logging::Record::Severity const &new_severity);
-        enum Logging::Record::Severity const &GetCriticalSeverity(void) const;
+        void SetCriticalSeverity(enum Logging::Record::Severity const& new_severity);
+		enum Logging::Record::Severity const& GetCriticalSeverity(void) const;
 
         void SetRecordPrinter(Logging::RecordPrinter *const &_rp);
 

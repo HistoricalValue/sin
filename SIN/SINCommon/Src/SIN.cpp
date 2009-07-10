@@ -1,5 +1,6 @@
 #include "SIN.h"
 #include "SINLoggerManager.h"
+#include "SINAssert.h"
 
 namespace SIN {
     static bool init_LoggerManager(void);
@@ -10,6 +11,8 @@ namespace SIN {
     }
 
     void CleanUp(void) {
+		SINASSERT(LoggerManager::SingletonCreated());
+		LoggerManager::SingletonDestroy();
     }
 
 
