@@ -118,7 +118,7 @@
 
 	////////////////////////////////////////////////////////////////////////
 	// defines
-	#define MESSAGE(STR)	logger.Fine(STR##"destructed\n")
+	#define MESSAGE(STR)	logger.Fine(#STR " destructed")
 
 
 

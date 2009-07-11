@@ -54,16 +54,16 @@ OBJECTFILES= \
 	${OBJECTDIR}/_ext/tmp/trunk/SIN/SINParser/Src/SINParserManageExpression.o \
 	${OBJECTDIR}/_ext/tmp/trunk/SIN/SINParser/Src/SINParserManageObjectList.o \
 	${OBJECTDIR}/_ext/tmp/trunk/SIN/SINParser/Src/SINParserManageLValue.o \
-	${OBJECTDIR}/_ext/tmp/trunk/SIN/SINCommon/Src/SINString.o \
 	${OBJECTDIR}/_ext/tmp/trunk/SIN/Tests/SINLogging_Test/Src/SINLoggingTester.o \
+	${OBJECTDIR}/_ext/tmp/trunk/SIN/SINCommon/Src/SINString.o \
 	${OBJECTDIR}/_ext/tmp/trunk/SIN/SINCommon/Src/SINInputStream.o \
 	${OBJECTDIR}/_ext/tmp/trunk/SIN/SINCommon/Src/SINCommon.o \
 	${OBJECTDIR}/_ext/tmp/trunk/SIN/SINLogging/Src/SINRecord.o \
 	${OBJECTDIR}/_ext/tmp/trunk/SIN/SINParser/Src/SINParserManageFunctionDefinition.o \
 	${OBJECTDIR}/_ext/tmp/trunk/SIN/SINParser/Src/SINParserManageIfStatement.o \
 	${OBJECTDIR}/_ext/tmp/trunk/SIN/SINParser/Src/SINParserManageIDList.o \
-	${OBJECTDIR}/_ext/tmp/trunk/SIN/SINParser/Src/SINParserManageWhileStatement.o \
 	${OBJECTDIR}/_ext/tmp/trunk/SIN/SINParser/Src/SINParserManageSinCode.o \
+	${OBJECTDIR}/_ext/tmp/trunk/SIN/SINParser/Src/SINParserManageWhileStatement.o \
 	${OBJECTDIR}/_ext/tmp/trunk/SIN/SINParser/Src/SINParserManageNormalCall.o \
 	${OBJECTDIR}/_ext/tmp/trunk/SIN/SINParser/Src/SINParserManageForStatement.o \
 	${OBJECTDIR}/_ext/tmp/trunk/SIN/Tests/SINTest/Src/SINTestCollection.o \
@@ -231,15 +231,15 @@ ${OBJECTDIR}/_ext/tmp/trunk/SIN/SINParser/Src/SINParserManageLValue.o: ../SINPar
 	${RM} $@.d
 	$(COMPILE.cc) -O2 -MMD -MP -MF $@.d -o ${OBJECTDIR}/_ext/tmp/trunk/SIN/SINParser/Src/SINParserManageLValue.o ../SINParser/Src/SINParserManageLValue.cpp
 
-${OBJECTDIR}/_ext/tmp/trunk/SIN/SINCommon/Src/SINString.o: ../SINCommon/Src/SINString.cpp 
-	${MKDIR} -p ${OBJECTDIR}/_ext/tmp/trunk/SIN/SINCommon/Src
-	${RM} $@.d
-	$(COMPILE.cc) -O2 -MMD -MP -MF $@.d -o ${OBJECTDIR}/_ext/tmp/trunk/SIN/SINCommon/Src/SINString.o ../SINCommon/Src/SINString.cpp
-
 ${OBJECTDIR}/_ext/tmp/trunk/SIN/Tests/SINLogging_Test/Src/SINLoggingTester.o: ../Tests/SINLogging_Test/Src/SINLoggingTester.cpp 
 	${MKDIR} -p ${OBJECTDIR}/_ext/tmp/trunk/SIN/Tests/SINLogging_Test/Src
 	${RM} $@.d
 	$(COMPILE.cc) -O2 -MMD -MP -MF $@.d -o ${OBJECTDIR}/_ext/tmp/trunk/SIN/Tests/SINLogging_Test/Src/SINLoggingTester.o ../Tests/SINLogging_Test/Src/SINLoggingTester.cpp
+
+${OBJECTDIR}/_ext/tmp/trunk/SIN/SINCommon/Src/SINString.o: ../SINCommon/Src/SINString.cpp 
+	${MKDIR} -p ${OBJECTDIR}/_ext/tmp/trunk/SIN/SINCommon/Src
+	${RM} $@.d
+	$(COMPILE.cc) -O2 -MMD -MP -MF $@.d -o ${OBJECTDIR}/_ext/tmp/trunk/SIN/SINCommon/Src/SINString.o ../SINCommon/Src/SINString.cpp
 
 ${OBJECTDIR}/_ext/tmp/trunk/SIN/SINCommon/Src/SINInputStream.o: ../SINCommon/Src/SINInputStream.cpp 
 	${MKDIR} -p ${OBJECTDIR}/_ext/tmp/trunk/SIN/SINCommon/Src
@@ -271,15 +271,15 @@ ${OBJECTDIR}/_ext/tmp/trunk/SIN/SINParser/Src/SINParserManageIDList.o: ../SINPar
 	${RM} $@.d
 	$(COMPILE.cc) -O2 -MMD -MP -MF $@.d -o ${OBJECTDIR}/_ext/tmp/trunk/SIN/SINParser/Src/SINParserManageIDList.o ../SINParser/Src/SINParserManageIDList.cpp
 
-${OBJECTDIR}/_ext/tmp/trunk/SIN/SINParser/Src/SINParserManageWhileStatement.o: ../SINParser/Src/SINParserManageWhileStatement.cpp 
-	${MKDIR} -p ${OBJECTDIR}/_ext/tmp/trunk/SIN/SINParser/Src
-	${RM} $@.d
-	$(COMPILE.cc) -O2 -MMD -MP -MF $@.d -o ${OBJECTDIR}/_ext/tmp/trunk/SIN/SINParser/Src/SINParserManageWhileStatement.o ../SINParser/Src/SINParserManageWhileStatement.cpp
-
 ${OBJECTDIR}/_ext/tmp/trunk/SIN/SINParser/Src/SINParserManageSinCode.o: ../SINParser/Src/SINParserManageSinCode.cpp 
 	${MKDIR} -p ${OBJECTDIR}/_ext/tmp/trunk/SIN/SINParser/Src
 	${RM} $@.d
 	$(COMPILE.cc) -O2 -MMD -MP -MF $@.d -o ${OBJECTDIR}/_ext/tmp/trunk/SIN/SINParser/Src/SINParserManageSinCode.o ../SINParser/Src/SINParserManageSinCode.cpp
+
+${OBJECTDIR}/_ext/tmp/trunk/SIN/SINParser/Src/SINParserManageWhileStatement.o: ../SINParser/Src/SINParserManageWhileStatement.cpp 
+	${MKDIR} -p ${OBJECTDIR}/_ext/tmp/trunk/SIN/SINParser/Src
+	${RM} $@.d
+	$(COMPILE.cc) -O2 -MMD -MP -MF $@.d -o ${OBJECTDIR}/_ext/tmp/trunk/SIN/SINParser/Src/SINParserManageWhileStatement.o ../SINParser/Src/SINParserManageWhileStatement.cpp
 
 ${OBJECTDIR}/_ext/tmp/trunk/SIN/SINParser/Src/SINParserManageNormalCall.o: ../SINParser/Src/SINParserManageNormalCall.cpp 
 	${MKDIR} -p ${OBJECTDIR}/_ext/tmp/trunk/SIN/SINParser/Src

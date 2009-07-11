@@ -100,6 +100,7 @@
         </logicalFolder>
         <logicalFolder name="Src" displayName="Src" projectFiles="true">
           <itemPath>../SINParser/Src/SINLexAnalyser.cpp</itemPath>
+          <itemPath>../SINParser/Src/SINParser.y</itemPath>
           <itemPath>../SINParser/Src/SINParserAPI.cpp</itemPath>
           <itemPath>../SINParser/Src/SINParserBison.cpp</itemPath>
           <itemPath>../SINParser/Src/SINParserManageAssignExpression.cpp</itemPath>
@@ -415,6 +416,9 @@
       </item>
       <item path="../SINParser/Src/SINLexAnalyser.cpp">
         <itemTool>1</itemTool>
+      </item>
+      <item path="../SINParser/Src/SINParser.y">
+        <itemTool>3</itemTool>
       </item>
       <item path="../SINParser/Src/SINParserAPI.cpp">
         <itemTool>1</itemTool>
@@ -758,6 +762,9 @@
       </item>
       <item path="../SINParser/Src/SINLexAnalyser.cpp">
         <itemTool>1</itemTool>
+      </item>
+      <item path="../SINParser/Src/SINParser.y">
+        <itemTool>3</itemTool>
       </item>
       <item path="../SINParser/Src/SINParserAPI.cpp">
         <itemTool>1</itemTool>
