@@ -19,6 +19,12 @@
 	#endif
 
 
+	
+	#include "Common.h"
+	#include "SINLogger.h"
+	#include "SINConstants.h"
+	#include "SINLoggerManager.h"
+	
 
 	#include "SINASTNode.h"
 	#include "SINParserManageSinCode.h"
@@ -48,9 +54,15 @@
 
 
 	////////////////////////////////////////////////////////////////////////
+	// defines
+	#define MESSAGE(STR)	logger.Fine(STR##"destructed\n")
+
+
+
+	////////////////////////////////////////////////////////////////////////
 	// functions definitions
 	
-	int yyerror (bool hasError, SIN::ASTNode **	root, char const* yaccProvidedMessage);
+	void yyerror (bool hasError, SIN::Logger & logger, SIN::ASTNode **	root, char const* yaccProvidedMessage);
 	int PrepareForFile(const char * filePath);
 	int PrepareForString(const char * str);
 
@@ -59,15 +71,14 @@
 
 	extern int yylineno;
 	extern char* yytext;
-	extern FILE* yyin;
-
-////////////////////////////////////////////////////////////////////////
-	
+	extern FILE* yyin;	
 %}
 
 
 %parse-param {bool				hasError}
+%parse-param {SIN::Logger &		logger}
 %parse-param {SIN::ASTNode **	root}
+
 
 
 
@@ -98,6 +109,36 @@
 %token <stringV> ID STRING
 
 
+%destructor { delete $$; MESSAGE("Sin Code"); root = 0;	}	SinCode
+%destructor { delete $$; MESSAGE("stmts");				}	stmts
+%destructor { delete $$; MESSAGE("stmt");				}	stmt
+%destructor { delete $$; MESSAGE("ifstmt");				}	ifstmt
+%destructor { delete $$; MESSAGE("whilestmt");			}	whilestmt
+%destructor { delete $$; MESSAGE("forstmt");			}	forstmt
+%destructor { delete $$; MESSAGE("returnstmt");			}	returnstmt
+%destructor { delete $$; MESSAGE("block");				}	block
+%destructor { delete $$; MESSAGE("expr");				}	expr
+%destructor { delete $$; MESSAGE("assignexpr");			}	assignexpr
+%destructor { delete $$; MESSAGE("term");				}	term
+%destructor { delete $$; MESSAGE("metaexpr");			}	metaexpr
+%destructor { delete $$; MESSAGE("lvalue");				}	lvalue
+%destructor { delete $$; MESSAGE("primary");			}	primary
+%destructor { delete $$; MESSAGE("call");				}	call
+%destructor { delete $$; MESSAGE("objectdef");			}	objectdef
+%destructor { delete $$; MESSAGE("funcdef");			}	funcdef
+%destructor { delete $$; MESSAGE("const");				}	const
+%destructor { delete $$; MESSAGE("member");				}	member
+%destructor { delete $$; MESSAGE("callsuffix");			}	callsuffix
+%destructor { delete $$; MESSAGE("elist");				}	elist
+%destructor { delete $$; MESSAGE("normalcall");			}	normalcall
+%destructor { delete $$; MESSAGE("methodcall");			}	methodcall
+%destructor { delete $$; MESSAGE("elists");				}	elists
+%destructor { delete $$; MESSAGE("objectlist");			}	objectlist
+%destructor { delete $$; MESSAGE("objectlists");		}	objectlists
+%destructor { delete $$; MESSAGE("stmtd");				}	stmtd
+%destructor { delete $$; MESSAGE("idlist");				}	idlist
+%destructor { delete $$; MESSAGE("idlists");			}	idlists
+
 
 
 ////////////////////////////////////////////////////////////////////////
@@ -127,7 +168,7 @@
 
 SinCode:		stmts	{	
 							SIN::Manage_SinCode($1, &($$));	
-							root = &$$;
+							(*root) = $$;
 						}
 				;
 
@@ -333,11 +374,11 @@ returnstmt:		RETURN ';'			{	SIN::Manage_ReturnStatement_Return(&($$));					}
 
 %%
 
-int yyerror (bool hasError, SIN::ASTNode **	root, char const* yaccProvidedMessage)
+void yyerror (bool hasError, SIN::Logger & logger, SIN::ASTNode **	root, char const* yaccProvidedMessage)
 {
 	hasError = true;
 	fprintf(stderr, "%s: at line %d, before token: >%s<\n", yaccProvidedMessage, yylineno, yytext);
-	return -1;
+	//return -1;
 }
 
 

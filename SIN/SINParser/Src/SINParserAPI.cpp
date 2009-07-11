@@ -1,7 +1,10 @@
 #include "SINParserAPI.h"
 #include <cassert>
 
-
+	#include "Common.h"
+	#include "SINLogger.h"
+	#include "SINConstants.h"
+	#include "SINLoggerManager.h"
 #include "SINAssert.h"
 #include "SINASTNode.h"
 
@@ -10,8 +13,8 @@
 
 // TODO those should be somewhere?
 extern int PrepareForFile(const char * filePath);
-extern int yyparse(bool, SIN::ASTNode **);
-extern SIN::ASTNode * root;
+extern int yyparse(bool, SIN::Logger & logger, SIN::ASTNode **);
+
 
 namespace SIN {
     //--------------------------------------------------------
@@ -31,7 +34,8 @@ namespace SIN {
 	//--------------------------------------------------------
 
     int ParserAPI::ParseFile(String const &_filepath) {
-        if (PrepareForFile(_filepath.c_str()) == 0 && yyparse(hasError, &root) == 0)
+		SIN::Logger * logger = &SIN::LoggerManager::SingletonGetInstance()->GetLogger("SIN::ParserAPI->Parser");
+        if (PrepareForFile(_filepath.c_str()) == 0 && yyparse(hasError, *logger, &root) == 0)
 			return 0;
 		return -1;
     }
@@ -50,7 +54,7 @@ namespace SIN {
 	// If Parse* returned no error, this returns the produced AST
 	ASTNode * ParserAPI::GetAST(void) const {
 		SINASSERT(root);
-		return root;
+		return hasError ? static_cast<ASTNode *>(0): root;
 	}
 
 
