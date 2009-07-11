@@ -50,9 +50,11 @@
 	////////////////////////////////////////////////////////////////////////
 	// functions definitions
 	
-	int yyerror (char const* yaccProvidedMessage);
+	int yyerror (bool hasError, SIN::ASTNode **	root, char const* yaccProvidedMessage);
 	int PrepareForFile(const char * filePath);
 	int PrepareForString(const char * str);
+
+
 	int yylex (void);
 
 	extern int yylineno;
@@ -60,14 +62,20 @@
 	extern FILE* yyin;
 
 ////////////////////////////////////////////////////////////////////////
-	//This is the root of the AStree
-	SIN::ASTNode * root = static_cast<SIN::ASTNode *>(0);	
+	
 %}
+
+
+%parse-param {bool				hasError}
+%parse-param {SIN::ASTNode **	root}
+
+
+
 
 /*Token types*/
 %union {
-    char *		stringV;
-    double		realV;
+    char *			stringV;
+    double			realV;
     SIN::ASTNode *	AST;
 };
 
@@ -119,7 +127,7 @@
 
 SinCode:		stmts	{	
 							SIN::Manage_SinCode($1, &($$));	
-							root = $$;
+							root = &$$;
 						}
 				;
 
@@ -325,8 +333,9 @@ returnstmt:		RETURN ';'			{	SIN::Manage_ReturnStatement_Return(&($$));					}
 
 %%
 
-int yyerror (char const* yaccProvidedMessage)
+int yyerror (bool hasError, SIN::ASTNode **	root, char const* yaccProvidedMessage)
 {
+	hasError = true;
 	fprintf(stderr, "%s: at line %d, before token: >%s<\n", yaccProvidedMessage, yylineno, yytext);
 	return -1;
 }
@@ -334,10 +343,6 @@ int yyerror (char const* yaccProvidedMessage)
 
 int PrepareForFile(const char * filePath) {
 	assert (filePath);
-	if (root != static_cast<SIN::ASTNode *>(0))
-		;// TODO here we mast delete the old tree
-	root = static_cast<SIN::ASTNode *>(0);
-	
 	if (!(yyin = fopen(filePath, "r"))) {
 			fprintf(stderr, "Cannot read file: %s\n", filePath);
 			return 1;
@@ -345,7 +350,7 @@ int PrepareForFile(const char * filePath) {
 	return 0;
 }
 
-//int PrepareForString(const char * str) {
+int PrepareForString(const char * str) {
 //	//yy_scan_string(const char * str);
-//	return 0;
-//}
+	return 0;
+}

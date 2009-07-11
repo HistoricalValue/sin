@@ -18,11 +18,17 @@ namespace SIN {
 		// return !=0 on error
 		int		ParseFile(const String &_fileName);
         int		ParseText(const char *_input);
-
+		bool	HasError(void) const { return hasError; }
 		void	DeleteAST(void); //delete the fucking AST
 		
 		// If Parse* returned no error, this returns the produced AST
 		ASTNode *GetAST(void) const;
+
+		
+
+	private:
+		bool		hasError;	
+		ASTNode *	root;
 
 		
 	}; // class ParserAPI

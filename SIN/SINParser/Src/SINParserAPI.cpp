@@ -10,13 +10,13 @@
 
 // TODO those should be somewhere?
 extern int PrepareForFile(const char * filePath);
-extern int yyparse(void);
+extern int yyparse(bool, SIN::ASTNode **);
 extern SIN::ASTNode * root;
 
 namespace SIN {
     //--------------------------------------------------------
 
-    ParserAPI::ParserAPI(void) {
+	ParserAPI::ParserAPI(void) : hasError(false){
     }
 
 
@@ -31,7 +31,7 @@ namespace SIN {
 	//--------------------------------------------------------
 
     int ParserAPI::ParseFile(String const &_filepath) {
-        if (PrepareForFile(_filepath.c_str()) == 0 && yyparse() == 0)
+        if (PrepareForFile(_filepath.c_str()) == 0 && yyparse(hasError, &root) == 0)
 			return 0;
 		return -1;
     }

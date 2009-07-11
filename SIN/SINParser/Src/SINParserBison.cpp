@@ -113,9 +113,11 @@
 	////////////////////////////////////////////////////////////////////////
 	// functions definitions
 	
-	int yyerror (char const* yaccProvidedMessage);
+	int yyerror (bool hasError, SIN::ASTNode **	root, char const* yaccProvidedMessage);
 	int PrepareForFile(const char * filePath);
 	int PrepareForString(const char * str);
+
+
 	int yylex (void);
 
 	extern int yylineno;
@@ -123,8 +125,7 @@
 	extern FILE* yyin;
 
 ////////////////////////////////////////////////////////////////////////
-	//This is the root of the AStree
-	SIN::ASTNode * root = static_cast<SIN::ASTNode *>(0);	
+	
 
 
 
@@ -247,8 +248,8 @@ typedef union YYSTYPE
 {
 
 
-    char *		stringV;
-    double		realV;
+    char *			stringV;
+    double			realV;
     SIN::ASTNode *	AST;
 
 
@@ -588,16 +589,16 @@ static const yytype_int8 yyrhs[] =
 /* YYRLINE[YYN] -- source line where rule number YYN was defined.  */
 static const yytype_uint16 yyrline[] =
 {
-       0,   120,   120,   128,   129,   134,   135,   136,   137,   138,
-     139,   140,   141,   142,   143,   144,   149,   150,   151,   152,
-     153,   154,   155,   156,   157,   158,   159,   160,   161,   162,
-     163,   164,   165,   170,   171,   172,   173,   174,   179,   180,
-     181,   182,   183,   184,   185,   186,   191,   196,   197,   198,
-     199,   200,   205,   206,   207,   208,   213,   214,   215,   216,
-     222,   223,   224,   229,   230,   235,   240,   245,   246,   251,
-     252,   257,   258,   263,   264,   269,   270,   271,   276,   276,
-     281,   282,   287,   288,   292,   293,   294,   295,   296,   300,
-     301,   306,   307,   312,   313,   316,   319,   322,   323
+       0,   128,   128,   136,   137,   142,   143,   144,   145,   146,
+     147,   148,   149,   150,   151,   152,   157,   158,   159,   160,
+     161,   162,   163,   164,   165,   166,   167,   168,   169,   170,
+     171,   172,   173,   178,   179,   180,   181,   182,   187,   188,
+     189,   190,   191,   192,   193,   194,   199,   204,   205,   206,
+     207,   208,   213,   214,   215,   216,   221,   222,   223,   224,
+     230,   231,   232,   237,   238,   243,   248,   253,   254,   259,
+     260,   265,   266,   271,   272,   277,   278,   279,   284,   284,
+     289,   290,   295,   296,   300,   301,   302,   303,   304,   308,
+     309,   314,   315,   320,   321,   324,   327,   330,   331
 };
 #endif
 
@@ -951,7 +952,7 @@ do								\
     }								\
   else								\
     {								\
-      yyerror (YY_("syntax error: cannot back up")); \
+      yyerror (hasError, root, YY_("syntax error: cannot back up")); \
       YYERROR;							\
     }								\
 while (YYID (0))
@@ -1031,7 +1032,7 @@ do {									  \
     {									  \
       YYFPRINTF (stderr, "%s ", Title);					  \
       yy_symbol_print (stderr,						  \
-		  Type, Value); \
+		  Type, Value, hasError, root); \
       YYFPRINTF (stderr, "\n");						  \
     }									  \
 } while (YYID (0))
@@ -1045,17 +1046,21 @@ do {									  \
 #if (defined __STDC__ || defined __C99__FUNC__ \
      || defined __cplusplus || defined _MSC_VER)
 static void
-yy_symbol_value_print (FILE *yyoutput, int yytype, YYSTYPE const * const yyvaluep)
+yy_symbol_value_print (FILE *yyoutput, int yytype, YYSTYPE const * const yyvaluep, bool				hasError, SIN::ASTNode **	root)
 #else
 static void
-yy_symbol_value_print (yyoutput, yytype, yyvaluep)
+yy_symbol_value_print (yyoutput, yytype, yyvaluep, hasError, root)
     FILE *yyoutput;
     int yytype;
     YYSTYPE const * const yyvaluep;
+    bool				hasError;
+    SIN::ASTNode **	root;
 #endif
 {
   if (!yyvaluep)
     return;
+  YYUSE (hasError);
+  YYUSE (root);
 # ifdef YYPRINT
   if (yytype < YYNTOKENS)
     YYPRINT (yyoutput, yytoknum[yytype], *yyvaluep);
@@ -1077,13 +1082,15 @@ yy_symbol_value_print (yyoutput, yytype, yyvaluep)
 #if (defined __STDC__ || defined __C99__FUNC__ \
      || defined __cplusplus || defined _MSC_VER)
 static void
-yy_symbol_print (FILE *yyoutput, int yytype, YYSTYPE const * const yyvaluep)
+yy_symbol_print (FILE *yyoutput, int yytype, YYSTYPE const * const yyvaluep, bool				hasError, SIN::ASTNode **	root)
 #else
 static void
-yy_symbol_print (yyoutput, yytype, yyvaluep)
+yy_symbol_print (yyoutput, yytype, yyvaluep, hasError, root)
     FILE *yyoutput;
     int yytype;
     YYSTYPE const * const yyvaluep;
+    bool				hasError;
+    SIN::ASTNode **	root;
 #endif
 {
   if (yytype < YYNTOKENS)
@@ -1091,7 +1098,7 @@ yy_symbol_print (yyoutput, yytype, yyvaluep)
   else
     YYFPRINTF (yyoutput, "nterm %s (", yytname[yytype]);
 
-  yy_symbol_value_print (yyoutput, yytype, yyvaluep);
+  yy_symbol_value_print (yyoutput, yytype, yyvaluep, hasError, root);
   YYFPRINTF (yyoutput, ")");
 }
 
@@ -1134,12 +1141,14 @@ do {								\
 #if (defined __STDC__ || defined __C99__FUNC__ \
      || defined __cplusplus || defined _MSC_VER)
 static void
-yy_reduce_print (YYSTYPE *yyvsp, int yyrule)
+yy_reduce_print (YYSTYPE *yyvsp, int yyrule, bool				hasError, SIN::ASTNode **	root)
 #else
 static void
-yy_reduce_print (yyvsp, yyrule)
+yy_reduce_print (yyvsp, yyrule, hasError, root)
     YYSTYPE *yyvsp;
     int yyrule;
+    bool				hasError;
+    SIN::ASTNode **	root;
 #endif
 {
   int yynrhs = yyr2[yyrule];
@@ -1153,7 +1162,7 @@ yy_reduce_print (yyvsp, yyrule)
       YYFPRINTF (stderr, "   $%d = ", yyi + 1);
       yy_symbol_print (stderr, yyrhs[yyprhs[yyrule] + yyi],
 		       &(yyvsp[(yyi + 1) - (yynrhs)])
-		       		       );
+		       		       , hasError, root);
       YYFPRINTF (stderr, "\n");
     }
 }
@@ -1161,7 +1170,7 @@ yy_reduce_print (yyvsp, yyrule)
 # define YY_REDUCE_PRINT(Rule)		\
 do {					\
   if (yydebug)				\
-    yy_reduce_print (yyvsp, Rule); \
+    yy_reduce_print (yyvsp, Rule, hasError, root); \
 } while (YYID (0))
 
 /* Nonzero means print parse trace.  It is left uninitialized so that
@@ -1412,16 +1421,20 @@ yysyntax_error (char *yyresult, int yystate, int yychar)
 #if (defined __STDC__ || defined __C99__FUNC__ \
      || defined __cplusplus || defined _MSC_VER)
 static void
-yydestruct (const char *yymsg, int yytype, YYSTYPE *yyvaluep)
+yydestruct (const char *yymsg, int yytype, YYSTYPE *yyvaluep, bool				hasError, SIN::ASTNode **	root)
 #else
 static void
-yydestruct (yymsg, yytype, yyvaluep)
+yydestruct (yymsg, yytype, yyvaluep, hasError, root)
     const char *yymsg;
     int yytype;
     YYSTYPE *yyvaluep;
+    bool				hasError;
+    SIN::ASTNode **	root;
 #endif
 {
   YYUSE (yyvaluep);
+  YYUSE (hasError);
+  YYUSE (root);
 
   if (!yymsg)
     yymsg = "Deleting";
@@ -1444,7 +1457,7 @@ int yyparse ();
 #endif
 #else /* ! YYPARSE_PARAM */
 #if defined __STDC__ || defined __cplusplus
-int yyparse (void);
+int yyparse (bool				hasError, SIN::ASTNode **	root);
 #else
 int yyparse ();
 #endif
@@ -1480,11 +1493,12 @@ yyparse (YYPARSE_PARAM)
 #if (defined __STDC__ || defined __C99__FUNC__ \
      || defined __cplusplus || defined _MSC_VER)
 int
-yyparse (void)
+yyparse (bool				hasError, SIN::ASTNode **	root)
 #else
 int
-yyparse ()
-
+yyparse (hasError, root)
+    bool				hasError;
+    SIN::ASTNode **	root;
 #endif
 #endif
 {
@@ -1733,7 +1747,7 @@ yyreduce:
 
     {	
 							SIN::Manage_SinCode((yyvsp[(1) - (1)].AST), &((yyval.AST)));	
-							root = (yyval.AST);
+							root = &(yyval.AST);
 						}
     break;
 
@@ -2253,7 +2267,7 @@ yyerrlab:
     {
       ++yynerrs;
 #if ! YYERROR_VERBOSE
-      yyerror (YY_("syntax error"));
+      yyerror (hasError, root, YY_("syntax error"));
 #else
       {
 	YYSIZE_T yysize = yysyntax_error (0, yystate, yychar);
@@ -2277,11 +2291,11 @@ yyerrlab:
 	if (0 < yysize && yysize <= yymsg_alloc)
 	  {
 	    (void) yysyntax_error (yymsg, yystate, yychar);
-	    yyerror (yymsg);
+	    yyerror (hasError, root, yymsg);
 	  }
 	else
 	  {
-	    yyerror (YY_("syntax error"));
+	    yyerror (hasError, root, YY_("syntax error"));
 	    if (yysize != 0)
 	      goto yyexhaustedlab;
 	  }
@@ -2305,7 +2319,7 @@ yyerrlab:
       else
 	{
 	  yydestruct ("Error: discarding",
-		      yytoken, &yylval);
+		      yytoken, &yylval, hasError, root);
 	  yychar = YYEMPTY;
 	}
     }
@@ -2361,7 +2375,7 @@ yyerrlab1:
 
 
       yydestruct ("Error: popping",
-		  yystos[yystate], yyvsp);
+		  yystos[yystate], yyvsp, hasError, root);
       YYPOPSTACK (1);
       yystate = *yyssp;
       YY_STACK_PRINT (yyss, yyssp);
@@ -2396,7 +2410,7 @@ yyabortlab:
 | yyexhaustedlab -- memory exhaustion comes here.  |
 `-------------------------------------------------*/
 yyexhaustedlab:
-  yyerror (YY_("memory exhausted"));
+  yyerror (hasError, root, YY_("memory exhausted"));
   yyresult = 2;
   /* Fall through.  */
 #endif
@@ -2404,7 +2418,7 @@ yyexhaustedlab:
 yyreturn:
   if (yychar != YYEMPTY)
      yydestruct ("Cleanup: discarding lookahead",
-		 yytoken, &yylval);
+		 yytoken, &yylval, hasError, root);
   /* Do not reclaim the symbols of the rule which action triggered
      this YYABORT or YYACCEPT.  */
   YYPOPSTACK (yylen);
@@ -2412,7 +2426,7 @@ yyreturn:
   while (yyssp != yyss)
     {
       yydestruct ("Cleanup: popping",
-		  yystos[*yyssp], yyvsp);
+		  yystos[*yyssp], yyvsp, hasError, root);
       YYPOPSTACK (1);
     }
 #ifndef yyoverflow
@@ -2431,8 +2445,9 @@ yyreturn:
 
 
 
-int yyerror (char const* yaccProvidedMessage)
+int yyerror (bool hasError, SIN::ASTNode **	root, char const* yaccProvidedMessage)
 {
+	hasError = true;
 	fprintf(stderr, "%s: at line %d, before token: >%s<\n", yaccProvidedMessage, yylineno, yytext);
 	return -1;
 }
@@ -2440,10 +2455,6 @@ int yyerror (char const* yaccProvidedMessage)
 
 int PrepareForFile(const char * filePath) {
 	assert (filePath);
-	if (root != static_cast<SIN::ASTNode *>(0))
-		;//here we mast delete the old tree
-	root = static_cast<SIN::ASTNode *>(0);
-	
 	if (!(yyin = fopen(filePath, "r"))) {
 			fprintf(stderr, "Cannot read file: %s\n", filePath);
 			return 1;
@@ -2452,7 +2463,6 @@ int PrepareForFile(const char * filePath) {
 }
 
 int PrepareForString(const char * str) {
-	//yy_scan_string(const char * str);
+//	//yy_scan_string(const char * str);
 	return 0;
 }
-
