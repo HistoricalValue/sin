@@ -1,21 +1,9 @@
 #include "SIN.h"
 #include "SINLoggerManager.h"
 #include "SINAssert.h"
+#include "SINASTNode.h"
 
 namespace SIN {
-    static bool init_LoggerManager(void);
-    bool Initialise(void) {
-        return 
-            init_LoggerManager()    &&
-            true;
-    }
-
-    void CleanUp(void) {
-		SINASSERT(LoggerManager::SingletonCreated());
-		LoggerManager::SingletonDestroy();
-    }
-
-
     bool init_LoggerManager(void) {
 		register bool result = true;
         LoggerManager::SingletonCreate();
@@ -37,4 +25,27 @@ namespace SIN {
 			result = false;
 		return result;
     }
+	/////////////////////////////////////////////////////////////////
+	static bool init_ASTNodeFactory(void) {
+		ASTNodeFactory::SingletonCreate();
+		return
+			ASTNodeFactory::SingletonCreated()				&&
+			&ASTNodeFactory::SingletonInstance() != 0x00	&&
+			true;
+	}
+	/////////////////////////////////////////////////////////////////
+	/////////////////////////////////////////////////////////////////
+
+    bool Initialise(void) {
+        return 
+            init_LoggerManager()    &&
+			init_ASTNodeFactory()	&&
+            true;
+    }
+
+    void CleanUp(void) {
+		SINASSERT(LoggerManager::SingletonCreated());
+		LoggerManager::SingletonDestroy();
+    }
+
 } // namespace SIN

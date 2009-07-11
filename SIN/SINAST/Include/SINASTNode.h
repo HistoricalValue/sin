@@ -55,22 +55,48 @@ namespace SIN {
 
 	class ASTNode : public TreeNode {
 	public :
+		typedef unsigned long int ID_t;
+
 		//Constructor and destructor 
 		ASTNode(void);
         ASTNode(String const &name);
 		virtual ~ASTNode(void);
 
         String const &Name(void) const;
+		ID_t const& ID(void) const;
 
 		virtual void Accept(ASTVisitor *) const;
 		virtual void Accept(ASTTreeVisualisationVisitor *) const;
-
     private:
         String const name;
-        static Namer namer;
-	};
+		ID_t id;
+	}; // class ASTNode
 	extern String const string_cast(SIN::ASTNode const        &_val);
 
+	class ASTNodeFactory {
+		Namer namer;
+		ASTNode::ID_t next_id;
+
+		ASTNodeFactory(void);
+		ASTNodeFactory(ASTNodeFactory const&);
+		~ASTNodeFactory(void);
+
+		static ASTNodeFactory* singleton;
+		static bool singleton_created;
+	public:
+		static void SingletonCreate(void);
+		static bool SingletonCreated(void);
+		static void SingletonDestroy(void);
+		static ASTNodeFactory& SingletonInstance(void);
+
+		// convenience methods
+		static String const NextName(void);
+		static ASTNode::ID_t const NextID(void);
+
+		// normal methods
+		String const iNextName(void);
+		ASTNode::ID_t const iNextID(void);
+	}; // class ASTNodeFactory
 
 	//-----------------------------------------------------------------------	
 	

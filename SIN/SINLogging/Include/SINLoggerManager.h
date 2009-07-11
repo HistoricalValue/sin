@@ -53,7 +53,7 @@ namespace SIN {
 		RecordPrinter dlf_rp_inst; // default logger factory record printer instance
 		enum Record::Severity default_severity_instance;
 		///////////
-		static bool singleton_created, singleton_destroyed;
+		static bool singleton_created;
 		static LoggerManager *me;
 		///////////
 		LoggerManager(void);

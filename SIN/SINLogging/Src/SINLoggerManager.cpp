@@ -47,32 +47,27 @@ namespace SIN {
 
 	//////////// LoggerManager Singleton /////////////
 	bool LoggerManager::singleton_created = false;
-	bool LoggerManager::singleton_destroyed = false;
 	LoggerManager *LoggerManager::me = 0x00;
 
 	void LoggerManager::SingletonCreate(void) {
 		SINASSERT(!singleton_created);
-		SINASSERT(!singleton_destroyed);
 		me = new LoggerManager;
 		singleton_created = true;
 	}
 
 	bool LoggerManager::SingletonCreated(void) {
-		SINASSERT(!singleton_destroyed);
 		return singleton_created;
 	}
 
 	void LoggerManager::SingletonDestroy(void) {
 		SINASSERT(singleton_created);
-		SINASSERT(!singleton_destroyed);
 		delete me;
-		singleton_destroyed = true;
+		singleton_created = false;
 	}
 
 	LoggerManager *LoggerManager::SingletonGetInstance(void) {
 		SINASSERT(singleton_created);
-		SINASSERT(!singleton_destroyed);
-		return singleton_created && !singleton_destroyed ? me : 0x00;
+		return singleton_created ? me : 0x00;
 	}
 
 	//////////////// LoggerManager Set/Get Defaults /////////////

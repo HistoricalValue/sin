@@ -8,6 +8,7 @@
 #include "SINLogger.h"
 #include "SINTestCollection.h"
 #include "SINTestFactory.h"
+#include "SINAssert.h"
 
 //////// for quick tests and c++ questions ///////
 // (please restore to original before commits)
@@ -52,6 +53,8 @@ int main(int argc, char *argv[]) {
 		mtc.RunAll();
         quick_test();
     }
+	else
+		SINASSERT(!"Initialisation failed");
 
 	SIN::CleanUp();
 	return 0;

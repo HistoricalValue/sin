@@ -49,7 +49,10 @@
 namespace SIN {
 
     ///--------- SIN AST ---------
-    ASTNode::ASTNode(void): name(namer++) {
+	ASTNode::ASTNode(void):
+	name(ASTNodeFactory::NextName()),
+	id(ASTNodeFactory::NextID())
+	{
     }
     ASTNode::ASTNode(String const &_name): name(_name) {
     }
@@ -58,6 +61,9 @@ namespace SIN {
     String const &ASTNode::Name(void) const {
         return name;
     }
+	ASTNode::ID_t const& ASTNode::ID(void) const {
+		return id;
+	}
     void ASTNode::Accept(ASTVisitor *_v) const {
         SINASSERT(_v);
         _v->Visit(*this);
@@ -69,7 +75,50 @@ namespace SIN {
 	String const string_cast(ASTNode const &_node) {
 		return string_cast(_node.Name());
 	}
-    Namer ASTNode::namer("ASTNode-");
+
+	///--------- AST Node Factory ----------
+	ASTNodeFactory::ASTNodeFactory(void): namer("ASTNode-"), next_id(0x00ul) {
+	}
+	ASTNodeFactory::ASTNodeFactory(ASTNodeFactory const& _other): namer(""), next_id(0xbee1cebul) {
+		SINASSERT(!"Copy constructor called for singleton class SIN::ASTNodeFactory");
+		throw String("Copy constructor called for singleton class SIN::ASTNodeFactory");
+	}
+	ASTNodeFactory::~ASTNodeFactory(void) {
+	}
+	// singleton related
+	ASTNodeFactory* ASTNodeFactory::singleton = 0x00;
+	bool ASTNodeFactory::singleton_created = false;
+	void ASTNodeFactory::SingletonCreate(void) {
+		SINASSERT(!singleton_created);
+		if ((singleton = new ASTNodeFactory) != 0x00)
+			singleton_created = true;
+	}
+	bool ASTNodeFactory::SingletonCreated(void) {
+		return singleton_created;
+	}
+	void ASTNodeFactory::SingletonDestroy(void) {
+		SINASSERT(singleton_created);
+		delete singleton;
+		singleton_created = false;
+	}
+	ASTNodeFactory& ASTNodeFactory::SingletonInstance(void) {
+		SINASSERT(singleton_created);
+		return *(singleton_created ? singleton : 0x00);
+	}
+	// convenience methods
+	String const ASTNodeFactory::NextName(void) {
+		return SingletonInstance().iNextName();
+	}
+	ASTNode::ID_t const ASTNodeFactory::NextID(void) {
+		return SingletonInstance().iNextID();
+	}
+	// instance factory methods
+	String const ASTNodeFactory::iNextName(void) {
+		return namer++;
+	}
+	ASTNode::ID_t const ASTNodeFactory::iNextID(void) {
+		return next_id++;
+	}
 
 	///--------- ConstNodes ---------
     SINASTNODE_DEFAULT_CONSTNODE_DEFS(           Number, CONST_NUMBER, Number_t         )
