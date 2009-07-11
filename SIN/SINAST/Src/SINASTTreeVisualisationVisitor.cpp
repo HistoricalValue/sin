@@ -10,19 +10,22 @@
 #include "SINConstants.h"
 #include "SINLoggerManager.h"
 
+#define SIN_ASTTreeVisualisationVisitor_LoggerName "SIN::ParserAPI->Parser"
 namespace SIN {
 
-	/*ASTTreeVisualisationVisitor::ASTTreeVisualisationVisitor(OutputStream& _out):
-	out(_out)
-	{ }*/
+	ASTTreeVisualisationVisitor::ASTTreeVisualisationVisitor(OutputStream& _out):
+	tabs(""), out(_out), logger_p(0x00)
+	{
+		Type<LoggerManager>::ref lm(*LoggerManager::SingletonGetInstance());
+		lm.GetDefaultLoggerFactory()->DestroyLogger(lm.MakeStdoutLogger(SIN_ASTTreeVisualisationVisitor_LoggerName));
+		logger_p = lm.GetLogger(SIN_ASTTreeVisualisationVisitor_LoggerName);
+	}
 
 	ASTTreeVisualisationVisitor::~ASTTreeVisualisationVisitor(void) {
 	}
 
 	void ASTTreeVisualisationVisitor::Visit(Type<ASTNode>::const_ref node) {
-		SIN::Logger * logger = &SIN::LoggerManager::SingletonGetInstance()->GetLogger("SIN::ParserAPI->Parser");
-		logger->Warning(tabs+node.Name().c_str());
-		//std::cout << node.Name() << std::endl;
+		out << tabs+node.Name();
 	}
 
 	//-----------------------------------------------------------------
@@ -186,7 +189,7 @@ namespace SIN {
 	
 	void ASTTreeVisualisationVisitor::RemoveTab(void) {
 		if (tabs != "") 
-			tabs.erase(tabs.length()-1, tabs.length());
+			tabs.Erase(tabs.Length()-1, 1);
 	}
 
 

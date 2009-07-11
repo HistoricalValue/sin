@@ -160,6 +160,10 @@
 				>
 			</File>
 			<File
+				RelativePath="..\..\Src\SINFileOutputStream.cpp"
+				>
+			</File>
+			<File
 				RelativePath="..\..\Src\SINInputStream.cpp"
 				>
 			</File>

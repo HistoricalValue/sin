@@ -3,11 +3,12 @@
 
 #include <string>
 #include <new>
+#include "Common.h"
 #include "SINOutputStream.h"
 
 namespace SIN {
     
-    class String {
+	class String: public ComparisonAware<String> {
         std::string core;
     public:
         String(void);
@@ -22,6 +23,9 @@ namespace SIN {
 
         bool operator ==(String const &) const;
         bool operator  <(String const &) const;
+
+		size_t Length(void) const;
+		void Erase(size_t pos, size_t n);
 
         template <typename T> String &operator <<(T const &o)
             { *this += string_cast(o); return *this; } 

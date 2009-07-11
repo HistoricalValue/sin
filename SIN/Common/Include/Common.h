@@ -26,7 +26,9 @@ template <typename T> T &max(T &a, T &b) {
 }
 
 
-#define READONLY(VAR,TYPE,VAL) extern class ___ReadOnly_##VAR##___ { public: operator TYPE(void) const { return VAL; } } VAR
+#define CLASSREADONLY(VAR,TYPE,VAL) class ___ReadOnly_##VAR##___ { public: operator TYPE(void) const { return VAL; } } VAR
+#define CLASSREADONLYDEF(NS,VAR) class NS::___ReadOnly_##VAR##___ NS::VAR
+#define READONLY(VAR,TYPE,VAL) extern CLASSREADONLY(VAR,TYPE,VAL)
 #define READONLYDEF(VAR) class ___ReadOnly_##VAR##___ VAR
 
 // Comparison operators for type T -- A subclass needs only to implement <(T) and ==(T)

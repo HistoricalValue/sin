@@ -1,20 +1,17 @@
 #ifndef __SIN_ASTTREEVISUALISATIONVISITOR_H__
 #define __SIN_ASTTREEVISUALISATIONVISITOR_H__
 
-#include <string>
-
 #include "Common.h"
-//#include "SINString.h"
+#include "SINString.h"
 #include "SINASTNode.h"
 #include "SINASTVisitor.h"
 #include "SINOutputStream.h"
-
+#include "SINLogger.h"
 
 namespace SIN {
 	class ASTTreeVisualisationVisitor: public ASTVisitor {
 	public:
-		ASTTreeVisualisationVisitor(void) : tabs("") {}
-		//ASTTreeVisualisationVisitor(OutputStream& out);
+		ASTTreeVisualisationVisitor(OutputStream& out);
 		virtual ~ASTTreeVisualisationVisitor(void);
 		
 
@@ -68,8 +65,9 @@ namespace SIN {
 
 
 	private:
-		std::string tabs;
-		//OutputStream& out;
+		String tabs;
+		OutputStream &out;
+		InstanceProxy<Logger> logger_p;
 	}; // class ASTTreeVisualisationVisitor
 
 

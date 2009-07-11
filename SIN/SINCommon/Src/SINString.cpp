@@ -46,6 +46,14 @@ namespace SIN {
         return core < _other.core;
     }
 
+	size_t String::Length(void) const {
+		return core.length();
+	}
+
+	void String::Erase(size_t pos, size_t n) {
+		core.erase(pos, n);
+	}
+
     char const *String::c_str(void) const {
         return core.c_str();
     }
