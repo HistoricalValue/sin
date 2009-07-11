@@ -1,11 +1,15 @@
 #include "SINParserTester.h"
-#include "SINParserAPI.h"
-#include "SINTest.h"
-#include "SINLoggerManager.h"
-#include "SINLogger.h"
+
+
 #include "Common.h"
-#include "SINTestingCommon.h"
+#include "SINTest.h"
+#include "SINLogger.h"
+#include "SINASTNode.h"
 #include "SINConstants.h"
+#include "SINParserAPI.h"
+#include "SINTestingCommon.h"
+#include "SINLoggerManager.h"
+#include "SINASTTreeVisualisationVisitor.h"
 
 
 #define SIN_TESTS_PARSER_RUN(NAME)               SINTESTS_RUNTEST(NAME)
@@ -19,6 +23,7 @@
 	#define FILE_PATH	"./../../../Tests/SINParser_Test/Resource/sin_grammar_test.sin"
 #endif
 
+
 namespace SIN {
 	namespace Tests {
 		namespace Parser {
@@ -29,7 +34,10 @@ namespace SIN {
 			SIN_TESTS_PARSER_TESTDEF(ParserFileTest,
 				ParserAPI test;
 				TRY(test.ParseFile(FILE_PATH) == 0);
-				test.GetAST();
+				ASTNode * root = test.GetAST();
+				ASTTreeVisualisationVisitor visitor;
+				root->Accept(&visitor);
+
 			)
 
 			void test(InstanceProxy<TestFactory> const &tf) { 

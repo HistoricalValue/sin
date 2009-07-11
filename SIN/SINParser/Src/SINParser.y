@@ -108,7 +108,7 @@
 %token <realV>   NUMBER
 %token <stringV> ID STRING
 
-
+/*
 %destructor { delete $$; MESSAGE("Sin Code"); root = 0;	}	SinCode
 %destructor { delete $$; MESSAGE("stmts");				}	stmts
 %destructor { delete $$; MESSAGE("stmt");				}	stmt
@@ -138,7 +138,7 @@
 %destructor { delete $$; MESSAGE("stmtd");				}	stmtd
 %destructor { delete $$; MESSAGE("idlist");				}	idlist
 %destructor { delete $$; MESSAGE("idlists");			}	idlists
-
+*/
 
 
 ////////////////////////////////////////////////////////////////////////

@@ -49,29 +49,61 @@
 namespace SIN {
 
     ///--------- SIN AST ---------
+	
+	//---------------------------------------------------
+	
 	ASTNode::ASTNode(void):
-	name(ASTNodeFactory::NextName()),
-	id(ASTNodeFactory::NextID())
-	{
-    }
-    ASTNode::ASTNode(String const &_name): name(_name) {
-    }
-    ASTNode::~ASTNode(void) {
-    }
+		name(ASTNodeFactory::NextName()),
+		id(ASTNodeFactory::NextID())
+	{}
+
+
+	//---------------------------------------------------
+
+    ASTNode::ASTNode(String const &_name): name(_name) {}
+
+
+	//---------------------------------------------------
+
+    ASTNode::~ASTNode(void) {}
+
+
+	//---------------------------------------------------
+
     String const &ASTNode::Name(void) const {
         return name;
     }
+
+
+	//---------------------------------------------------
+
 	ASTNode::ID_t const& ASTNode::ID(void) const {
 		return id;
 	}
+
+
+	//---------------------------------------------------
+
     void ASTNode::Accept(ASTVisitor *_v) const {
         SINASSERT(_v);
         _v->Visit(*this);
     }
+	
+	
+	//---------------------------------------------------
+
 	void ASTNode::Accept(ASTTreeVisualisationVisitor *_v) const {
 		SINASSERT(_v);
 		_v->Visit(*this);
+		_v->AddTab();
+		for (size_t i = 0; i < NumberOfChildren(); ++i)
+			dynamic_cast<ASTNode *>((*this)[i])->Accept(_v);
+		_v->RemoveTab();	
 	}
+	
+
+	//---------------------------------------------------
+
 	String const string_cast(ASTNode const &_node) {
 		return string_cast(_node.Name());
 	}
@@ -79,43 +111,86 @@ namespace SIN {
 	///--------- AST Node Factory ----------
 	ASTNodeFactory::ASTNodeFactory(void): namer("ASTNode-"), next_id(0x00ul) {
 	}
+
+
+	//---------------------------------------------------
+
 	ASTNodeFactory::ASTNodeFactory(ASTNodeFactory const& _other): namer(""), next_id(0xbee1cebul) {
 		SINASSERT(!"Copy constructor called for singleton class SIN::ASTNodeFactory");
 		throw String("Copy constructor called for singleton class SIN::ASTNodeFactory");
 	}
-	ASTNodeFactory::~ASTNodeFactory(void) {
-	}
+	
+	
+	//---------------------------------------------------
+	ASTNodeFactory::~ASTNodeFactory(void) {}
+	
+	
+	//---------------------------------------------------
 	// singleton related
 	ASTNodeFactory* ASTNodeFactory::singleton = 0x00;
+	
+	
+	//---------------------------------------------------
+	
 	bool ASTNodeFactory::singleton_created = false;
+	
+	
+	//---------------------------------------------------
+	
 	void ASTNodeFactory::SingletonCreate(void) {
 		SINASSERT(!singleton_created);
 		if ((singleton = new ASTNodeFactory) != 0x00)
 			singleton_created = true;
 	}
+	
+	
+	//---------------------------------------------------
+	
 	bool ASTNodeFactory::SingletonCreated(void) {
 		return singleton_created;
 	}
+	
+	
+	//---------------------------------------------------
+
 	void ASTNodeFactory::SingletonDestroy(void) {
 		SINASSERT(singleton_created);
 		delete singleton;
 		singleton_created = false;
 	}
+	
+	
+	//---------------------------------------------------
+
 	ASTNodeFactory& ASTNodeFactory::SingletonInstance(void) {
 		SINASSERT(singleton_created);
 		return *(singleton_created ? singleton : 0x00);
 	}
+	
+	
+	//---------------------------------------------------
 	// convenience methods
 	String const ASTNodeFactory::NextName(void) {
 		return SingletonInstance().iNextName();
 	}
+	
+	
+	//---------------------------------------------------
+	
 	ASTNode::ID_t const ASTNodeFactory::NextID(void) {
 		return SingletonInstance().iNextID();
 	}
+	
+	
+	//---------------------------------------------------
 	// instance factory methods
 	String const ASTNodeFactory::iNextName(void) {
 		return namer++;
 	}
+
+
+	//---------------------------------------------------
+
 	ASTNode::ID_t const ASTNodeFactory::iNextID(void) {
 		return next_id++;
 	}

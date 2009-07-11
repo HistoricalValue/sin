@@ -1,14 +1,18 @@
 #include "SINParserAPI.h"
 #include <cassert>
 
-	#include "Common.h"
-	#include "SINLogger.h"
-	#include "SINConstants.h"
-	#include "SINLoggerManager.h"
+#include "Common.h"
+#include "SINLogger.h"
 #include "SINAssert.h"
 #include "SINASTNode.h"
-
+#include "SINConstants.h"
 #include "SINParserBison.h"
+#include "SINLoggerManager.h"
+
+
+
+
+
 
 
 // TODO those should be somewhere?
