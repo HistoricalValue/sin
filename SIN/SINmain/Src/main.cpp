@@ -11,24 +11,28 @@
 
 //////// for quick tests and c++ questions ///////
 // (please restore to original before commits)
+class out_class {
+	SIN::Logger& out;
+public:
+	out_class(SIN::Logger& _out): out(_out) { }
+	template <typename _T>
+	out_class& operator <<(_T const& something) {
+		out.Notice(SIN::string_cast(something));
+		return *this;
+	}
+};
+// keep the above for convenience. ex:
+// out << (SIN::String() << "This is" << " horrible " << (4));
 static void quick_test(void) {
 	SIN::LoggerManager::SingletonGetInstance()->MakeStdoutLogger("SIN::main::quick_test");
-	SIN::Logger &_out(SIN::LoggerManager::SingletonGetInstance()->GetLogger("SIN::main::quick_test"));
-	class out_class {
-		SIN::Logger& out;
-	public:
-		out_class(SIN::Logger& _out): out(_out) { }
-		out_class& operator <<(SIN::String const& msg) {
-			out.Notice(msg);
-			return *this;
-		}
-	} out(_out);
-	// keep the above for convenience. ex:
-	// out << (SIN::String() << "This is" << " horrible " << (4));
+	out_class out(SIN::LoggerManager::SingletonGetInstance()->GetLogger("SIN::main::quick_test"));
+	// keep the above for convenience
+
+	// Example of using "out" and "FOREACH"
 	std::list<int> lis; lis.push_back(9); lis.push_back(8); lis.push_back(7); lis.push_back(6);
-	FOREACH(i, lis)
-		out << (SIN::string_cast(*ITER(i, lis)));
-	out << (SIN::String() << "This is" << " horrible " << (4));
+	FOREACH(lis)
+		out << *ITER(lis);
+	out << (SIN::string_cast("This is") << " horrible " << (4));
 }
 ////////
 

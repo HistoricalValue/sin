@@ -126,13 +126,13 @@ public:
 // Foreach - works like a charm
 // example:
 //  std::list<int> lis; lis.push_back(9); lis.push_back(8); lis.push_back(7); lis.push_back(6);
-//  FOREACH(i, lis)
-//      out.Notice(SIN::string_cast(*ITER(i, lis)));
-#define ITER(ITERATOR,ITERABLE) Type<void*>::ForType(ITERABLE.begin()).CastRef(ITERATOR)
-#define FOREACH(ITERATOR,ITERABLE)											\
-	for (																	\
-		AnyHolder<sizeof(ITERABLE.begin())> ITERATOR(ITERABLE.begin())	;	\
-		ITER(ITERATOR,ITERABLE) != ITERABLE.end()						;	\
-		++ITER(ITERATOR,ITERABLE)										)
+//  FOREACH(lis)
+//      out.Notice(SIN::string_cast(*ITER(lis)));
+#define ITER(ITERABLE) (Type<void*>::ForType(ITERABLE.begin()).CastRef(ITERABLE__iterator))
+#define FOREACH(ITERABLE)															\
+	for (																			\
+		AnyHolder<sizeof(ITERABLE.begin())> ITERABLE__iterator(ITERABLE.begin());	\
+		ITER(ITERABLE) != ITERABLE.end()										;	\
+		++ITER(ITERABLE)														)
 
 #endif //__SIN_COMMON_H__
