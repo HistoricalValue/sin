@@ -1,14 +1,17 @@
 #include "SIN.h"
 #include "Common.h"
+#include "SINAssert.h"
+#include "SINLogger.h"
 #include "SINASTTester.h"
+#include "SINTestFactory.h"
 #include "SINParserTester.h"
 #include "SINCommonTester.h"
 #include "SINLoggingTester.h"
 #include "SINLoggerManager.h"
-#include "SINLogger.h"
 #include "SINTestCollection.h"
-#include "SINTestFactory.h"
-#include "SINAssert.h"
+#include "SINSymbolTableTester.h"
+
+
 
 //////// for quick tests and c++ questions ///////
 // (please restore to original before commits)
@@ -70,5 +73,6 @@ bool MainTestCollection::RunAll(void) {
 	SIN::Tests::Common::test(&test_factory);
 	SIN::Tests::Logging::test(&test_factory);
 	SIN::Tests::Parser::test(&test_factory);
+	//SIN::Tests::ST::test(&test_factory);
 	return true;
 }
