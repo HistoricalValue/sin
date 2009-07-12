@@ -17,13 +17,13 @@
 
 // TODO those should be somewhere?
 extern int PrepareForFile(const char * filePath);
-extern int yyparse(bool, SIN::Logger & logger, SIN::ASTNode **);
+extern int yyparse(SIN::BisonParseArguments &);
 
 
 namespace SIN {
     //--------------------------------------------------------
 
-	ParserAPI::ParserAPI(void) : hasError(false){
+	ParserAPI::ParserAPI(void) {
     }
 
 
@@ -39,7 +39,7 @@ namespace SIN {
 
     int ParserAPI::ParseFile(String const &_filepath) {
 		SIN::Logger * logger = &SIN::LoggerManager::SingletonGetInstance()->GetLogger("SIN::ParserAPI->Parser");
-        if (PrepareForFile(_filepath.c_str()) == 0 && yyparse(hasError, *logger, &root) == 0)
+        if (PrepareForFile(_filepath.c_str()) == 0 && yyparse(bpa) == 0)
 			return 0;
 		return -1;
     }
@@ -57,8 +57,9 @@ namespace SIN {
 
 	// If Parse* returned no error, this returns the produced AST
 	ASTNode * ParserAPI::GetAST(void) const {
+		ASTNode * root = bpa.GetRoot();
 		SINASSERT(root);
-		return hasError ? static_cast<ASTNode *>(0): root;
+		return bpa.HasError() ? static_cast<ASTNode *>(0): root;
 	}
 
 

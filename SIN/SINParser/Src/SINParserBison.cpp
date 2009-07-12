@@ -83,10 +83,11 @@
 
 
 	
-	#include "Common.h"
-	#include "SINLogger.h"
-	#include "SINConstants.h"
-	#include "SINLoggerManager.h"
+	//#include "Common.h"
+	//#include "SINLogger.h"
+	//#include "SINConstants.h"
+	//#include "SINLoggerManager.h"
+	#include "BisonParseArguments.h"
 	
 
 	#include "SINASTNode.h"
@@ -118,14 +119,14 @@
 
 	////////////////////////////////////////////////////////////////////////
 	// defines
-	#define MESSAGE(STR)	logger.Fine(#STR " destructed")
+	#define MESSAGE(STR)	bpa.WriteFine(#STR " destructed")
 
 
 
 	////////////////////////////////////////////////////////////////////////
 	// functions definitions
 	
-	void yyerror (bool hasError, SIN::Logger & logger, SIN::ASTNode **	root, char const* yaccProvidedMessage);
+	void yyerror (SIN::BisonParseArguments & bpa, char const* yaccProvidedMessage);
 	int PrepareForFile(const char * filePath);
 	int PrepareForString(const char * str);
 
@@ -598,16 +599,16 @@ static const yytype_int8 yyrhs[] =
 /* YYRLINE[YYN] -- source line where rule number YYN was defined.  */
 static const yytype_uint16 yyrline[] =
 {
-       0,   169,   169,   177,   178,   183,   184,   185,   186,   187,
-     188,   189,   190,   191,   192,   193,   198,   199,   200,   201,
-     202,   203,   204,   205,   206,   207,   208,   209,   210,   211,
-     212,   213,   214,   219,   220,   221,   222,   223,   228,   229,
-     230,   231,   232,   233,   234,   235,   240,   245,   246,   247,
-     248,   249,   254,   255,   256,   257,   262,   263,   264,   265,
-     271,   272,   273,   278,   279,   284,   289,   294,   295,   300,
-     301,   306,   307,   312,   313,   318,   319,   320,   325,   325,
-     330,   331,   336,   337,   341,   342,   343,   344,   345,   349,
-     350,   355,   356,   361,   362,   365,   368,   371,   372
+       0,   167,   167,   176,   177,   182,   183,   184,   185,   186,
+     187,   188,   189,   190,   191,   192,   197,   198,   199,   200,
+     201,   202,   203,   204,   205,   206,   207,   208,   209,   210,
+     211,   212,   213,   218,   219,   220,   221,   222,   227,   228,
+     229,   230,   231,   232,   233,   234,   239,   244,   245,   246,
+     247,   248,   253,   254,   255,   256,   261,   262,   263,   264,
+     270,   271,   272,   277,   278,   283,   288,   293,   294,   299,
+     300,   305,   306,   311,   312,   317,   318,   319,   324,   324,
+     329,   330,   335,   336,   340,   341,   342,   343,   344,   348,
+     349,   354,   355,   360,   361,   364,   367,   370,   371
 };
 #endif
 
@@ -961,7 +962,7 @@ do								\
     }								\
   else								\
     {								\
-      yyerror (hasError, logger, root, YY_("syntax error: cannot back up")); \
+      yyerror (bpa, YY_("syntax error: cannot back up")); \
       YYERROR;							\
     }								\
 while (YYID (0))
@@ -1041,7 +1042,7 @@ do {									  \
     {									  \
       YYFPRINTF (stderr, "%s ", Title);					  \
       yy_symbol_print (stderr,						  \
-		  Type, Value, hasError, logger, root); \
+		  Type, Value, bpa); \
       YYFPRINTF (stderr, "\n");						  \
     }									  \
 } while (YYID (0))
@@ -1055,23 +1056,19 @@ do {									  \
 #if (defined __STDC__ || defined __C99__FUNC__ \
      || defined __cplusplus || defined _MSC_VER)
 static void
-yy_symbol_value_print (FILE *yyoutput, int yytype, YYSTYPE const * const yyvaluep, bool				hasError, SIN::Logger &		logger, SIN::ASTNode **	root)
+yy_symbol_value_print (FILE *yyoutput, int yytype, YYSTYPE const * const yyvaluep, SIN::BisonParseArguments & bpa)
 #else
 static void
-yy_symbol_value_print (yyoutput, yytype, yyvaluep, hasError, logger, root)
+yy_symbol_value_print (yyoutput, yytype, yyvaluep, bpa)
     FILE *yyoutput;
     int yytype;
     YYSTYPE const * const yyvaluep;
-    bool				hasError;
-    SIN::Logger &		logger;
-    SIN::ASTNode **	root;
+    SIN::BisonParseArguments & bpa;
 #endif
 {
   if (!yyvaluep)
     return;
-  YYUSE (hasError);
-  YYUSE (logger);
-  YYUSE (root);
+  YYUSE (bpa);
 # ifdef YYPRINT
   if (yytype < YYNTOKENS)
     YYPRINT (yyoutput, yytoknum[yytype], *yyvaluep);
@@ -1093,16 +1090,14 @@ yy_symbol_value_print (yyoutput, yytype, yyvaluep, hasError, logger, root)
 #if (defined __STDC__ || defined __C99__FUNC__ \
      || defined __cplusplus || defined _MSC_VER)
 static void
-yy_symbol_print (FILE *yyoutput, int yytype, YYSTYPE const * const yyvaluep, bool				hasError, SIN::Logger &		logger, SIN::ASTNode **	root)
+yy_symbol_print (FILE *yyoutput, int yytype, YYSTYPE const * const yyvaluep, SIN::BisonParseArguments & bpa)
 #else
 static void
-yy_symbol_print (yyoutput, yytype, yyvaluep, hasError, logger, root)
+yy_symbol_print (yyoutput, yytype, yyvaluep, bpa)
     FILE *yyoutput;
     int yytype;
     YYSTYPE const * const yyvaluep;
-    bool				hasError;
-    SIN::Logger &		logger;
-    SIN::ASTNode **	root;
+    SIN::BisonParseArguments & bpa;
 #endif
 {
   if (yytype < YYNTOKENS)
@@ -1110,7 +1105,7 @@ yy_symbol_print (yyoutput, yytype, yyvaluep, hasError, logger, root)
   else
     YYFPRINTF (yyoutput, "nterm %s (", yytname[yytype]);
 
-  yy_symbol_value_print (yyoutput, yytype, yyvaluep, hasError, logger, root);
+  yy_symbol_value_print (yyoutput, yytype, yyvaluep, bpa);
   YYFPRINTF (yyoutput, ")");
 }
 
@@ -1153,15 +1148,13 @@ do {								\
 #if (defined __STDC__ || defined __C99__FUNC__ \
      || defined __cplusplus || defined _MSC_VER)
 static void
-yy_reduce_print (YYSTYPE *yyvsp, int yyrule, bool				hasError, SIN::Logger &		logger, SIN::ASTNode **	root)
+yy_reduce_print (YYSTYPE *yyvsp, int yyrule, SIN::BisonParseArguments & bpa)
 #else
 static void
-yy_reduce_print (yyvsp, yyrule, hasError, logger, root)
+yy_reduce_print (yyvsp, yyrule, bpa)
     YYSTYPE *yyvsp;
     int yyrule;
-    bool				hasError;
-    SIN::Logger &		logger;
-    SIN::ASTNode **	root;
+    SIN::BisonParseArguments & bpa;
 #endif
 {
   int yynrhs = yyr2[yyrule];
@@ -1175,7 +1168,7 @@ yy_reduce_print (yyvsp, yyrule, hasError, logger, root)
       YYFPRINTF (stderr, "   $%d = ", yyi + 1);
       yy_symbol_print (stderr, yyrhs[yyprhs[yyrule] + yyi],
 		       &(yyvsp[(yyi + 1) - (yynrhs)])
-		       		       , hasError, logger, root);
+		       		       , bpa);
       YYFPRINTF (stderr, "\n");
     }
 }
@@ -1183,7 +1176,7 @@ yy_reduce_print (yyvsp, yyrule, hasError, logger, root)
 # define YY_REDUCE_PRINT(Rule)		\
 do {					\
   if (yydebug)				\
-    yy_reduce_print (yyvsp, Rule, hasError, logger, root); \
+    yy_reduce_print (yyvsp, Rule, bpa); \
 } while (YYID (0))
 
 /* Nonzero means print parse trace.  It is left uninitialized so that
@@ -1434,22 +1427,18 @@ yysyntax_error (char *yyresult, int yystate, int yychar)
 #if (defined __STDC__ || defined __C99__FUNC__ \
      || defined __cplusplus || defined _MSC_VER)
 static void
-yydestruct (const char *yymsg, int yytype, YYSTYPE *yyvaluep, bool				hasError, SIN::Logger &		logger, SIN::ASTNode **	root)
+yydestruct (const char *yymsg, int yytype, YYSTYPE *yyvaluep, SIN::BisonParseArguments & bpa)
 #else
 static void
-yydestruct (yymsg, yytype, yyvaluep, hasError, logger, root)
+yydestruct (yymsg, yytype, yyvaluep, bpa)
     const char *yymsg;
     int yytype;
     YYSTYPE *yyvaluep;
-    bool				hasError;
-    SIN::Logger &		logger;
-    SIN::ASTNode **	root;
+    SIN::BisonParseArguments & bpa;
 #endif
 {
   YYUSE (yyvaluep);
-  YYUSE (hasError);
-  YYUSE (logger);
-  YYUSE (root);
+  YYUSE (bpa);
 
   if (!yymsg)
     yymsg = "Deleting";
@@ -1472,7 +1461,7 @@ int yyparse ();
 #endif
 #else /* ! YYPARSE_PARAM */
 #if defined __STDC__ || defined __cplusplus
-int yyparse (bool				hasError, SIN::Logger &		logger, SIN::ASTNode **	root);
+int yyparse (SIN::BisonParseArguments & bpa);
 #else
 int yyparse ();
 #endif
@@ -1508,13 +1497,11 @@ yyparse (YYPARSE_PARAM)
 #if (defined __STDC__ || defined __C99__FUNC__ \
      || defined __cplusplus || defined _MSC_VER)
 int
-yyparse (bool				hasError, SIN::Logger &		logger, SIN::ASTNode **	root)
+yyparse (SIN::BisonParseArguments & bpa)
 #else
 int
-yyparse (hasError, logger, root)
-    bool				hasError;
-    SIN::Logger &		logger;
-    SIN::ASTNode **	root;
+yyparse (bpa)
+    SIN::BisonParseArguments & bpa;
 #endif
 #endif
 {
@@ -1763,7 +1750,8 @@ yyreduce:
 
     {	
 							SIN::Manage_SinCode((yyvsp[(1) - (1)].AST), &((yyval.AST)));	
-							(*root) = (yyval.AST);
+							bpa.SetRoot((yyval.AST));
+							//(*root) = $$;
 						}
     break;
 
@@ -2283,7 +2271,7 @@ yyerrlab:
     {
       ++yynerrs;
 #if ! YYERROR_VERBOSE
-      yyerror (hasError, logger, root, YY_("syntax error"));
+      yyerror (bpa, YY_("syntax error"));
 #else
       {
 	YYSIZE_T yysize = yysyntax_error (0, yystate, yychar);
@@ -2307,11 +2295,11 @@ yyerrlab:
 	if (0 < yysize && yysize <= yymsg_alloc)
 	  {
 	    (void) yysyntax_error (yymsg, yystate, yychar);
-	    yyerror (hasError, logger, root, yymsg);
+	    yyerror (bpa, yymsg);
 	  }
 	else
 	  {
-	    yyerror (hasError, logger, root, YY_("syntax error"));
+	    yyerror (bpa, YY_("syntax error"));
 	    if (yysize != 0)
 	      goto yyexhaustedlab;
 	  }
@@ -2335,7 +2323,7 @@ yyerrlab:
       else
 	{
 	  yydestruct ("Error: discarding",
-		      yytoken, &yylval, hasError, logger, root);
+		      yytoken, &yylval, bpa);
 	  yychar = YYEMPTY;
 	}
     }
@@ -2391,7 +2379,7 @@ yyerrlab1:
 
 
       yydestruct ("Error: popping",
-		  yystos[yystate], yyvsp, hasError, logger, root);
+		  yystos[yystate], yyvsp, bpa);
       YYPOPSTACK (1);
       yystate = *yyssp;
       YY_STACK_PRINT (yyss, yyssp);
@@ -2426,7 +2414,7 @@ yyabortlab:
 | yyexhaustedlab -- memory exhaustion comes here.  |
 `-------------------------------------------------*/
 yyexhaustedlab:
-  yyerror (hasError, logger, root, YY_("memory exhausted"));
+  yyerror (bpa, YY_("memory exhausted"));
   yyresult = 2;
   /* Fall through.  */
 #endif
@@ -2434,7 +2422,7 @@ yyexhaustedlab:
 yyreturn:
   if (yychar != YYEMPTY)
      yydestruct ("Cleanup: discarding lookahead",
-		 yytoken, &yylval, hasError, logger, root);
+		 yytoken, &yylval, bpa);
   /* Do not reclaim the symbols of the rule which action triggered
      this YYABORT or YYACCEPT.  */
   YYPOPSTACK (yylen);
@@ -2442,7 +2430,7 @@ yyreturn:
   while (yyssp != yyss)
     {
       yydestruct ("Cleanup: popping",
-		  yystos[*yyssp], yyvsp, hasError, logger, root);
+		  yystos[*yyssp], yyvsp, bpa);
       YYPOPSTACK (1);
     }
 #ifndef yyoverflow
@@ -2461,10 +2449,10 @@ yyreturn:
 
 
 
-void yyerror (bool hasError, SIN::Logger & logger, SIN::ASTNode **	root, char const* yaccProvidedMessage)
+void yyerror (SIN::BisonParseArguments & bpa, char const* yaccProvidedMessage)
 {
-	hasError = true;
 	fprintf(stderr, "%s: at line %d, before token: >%s<\n", yaccProvidedMessage, yylineno, yytext);
+	bpa.SetError(yaccProvidedMessage);
 	//return -1;
 }
 

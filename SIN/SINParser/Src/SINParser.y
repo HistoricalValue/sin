@@ -20,10 +20,11 @@
 
 
 	
-	#include "Common.h"
-	#include "SINLogger.h"
-	#include "SINConstants.h"
-	#include "SINLoggerManager.h"
+	//#include "Common.h"
+	//#include "SINLogger.h"
+	//#include "SINConstants.h"
+	//#include "SINLoggerManager.h"
+	#include "BisonParseArguments.h"
 	
 
 	#include "SINASTNode.h"
@@ -55,14 +56,14 @@
 
 	////////////////////////////////////////////////////////////////////////
 	// defines
-	#define MESSAGE(STR)	logger.Fine(#STR " destructed")
+	#define MESSAGE(STR)	bpa.WriteFine(#STR " destructed")
 
 
 
 	////////////////////////////////////////////////////////////////////////
 	// functions definitions
 	
-	void yyerror (bool hasError, SIN::Logger & logger, SIN::ASTNode **	root, char const* yaccProvidedMessage);
+	void yyerror (SIN::BisonParseArguments & bpa, char const* yaccProvidedMessage);
 	int PrepareForFile(const char * filePath);
 	int PrepareForString(const char * str);
 
@@ -75,11 +76,8 @@
 %}
 
 
-%parse-param {bool				hasError}
-%parse-param {SIN::Logger &		logger}
-%parse-param {SIN::ASTNode **	root}
 
-
+%parse-param {SIN::BisonParseArguments & bpa}
 
 
 
@@ -168,7 +166,8 @@
 
 SinCode:		stmts	{	
 							SIN::Manage_SinCode($1, &($$));	
-							(*root) = $$;
+							bpa.SetRoot($$);
+							//(*root) = $$;
 						}
 				;
 
@@ -374,10 +373,10 @@ returnstmt:		RETURN ';'			{	SIN::Manage_ReturnStatement_Return(&($$));					}
 
 %%
 
-void yyerror (bool hasError, SIN::Logger & logger, SIN::ASTNode **	root, char const* yaccProvidedMessage)
+void yyerror (SIN::BisonParseArguments & bpa, char const* yaccProvidedMessage)
 {
-	hasError = true;
 	fprintf(stderr, "%s: at line %d, before token: >%s<\n", yaccProvidedMessage, yylineno, yytext);
+	bpa.SetError(yaccProvidedMessage);
 	//return -1;
 }
 

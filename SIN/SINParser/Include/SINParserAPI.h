@@ -7,6 +7,7 @@
 #include <iostream>
 #include "SINString.h"
 #include "SINASTNode.h"
+#include "BisonParseArguments.h"
 
 namespace SIN {
 
@@ -18,7 +19,7 @@ namespace SIN {
 		// return !=0 on error
 		int		ParseFile(const String &_fileName);
         int		ParseText(const char *_input);
-		bool	HasError(void) const { return hasError; }
+		bool	HasError(void) const { return bpa.HasError(); }
 		void	DeleteAST(void); //delete the fucking AST
 		
 		// If Parse* returned no error, this returns the produced AST
@@ -27,8 +28,7 @@ namespace SIN {
 		
 
 	private:
-		bool		hasError;	
-		ASTNode *	root;
+		BisonParseArguments bpa;
 
 		
 	}; // class ParserAPI

@@ -2,11 +2,12 @@
 #define __SIN_ASTTREEVISUALISATIONVISITOR_H__
 
 #include "Common.h"
+#include "SINLogger.h"
 #include "SINString.h"
 #include "SINASTNode.h"
 #include "SINASTVisitor.h"
 #include "SINOutputStream.h"
-#include "SINLogger.h"
+
 
 namespace SIN {
 	class ASTTreeVisualisationVisitor: public ASTVisitor {
