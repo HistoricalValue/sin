@@ -158,6 +158,10 @@
 				RelativePath="..\..\Src\SINMemoryCell.cpp"
 				>
 			</File>
+			<File
+				RelativePath="..\..\Src\SINSymbolTable.cpp"
+				>
+			</File>
 		</Filter>
 		<Filter
 			Name="Header Files"
@@ -166,6 +170,10 @@
 			>
 			<File
 				RelativePath="..\..\Include\SINMemoryCell.h"
+				>
+			</File>
+			<File
+				RelativePath="..\..\Include\SINSymbolTable.h"
 				>
 			</File>
 		</Filter>

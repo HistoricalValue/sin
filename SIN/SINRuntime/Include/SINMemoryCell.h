@@ -4,6 +4,9 @@
 
 namespace SIN {
 	class MemoryCell {
+	public:
+		MemoryCell(void);
+		~MemoryCell();
 	};
 
 }	//namespace sin
