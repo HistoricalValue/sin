@@ -12,6 +12,7 @@
 
 //////// for quick tests and c++ questions ///////
 // (please restore to original before commits)
+#include "SINConstants.h"
 class out_class {
 	SIN::Logger& out;
 public:
@@ -30,10 +31,10 @@ static void quick_test(void) {
 	// keep the above for convenience
 
 	// Example of using "out" and "FOREACH"
-	std::list<int> lis; lis.push_back(9); lis.push_back(8); lis.push_back(7); lis.push_back(6);
-	FOREACH(lis)
-		out << *ITER(lis);
-	out << (SIN::string_cast("This is") << " horrible " << (4));
+//	std::list<int> lis; lis.push_back(9); lis.push_back(8); lis.push_back(7); lis.push_back(6);
+//	FOREACH(lis)
+//		out << *ITER(lis);
+//	out << (SIN::string_cast("This is") << " horrible " << (4));
 }
 ////////
 

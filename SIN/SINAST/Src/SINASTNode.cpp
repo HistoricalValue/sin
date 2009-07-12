@@ -12,8 +12,8 @@
     NAME##ASTNode::NAME##ASTNode(VALTYPE const &_val): ConstASTNode<TYPE, VALTYPE>(_val) {  \
     }                                                                                       \
     void NAME##ASTNode::Accept(ASTVisitor *_visitor_p) {                                    \
-		assert(_visitor_p);																\
-        static_cast<ASTVisitor &>(*_visitor_p).Visit(*this);                                \
+		assert(_visitor_p);																	\
+        _visitor_p->Visit(*this);															\
     }
 
 
@@ -25,7 +25,7 @@
     }                                                                                       \
     void NAME##ASTNode::Accept(ASTVisitor *_visitor_p) {                                    \
 		assert (_visitor_p);																\
-        static_cast<ASTVisitor &>(*_visitor_p).Visit(*this);                                \
+        _visitor_p->Visit(*this);															\
     }
 
 
@@ -41,7 +41,7 @@
     }                                                           \
     void OPNAME##ASTNode::Accept(ASTVisitor *_visitor_p) {      \
 		assert (_visitor_p);									\
-        static_cast<ASTVisitor &>(*_visitor_p).Visit(*this);    \
+        _visitor_p->Visit(*this);								\
     }
 
 
@@ -95,10 +95,14 @@ namespace SIN {
 	void ASTNode::Accept(ASTTreeVisualisationVisitor *_v) const {
 		SINASSERT(_v);
 		_v->Visit(*this);
-		_v->AddTab();
-		for (size_t i = 0; i < NumberOfChildren(); ++i)
-			dynamic_cast<ASTNode *>((*this)[i])->Accept(_v);
-		_v->RemoveTab();	
+		_v->IncreaseIndentationLevel();
+		for (size_t i = 0; i < NumberOfChildren(); ++i) {
+			TreeNode* _child = (*this)[i];
+			SINASSERT(dynamic_cast<ASTNode*>(_child) != 0x00);
+			ASTNode* child = static_cast<ASTNode*>(_child);
+			child->Accept(_v);
+		}
+		_v->DecreaseIndentationLevel();
 	}
 	
 

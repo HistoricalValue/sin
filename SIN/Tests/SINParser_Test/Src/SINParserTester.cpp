@@ -36,10 +36,9 @@ namespace SIN {
 				ParserAPI test;
 				TRY(test.ParseFile(FILE_PATH) == 0);
 				ASTNode * root = test.GetAST();
-				FileOutputStream fout("treeVisualisation.txt", FileOutputStream::Truncate);
+				FileOutputStream fout("treeVisualisation.txt", FileOutputStream::Mode::Truncate());
 				ASTTreeVisualisationVisitor visitor(fout);
 				root->Accept(&visitor);
-
 			)
 
 			void test(InstanceProxy<TestFactory> const &tf) { 

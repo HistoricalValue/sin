@@ -2,14 +2,18 @@
 
 #include <fstream>
 #include "SINAssert.h"
+#include <new>
 
 namespace SIN {
 
-	CLASSREADONLYDEF(FileOutputStream, Truncate);
-
-	FileOutputStream::FileOutputStream(String const& _filepath, unsigned int _mode):
-	filepath(_filepath), mode(_mode), fout(), file_open(false)
-	{ }
+	FileOutputStream::FileOutputStream(String const& _filepath, mode_t _mode):
+		filepath(_filepath),
+		mode(_mode),
+		fout(_filepath.c_str(), Mode(_mode).HasTruncate() ? std::ios_base::trunc : std::ios_base::out),
+		file_open(false)
+	{
+		fout.close();
+	}
 
 	FileOutputStream::~FileOutputStream(void) {
 	}
@@ -25,18 +29,16 @@ namespace SIN {
 	/// private utilities
 	bool FileOutputStream::openFile(void) {
 		SINASSERT(!file_open);
+		SINASSERT(!fout.is_open());
 
-		std::ios_base::open_mode mode = std::ios_base::out;
-		if (truncate())
-			mode |= std::ios_base::trunc;
-		new (&fout) std::ofstream(filepath.c_str(), mode);
-		file_open = true;
+		new (&fout) std::ofstream(filepath.c_str(), std::ios_base::app);
 
-		return fout.good();
+		return file_open = fout.good();
 	}
 
 	bool FileOutputStream::closeFile(void) {
 		SINASSERT(file_open);
+		SINASSERT(fout.is_open());
 
 		fout.close();
 		file_open = false;
@@ -44,7 +46,8 @@ namespace SIN {
 		return fout.good();
 	}
 
-	bool FileOutputStream::truncate(void) const {
-		return mode & Truncate;
+	bool FileOutputStream::DoesTruncate(void) const {
+		return mode.HasTruncate();
 	}
+
 } // namespace SIN

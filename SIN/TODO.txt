@@ -1,3 +1,7 @@
+==== Always in mind ====
+* check dynamic_castss
+
+==== Do once ====
 *[004] Make ASTNode subclasses give an appropriate name to their ASTNode ancestor
 
 *[005] Implement FileOutputStream-s

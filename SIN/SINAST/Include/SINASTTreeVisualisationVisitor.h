@@ -61,14 +61,17 @@ namespace SIN {
 		//virtual void	Visit (IfASTNode const &		);
 		//virtual void	Visit (IfElseASTNode const &	);
 
-		void	AddTab(void);
-		void	RemoveTab(void);
+		// "Indentation" levels
+		void			IncreaseIndentationLevel(void);
+		void			DecreaseIndentationLevel(void);
+		unsigned int	IndentationLevel(void) const;
 
 
 	private:
 		String tabs;
 		OutputStream &out;
 		InstanceProxy<Logger> logger_p;
+		unsigned int indentation_level;
 	}; // class ASTTreeVisualisationVisitor
 
 

@@ -25,7 +25,8 @@ namespace SIN {
         bool operator  <(String const &) const;
 
 		size_t Length(void) const;
-		void Erase(size_t pos, size_t n);
+		String& Erase(size_t pos, size_t n);	// returns this
+		String& DropLast(size_t n);				// returns this
 
         template <typename T> String &operator <<(T const &o)
             { *this += string_cast(o); return *this; } 

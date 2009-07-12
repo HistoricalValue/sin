@@ -41,6 +41,7 @@
         <logicalFolder name="Src" displayName="Src" projectFiles="true">
           <itemPath>../SINCommon/Src/SIN.cpp</itemPath>
           <itemPath>../SINCommon/Src/SINCommon.cpp</itemPath>
+          <itemPath>../SINCommon/Src/SINFileOutputStream.cpp</itemPath>
           <itemPath>../SINCommon/Src/SINInputStream.cpp</itemPath>
           <itemPath>../SINCommon/Src/SINNamer.cpp</itemPath>
           <itemPath>../SINCommon/Src/SINOutputStream.cpp</itemPath>
@@ -69,64 +70,20 @@
       </logicalFolder>
       <logicalFolder name="SINParser" displayName="SINParser" projectFiles="true">
         <logicalFolder name="Include" displayName="Include" projectFiles="true">
+          <itemPath>../SINParser/Include/BisonParseArguments.h</itemPath>
           <itemPath>../SINParser/Include/SINParser.h</itemPath>
           <itemPath>../SINParser/Include/SINParserAPI.h</itemPath>
           <itemPath>../SINParser/Include/SINParserBison.h</itemPath>
-          <itemPath>../SINParser/Include/SINParserManageAssignExpression.h</itemPath>
-          <itemPath>../SINParser/Include/SINParserManageBlock.h</itemPath>
-          <itemPath>../SINParser/Include/SINParserManageCall.h</itemPath>
-          <itemPath>../SINParser/Include/SINParserManageCallSuffix.h</itemPath>
-          <itemPath>../SINParser/Include/SINParserManageConstant.h</itemPath>
-          <itemPath>../SINParser/Include/SINParserManageExpression.h</itemPath>
-          <itemPath>../SINParser/Include/SINParserManageExpressionList.h</itemPath>
-          <itemPath>../SINParser/Include/SINParserManageForStatement.h</itemPath>
-          <itemPath>../SINParser/Include/SINParserManageFunctionDefinition.h</itemPath>
-          <itemPath>../SINParser/Include/SINParserManageIDList.h</itemPath>
-          <itemPath>../SINParser/Include/SINParserManageIfStatement.h</itemPath>
-          <itemPath>../SINParser/Include/SINParserManageLValue.h</itemPath>
-          <itemPath>../SINParser/Include/SINParserManageMember.h</itemPath>
-          <itemPath>../SINParser/Include/SINParserManageMethodCall.h</itemPath>
-          <itemPath>../SINParser/Include/SINParserManageNormalCall.h</itemPath>
-          <itemPath>../SINParser/Include/SINParserManageObjectDefinition.h</itemPath>
-          <itemPath>../SINParser/Include/SINParserManageObjectList.h</itemPath>
-          <itemPath>../SINParser/Include/SINParserManagePrimary.h</itemPath>
-          <itemPath>../SINParser/Include/SINParserManageReturnStatement.h</itemPath>
-          <itemPath>../SINParser/Include/SINParserManageSinCode.h</itemPath>
-          <itemPath>../SINParser/Include/SINParserManageStatement.h</itemPath>
-          <itemPath>../SINParser/Include/SINParserManageStatements.h</itemPath>
-          <itemPath>../SINParser/Include/SINParserManageTerm.h</itemPath>
-          <itemPath>../SINParser/Include/SINParserManageWhileStatement.h</itemPath>
+          <itemPath>../SINParser/Include/SINParserManage.h</itemPath>
           <itemPath>../SINParser/Include/unistd.h</itemPath>
         </logicalFolder>
         <logicalFolder name="Src" displayName="Src" projectFiles="true">
+          <itemPath>../SINParser/Src/BisonParseArguments.cpp</itemPath>
           <itemPath>../SINParser/Src/SINLexAnalyser.cpp</itemPath>
           <itemPath>../SINParser/Src/SINParser.y</itemPath>
           <itemPath>../SINParser/Src/SINParserAPI.cpp</itemPath>
           <itemPath>../SINParser/Src/SINParserBison.cpp</itemPath>
-          <itemPath>../SINParser/Src/SINParserManageAssignExpression.cpp</itemPath>
-          <itemPath>../SINParser/Src/SINParserManageBlock.cpp</itemPath>
-          <itemPath>../SINParser/Src/SINParserManageCall.cpp</itemPath>
-          <itemPath>../SINParser/Src/SINParserManageCallSuffix.cpp</itemPath>
-          <itemPath>../SINParser/Src/SINParserManageConstant.cpp</itemPath>
-          <itemPath>../SINParser/Src/SINParserManageExpression.cpp</itemPath>
-          <itemPath>../SINParser/Src/SINParserManageExpressionList.cpp</itemPath>
-          <itemPath>../SINParser/Src/SINParserManageForStatement.cpp</itemPath>
-          <itemPath>../SINParser/Src/SINParserManageFunctionDefinition.cpp</itemPath>
-          <itemPath>../SINParser/Src/SINParserManageIDList.cpp</itemPath>
-          <itemPath>../SINParser/Src/SINParserManageIfStatement.cpp</itemPath>
-          <itemPath>../SINParser/Src/SINParserManageLValue.cpp</itemPath>
-          <itemPath>../SINParser/Src/SINParserManageMember.cpp</itemPath>
-          <itemPath>../SINParser/Src/SINParserManageMethodCall.cpp</itemPath>
-          <itemPath>../SINParser/Src/SINParserManageNormalCall.cpp</itemPath>
-          <itemPath>../SINParser/Src/SINParserManageObjectDefinition.cpp</itemPath>
-          <itemPath>../SINParser/Src/SINParserManageObjectList.cpp</itemPath>
-          <itemPath>../SINParser/Src/SINParserManagePrimary.cpp</itemPath>
-          <itemPath>../SINParser/Src/SINParserManageReturnStatement.cpp</itemPath>
-          <itemPath>../SINParser/Src/SINParserManageSinCode.cpp</itemPath>
-          <itemPath>../SINParser/Src/SINParserManageStatement.cpp</itemPath>
-          <itemPath>../SINParser/Src/SINParserManageStatements.cpp</itemPath>
-          <itemPath>../SINParser/Src/SINParserManageTerm.cpp</itemPath>
-          <itemPath>../SINParser/Src/SINParserManageWhileStatement.cpp</itemPath>
+          <itemPath>../SINParser/Src/SINParserManage.cpp</itemPath>
         </logicalFolder>
       </logicalFolder>
       <logicalFolder name="Tests" displayName="Tests" projectFiles="true">
@@ -291,6 +248,9 @@
       <item path="../SINCommon/Src/SINCommon.cpp">
         <itemTool>1</itemTool>
       </item>
+      <item path="../SINCommon/Src/SINFileOutputStream.cpp">
+        <itemTool>1</itemTool>
+      </item>
       <item path="../SINCommon/Src/SINInputStream.cpp">
         <itemTool>1</itemTool>
       </item>
@@ -330,6 +290,9 @@
       <item path="../SINLogging/Src/SINRecordPrinter.cpp">
         <itemTool>1</itemTool>
       </item>
+      <item path="../SINParser/Include/BisonParseArguments.h">
+        <itemTool>3</itemTool>
+      </item>
       <item path="../SINParser/Include/SINParser.h">
         <itemTool>3</itemTool>
       </item>
@@ -339,80 +302,14 @@
       <item path="../SINParser/Include/SINParserBison.h">
         <itemTool>3</itemTool>
       </item>
-      <item path="../SINParser/Include/SINParserManageAssignExpression.h">
-        <itemTool>3</itemTool>
-      </item>
-      <item path="../SINParser/Include/SINParserManageBlock.h">
-        <itemTool>3</itemTool>
-      </item>
-      <item path="../SINParser/Include/SINParserManageCall.h">
-        <itemTool>3</itemTool>
-      </item>
-      <item path="../SINParser/Include/SINParserManageCallSuffix.h">
-        <itemTool>3</itemTool>
-      </item>
-      <item path="../SINParser/Include/SINParserManageConstant.h">
-        <itemTool>3</itemTool>
-      </item>
-      <item path="../SINParser/Include/SINParserManageExpression.h">
-        <itemTool>3</itemTool>
-      </item>
-      <item path="../SINParser/Include/SINParserManageExpressionList.h">
-        <itemTool>3</itemTool>
-      </item>
-      <item path="../SINParser/Include/SINParserManageForStatement.h">
-        <itemTool>3</itemTool>
-      </item>
-      <item path="../SINParser/Include/SINParserManageFunctionDefinition.h">
-        <itemTool>3</itemTool>
-      </item>
-      <item path="../SINParser/Include/SINParserManageIDList.h">
-        <itemTool>3</itemTool>
-      </item>
-      <item path="../SINParser/Include/SINParserManageIfStatement.h">
-        <itemTool>3</itemTool>
-      </item>
-      <item path="../SINParser/Include/SINParserManageLValue.h">
-        <itemTool>3</itemTool>
-      </item>
-      <item path="../SINParser/Include/SINParserManageMember.h">
-        <itemTool>3</itemTool>
-      </item>
-      <item path="../SINParser/Include/SINParserManageMethodCall.h">
-        <itemTool>3</itemTool>
-      </item>
-      <item path="../SINParser/Include/SINParserManageNormalCall.h">
-        <itemTool>3</itemTool>
-      </item>
-      <item path="../SINParser/Include/SINParserManageObjectDefinition.h">
-        <itemTool>3</itemTool>
-      </item>
-      <item path="../SINParser/Include/SINParserManageObjectList.h">
-        <itemTool>3</itemTool>
-      </item>
-      <item path="../SINParser/Include/SINParserManagePrimary.h">
-        <itemTool>3</itemTool>
-      </item>
-      <item path="../SINParser/Include/SINParserManageReturnStatement.h">
-        <itemTool>3</itemTool>
-      </item>
-      <item path="../SINParser/Include/SINParserManageSinCode.h">
-        <itemTool>3</itemTool>
-      </item>
-      <item path="../SINParser/Include/SINParserManageStatement.h">
-        <itemTool>3</itemTool>
-      </item>
-      <item path="../SINParser/Include/SINParserManageStatements.h">
-        <itemTool>3</itemTool>
-      </item>
-      <item path="../SINParser/Include/SINParserManageTerm.h">
-        <itemTool>3</itemTool>
-      </item>
-      <item path="../SINParser/Include/SINParserManageWhileStatement.h">
+      <item path="../SINParser/Include/SINParserManage.h">
         <itemTool>3</itemTool>
       </item>
       <item path="../SINParser/Include/unistd.h">
         <itemTool>3</itemTool>
+      </item>
+      <item path="../SINParser/Src/BisonParseArguments.cpp">
+        <itemTool>1</itemTool>
       </item>
       <item path="../SINParser/Src/SINLexAnalyser.cpp">
         <itemTool>1</itemTool>
@@ -426,76 +323,7 @@
       <item path="../SINParser/Src/SINParserBison.cpp">
         <itemTool>1</itemTool>
       </item>
-      <item path="../SINParser/Src/SINParserManageAssignExpression.cpp">
-        <itemTool>1</itemTool>
-      </item>
-      <item path="../SINParser/Src/SINParserManageBlock.cpp">
-        <itemTool>1</itemTool>
-      </item>
-      <item path="../SINParser/Src/SINParserManageCall.cpp">
-        <itemTool>1</itemTool>
-      </item>
-      <item path="../SINParser/Src/SINParserManageCallSuffix.cpp">
-        <itemTool>1</itemTool>
-      </item>
-      <item path="../SINParser/Src/SINParserManageConstant.cpp">
-        <itemTool>1</itemTool>
-      </item>
-      <item path="../SINParser/Src/SINParserManageExpression.cpp">
-        <itemTool>1</itemTool>
-      </item>
-      <item path="../SINParser/Src/SINParserManageExpressionList.cpp">
-        <itemTool>1</itemTool>
-      </item>
-      <item path="../SINParser/Src/SINParserManageForStatement.cpp">
-        <itemTool>1</itemTool>
-      </item>
-      <item path="../SINParser/Src/SINParserManageFunctionDefinition.cpp">
-        <itemTool>1</itemTool>
-      </item>
-      <item path="../SINParser/Src/SINParserManageIDList.cpp">
-        <itemTool>1</itemTool>
-      </item>
-      <item path="../SINParser/Src/SINParserManageIfStatement.cpp">
-        <itemTool>1</itemTool>
-      </item>
-      <item path="../SINParser/Src/SINParserManageLValue.cpp">
-        <itemTool>1</itemTool>
-      </item>
-      <item path="../SINParser/Src/SINParserManageMember.cpp">
-        <itemTool>1</itemTool>
-      </item>
-      <item path="../SINParser/Src/SINParserManageMethodCall.cpp">
-        <itemTool>1</itemTool>
-      </item>
-      <item path="../SINParser/Src/SINParserManageNormalCall.cpp">
-        <itemTool>1</itemTool>
-      </item>
-      <item path="../SINParser/Src/SINParserManageObjectDefinition.cpp">
-        <itemTool>1</itemTool>
-      </item>
-      <item path="../SINParser/Src/SINParserManageObjectList.cpp">
-        <itemTool>1</itemTool>
-      </item>
-      <item path="../SINParser/Src/SINParserManagePrimary.cpp">
-        <itemTool>1</itemTool>
-      </item>
-      <item path="../SINParser/Src/SINParserManageReturnStatement.cpp">
-        <itemTool>1</itemTool>
-      </item>
-      <item path="../SINParser/Src/SINParserManageSinCode.cpp">
-        <itemTool>1</itemTool>
-      </item>
-      <item path="../SINParser/Src/SINParserManageStatement.cpp">
-        <itemTool>1</itemTool>
-      </item>
-      <item path="../SINParser/Src/SINParserManageStatements.cpp">
-        <itemTool>1</itemTool>
-      </item>
-      <item path="../SINParser/Src/SINParserManageTerm.cpp">
-        <itemTool>1</itemTool>
-      </item>
-      <item path="../SINParser/Src/SINParserManageWhileStatement.cpp">
+      <item path="../SINParser/Src/SINParserManage.cpp">
         <itemTool>1</itemTool>
       </item>
       <item path="../SINmain/Src/main.cpp">
@@ -637,6 +465,9 @@
       <item path="../SINCommon/Src/SINCommon.cpp">
         <itemTool>1</itemTool>
       </item>
+      <item path="../SINCommon/Src/SINFileOutputStream.cpp">
+        <itemTool>1</itemTool>
+      </item>
       <item path="../SINCommon/Src/SINInputStream.cpp">
         <itemTool>1</itemTool>
       </item>
@@ -676,6 +507,9 @@
       <item path="../SINLogging/Src/SINRecordPrinter.cpp">
         <itemTool>1</itemTool>
       </item>
+      <item path="../SINParser/Include/BisonParseArguments.h">
+        <itemTool>3</itemTool>
+      </item>
       <item path="../SINParser/Include/SINParser.h">
         <itemTool>3</itemTool>
       </item>
@@ -685,80 +519,14 @@
       <item path="../SINParser/Include/SINParserBison.h">
         <itemTool>3</itemTool>
       </item>
-      <item path="../SINParser/Include/SINParserManageAssignExpression.h">
-        <itemTool>3</itemTool>
-      </item>
-      <item path="../SINParser/Include/SINParserManageBlock.h">
-        <itemTool>3</itemTool>
-      </item>
-      <item path="../SINParser/Include/SINParserManageCall.h">
-        <itemTool>3</itemTool>
-      </item>
-      <item path="../SINParser/Include/SINParserManageCallSuffix.h">
-        <itemTool>3</itemTool>
-      </item>
-      <item path="../SINParser/Include/SINParserManageConstant.h">
-        <itemTool>3</itemTool>
-      </item>
-      <item path="../SINParser/Include/SINParserManageExpression.h">
-        <itemTool>3</itemTool>
-      </item>
-      <item path="../SINParser/Include/SINParserManageExpressionList.h">
-        <itemTool>3</itemTool>
-      </item>
-      <item path="../SINParser/Include/SINParserManageForStatement.h">
-        <itemTool>3</itemTool>
-      </item>
-      <item path="../SINParser/Include/SINParserManageFunctionDefinition.h">
-        <itemTool>3</itemTool>
-      </item>
-      <item path="../SINParser/Include/SINParserManageIDList.h">
-        <itemTool>3</itemTool>
-      </item>
-      <item path="../SINParser/Include/SINParserManageIfStatement.h">
-        <itemTool>3</itemTool>
-      </item>
-      <item path="../SINParser/Include/SINParserManageLValue.h">
-        <itemTool>3</itemTool>
-      </item>
-      <item path="../SINParser/Include/SINParserManageMember.h">
-        <itemTool>3</itemTool>
-      </item>
-      <item path="../SINParser/Include/SINParserManageMethodCall.h">
-        <itemTool>3</itemTool>
-      </item>
-      <item path="../SINParser/Include/SINParserManageNormalCall.h">
-        <itemTool>3</itemTool>
-      </item>
-      <item path="../SINParser/Include/SINParserManageObjectDefinition.h">
-        <itemTool>3</itemTool>
-      </item>
-      <item path="../SINParser/Include/SINParserManageObjectList.h">
-        <itemTool>3</itemTool>
-      </item>
-      <item path="../SINParser/Include/SINParserManagePrimary.h">
-        <itemTool>3</itemTool>
-      </item>
-      <item path="../SINParser/Include/SINParserManageReturnStatement.h">
-        <itemTool>3</itemTool>
-      </item>
-      <item path="../SINParser/Include/SINParserManageSinCode.h">
-        <itemTool>3</itemTool>
-      </item>
-      <item path="../SINParser/Include/SINParserManageStatement.h">
-        <itemTool>3</itemTool>
-      </item>
-      <item path="../SINParser/Include/SINParserManageStatements.h">
-        <itemTool>3</itemTool>
-      </item>
-      <item path="../SINParser/Include/SINParserManageTerm.h">
-        <itemTool>3</itemTool>
-      </item>
-      <item path="../SINParser/Include/SINParserManageWhileStatement.h">
+      <item path="../SINParser/Include/SINParserManage.h">
         <itemTool>3</itemTool>
       </item>
       <item path="../SINParser/Include/unistd.h">
         <itemTool>3</itemTool>
+      </item>
+      <item path="../SINParser/Src/BisonParseArguments.cpp">
+        <itemTool>1</itemTool>
       </item>
       <item path="../SINParser/Src/SINLexAnalyser.cpp">
         <itemTool>1</itemTool>
@@ -772,76 +540,7 @@
       <item path="../SINParser/Src/SINParserBison.cpp">
         <itemTool>1</itemTool>
       </item>
-      <item path="../SINParser/Src/SINParserManageAssignExpression.cpp">
-        <itemTool>1</itemTool>
-      </item>
-      <item path="../SINParser/Src/SINParserManageBlock.cpp">
-        <itemTool>1</itemTool>
-      </item>
-      <item path="../SINParser/Src/SINParserManageCall.cpp">
-        <itemTool>1</itemTool>
-      </item>
-      <item path="../SINParser/Src/SINParserManageCallSuffix.cpp">
-        <itemTool>1</itemTool>
-      </item>
-      <item path="../SINParser/Src/SINParserManageConstant.cpp">
-        <itemTool>1</itemTool>
-      </item>
-      <item path="../SINParser/Src/SINParserManageExpression.cpp">
-        <itemTool>1</itemTool>
-      </item>
-      <item path="../SINParser/Src/SINParserManageExpressionList.cpp">
-        <itemTool>1</itemTool>
-      </item>
-      <item path="../SINParser/Src/SINParserManageForStatement.cpp">
-        <itemTool>1</itemTool>
-      </item>
-      <item path="../SINParser/Src/SINParserManageFunctionDefinition.cpp">
-        <itemTool>1</itemTool>
-      </item>
-      <item path="../SINParser/Src/SINParserManageIDList.cpp">
-        <itemTool>1</itemTool>
-      </item>
-      <item path="../SINParser/Src/SINParserManageIfStatement.cpp">
-        <itemTool>1</itemTool>
-      </item>
-      <item path="../SINParser/Src/SINParserManageLValue.cpp">
-        <itemTool>1</itemTool>
-      </item>
-      <item path="../SINParser/Src/SINParserManageMember.cpp">
-        <itemTool>1</itemTool>
-      </item>
-      <item path="../SINParser/Src/SINParserManageMethodCall.cpp">
-        <itemTool>1</itemTool>
-      </item>
-      <item path="../SINParser/Src/SINParserManageNormalCall.cpp">
-        <itemTool>1</itemTool>
-      </item>
-      <item path="../SINParser/Src/SINParserManageObjectDefinition.cpp">
-        <itemTool>1</itemTool>
-      </item>
-      <item path="../SINParser/Src/SINParserManageObjectList.cpp">
-        <itemTool>1</itemTool>
-      </item>
-      <item path="../SINParser/Src/SINParserManagePrimary.cpp">
-        <itemTool>1</itemTool>
-      </item>
-      <item path="../SINParser/Src/SINParserManageReturnStatement.cpp">
-        <itemTool>1</itemTool>
-      </item>
-      <item path="../SINParser/Src/SINParserManageSinCode.cpp">
-        <itemTool>1</itemTool>
-      </item>
-      <item path="../SINParser/Src/SINParserManageStatement.cpp">
-        <itemTool>1</itemTool>
-      </item>
-      <item path="../SINParser/Src/SINParserManageStatements.cpp">
-        <itemTool>1</itemTool>
-      </item>
-      <item path="../SINParser/Src/SINParserManageTerm.cpp">
-        <itemTool>1</itemTool>
-      </item>
-      <item path="../SINParser/Src/SINParserManageWhileStatement.cpp">
+      <item path="../SINParser/Src/SINParserManage.cpp">
         <itemTool>1</itemTool>
       </item>
       <item path="../SINmain/Src/main.cpp">

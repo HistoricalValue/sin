@@ -10,11 +10,12 @@
 #include "SINConstants.h"
 #include "SINLoggerManager.h"
 
-#define SIN_ASTTreeVisualisationVisitor_LoggerName "SIN::ParserAPI->Parser"
+#define SIN_ASTTreeVisualisationVisitor_LoggerName "SIN::ASTTreeVisualisationVisitor"
+#define SIN_ASTTreeVisualisationVisitor_IdentationSequence "|---"
 namespace SIN {
 
 	ASTTreeVisualisationVisitor::ASTTreeVisualisationVisitor(OutputStream& _out):
-	tabs(""), out(_out), logger_p(0x00)
+	tabs(""), out(_out), logger_p(0x00), indentation_level(0u)
 	{
 		Type<LoggerManager>::ref lm(*LoggerManager::SingletonGetInstance());
 		lm.GetDefaultLoggerFactory()->DestroyLogger(lm.MakeStdoutLogger(SIN_ASTTreeVisualisationVisitor_LoggerName));
@@ -25,7 +26,7 @@ namespace SIN {
 	}
 
 	void ASTTreeVisualisationVisitor::Visit(Type<ASTNode>::const_ref node) {
-		out << tabs+node.Name();
+		out << tabs + "+" + node.Name() << SIN::ENDL;
 	}
 
 	//-----------------------------------------------------------------
@@ -184,12 +185,20 @@ namespace SIN {
 	//	{ Visit(dynamic_cast<ASTNode const &>(node)); }
 
 
-	void ASTTreeVisualisationVisitor::AddTab(void) 
-		{ tabs += "\t"; }
+	void ASTTreeVisualisationVisitor::IncreaseIndentationLevel(void) {
+		tabs += SIN_ASTTreeVisualisationVisitor_IdentationSequence;
+		++indentation_level;
+	}
 	
-	void ASTTreeVisualisationVisitor::RemoveTab(void) {
-		if (tabs != "") 
-			tabs.Erase(tabs.Length()-1, 1);
+	void ASTTreeVisualisationVisitor::DecreaseIndentationLevel(void) {
+		static const size_t tabs_len = strlen(SIN_ASTTreeVisualisationVisitor_IdentationSequence);
+		SINASSERT(indentation_level > 0);
+		tabs.DropLast(tabs_len);
+		--indentation_level;
+	}
+
+	unsigned int ASTTreeVisualisationVisitor::IndentationLevel(void) const {
+		return indentation_level;
 	}
 
 

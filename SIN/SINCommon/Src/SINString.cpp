@@ -50,8 +50,13 @@ namespace SIN {
 		return core.length();
 	}
 
-	void String::Erase(size_t pos, size_t n) {
+	String& String::Erase(size_t pos, size_t n) {
 		core.erase(pos, n);
+		return *this;
+	}
+
+	String& String::DropLast(size_t n) {
+		return Erase(Length() - n, n);
 	}
 
     char const *String::c_str(void) const {

@@ -40,6 +40,9 @@ namespace SIN {
                 ASSERT(strcmp(static_cast<String>(str).c_str(), str.c_str()) == 0);
                 ASSERT(strcmp(String(str).c_str(), static_cast<std::string>(str.c_str()).c_str()) ==0);
                 ASSERT(String(str) == "1825");
+				String jon = "We live a beautiful life and then we die";
+				ASSERT(jon.Erase(8,17) == "We live and then we die");
+				ASSERT(jon.DropLast(7) + "..." == "We live and then...");
 
                 ASSERT(nil == 0x00);
 
