@@ -11,7 +11,8 @@
 
 namespace SIN {
 
-    class ASTVisitor;	//forward declaration
+	// Visitors' forward declarations
+    class ASTVisitor;
 	class ASTTreeVisualisationVisitor;
 
 

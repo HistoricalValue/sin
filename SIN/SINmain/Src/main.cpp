@@ -28,6 +28,7 @@ public:
 };
 // keep the above for convenience. ex:
 // out << (SIN::String() << "This is" << " horrible " << (4));
+#include "SINASTMITTreeVisualizerXMLProducerVisitor.h"
 static void quick_test(void) {
 	SIN::LoggerManager::SingletonGetInstance()->MakeStdoutLogger("SIN::main::quick_test");
 	out_class out(SIN::LoggerManager::SingletonGetInstance()->GetLogger("SIN::main::quick_test"));
@@ -38,6 +39,7 @@ static void quick_test(void) {
 //	FOREACH(lis)
 //		out << *ITER(lis);
 //	out << (SIN::string_cast("This is") << " horrible " << (4));
+
 }
 ////////
 

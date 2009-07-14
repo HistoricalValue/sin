@@ -11,7 +11,7 @@
 #include "SINTestingCommon.h"
 #include "SINLoggerManager.h"
 #include "SINASTTreeVisualisationVisitor.h"
-
+#include "SINASTMITTreeVisualizerXMLProducerVisitor.h"
 
 #define SIN_TESTS_PARSER_RUN(NAME)               SINTESTS_RUNTEST(NAME)
 #define SIN_TESTS_PARSER_TESTDEF(NAME,TESTCODE)  SINTESTS_TESTDEF(NAME,TESTCODE)
@@ -37,8 +37,11 @@ namespace SIN {
 				TRY(test.ParseFile(FILE_PATH) == 0);
 				ASTNode * root = test.GetAST();
 				FileOutputStream fout("treeVisualisation.txt", FileOutputStream::Mode::Truncate());
+				FileOutputStream foutxml("treeVisualisation.xml", FileOutputStream::Mode::Truncate());
 				ASTTreeVisualisationVisitor visitor(fout);
+				ASTMITTreeVisualizerXMLProducerVisitor mitvis(foutxml);
 				root->Accept(&visitor);
+				root->Accept(&mitvis);
 			)
 
 			void test(InstanceProxy<TestFactory> const &tf) { 

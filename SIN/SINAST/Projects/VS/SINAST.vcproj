@@ -156,6 +156,10 @@
 				>
 			</File>
 			<File
+				RelativePath="..\..\Src\SINASTMITTreeVisualizerXMLProducerVisitor.cpp"
+				>
+			</File>
+			<File
 				RelativePath="..\..\Src\SINASTNode.cpp"
 				>
 			</File>
@@ -175,6 +179,10 @@
 			>
 			<File
 				RelativePath="..\..\Include\SINASTCommon.h"
+				>
+			</File>
+			<File
+				RelativePath="..\..\Include\SINASTMITTreeVisualizerXMLProducerVisitor.h"
 				>
 			</File>
 			<File

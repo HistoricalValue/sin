@@ -16,6 +16,10 @@ namespace SIN {
 	}
 
 	FileOutputStream::~FileOutputStream(void) {
+		if (file_open) {
+			SINASSERT(fout.is_open());
+			fout.close();
+		}
 	}
 
 	bool FileOutputStream::write(char const* buf, size_t len) {

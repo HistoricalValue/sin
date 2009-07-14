@@ -137,4 +137,57 @@ public:
 		ITER(ITERABLE) != ITERABLE.end()										;	\
 		++ITER(ITERABLE)														)
 
+// Native-array-type foreach-wrapper
+template <typename T, const size_t N>
+class ArrayIterableWrapper {
+	typedef T(& ArrayType)[N];
+	ArrayType arr;
+public:
+	ArrayIterableWrapper(ArrayType _arr): arr(_arr)
+	{ }
+	ArrayIterableWrapper(ArrayIterableWrapper<T,N> const& _other):
+	arr(_other.arr)
+	{ }
+	~ArrayIterableWrapper(void) {
+	}
+	T* begin(void) const {
+		return &arr[0];
+	}
+	T* end(void) const {
+		return &arr[N];
+	}
+}; // ArrayIterableWrapper<T,N>
+
+template <typename T, const size_t N>
+class ConstArrayIterableWrapper {
+public:
+	typedef T const(& ArrayType)[N];
+	ArrayType arr;
+public:
+	ConstArrayIterableWrapper(ArrayType _arr): arr(_arr)
+	{ }
+	ConstArrayIterableWrapper(ArrayIterableWrapper<T,N> const& _other):
+	arr(_other.arr)
+	{ }
+	~ConstArrayIterableWrapper(void) {
+	}
+	T const* begin(void) const {
+		return &arr[0];
+	}
+	T const* end(void) const {
+		return &arr[N];
+	}
+}; // ConstArrayIterableWrapper<T,N>
+
+template <typename T, const size_t N>
+ConstArrayIterableWrapper<T, N> array_iterable(T const(& _arr)[N]) {
+	return ConstArrayIterableWrapper<T, N>(_arr);
+}
+
+template <typename T, const size_t N>
+ArrayIterableWrapper<T, N> array_iterable(T(& _arr)[N]) {
+	return ArrayIterableWrapper<T, N>(_arr);
+}
+
+
 #endif //__SIN_COMMON_H__

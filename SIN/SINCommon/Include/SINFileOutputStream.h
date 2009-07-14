@@ -17,7 +17,7 @@ namespace SIN {
 			///
 			static inline bool HasTruncate(Type<mode_t>::const_ref mode) { return Mode(mode).HasTruncate(); }
 			///
-			inline bool HasTruncate(void) const { return mode & Truncate(); }
+			inline bool HasTruncate(void) const { return (mode & Truncate()) != 0; }
 			///
 			Mode(mode_t _mode): mode(_mode) {
 				SINASSERT((mode & ~(Neutral() | Truncate())) == 0);
