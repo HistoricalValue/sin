@@ -27,7 +27,7 @@ namespace SIN {
 			
 			
 			SIN_TESTS_SYMBOL_TABLE_TESTDEF(SymbolTableTest,
-				//SymbolTable st;
+				SymbolTable st;
 
 			)
 
