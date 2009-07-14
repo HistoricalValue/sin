@@ -13,6 +13,7 @@
       <logicalFolder name="SINAST" displayName="SINAST" projectFiles="true">
         <logicalFolder name="Include" displayName="Include" projectFiles="true">
           <itemPath>../SINAST/Include/SINASTCommon.h</itemPath>
+          <itemPath>../SINAST/Include/SINASTMITTreeVisualizerXMLProducerVisitor.h</itemPath>
           <itemPath>../SINAST/Include/SINASTNode.h</itemPath>
           <itemPath>../SINAST/Include/SINASTTreeVisualisationVisitor.h</itemPath>
           <itemPath>../SINAST/Include/SINASTVisitor.h</itemPath>
@@ -20,6 +21,7 @@
         </logicalFolder>
         <logicalFolder name="Src" displayName="Src" projectFiles="true">
           <itemPath>../SINAST/Src/ASTVisitor.cpp</itemPath>
+          <itemPath>../SINAST/Src/SINASTMITTreeVisualizerXMLProducerVisitor.cpp</itemPath>
           <itemPath>../SINAST/Src/SINASTNode.cpp</itemPath>
           <itemPath>../SINAST/Src/SINASTTreeVisualisationVisitor.cpp</itemPath>
           <itemPath>../SINAST/Src/SINTreeNode.cpp</itemPath>
@@ -86,6 +88,16 @@
           <itemPath>../SINParser/Src/SINParserManage.cpp</itemPath>
         </logicalFolder>
       </logicalFolder>
+      <logicalFolder name="SINRuntime" displayName="SINRuntime" projectFiles="true">
+        <logicalFolder name="Include" displayName="Include" projectFiles="true">
+          <itemPath>../SINRuntime/Include/SINMemoryCell.h</itemPath>
+          <itemPath>../SINRuntime/Include/SINSymbolTable.h</itemPath>
+        </logicalFolder>
+        <logicalFolder name="Src" displayName="Src" projectFiles="true">
+          <itemPath>../SINRuntime/Src/SINMemoryCell.cpp</itemPath>
+          <itemPath>../SINRuntime/Src/SINSymbolTable.cpp</itemPath>
+        </logicalFolder>
+      </logicalFolder>
       <logicalFolder name="Tests" displayName="Tests" projectFiles="true">
         <logicalFolder name="SINAST_Test" displayName="SINAST_Test" projectFiles="true">
           <logicalFolder name="Include" displayName="Include" projectFiles="true">
@@ -123,6 +135,16 @@
           </logicalFolder>
           <logicalFolder name="Src" displayName="Src" projectFiles="true">
             <itemPath>../Tests/SINParser_Test/Src/SINParserTester.cpp</itemPath>
+          </logicalFolder>
+        </logicalFolder>
+        <logicalFolder name="SINSymbolTable_Test"
+                       displayName="SINSymbolTable_Test"
+                       projectFiles="true">
+          <logicalFolder name="Include" displayName="Include" projectFiles="true">
+            <itemPath>../Tests/SINSymbolTable_Test/Include/SINSymbolTableTester.h</itemPath>
+          </logicalFolder>
+          <logicalFolder name="Src" displayName="Src" projectFiles="true">
+            <itemPath>../Tests/SINSymbolTable_Test/Src/SINSymbolTableTester.cpp</itemPath>
           </logicalFolder>
         </logicalFolder>
         <logicalFolder name="SINTest" displayName="SINTest" projectFiles="true">
@@ -167,12 +189,16 @@
             <directoryPath>../SINLogging/Include</directoryPath>
             <directoryPath>../SINmain/Include</directoryPath>
             <directoryPath>../SINParser/Include</directoryPath>
+            <directoryPath>../SINRuntime/Include</directoryPath>
             <directoryPath>../Tests/SINAST_Test/Include</directoryPath>
             <directoryPath>../Tests/SINCommon_Test/Include</directoryPath>
             <directoryPath>../Tests/SINLogging_Test/Include</directoryPath>
             <directoryPath>../Tests/SINParser_Test/Include</directoryPath>
+            <directoryPath>../Tests/SINSymbolTable_Test/Include</directoryPath>
             <directoryPath>../Tests/SINTest/Include</directoryPath>
           </includeDirectories>
+          <commandLine>-pedantic -ansi -Wall -O0 -g</commandLine>
+          <warningLevel>2</warningLevel>
         </ccCompilerTool>
         <linkerTool>
           <linkerLibItems>
@@ -188,6 +214,9 @@
       <item path="../SINAST/Include/SINASTCommon.h">
         <itemTool>3</itemTool>
       </item>
+      <item path="../SINAST/Include/SINASTMITTreeVisualizerXMLProducerVisitor.h">
+        <itemTool>3</itemTool>
+      </item>
       <item path="../SINAST/Include/SINASTNode.h">
         <itemTool>3</itemTool>
       </item>
@@ -201,6 +230,9 @@
         <itemTool>3</itemTool>
       </item>
       <item path="../SINAST/Src/ASTVisitor.cpp">
+        <itemTool>1</itemTool>
+      </item>
+      <item path="../SINAST/Src/SINASTMITTreeVisualizerXMLProducerVisitor.cpp">
         <itemTool>1</itemTool>
       </item>
       <item path="../SINAST/Src/SINASTNode.cpp">
@@ -326,6 +358,18 @@
       <item path="../SINParser/Src/SINParserManage.cpp">
         <itemTool>1</itemTool>
       </item>
+      <item path="../SINRuntime/Include/SINMemoryCell.h">
+        <itemTool>3</itemTool>
+      </item>
+      <item path="../SINRuntime/Include/SINSymbolTable.h">
+        <itemTool>3</itemTool>
+      </item>
+      <item path="../SINRuntime/Src/SINMemoryCell.cpp">
+        <itemTool>1</itemTool>
+      </item>
+      <item path="../SINRuntime/Src/SINSymbolTable.cpp">
+        <itemTool>1</itemTool>
+      </item>
       <item path="../SINmain/Src/main.cpp">
         <itemTool>1</itemTool>
       </item>
@@ -351,6 +395,12 @@
         <itemTool>3</itemTool>
       </item>
       <item path="../Tests/SINParser_Test/Src/SINParserTester.cpp">
+        <itemTool>1</itemTool>
+      </item>
+      <item path="../Tests/SINSymbolTable_Test/Include/SINSymbolTableTester.h">
+        <itemTool>3</itemTool>
+      </item>
+      <item path="../Tests/SINSymbolTable_Test/Src/SINSymbolTableTester.cpp">
         <itemTool>1</itemTool>
       </item>
       <item path="../Tests/SINTest/Include/SINTest.h">
@@ -405,6 +455,9 @@
       <item path="../SINAST/Include/SINASTCommon.h">
         <itemTool>3</itemTool>
       </item>
+      <item path="../SINAST/Include/SINASTMITTreeVisualizerXMLProducerVisitor.h">
+        <itemTool>3</itemTool>
+      </item>
       <item path="../SINAST/Include/SINASTNode.h">
         <itemTool>3</itemTool>
       </item>
@@ -418,6 +471,9 @@
         <itemTool>3</itemTool>
       </item>
       <item path="../SINAST/Src/ASTVisitor.cpp">
+        <itemTool>1</itemTool>
+      </item>
+      <item path="../SINAST/Src/SINASTMITTreeVisualizerXMLProducerVisitor.cpp">
         <itemTool>1</itemTool>
       </item>
       <item path="../SINAST/Src/SINASTNode.cpp">
@@ -543,6 +599,18 @@
       <item path="../SINParser/Src/SINParserManage.cpp">
         <itemTool>1</itemTool>
       </item>
+      <item path="../SINRuntime/Include/SINMemoryCell.h">
+        <itemTool>3</itemTool>
+      </item>
+      <item path="../SINRuntime/Include/SINSymbolTable.h">
+        <itemTool>3</itemTool>
+      </item>
+      <item path="../SINRuntime/Src/SINMemoryCell.cpp">
+        <itemTool>1</itemTool>
+      </item>
+      <item path="../SINRuntime/Src/SINSymbolTable.cpp">
+        <itemTool>1</itemTool>
+      </item>
       <item path="../SINmain/Src/main.cpp">
         <itemTool>1</itemTool>
       </item>
@@ -568,6 +636,12 @@
         <itemTool>3</itemTool>
       </item>
       <item path="../Tests/SINParser_Test/Src/SINParserTester.cpp">
+        <itemTool>1</itemTool>
+      </item>
+      <item path="../Tests/SINSymbolTable_Test/Include/SINSymbolTableTester.h">
+        <itemTool>3</itemTool>
+      </item>
+      <item path="../Tests/SINSymbolTable_Test/Src/SINSymbolTableTester.cpp">
         <itemTool>1</itemTool>
       </item>
       <item path="../Tests/SINTest/Include/SINTest.h">

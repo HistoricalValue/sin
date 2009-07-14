@@ -38,7 +38,8 @@ namespace SIN {
 	//--------------------------------------------------------
 
     int ParserAPI::ParseFile(String const &_filepath) {
-		SIN::Logger * logger = &SIN::LoggerManager::SingletonGetInstance()->GetLogger("SIN::ParserAPI->Parser");
+		// Uncomment when needed
+//		SIN::Logger * logger = &SIN::LoggerManager::SingletonGetInstance()->GetLogger("SIN::ParserAPI->Parser");
         if (PrepareForFile(_filepath.c_str()) == 0 && yyparse(bpa) == 0)
 			return 0;
 		return -1;
