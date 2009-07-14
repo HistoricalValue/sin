@@ -73,3 +73,21 @@
 ====== Writing tests ======
 * Look at SIN::Test and the existing Testers
 
+====== Inspecting the AST ======
+There are two AST Visualisation Visitors (for now):
+* SIN::ASTTreeVisualisationVisitor : produces plain-text visualisation of the AST
+* SIN::ASTMITTreeVisualizerXMLProducerVisitor : produces an XML, specific for TreeViz
+
+Both of these Visitors accept a SIN::OutputStream as a constructor argument, to which they
+write their output. A SIN::FileOutputStream can be used in place, to have the output
+writen directly to a file.
+
+--- About SIN::ASTMITTreeVisualizerXMLProducerVisitor:
+    TreeViz is an MIT project (http://www.randelshofer.ch/treeviz/index.html)
+    about visualising directories as trees. Abusing their alpha version,
+    the SIN::ASTMITTreeVisualizerXMLProducerVisitor produces an XML that treats AST Nodes
+    as Folders in a filesystem-tree structure. The result XML can be fed to an instance
+    of TreeViz (from File > Open File) and admire the results!
+    (For the Java-ly challenged: TreeViz can be run from the precompiled jar right
+     away. The jar can be found in the dist/ folder, after unpacking the commited
+     .zip)
