@@ -156,6 +156,10 @@
 				>
 			</File>
 			<File
+				RelativePath="..\..\Src\SINBufferedOutputStream.cpp"
+				>
+			</File>
+			<File
 				RelativePath="..\..\Src\SINCommon.cpp"
 				>
 			</File>
@@ -195,6 +199,10 @@
 			</File>
 			<File
 				RelativePath="..\..\Include\SINAssert.h"
+				>
+			</File>
+			<File
+				RelativePath="..\..\Include\SINBufferedOutputStream.h"
 				>
 			</File>
 			<File

@@ -6,6 +6,7 @@
 #include "SINLogger.h"
 #include "SINASTNode.h"
 #include "SINConstants.h"
+#include "SINBufferedOutputStream.h"
 #include "SINFileOutputStream.h"
 #include "SINParserAPI.h"
 #include "SINTestingCommon.h"
@@ -36,8 +37,10 @@ namespace SIN {
 				ParserAPI test;
 				TRY(test.ParseFile(FILE_PATH) == 0);
 				ASTNode * root = test.GetAST();
-				FileOutputStream fout("treeVisualisation.txt", FileOutputStream::Mode::Truncate());
-				FileOutputStream foutxml("treeVisualisation.xml", FileOutputStream::Mode::Truncate());
+				FileOutputStream _fout("treeVisualisation.txt", FileOutputStream::Mode::Truncate());
+				FileOutputStream _foutxml("treeVisualisation.xml", FileOutputStream::Mode::Truncate());
+				BufferedOutputStream fout(_fout);
+				BufferedOutputStream foutxml(_foutxml);
 				ASTTreeVisualisationVisitor visitor(fout);
 				ASTMITTreeVisualizerXMLProducerVisitor mitvis(foutxml);
 				root->Accept(&visitor);
