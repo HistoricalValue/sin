@@ -5,7 +5,7 @@
 namespace SIN {
 	class MemoryCell {
 	public:
-		enum MemoryCellType{
+		enum MemoryCellType {
 			string,
 			number,
 			nil,
@@ -14,7 +14,7 @@ namespace SIN {
 			function
 		};
 
-		MemoryCellType GetType() = 0;
+		virtual enum MemoryCellType GetType(void) = 0;
 
 		MemoryCell(void);
 		~MemoryCell();
