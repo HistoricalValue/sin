@@ -5,6 +5,17 @@
 namespace SIN {
 	class MemoryCell {
 	public:
+		enum MemoryCellType{
+			string,
+			number,
+			nil,
+			AST,
+			sin_object,
+			function
+		};
+
+		MemoryCellType GetType() = 0;
+
 		MemoryCell(void);
 		~MemoryCell();
 	};
