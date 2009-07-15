@@ -15,10 +15,13 @@ namespace SIN {
     };
 
     /** SIN internal constant values' representation types */
-    typedef        double   Number_t;
-    typedef String          String_t;
-    typedef Nil             Nil_t;
+    typedef double           Number_t;
+    typedef String           String_t;
+    typedef class Nil           Nil_t;
     typedef unsigned char   Boolean_t;
+
+	extern String const string_cast(Nil_t const _nil);
+
 
 } // namespace SIN
 

@@ -111,16 +111,9 @@ namespace SIN {
 		return string_cast(_node.Name());
 	}
 
-	//---------------------------------------------------
-
-	String const string_cast(Nil_t const _nil) {
-		return "NIL";
-	}
-
 	///--------- AST Node Factory ----------
 	ASTNodeFactory::ASTNodeFactory(void): namer("ASTNode-"), next_id(0x00ul) {
 	}
-
 
 	//---------------------------------------------------
 
