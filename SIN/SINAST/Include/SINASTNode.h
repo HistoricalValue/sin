@@ -63,7 +63,7 @@ namespace SIN {
         ASTNode(String const &name);
 		virtual ~ASTNode(void);
 
-        String const &Name(void) const;
+        virtual String const &Name(void) const;
 		ID_t const& ID(void) const;
 
 		virtual void Accept(ASTVisitor *) const;
@@ -105,7 +105,8 @@ namespace SIN {
 	class ConstASTNode : public ASTNode, public ValueHolder<_ValueT> {
 	public :
         typedef typename ValueHolder<_ValueT>::Value Value;
-        ConstASTNode(Value const &_value): ASTNode(), ValueHolder<_ValueT>(_value) { }
+        ConstASTNode(Value const &_value): ASTNode(string_cast(_value)), ValueHolder<_ValueT>(_value) { }
+		ConstASTNode(String const &_name, Value const &_value): ASTNode(_name), ValueHolder<_ValueT>(_value) { }
         virtual void Accept(ASTVisitor *) = 0;
 	};
 
@@ -166,7 +167,7 @@ namespace SIN {
 	template <enum SIN::OpValueType>
     class OpASTNode : public ASTNode {
     public:
-        OpASTNode(void): ASTNode() { }
+        OpASTNode(String const &_name): ASTNode(_name) { }
         virtual ~OpASTNode(void) { }
         virtual void Accept(ASTVisitor *) = 0;
     };

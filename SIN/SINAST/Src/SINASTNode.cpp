@@ -14,19 +14,18 @@
     void NAME##ASTNode::Accept(ASTVisitor *_visitor_p) {                                    \
 		assert(_visitor_p);																	\
         _visitor_p->Visit(*this);															\
-    }
-
+    }																						
 
 
 //-------------------------------------------------------------------------------------------------	
 
 #define SINASTNODE_DEFAULT_VALUELESS_CONSTNODE_DEFS(NAME, TYPE, VALTYPE, VALUE)             \
-    NAME##ASTNode::NAME##ASTNode(void): ConstASTNode<TYPE, VALTYPE>(VALUE) {                \
+	NAME##ASTNode::NAME##ASTNode(void): ConstASTNode<TYPE, VALTYPE>(#VALUE, VALUE) {        \
     }                                                                                       \
     void NAME##ASTNode::Accept(ASTVisitor *_visitor_p) {                                    \
 		assert (_visitor_p);																\
         _visitor_p->Visit(*this);															\
-    }
+    }																						
 
 
 
@@ -34,7 +33,7 @@
 
 #define SINASTNODE_DEFAULT_OPNODE_DEFS(OPNAME, OPTYPE)          \
     OPNAME##ASTNode::OPNAME##ASTNode(void):                     \
-        OpASTNode<OPTYPE>()                                     \
+	OpASTNode<OPTYPE>(#OPNAME)                                  \
     {                                                           \
     }                                                           \
     OPNAME##ASTNode::~OPNAME##ASTNode(void) {                   \
@@ -110,6 +109,12 @@ namespace SIN {
 
 	String const string_cast(ASTNode const &_node) {
 		return string_cast(_node.Name());
+	}
+
+	//---------------------------------------------------
+
+	String const string_cast(Nil_t const _nil) {
+		return "NIL";
 	}
 
 	///--------- AST Node Factory ----------
