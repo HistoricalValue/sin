@@ -480,7 +480,9 @@ goto find_rule; \
 #define YY_RESTORE_YY_MORE_OFFSET
 char *yytext;
 #define INITIAL 0
+	#include <stdlib.h>
 	#include "SINParser.h" /**/
+	#include "SINString.h"
 	#define YY_NEVER_INTERACTIVE 1
 /* Flex options */
 /* Flex macros */
@@ -925,15 +927,24 @@ YY_RULE_SETUP
 	YY_BREAK
 case 50:
 YY_RULE_SETUP
-{ return ID;		}
+{
+					yylval.stringV = (new SIN::String(yytext))->c_str();
+					return ID;		
+				}
 	YY_BREAK
 case 51:
 YY_RULE_SETUP
-{ return NUMBER;	}
+{ 
+					yylval.realV = atof(yytext);
+					return NUMBER;	
+				}
 	YY_BREAK
 case 52:
 YY_RULE_SETUP
-{ return STRING;	}
+{ 
+					yylval.stringV = (new SIN::String(yytext))->c_str();
+					return STRING;	
+				}
 	YY_BREAK
 case 53:
 YY_RULE_SETUP

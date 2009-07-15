@@ -1,5 +1,7 @@
 %{
+	#include <stdlib.h>
 	#include "SINParser.h" /**/
+	#include "SINString.h"
 	#define YY_NEVER_INTERACTIVE 1
 %}
  
@@ -82,9 +84,19 @@ lineComm		\/\/.*
 {ws}			{/*We do not do nothing in this case*/}
 {lineComm}		{}
 
-{id}			{ return ID;		}
-{number}		{ return NUMBER;	}
-{string}		{ return STRING;	}
+{id}			{
+					yylval.stringV = (new SIN::String(yytext))->c_str();
+					return ID;		
+				}
+{number}		{ 
+					yylval.realV = atof(yytext);
+					return NUMBER;	
+				}
+				
+{string}		{ 
+					yylval.stringV = (new SIN::String(yytext))->c_str();
+					return STRING;	
+				}
 
 
 .				{ fprintf(stderr, "Cannot match character `%s' with any rule\n", yytext); }

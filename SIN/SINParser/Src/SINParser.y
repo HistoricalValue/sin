@@ -87,7 +87,7 @@
 
 /*Token types*/
 %union {
-    char *			stringV;
+    const char *	stringV;
     double			realV;
     SIN::ASTNode *	AST;
 };
@@ -335,7 +335,7 @@ stmtd:			stmt stmtd	{	SIN::ParserManage::Manage_Statements($1, $2, &($$));	}
 
 
 
-funcdef:		FUNCTION ID	'(' idlist ')' block	{	SIN::ParserManage::Manage_FunctionDefinition_Function(yytext, $4, $6, &($$));	}
+funcdef:		FUNCTION ID	'(' idlist ')' block	{	SIN::ParserManage::Manage_FunctionDefinition_Function(const_cast<char *>($2), $4, $6, &($$));	}
 				|	FUNCTION '(' idlist ')' block	{	SIN::ParserManage::Manage_FunctionDefinition_LamdaFunction($3, $5, &($$));			}
 				;
 

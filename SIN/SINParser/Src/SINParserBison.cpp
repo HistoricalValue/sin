@@ -262,7 +262,7 @@ typedef union YYSTYPE
 {
 
 
-    char *			stringV;
+    const char *	stringV;
     double			realV;
     SIN::ASTNode *	AST;
 
@@ -2155,7 +2155,7 @@ yyreduce:
 
   case 82:
 
-    {	SIN::ParserManage::Manage_FunctionDefinition_Function(yytext, (yyvsp[(4) - (6)].AST), (yyvsp[(6) - (6)].AST), &((yyval.AST)));	}
+    {	SIN::ParserManage::Manage_FunctionDefinition_Function(const_cast<char *>((yyvsp[(2) - (6)].stringV)), (yyvsp[(4) - (6)].AST), (yyvsp[(6) - (6)].AST), &((yyval.AST)));	}
     break;
 
   case 83:
