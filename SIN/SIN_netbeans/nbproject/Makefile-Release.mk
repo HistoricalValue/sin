@@ -30,13 +30,14 @@ OBJECTDIR=build/Release/${PLATFORM}
 OBJECTFILES= \
 	${OBJECTDIR}/_ext/tmp/trunk/SIN/SIN_netbeans/../Common/Src/Common.o \
 	${OBJECTDIR}/_ext/tmp/trunk/SIN/SIN_netbeans/../SINParser/Src/BisonParseArguments.o \
-	${OBJECTDIR}/_ext/tmp/trunk/SIN/SIN_netbeans/../SINLogging/Src/SINLoggerManager.o \
 	${OBJECTDIR}/_ext/tmp/trunk/SIN/SIN_netbeans/../SINParser/Src/SINParserBison.o \
+	${OBJECTDIR}/_ext/tmp/trunk/SIN/SIN_netbeans/../SINLogging/Src/SINLoggerManager.o \
 	${OBJECTDIR}/_ext/tmp/trunk/SIN/SIN_netbeans/../Tests/SINAST_Test/Src/SINAST_Tester.o \
 	${OBJECTDIR}/_ext/tmp/trunk/SIN/SIN_netbeans/../SINmain/Src/main.o \
 	${OBJECTDIR}/_ext/tmp/trunk/SIN/SIN_netbeans/../Tests/SINLogging_Test/Src/SINLoggingTester.o \
 	${OBJECTDIR}/_ext/tmp/trunk/SIN/SIN_netbeans/../SINCommon/Src/SINString.o \
 	${OBJECTDIR}/_ext/tmp/trunk/SIN/SIN_netbeans/../SINCommon/Src/SINStream.o \
+	${OBJECTDIR}/_ext/tmp/trunk/SIN/SIN_netbeans/../SINCommon/Src/SINBufferedOutputStream.o \
 	${OBJECTDIR}/_ext/tmp/trunk/SIN/SIN_netbeans/../SINParser/Src/SINParserManage.o \
 	${OBJECTDIR}/_ext/tmp/trunk/SIN/SIN_netbeans/../SINCommon/Src/SINInputStream.o \
 	${OBJECTDIR}/_ext/tmp/trunk/SIN/SIN_netbeans/../SINCommon/Src/SINCommon.o \
@@ -50,8 +51,8 @@ OBJECTFILES= \
 	${OBJECTDIR}/_ext/tmp/trunk/SIN/SIN_netbeans/../Tests/SINTest/Src/SINTestCollection.o \
 	${OBJECTDIR}/_ext/tmp/trunk/SIN/SIN_netbeans/../SINCommon/Src/SINNamer.o \
 	${OBJECTDIR}/_ext/tmp/trunk/SIN/SIN_netbeans/../SINCommon/Src/SINOutputStream.o \
-	${OBJECTDIR}/_ext/tmp/trunk/SIN/SIN_netbeans/../SINAST/Src/SINASTMITTreeVisualizerXMLProducerVisitor.o \
 	${OBJECTDIR}/_ext/tmp/trunk/SIN/SIN_netbeans/../Tests/SINTest/Src/SINTest.o \
+	${OBJECTDIR}/_ext/tmp/trunk/SIN/SIN_netbeans/../SINAST/Src/SINASTMITTreeVisualizerXMLProducerVisitor.o \
 	${OBJECTDIR}/_ext/tmp/trunk/SIN/SIN_netbeans/../SINCommon/Src/SIN.o \
 	${OBJECTDIR}/_ext/tmp/trunk/SIN/SIN_netbeans/../SINCommon/Src/SINFileOutputStream.o \
 	${OBJECTDIR}/_ext/tmp/trunk/SIN/SIN_netbeans/../SINRuntime/Src/SINSymbolTable.o \
@@ -94,15 +95,15 @@ ${OBJECTDIR}/_ext/tmp/trunk/SIN/SIN_netbeans/../SINParser/Src/BisonParseArgument
 	${RM} $@.d
 	$(COMPILE.cc) -O2 -MMD -MP -MF $@.d -o ${OBJECTDIR}/_ext/tmp/trunk/SIN/SIN_netbeans/../SINParser/Src/BisonParseArguments.o ../SINParser/Src/BisonParseArguments.cpp
 
-${OBJECTDIR}/_ext/tmp/trunk/SIN/SIN_netbeans/../SINLogging/Src/SINLoggerManager.o: ../SINLogging/Src/SINLoggerManager.cpp 
-	${MKDIR} -p ${OBJECTDIR}/_ext/tmp/trunk/SIN/SIN_netbeans/../SINLogging/Src
-	${RM} $@.d
-	$(COMPILE.cc) -O2 -MMD -MP -MF $@.d -o ${OBJECTDIR}/_ext/tmp/trunk/SIN/SIN_netbeans/../SINLogging/Src/SINLoggerManager.o ../SINLogging/Src/SINLoggerManager.cpp
-
 ${OBJECTDIR}/_ext/tmp/trunk/SIN/SIN_netbeans/../SINParser/Src/SINParserBison.o: ../SINParser/Src/SINParserBison.cpp 
 	${MKDIR} -p ${OBJECTDIR}/_ext/tmp/trunk/SIN/SIN_netbeans/../SINParser/Src
 	${RM} $@.d
 	$(COMPILE.cc) -O2 -MMD -MP -MF $@.d -o ${OBJECTDIR}/_ext/tmp/trunk/SIN/SIN_netbeans/../SINParser/Src/SINParserBison.o ../SINParser/Src/SINParserBison.cpp
+
+${OBJECTDIR}/_ext/tmp/trunk/SIN/SIN_netbeans/../SINLogging/Src/SINLoggerManager.o: ../SINLogging/Src/SINLoggerManager.cpp 
+	${MKDIR} -p ${OBJECTDIR}/_ext/tmp/trunk/SIN/SIN_netbeans/../SINLogging/Src
+	${RM} $@.d
+	$(COMPILE.cc) -O2 -MMD -MP -MF $@.d -o ${OBJECTDIR}/_ext/tmp/trunk/SIN/SIN_netbeans/../SINLogging/Src/SINLoggerManager.o ../SINLogging/Src/SINLoggerManager.cpp
 
 ${OBJECTDIR}/_ext/tmp/trunk/SIN/SIN_netbeans/../Tests/SINAST_Test/Src/SINAST_Tester.o: ../Tests/SINAST_Test/Src/SINAST_Tester.cpp 
 	${MKDIR} -p ${OBJECTDIR}/_ext/tmp/trunk/SIN/SIN_netbeans/../Tests/SINAST_Test/Src
@@ -128,6 +129,11 @@ ${OBJECTDIR}/_ext/tmp/trunk/SIN/SIN_netbeans/../SINCommon/Src/SINStream.o: ../SI
 	${MKDIR} -p ${OBJECTDIR}/_ext/tmp/trunk/SIN/SIN_netbeans/../SINCommon/Src
 	${RM} $@.d
 	$(COMPILE.cc) -O2 -MMD -MP -MF $@.d -o ${OBJECTDIR}/_ext/tmp/trunk/SIN/SIN_netbeans/../SINCommon/Src/SINStream.o ../SINCommon/Src/SINStream.cpp
+
+${OBJECTDIR}/_ext/tmp/trunk/SIN/SIN_netbeans/../SINCommon/Src/SINBufferedOutputStream.o: ../SINCommon/Src/SINBufferedOutputStream.cpp 
+	${MKDIR} -p ${OBJECTDIR}/_ext/tmp/trunk/SIN/SIN_netbeans/../SINCommon/Src
+	${RM} $@.d
+	$(COMPILE.cc) -O2 -MMD -MP -MF $@.d -o ${OBJECTDIR}/_ext/tmp/trunk/SIN/SIN_netbeans/../SINCommon/Src/SINBufferedOutputStream.o ../SINCommon/Src/SINBufferedOutputStream.cpp
 
 ${OBJECTDIR}/_ext/tmp/trunk/SIN/SIN_netbeans/../SINParser/Src/SINParserManage.o: ../SINParser/Src/SINParserManage.cpp 
 	${MKDIR} -p ${OBJECTDIR}/_ext/tmp/trunk/SIN/SIN_netbeans/../SINParser/Src
@@ -194,15 +200,15 @@ ${OBJECTDIR}/_ext/tmp/trunk/SIN/SIN_netbeans/../SINCommon/Src/SINOutputStream.o:
 	${RM} $@.d
 	$(COMPILE.cc) -O2 -MMD -MP -MF $@.d -o ${OBJECTDIR}/_ext/tmp/trunk/SIN/SIN_netbeans/../SINCommon/Src/SINOutputStream.o ../SINCommon/Src/SINOutputStream.cpp
 
-${OBJECTDIR}/_ext/tmp/trunk/SIN/SIN_netbeans/../SINAST/Src/SINASTMITTreeVisualizerXMLProducerVisitor.o: ../SINAST/Src/SINASTMITTreeVisualizerXMLProducerVisitor.cpp 
-	${MKDIR} -p ${OBJECTDIR}/_ext/tmp/trunk/SIN/SIN_netbeans/../SINAST/Src
-	${RM} $@.d
-	$(COMPILE.cc) -O2 -MMD -MP -MF $@.d -o ${OBJECTDIR}/_ext/tmp/trunk/SIN/SIN_netbeans/../SINAST/Src/SINASTMITTreeVisualizerXMLProducerVisitor.o ../SINAST/Src/SINASTMITTreeVisualizerXMLProducerVisitor.cpp
-
 ${OBJECTDIR}/_ext/tmp/trunk/SIN/SIN_netbeans/../Tests/SINTest/Src/SINTest.o: ../Tests/SINTest/Src/SINTest.cpp 
 	${MKDIR} -p ${OBJECTDIR}/_ext/tmp/trunk/SIN/SIN_netbeans/../Tests/SINTest/Src
 	${RM} $@.d
 	$(COMPILE.cc) -O2 -MMD -MP -MF $@.d -o ${OBJECTDIR}/_ext/tmp/trunk/SIN/SIN_netbeans/../Tests/SINTest/Src/SINTest.o ../Tests/SINTest/Src/SINTest.cpp
+
+${OBJECTDIR}/_ext/tmp/trunk/SIN/SIN_netbeans/../SINAST/Src/SINASTMITTreeVisualizerXMLProducerVisitor.o: ../SINAST/Src/SINASTMITTreeVisualizerXMLProducerVisitor.cpp 
+	${MKDIR} -p ${OBJECTDIR}/_ext/tmp/trunk/SIN/SIN_netbeans/../SINAST/Src
+	${RM} $@.d
+	$(COMPILE.cc) -O2 -MMD -MP -MF $@.d -o ${OBJECTDIR}/_ext/tmp/trunk/SIN/SIN_netbeans/../SINAST/Src/SINASTMITTreeVisualizerXMLProducerVisitor.o ../SINAST/Src/SINASTMITTreeVisualizerXMLProducerVisitor.cpp
 
 ${OBJECTDIR}/_ext/tmp/trunk/SIN/SIN_netbeans/../SINCommon/Src/SIN.o: ../SINCommon/Src/SIN.cpp 
 	${MKDIR} -p ${OBJECTDIR}/_ext/tmp/trunk/SIN/SIN_netbeans/../SINCommon/Src

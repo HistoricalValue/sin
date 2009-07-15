@@ -18,6 +18,10 @@
 *[017] Delete IDs and strings in AST parsing (Bison)
 *[018] Fix lvcall in AST making
 
+*[019] Fill up Symbol Table's tester
+
+*[020] Fix ASTNodes (the whole template inheritance style is bad)
+
 ---logging---
 *[010] LoggerFactory base should internally keep a list of produced loggers
   and validate them at destruction time (make sure the pointers are correct)
