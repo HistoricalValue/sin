@@ -97,7 +97,7 @@ namespace SIN {
 		_v->IncreaseIndentationLevel();
 		for (size_t i = 0; i < NumberOfChildren(); ++i) {
 			TreeNode* _child = (*this)[i];
-			SINASSERT(dynamic_cast<ASTNode*>(_child) != 0x00);
+			// TODO check for pointer validity
 			ASTNode* child = static_cast<ASTNode*>(_child);
 			child->Accept(_v);
 		}

@@ -9,3 +9,11 @@ sin:
 
 clean_all:
 	$(foreach PROJ,$(PROJECTS),(cd '$(PROJ)'/Projects/Linux_GNU/ && printf 'include $$(SIN_BASE_DIR)/Linux_static_lib_base.mk\n' | $(MAKE) -f - SIN_BASE_DIR='$(shell ruby -r pathname -e $(SUBPROJECT_RELATIVE_PATH_TO_SIN_BASE_DIR_RUBY_SHELL_ESCAPED_CODE) )' linux_static_lib_clean ) && )  true 
+
+
+visualise: treeVisualisation.xml
+	treeviz_command_line ./treeVisualisation.xml
+
+treeVisualisation.xml: sin
+	./sin
+

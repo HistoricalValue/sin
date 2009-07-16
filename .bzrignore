@@ -30,3 +30,15 @@ SIN/SIN_netbeans/dist
 SIN/SINmain/Projects/Linux_GNU/treeVisualisation.txt
 SIN/sin
 SIN/SINmain/Projects/Linux_GNU/treeVisualisation.xml
+SIN/SINAST/Src/SINASTMITTreeVisualizerXMLProducerVisitor.d
+SIN/SINAST/Src/SINASTTreeVisualisationVisitor.d
+SIN/SINCommon/Src/SINBufferedOutputStream.d
+SIN/SINCommon/Src/SINFileOutputStream.d
+SIN/SINParser/Src/BisonParseArguments.d
+SIN/SINParser/Src/SINParserManage.d
+SIN/SINRuntime/Src/SINMemoryCell.d
+SIN/SINRuntime/Src/SINSymbolTable.d
+SIN/SINmain/Projects/Linux_GNU/vis
+SIN/Tests/SINSymbolTable_Test/Src/SINSymbolTableTester.d
+SIN/Tests/SINTest/Src/SINTestCollection.d
+SIN/Tests/SINTest/Src/SINTestFactory.d

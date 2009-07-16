@@ -11,10 +11,12 @@ PROJECTS = $(addprefix $(SIN_BASE_DIR)/, \
                 AST \
                 Common \
                 Logging \
+                SymbolTable \
                 Parser )) \
         Tests/SINTest \
         SINParser \
         SINAST \
+        SINRuntime \
         SINLogging \
         SINCommon \
         Common)
