@@ -1765,7 +1765,7 @@ yyreduce:
 
   case 4:
 
-    {	SIN::ParserManage::Manage_Statements_Empty(&((yyval.AST)));	}
+    {	SIN::ParserManage::Manage_Statements_Empty(&((yyval.AST)));		}
     break;
 
   case 5:
@@ -1785,7 +1785,7 @@ yyreduce:
 
   case 8:
 
-    {	SIN::ParserManage::Manage_Statement_ForStatement((yyvsp[(1) - (1)].AST), &((yyval.AST)));			}
+    {	SIN::ParserManage::Manage_Statement_ForStatement((yyvsp[(1) - (1)].AST), &((yyval.AST)));		}
     break;
 
   case 9:
@@ -1795,17 +1795,17 @@ yyreduce:
 
   case 10:
 
-    {	SIN::ParserManage::Manage_Statement_Break(&((yyval.AST)));						}
+    {	SIN::ParserManage::Manage_Statement_Break(&((yyval.AST)));					}
     break;
 
   case 11:
 
-    {	SIN::ParserManage::Manage_Statement_Continue(&((yyval.AST)));					}
+    {	SIN::ParserManage::Manage_Statement_Continue(&((yyval.AST)));				}
     break;
 
   case 12:
 
-    {	SIN::ParserManage::Manage_Statement_Block((yyvsp[(1) - (1)].AST), &((yyval.AST)));					}
+    {	SIN::ParserManage::Manage_Statement_Block((yyvsp[(1) - (1)].AST), &((yyval.AST)));				}
     break;
 
   case 13:
@@ -1815,7 +1815,7 @@ yyreduce:
 
   case 14:
 
-    {	SIN::ParserManage::Manage_Statement_Semicolon(&((yyval.AST)));					}
+    {	SIN::ParserManage::Manage_Statement_Semicolon(&((yyval.AST)));				}
     break;
 
   case 15:
@@ -1825,32 +1825,32 @@ yyreduce:
 
   case 16:
 
-    {	SIN::ParserManage::Manage_Expression_AssignExpression((yyvsp[(1) - (1)].AST), &((yyval.AST)));					}
+    {	SIN::ParserManage::Manage_Expression_AssignExpression((yyvsp[(1) - (1)].AST), &((yyval.AST)));				}
     break;
 
   case 17:
 
-    {	SIN::ParserManage::Manage_Expression_ExpressionADDExpression((yyvsp[(1) - (3)].AST), (yyvsp[(3) - (3)].AST), &((yyval.AST)));		}
+    {	SIN::ParserManage::Manage_Expression_ExpressionADDExpression((yyvsp[(1) - (3)].AST), (yyvsp[(3) - (3)].AST), &((yyval.AST)));	}
     break;
 
   case 18:
 
-    {	SIN::ParserManage::Manage_Expression_ExpressionMINExpression((yyvsp[(1) - (3)].AST), (yyvsp[(3) - (3)].AST), &((yyval.AST)));		}
+    {	SIN::ParserManage::Manage_Expression_ExpressionMINExpression((yyvsp[(1) - (3)].AST), (yyvsp[(3) - (3)].AST), &((yyval.AST)));	}
     break;
 
   case 19:
 
-    {	SIN::ParserManage::Manage_Expression_ExpressionMULExpression((yyvsp[(1) - (3)].AST), (yyvsp[(3) - (3)].AST), &((yyval.AST)));		}
+    {	SIN::ParserManage::Manage_Expression_ExpressionMULExpression((yyvsp[(1) - (3)].AST), (yyvsp[(3) - (3)].AST), &((yyval.AST)));	}
     break;
 
   case 20:
 
-    {	SIN::ParserManage::Manage_Expression_ExpressionDIVExpression((yyvsp[(1) - (3)].AST), (yyvsp[(3) - (3)].AST), &((yyval.AST)));		}
+    {	SIN::ParserManage::Manage_Expression_ExpressionDIVExpression((yyvsp[(1) - (3)].AST), (yyvsp[(3) - (3)].AST), &((yyval.AST)));	}
     break;
 
   case 21:
 
-    {	SIN::ParserManage::Manage_Expression_ExpressionMODExpression((yyvsp[(1) - (3)].AST), (yyvsp[(3) - (3)].AST), &((yyval.AST)));		}
+    {	SIN::ParserManage::Manage_Expression_ExpressionMODExpression((yyvsp[(1) - (3)].AST), (yyvsp[(3) - (3)].AST), &((yyval.AST)));	}
     break;
 
   case 22:
@@ -1885,7 +1885,7 @@ yyreduce:
 
   case 28:
 
-    {	SIN::ParserManage::Manage_Expression_ExpressionANDExpression((yyvsp[(1) - (3)].AST), (yyvsp[(3) - (3)].AST), &((yyval.AST)));		}
+    {	SIN::ParserManage::Manage_Expression_ExpressionANDExpression((yyvsp[(1) - (3)].AST), (yyvsp[(3) - (3)].AST), &((yyval.AST)));	}
     break;
 
   case 29:
@@ -1895,7 +1895,7 @@ yyreduce:
 
   case 30:
 
-    {	SIN::ParserManage::Manage_Expression_ExpressionNOTExpression((yyvsp[(1) - (3)].AST), (yyvsp[(3) - (3)].AST), &((yyval.AST)));		}
+    {	SIN::ParserManage::Manage_Expression_ExpressionNOTExpression((yyvsp[(1) - (3)].AST), (yyvsp[(3) - (3)].AST), &((yyval.AST)));	}
     break;
 
   case 31:
@@ -1905,7 +1905,7 @@ yyreduce:
 
   case 32:
 
-    {	SIN::ParserManage::Manage_Expression_Term((yyvsp[(1) - (1)].AST), &((yyval.AST)));								}
+    {	SIN::ParserManage::Manage_Expression_Term((yyvsp[(1) - (1)].AST), &((yyval.AST)));							}
     break;
 
   case 33:
@@ -1970,7 +1970,7 @@ yyreduce:
 
   case 45:
 
-    {	SIN::ParserManage::Manage_Term_Primary((yyvsp[(1) - (1)].AST), &((yyval.AST)));				}
+    {	SIN::ParserManage::Manage_Term_Primary((yyvsp[(1) - (1)].AST), &((yyval.AST)));					}
     break;
 
   case 46:
@@ -1980,7 +1980,7 @@ yyreduce:
 
   case 47:
 
-    {	SIN::ParserManage::Manage_Primary_LValue((yyvsp[(1) - (1)].AST), &((yyval.AST)));							}
+    {	SIN::ParserManage::Manage_Primary_LValue((yyvsp[(1) - (1)].AST), &((yyval.AST)));						}
     break;
 
   case 48:
@@ -2005,37 +2005,37 @@ yyreduce:
 
   case 52:
 
-    {	SIN::ParserManage::Manage_LValue_ID(yytext, &((yyval.AST)));		}
+    {	SIN::ParserManage::Manage_LValue_ID((yyvsp[(1) - (1)].stringV), &((yyval.AST)));			}
     break;
 
   case 53:
 
-    {	SIN::ParserManage::Manage_LValue_LocalID(yytext, &((yyval.AST)));	}
+    {	SIN::ParserManage::Manage_LValue_LocalID(const_cast<char *>((yyvsp[(2) - (2)].stringV)), &((yyval.AST)));	}
     break;
 
   case 54:
 
-    {	SIN::ParserManage::Manage_LValue_GlobalID(yytext, &((yyval.AST)));	}
+    {	SIN::ParserManage::Manage_LValue_GlobalID((yyvsp[(2) - (2)].stringV), &((yyval.AST)));	}
     break;
 
   case 55:
 
-    {	SIN::ParserManage::Manage_LValue_Member((yyvsp[(1) - (1)].AST), &((yyval.AST)));				}
+    {	SIN::ParserManage::Manage_LValue_Member((yyvsp[(1) - (1)].AST), &((yyval.AST)));		}
     break;
 
   case 56:
 
-    {	SIN::ParserManage::Manage_Member_LValueID((yyvsp[(1) - (3)].AST), yytext, &((yyval.AST)));	}
+    {	SIN::ParserManage::Manage_Member_LValueID((yyvsp[(1) - (3)].AST), (yyvsp[(3) - (3)].stringV), &((yyval.AST)));			}
     break;
 
   case 57:
 
-    {	SIN::ParserManage::Manage_Member_LValueExpression((yyvsp[(1) - (4)].AST), (yyvsp[(3) - (4)].AST), &((yyval.AST)));		}
+    {	SIN::ParserManage::Manage_Member_LValueExpression((yyvsp[(1) - (4)].AST), (yyvsp[(3) - (4)].AST), &((yyval.AST)));	}
     break;
 
   case 58:
 
-    {	SIN::ParserManage::Manage_Member_CallID((yyvsp[(1) - (3)].AST), yytext, &((yyval.AST)));	}
+    {	SIN::ParserManage::Manage_Member_CallID((yyvsp[(1) - (3)].AST), (yyvsp[(3) - (3)].stringV), &((yyval.AST)));				}
     break;
 
   case 59:
@@ -2045,7 +2045,7 @@ yyreduce:
 
   case 60:
 
-    {	SIN::ParserManage::Manage_Call_CallCallSuffix((yyvsp[(1) - (2)].AST), (yyvsp[(2) - (2)].AST), &((yyval.AST)));						}
+    {	SIN::ParserManage::Manage_Call_CallCallSuffix((yyvsp[(1) - (2)].AST), (yyvsp[(2) - (2)].AST), &((yyval.AST)));					}
     break;
 
   case 61:
@@ -2075,7 +2075,7 @@ yyreduce:
 
   case 66:
 
-    {	SIN::ParserManage::Manage_MethodCall(yytext, (yyvsp[(4) - (5)].AST), &((yyval.AST)));	}
+    {	SIN::ParserManage::Manage_MethodCall((yyvsp[(2) - (5)].stringV), (yyvsp[(4) - (5)].AST), &((yyval.AST)));	}
     break;
 
   case 67:
@@ -2085,7 +2085,7 @@ yyreduce:
 
   case 68:
 
-    {	SIN::ParserManage::Manage_ExpressionList_Empty(&((yyval.AST)));	}
+    {	SIN::ParserManage::Manage_ExpressionList_Empty(&((yyval.AST)));		}
     break;
 
   case 69:
@@ -2095,12 +2095,12 @@ yyreduce:
 
   case 70:
 
-    {	SIN::ParserManage::Manage_ExpressionList_Empty(&((yyval.AST)));	}
+    {	SIN::ParserManage::Manage_ExpressionList_Empty(&((yyval.AST)));		}
     break;
 
   case 71:
 
-    {	SIN::ParserManage::Manage_ObjectDefinition_EmptyObject(&((yyval.AST)));	}
+    {	SIN::ParserManage::Manage_ObjectDefinition_EmptyObject(&((yyval.AST)));		}
     break;
 
   case 72:
@@ -2110,7 +2110,7 @@ yyreduce:
 
   case 73:
 
-    {	SIN::ParserManage::Manage_ObjectList_ExpressionObjectLists((yyvsp[(1) - (2)].AST), (yyvsp[(2) - (2)].AST), &((yyval.AST)));				}
+    {	SIN::ParserManage::Manage_ObjectList_ExpressionObjectLists((yyvsp[(1) - (2)].AST), (yyvsp[(2) - (2)].AST), &((yyval.AST)));					}
     break;
 
   case 74:
@@ -2120,7 +2120,7 @@ yyreduce:
 
   case 75:
 
-    {	SIN::ParserManage::Manage_ObjectList_ExpressionObjectLists((yyvsp[(2) - (3)].AST), (yyvsp[(3) - (3)].AST), &((yyval.AST)));				}
+    {	SIN::ParserManage::Manage_ObjectList_ExpressionObjectLists((yyvsp[(2) - (3)].AST), (yyvsp[(3) - (3)].AST), &((yyval.AST)));					}
     break;
 
   case 76:
@@ -2130,7 +2130,7 @@ yyreduce:
 
   case 77:
 
-    {	SIN::ParserManage::Manage_ObjectList_Empty(&((yyval.AST)));										}
+    {	SIN::ParserManage::Manage_ObjectList_Empty(&((yyval.AST)));											}
     break;
 
   case 78:
@@ -2150,17 +2150,17 @@ yyreduce:
 
   case 81:
 
-    {	SIN::ParserManage::Manage_Statements_Empty(&((yyval.AST)));	}
+    {	SIN::ParserManage::Manage_Statements_Empty(&((yyval.AST)));		}
     break;
 
   case 82:
 
-    {	SIN::ParserManage::Manage_FunctionDefinition_Function(const_cast<char *>((yyvsp[(2) - (6)].stringV)), (yyvsp[(4) - (6)].AST), (yyvsp[(6) - (6)].AST), &((yyval.AST)));	}
+    {	SIN::ParserManage::Manage_FunctionDefinition_Function((yyvsp[(2) - (6)].stringV), (yyvsp[(4) - (6)].AST), (yyvsp[(6) - (6)].AST), &((yyval.AST)));	}
     break;
 
   case 83:
 
-    {	SIN::ParserManage::Manage_FunctionDefinition_LamdaFunction((yyvsp[(3) - (5)].AST), (yyvsp[(5) - (5)].AST), &((yyval.AST)));			}
+    {	SIN::ParserManage::Manage_FunctionDefinition_LamdaFunction((yyvsp[(3) - (5)].AST), (yyvsp[(5) - (5)].AST), &((yyval.AST)));	}
     break;
 
   case 84:
@@ -2170,7 +2170,7 @@ yyreduce:
 
   case 85:
 
-    {	SIN::ParserManage::Manage_Constant_String(yytext, &((yyval.AST)));	}
+    {	SIN::ParserManage::Manage_Constant_String((yyvsp[(1) - (1)].stringV), &((yyval.AST)));			}
     break;
 
   case 86:
@@ -2185,12 +2185,12 @@ yyreduce:
 
   case 88:
 
-    {	SIN::ParserManage::Manage_Constant_False(&((yyval.AST)));					}
+    {	SIN::ParserManage::Manage_Constant_False(&((yyval.AST)));				}
     break;
 
   case 89:
 
-    {	SIN::ParserManage::Manage_IDList(yytext, (yyvsp[(2) - (2)].AST), &((yyval.AST)));	}
+    {	SIN::ParserManage::Manage_IDList((yyvsp[(1) - (2)].stringV), (yyvsp[(2) - (2)].AST), &((yyval.AST)));	}
     break;
 
   case 90:
@@ -2200,7 +2200,7 @@ yyreduce:
 
   case 91:
 
-    {	SIN::ParserManage::Manage_IDList(yytext, (yyvsp[(3) - (3)].AST), &((yyval.AST)));	}
+    {	SIN::ParserManage::Manage_IDList((yyvsp[(2) - (3)].stringV), (yyvsp[(3) - (3)].AST), &((yyval.AST)));	}
     break;
 
   case 92:
@@ -2230,7 +2230,7 @@ yyreduce:
 
   case 97:
 
-    {	SIN::ParserManage::Manage_ReturnStatement_Return(&((yyval.AST)));					}
+    {	SIN::ParserManage::Manage_ReturnStatement_Return(&((yyval.AST)));				}
     break;
 
   case 98:

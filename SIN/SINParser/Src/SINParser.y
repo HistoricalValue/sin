@@ -177,7 +177,7 @@ SinCode:		stmts	{
 
 
 stmts:			stmt stmts	{	SIN::ParserManage::Manage_Statements($1, $2, &($$));	}
-				|			{	SIN::ParserManage::Manage_Statements_Empty(&($$));	}
+				|			{	SIN::ParserManage::Manage_Statements_Empty(&($$));		}
 				;
 
 
@@ -185,35 +185,35 @@ stmts:			stmt stmts	{	SIN::ParserManage::Manage_Statements($1, $2, &($$));	}
 stmt:			expr ';'			{	SIN::ParserManage::Manage_Statement_Expression($1, &($$));			}
 				|	ifstmt			{	SIN::ParserManage::Manage_Statement_IfStatement($1, &($$));			}
 				|	whilestmt		{	SIN::ParserManage::Manage_Statement_WhileStatement($1, &($$));		}
-				|	forstmt			{	SIN::ParserManage::Manage_Statement_ForStatement($1, &($$));			}
+				|	forstmt			{	SIN::ParserManage::Manage_Statement_ForStatement($1, &($$));		}
 				|	returnstmt		{	SIN::ParserManage::Manage_Statement_ReturnStatement($1, &($$));		}
-				|	BREAK ';'		{	SIN::ParserManage::Manage_Statement_Break(&($$));						}
-				|	CONTINUE ';'	{	SIN::ParserManage::Manage_Statement_Continue(&($$));					}
-				|	block			{	SIN::ParserManage::Manage_Statement_Block($1, &($$));					}
+				|	BREAK ';'		{	SIN::ParserManage::Manage_Statement_Break(&($$));					}
+				|	CONTINUE ';'	{	SIN::ParserManage::Manage_Statement_Continue(&($$));				}
+				|	block			{	SIN::ParserManage::Manage_Statement_Block($1, &($$));				}
 				|	funcdef			{	SIN::ParserManage::Manage_Statement_FunctionDefinition($1, &($$));	}
-				|	';'				{	SIN::ParserManage::Manage_Statement_Semicolon(&($$));					}
+				|	';'				{	SIN::ParserManage::Manage_Statement_Semicolon(&($$));				}
 				|	error  			{yyclearin;}
 				;
 
 
 
-expr:			assignexpr 					{	SIN::ParserManage::Manage_Expression_AssignExpression($1, &($$));					}
-				|	expr	ADD		expr	{	SIN::ParserManage::Manage_Expression_ExpressionADDExpression($1, $3, &($$));		}
-				|	expr	MIN		expr	{	SIN::ParserManage::Manage_Expression_ExpressionMINExpression($1, $3, &($$));		}
-				|	expr	MUL		expr	{	SIN::ParserManage::Manage_Expression_ExpressionMULExpression($1, $3, &($$));		}
-				|	expr	DIV		expr	{	SIN::ParserManage::Manage_Expression_ExpressionDIVExpression($1, $3, &($$));		}
-				|	expr	MOD		expr	{	SIN::ParserManage::Manage_Expression_ExpressionMODExpression($1, $3, &($$));		}
+expr:			assignexpr 					{	SIN::ParserManage::Manage_Expression_AssignExpression($1, &($$));				}
+				|	expr	ADD		expr	{	SIN::ParserManage::Manage_Expression_ExpressionADDExpression($1, $3, &($$));	}
+				|	expr	MIN		expr	{	SIN::ParserManage::Manage_Expression_ExpressionMINExpression($1, $3, &($$));	}
+				|	expr	MUL		expr	{	SIN::ParserManage::Manage_Expression_ExpressionMULExpression($1, $3, &($$));	}
+				|	expr	DIV		expr	{	SIN::ParserManage::Manage_Expression_ExpressionDIVExpression($1, $3, &($$));	}
+				|	expr	MOD		expr	{	SIN::ParserManage::Manage_Expression_ExpressionMODExpression($1, $3, &($$));	}
 				|	expr	GT		expr	{	SIN::ParserManage::Manage_Expression_ExpressionGTExpression($1, $3, &($$));		}
 				|	expr	GE		expr	{	SIN::ParserManage::Manage_Expression_ExpressionGEExpression($1, $3, &($$));		}
 				|	expr	LT		expr	{	SIN::ParserManage::Manage_Expression_ExpressionLTExpression($1, $3, &($$));		}
 				|	expr	LE		expr	{	SIN::ParserManage::Manage_Expression_ExpressionLEExpression($1, $3, &($$));		}
 				|	expr	EQ		expr	{	SIN::ParserManage::Manage_Expression_ExpressionEQExpression($1, $3, &($$));		}
 				|	expr	NOTEQ	expr	{	SIN::ParserManage::Manage_Expression_ExpressionNOTEQExpression($1, $3, &($$));	}
-				|	expr	AND		expr	{	SIN::ParserManage::Manage_Expression_ExpressionANDExpression($1, $3, &($$));		}
+				|	expr	AND		expr	{	SIN::ParserManage::Manage_Expression_ExpressionANDExpression($1, $3, &($$));	}
 				|	expr	OR		expr	{	SIN::ParserManage::Manage_Expression_ExpressionORExpression($1, $3, &($$));		}
-				|	expr	NOT		expr	{	SIN::ParserManage::Manage_Expression_ExpressionNOTExpression($1, $3, &($$));		}
+				|	expr	NOT		expr	{	SIN::ParserManage::Manage_Expression_ExpressionNOTExpression($1, $3, &($$));	}
 				|	metaexpr				{	SIN::ParserManage::Manage_Expression_MetaExpression($1, &($$));					}
-				|	term					{	SIN::ParserManage::Manage_Expression_Term($1, &($$));								}
+				|	term					{	SIN::ParserManage::Manage_Expression_Term($1, &($$));							}
 				;
 				
 				
@@ -234,7 +234,7 @@ term:			'(' expr ')'					{	SIN::ParserManage::Manage_Term_ExpressionParentheses(
 				|	lvalue	INCR				{	SIN::ParserManage::Manage_Term_LValueINCR($1, &($$));				}
 				|	DECR	lvalue				{	SIN::ParserManage::Manage_Term_DECRLValue($2, &($$));				}
 				|	lvalue	DECR				{	SIN::ParserManage::Manage_Term_LValueDECR($1, &($$));				}
-				|	primary						{	SIN::ParserManage::Manage_Term_Primary($1, &($$));				}
+				|	primary						{	SIN::ParserManage::Manage_Term_Primary($1, &($$));					}
 				;
 				
 
@@ -244,7 +244,7 @@ assignexpr:		lvalue ASSIGN expr				{	SIN::ParserManage::Manage_AssignExpression(
 
 
 
-primary:		lvalue							{	SIN::ParserManage::Manage_Primary_LValue($1, &($$));							}
+primary:		lvalue							{	SIN::ParserManage::Manage_Primary_LValue($1, &($$));						}
 				|	call						{	SIN::ParserManage::Manage_Primary_Call($1, &($$));							}
 				|	objectdef					{	SIN::ParserManage::Manage_Primary_ObjectDefinition($1, &($$));				}
 				|	'(' funcdef ')'				{	SIN::ParserManage::Manage_Primary_FunctionDefinitionParentheses($2, &($$));	}
@@ -253,24 +253,24 @@ primary:		lvalue							{	SIN::ParserManage::Manage_Primary_LValue($1, &($$));			
 
 
 
-lvalue:			ID 								{	SIN::ParserManage::Manage_LValue_ID(yytext, &($$));		}
-				|	LOCAL ID					{	SIN::ParserManage::Manage_LValue_LocalID(yytext, &($$));	}
-				|	GLOBAL ID					{	SIN::ParserManage::Manage_LValue_GlobalID(yytext, &($$));	}
-				|	member						{	SIN::ParserManage::Manage_LValue_Member($1, &($$));				}
+lvalue:			ID 								{	SIN::ParserManage::Manage_LValue_ID($1, &($$));			}
+				|	LOCAL ID					{	SIN::ParserManage::Manage_LValue_LocalID(const_cast<char *>($2), &($$));	}
+				|	GLOBAL ID					{	SIN::ParserManage::Manage_LValue_GlobalID($2, &($$));	}
+				|	member						{	SIN::ParserManage::Manage_LValue_Member($1, &($$));		}
 				;
 
 
     
-member:			lvalue '.' ID					{	SIN::ParserManage::Manage_Member_LValueID($1, yytext, &($$));	}
-				|	lvalue	'[' expr ']'		{	SIN::ParserManage::Manage_Member_LValueExpression($1, $3, &($$));		}
-				|	call	'.' ID				{	SIN::ParserManage::Manage_Member_CallID($1, yytext, &($$));	}
+member:			lvalue '.' ID					{	SIN::ParserManage::Manage_Member_LValueID($1, $3, &($$));			}
+				|	lvalue	'[' expr ']'		{	SIN::ParserManage::Manage_Member_LValueExpression($1, $3, &($$));	}
+				|	call	'.' ID				{	SIN::ParserManage::Manage_Member_CallID($1, $3, &($$));				}
 				|	call	'[' expr ']'		{	SIN::ParserManage::Manage_Member_CallExpression($1, $3, &($$));		}
 				;
 
 
 
 	
-call:			call callsuffix						{	SIN::ParserManage::Manage_Call_CallCallSuffix($1, $2, &($$));						}
+call:			call callsuffix						{	SIN::ParserManage::Manage_Call_CallCallSuffix($1, $2, &($$));					}
 				|	lvalue callsuffix				{	SIN::ParserManage::Manage_Call_LValueCallSuffix($1, $2, &($$));					}
 				|	'(' funcdef ')' '(' elist ')'	{	SIN::ParserManage::Manage_Call_FunctionDefinitionExpressionList($2, $5, &($$));	}
 				;
@@ -288,38 +288,38 @@ normalcall:		'(' elist ')'						{	SIN::ParserManage::Manage_NormalCall($2, &($$)
 				
 				
 				
-methodcall:		DOUBLEDOT ID '(' elist ')'			{	SIN::ParserManage::Manage_MethodCall(yytext, $4, &($$));	}	/*equivalent to lvalue.id(lvalue, elist)*/
+methodcall:		DOUBLEDOT ID '(' elist ')'			{	SIN::ParserManage::Manage_MethodCall($2, $4, &($$));	}	/*equivalent to lvalue.id(lvalue, elist)*/
 				;
 
 
 
 elist:			expr elists							{	SIN::ParserManage::Manage_ExpressionList($1, $2, &($$));	}
-				| 									{	SIN::ParserManage::Manage_ExpressionList_Empty(&($$));	}
+				| 									{	SIN::ParserManage::Manage_ExpressionList_Empty(&($$));		}
 				;
 
 
 
 elists:			',' expr elists						{	SIN::ParserManage::Manage_ExpressionList($2, $3, &($$));	}
-				|									{	SIN::ParserManage::Manage_ExpressionList_Empty(&($$));	}
+				|									{	SIN::ParserManage::Manage_ExpressionList_Empty(&($$));		}
 				;
 
 
 
-objectdef:		'[' ']'								{	SIN::ParserManage::Manage_ObjectDefinition_EmptyObject(&($$));	}
+objectdef:		'[' ']'								{	SIN::ParserManage::Manage_ObjectDefinition_EmptyObject(&($$));		}
 				|	'[' objectlist ']'				{	SIN::ParserManage::Manage_ObjectDefinition_ObjectList($2, &($$));	}
 				;
 			
 			
 			
-objectlist:	 	expr objectlists					{	SIN::ParserManage::Manage_ObjectList_ExpressionObjectLists($1, $2, &($$));				}
+objectlist:	 	expr objectlists					{	SIN::ParserManage::Manage_ObjectList_ExpressionObjectLists($1, $2, &($$));					}
 				|	expr ':' expr objectlists		{	SIN::ParserManage::Manage_ObjectList_ExpressionExpressionObjectLists($1, $3, $4, &($$));	}
 				;
 
 
 
-objectlists:	',' expr objectlists				{	SIN::ParserManage::Manage_ObjectList_ExpressionObjectLists($2, $3, &($$));				}
+objectlists:	',' expr objectlists				{	SIN::ParserManage::Manage_ObjectList_ExpressionObjectLists($2, $3, &($$));					}
 				|	',' expr ':' expr objectlists	{	SIN::ParserManage::Manage_ObjectList_ExpressionExpressionObjectLists($2, $4, $5, &($$));	}
-				|									{	SIN::ParserManage::Manage_ObjectList_Empty(&($$));										}
+				|									{	SIN::ParserManage::Manage_ObjectList_Empty(&($$));											}
 				;
 
 
@@ -330,31 +330,31 @@ block:			'{' {} stmtd '}'					{	SIN::ParserManage::Manage_Block($3, &($$));	}
 
 
 stmtd:			stmt stmtd	{	SIN::ParserManage::Manage_Statements($1, $2, &($$));	}
-				|			{	SIN::ParserManage::Manage_Statements_Empty(&($$));	}
+				|			{	SIN::ParserManage::Manage_Statements_Empty(&($$));		}
 				;
 
 
 
-funcdef:		FUNCTION ID	'(' idlist ')' block	{	SIN::ParserManage::Manage_FunctionDefinition_Function(const_cast<char *>($2), $4, $6, &($$));	}
-				|	FUNCTION '(' idlist ')' block	{	SIN::ParserManage::Manage_FunctionDefinition_LamdaFunction($3, $5, &($$));			}
+funcdef:		FUNCTION ID	'(' idlist ')' block	{	SIN::ParserManage::Manage_FunctionDefinition_Function($2, $4, $6, &($$));	}
+				|	FUNCTION '(' idlist ')' block	{	SIN::ParserManage::Manage_FunctionDefinition_LamdaFunction($3, $5, &($$));	}
 				;
 
 
 const:			NUMBER 				{	SIN::ParserManage::Manage_Constant_Number(atof(yytext), &($$));	}
-				|	STRING 			{	SIN::ParserManage::Manage_Constant_String(yytext, &($$));	}
+				|	STRING 			{	SIN::ParserManage::Manage_Constant_String($1, &($$));			}
 				|	NIL 			{	SIN::ParserManage::Manage_Constant_Nil(&($$));					}
 				|	TRUE 			{	SIN::ParserManage::Manage_Constant_True(&($$));					}
-				|	FALSE			{	SIN::ParserManage::Manage_Constant_False(&($$));					}
+				|	FALSE			{	SIN::ParserManage::Manage_Constant_False(&($$));				}
 				;
 
 
-idlist:			ID idlists			{	SIN::ParserManage::Manage_IDList(yytext, $2, &($$));	}
+idlist:			ID idlists			{	SIN::ParserManage::Manage_IDList($1, $2, &($$));	}
 				|	/*empty*/		{	SIN::ParserManage::Manage_IDList_Empty(&($$));		}
 				;
 
 
 
-idlists:		',' ID idlists	    {	SIN::ParserManage::Manage_IDList(yytext, $3, &($$));	}
+idlists:		',' ID idlists	    {	SIN::ParserManage::Manage_IDList($2, $3, &($$));	}
 				|				    {	SIN::ParserManage::Manage_IDList_Empty(&($$));		}
 				;
 
@@ -370,7 +370,7 @@ whilestmt:		WHILE '(' expr ')' stmt						{	SIN::ParserManage::Manage_WhileStatem
 forstmt:		FOR '(' elist ';' expr ';' elist ')' stmt	{	SIN::ParserManage::Manage_ForStatement($3, $5, $7, $9, &($$));	}
 				;
 
-returnstmt:		RETURN ';'			{	SIN::ParserManage::Manage_ReturnStatement_Return(&($$));					}
+returnstmt:		RETURN ';'			{	SIN::ParserManage::Manage_ReturnStatement_Return(&($$));				}
 				|	RETURN expr ';' {	SIN::ParserManage::Manage_ReturnStatement_ReturnExpression($2, &($$));	}
 				;
 

@@ -34,7 +34,7 @@ namespace SIN {
 		//////////////////////////////////////////////////////////
 		// Manage constant
 		static void Manage_Constant_Number		(double _number, ASTNode **_retconst);
-		static void Manage_Constant_String		(char *_string, ASTNode **_retconst);
+		static void Manage_Constant_String		(const char *_string, ASTNode **_retconst);
 		static void Manage_Constant_Nil			(ASTNode **_retconst);
 		static void Manage_Constant_True		(ASTNode **_retconst);
 		static void Manage_Constant_False		(ASTNode **_retconst);
@@ -75,13 +75,13 @@ namespace SIN {
 
 		//////////////////////////////////////////////////////////
 		// Manage function definition
-		static void Manage_FunctionDefinition_Function			(char *_id, ASTNode *_idlist, ASTNode *_block, ASTNode **_retfuncdef);
+		static void Manage_FunctionDefinition_Function			(const char *_id, ASTNode *_idlist, ASTNode *_block, ASTNode **_retfuncdef);
 		static void Manage_FunctionDefinition_LamdaFunction		(ASTNode *_idlist, ASTNode *_block, ASTNode **_retfuncdef);
 
 
 		//////////////////////////////////////////////////////////
 		// Manage id list
-		static void Manage_IDList			(char *_id, ASTNode *_idlists, ASTNode **_retidlist);
+		static void Manage_IDList			(const char *_id, ASTNode *_idlists, ASTNode **_retidlist);
 		static void Manage_IDList_Empty		(ASTNode **_retidlist);
 
 
@@ -93,23 +93,23 @@ namespace SIN {
 
 		//////////////////////////////////////////////////////////
 		// Manage l-value
-		static void Manage_LValue_ID		(char *_ID, ASTNode **_retlvalue);
+		static void Manage_LValue_ID		(const char *_ID, ASTNode **_retlvalue);
 		static void Manage_LValue_LocalID	(char *_localID, ASTNode **_retlvalue);
-		static void Manage_LValue_GlobalID	(char *_globalID, ASTNode **_retlvalue);
+		static void Manage_LValue_GlobalID	(const char *_globalID, ASTNode **_retlvalue);
 		static void Manage_LValue_Member	(ASTNode *_member, ASTNode **_retlvalue);
 
 
 		//////////////////////////////////////////////////////////
 		// Manage member
-		static void Manage_Member_LValueID			(ASTNode *_lvalue, char *_id, ASTNode **_retmember);
+		static void Manage_Member_LValueID			(ASTNode *_lvalue, const char *_id, ASTNode **_retmember);
 		static void Manage_Member_LValueExpression	(ASTNode *_lvalue, ASTNode *_expr, ASTNode **_retmember);
-		static void Manage_Member_CallID			(ASTNode *_call, char *_id, ASTNode **_retmember);
+		static void Manage_Member_CallID			(ASTNode *_call, const char *_id, ASTNode **_retmember);
 		static void Manage_Member_CallExpression	(ASTNode *_call, ASTNode *_expr, ASTNode **_retmember);
 
 
 		//////////////////////////////////////////////////////////
 		// Manage method and normal call
-		static void Manage_MethodCall	(char *_id, ASTNode *_elist, ASTNode **_retmethodcall);
+		static void Manage_MethodCall	(const char *_id, ASTNode *_elist, ASTNode **_retmethodcall);
 		static void Manage_NormalCall	(ASTNode *_elist, ASTNode **_retnormalcall);
 
 

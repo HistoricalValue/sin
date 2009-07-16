@@ -18,8 +18,8 @@ namespace SIN {
 			// or
 			// manager.GetLogger("SIN::Tests::Parser::Manage")
 			//		.SetCriticalSeverity(Logging::Record::SERIOUS);
-			manager.GetLogger("SIN::Tests::Parser::Manage").
-					SetCriticalSeverity(Logging::Record::SERIOUS);
+			// manager.GetLogger("SIN::Tests::Parser::Manage").
+			//		SetCriticalSeverity(Logging::Record::SERIOUS);
 		}
 		else
 			result = false;

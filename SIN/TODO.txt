@@ -11,12 +11,10 @@
 *[007] Add a method DestroyTree() somewhere.
 
 *[008] Add unique ID for each ASTNode
-*[009] AST Const nodes give correct string name
 
 *[016] Make a reserved type for all SIN-types and string_cast them
 
 *[017] Delete IDs and strings in AST parsing (Bison)
-*[018] Fix lvcall in AST making
 
 *[019] Fill up Symbol Table's tester
 
@@ -58,4 +56,8 @@
   [ rudolf| default severity property added (along with much refactoring again)]
 *[005] Implement FileOutputStream-s
   [ rudolf| implemented it]
+*[009] AST Const nodes give correct string name
+  [ ilapost| done]
+*[018] Fix lvcall in AST making
+  [ ilapost| fixed]
 
