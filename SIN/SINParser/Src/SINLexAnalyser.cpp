@@ -928,7 +928,9 @@ YY_RULE_SETUP
 case 50:
 YY_RULE_SETUP
 {
-					yylval.stringV = (new SIN::String(yytext))->c_str();
+                    const size_t yytext_len = strlen(yytext);
+					yylval.stringV = new char[yytext_len];
+                    memcpy(yylval.stringV, yytext, yytext_len);
 					return ID;		
 				}
 	YY_BREAK
@@ -942,7 +944,9 @@ YY_RULE_SETUP
 case 52:
 YY_RULE_SETUP
 { 
-					yylval.stringV = (new SIN::String(yytext))->c_str();
+                    const size_t yytext_len = strlen(yytext);
+					yylval.stringV = new char[yytext_len];
+                    memcpy(yylval.stringV, yytext, yytext_len);
 					return STRING;	
 				}
 	YY_BREAK

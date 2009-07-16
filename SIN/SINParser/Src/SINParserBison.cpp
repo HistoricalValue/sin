@@ -262,7 +262,7 @@ typedef union YYSTYPE
 {
 
 
-    const char *	stringV;
+    char *	stringV;
     double			realV;
     SIN::ASTNode *	AST;
 
@@ -2473,3 +2473,4 @@ int PrepareForString(const char * str) {
 //	//yy_scan_string(const char * str);
 	return 0;
 }
+
