@@ -123,4 +123,17 @@ namespace SIN {
 		if (parent)
 			parent->UpdateWidthOfDescendantsTree();
 	}
+
+
+
+	//-----------------------------------------------------------------------
+	void TreeNode::DeleteTree(TreeNode *_root){
+
+		for(TreeNode *child = (*_root)[0], *nxtChild; child != NULL; child = nxtChild){
+			nxtChild = +(*child);
+			DeleteTree(child);
+		}
+		delete _root;
+	}
+
 } // namespace SIN

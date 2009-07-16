@@ -6,15 +6,9 @@
 
 *[015] Make a BufferedOutputStream.
 
-
-*[006] Delete AST nodes (some day)
-*[007] Add a method DestroyTree() somewhere.
-
 *[008] Add unique ID for each ASTNode
 
 *[016] Make a reserved type for all SIN-types and string_cast them
-
-*[017] Delete IDs and strings in AST parsing (Bison)
 
 *[019] Fill up Symbol Table's tester
 
@@ -60,4 +54,10 @@
   [ ilapost| done]
 *[018] Fix lvcall in AST making
   [ ilapost| fixed]
+*[017] Delete IDs and strings in AST parsing (Bison)
+  [ ilapost| done]
+*[006] Delete AST nodes (some day)
+  [ ilapost| AST is deleted after visualization in SINParserTester.cpp]
+*[007] Add a method DestroyTree() somewhere.
+  [ ilapost| Added in SINTreeNode]
 

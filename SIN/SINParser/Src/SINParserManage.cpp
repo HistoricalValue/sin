@@ -507,10 +507,7 @@ namespace SIN {
 			nxtExpr = static_cast<ASTNode*>(+(*_elist));
 			delete _elist;
 		}
-		if(arguments->NumberOfChildren())
-			**_retmethodcall << arguments;
-		else
-			delete arguments;
+		**_retmethodcall << arguments;
 
 		delete _id;
 	}
@@ -527,10 +524,7 @@ namespace SIN {
 			nxtExpr = static_cast<ASTNode*>(+(*_elist));
 			delete _elist;
 		}
-		if(arguments->NumberOfChildren())
-			**_retnormalcall << arguments;
-		else
-			delete arguments;
+		**_retnormalcall << arguments;
 	}
 
 

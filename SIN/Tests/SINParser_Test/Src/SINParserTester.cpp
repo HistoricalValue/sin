@@ -45,6 +45,7 @@ namespace SIN {
 				ASTMITTreeVisualizerXMLProducerVisitor mitvis(foutxml);
 				root->Accept(&visitor);
 				root->Accept(&mitvis);
+				TreeNode::DeleteTree(root);
 			)
 
 			void test(InstanceProxy<TestFactory> const &tf) { 

@@ -56,6 +56,8 @@ namespace SIN {
 		void SetPrevious(TreeNode *_previous);
 		void SetLeftSibling(TreeNode *_left) { SetPrevious(_left); } // for santa
 
+		/** Deletes the whole subtree under root including root */
+		static void DeleteTree(TreeNode *_root);
 
 	protected:
 		void UpdateWidthOfDescendantsTree(void);
