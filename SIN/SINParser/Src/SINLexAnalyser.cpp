@@ -929,8 +929,9 @@ case 50:
 YY_RULE_SETUP
 {
                     const size_t yytext_len = strlen(yytext);
-					yylval.stringV = new char[yytext_len];
-                    memcpy(yylval.stringV, yytext, yytext_len);
+					yylval.stringV = new char[yytext_len + 1];
+                    strncpy(yylval.stringV, yytext, yytext_len);
+					yylval.stringV[yytext_len] = '\0'; // be safe
 					return ID;		
 				}
 	YY_BREAK
@@ -945,8 +946,9 @@ case 52:
 YY_RULE_SETUP
 { 
                     const size_t yytext_len = strlen(yytext);
-					yylval.stringV = new char[yytext_len];
-                    memcpy(yylval.stringV, yytext, yytext_len);
+					yylval.stringV = new char[yytext_len + 1];
+                    strncpy(yylval.stringV, yytext, yytext_len);
+					yylval.stringV[yytext_len] = '\0'; // be safe
 					return STRING;	
 				}
 	YY_BREAK
