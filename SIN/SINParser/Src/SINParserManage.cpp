@@ -44,8 +44,8 @@ namespace SIN {
 	//-----------------------------------------------------------------
 
 	void ParserManage::Manage_Call_CallCallSuffix (ASTNode *_call, ASTNode *_callsuffix, ASTNode **_retcall) {	
-		*_retcall = new ASTNode("Calls");
-		**_retcall << _call << _callsuffix;
+		*_retcall = _callsuffix;
+		*_call >> *_retcall;
 	}
 
 
@@ -63,11 +63,13 @@ namespace SIN {
 		*_retcall = new ASTNode("funcdef call");
 
 		**_retcall << _funcdef;
+		ASTNode *arguments = new ASTNode("Arguments");
 		for(ASTNode *nxtExpr; _elist != NULL; _elist = nxtExpr){
-			**_retcall << new ASTNode(*_elist);
+			*arguments << new ASTNode(*_elist);
 			nxtExpr = static_cast<ASTNode*>(+(*_elist));
 			delete _elist;
-		}	
+		}
+		**_retcall << arguments;
 	}
 	
 	
