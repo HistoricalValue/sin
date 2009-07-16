@@ -101,12 +101,14 @@ namespace SIN {
 
 	//-----------------------------------------------------------------
 	
-	void ParserManage::Manage_Constant_String (const char *_string, ASTNode **_retconst) {
+	void ParserManage::Manage_Constant_String (char *_string, ASTNode **_retconst) {
 		SIN::Logger &logger = SIN::LoggerManager::SingletonGetInstance()->GetLogger("SIN::Tests::Parser::Manage");
 		logger.Notice(SIN::String("Entered const : string Rule. String ") + SIN::String(_string));
 
-		*_retconst = new StringASTNode(_string);	
+		*_retconst = new StringASTNode(_string);
 		logger.Notice((*_retconst)->Name());
+
+		delete _string;
 	}
 
 
@@ -337,7 +339,7 @@ namespace SIN {
 
 	//-----------------------------------------------------------------
 	
-	void ParserManage::Manage_FunctionDefinition_Function (const char *_id, ASTNode *_idlist, ASTNode *_block, ASTNode **_retfuncdef) {
+	void ParserManage::Manage_FunctionDefinition_Function (char *_id, ASTNode *_idlist, ASTNode *_block, ASTNode **_retfuncdef) {
 		*_retfuncdef = new ASTNode("Function");
 		StringASTNode *id = new StringASTNode(_id);
 
@@ -347,7 +349,9 @@ namespace SIN {
 			nxtID = static_cast<ASTNode*>(+(*_idlist));
 			delete _idlist;
 		}
-		**_retfuncdef << _block;	
+		**_retfuncdef << _block;
+
+		delete _id;
 	}
 
 	
@@ -370,11 +374,13 @@ namespace SIN {
 
 	//-----------------------------------------------------------------
 	
-	void ParserManage::Manage_IDList (const char *_id, ASTNode *_idlists, ASTNode **_retidlist) {
+	void ParserManage::Manage_IDList (char *_id, ASTNode *_idlists, ASTNode **_retidlist) {
 		*_retidlist = new StringASTNode(_id);
 
 		if(_idlists != NULL)
-			(*_retidlist)->SetRightSibling(_idlists);	
+			(*_retidlist)->SetRightSibling(_idlists);
+
+		delete _id;
 	}
 
 	
@@ -408,26 +414,32 @@ namespace SIN {
 
 	//-----------------------------------------------------------------
 	
-	void ParserManage::Manage_LValue_ID (const char *_id, ASTNode **_retlvalue) {
+	void ParserManage::Manage_LValue_ID (char *_id, ASTNode **_retlvalue) {
 		SIN::Logger &logger = SIN::LoggerManager::SingletonGetInstance()->GetLogger("SIN::Tests::Parser::Manage");
 		logger.Notice(SIN::String("Entered lvalue : id Rule. ID = ") + SIN::String(_id));
 
-		*_retlvalue = new ASTNode(_id);	
+		*_retlvalue = new ASTNode(_id);
+
+		delete _id;
 	}
 
 	
 	//-----------------------------------------------------------------
 
 	void ParserManage::Manage_LValue_LocalID (char *_localID, ASTNode **_retlvalue){
-		*_retlvalue = new ASTNode(_localID);
-//		delete(_localID);
+		*_retlvalue = new ASTNode(string_cast("local ")+string_cast(_localID));
+
+		delete _localID;
 	}
 	
 	
 	//-----------------------------------------------------------------
 
-	void ParserManage::Manage_LValue_GlobalID	(const char *_globalID, ASTNode **_retlvalue)
-		{ *_retlvalue = new ASTNode(_globalID); }
+	void ParserManage::Manage_LValue_GlobalID (char *_globalID, ASTNode **_retlvalue){
+		*_retlvalue = new ASTNode(string_cast("global ")+string_cast(_globalID));
+
+		delete _globalID;
+	}
 	
 	
 	//-----------------------------------------------------------------
@@ -441,11 +453,13 @@ namespace SIN {
 	
 	//-----------------------------------------------------------------
 
-	void ParserManage::Manage_Member_LValueID (ASTNode *_lvalue, const char *_id, ASTNode **_retmember) {
+	void ParserManage::Manage_Member_LValueID (ASTNode *_lvalue, char *_id, ASTNode **_retmember) {
 		*_retmember = new ASTNode("lv.id");
 		StringASTNode *id = new StringASTNode(_id);
 
-		**_retmember << _lvalue << id;	
+		**_retmember << _lvalue << id;
+
+		delete _id;
 	}
 
 	
@@ -459,10 +473,12 @@ namespace SIN {
 	
 	//-----------------------------------------------------------------
 
-	void ParserManage::Manage_Member_CallID (ASTNode *_call, const char *_id, ASTNode **_retmember) {
+	void ParserManage::Manage_Member_CallID (ASTNode *_call, char *_id, ASTNode **_retmember) {
 		*_retmember = new ASTNode("call.id");
 		StringASTNode *id = new StringASTNode(_id);
-		**_retmember << _call << id;	
+		**_retmember << _call << id;
+
+		delete _id;
 	}
 
 	
@@ -479,7 +495,7 @@ namespace SIN {
 	
 	//-----------------------------------------------------------------
 
-	void ParserManage::Manage_MethodCall (const char *_id, ASTNode *_elist, ASTNode **_retmethodcall) {
+	void ParserManage::Manage_MethodCall (char *_id, ASTNode *_elist, ASTNode **_retmethodcall) {
 		*_retmethodcall = new ASTNode("Method call");
 		StringASTNode *id = new StringASTNode(_id);
 
@@ -495,6 +511,8 @@ namespace SIN {
 			**_retmethodcall << arguments;
 		else
 			delete arguments;
+
+		delete _id;
 	}
 
 	

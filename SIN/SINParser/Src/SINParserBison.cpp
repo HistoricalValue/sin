@@ -2010,7 +2010,7 @@ yyreduce:
 
   case 53:
 
-    {	SIN::ParserManage::Manage_LValue_LocalID(const_cast<char *>((yyvsp[(2) - (2)].stringV)), &((yyval.AST)));	}
+    {	SIN::ParserManage::Manage_LValue_LocalID((yyvsp[(2) - (2)].stringV), &((yyval.AST)));	}
     break;
 
   case 54:

@@ -254,7 +254,7 @@ primary:		lvalue							{	SIN::ParserManage::Manage_Primary_LValue($1, &($$));			
 
 
 lvalue:			ID 								{	SIN::ParserManage::Manage_LValue_ID($1, &($$));			}
-				|	LOCAL ID					{	SIN::ParserManage::Manage_LValue_LocalID(const_cast<char *>($2), &($$));	}
+				|	LOCAL ID					{	SIN::ParserManage::Manage_LValue_LocalID($2, &($$));	}
 				|	GLOBAL ID					{	SIN::ParserManage::Manage_LValue_GlobalID($2, &($$));	}
 				|	member						{	SIN::ParserManage::Manage_LValue_Member($1, &($$));		}
 				;
