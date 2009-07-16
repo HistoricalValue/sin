@@ -5,60 +5,62 @@
 
 namespace SIN {
 
-    /** A minimal tree-like container, which keeps references to all relatives,
-      * keeps sorted children and is visitable.
-      */
+		/** A minimal tree-like container, which keeps references to all relatives,
+		  * keeps sorted children and is visitable.
+		  */
 	class TreeNode {
 	public:
 		TreeNode(void);
 		virtual ~TreeNode();
 
 
-        /** get number of children */
-        size_t NumberOfChildren(void) const;
+		/** get number of children */
+		size_t NumberOfChildren(void) const;
 		/** get child at index _index_ or 0x00 if there is no child for that
-          * index */
-        TreeNode *operator[](size_t _index) const;
+		  * index */
+		TreeNode *operator[](size_t _index) const;
 		/** returns tha width of this node's tree of descendats.
 		  * (In other words, the number of columns required to represent
 		  *  the tree which has this node as root, in a tree-like
 		  *  representation). */
 		size_t WidthOfDescendantsTree(void) const;
-        
-		
-		/** append a child (returns self) */
-        TreeNode &operator<<(TreeNode *_child);
 
-        
+		
+		/** append a child (returns self). Returns this. */
+		TreeNode &operator<<(TreeNode *_child);
+		/** prepends this node as a child to the given parent. Returns the parent. */
+                TreeNode &operator>>(TreeNode *_parent);
+
+
 		/** get parent or 0x00 if this tree has no parent */
-        TreeNode *GetParent(void) const;
-        TreeNode *operator *(void) const { return GetParent(); }
-        /** set this node's parent */
+		TreeNode *GetParent(void) const;
+		TreeNode *operator *(void) const { return GetParent(); }
+		/** set this node's parent */
 		void SetParent(TreeNode * _parent);
-        
+
 		
 		/** get this node's next (right) sibling or 0x00 if there isn't any */
-        TreeNode *GetNext(void) const;
-        TreeNode *operator +(void) const { return GetNext(); }
-        TreeNode *GetRightSibling(void) const { return GetNext(); } // for santa
-        /** set this node's next (right) sibling */
+		TreeNode *GetNext(void) const;
+		TreeNode *operator +(void) const { return GetNext(); }
+		TreeNode *GetRightSibling(void) const { return GetNext(); } // for santa
+		/** set this node's next (right) sibling */
 		void SetNext(TreeNode *_next);
-        void SetRightSibling(TreeNode *_right) { SetNext(_right); } // for santa
-        
+		void SetRightSibling(TreeNode *_right) { SetNext(_right); } // for santa
+
 		
 		/** get this node's previous (left) sibling or 0x00 if there isn't any */
-        TreeNode *GetPrevious(void) const;
-        TreeNode *operator -(void) const { return GetPrevious(); }
-        TreeNode *GetLeftSibling(void) const { return GetPrevious(); } // for santa
-        /** sets this node's previous (left) sibling */
+		TreeNode *GetPrevious(void) const;
+		TreeNode *operator -(void) const { return GetPrevious(); }
+		TreeNode *GetLeftSibling(void) const { return GetPrevious(); } // for santa
+		/** sets this node's previous (left) sibling */
 		void SetPrevious(TreeNode *_previous);
-        void SetLeftSibling(TreeNode *_left) { SetPrevious(_left); } // for santa
+		void SetLeftSibling(TreeNode *_left) { SetPrevious(_left); } // for santa
 
 
 	protected:
 		void UpdateWidthOfDescendantsTree(void);
 
-    private:
+		private:
 		TreeNode *parent, *previous, *next;
 		std::vector<TreeNode *>	children;
 		typedef std::vector<TreeNode *> children_type;
