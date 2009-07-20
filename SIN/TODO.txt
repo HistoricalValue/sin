@@ -2,7 +2,6 @@
 * check dynamic_castss
 
 ==== Do once ====
-*[004] Make ASTNode subclasses give an appropriate name to their ASTNode ancestor
 
 *[015] Make a BufferedOutputStream.
 
@@ -60,4 +59,5 @@
   [ ilapost| AST is deleted after visualization in SINParserTester.cpp]
 *[007] Add a method DestroyTree() somewhere.
   [ ilapost| Added in SINTreeNode]
-
+*[004] Make ASTNode subclasses give an appropriate name to their ASTNode ancestor
+  [ ilapost| done]
