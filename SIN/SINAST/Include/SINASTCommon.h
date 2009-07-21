@@ -30,7 +30,8 @@ namespace SIN {
 		OP_EQ,
 		OP_NE,
 		OP_OR,
-		OP_END
+		OP_AND,
+                OP_NOT
 	};
 
 	enum ExprValueType {

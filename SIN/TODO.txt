@@ -3,15 +3,12 @@
 
 ==== Do once ====
 
-*[015] Make a BufferedOutputStream.
-
-*[008] Add unique ID for each ASTNode
-
 *[016] Make a reserved type for all SIN-types and string_cast them
 
 *[019] Fill up Symbol Table's tester
 
-*[020] Fix ASTNodes (the whole template inheritance style is bad)
+*[023] Implement an internal data type for SIN Object
+*[024] Implement an internal data type for SIN Object
 
 ---logging---
 *[010] LoggerFactory base should internally keep a list of produced loggers
@@ -24,19 +21,23 @@
   - ASTNode *& root   <--- return result in there
 *[013] Investigate the parser's auto-destruction callbacks on error and stuff
 *[014] Add error querying method in parser
+*[021] Implement DeleteAST()
+*[022] Add get for line of error
 
 
 
 
-
-==== QYESTIONS =====
+==== QUESTIONS =====
 * What about native object pointers? Why are they needed for the AST?
 
 ==== LOW PRIORITY ====
 * SIN Functors
 * "compile time" Warnings
+* string_cast -> to_string
 
 
+===== IGNORED =====
+*[020] Fix ASTNodes (the whole template inheritance style is bad)
 
 
 
@@ -61,3 +62,7 @@
   [ ilapost| Added in SINTreeNode]
 *[004] Make ASTNode subclasses give an appropriate name to their ASTNode ancestor
   [ ilapost| done]
+*[015] Make a BufferedOutputStream.
+  [ rudolf| added it]
+*[008] Add unique ID for each ASTNode
+  [ rudolf| Added ASTNodeFactory and using ID() or something]
