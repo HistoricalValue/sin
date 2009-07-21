@@ -22,6 +22,7 @@ namespace SIN {
         NAME##ASTNode(void);                                \
         ~NAME##ASTNode(void);                               \
         void Accept(ASTVisitor *);                          \
+		NAME##ASTNode *Clone(void) const;					\
     }
 
 
@@ -68,6 +69,8 @@ namespace SIN {
 
 		virtual void Accept(ASTVisitor *) const;
 		virtual void Accept(ASTTreeVisualisationVisitor *) const;
+
+		virtual ASTNode *Clone(void) const;
     private:
         String const name;
 		ID_t id;
@@ -108,6 +111,7 @@ namespace SIN {
         ConstASTNode(Value const &_value): ASTNode(string_cast(_value)), ValueHolder<_ValueT>(_value) { }
 		ConstASTNode(String const &_name, Value const &_value): ASTNode(_name), ValueHolder<_ValueT>(_value) { }
         virtual void Accept(ASTVisitor *) = 0;
+		virtual ConstASTNode *Clone(void) const = 0;
 	};
 
 
@@ -118,6 +122,7 @@ namespace SIN {
     public:
         NumberASTNode(Number_t const &_value = 0);
         virtual void Accept(ASTVisitor *);
+		virtual NumberASTNode *Clone(void) const;
     }; // class NumberASTNode
 
 
@@ -128,6 +133,7 @@ namespace SIN {
     public:
         StringASTNode(String_t const &_value = "");
         virtual void Accept(ASTVisitor *);
+		virtual StringASTNode *Clone(void) const;
     }; // class StringASTNode
 
 
@@ -138,6 +144,7 @@ namespace SIN {
     public:
         NilASTNode(void);
         virtual void Accept(ASTVisitor *);
+		virtual NilASTNode *Clone(void) const;
     }; // class NilASTNode
 
 
@@ -148,6 +155,7 @@ namespace SIN {
     public:
         TrueASTNode(void);
         virtual void Accept(ASTVisitor *);
+		virtual TrueASTNode *Clone(void) const;
     }; // class TrueASTNode
 
 
@@ -158,6 +166,7 @@ namespace SIN {
     public:
         FalseASTNode(void);
         virtual void Accept(ASTVisitor *);
+		virtual FalseASTNode *Clone(void) const;
     }; // class FalseASTNode
 
 
@@ -170,6 +179,7 @@ namespace SIN {
         OpASTNode(String const &_name): ASTNode(_name) { }
         virtual ~OpASTNode(void) { }
         virtual void Accept(ASTVisitor *) = 0;
+		virtual OpASTNode *Clone(void) const = 0;
     };
     SINASTNODE_OPNODE_DECL(Add,ADD);
     SINASTNODE_OPNODE_DECL(Sub,SUB);
@@ -183,8 +193,8 @@ namespace SIN {
     SINASTNODE_OPNODE_DECL(Eq ,EQ );
     SINASTNODE_OPNODE_DECL(Ne ,NE );
     SINASTNODE_OPNODE_DECL(Or ,OR );
-    SINASTNODE_OPNODE_DECL(And,END);
-
+    SINASTNODE_OPNODE_DECL(And,AND);
+    SINASTNODE_OPNODE_DECL(Not,NOT);
 
 
 } // namespace SIN

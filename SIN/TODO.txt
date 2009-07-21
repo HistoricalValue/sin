@@ -29,6 +29,9 @@
 
 ==== QUESTIONS =====
 * What about native object pointers? Why are they needed for the AST?
+* What is the purpose of .~?
+* What about extensible library functions? How can we add library functions?
+
 
 ==== LOW PRIORITY ====
 * SIN Functors

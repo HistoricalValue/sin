@@ -3,16 +3,7 @@
 
 #include "SINLogger.h"
 #include "SINLoggerManager.h"
-#include "SINAssignASTNode.h"
-#include "SINIDASTNode.h"
-#include "SINBlockASTNode.h"
-#include "SINFunctionASTNode.h"
-#include "SINCallASTNode.h"
-#include "SINArgumentsASTNode.h"
-#include "SINIfASTNode.h"
-#include "SINLoopASTNode.h"
-#include "SINUnaryASTNode.h"
-
+#include "SINASTNodes.h"
 
 namespace SIN {
 
@@ -39,7 +30,7 @@ namespace SIN {
 		*_retblock = new BlockASTNode("Block");
 
 		for(ASTNode *nxtStmt; _stmtd != NULL; _stmtd = nxtStmt){
-			**_retblock << new ASTNode(*_stmtd);
+			**_retblock << _stmtd->Clone();
 			nxtStmt = static_cast<ASTNode*>(+(*_stmtd));
 			delete _stmtd;
 		}	
@@ -73,7 +64,7 @@ namespace SIN {
 		**_retcall << _funcdef;
 		ASTNode *arguments = new ArgumentsASTNode("Arguments");
 		for(ASTNode *nxtExpr; _elist != NULL; _elist = nxtExpr){
-			*arguments << new ASTNode(*_elist);
+			*arguments << _elist->Clone();
 			nxtExpr = static_cast<ASTNode*>(+(*_elist));
 			delete _elist;
 		}
@@ -272,7 +263,7 @@ namespace SIN {
 
 	void ParserManage::Manage_Expression_ExpressionNOTExpression (ASTNode *_expr1, ASTNode *_expr2, ASTNode **_retexpr){
 
-		*_retexpr = new ASTNode("not");
+		*_retexpr = new NotASTNode();
 
 		**_retexpr << _expr1 << _expr2;
 	}
@@ -322,13 +313,13 @@ namespace SIN {
 		*_retforstmt = new ForASTNode("for");
 
 		for(ASTNode *nxtExpr; _elist1 != NULL; _elist1 = nxtExpr){
-			**_retforstmt << new ASTNode(*_elist1);
+			**_retforstmt << _elist1->Clone();
 			nxtExpr = static_cast<ASTNode*>(+(*_elist1));
 			delete _elist1;
 		}
 		**_retforstmt << _expr;
 		for(ASTNode *nxtExpr; _elist2 != NULL; _elist2 = nxtExpr){
-			**_retforstmt << new ASTNode(*_elist2);
+			**_retforstmt << _elist2->Clone();
 			nxtExpr = static_cast<ASTNode*>(+(*_elist2));
 			delete _elist2;
 		}
@@ -355,7 +346,7 @@ namespace SIN {
 
 		**_retfuncdef << id;	// To remove(No need to keep function names after we use unique IDs)
 		for(ASTNode *nxtID; _idlist != NULL; _idlist = nxtID){
-			**_retfuncdef << new ASTNode(*_idlist);
+			**_retfuncdef << _idlist->Clone();
 			nxtID = static_cast<ASTNode*>(+(*_idlist));
 			delete _idlist;
 		}
@@ -371,7 +362,7 @@ namespace SIN {
 		*_retfuncdef = new LamdaFunctionASTNode("Lamda Function");
 
 		for(ASTNode *nxtID; _idlist != NULL; _idlist = nxtID){
-			**_retfuncdef << new ASTNode(*_idlist);
+			**_retfuncdef << _idlist->Clone();
 			nxtID = static_cast<ASTNode*>(+(*_idlist));
 			delete _idlist;
 		}
@@ -464,7 +455,7 @@ namespace SIN {
 	//-----------------------------------------------------------------
 
 	void ParserManage::Manage_Member_LValueID (ASTNode *_lvalue, char *_id, ASTNode **_retmember) {
-		*_retmember = new ASTNode("lv.id");
+		*_retmember = new ObjectMemberASTNode("lv.id");
 		StringASTNode *id = new StringASTNode(_id);
 
 		**_retmember << _lvalue << id;
@@ -476,7 +467,7 @@ namespace SIN {
 	//-----------------------------------------------------------------
 
 	void ParserManage::Manage_Member_LValueExpression (ASTNode *_lvalue, ASTNode *_expr, ASTNode **_retmember) {
-		*_retmember = new ASTNode("lv[expr]");
+		*_retmember = new ObjectIndexASTNode("lv[expr]");
 		**_retmember << _lvalue << _expr;	
 	}
 
@@ -484,7 +475,7 @@ namespace SIN {
 	//-----------------------------------------------------------------
 
 	void ParserManage::Manage_Member_CallID (ASTNode *_call, char *_id, ASTNode **_retmember) {
-		*_retmember = new ASTNode("call.id");
+		*_retmember = new CallMemberASTNode("call.id");
 		StringASTNode *id = new StringASTNode(_id);
 		**_retmember << _call << id;
 
@@ -495,7 +486,7 @@ namespace SIN {
 	//-----------------------------------------------------------------
 
 	void ParserManage::Manage_Member_CallExpression (ASTNode *_call, ASTNode *_expr, ASTNode **_retmember) {
-		*_retmember = new ASTNode("call[expr]");
+		*_retmember = new CallIndexASTNode("call[expr]");
 		**_retmember << _call << _expr;	
 	}
 
@@ -513,7 +504,7 @@ namespace SIN {
 
 		ASTNode *arguments = new ArgumentsASTNode("Arguments");
 		for(ASTNode *nxtExpr; _elist != NULL; _elist = nxtExpr){
-			*arguments << new ASTNode(*_elist);
+			*arguments << _elist->Clone();
 			nxtExpr = static_cast<ASTNode*>(+(*_elist));
 			delete _elist;
 		}
@@ -530,7 +521,7 @@ namespace SIN {
 
 		ASTNode *arguments = new ArgumentsASTNode("Arguments");
 		for(ASTNode *nxtExpr; _elist != NULL; _elist = nxtExpr){
-			*arguments << new ASTNode(*_elist);
+			*arguments << _elist->Clone();
 			nxtExpr = static_cast<ASTNode*>(+(*_elist));
 			delete _elist;
 		}
@@ -544,7 +535,7 @@ namespace SIN {
 	//-----------------------------------------------------------------
 
 	void ParserManage::Manage_ObjectDefinition_EmptyObject (ASTNode **_retobjectdef) 
-		{ *_retobjectdef = new ASTNode("Empty object"); }
+		{ *_retobjectdef = new EmptyObjectASTNode("Empty object"); }
 	
 	
 	//-----------------------------------------------------------------
@@ -553,10 +544,10 @@ namespace SIN {
 		SIN::Logger &logger = SIN::LoggerManager::SingletonGetInstance()->GetLogger("SIN::Tests::Parser::Manage");
 		logger.Notice("Entered objectdef : [ objectlist ] Rule");
 
-		*_retobjectdef = new ASTNode("Object");
+		*_retobjectdef = new ObjectASTNode("Object");
 
 		for(ASTNode *nxtObject; _objectlist != NULL; _objectlist = nxtObject){
-			**_retobjectdef << new ASTNode(*_objectlist);
+			**_retobjectdef << _objectlist->Clone();
 			nxtObject = static_cast<ASTNode*>(+(*_objectlist));
 			delete _objectlist;
 		}	
@@ -569,7 +560,7 @@ namespace SIN {
 	//-----------------------------------------------------------------
 
 	void ParserManage::Manage_ObjectList_ExpressionObjectLists (ASTNode *_expr, ASTNode *_objectlists, ASTNode **_retobjectlists) {
-		*_retobjectlists = new ASTNode("Unindexed Object");
+		*_retobjectlists = new UnindexedMemberASTNode("Unindexed Object");
 
 		**_retobjectlists << _expr;
 		if(_objectlists != NULL)
@@ -581,7 +572,7 @@ namespace SIN {
 	//-----------------------------------------------------------------
 
 	void ParserManage::Manage_ObjectList_ExpressionExpressionObjectLists (ASTNode *_expr1, ASTNode *_expr2, ASTNode *_objectlists, ASTNode **_retobjectlists) {
-		*_retobjectlists = new ASTNode("Indexed Object");
+		*_retobjectlists = new IndexedMemberASTNode("Indexed Object");
 
 		**_retobjectlists << _expr1 << _expr2;
 		if(_objectlists != NULL)
@@ -640,13 +631,13 @@ namespace SIN {
 	//-----------------------------------------------------------------
 
 	void ParserManage::Manage_ReturnStatement_Return (ASTNode **_retreturnstmt)
-		{ *_retreturnstmt = new ASTNode("return"); }
+		{ *_retreturnstmt = new ReturnASTNode("return"); }
 	
 	
 	//-----------------------------------------------------------------
 
 	void ParserManage::Manage_ReturnStatement_ReturnExpression (ASTNode *_expr, ASTNode **_retreturnstmt) {
-		*_retreturnstmt = new ASTNode("return expr");
+		*_retreturnstmt = new ReturnASTNode("return expr");
 		**_retreturnstmt << _expr;	
 	}
 
@@ -660,7 +651,7 @@ namespace SIN {
 		*_retsincode = new ASTNode("AST");
 
 		for(ASTNode *nxtStmt; _stmts != NULL; _stmts = nxtStmt){
-			**_retsincode << new ASTNode(*_stmts);
+			**_retsincode << _stmts->Clone();
 			nxtStmt = static_cast<ASTNode*>(+(*_stmts));
 			delete _stmts;
 		}	
@@ -706,13 +697,13 @@ namespace SIN {
 		SIN::Logger &logger = SIN::LoggerManager::SingletonGetInstance()->GetLogger("SIN::Tests::Parser::Manage");
 		logger.Notice("Entered stmt : break Rule");
 
-		*_retstmt = new ASTNode("Break");	
+		*_retstmt = new BreakASTNode("Break");	
 	}
 
 	//-----------------------------------------------------------------
 
 	void ParserManage::Manage_Statement_Continue (ASTNode **_retstmt)
-		{ *_retstmt = new ASTNode("Continue"); }
+		{ *_retstmt = new ContinueASTNode("Continue"); }
 	
 	
 	//-----------------------------------------------------------------
@@ -730,7 +721,7 @@ namespace SIN {
 	//-----------------------------------------------------------------
 
 	void ParserManage::Manage_Statement_Semicolon (ASTNode **_retstmt)
-		{ *_retstmt = new ASTNode(";"); }
+		{ *_retstmt = new SemicolonASTNode(";"); }
 
 
 	//////////////////////////////////////////////////////////

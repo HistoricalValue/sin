@@ -14,7 +14,10 @@
     void NAME##ASTNode::Accept(ASTVisitor *_visitor_p) {                                    \
 		assert(_visitor_p);																	\
         _visitor_p->Visit(*this);															\
-    }																						
+    }																						\
+    NAME##ASTNode *NAME##ASTNode::Clone(void) const {	                                    \
+		return new NAME##ASTNode(*this);													\
+	}																						
 
 
 //-------------------------------------------------------------------------------------------------	
@@ -25,7 +28,10 @@
     void NAME##ASTNode::Accept(ASTVisitor *_visitor_p) {                                    \
 		assert (_visitor_p);																\
         _visitor_p->Visit(*this);															\
-    }																						
+    }																						\
+    NAME##ASTNode *NAME##ASTNode::Clone(void) const {	                                    \
+		return new NAME##ASTNode(*this);													\
+	}																						
 
 
 
@@ -41,7 +47,10 @@
     void OPNAME##ASTNode::Accept(ASTVisitor *_visitor_p) {      \
 		assert (_visitor_p);									\
         _visitor_p->Visit(*this);								\
-    }
+    }															\
+    OPNAME##ASTNode *OPNAME##ASTNode::Clone(void) const {	    \
+		return new OPNAME##ASTNode(*this);						\
+	}																						
 
 
 
@@ -102,6 +111,13 @@ namespace SIN {
 			child->Accept(_v);
 		}
 		_v->DecreaseIndentationLevel();
+	}
+	
+
+	//---------------------------------------------------
+
+	ASTNode *ASTNode::Clone(void) const {
+		return new ASTNode(*this);
 	}
 	
 

@@ -160,6 +160,14 @@
 				>
 			</File>
 			<File
+				RelativePath="..\..\Src\SINASTNode.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\Src\SINASTNodes.cpp"
+				>
+			</File>
+			<File
 				RelativePath="..\..\Src\SINASTTreeVisualisationVisitor.cpp"
 				>
 			</File>
@@ -167,50 +175,6 @@
 				RelativePath="..\..\Src\SINTreeNode.cpp"
 				>
 			</File>
-			<Filter
-				Name="SINASTNode"
-				>
-				<File
-					RelativePath="..\..\Src\SINArgumentsASTNode.cpp"
-					>
-				</File>
-				<File
-					RelativePath="..\..\Src\SINAssignASTNode.cpp"
-					>
-				</File>
-				<File
-					RelativePath="..\..\Src\SINASTNode.cpp"
-					>
-				</File>
-				<File
-					RelativePath="..\..\Src\SINBlockASTNode.cpp"
-					>
-				</File>
-				<File
-					RelativePath="..\..\Src\SINCallASTNode.cpp"
-					>
-				</File>
-				<File
-					RelativePath="..\..\Src\SINFunctionASTNode.cpp"
-					>
-				</File>
-				<File
-					RelativePath="..\..\Src\SINIDASTNode.cpp"
-					>
-				</File>
-				<File
-					RelativePath="..\..\Src\SINIfASTNode.cpp"
-					>
-				</File>
-				<File
-					RelativePath="..\..\Src\SINLoopASTNode.cpp"
-					>
-				</File>
-				<File
-					RelativePath="..\..\Src\SINUnaryASTNode.cpp"
-					>
-				</File>
-			</Filter>
 		</Filter>
 		<Filter
 			Name="Header Files"
@@ -226,6 +190,14 @@
 				>
 			</File>
 			<File
+				RelativePath="..\..\Include\SINASTNode.h"
+				>
+			</File>
+			<File
+				RelativePath="..\..\Include\SINASTNodes.h"
+				>
+			</File>
+			<File
 				RelativePath="..\..\Include\SINASTTreeVisualisationVisitor.h"
 				>
 			</File>
@@ -237,50 +209,6 @@
 				RelativePath="..\..\Include\SINTreeNode.h"
 				>
 			</File>
-			<Filter
-				Name="SINASTNode"
-				>
-				<File
-					RelativePath="..\..\Include\SINArgumentsASTNode.h"
-					>
-				</File>
-				<File
-					RelativePath="..\..\Include\SINAssignASTNode.h"
-					>
-				</File>
-				<File
-					RelativePath="..\..\Include\SINASTNode.h"
-					>
-				</File>
-				<File
-					RelativePath="..\..\Include\SINBlockASTNode.h"
-					>
-				</File>
-				<File
-					RelativePath="..\..\Include\SINCallASTNode.h"
-					>
-				</File>
-				<File
-					RelativePath="..\..\Include\SINFunctionASTNode.h"
-					>
-				</File>
-				<File
-					RelativePath="..\..\Include\SINIDASTNode.h"
-					>
-				</File>
-				<File
-					RelativePath="..\..\Include\SINIfASTNode.h"
-					>
-				</File>
-				<File
-					RelativePath="..\..\Include\SINLoopASTNode.h"
-					>
-				</File>
-				<File
-					RelativePath="..\..\Include\SINUnaryASTNode.h"
-					>
-				</File>
-			</Filter>
 		</Filter>
 		<Filter
 			Name="Resource Files"
