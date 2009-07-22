@@ -8,6 +8,15 @@
 #include "SINMemoryCell.h"
 
 
+#include "SINMemoryCellAST.h"
+#include "SINMemoryCellBool.h"
+#include "SINMemoryCellFunction.h"
+#include "SINMemoryCellNil.h"
+#include "SINMemoryCellNumber.h"
+#include "SINMemoryCellObject.h"
+#include "SINMemoryCellString.h"
+
+
 namespace SIN {
 	class SymbolTable {
 	public:	

@@ -173,6 +173,34 @@
 				>
 			</File>
 			<File
+				RelativePath="..\..\Include\SINMemoryCellAST.h"
+				>
+			</File>
+			<File
+				RelativePath="..\..\Include\SINMemoryCellBool.h"
+				>
+			</File>
+			<File
+				RelativePath="..\..\Include\SINMemoryCellFunction.h"
+				>
+			</File>
+			<File
+				RelativePath="..\..\Include\SINMemoryCellNil.h"
+				>
+			</File>
+			<File
+				RelativePath="..\..\Include\SINMemoryCellNumber.h"
+				>
+			</File>
+			<File
+				RelativePath="..\..\Include\SINMemoryCellObject.h"
+				>
+			</File>
+			<File
+				RelativePath="..\..\Include\SINMemoryCellString.h"
+				>
+			</File>
+			<File
 				RelativePath="..\..\Include\SINSymbolTable.h"
 				>
 			</File>

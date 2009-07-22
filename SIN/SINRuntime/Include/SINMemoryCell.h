@@ -2,22 +2,31 @@
 #define __SIN_MEMORY_CELL_H__
 
 
+#include "SINASTNode.h"
+
 namespace SIN {
+
+	//-----------------------------------------------------------------------
+
 	class MemoryCell {
+	
 	public:
+		
 		enum MemoryCellType {
-			string,
-			number,
-			nil,
-			AST,
-			sin_object,
-			function
+			NIL_MCT		= 0,
+			BOOL_MCT,
+			STRING_MCT,
+			NUMBER_MCT,
+			AST_MCT,
+			OBJECT_MCT,
+			FUNCTION_MCT
 		};
 
-		virtual enum MemoryCellType GetType(void) = 0;
+
+		virtual MemoryCellType Type (void) = 0;
 
 		MemoryCell(void);
-		~MemoryCell();
+		virtual ~MemoryCell();
 	};
 
 }	//namespace sin
