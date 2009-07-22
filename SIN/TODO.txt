@@ -23,6 +23,7 @@
 *[014] Add error querying method in parser
 *[021] Implement DeleteAST()
 *[022] Add get for line of error
+*[023] Fix lex-util
 
 
 
