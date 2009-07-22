@@ -4,6 +4,7 @@
 
 #include <list>
 
+#include <utility>
 #include "SINLogger.h"
 #include "SINString.h"
 #include "SINASTNode.h"
@@ -13,17 +14,26 @@ namespace SIN {
 		
 	class BisonParseArguments {
 	public:
-		typedef std::list<String> Errors;
-		
+		typedef std::list<ASTNode *>		NodesList;
+		typedef std::pair<String, unsigned>	ErrorInfo;
+		typedef std::list<ErrorInfo>		Errors;
+
 		BisonParseArguments(void);
 		~BisonParseArguments();
 
-		bool	HasError () const;
-		void	SetError (const String &);
-		void	WriteFine (const String &);
 
-		
+		bool	HasError () const;
 		void	SetRoot (ASTNode *);
+		void	SetError (const ErrorInfo &);
+		void	WriteFine (const String &);
+		void	AppendToNodeList (ASTNode *);
+		
+
+		void	CleanNodes (void);
+		void	CleanErrors (void);
+		void	CleanErrosAndNodes (void);
+		
+		
 
 
 		ASTNode *		GetRoot (void) const;
@@ -34,7 +44,8 @@ namespace SIN {
 		bool		hasError;
 		Errors		errors;
 		ASTNode *	root;
-
+		NodesList	nodesList;
+		
 		InstanceProxy<Logger> logger_p;
 
 	};

@@ -6,6 +6,7 @@
 
 %{
 	#include <stdio.h>
+	#include <utility>
 	#include <assert.h>
 	#include <iostream>
 	#include <string.h>
@@ -378,8 +379,8 @@ returnstmt:		RETURN ';'			{	SIN::ParserManage::Manage_ReturnStatement_Return(&($
 
 void yyerror (SIN::BisonParseArguments & bpa, char const* yaccProvidedMessage)
 {
-	fprintf(stderr, "%s: at line %d, before token: >%s<\n", yaccProvidedMessage, yylineno, yytext);
-	bpa.SetError(yaccProvidedMessage);
+	//fprintf(stderr, "%s: at line %d, before token: >%s<\n", yaccProvidedMessage, yylineno, yytext);
+	bpa.SetError(std::make_pair(yaccProvidedMessage, yylineno));
 	//return -1;
 }
 

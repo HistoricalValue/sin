@@ -1,5 +1,9 @@
 #include "BisonParseArguments.h"
 
+#include <algorithm>
+#include <functional>
+
+
 
 #include "Common.h"
 #include "SINLogger.h"
@@ -12,6 +16,17 @@
 
 
 namespace SIN {
+
+
+	//-----------------------------------------------------------------
+	
+	struct CleanListFunctor : public std::unary_function<ASTNode *, void> {
+		void operator() (ASTNode * node) {
+			delete node;
+		}
+	};
+
+
 
 	//-----------------------------------------------------------------
 
@@ -26,7 +41,8 @@ namespace SIN {
 	
 	//-----------------------------------------------------------------
 
-	BisonParseArguments::~BisonParseArguments() { errors.clear(); }
+	BisonParseArguments::~BisonParseArguments() 
+		{ CleanErrosAndNodes(); }
 
 	
 	//-----------------------------------------------------------------
@@ -36,12 +52,10 @@ namespace SIN {
 
 
 	//-----------------------------------------------------------------
-	
-	void BisonParseArguments::SetError(const String & error) {
+	void BisonParseArguments::SetError (const ErrorInfo & ei) {
 		hasError = true;
-		errors.push_back(error);
+		errors.push_back(ei);
 	}
-
 
 	//-----------------------------------------------------------------
 	
@@ -67,5 +81,23 @@ namespace SIN {
 		{ return errors; }
 
 
+	//-----------------------------------------------------------------
+	
+	void BisonParseArguments::CleanNodes (void) 
+		{ std::for_each(nodesList.begin(), nodesList.end(), CleanListFunctor()); }
+
+	
+	//-----------------------------------------------------------------
+	
+	void BisonParseArguments::CleanErrors (void) 
+		{ errors.clear(); }
+
+	
+	//-----------------------------------------------------------------
+	
+	void BisonParseArguments::CleanErrosAndNodes (void) {
+		CleanNodes();
+		CleanErrors();
+	}
 
 }	//namespace SIN

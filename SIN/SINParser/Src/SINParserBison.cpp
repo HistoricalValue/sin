@@ -69,6 +69,7 @@
 
 
 	#include <stdio.h>
+	#include <utility>
 	#include <assert.h>
 	#include <iostream>
 	#include <string.h>
@@ -603,16 +604,16 @@ static const yytype_int8 yyrhs[] =
 /* YYRLINE[YYN] -- source line where rule number YYN was defined.  */
 static const yytype_uint16 yyrline[] =
 {
-       0,   171,   171,   179,   180,   185,   186,   187,   188,   189,
-     190,   191,   192,   193,   194,   195,   200,   201,   202,   203,
-     204,   205,   206,   207,   208,   209,   210,   211,   212,   213,
-     214,   215,   216,   221,   222,   223,   224,   225,   230,   231,
-     232,   233,   234,   235,   236,   237,   242,   247,   248,   249,
-     250,   251,   256,   257,   258,   259,   264,   265,   266,   267,
-     273,   274,   275,   280,   281,   286,   291,   296,   297,   302,
-     303,   308,   309,   314,   315,   320,   321,   322,   327,   327,
-     332,   333,   338,   339,   343,   344,   345,   346,   347,   351,
-     352,   357,   358,   363,   364,   367,   370,   373,   374
+       0,   172,   172,   180,   181,   186,   187,   188,   189,   190,
+     191,   192,   193,   194,   195,   196,   201,   202,   203,   204,
+     205,   206,   207,   208,   209,   210,   211,   212,   213,   214,
+     215,   216,   217,   222,   223,   224,   225,   226,   231,   232,
+     233,   234,   235,   236,   237,   238,   243,   248,   249,   250,
+     251,   252,   257,   258,   259,   260,   265,   266,   267,   268,
+     274,   275,   276,   281,   282,   287,   292,   297,   298,   303,
+     304,   309,   310,   315,   316,   321,   322,   323,   328,   328,
+     333,   334,   339,   340,   344,   345,   346,   347,   348,   352,
+     353,   358,   359,   364,   365,   368,   371,   374,   375
 };
 #endif
 
@@ -2454,8 +2455,8 @@ yyreturn:
 
 void yyerror (SIN::BisonParseArguments & bpa, char const* yaccProvidedMessage)
 {
-	fprintf(stderr, "%s: at line %d, before token: >%s<\n", yaccProvidedMessage, yylineno, yytext);
-	bpa.SetError(yaccProvidedMessage);
+	//fprintf(stderr, "%s: at line %d, before token: >%s<\n", yaccProvidedMessage, yylineno, yytext);
+	bpa.SetError(std::make_pair(yaccProvidedMessage, yylineno));
 	//return -1;
 }
 
