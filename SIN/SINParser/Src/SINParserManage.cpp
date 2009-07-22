@@ -4,6 +4,7 @@
 #include "SINLogger.h"
 #include "SINLoggerManager.h"
 #include "SINASTNodes.h"
+#include "SINAlloc.h"
 
 namespace SIN {
 
@@ -16,7 +17,7 @@ namespace SIN {
 	void ParserManage::Manage_AssignExpression (ASTNode *_lvalue, ASTNode *_expr, ASTNode **_retassignexpr) {
 		SIN::Logger &logger = SIN::LoggerManager::SingletonGetInstance()->GetLogger("SIN::Tests::Parser::Manage");
 		logger.Notice("Entered lvalue = expr Rule");
-		*_retassignexpr = new AssignASTNode("=");
+		*_retassignexpr = SINEWCLASS(AssignASTNode, ("="));
 		**_retassignexpr << _lvalue << _expr;
 	}
 	
@@ -27,7 +28,7 @@ namespace SIN {
 	//-----------------------------------------------------------------
 
 	void ParserManage::Manage_Block	(ASTNode *_stmtd, ASTNode **_retblock) {
-		*_retblock = new BlockASTNode("Block");
+		*_retblock = SINEWCLASS(BlockASTNode, ("Block"));
 
 		for(ASTNode *nxtStmt; _stmtd != NULL; _stmtd = nxtStmt){
 			**_retblock << _stmtd->Clone();
@@ -59,10 +60,10 @@ namespace SIN {
 	//-----------------------------------------------------------------
 
 	void ParserManage::Manage_Call_FunctionDefinitionExpressionList	(ASTNode *_funcdef, ASTNode *_elist, ASTNode **_retcall) {
-		*_retcall = new FuncdefCallASTNode("funcdef call");
+		*_retcall = SINEWCLASS(FuncdefCallASTNode, ("funcdef call"));
 
 		**_retcall << _funcdef;
-		ASTNode *arguments = new ArgumentsASTNode("Arguments");
+		ASTNode *arguments = SINEWCLASS(ArgumentsASTNode, ("Arguments"));
 		for(ASTNode *nxtExpr; _elist != NULL; _elist = nxtExpr){
 			*arguments << _elist->Clone();
 			nxtExpr = static_cast<ASTNode*>(+(*_elist));
@@ -96,7 +97,7 @@ namespace SIN {
 		SIN::Logger &logger = SIN::LoggerManager::SingletonGetInstance()->GetLogger("SIN::Tests::Parser::Manage");
 		logger.Notice(SIN::String("Entered const : Number Rule. Number ") + SIN::string_cast(_number));
 
-		*_retconst = new NumberASTNode(_number);	
+		*_retconst = SINEWCLASS(NumberASTNode, (_number));	
 	}
 
 
@@ -106,7 +107,7 @@ namespace SIN {
 		SIN::Logger &logger = SIN::LoggerManager::SingletonGetInstance()->GetLogger("SIN::Tests::Parser::Manage");
 		logger.Notice(SIN::String("Entered const : string Rule. String ") + SIN::String(_string));
 
-		*_retconst = new StringASTNode(_string);
+		*_retconst = SINEWCLASS(StringASTNode, (_string));
 		logger.Notice((*_retconst)->Name());
 
 		delete _string;
@@ -116,19 +117,19 @@ namespace SIN {
 	//-----------------------------------------------------------------
 	
 	void ParserManage::Manage_Constant_Nil (ASTNode **_retconst)
-		{ *_retconst = new NilASTNode(); }
+		{ *_retconst = SINEWCLASS(NilASTNode, ()); }
 
 
 	//-----------------------------------------------------------------
 	
 	void ParserManage::Manage_Constant_True (ASTNode **_retconst) 
-		{ *_retconst = new TrueASTNode(); }
+		{ *_retconst = SINEWCLASS(TrueASTNode, ()); }
 	
 
 	//-----------------------------------------------------------------
 	
 	void ParserManage::Manage_Constant_False	(ASTNode **_retconst)
-		{ *_retconst = new FalseASTNode(); }
+		{ *_retconst = SINEWCLASS(FalseASTNode, ()); }
 
 
 
@@ -146,7 +147,7 @@ namespace SIN {
 
 	void ParserManage::Manage_Expression_ExpressionADDExpression (ASTNode *_expr1, ASTNode *_expr2, ASTNode **_retexpr){
 
-		*_retexpr = new AddASTNode();
+		*_retexpr = SINEWCLASS(AddASTNode, ());
 
 		**_retexpr << _expr1 << _expr2;
 	}
@@ -155,7 +156,7 @@ namespace SIN {
 
 	void ParserManage::Manage_Expression_ExpressionMINExpression (ASTNode *_expr1, ASTNode *_expr2, ASTNode **_retexpr){
 
-		*_retexpr = new SubASTNode();
+		*_retexpr = SINEWCLASS(SubASTNode, ());
 
 		**_retexpr << _expr1 << _expr2;
 	}
@@ -164,7 +165,7 @@ namespace SIN {
 
 	void ParserManage::Manage_Expression_ExpressionMULExpression (ASTNode *_expr1, ASTNode *_expr2, ASTNode **_retexpr){
 
-		*_retexpr = new MulASTNode();
+		*_retexpr = SINEWCLASS(MulASTNode, ());
 
 		**_retexpr << _expr1 << _expr2;
 	}
@@ -173,7 +174,7 @@ namespace SIN {
 
 	void ParserManage::Manage_Expression_ExpressionDIVExpression (ASTNode *_expr1, ASTNode *_expr2, ASTNode **_retexpr){
 
-		*_retexpr = new DivASTNode();
+		*_retexpr = SINEWCLASS(DivASTNode, ());
 
 		**_retexpr << _expr1 << _expr2;
 	}
@@ -182,7 +183,7 @@ namespace SIN {
 	
 	void ParserManage::Manage_Expression_ExpressionMODExpression (ASTNode *_expr1, ASTNode *_expr2, ASTNode **_retexpr){
 
-		*_retexpr = new ModASTNode();
+		*_retexpr = SINEWCLASS(ModASTNode, ());
 
 		**_retexpr << _expr1 << _expr2;
 	}
@@ -191,7 +192,7 @@ namespace SIN {
 
 	void ParserManage::Manage_Expression_ExpressionGTExpression (ASTNode *_expr1, ASTNode *_expr2, ASTNode **_retexpr){
 
-		*_retexpr = new GtASTNode();
+		*_retexpr = SINEWCLASS(GtASTNode, ());
 
 		**_retexpr << _expr1 << _expr2;
 	}
@@ -200,7 +201,7 @@ namespace SIN {
 
 	void ParserManage::Manage_Expression_ExpressionGEExpression (ASTNode *_expr1, ASTNode *_expr2, ASTNode **_retexpr){
 
-		*_retexpr = new GeASTNode();
+		*_retexpr = SINEWCLASS(GeASTNode, ());
 
 		**_retexpr << _expr1 << _expr2;
 	}
@@ -209,7 +210,7 @@ namespace SIN {
 
 	void ParserManage::Manage_Expression_ExpressionLTExpression (ASTNode *_expr1, ASTNode *_expr2, ASTNode **_retexpr){
 
-		*_retexpr = new LtASTNode();
+		*_retexpr = SINEWCLASS(LtASTNode, ());
 
 		**_retexpr << _expr1 << _expr2;
 	}
@@ -218,7 +219,7 @@ namespace SIN {
 
 	void ParserManage::Manage_Expression_ExpressionLEExpression (ASTNode *_expr1, ASTNode *_expr2, ASTNode **_retexpr){
 
-		*_retexpr = new LeASTNode();
+		*_retexpr = SINEWCLASS(LeASTNode, ());
 
 		**_retexpr << _expr1 << _expr2;
 	}
@@ -227,7 +228,7 @@ namespace SIN {
 
 	void ParserManage::Manage_Expression_ExpressionEQExpression (ASTNode *_expr1, ASTNode *_expr2, ASTNode **_retexpr){
 
-		*_retexpr = new EqASTNode();
+		*_retexpr = SINEWCLASS(EqASTNode, ());
 
 		**_retexpr << _expr1 << _expr2;
 	}
@@ -236,7 +237,7 @@ namespace SIN {
 
 	void ParserManage::Manage_Expression_ExpressionNOTEQExpression (ASTNode *_expr1, ASTNode *_expr2, ASTNode **_retexpr){
 
-		*_retexpr = new NeASTNode();
+		*_retexpr = SINEWCLASS(NeASTNode, ());
 
 		**_retexpr << _expr1 << _expr2;
 	}
@@ -245,7 +246,7 @@ namespace SIN {
 
 	void ParserManage::Manage_Expression_ExpressionANDExpression (ASTNode *_expr1, ASTNode *_expr2, ASTNode **_retexpr){
 
-		*_retexpr = new AndASTNode();
+		*_retexpr = SINEWCLASS(AndASTNode, ());
 
 		**_retexpr << _expr1 << _expr2;
 	}
@@ -254,7 +255,7 @@ namespace SIN {
 
 	void ParserManage::Manage_Expression_ExpressionORExpression (ASTNode *_expr1, ASTNode *_expr2, ASTNode **_retexpr){
 
-		*_retexpr = new OrASTNode();
+		*_retexpr = SINEWCLASS(OrASTNode, ());
 
 		**_retexpr << _expr1 << _expr2;
 	}
@@ -263,7 +264,7 @@ namespace SIN {
 
 	void ParserManage::Manage_Expression_ExpressionNOTExpression (ASTNode *_expr1, ASTNode *_expr2, ASTNode **_retexpr){
 
-		*_retexpr = new NotASTNode();
+		*_retexpr = SINEWCLASS(NotASTNode, ());
 
 		**_retexpr << _expr1 << _expr2;
 	}
@@ -310,7 +311,7 @@ namespace SIN {
 	//-----------------------------------------------------------------
 
 	void ParserManage::Manage_ForStatement (ASTNode *_elist1, ASTNode *_expr, ASTNode *_elist2, ASTNode *_stmt, ASTNode **_retforstmt) {
-		*_retforstmt = new ForASTNode("for");
+		*_retforstmt = SINEWCLASS(ForASTNode, ("for"));
 
 		for(ASTNode *nxtExpr; _elist1 != NULL; _elist1 = nxtExpr){
 			**_retforstmt << _elist1->Clone();
@@ -330,7 +331,7 @@ namespace SIN {
 	//-----------------------------------------------------------------
 	
 	void ParserManage::Manage_WhileStatement (ASTNode *_expr, ASTNode *_stmt, ASTNode **_retwhilestmt) {
-		*_retwhilestmt = new WhileASTNode("while");
+		*_retwhilestmt = SINEWCLASS(WhileASTNode, ("while"));
 		**_retwhilestmt << _expr << _stmt;
 	}
 
@@ -341,8 +342,8 @@ namespace SIN {
 	//-----------------------------------------------------------------
 	
 	void ParserManage::Manage_FunctionDefinition_Function (char *_id, ASTNode *_idlist, ASTNode *_block, ASTNode **_retfuncdef) {
-		*_retfuncdef = new FunctionASTNode("Function");
-		StringASTNode *id = new StringASTNode(_id);
+		*_retfuncdef = SINEWCLASS(FunctionASTNode, ("Function"));
+		StringASTNode *id = SINEWCLASS(StringASTNode, (_id));
 
 		**_retfuncdef << id;	// To remove(No need to keep function names after we use unique IDs)
 		for(ASTNode *nxtID; _idlist != NULL; _idlist = nxtID){
@@ -359,7 +360,7 @@ namespace SIN {
 	//-----------------------------------------------------------------
 	
 	void ParserManage::Manage_FunctionDefinition_LamdaFunction (ASTNode *_idlist, ASTNode *_block, ASTNode **_retfuncdef) {
-		*_retfuncdef = new LamdaFunctionASTNode("Lamda Function");
+		*_retfuncdef = SINEWCLASS(LamdaFunctionASTNode, ("Lamda Function"));
 
 		for(ASTNode *nxtID; _idlist != NULL; _idlist = nxtID){
 			**_retfuncdef << _idlist->Clone();
@@ -376,7 +377,7 @@ namespace SIN {
 	//-----------------------------------------------------------------
 	
 	void ParserManage::Manage_IDList (char *_id, ASTNode *_idlists, ASTNode **_retidlist) {
-		*_retidlist = new StringASTNode(_id);
+		*_retidlist = SINEWCLASS(StringASTNode, (_id));
 
 		if(_idlists != NULL)
 			(*_retidlist)->SetRightSibling(_idlists);
@@ -397,7 +398,7 @@ namespace SIN {
 	//-----------------------------------------------------------------
 
 	void ParserManage::Manage_IfStatement_If	(ASTNode *_expr, ASTNode *_stmt, ASTNode **_retifstmt) {
-		*_retifstmt = new IfASTNode("if");
+		*_retifstmt = SINEWCLASS(IfASTNode, ("if"));
 		**_retifstmt << _expr << _stmt;
 	}
 
@@ -405,7 +406,7 @@ namespace SIN {
 	//-----------------------------------------------------------------
 
 	void ParserManage::Manage_IfStatement_IfElse	(ASTNode *_expr, ASTNode *_stmt1, ASTNode *_stmt2, ASTNode **_retifstmt) {
-		*_retifstmt = new IfElseASTNode("if else");
+		*_retifstmt = SINEWCLASS(IfElseASTNode, ("if else"));
 		**_retifstmt << _expr << _stmt1 << _stmt2;
 	}
 
@@ -419,7 +420,7 @@ namespace SIN {
 		SIN::Logger &logger = SIN::LoggerManager::SingletonGetInstance()->GetLogger("SIN::Tests::Parser::Manage");
 		logger.Notice(SIN::String("Entered lvalue : id Rule. ID = ") + SIN::String(_id));
 
-		*_retlvalue = new IDASTNode(_id);
+		*_retlvalue = SINEWCLASS(IDASTNode, (_id));
 
 		delete _id;
 	}
@@ -428,7 +429,7 @@ namespace SIN {
 	//-----------------------------------------------------------------
 
 	void ParserManage::Manage_LValue_LocalID (char *_localID, ASTNode **_retlvalue){
-		*_retlvalue = new LocalIDASTNode(string_cast("local ")+string_cast(_localID));
+		*_retlvalue = SINEWCLASS(LocalIDASTNode, (string_cast("local ") << _localID));
 
 		delete _localID;
 	}
@@ -437,7 +438,7 @@ namespace SIN {
 	//-----------------------------------------------------------------
 
 	void ParserManage::Manage_LValue_GlobalID (char *_globalID, ASTNode **_retlvalue){
-		*_retlvalue = new GlobalIDASTNode(string_cast("global ")+string_cast(_globalID));
+		*_retlvalue = SINEWCLASS(GlobalIDASTNode, (string_cast("global ") << _globalID));
 
 		delete _globalID;
 	}
@@ -455,8 +456,8 @@ namespace SIN {
 	//-----------------------------------------------------------------
 
 	void ParserManage::Manage_Member_LValueID (ASTNode *_lvalue, char *_id, ASTNode **_retmember) {
-		*_retmember = new ObjectMemberASTNode("lv.id");
-		StringASTNode *id = new StringASTNode(_id);
+		*_retmember = SINEWCLASS(ObjectMemberASTNode, ("lv.id"));
+		StringASTNode *id = SINEWCLASS(StringASTNode, (_id));
 
 		**_retmember << _lvalue << id;
 
@@ -467,7 +468,7 @@ namespace SIN {
 	//-----------------------------------------------------------------
 
 	void ParserManage::Manage_Member_LValueExpression (ASTNode *_lvalue, ASTNode *_expr, ASTNode **_retmember) {
-		*_retmember = new ObjectIndexASTNode("lv[expr]");
+		*_retmember = SINEWCLASS(ObjectIndexASTNode, ("lv[expr]"));
 		**_retmember << _lvalue << _expr;	
 	}
 
@@ -475,8 +476,8 @@ namespace SIN {
 	//-----------------------------------------------------------------
 
 	void ParserManage::Manage_Member_CallID (ASTNode *_call, char *_id, ASTNode **_retmember) {
-		*_retmember = new CallMemberASTNode("call.id");
-		StringASTNode *id = new StringASTNode(_id);
+		*_retmember = SINEWCLASS(CallMemberASTNode, ("call.id"));
+		StringASTNode *id = SINEWCLASS(StringASTNode, (_id));
 		**_retmember << _call << id;
 
 		delete _id;
@@ -486,7 +487,7 @@ namespace SIN {
 	//-----------------------------------------------------------------
 
 	void ParserManage::Manage_Member_CallExpression (ASTNode *_call, ASTNode *_expr, ASTNode **_retmember) {
-		*_retmember = new CallIndexASTNode("call[expr]");
+		*_retmember = SINEWCLASS(CallIndexASTNode, ("call[expr]"));
 		**_retmember << _call << _expr;	
 	}
 
@@ -497,12 +498,12 @@ namespace SIN {
 	//-----------------------------------------------------------------
 
 	void ParserManage::Manage_MethodCall (char *_id, ASTNode *_elist, ASTNode **_retmethodcall) {
-		*_retmethodcall = new MethodCallASTNode("Method call");
-		StringASTNode *id = new StringASTNode(_id);
+		*_retmethodcall = SINEWCLASS(MethodCallASTNode, ("Method call"));
+		StringASTNode *id = SINEWCLASS(StringASTNode, (_id));
 
 		**_retmethodcall << id;
 
-		ASTNode *arguments = new ArgumentsASTNode("Arguments");
+		ASTNode *arguments = SINEWCLASS(ArgumentsASTNode, ("Arguments"));
 		for(ASTNode *nxtExpr; _elist != NULL; _elist = nxtExpr){
 			*arguments << _elist->Clone();
 			nxtExpr = static_cast<ASTNode*>(+(*_elist));
@@ -517,9 +518,9 @@ namespace SIN {
 	//-----------------------------------------------------------------
 
 	void ParserManage::Manage_NormalCall (ASTNode *_elist, ASTNode **_retnormalcall) {
-		*_retnormalcall = new NormalCallASTNode("Normal Call");
+		*_retnormalcall = SINEWCLASS(NormalCallASTNode, ("Normal Call"));
 
-		ASTNode *arguments = new ArgumentsASTNode("Arguments");
+		ASTNode *arguments = SINEWCLASS(ArgumentsASTNode, ("Arguments"));
 		for(ASTNode *nxtExpr; _elist != NULL; _elist = nxtExpr){
 			*arguments << _elist->Clone();
 			nxtExpr = static_cast<ASTNode*>(+(*_elist));
@@ -535,7 +536,7 @@ namespace SIN {
 	//-----------------------------------------------------------------
 
 	void ParserManage::Manage_ObjectDefinition_EmptyObject (ASTNode **_retobjectdef) 
-		{ *_retobjectdef = new EmptyObjectASTNode("Empty object"); }
+		{ *_retobjectdef = SINEWCLASS(EmptyObjectASTNode, ("Empty object")); }
 	
 	
 	//-----------------------------------------------------------------
@@ -544,7 +545,7 @@ namespace SIN {
 		SIN::Logger &logger = SIN::LoggerManager::SingletonGetInstance()->GetLogger("SIN::Tests::Parser::Manage");
 		logger.Notice("Entered objectdef : [ objectlist ] Rule");
 
-		*_retobjectdef = new ObjectASTNode("Object");
+		*_retobjectdef = SINEWCLASS(ObjectASTNode, ("Object"));
 
 		for(ASTNode *nxtObject; _objectlist != NULL; _objectlist = nxtObject){
 			**_retobjectdef << _objectlist->Clone();
@@ -560,7 +561,7 @@ namespace SIN {
 	//-----------------------------------------------------------------
 
 	void ParserManage::Manage_ObjectList_ExpressionObjectLists (ASTNode *_expr, ASTNode *_objectlists, ASTNode **_retobjectlists) {
-		*_retobjectlists = new UnindexedMemberASTNode("Unindexed Object");
+		*_retobjectlists = SINEWCLASS(UnindexedMemberASTNode, ("Unindexed Object"));
 
 		**_retobjectlists << _expr;
 		if(_objectlists != NULL)
@@ -572,7 +573,7 @@ namespace SIN {
 	//-----------------------------------------------------------------
 
 	void ParserManage::Manage_ObjectList_ExpressionExpressionObjectLists (ASTNode *_expr1, ASTNode *_expr2, ASTNode *_objectlists, ASTNode **_retobjectlists) {
-		*_retobjectlists = new IndexedMemberASTNode("Indexed Object");
+		*_retobjectlists = SINEWCLASS(IndexedMemberASTNode, ("Indexed Object"));
 
 		**_retobjectlists << _expr1 << _expr2;
 		if(_objectlists != NULL)
@@ -631,13 +632,13 @@ namespace SIN {
 	//-----------------------------------------------------------------
 
 	void ParserManage::Manage_ReturnStatement_Return (ASTNode **_retreturnstmt)
-		{ *_retreturnstmt = new ReturnASTNode("return"); }
+		{ *_retreturnstmt = SINEWCLASS(ReturnASTNode, ("return")); }
 	
 	
 	//-----------------------------------------------------------------
 
 	void ParserManage::Manage_ReturnStatement_ReturnExpression (ASTNode *_expr, ASTNode **_retreturnstmt) {
-		*_retreturnstmt = new ReturnASTNode("return expr");
+		*_retreturnstmt = SINEWCLASS(ReturnASTNode, ("return expr"));
 		**_retreturnstmt << _expr;	
 	}
 
@@ -648,10 +649,10 @@ namespace SIN {
 	//-----------------------------------------------------------------
 
 	void ParserManage::Manage_SinCode (ASTNode *_stmts, ASTNode **_retsincode) {
-		*_retsincode = new ASTNode("AST");
+		*_retsincode = SINEWCLASS(ASTNode, ("AST"));
 
 		for(ASTNode *nxtStmt; _stmts != NULL; _stmts = nxtStmt){
-			**_retsincode << _stmts->Clone();
+			**_retsincode << SINPTR(_stmts)->Clone();
 			nxtStmt = static_cast<ASTNode*>(+(*_stmts));
 			delete _stmts;
 		}	
@@ -697,13 +698,13 @@ namespace SIN {
 		SIN::Logger &logger = SIN::LoggerManager::SingletonGetInstance()->GetLogger("SIN::Tests::Parser::Manage");
 		logger.Notice("Entered stmt : break Rule");
 
-		*_retstmt = new BreakASTNode("Break");	
+		*_retstmt = SINEWCLASS(BreakASTNode, ("Break"));	
 	}
 
 	//-----------------------------------------------------------------
 
 	void ParserManage::Manage_Statement_Continue (ASTNode **_retstmt)
-		{ *_retstmt = new ContinueASTNode("Continue"); }
+		{ *_retstmt = SINEWCLASS(ContinueASTNode, ("Continue")); }
 	
 	
 	//-----------------------------------------------------------------
@@ -721,7 +722,7 @@ namespace SIN {
 	//-----------------------------------------------------------------
 
 	void ParserManage::Manage_Statement_Semicolon (ASTNode **_retstmt)
-		{ *_retstmt = new SemicolonASTNode(";"); }
+		{ *_retstmt = SINEWCLASS(SemicolonASTNode, (";")); }
 
 
 	//////////////////////////////////////////////////////////
@@ -755,7 +756,7 @@ namespace SIN {
 	//-----------------------------------------------------------------
 
 	void ParserManage::Manage_Term_MINExpression (ASTNode *_expr, ASTNode **_retterm) {
-		*_retterm = new UnaryMinASTNode("-expr");
+		*_retterm = SINEWCLASS(UnaryMinASTNode, ("-expr"));
 		**_retterm << _expr;
 	}
 
@@ -763,7 +764,7 @@ namespace SIN {
 	//-----------------------------------------------------------------
 	
 	void ParserManage::Manage_Term_NOTExpression (ASTNode *_expr, ASTNode **_retterm) {
-		*_retterm = new UnaryNotASTNode("not expr");
+		*_retterm = SINEWCLASS(UnaryNotASTNode, ("not expr"));
 		**_retterm << _expr;
 	}
 
@@ -771,7 +772,7 @@ namespace SIN {
 	//-----------------------------------------------------------------
 
 	void ParserManage::Manage_Term_INCRLValue (ASTNode *_lvalue, ASTNode **_retterm) {
-		*_retterm = new PreIncrASTNode("++lvalue");
+		*_retterm = SINEWCLASS(PreIncrASTNode, ("++lvalue"));
 		**_retterm << _lvalue;
 	}
 	
@@ -779,7 +780,7 @@ namespace SIN {
 	//-----------------------------------------------------------------
 
 	void ParserManage::Manage_Term_LValueINCR (ASTNode *_lvalue, ASTNode **_retterm) {
-		*_retterm = new PostIncrASTNode("lvalue++");
+		*_retterm = SINEWCLASS(PostIncrASTNode, ("lvalue++"));
 		**_retterm << _lvalue;	
 	}
 
@@ -787,7 +788,7 @@ namespace SIN {
 	//-----------------------------------------------------------------
 
 	void ParserManage::Manage_Term_DECRLValue (ASTNode *_lvalue, ASTNode **_retterm) {
-		*_retterm = new PreDecrASTNode("--lvalue");
+		*_retterm = SINEWCLASS(PreDecrASTNode, ("--lvalue"));
 		**_retterm << _lvalue;	
 	}
 
@@ -795,7 +796,7 @@ namespace SIN {
 	//-----------------------------------------------------------------
 
 	void ParserManage::Manage_Term_LValueDECR (ASTNode *_lvalue, ASTNode **_retterm) {
-		*_retterm = new PostDecrASTNode("lvalue--");
+		*_retterm = SINEWCLASS(PostDecrASTNode, ("lvalue--"));
 		**_retterm << _lvalue;	
 	}
 

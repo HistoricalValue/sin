@@ -51,11 +51,6 @@ namespace SIN {
 
 				inline bool  IsValid(void* const _memory_chunk) const
 					{ return chunks_map.find(_memory_chunk) != chunks_map.end(); }
-				template <typename T> T* const validated(T* const& _p) {
-					register bool const is_valid = IsValid(_p);
-					SINASSERT(is_valid);
-					return is_valid ? _p : 0x00;
-				}
 
 				inline memory_count_t const TotallyAllocated(void) const
 					{ return totally_allocated; }
@@ -150,7 +145,13 @@ namespace SIN {
 		}
 
 		bool IsArrayAllocated(void* _p) {
+			SINASSERT(P_initialised);
 			return P_singletons_p->allocations_types[_p] == SINALLOC_ALLOCATION_TYPE_ARRAY;
+		}
+
+		bool IsValid(register void* const _p) {
+			SINASSERT(P_initialised);
+			return P_singletons_p->validator.IsValid(_p);
 		}
 
 		std::map<void*, Chunk> const UndeallocatedChunks(void) {

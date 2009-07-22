@@ -3,6 +3,7 @@
 
 #include "SINString.h"
 #include <map>
+#include "SINAssert.h"
 
 namespace SIN { namespace Alloc {
 	extern bool Initialise(void);
@@ -18,6 +19,15 @@ namespace SIN { namespace Alloc {
 	extern size_t MaximumAllocated(void);
 
 	extern bool IsArrayAllocated(void*);
+	extern bool IsValid(void*);
+	template <typename T> inline T* ValidateAndUse(T* _ptr) {
+		register T* result = _ptr;
+		if (!IsValid(_ptr)) {
+			SINASSERT(false);
+			result = 0x00;
+		}
+		return result;
+	}
 
 	class Chunk {
 		String file; // file allocated in
@@ -60,5 +70,6 @@ extern void  operator delete[](void* ptr, SINAllocationIndicator const&, SIN::St
 #define SINEWCLASS(TYPE, ARGS) new(SINAllocationIndicator(), __FILE__, __LINE__) TYPE ARGS
 #define SINEWARRAY(TYPE, LENGTH) new(SINAllocationIndicator(), __FILE__, __LINE__) TYPE[LENGTH]
 #define SINDELETE(PTR) SIN::Alloc::IsArrayAllocated(PTR) ? operator delete[]((PTR), SINAllocationIndicator(), "", 0) : operator delete((PTR), SINAllocationIndicator(), "", 0)
+#define SINPTR(PTR) SIN::Alloc::ValidateAndUse((PTR))
 
 #endif // __SIN_ALLOC_H__
