@@ -7,8 +7,8 @@
 namespace SIN {
 
     /** Boolean constants */
-    READONLY(TRUE, Boolean_t, 0x01u);
-    READONLY(FALSE, Boolean_t, 0x00u);
+    READONLY(TRUE, Boolean, 0x01u);
+    READONLY(FALSE, Boolean, 0x00u);
 
     /** Nil value constants */
     READONLY(NIL, Nil_t, Nil());

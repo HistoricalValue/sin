@@ -19,7 +19,7 @@ namespace SIN {
 		virtual MemoryCellType Type (void) { return MemoryCell::STRING_MCT; }
 
 
-		void			SetValur (const String & s) { value = s; }
+		void			SetValue (const String & s) { value = s; }
 		const String &	GetValue (void) const		{ return value; }
 
 

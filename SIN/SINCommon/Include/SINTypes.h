@@ -3,22 +3,31 @@
 
 #include "SINString.h"
 
+//TODO we must create types for object, functions 
+
+
 namespace SIN {
 
     /** Type for the nil class. Should be totally unusable. 
         Is only equal with itself and 0x00.
       */
+
+
     class Nil {
     public:
         bool operator ==(Nil const &) const;
         bool operator ==(long const &) const;
     };
 
+
+	
+
     /** SIN internal constant values' representation types */
-    typedef double           Number_t;
-    typedef String           String_t;
-    typedef class Nil           Nil_t;
-    typedef unsigned char   Boolean_t;
+	typedef bool		Boolean;
+	typedef double      Number;
+    typedef String      String_t;
+    typedef class Nil   Nil_t;
+    
 
 	extern String const string_cast(Nil_t const _nil);
 

@@ -118,9 +118,9 @@ namespace SIN {
 
 	//-----------------------------------------------------------------------
 
-    class NumberASTNode : public ConstASTNode<CONST_NUMBER, Number_t> {
+    class NumberASTNode : public ConstASTNode<CONST_NUMBER, Number> {
     public:
-        NumberASTNode(Number_t const &_value = 0);
+        NumberASTNode(Number const &_value = 0);
         virtual void Accept(ASTVisitor *);
 		virtual NumberASTNode *Clone(void) const;
     }; // class NumberASTNode
@@ -151,7 +151,7 @@ namespace SIN {
 
 	//-----------------------------------------------------------------------
 
-    class TrueASTNode : public ConstASTNode<CONST_TRUE, Boolean_t> {
+    class TrueASTNode : public ConstASTNode<CONST_TRUE, Boolean> {
     public:
         TrueASTNode(void);
         virtual void Accept(ASTVisitor *);
@@ -162,7 +162,7 @@ namespace SIN {
 
 	//-----------------------------------------------------------------------
 
-    class FalseASTNode : public ConstASTNode<CONST_FALSE, Boolean_t> {
+    class FalseASTNode : public ConstASTNode<CONST_FALSE, Boolean> {
     public:
         FalseASTNode(void);
         virtual void Accept(ASTVisitor *);

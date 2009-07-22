@@ -2,7 +2,7 @@
 #define __SIN_MEMORY_CELL_AST_H__BOOL_H__
 
 
-//#include "SIN"
+#include "SINTypes.h"
 #include "SINMemoryCell.h"
 
 
@@ -13,15 +13,15 @@ namespace SIN {
 		
 	public:
 		MemoryCellBool(void) : MemoryCell() {}
-		MemoryCellBool(const bool b) : MemoryCell(), value(b) {}
+		MemoryCellBool(const Boolean & b) : MemoryCell(), value(b) {}
 		~MemoryCellBool() {}
 
 		virtual MemoryCellType Type(void) { return MemoryCell::OBJECT_MCT; }
 
-		void		SetType (const bool b)	{ value = b; }
+		void		SetType (const Boolean & b)	{ value = b; }
 		const bool	GetType (void) const	{ return value; }
 	private:
-		bool value;
+		Boolean value;
 	};
 }
 

@@ -122,7 +122,7 @@ namespace SIN {
             )
 
             SINTESTSAST_TESTDEF(ConstNodes,
-                Number_t num_val = 0xfaceful;
+                Number num_val = 0xfaceful;
                 String_t str_val = "Ludvich Rudolf Santa Bach";
 
                 NumberASTNode num(num_val);

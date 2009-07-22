@@ -25,8 +25,8 @@ namespace SIN {
 
 		virtual MemoryCellType Type (void) = 0;
 
-		MemoryCell(void);
-		virtual ~MemoryCell();
+		MemoryCell(void) {}
+		virtual ~MemoryCell() {}
 	};
 
 }	//namespace sin

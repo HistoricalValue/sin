@@ -1105,7 +1105,7 @@ static int yy_get_next_buffer()
 	{
 	register char *dest = yy_current_buffer->yy_ch_buf;
 	register char *source = yytext_ptr;
-	register int number_to_move, i;
+	register int Numbero_move, i;
 	int ret_val;
 
 	if ( yy_c_buf_p > &yy_current_buffer->yy_ch_buf[yy_n_chars + 1] )
@@ -1134,9 +1134,9 @@ static int yy_get_next_buffer()
 	/* Try to read more data. */
 
 	/* First move last chars to start of buffer. */
-	number_to_move = (int) (yy_c_buf_p - yytext_ptr) - 1;
+	Numbero_move = (int) (yy_c_buf_p - yytext_ptr) - 1;
 
-	for ( i = 0; i < number_to_move; ++i )
+	for ( i = 0; i < Numbero_move; ++i )
 		*(dest++) = *(source++);
 
 	if ( yy_current_buffer->yy_buffer_status == YY_BUFFER_EOF_PENDING )
@@ -1148,7 +1148,7 @@ static int yy_get_next_buffer()
 	else
 		{
 		int num_to_read =
-			yy_current_buffer->yy_buf_size - number_to_move - 1;
+			yy_current_buffer->yy_buf_size - Numbero_move - 1;
 
 		while ( num_to_read <= 0 )
 			{ /* Not enough room in the buffer - grow it. */
@@ -1188,7 +1188,7 @@ static int yy_get_next_buffer()
 			yy_c_buf_p = &b->yy_ch_buf[yy_c_buf_p_offset];
 
 			num_to_read = yy_current_buffer->yy_buf_size -
-						number_to_move - 1;
+						Numbero_move - 1;
 #endif
 			}
 
@@ -1196,7 +1196,7 @@ static int yy_get_next_buffer()
 			num_to_read = YY_READ_BUF_SIZE;
 
 		/* Read in more data. */
-		YY_INPUT( (&yy_current_buffer->yy_ch_buf[number_to_move]),
+		YY_INPUT( (&yy_current_buffer->yy_ch_buf[Numbero_move]),
 			yy_n_chars, num_to_read );
 
 		yy_current_buffer->yy_n_chars = yy_n_chars;
@@ -1204,7 +1204,7 @@ static int yy_get_next_buffer()
 
 	if ( yy_n_chars == 0 )
 		{
-		if ( number_to_move == YY_MORE_ADJ )
+		if ( Numbero_move == YY_MORE_ADJ )
 			{
 			ret_val = EOB_ACT_END_OF_FILE;
 			yyrestart( yyin );
@@ -1221,7 +1221,7 @@ static int yy_get_next_buffer()
 	else
 		ret_val = EOB_ACT_CONTINUE_SCAN;
 
-	yy_n_chars += number_to_move;
+	yy_n_chars += Numbero_move;
 	yy_current_buffer->yy_ch_buf[yy_n_chars] = YY_END_OF_BUFFER_CHAR;
 	yy_current_buffer->yy_ch_buf[yy_n_chars + 1] = YY_END_OF_BUFFER_CHAR;
 
@@ -1307,11 +1307,11 @@ register char *yy_bp;
 	if ( yy_cp < yy_current_buffer->yy_ch_buf + 2 )
 		{ /* need to shift things up to make room */
 		/* +2 for EOB chars. */
-		register int number_to_move = yy_n_chars + 2;
+		register int Numbero_move = yy_n_chars + 2;
 		register char *dest = &yy_current_buffer->yy_ch_buf[
 					yy_current_buffer->yy_buf_size + 2];
 		register char *source =
-				&yy_current_buffer->yy_ch_buf[number_to_move];
+				&yy_current_buffer->yy_ch_buf[Numbero_move];
 
 		while ( source > yy_current_buffer->yy_ch_buf )
 			*--dest = *--source;

@@ -19,10 +19,10 @@ namespace SIN {
 			static InstanceProxy<TestFactory> test_factory;
 
             SINTESTSCOMMON_TESTDEF(Types,
-                Number_t num;
+                Number num;
                 String_t str;
                 Nil_t nil;
-                Boolean_t bln;
+                Boolean bln;
 
                 num = 12; ASSERT(num == 12); ASSERT(num + 1 == 13); ASSERT(num - 1 == 11);
                 ASSERT(num++ == 12); ASSERT(num == 13); ASSERT(++num == 14); ASSERT(num == 14);
