@@ -168,6 +168,10 @@
 				Name="Scanner"
 				>
 				<File
+					RelativePath="..\..\Src\LexUtility.cpp"
+					>
+				</File>
+				<File
 					RelativePath="..\..\Src\SINLexAnalyzer.cpp"
 					>
 				</File>
@@ -215,6 +219,10 @@
 				>
 				<File
 					RelativePath="..\..\Include\BisonParseArguments.h"
+					>
+				</File>
+				<File
+					RelativePath="..\..\Include\LexUtility.h"
 					>
 				</File>
 				<File

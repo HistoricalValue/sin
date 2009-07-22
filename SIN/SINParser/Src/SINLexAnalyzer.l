@@ -1,9 +1,17 @@
 %{
 	#include <stdlib.h>
+	#include "LexUtility.h"
 	#include "SINParser.h" /**/
 	#include "SINString.h"
 	#define YY_NEVER_INTERACTIVE 1
+	
+	
+	static char InputWrapper (void);//		{ return yyinput(); }
+	static void UnputWrapper (char c);//	{ unput(c); }
+
 %}
+
+
  
 /* Flex options */
 %option noyywrap
@@ -81,16 +89,15 @@ lineComm		\/\/.*
 "or"			{ return OR;		}	
 
 
-{ws}			{/*We do not do nothing in this case*/}
+"/*"			{	LEX::LexUtility::IgnoreCStyleComments(yytext); }
+
+{ws}			{}
 {lineComm}		{}
 
 {id}			{
-//char * == yylval.stringV
-//char * == yytext
-					const size_t yytext_len = strlen(yytext);
-					yylval.stringV = new char[yytext_len + 1];
-					strncpy(yylval.stringV, yytext, yytext_len);
-					yylval.stringV[yytext_len] = '\0'; // be safe
+
+					yylval.stringV = LEX::LexUtility::SaveStr(yytext);
+					UnputWrapper(InputWrapper());
 					return ID;
 				}
 {number}		{ 
@@ -99,12 +106,15 @@ lineComm		\/\/.*
 				}
 				
 {string}		{ 
-					const size_t yytext_len = strlen(yytext);
-					yylval.stringV = new char[yytext_len + 1];
-					strncpy(yylval.stringV, yytext, yytext_len);
-					yylval.stringV[yytext_len] = '\0'; // be safe
+					yylval.stringV = LEX::LexUtility::SaveStr(yytext);
 					return STRING;	
 				}
 
 
-.				{ fprintf(stderr, "Cannot match character `%s' with any rule\n", yytext); }
+.				{ fprintf(stderr, "Cannot match character `%s' with any rule\n", yytext); return yytext[0]; }
+
+
+%%
+
+static char InputWrapper (void)		{ return yyinput(); }
+static void UnputWrapper (char c)	{ unput(c); }
