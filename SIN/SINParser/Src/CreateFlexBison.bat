@@ -1,6 +1,6 @@
 del SINParserBison.cpp
-del SINLexAnalyser.cpp
+del SINLexAnalyzer.cpp
 del ..\Include\SINParserBison.h
-flex -L -oSINLexAnalyser.cpp SINLexAnalyser.l
+flex -L -oSINLexAnalyzer.cpp SINLexAnalyzer.l
 bison -l -y --defines=..\Include\SINParserBison.h -o.\SINParserBison.cpp SINParser.y
 pause;

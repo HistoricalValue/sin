@@ -85,24 +85,26 @@ lineComm		\/\/.*
 {lineComm}		{}
 
 {id}			{
-				const size_t yytext_len = strlen(yytext);
-				yylval.stringV = new char[yytext_len + 1];
-				strncpy(yylval.stringV, yytext, yytext_len);
-				yylval.stringV[yytext_len] = '\0'; // be safe
-				return ID;
-			}
+//char * == yylval.stringV
+//char * == yytext
+					const size_t yytext_len = strlen(yytext);
+					yylval.stringV = new char[yytext_len + 1];
+					strncpy(yylval.stringV, yytext, yytext_len);
+					yylval.stringV[yytext_len] = '\0'; // be safe
+					return ID;
+				}
 {number}		{ 
-				yylval.realV = atof(yytext);
-				return NUMBER;	
-			}
+					yylval.realV = atof(yytext);
+					return NUMBER;	
+				}
 				
 {string}		{ 
-				const size_t yytext_len = strlen(yytext);
-				yylval.stringV = new char[yytext_len + 1];
-				strncpy(yylval.stringV, yytext, yytext_len);
-				yylval.stringV[yytext_len] = '\0'; // be safe
-				return STRING;	
-			}
+					const size_t yytext_len = strlen(yytext);
+					yylval.stringV = new char[yytext_len + 1];
+					strncpy(yylval.stringV, yytext, yytext_len);
+					yylval.stringV[yytext_len] = '\0'; // be safe
+					return STRING;	
+				}
 
 
 .				{ fprintf(stderr, "Cannot match character `%s' with any rule\n", yytext); }

@@ -928,29 +928,29 @@ YY_RULE_SETUP
 case 50:
 YY_RULE_SETUP
 {
-				const size_t yytext_len = strlen(yytext);
-				yylval.stringV = new char[yytext_len + 1];
-				strncpy(yylval.stringV, yytext, yytext_len);
-				yylval.stringV[yytext_len] = '\0'; // be safe
-				return ID;
-			}
+					const size_t yytext_len = strlen(yytext);
+					yylval.stringV = new char[yytext_len + 1];
+					strncpy(yylval.stringV, yytext, yytext_len);
+					yylval.stringV[yytext_len] = '\0'; // be safe
+					return ID;
+				}
 	YY_BREAK
 case 51:
 YY_RULE_SETUP
 { 
-				yylval.realV = atof(yytext);
-				return NUMBER;	
-			}
+					yylval.realV = atof(yytext);
+					return NUMBER;	
+				}
 	YY_BREAK
 case 52:
 YY_RULE_SETUP
 { 
-				const size_t yytext_len = strlen(yytext);
-				yylval.stringV = new char[yytext_len + 1];
-				strncpy(yylval.stringV, yytext, yytext_len);
-				yylval.stringV[yytext_len] = '\0'; // be safe
-				return STRING;	
-			}
+					const size_t yytext_len = strlen(yytext);
+					yylval.stringV = new char[yytext_len + 1];
+					strncpy(yylval.stringV, yytext, yytext_len);
+					yylval.stringV[yytext_len] = '\0'; // be safe
+					return STRING;	
+				}
 	YY_BREAK
 case 53:
 YY_RULE_SETUP

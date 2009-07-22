@@ -168,11 +168,11 @@
 				Name="Scanner"
 				>
 				<File
-					RelativePath="..\..\Src\SINLexAnalyser.cpp"
+					RelativePath="..\..\Src\SINLexAnalyzer.cpp"
 					>
 				</File>
 				<File
-					RelativePath="..\..\Src\SINLexAnalyser.l"
+					RelativePath="..\..\Src\SINLexAnalyzer.l"
 					>
 				</File>
 			</Filter>
@@ -240,6 +240,10 @@
 			Filter="rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav"
 			UniqueIdentifier="{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}"
 			>
+			<File
+				RelativePath="..\..\Src\CreateFlexBison.bat"
+				>
+			</File>
 		</Filter>
 	</Files>
 	<Globals>
