@@ -15,9 +15,19 @@ namespace SIN {
         Test::~Test(void) {
         }
 
+		void Test::testEnvironmentSetUp(void) {
+
+		}
+
+		void Test::testEnvironmentCleanUp(void) {
+
+		}
+
         void Test::Run(void) {
             try {
+				testEnvironmentSetUp();
                 TestLogic();
+				testEnvironmentCleanUp();
             } catch(Test const *) {
             }
         }

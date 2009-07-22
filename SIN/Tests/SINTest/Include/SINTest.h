@@ -29,6 +29,9 @@ namespace SIN {
             String failed_condition;
             String failure_file;
             unsigned long failure_line;
+
+			void testEnvironmentSetUp(void);
+			void testEnvironmentCleanUp(void);
         protected:
             virtual void TestLogic(void) = 0;
         public:

@@ -10,6 +10,20 @@
           <itemPath>../Common/Src/Common.cpp</itemPath>
         </logicalFolder>
       </logicalFolder>
+      <logicalFolder name="SINAlloc" displayName="SINAlloc" projectFiles="true">
+        <logicalFolder name="Include" displayName="Include" projectFiles="true">
+          <itemPath>../SINAlloc/Include/SINAlloc.h</itemPath>
+        </logicalFolder>
+        <logicalFolder name="Projects" displayName="Projects" projectFiles="true">
+          <logicalFolder name="Linux_GNU" displayName="Linux_GNU" projectFiles="true">
+          </logicalFolder>
+          <logicalFolder name="VS" displayName="VS" projectFiles="true">
+          </logicalFolder>
+        </logicalFolder>
+        <logicalFolder name="Src" displayName="Src" projectFiles="true">
+          <itemPath>../SINAlloc/Src/SINAlloc.cpp</itemPath>
+        </logicalFolder>
+      </logicalFolder>
       <logicalFolder name="SINAST" displayName="SINAST" projectFiles="true">
         <logicalFolder name="Include" displayName="Include" projectFiles="true">
           <itemPath>../SINAST/Include/SINASTCommon.h</itemPath>
@@ -102,6 +116,22 @@
         </logicalFolder>
       </logicalFolder>
       <logicalFolder name="Tests" displayName="Tests" projectFiles="true">
+        <logicalFolder name="SINAlloc_Test"
+                       displayName="SINAlloc_Test"
+                       projectFiles="true">
+          <logicalFolder name="Include" displayName="Include" projectFiles="true">
+            <itemPath>../Tests/SINAlloc_Test/Include/SINAllocTester.h</itemPath>
+          </logicalFolder>
+          <logicalFolder name="Projects" displayName="Projects" projectFiles="true">
+            <logicalFolder name="Linux_GNU" displayName="Linux_GNU" projectFiles="true">
+            </logicalFolder>
+            <logicalFolder name="VS" displayName="VS" projectFiles="true">
+            </logicalFolder>
+          </logicalFolder>
+          <logicalFolder name="Src" displayName="Src" projectFiles="true">
+            <itemPath>../Tests/SINAlloc_Test/Src/SINAllocTester.cpp</itemPath>
+          </logicalFolder>
+        </logicalFolder>
         <logicalFolder name="SINAST_Test" displayName="SINAST_Test" projectFiles="true">
           <logicalFolder name="Include" displayName="Include" projectFiles="true">
             <itemPath>../Tests/SINAST_Test/Include/SINASTTester.h</itemPath>
@@ -187,12 +217,14 @@
         <ccTool>
           <incDir>
             <pElem>../Common/Include</pElem>
+            <pElem>../SINAlloc/Include</pElem>
             <pElem>../SINAST/Include</pElem>
             <pElem>../SINCommon/Include</pElem>
             <pElem>../SINLogging/Include</pElem>
             <pElem>../SINmain/Include</pElem>
             <pElem>../SINParser/Include</pElem>
             <pElem>../SINRuntime/Include</pElem>
+            <pElem>../Tests/SINAlloc_Test/Include</pElem>
             <pElem>../Tests/SINAST_Test/Include</pElem>
             <pElem>../Tests/SINCommon_Test/Include</pElem>
             <pElem>../Tests/SINLogging_Test/Include</pElem>

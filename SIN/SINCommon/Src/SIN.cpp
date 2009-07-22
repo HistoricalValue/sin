@@ -2,6 +2,7 @@
 #include "SINLoggerManager.h"
 #include "SINAssert.h"
 #include "SINASTNode.h"
+#include "SINAlloc.h"
 
 namespace SIN {
     bool init_LoggerManager(void) {
@@ -34,10 +35,17 @@ namespace SIN {
 			true;
 	}
 	/////////////////////////////////////////////////////////////////
+	static bool init_Allocation(void) {
+		return
+			SIN::Alloc::Initialise()	&&
+			SIN::Alloc::IsInitialised()	&&
+			true;
+	}
 	/////////////////////////////////////////////////////////////////
 
     bool Initialise(void) {
-        return 
+        return
+			init_Allocation()		&&
             init_LoggerManager()    &&
 			init_ASTNodeFactory()	&&
             true;
@@ -46,6 +54,10 @@ namespace SIN {
     void CleanUp(void) {
 		SINASSERT(LoggerManager::SingletonCreated());
 		LoggerManager::SingletonDestroy();
+		SINASSERT(ASTNodeFactory::SingletonCreated());
+		ASTNodeFactory::SingletonDestroy();
+		SINASSERT(SIN::Alloc::IsInitialised());
+		SIN::Alloc::CleanUp();
     }
 
 

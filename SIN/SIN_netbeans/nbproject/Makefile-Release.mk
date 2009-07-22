@@ -40,6 +40,7 @@ OBJECTFILES= \
 	${OBJECTDIR}/_ext/_DOTDOT/Tests/SINLogging_Test/Src/SINLoggingTester.o \
 	${OBJECTDIR}/_ext/_DOTDOT/SINCommon/Src/SINString.o \
 	${OBJECTDIR}/_ext/_DOTDOT/SINCommon/Src/SINStream.o \
+	${OBJECTDIR}/_ext/_DOTDOT/Tests/SINAlloc_Test/Src/SINAllocTester.o \
 	${OBJECTDIR}/_ext/_DOTDOT/SINParser/Src/SINParserManage.o \
 	${OBJECTDIR}/_ext/_DOTDOT/SINCommon/Src/SINBufferedOutputStream.o \
 	${OBJECTDIR}/_ext/_DOTDOT/SINCommon/Src/SINInputStream.o \
@@ -64,6 +65,7 @@ OBJECTFILES= \
 	${OBJECTDIR}/_ext/_DOTDOT/Tests/SINParser_Test/Src/SINParserTester.o \
 	${OBJECTDIR}/_ext/_DOTDOT/SINParser/Src/SINParserAPI.o \
 	${OBJECTDIR}/_ext/_DOTDOT/Tests/SINSymbolTable_Test/Src/SINSymbolTableTester.o \
+	${OBJECTDIR}/_ext/_DOTDOT/SINAlloc/Src/SINAlloc.o \
 	${OBJECTDIR}/_ext/_DOTDOT/SINLogging/Src/SINRecordPrinter.o \
 	${OBJECTDIR}/_ext/_DOTDOT/SINAST/Src/SINASTNode.o
 
@@ -135,6 +137,11 @@ ${OBJECTDIR}/_ext/_DOTDOT/SINCommon/Src/SINStream.o: nbproject/Makefile-${CND_CO
 	${MKDIR} -p ${OBJECTDIR}/_ext/_DOTDOT/SINCommon/Src
 	${RM} $@.d
 	$(COMPILE.cc) -O2 -MMD -MP -MF $@.d -o ${OBJECTDIR}/_ext/_DOTDOT/SINCommon/Src/SINStream.o ../SINCommon/Src/SINStream.cpp
+
+${OBJECTDIR}/_ext/_DOTDOT/Tests/SINAlloc_Test/Src/SINAllocTester.o: nbproject/Makefile-${CND_CONF}.mk ../Tests/SINAlloc_Test/Src/SINAllocTester.cpp 
+	${MKDIR} -p ${OBJECTDIR}/_ext/_DOTDOT/Tests/SINAlloc_Test/Src
+	${RM} $@.d
+	$(COMPILE.cc) -O2 -MMD -MP -MF $@.d -o ${OBJECTDIR}/_ext/_DOTDOT/Tests/SINAlloc_Test/Src/SINAllocTester.o ../Tests/SINAlloc_Test/Src/SINAllocTester.cpp
 
 ${OBJECTDIR}/_ext/_DOTDOT/SINParser/Src/SINParserManage.o: nbproject/Makefile-${CND_CONF}.mk ../SINParser/Src/SINParserManage.cpp 
 	${MKDIR} -p ${OBJECTDIR}/_ext/_DOTDOT/SINParser/Src
@@ -255,6 +262,11 @@ ${OBJECTDIR}/_ext/_DOTDOT/Tests/SINSymbolTable_Test/Src/SINSymbolTableTester.o: 
 	${MKDIR} -p ${OBJECTDIR}/_ext/_DOTDOT/Tests/SINSymbolTable_Test/Src
 	${RM} $@.d
 	$(COMPILE.cc) -O2 -MMD -MP -MF $@.d -o ${OBJECTDIR}/_ext/_DOTDOT/Tests/SINSymbolTable_Test/Src/SINSymbolTableTester.o ../Tests/SINSymbolTable_Test/Src/SINSymbolTableTester.cpp
+
+${OBJECTDIR}/_ext/_DOTDOT/SINAlloc/Src/SINAlloc.o: nbproject/Makefile-${CND_CONF}.mk ../SINAlloc/Src/SINAlloc.cpp 
+	${MKDIR} -p ${OBJECTDIR}/_ext/_DOTDOT/SINAlloc/Src
+	${RM} $@.d
+	$(COMPILE.cc) -O2 -MMD -MP -MF $@.d -o ${OBJECTDIR}/_ext/_DOTDOT/SINAlloc/Src/SINAlloc.o ../SINAlloc/Src/SINAlloc.cpp
 
 ${OBJECTDIR}/_ext/_DOTDOT/SINLogging/Src/SINRecordPrinter.o: nbproject/Makefile-${CND_CONF}.mk ../SINLogging/Src/SINRecordPrinter.cpp 
 	${MKDIR} -p ${OBJECTDIR}/_ext/_DOTDOT/SINLogging/Src

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="windows-1253"?>
 <VisualStudioProject
 	ProjectType="Visual C++"
-	Version="9.00"
+	Version="9,00"
 	Name="SINmain"
 	ProjectGUID="{2FF2E5DD-6B8C-4A02-AC93-58B45636D824}"
 	RootNamespace="SIN"
@@ -209,6 +209,14 @@
 		<ProjectReference
 			ReferencedProjectIdentifier="{6EF1473D-B277-4446-8E29-5E5D028730E0}"
 			RelativePathToProject=".\SINRuntime\Projects\VS\SINRuntime.vcproj"
+		/>
+		<ProjectReference
+			ReferencedProjectIdentifier="{FE046A76-0260-4C0E-A739-75583AF47C3A}"
+			RelativePathToProject=".\SINAlloc\SINAlloc.vcproj"
+		/>
+		<ProjectReference
+			ReferencedProjectIdentifier="{7B1F75F3-2F88-4EFF-824B-7204BDBF3995}"
+			RelativePathToProject=".\Tests\SINAlloc_Test\Projects\VS\SINAlloc_Test.vcproj"
 		/>
 	</References>
 	<Files>

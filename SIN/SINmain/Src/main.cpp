@@ -10,7 +10,7 @@
 #include "SINLoggerManager.h"
 #include "SINTestCollection.h"
 #include "SINSymbolTableTester.h"
-
+#include "SINAllocTester.h"
 
 
 //////// for quick tests and c++ questions ///////
@@ -29,9 +29,12 @@ public:
 // keep the above for convenience. ex:
 // out << (SIN::String() << "This is" << " horrible " << (4));
 #include "SINASTMITTreeVisualizerXMLProducerVisitor.h"
+InstanceProxy<out_class> g_out;
+
 static void quick_test(void) {
 	SIN::LoggerManager::SingletonGetInstance()->MakeStdoutLogger("SIN::main::quick_test");
 	out_class out(SIN::LoggerManager::SingletonGetInstance()->GetLogger("SIN::main::quick_test"));
+	g_out = out;
 	// keep the above for convenience
 
 	// Example of using "out" and "FOREACH"
@@ -39,7 +42,6 @@ static void quick_test(void) {
 //	FOREACH(lis)
 //		out << *ITER(lis);
 //	out << (SIN::string_cast("This is") << " horrible " << (4));
-
 }
 ////////
 
@@ -76,5 +78,6 @@ bool MainTestCollection::RunAll(void) {
 	SIN::Tests::Logging::test(&test_factory);
 	SIN::Tests::Parser::test(&test_factory);
 	SIN::Tests::ST::test(&test_factory);
+	SIN::Tests::Alloc::test(&test_factory);
 	return true;
 }

@@ -12,6 +12,7 @@ PROJECTS = $(addprefix $(SIN_BASE_DIR)/, \
                 Common \
                 Logging \
                 SymbolTable \
+                Alloc \
                 Parser )) \
         Tests/SINTest \
         SINParser \
@@ -19,6 +20,7 @@ PROJECTS = $(addprefix $(SIN_BASE_DIR)/, \
         SINRuntime \
         SINLogging \
         SINCommon \
+        SINAlloc \
         Common)
 INCLUDE_DIRS = $(addsuffix /Include/,$(PROJECTS))
 LIBRARY_DIRS = $(addsuffix /Projects/Linux_GNU/,$(PROJECTS))
