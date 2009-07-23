@@ -7,8 +7,12 @@
 #include <string.h>
 
 
-#define ERROR(MSG, RETVAL)		labpa.SetError(std::make_pair(MSG, *line));	\
+
+#define ERROR_(MSG, RETVAL)		labpa.SetError(std::make_pair(MSG, *line));	\
 								return RETVAL
+
+#define ERROR(MSG)				labpa.SetError(std::make_pair(MSG, *line));	\
+								return
 
 #define PUSH_BACK(C)			buffer.push_back(C);	\
 								break
@@ -99,7 +103,7 @@ namespace LEX {
 					case '\"':	PUSH_BACK('\"');
 					case '\0':	PUSH_BACK('\0');
 					case '\n':	PUSH_BACK('\n');
-					default:  ERROR("Error begin in line. Invalid string\n", 0);
+					default:  ERROR_("Error begin in line. Invalid string\n", 0);
 				}
 			else if (c == '\n') {
 				buffer.push_back(c);
