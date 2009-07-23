@@ -31,8 +31,9 @@ OBJECTDIR=build/${CND_CONF}/${CND_PLATFORM}
 
 # Object Files
 OBJECTFILES= \
-	${OBJECTDIR}/_ext/_DOTDOT/Common/Src/Common.o \
+	${OBJECTDIR}/_ext/_DOTDOT/SINAST/Src/SINASTNodes.o \
 	${OBJECTDIR}/_ext/_DOTDOT/SINParser/Src/BisonParseArguments.o \
+	${OBJECTDIR}/_ext/_DOTDOT/Common/Src/Common.o \
 	${OBJECTDIR}/_ext/_DOTDOT/SINParser/Src/SINParserBison.o \
 	${OBJECTDIR}/_ext/_DOTDOT/SINLogging/Src/SINLoggerManager.o \
 	${OBJECTDIR}/_ext/_DOTDOT/Tests/SINAST_Test/Src/SINAST_Tester.o \
@@ -44,9 +45,10 @@ OBJECTFILES= \
 	${OBJECTDIR}/_ext/_DOTDOT/SINParser/Src/SINParserManage.o \
 	${OBJECTDIR}/_ext/_DOTDOT/SINCommon/Src/SINBufferedOutputStream.o \
 	${OBJECTDIR}/_ext/_DOTDOT/SINCommon/Src/SINInputStream.o \
+	${OBJECTDIR}/_ext/_DOTDOT/SINParser/Src/LexUtility.o \
 	${OBJECTDIR}/_ext/_DOTDOT/SINCommon/Src/SINCommon.o \
-	${OBJECTDIR}/_ext/_DOTDOT/SINParser/Src/SINLexAnalyser.o \
 	${OBJECTDIR}/_ext/_DOTDOT/SINLogging/Src/SINRecord.o \
+	${OBJECTDIR}/_ext/_DOTDOT/SINParser/Src/SINLexAnalyzer.o \
 	${OBJECTDIR}/_ext/_DOTDOT/SINRuntime/Src/SINMemoryCell.o \
 	${OBJECTDIR}/_ext/_DOTDOT/Tests/SINCommon_Test/Src/SINCommonTester.o \
 	${OBJECTDIR}/_ext/_DOTDOT/Tests/SINTest/Src/SINTestFactory.o \
@@ -93,15 +95,20 @@ dist/Release/GNU-Linux-x86/sin_netbeans: ${OBJECTFILES}
 	${MKDIR} -p dist/Release/GNU-Linux-x86
 	${LINK.cc} -o ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/sin_netbeans ${OBJECTFILES} ${LDLIBSOPTIONS} 
 
-${OBJECTDIR}/_ext/_DOTDOT/Common/Src/Common.o: nbproject/Makefile-${CND_CONF}.mk ../Common/Src/Common.cpp 
-	${MKDIR} -p ${OBJECTDIR}/_ext/_DOTDOT/Common/Src
+${OBJECTDIR}/_ext/_DOTDOT/SINAST/Src/SINASTNodes.o: nbproject/Makefile-${CND_CONF}.mk ../SINAST/Src/SINASTNodes.cpp 
+	${MKDIR} -p ${OBJECTDIR}/_ext/_DOTDOT/SINAST/Src
 	${RM} $@.d
-	$(COMPILE.cc) -O2 -MMD -MP -MF $@.d -o ${OBJECTDIR}/_ext/_DOTDOT/Common/Src/Common.o ../Common/Src/Common.cpp
+	$(COMPILE.cc) -O2 -MMD -MP -MF $@.d -o ${OBJECTDIR}/_ext/_DOTDOT/SINAST/Src/SINASTNodes.o ../SINAST/Src/SINASTNodes.cpp
 
 ${OBJECTDIR}/_ext/_DOTDOT/SINParser/Src/BisonParseArguments.o: nbproject/Makefile-${CND_CONF}.mk ../SINParser/Src/BisonParseArguments.cpp 
 	${MKDIR} -p ${OBJECTDIR}/_ext/_DOTDOT/SINParser/Src
 	${RM} $@.d
 	$(COMPILE.cc) -O2 -MMD -MP -MF $@.d -o ${OBJECTDIR}/_ext/_DOTDOT/SINParser/Src/BisonParseArguments.o ../SINParser/Src/BisonParseArguments.cpp
+
+${OBJECTDIR}/_ext/_DOTDOT/Common/Src/Common.o: nbproject/Makefile-${CND_CONF}.mk ../Common/Src/Common.cpp 
+	${MKDIR} -p ${OBJECTDIR}/_ext/_DOTDOT/Common/Src
+	${RM} $@.d
+	$(COMPILE.cc) -O2 -MMD -MP -MF $@.d -o ${OBJECTDIR}/_ext/_DOTDOT/Common/Src/Common.o ../Common/Src/Common.cpp
 
 ${OBJECTDIR}/_ext/_DOTDOT/SINParser/Src/SINParserBison.o: nbproject/Makefile-${CND_CONF}.mk ../SINParser/Src/SINParserBison.cpp 
 	${MKDIR} -p ${OBJECTDIR}/_ext/_DOTDOT/SINParser/Src
@@ -158,20 +165,25 @@ ${OBJECTDIR}/_ext/_DOTDOT/SINCommon/Src/SINInputStream.o: nbproject/Makefile-${C
 	${RM} $@.d
 	$(COMPILE.cc) -O2 -MMD -MP -MF $@.d -o ${OBJECTDIR}/_ext/_DOTDOT/SINCommon/Src/SINInputStream.o ../SINCommon/Src/SINInputStream.cpp
 
+${OBJECTDIR}/_ext/_DOTDOT/SINParser/Src/LexUtility.o: nbproject/Makefile-${CND_CONF}.mk ../SINParser/Src/LexUtility.cpp 
+	${MKDIR} -p ${OBJECTDIR}/_ext/_DOTDOT/SINParser/Src
+	${RM} $@.d
+	$(COMPILE.cc) -O2 -MMD -MP -MF $@.d -o ${OBJECTDIR}/_ext/_DOTDOT/SINParser/Src/LexUtility.o ../SINParser/Src/LexUtility.cpp
+
 ${OBJECTDIR}/_ext/_DOTDOT/SINCommon/Src/SINCommon.o: nbproject/Makefile-${CND_CONF}.mk ../SINCommon/Src/SINCommon.cpp 
 	${MKDIR} -p ${OBJECTDIR}/_ext/_DOTDOT/SINCommon/Src
 	${RM} $@.d
 	$(COMPILE.cc) -O2 -MMD -MP -MF $@.d -o ${OBJECTDIR}/_ext/_DOTDOT/SINCommon/Src/SINCommon.o ../SINCommon/Src/SINCommon.cpp
 
-${OBJECTDIR}/_ext/_DOTDOT/SINParser/Src/SINLexAnalyser.o: nbproject/Makefile-${CND_CONF}.mk ../SINParser/Src/SINLexAnalyser.cpp 
-	${MKDIR} -p ${OBJECTDIR}/_ext/_DOTDOT/SINParser/Src
-	${RM} $@.d
-	$(COMPILE.cc) -O2 -MMD -MP -MF $@.d -o ${OBJECTDIR}/_ext/_DOTDOT/SINParser/Src/SINLexAnalyser.o ../SINParser/Src/SINLexAnalyser.cpp
-
 ${OBJECTDIR}/_ext/_DOTDOT/SINLogging/Src/SINRecord.o: nbproject/Makefile-${CND_CONF}.mk ../SINLogging/Src/SINRecord.cpp 
 	${MKDIR} -p ${OBJECTDIR}/_ext/_DOTDOT/SINLogging/Src
 	${RM} $@.d
 	$(COMPILE.cc) -O2 -MMD -MP -MF $@.d -o ${OBJECTDIR}/_ext/_DOTDOT/SINLogging/Src/SINRecord.o ../SINLogging/Src/SINRecord.cpp
+
+${OBJECTDIR}/_ext/_DOTDOT/SINParser/Src/SINLexAnalyzer.o: nbproject/Makefile-${CND_CONF}.mk ../SINParser/Src/SINLexAnalyzer.cpp 
+	${MKDIR} -p ${OBJECTDIR}/_ext/_DOTDOT/SINParser/Src
+	${RM} $@.d
+	$(COMPILE.cc) -O2 -MMD -MP -MF $@.d -o ${OBJECTDIR}/_ext/_DOTDOT/SINParser/Src/SINLexAnalyzer.o ../SINParser/Src/SINLexAnalyzer.cpp
 
 ${OBJECTDIR}/_ext/_DOTDOT/SINRuntime/Src/SINMemoryCell.o: nbproject/Makefile-${CND_CONF}.mk ../SINRuntime/Src/SINMemoryCell.cpp 
 	${MKDIR} -p ${OBJECTDIR}/_ext/_DOTDOT/SINRuntime/Src

@@ -14,11 +14,22 @@ namespace SIN {
 
 			//SINTESTS_TESTDEF(Alloc,
 			//);
+			namespace {
+				struct A { int a,b,c; double d,e,f; long double g,h,i,j,k; };
+				class B {
+					int poo;
+					A* as;
+				public:
+					B(int _poo, A* _as): poo(_poo), as(_as) { }
+					int Poo(void) const { return poo; }
+					A* As(void) const { return as; }
+				};
+			}
 			static void test_Alloc(void) {
 				class AllocTest : public Test {
 				public:                                         
-					AllocTest(void): Test("Alloc" "Test") { }   
-				protected:                                      
+					AllocTest(void): Test("Alloc" "Test") { }
+				protected:
 					virtual void TestLogic(void) {
 						int* ip = SINEW(int);
                         *SINPTR(ip) = 5;
@@ -29,8 +40,7 @@ namespace SIN {
 						ASSERT(SIN::Alloc::MaximumAllocated() == sizeof(*ip));
 						ASSERT(SIN::Alloc::IsValid(ip) == true);
 						ASSERT(*SINPTR(ip) == 5);
-						
-						struct A { int a,b,c; double d,e,f; long double g,h,i,j,k; };
+
 						A* a = SINEW(A);
 						SINPTR(a)->a = 12;
 
@@ -106,14 +116,7 @@ namespace SIN {
 						ASSERT(SIN::Alloc::IsValid(dp) == false);
 						ASSERT(SIN::Alloc::IsValid(as) == true);
 
-						class B {
-							int poo;
-							A* as;
-						public:
-							B(int _poo, A* _as): poo(_poo), as(_as) { }
-							int Poo(void) const { return poo; }
-							A* As(void) const { return as; }
-						};
+
 						class B* bp = SINEWCLASS(class B, (12, as));
 						SINASSERT(sizeof(*bp) < sizeof(*a));
 						SINASSERT(sizeof(*bp) < sizeof(as_size));
