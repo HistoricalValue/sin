@@ -1,5 +1,5 @@
-#ifndef __BISON_PARSER_ARGUMENTS_H__
-#define __BISON_PARSER_ARGUMENTS_H__
+#ifndef __LEX_AND_BISON_PARSER_ARGUMENTS_H__
+#define __LEX_AND_BISON_PARSER_ARGUMENTS_H__
 
 
 #include <list>
@@ -12,14 +12,14 @@
 namespace SIN {
 		
 		
-	class BisonParseArguments {
+	class LexAndBisonParseArguments {
 	public:
 		typedef std::list<ASTNode *>		NodesList;
 		typedef std::pair<String, unsigned>	ErrorInfo;
 		typedef std::list<ErrorInfo>		Errors;
 
-		BisonParseArguments(void);
-		~BisonParseArguments();
+		LexAndBisonParseArguments(void);
+		~LexAndBisonParseArguments();
 
 
 		bool	HasError () const;
@@ -52,4 +52,4 @@ namespace SIN {
 }	//namespace SIN
 
 
-#endif //__BISON_PARSER_ARGUMENTS_H__
+#endif //__LEX_AND_BISON_PARSER_ARGUMENTS_H__

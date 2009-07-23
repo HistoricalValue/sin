@@ -83,44 +83,11 @@
 	#endif
 
 
-	
-	//#include "Common.h"
-	//#include "SINLogger.h"
-	//#include "SINConstants.h"
-	//#include "SINLoggerManager.h"
-	#include "BisonParseArguments.h"
-	
 
 	#include "SINASTNode.h"
-	
 	#include "SINParserManage.h"
+	#include "LexAndBisonParseArguments.h"
 	
-/*	
-	#include "ParserManageSinCode.h"
-	#include "ParserManageStatements.h"
-	#include "ParserManageStatement.h"
-	#include "ParserManageExpression.h"
-	#include "ParserManageTerm.h"
-	#include "ParserManageAssignExpression.h"
-	#include "ParserManagePrimary.h"
-	#include "ParserManageLValue.h"
-	#include "ParserManageMember.h"
-	#include "ParserManageCall.h"
-	#include "ParserManageCallSuffix.h"
-	#include "ParserManageNormalCall.h"
-	#include "ParserManageMethodCall.h"
-	#include "ParserManageExpressionList.h"
-	#include "ParserManageObjectDefinition.h"
-	#include "ParserManageObjectList.h"
-	#include "ParserManageBlock.h"
-	#include "ParserManageFunctionDefinition.h"
-	#include "ParserManageConstant.h"
-	#include "ParserManageIDList.h"
-	#include "ParserManageIfStatement.h"
-	#include "ParserManageWhileStatement.h"
-	#include "ParserManageForStatement.h"
-	#include "ParserManageReturnStatement.h"
-*/
 
 	////////////////////////////////////////////////////////////////////////
 	// defines
@@ -131,13 +98,13 @@
 	////////////////////////////////////////////////////////////////////////
 	// functions definitions
 	
-	void yyerror (SIN::BisonParseArguments & bpa, char const* yaccProvidedMessage);
+	void yyerror (SIN::LexAndBisonParseArguments & bpa, char const* yaccProvidedMessage);
 	int PrepareForFile(const char * filePath);
 	int PrepareForString(const char * str);
 
 
-	int yylex (void);
-
+	int yylex(SIN::LexAndBisonParseArguments & bpa);
+	//
 	extern int yylineno;
 	extern char* yytext;
 	extern FILE* yyin;	
@@ -604,16 +571,16 @@ static const yytype_int8 yyrhs[] =
 /* YYRLINE[YYN] -- source line where rule number YYN was defined.  */
 static const yytype_uint16 yyrline[] =
 {
-       0,   172,   172,   180,   181,   186,   187,   188,   189,   190,
-     191,   192,   193,   194,   195,   196,   201,   202,   203,   204,
-     205,   206,   207,   208,   209,   210,   211,   212,   213,   214,
-     215,   216,   217,   222,   223,   224,   225,   226,   231,   232,
-     233,   234,   235,   236,   237,   238,   243,   248,   249,   250,
-     251,   252,   257,   258,   259,   260,   265,   266,   267,   268,
-     274,   275,   276,   281,   282,   287,   292,   297,   298,   303,
-     304,   309,   310,   315,   316,   321,   322,   323,   328,   328,
-     333,   334,   339,   340,   344,   345,   346,   347,   348,   352,
-     353,   358,   359,   364,   365,   368,   371,   374,   375
+       0,   140,   140,   148,   149,   154,   155,   156,   157,   158,
+     159,   160,   161,   162,   163,   164,   169,   170,   171,   172,
+     173,   174,   175,   176,   177,   178,   179,   180,   181,   182,
+     183,   184,   185,   190,   191,   192,   193,   194,   199,   200,
+     201,   202,   203,   204,   205,   206,   211,   216,   217,   218,
+     219,   220,   225,   226,   227,   228,   233,   234,   235,   236,
+     242,   243,   244,   249,   250,   255,   260,   265,   266,   271,
+     272,   277,   278,   283,   284,   289,   290,   291,   296,   296,
+     301,   302,   307,   308,   312,   313,   314,   315,   316,   320,
+     321,   326,   327,   332,   333,   336,   339,   342,   343
 };
 #endif
 
@@ -1024,7 +991,7 @@ while (YYID (0))
 #ifdef YYLEX_PARAM
 # define YYLEX yylex (YYLEX_PARAM)
 #else
-# define YYLEX yylex ()
+# define YYLEX yylex (bpa)
 #endif
 
 /* Enable debugging if requested.  */
@@ -1061,14 +1028,14 @@ do {									  \
 #if (defined __STDC__ || defined __C99__FUNC__ \
      || defined __cplusplus || defined _MSC_VER)
 static void
-yy_symbol_value_print (FILE *yyoutput, int yytype, YYSTYPE const * const yyvaluep, SIN::BisonParseArguments & bpa)
+yy_symbol_value_print (FILE *yyoutput, int yytype, YYSTYPE const * const yyvaluep, SIN::LexAndBisonParseArguments & bpa)
 #else
 static void
 yy_symbol_value_print (yyoutput, yytype, yyvaluep, bpa)
     FILE *yyoutput;
     int yytype;
     YYSTYPE const * const yyvaluep;
-    SIN::BisonParseArguments & bpa;
+    SIN::LexAndBisonParseArguments & bpa;
 #endif
 {
   if (!yyvaluep)
@@ -1095,14 +1062,14 @@ yy_symbol_value_print (yyoutput, yytype, yyvaluep, bpa)
 #if (defined __STDC__ || defined __C99__FUNC__ \
      || defined __cplusplus || defined _MSC_VER)
 static void
-yy_symbol_print (FILE *yyoutput, int yytype, YYSTYPE const * const yyvaluep, SIN::BisonParseArguments & bpa)
+yy_symbol_print (FILE *yyoutput, int yytype, YYSTYPE const * const yyvaluep, SIN::LexAndBisonParseArguments & bpa)
 #else
 static void
 yy_symbol_print (yyoutput, yytype, yyvaluep, bpa)
     FILE *yyoutput;
     int yytype;
     YYSTYPE const * const yyvaluep;
-    SIN::BisonParseArguments & bpa;
+    SIN::LexAndBisonParseArguments & bpa;
 #endif
 {
   if (yytype < YYNTOKENS)
@@ -1153,13 +1120,13 @@ do {								\
 #if (defined __STDC__ || defined __C99__FUNC__ \
      || defined __cplusplus || defined _MSC_VER)
 static void
-yy_reduce_print (YYSTYPE *yyvsp, int yyrule, SIN::BisonParseArguments & bpa)
+yy_reduce_print (YYSTYPE *yyvsp, int yyrule, SIN::LexAndBisonParseArguments & bpa)
 #else
 static void
 yy_reduce_print (yyvsp, yyrule, bpa)
     YYSTYPE *yyvsp;
     int yyrule;
-    SIN::BisonParseArguments & bpa;
+    SIN::LexAndBisonParseArguments & bpa;
 #endif
 {
   int yynrhs = yyr2[yyrule];
@@ -1432,14 +1399,14 @@ yysyntax_error (char *yyresult, int yystate, int yychar)
 #if (defined __STDC__ || defined __C99__FUNC__ \
      || defined __cplusplus || defined _MSC_VER)
 static void
-yydestruct (const char *yymsg, int yytype, YYSTYPE *yyvaluep, SIN::BisonParseArguments & bpa)
+yydestruct (const char *yymsg, int yytype, YYSTYPE *yyvaluep, SIN::LexAndBisonParseArguments & bpa)
 #else
 static void
 yydestruct (yymsg, yytype, yyvaluep, bpa)
     const char *yymsg;
     int yytype;
     YYSTYPE *yyvaluep;
-    SIN::BisonParseArguments & bpa;
+    SIN::LexAndBisonParseArguments & bpa;
 #endif
 {
   YYUSE (yyvaluep);
@@ -1466,7 +1433,7 @@ int yyparse ();
 #endif
 #else /* ! YYPARSE_PARAM */
 #if defined __STDC__ || defined __cplusplus
-int yyparse (SIN::BisonParseArguments & bpa);
+int yyparse (SIN::LexAndBisonParseArguments & bpa);
 #else
 int yyparse ();
 #endif
@@ -1502,11 +1469,11 @@ yyparse (YYPARSE_PARAM)
 #if (defined __STDC__ || defined __C99__FUNC__ \
      || defined __cplusplus || defined _MSC_VER)
 int
-yyparse (SIN::BisonParseArguments & bpa)
+yyparse (SIN::LexAndBisonParseArguments & bpa)
 #else
 int
 yyparse (bpa)
-    SIN::BisonParseArguments & bpa;
+    SIN::LexAndBisonParseArguments & bpa;
 #endif
 #endif
 {
@@ -2453,7 +2420,7 @@ yyreturn:
 
 
 
-void yyerror (SIN::BisonParseArguments & bpa, char const* yaccProvidedMessage)
+void yyerror (SIN::LexAndBisonParseArguments & bpa, char const* yaccProvidedMessage)
 {
 	//fprintf(stderr, "%s: at line %d, before token: >%s<\n", yaccProvidedMessage, yylineno, yytext);
 	bpa.SetError(std::make_pair(yaccProvidedMessage, yylineno));

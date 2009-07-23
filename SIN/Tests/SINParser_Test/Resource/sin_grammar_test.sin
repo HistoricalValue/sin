@@ -1,5 +1,9 @@
-
+/*
 a = 12
 
 
 a = a and b er w;
+*/
+
+a = "m\\alakas\nmala\tkas";
+a = "malakas2\tmalakas2";

@@ -17,7 +17,7 @@
 
 // TODO those should be somewhere?
 extern int PrepareForFile(const char * filePath);
-extern int yyparse(SIN::BisonParseArguments &);
+extern int yyparse(SIN::LexAndBisonParseArguments &);
 
 
 namespace SIN {

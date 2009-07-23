@@ -7,7 +7,7 @@
 #include <iostream>
 #include "SINString.h"
 #include "SINASTNode.h"
-#include "BisonParseArguments.h"
+#include "LexAndBisonParseArguments.h"
 
 namespace SIN {
 
@@ -28,7 +28,7 @@ namespace SIN {
 		
 
 	private:
-		BisonParseArguments bpa;
+		LexAndBisonParseArguments bpa;
 
 		
 	}; // class ParserAPI

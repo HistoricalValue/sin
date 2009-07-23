@@ -3,11 +3,14 @@
 	#include "LexUtility.h"
 	#include "SINParser.h" /**/
 	#include "SINString.h"
+	#include "LexAndBisonParseArguments.h"
+	
 	#define YY_NEVER_INTERACTIVE 1
-	
-	
-	static char InputWrapper (void);//		{ return yyinput(); }
-	static void UnputWrapper (char c);//	{ unput(c); }
+
+	#define YY_DECL int yylex(SIN::LexAndBisonParseArguments & bpa)
+
+	static char InputWrapper (void);
+	static void UnputWrapper (char c);
 
 %}
 
@@ -26,9 +29,11 @@ underscore		[_]
 id				{letter}({letter}|{underscore}|{digit})*
 
 
-string			\"([^"\n]|\\\")*\"
-number			{digit}+(\.{digit}+)?
+string			"\""
+ccomments		"\*"
 lineComm		\/\/.*
+number			{digit}+(\.{digit}+)?
+
 
 %%
 
@@ -89,23 +94,23 @@ lineComm		\/\/.*
 "or"			{ return OR;		}	
 
 
-"/*"			{	LEX::LexUtility::IgnoreCStyleComments(InputWrapper, UnputWrapper, &yylineno); }
+ccomments		{	bpa.HasError(); LEX::LexUtility::IgnoreCStyleComments(InputWrapper, UnputWrapper, &yylineno); }
 
-{ws}			{}
 {lineComm}		{}
 
-{id}			{
+{ws}			{}
 
+{id}			{
 					yylval.stringV = LEX::LexUtility::SaveStr(yytext);
-					UnputWrapper(InputWrapper());
 					return ID;
 				}
+				
 {number}		{ 
 					yylval.realV = atof(yytext);
 					return NUMBER;	
 				}
 				
-"\""		{ 
+{string}		{ 
 					yylval.stringV = LEX::LexUtility::SaveQuotedString(InputWrapper, &yylineno);
 					return STRING;	
 				}

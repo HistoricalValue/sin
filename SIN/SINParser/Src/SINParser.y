@@ -20,44 +20,11 @@
 	#endif
 
 
-	
-	//#include "Common.h"
-	//#include "SINLogger.h"
-	//#include "SINConstants.h"
-	//#include "SINLoggerManager.h"
-	#include "BisonParseArguments.h"
-	
 
 	#include "SINASTNode.h"
-	
 	#include "SINParserManage.h"
+	#include "LexAndBisonParseArguments.h"
 	
-/*	
-	#include "ParserManageSinCode.h"
-	#include "ParserManageStatements.h"
-	#include "ParserManageStatement.h"
-	#include "ParserManageExpression.h"
-	#include "ParserManageTerm.h"
-	#include "ParserManageAssignExpression.h"
-	#include "ParserManagePrimary.h"
-	#include "ParserManageLValue.h"
-	#include "ParserManageMember.h"
-	#include "ParserManageCall.h"
-	#include "ParserManageCallSuffix.h"
-	#include "ParserManageNormalCall.h"
-	#include "ParserManageMethodCall.h"
-	#include "ParserManageExpressionList.h"
-	#include "ParserManageObjectDefinition.h"
-	#include "ParserManageObjectList.h"
-	#include "ParserManageBlock.h"
-	#include "ParserManageFunctionDefinition.h"
-	#include "ParserManageConstant.h"
-	#include "ParserManageIDList.h"
-	#include "ParserManageIfStatement.h"
-	#include "ParserManageWhileStatement.h"
-	#include "ParserManageForStatement.h"
-	#include "ParserManageReturnStatement.h"
-*/
 
 	////////////////////////////////////////////////////////////////////////
 	// defines
@@ -68,13 +35,13 @@
 	////////////////////////////////////////////////////////////////////////
 	// functions definitions
 	
-	void yyerror (SIN::BisonParseArguments & bpa, char const* yaccProvidedMessage);
+	void yyerror (SIN::LexAndBisonParseArguments & bpa, char const* yaccProvidedMessage);
 	int PrepareForFile(const char * filePath);
 	int PrepareForString(const char * str);
 
 
-	int yylex (void);
-
+	int yylex(SIN::LexAndBisonParseArguments & bpa);
+	//
 	extern int yylineno;
 	extern char* yytext;
 	extern FILE* yyin;	
@@ -82,7 +49,8 @@
 
 
 
-%parse-param {SIN::BisonParseArguments & bpa}
+%parse-param {SIN::LexAndBisonParseArguments & bpa}
+%lex-param   {SIN::LexAndBisonParseArguments & bpa}
 
 
 
@@ -377,7 +345,7 @@ returnstmt:		RETURN ';'			{	SIN::ParserManage::Manage_ReturnStatement_Return(&($
 
 %%
 
-void yyerror (SIN::BisonParseArguments & bpa, char const* yaccProvidedMessage)
+void yyerror (SIN::LexAndBisonParseArguments & bpa, char const* yaccProvidedMessage)
 {
 	//fprintf(stderr, "%s: at line %d, before token: >%s<\n", yaccProvidedMessage, yylineno, yytext);
 	bpa.SetError(std::make_pair(yaccProvidedMessage, yylineno));

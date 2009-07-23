@@ -1,4 +1,4 @@
-#include "BisonParseArguments.h"
+#include "LexAndBisonParseArguments.h"
 
 #include <algorithm>
 #include <functional>
@@ -12,7 +12,7 @@
 
 
 
-#define SIN_BISON_PARSE_ARGUMENTS_LOGGER_NAME "SIN::BisonParseArguments"
+#define SIN_BISON_PARSE_ARGUMENTS_LOGGER_NAME "SIN::LexAndBisonParseArguments"
 
 
 namespace SIN {
@@ -30,7 +30,7 @@ namespace SIN {
 
 	//-----------------------------------------------------------------
 
-	BisonParseArguments::BisonParseArguments(void) : 
+	LexAndBisonParseArguments::LexAndBisonParseArguments(void) : 
 		hasError(false), root(static_cast<ASTNode *>(0))
 	{
 		Type<LoggerManager>::ref lm(*LoggerManager::SingletonGetInstance());
@@ -41,61 +41,61 @@ namespace SIN {
 	
 	//-----------------------------------------------------------------
 
-	BisonParseArguments::~BisonParseArguments() 
+	LexAndBisonParseArguments::~LexAndBisonParseArguments() 
 		{ CleanErrosAndNodes(); }
 
 	
 	//-----------------------------------------------------------------
 
-	bool BisonParseArguments::HasError() const 
+	bool LexAndBisonParseArguments::HasError() const 
 		{ return hasError; }
 
 
 	//-----------------------------------------------------------------
-	void BisonParseArguments::SetError (const ErrorInfo & ei) {
+	void LexAndBisonParseArguments::SetError (const ErrorInfo & ei) {
 		hasError = true;
 		errors.push_back(ei);
 	}
 
 	//-----------------------------------------------------------------
 	
-	void BisonParseArguments::WriteFine(const String & msg) 
+	void LexAndBisonParseArguments::WriteFine(const String & msg) 
 		{ logger_p->Fine(msg);	}
 
 	
 	//-----------------------------------------------------------------
 	
-	void BisonParseArguments::SetRoot(ASTNode * node) 
+	void LexAndBisonParseArguments::SetRoot(ASTNode * node) 
 		{ root = node; }
 
 
 	//-----------------------------------------------------------------
 	
-	ASTNode * BisonParseArguments::GetRoot() const 
+	ASTNode * LexAndBisonParseArguments::GetRoot() const 
 		{ return root; }
 
 
 	//-----------------------------------------------------------------
 	
-	const BisonParseArguments::Errors &	BisonParseArguments::GetErros() const 
+	const LexAndBisonParseArguments::Errors &	LexAndBisonParseArguments::GetErros() const 
 		{ return errors; }
 
 
 	//-----------------------------------------------------------------
 	
-	void BisonParseArguments::CleanNodes (void) 
+	void LexAndBisonParseArguments::CleanNodes (void) 
 		{ std::for_each(nodesList.begin(), nodesList.end(), CleanListFunctor()); }
 
 	
 	//-----------------------------------------------------------------
 	
-	void BisonParseArguments::CleanErrors (void) 
+	void LexAndBisonParseArguments::CleanErrors (void) 
 		{ errors.clear(); }
 
 	
 	//-----------------------------------------------------------------
 	
-	void BisonParseArguments::CleanErrosAndNodes (void) {
+	void LexAndBisonParseArguments::CleanErrosAndNodes (void) {
 		CleanNodes();
 		CleanErrors();
 	}
