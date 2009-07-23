@@ -5,8 +5,13 @@ namespace LEX {
 	class LexUtility {
 	public:
 		static char *	SaveStr(const char * yytext);
-		static int		IgnoreCStyleComments(char * yytext);
-		static void		TestingInputAndUnput(char * yytext);
+		
+		static char *	SaveQuotedString(char (*input)	(void),
+										 int *	line);
+		
+		static void		IgnoreCStyleComments( char (*input)	(void),
+											  void (*unput) (char),
+											  int *	line);
 	};
 }	//namespace LEX
 

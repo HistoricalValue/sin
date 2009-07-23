@@ -89,7 +89,7 @@ lineComm		\/\/.*
 "or"			{ return OR;		}	
 
 
-"/*"			{	LEX::LexUtility::IgnoreCStyleComments(yytext); }
+"/*"			{	LEX::LexUtility::IgnoreCStyleComments(InputWrapper, UnputWrapper, &yylineno); }
 
 {ws}			{}
 {lineComm}		{}
@@ -105,8 +105,8 @@ lineComm		\/\/.*
 					return NUMBER;	
 				}
 				
-{string}		{ 
-					yylval.stringV = LEX::LexUtility::SaveStr(yytext);
+"\""		{ 
+					yylval.stringV = LEX::LexUtility::SaveQuotedString(InputWrapper, &yylineno);
 					return STRING;	
 				}
 
