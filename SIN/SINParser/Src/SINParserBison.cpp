@@ -91,19 +91,19 @@
 
 	////////////////////////////////////////////////////////////////////////
 	// defines
-	#define MESSAGE(STR)	bpa.WriteFine(#STR " destructed")
+	#define MESSAGE(STR)	fabpa.WriteFine(#STR " destructed")
 
 
 
 	////////////////////////////////////////////////////////////////////////
 	// functions definitions
 	
-	void yyerror (SIN::LexAndBisonParseArguments & bpa, char const* yaccProvidedMessage);
+	void yyerror (SIN::LexAndBisonParseArguments & fabpa, char const* yaccProvidedMessage);
 	int PrepareForFile(const char * filePath);
 	int PrepareForString(const char * str);
 
 
-	int yylex(SIN::LexAndBisonParseArguments & bpa);
+	int yylex(SIN::LexAndBisonParseArguments & fabpa);
 	//
 	extern int yylineno;
 	extern char* yytext;
@@ -934,7 +934,7 @@ do								\
     }								\
   else								\
     {								\
-      yyerror (bpa, YY_("syntax error: cannot back up")); \
+      yyerror (fabpa, YY_("syntax error: cannot back up")); \
       YYERROR;							\
     }								\
 while (YYID (0))
@@ -991,7 +991,7 @@ while (YYID (0))
 #ifdef YYLEX_PARAM
 # define YYLEX yylex (YYLEX_PARAM)
 #else
-# define YYLEX yylex (bpa)
+# define YYLEX yylex (fabpa)
 #endif
 
 /* Enable debugging if requested.  */
@@ -1014,7 +1014,7 @@ do {									  \
     {									  \
       YYFPRINTF (stderr, "%s ", Title);					  \
       yy_symbol_print (stderr,						  \
-		  Type, Value, bpa); \
+		  Type, Value, fabpa); \
       YYFPRINTF (stderr, "\n");						  \
     }									  \
 } while (YYID (0))
@@ -1028,19 +1028,19 @@ do {									  \
 #if (defined __STDC__ || defined __C99__FUNC__ \
      || defined __cplusplus || defined _MSC_VER)
 static void
-yy_symbol_value_print (FILE *yyoutput, int yytype, YYSTYPE const * const yyvaluep, SIN::LexAndBisonParseArguments & bpa)
+yy_symbol_value_print (FILE *yyoutput, int yytype, YYSTYPE const * const yyvaluep, SIN::LexAndBisonParseArguments & fabpa)
 #else
 static void
-yy_symbol_value_print (yyoutput, yytype, yyvaluep, bpa)
+yy_symbol_value_print (yyoutput, yytype, yyvaluep, fabpa)
     FILE *yyoutput;
     int yytype;
     YYSTYPE const * const yyvaluep;
-    SIN::LexAndBisonParseArguments & bpa;
+    SIN::LexAndBisonParseArguments & fabpa;
 #endif
 {
   if (!yyvaluep)
     return;
-  YYUSE (bpa);
+  YYUSE (fabpa);
 # ifdef YYPRINT
   if (yytype < YYNTOKENS)
     YYPRINT (yyoutput, yytoknum[yytype], *yyvaluep);
@@ -1062,14 +1062,14 @@ yy_symbol_value_print (yyoutput, yytype, yyvaluep, bpa)
 #if (defined __STDC__ || defined __C99__FUNC__ \
      || defined __cplusplus || defined _MSC_VER)
 static void
-yy_symbol_print (FILE *yyoutput, int yytype, YYSTYPE const * const yyvaluep, SIN::LexAndBisonParseArguments & bpa)
+yy_symbol_print (FILE *yyoutput, int yytype, YYSTYPE const * const yyvaluep, SIN::LexAndBisonParseArguments & fabpa)
 #else
 static void
-yy_symbol_print (yyoutput, yytype, yyvaluep, bpa)
+yy_symbol_print (yyoutput, yytype, yyvaluep, fabpa)
     FILE *yyoutput;
     int yytype;
     YYSTYPE const * const yyvaluep;
-    SIN::LexAndBisonParseArguments & bpa;
+    SIN::LexAndBisonParseArguments & fabpa;
 #endif
 {
   if (yytype < YYNTOKENS)
@@ -1077,7 +1077,7 @@ yy_symbol_print (yyoutput, yytype, yyvaluep, bpa)
   else
     YYFPRINTF (yyoutput, "nterm %s (", yytname[yytype]);
 
-  yy_symbol_value_print (yyoutput, yytype, yyvaluep, bpa);
+  yy_symbol_value_print (yyoutput, yytype, yyvaluep, fabpa);
   YYFPRINTF (yyoutput, ")");
 }
 
@@ -1120,13 +1120,13 @@ do {								\
 #if (defined __STDC__ || defined __C99__FUNC__ \
      || defined __cplusplus || defined _MSC_VER)
 static void
-yy_reduce_print (YYSTYPE *yyvsp, int yyrule, SIN::LexAndBisonParseArguments & bpa)
+yy_reduce_print (YYSTYPE *yyvsp, int yyrule, SIN::LexAndBisonParseArguments & fabpa)
 #else
 static void
-yy_reduce_print (yyvsp, yyrule, bpa)
+yy_reduce_print (yyvsp, yyrule, fabpa)
     YYSTYPE *yyvsp;
     int yyrule;
-    SIN::LexAndBisonParseArguments & bpa;
+    SIN::LexAndBisonParseArguments & fabpa;
 #endif
 {
   int yynrhs = yyr2[yyrule];
@@ -1140,7 +1140,7 @@ yy_reduce_print (yyvsp, yyrule, bpa)
       YYFPRINTF (stderr, "   $%d = ", yyi + 1);
       yy_symbol_print (stderr, yyrhs[yyprhs[yyrule] + yyi],
 		       &(yyvsp[(yyi + 1) - (yynrhs)])
-		       		       , bpa);
+		       		       , fabpa);
       YYFPRINTF (stderr, "\n");
     }
 }
@@ -1148,7 +1148,7 @@ yy_reduce_print (yyvsp, yyrule, bpa)
 # define YY_REDUCE_PRINT(Rule)		\
 do {					\
   if (yydebug)				\
-    yy_reduce_print (yyvsp, Rule, bpa); \
+    yy_reduce_print (yyvsp, Rule, fabpa); \
 } while (YYID (0))
 
 /* Nonzero means print parse trace.  It is left uninitialized so that
@@ -1399,18 +1399,18 @@ yysyntax_error (char *yyresult, int yystate, int yychar)
 #if (defined __STDC__ || defined __C99__FUNC__ \
      || defined __cplusplus || defined _MSC_VER)
 static void
-yydestruct (const char *yymsg, int yytype, YYSTYPE *yyvaluep, SIN::LexAndBisonParseArguments & bpa)
+yydestruct (const char *yymsg, int yytype, YYSTYPE *yyvaluep, SIN::LexAndBisonParseArguments & fabpa)
 #else
 static void
-yydestruct (yymsg, yytype, yyvaluep, bpa)
+yydestruct (yymsg, yytype, yyvaluep, fabpa)
     const char *yymsg;
     int yytype;
     YYSTYPE *yyvaluep;
-    SIN::LexAndBisonParseArguments & bpa;
+    SIN::LexAndBisonParseArguments & fabpa;
 #endif
 {
   YYUSE (yyvaluep);
-  YYUSE (bpa);
+  YYUSE (fabpa);
 
   if (!yymsg)
     yymsg = "Deleting";
@@ -1433,7 +1433,7 @@ int yyparse ();
 #endif
 #else /* ! YYPARSE_PARAM */
 #if defined __STDC__ || defined __cplusplus
-int yyparse (SIN::LexAndBisonParseArguments & bpa);
+int yyparse (SIN::LexAndBisonParseArguments & fabpa);
 #else
 int yyparse ();
 #endif
@@ -1469,11 +1469,11 @@ yyparse (YYPARSE_PARAM)
 #if (defined __STDC__ || defined __C99__FUNC__ \
      || defined __cplusplus || defined _MSC_VER)
 int
-yyparse (SIN::LexAndBisonParseArguments & bpa)
+yyparse (SIN::LexAndBisonParseArguments & fabpa)
 #else
 int
-yyparse (bpa)
-    SIN::LexAndBisonParseArguments & bpa;
+yyparse (fabpa)
+    SIN::LexAndBisonParseArguments & fabpa;
 #endif
 #endif
 {
@@ -1722,7 +1722,7 @@ yyreduce:
 
     {	
 							SIN::ParserManage::Manage_SinCode((yyvsp[(1) - (1)].AST), &((yyval.AST)));	
-							bpa.SetRoot((yyval.AST));
+							fabpa.SetRoot((yyval.AST));
 						}
     break;
 
@@ -2242,7 +2242,7 @@ yyerrlab:
     {
       ++yynerrs;
 #if ! YYERROR_VERBOSE
-      yyerror (bpa, YY_("syntax error"));
+      yyerror (fabpa, YY_("syntax error"));
 #else
       {
 	YYSIZE_T yysize = yysyntax_error (0, yystate, yychar);
@@ -2266,11 +2266,11 @@ yyerrlab:
 	if (0 < yysize && yysize <= yymsg_alloc)
 	  {
 	    (void) yysyntax_error (yymsg, yystate, yychar);
-	    yyerror (bpa, yymsg);
+	    yyerror (fabpa, yymsg);
 	  }
 	else
 	  {
-	    yyerror (bpa, YY_("syntax error"));
+	    yyerror (fabpa, YY_("syntax error"));
 	    if (yysize != 0)
 	      goto yyexhaustedlab;
 	  }
@@ -2294,7 +2294,7 @@ yyerrlab:
       else
 	{
 	  yydestruct ("Error: discarding",
-		      yytoken, &yylval, bpa);
+		      yytoken, &yylval, fabpa);
 	  yychar = YYEMPTY;
 	}
     }
@@ -2350,7 +2350,7 @@ yyerrlab1:
 
 
       yydestruct ("Error: popping",
-		  yystos[yystate], yyvsp, bpa);
+		  yystos[yystate], yyvsp, fabpa);
       YYPOPSTACK (1);
       yystate = *yyssp;
       YY_STACK_PRINT (yyss, yyssp);
@@ -2385,7 +2385,7 @@ yyabortlab:
 | yyexhaustedlab -- memory exhaustion comes here.  |
 `-------------------------------------------------*/
 yyexhaustedlab:
-  yyerror (bpa, YY_("memory exhausted"));
+  yyerror (fabpa, YY_("memory exhausted"));
   yyresult = 2;
   /* Fall through.  */
 #endif
@@ -2393,7 +2393,7 @@ yyexhaustedlab:
 yyreturn:
   if (yychar != YYEMPTY)
      yydestruct ("Cleanup: discarding lookahead",
-		 yytoken, &yylval, bpa);
+		 yytoken, &yylval, fabpa);
   /* Do not reclaim the symbols of the rule which action triggered
      this YYABORT or YYACCEPT.  */
   YYPOPSTACK (yylen);
@@ -2401,7 +2401,7 @@ yyreturn:
   while (yyssp != yyss)
     {
       yydestruct ("Cleanup: popping",
-		  yystos[*yyssp], yyvsp, bpa);
+		  yystos[*yyssp], yyvsp, fabpa);
       YYPOPSTACK (1);
     }
 #ifndef yyoverflow
@@ -2420,10 +2420,10 @@ yyreturn:
 
 
 
-void yyerror (SIN::LexAndBisonParseArguments & bpa, char const* yaccProvidedMessage)
+void yyerror (SIN::LexAndBisonParseArguments & fabpa, char const* yaccProvidedMessage)
 {
 	//fprintf(stderr, "%s: at line %d, before token: >%s<\n", yaccProvidedMessage, yylineno, yytext);
-	bpa.SetError(std::make_pair(yaccProvidedMessage, yylineno));
+	fabpa.SetError(std::make_pair(yaccProvidedMessage, yylineno));
 	//return -1;
 }
 

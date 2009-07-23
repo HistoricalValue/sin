@@ -2,16 +2,18 @@
 
 
 #include <string>
+#include <utility>
 #include <stdio.h>
 #include <string.h>
 
 
-#define EOF_ERROR	fprintf(stderr, "Error. Invalid Comment at End of File\n");	\
-					return
+#define ERROR(MSG, RETVAL)		labpa.SetError(std::make_pair(MSG, *line));	\
+								return RETVAL
 
-#define PUSH_BACK(c)	buffer.push_back(c);	\
-						break
+#define PUSH_BACK(C)			buffer.push_back(C);	\
+								break
 
+namespace SIN {
 namespace LEX {
 
 	//-----------------------------------------------------------------
@@ -32,7 +34,8 @@ namespace LEX {
 	void LexUtility::IgnoreCStyleComments(	
 		char (*input)	(void),
 		void (*unput)	(char),
-		int * line
+		int * line,
+		SIN::LexAndBisonParseArguments & labpa
 	) {
 		char c				= '\0';
 		unsigned countSlash = 1;
@@ -58,17 +61,15 @@ namespace LEX {
 				default:	break;
 			}	/*end of switch*/
 			
-			if (countSlash < 0){            /*fenetai oti exei klisei kapio sxoleio*/
-				fprintf(stderr, "Error. Invalid Comment line%d\n", *line);/*xwreis na exei ani3ei*/
-				return;
-			}
+			if (countSlash < 0)
+				{ ERROR("Error. Invalid Comment"); }
 
 			if(!countSlash)             /*Oti exei ani3ei exei lisei*/
 				break;
 		}/*end while*/
 
 		if( c == EOF ) 
-			{ EOF_ERROR; }
+			{ ERROR("Error. Invalid Comment at End of File"); }
 	}
 
 
@@ -76,7 +77,8 @@ namespace LEX {
 
 	char * LexUtility::SaveQuotedString(
 		char (*input) (void),
-		int * line
+		int * line,
+		SIN::LexAndBisonParseArguments & labpa
 	){
 		char c = '\0';
 		std::string buffer;
@@ -97,7 +99,7 @@ namespace LEX {
 					case '\"':	PUSH_BACK('\"');
 					case '\0':	PUSH_BACK('\0');
 					case '\n':	PUSH_BACK('\n');
-					default:  fprintf(stderr, "Error begin in line %d. Invalid string\n", line); return 0; 
+					default:  ERROR("Error begin in line. Invalid string\n", 0);
 				}
 			else if (c == '\n') {
 				buffer.push_back(c);
@@ -109,4 +111,5 @@ namespace LEX {
 		return SaveStr(buffer.c_str());
 	}
 
-}	//namespace lex
+}	//namespace LEX
+}	//namespace SIN

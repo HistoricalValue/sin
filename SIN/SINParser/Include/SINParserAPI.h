@@ -19,7 +19,7 @@ namespace SIN {
 		// return !=0 on error
 		int		ParseFile(const String &_fileName);
         int		ParseText(const char *_input);
-		bool	HasError(void) const { return bpa.HasError(); }
+		bool	HasError(void) const { return fabpa.HasError(); }
 		void	DeleteAST(void); //delete the fucking AST
 		
 		// If Parse* returned no error, this returns the produced AST
@@ -28,7 +28,7 @@ namespace SIN {
 		
 
 	private:
-		LexAndBisonParseArguments bpa;
+		LexAndBisonParseArguments fabpa;
 
 		
 	}; // class ParserAPI

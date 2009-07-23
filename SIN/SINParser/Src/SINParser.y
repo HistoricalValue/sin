@@ -28,19 +28,19 @@
 
 	////////////////////////////////////////////////////////////////////////
 	// defines
-	#define MESSAGE(STR)	bpa.WriteFine(#STR " destructed")
+	#define MESSAGE(STR)	fabpa.WriteFine(#STR " destructed")
 
 
 
 	////////////////////////////////////////////////////////////////////////
 	// functions definitions
 	
-	void yyerror (SIN::LexAndBisonParseArguments & bpa, char const* yaccProvidedMessage);
+	void yyerror (SIN::LexAndBisonParseArguments & fabpa, char const* yaccProvidedMessage);
 	int PrepareForFile(const char * filePath);
 	int PrepareForString(const char * str);
 
 
-	int yylex(SIN::LexAndBisonParseArguments & bpa);
+	int yylex(SIN::LexAndBisonParseArguments & fabpa);
 	//
 	extern int yylineno;
 	extern char* yytext;
@@ -49,8 +49,8 @@
 
 
 
-%parse-param {SIN::LexAndBisonParseArguments & bpa}
-%lex-param   {SIN::LexAndBisonParseArguments & bpa}
+%parse-param {SIN::LexAndBisonParseArguments & fabpa}
+%lex-param   {SIN::LexAndBisonParseArguments & fabpa}
 
 
 
@@ -139,7 +139,7 @@
 
 SinCode:		stmts	{	
 							SIN::ParserManage::Manage_SinCode($1, &($$));	
-							bpa.SetRoot($$);
+							fabpa.SetRoot($$);
 						}
 				;
 
@@ -345,10 +345,10 @@ returnstmt:		RETURN ';'			{	SIN::ParserManage::Manage_ReturnStatement_Return(&($
 
 %%
 
-void yyerror (SIN::LexAndBisonParseArguments & bpa, char const* yaccProvidedMessage)
+void yyerror (SIN::LexAndBisonParseArguments & fabpa, char const* yaccProvidedMessage)
 {
 	//fprintf(stderr, "%s: at line %d, before token: >%s<\n", yaccProvidedMessage, yylineno, yytext);
-	bpa.SetError(std::make_pair(yaccProvidedMessage, yylineno));
+	fabpa.SetError(std::make_pair(yaccProvidedMessage, yylineno));
 	//return -1;
 }
 

@@ -1,5 +1,7 @@
 %{
 	#include <stdlib.h>
+	#include <stdarg.h>
+	
 	#include "LexUtility.h"
 	#include "SINParser.h" /**/
 	#include "SINString.h"
@@ -7,7 +9,7 @@
 	
 	#define YY_NEVER_INTERACTIVE 1
 
-	#define YY_DECL int yylex(SIN::LexAndBisonParseArguments & bpa)
+	#define YY_DECL int yylex(SIN::LexAndBisonParseArguments & fabpa)
 
 	static char InputWrapper (void);
 	static void UnputWrapper (char c);
@@ -94,14 +96,14 @@ number			{digit}+(\.{digit}+)?
 "or"			{ return OR;		}	
 
 
-ccomments		{	bpa.HasError(); LEX::LexUtility::IgnoreCStyleComments(InputWrapper, UnputWrapper, &yylineno); }
+ccomments		{	SIN::LEX::LexUtility::IgnoreCStyleComments(InputWrapper, UnputWrapper, &yylineno, fabpa); }
 
 {lineComm}		{}
 
 {ws}			{}
 
 {id}			{
-					yylval.stringV = LEX::LexUtility::SaveStr(yytext);
+					yylval.stringV = SIN::LEX::LexUtility::SaveStr(yytext);
 					return ID;
 				}
 				
@@ -111,7 +113,7 @@ ccomments		{	bpa.HasError(); LEX::LexUtility::IgnoreCStyleComments(InputWrapper,
 				}
 				
 {string}		{ 
-					yylval.stringV = LEX::LexUtility::SaveQuotedString(InputWrapper, &yylineno);
+					yylval.stringV = SIN::LEX::LexUtility::SaveQuotedString(InputWrapper, &yylineno, fabpa);
 					return STRING;	
 				}
 
