@@ -77,7 +77,7 @@ namespace SIN {
 
 	//-----------------------------------------------------------------
 	
-	const LexAndBisonParseArguments::Errors &	LexAndBisonParseArguments::GetErros() const 
+	const LexAndBisonParseArguments::Errors &	LexAndBisonParseArguments::GetErrors() const 
 		{ return errors; }
 
 

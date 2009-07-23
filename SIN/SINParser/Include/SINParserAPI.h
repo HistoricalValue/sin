@@ -25,6 +25,7 @@ namespace SIN {
 		// If Parse* returned no error, this returns the produced AST
 		ASTNode *GetAST(void) const;
 
+		const LexAndBisonParseArguments::Errors & GetErrors(void) const;
 		
 
 	private:

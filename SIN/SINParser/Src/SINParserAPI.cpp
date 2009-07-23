@@ -38,8 +38,6 @@ namespace SIN {
 	//--------------------------------------------------------
 
     int ParserAPI::ParseFile(String const &_filepath) {
-		// Uncomment when needed
-//		SIN::Logger * logger = &SIN::LoggerManager::SingletonGetInstance()->GetLogger("SIN::ParserAPI->Parser");
         if (PrepareForFile(_filepath.c_str()) == 0 && yyparse(fabpa) == 0)
 			return 0;
 		return -1;
@@ -62,6 +60,10 @@ namespace SIN {
 		SINASSERT(root);
 		return fabpa.HasError() ? static_cast<ASTNode *>(0): root;
 	}
+
+
+	const LexAndBisonParseArguments::Errors & ParserAPI::GetErrors(void) const 
+		{ return fabpa.GetErrors(); }
 
 
     ////////////////////////////////

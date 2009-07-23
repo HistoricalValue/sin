@@ -37,7 +37,7 @@ namespace SIN {
 
 
 		ASTNode *		GetRoot (void) const;
-		const Errors &	GetErros (void) const;
+		const Errors &	GetErrors (void) const;
 		
 
 	private:
