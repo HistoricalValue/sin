@@ -32,7 +32,6 @@ OBJECTDIR=build/${CND_CONF}/${CND_PLATFORM}
 # Object Files
 OBJECTFILES= \
 	${OBJECTDIR}/_ext/_DOTDOT/SINAST/Src/SINASTNodes.o \
-	${OBJECTDIR}/_ext/_DOTDOT/SINParser/Src/BisonParseArguments.o \
 	${OBJECTDIR}/_ext/_DOTDOT/Common/Src/Common.o \
 	${OBJECTDIR}/_ext/_DOTDOT/SINParser/Src/SINParserBison.o \
 	${OBJECTDIR}/_ext/_DOTDOT/SINLogging/Src/SINLoggerManager.o \
@@ -42,8 +41,10 @@ OBJECTFILES= \
 	${OBJECTDIR}/_ext/_DOTDOT/SINCommon/Src/SINString.o \
 	${OBJECTDIR}/_ext/_DOTDOT/SINCommon/Src/SINStream.o \
 	${OBJECTDIR}/_ext/_DOTDOT/Tests/SINAlloc_Test/Src/SINAllocTester.o \
+	${OBJECTDIR}/_ext/_DOTDOT/SINParser/Src/LexAndBisonParseArguments.o \
 	${OBJECTDIR}/_ext/_DOTDOT/SINParser/Src/SINParserManage.o \
 	${OBJECTDIR}/_ext/_DOTDOT/SINCommon/Src/SINBufferedOutputStream.o \
+	${OBJECTDIR}/_ext/_DOTDOT/SINAST/Src/SINASTTreeEvaluationVisitor.o \
 	${OBJECTDIR}/_ext/_DOTDOT/SINCommon/Src/SINInputStream.o \
 	${OBJECTDIR}/_ext/_DOTDOT/SINParser/Src/LexUtility.o \
 	${OBJECTDIR}/_ext/_DOTDOT/SINCommon/Src/SINCommon.o \
@@ -100,11 +101,6 @@ ${OBJECTDIR}/_ext/_DOTDOT/SINAST/Src/SINASTNodes.o: nbproject/Makefile-${CND_CON
 	${RM} $@.d
 	$(COMPILE.cc) -g -Wall -I../Common/Include -I../SINAlloc/Include -I../SINAST/Include -I../SINCommon/Include -I../SINLogging/Include -I../SINmain/Include -I../SINParser/Include -I../SINRuntime/Include -I../Tests/SINAlloc_Test/Include -I../Tests/SINAST_Test/Include -I../Tests/SINCommon_Test/Include -I../Tests/SINLogging_Test/Include -I../Tests/SINParser_Test/Include -I../Tests/SINSymbolTable_Test/Include -I../Tests/SINTest/Include -MMD -MP -MF $@.d -o ${OBJECTDIR}/_ext/_DOTDOT/SINAST/Src/SINASTNodes.o ../SINAST/Src/SINASTNodes.cpp
 
-${OBJECTDIR}/_ext/_DOTDOT/SINParser/Src/BisonParseArguments.o: nbproject/Makefile-${CND_CONF}.mk ../SINParser/Src/BisonParseArguments.cpp 
-	${MKDIR} -p ${OBJECTDIR}/_ext/_DOTDOT/SINParser/Src
-	${RM} $@.d
-	$(COMPILE.cc) -g -Wall -I../Common/Include -I../SINAlloc/Include -I../SINAST/Include -I../SINCommon/Include -I../SINLogging/Include -I../SINmain/Include -I../SINParser/Include -I../SINRuntime/Include -I../Tests/SINAlloc_Test/Include -I../Tests/SINAST_Test/Include -I../Tests/SINCommon_Test/Include -I../Tests/SINLogging_Test/Include -I../Tests/SINParser_Test/Include -I../Tests/SINSymbolTable_Test/Include -I../Tests/SINTest/Include -MMD -MP -MF $@.d -o ${OBJECTDIR}/_ext/_DOTDOT/SINParser/Src/BisonParseArguments.o ../SINParser/Src/BisonParseArguments.cpp
-
 ${OBJECTDIR}/_ext/_DOTDOT/Common/Src/Common.o: nbproject/Makefile-${CND_CONF}.mk ../Common/Src/Common.cpp 
 	${MKDIR} -p ${OBJECTDIR}/_ext/_DOTDOT/Common/Src
 	${RM} $@.d
@@ -150,6 +146,11 @@ ${OBJECTDIR}/_ext/_DOTDOT/Tests/SINAlloc_Test/Src/SINAllocTester.o: nbproject/Ma
 	${RM} $@.d
 	$(COMPILE.cc) -g -Wall -I../Common/Include -I../SINAlloc/Include -I../SINAST/Include -I../SINCommon/Include -I../SINLogging/Include -I../SINmain/Include -I../SINParser/Include -I../SINRuntime/Include -I../Tests/SINAlloc_Test/Include -I../Tests/SINAST_Test/Include -I../Tests/SINCommon_Test/Include -I../Tests/SINLogging_Test/Include -I../Tests/SINParser_Test/Include -I../Tests/SINSymbolTable_Test/Include -I../Tests/SINTest/Include -MMD -MP -MF $@.d -o ${OBJECTDIR}/_ext/_DOTDOT/Tests/SINAlloc_Test/Src/SINAllocTester.o ../Tests/SINAlloc_Test/Src/SINAllocTester.cpp
 
+${OBJECTDIR}/_ext/_DOTDOT/SINParser/Src/LexAndBisonParseArguments.o: nbproject/Makefile-${CND_CONF}.mk ../SINParser/Src/LexAndBisonParseArguments.cpp 
+	${MKDIR} -p ${OBJECTDIR}/_ext/_DOTDOT/SINParser/Src
+	${RM} $@.d
+	$(COMPILE.cc) -g -Wall -I../Common/Include -I../SINAlloc/Include -I../SINAST/Include -I../SINCommon/Include -I../SINLogging/Include -I../SINmain/Include -I../SINParser/Include -I../SINRuntime/Include -I../Tests/SINAlloc_Test/Include -I../Tests/SINAST_Test/Include -I../Tests/SINCommon_Test/Include -I../Tests/SINLogging_Test/Include -I../Tests/SINParser_Test/Include -I../Tests/SINSymbolTable_Test/Include -I../Tests/SINTest/Include -MMD -MP -MF $@.d -o ${OBJECTDIR}/_ext/_DOTDOT/SINParser/Src/LexAndBisonParseArguments.o ../SINParser/Src/LexAndBisonParseArguments.cpp
+
 ${OBJECTDIR}/_ext/_DOTDOT/SINParser/Src/SINParserManage.o: nbproject/Makefile-${CND_CONF}.mk ../SINParser/Src/SINParserManage.cpp 
 	${MKDIR} -p ${OBJECTDIR}/_ext/_DOTDOT/SINParser/Src
 	${RM} $@.d
@@ -159,6 +160,11 @@ ${OBJECTDIR}/_ext/_DOTDOT/SINCommon/Src/SINBufferedOutputStream.o: nbproject/Mak
 	${MKDIR} -p ${OBJECTDIR}/_ext/_DOTDOT/SINCommon/Src
 	${RM} $@.d
 	$(COMPILE.cc) -g -Wall -I../Common/Include -I../SINAlloc/Include -I../SINAST/Include -I../SINCommon/Include -I../SINLogging/Include -I../SINmain/Include -I../SINParser/Include -I../SINRuntime/Include -I../Tests/SINAlloc_Test/Include -I../Tests/SINAST_Test/Include -I../Tests/SINCommon_Test/Include -I../Tests/SINLogging_Test/Include -I../Tests/SINParser_Test/Include -I../Tests/SINSymbolTable_Test/Include -I../Tests/SINTest/Include -MMD -MP -MF $@.d -o ${OBJECTDIR}/_ext/_DOTDOT/SINCommon/Src/SINBufferedOutputStream.o ../SINCommon/Src/SINBufferedOutputStream.cpp
+
+${OBJECTDIR}/_ext/_DOTDOT/SINAST/Src/SINASTTreeEvaluationVisitor.o: nbproject/Makefile-${CND_CONF}.mk ../SINAST/Src/SINASTTreeEvaluationVisitor.cpp 
+	${MKDIR} -p ${OBJECTDIR}/_ext/_DOTDOT/SINAST/Src
+	${RM} $@.d
+	$(COMPILE.cc) -g -Wall -I../Common/Include -I../SINAlloc/Include -I../SINAST/Include -I../SINCommon/Include -I../SINLogging/Include -I../SINmain/Include -I../SINParser/Include -I../SINRuntime/Include -I../Tests/SINAlloc_Test/Include -I../Tests/SINAST_Test/Include -I../Tests/SINCommon_Test/Include -I../Tests/SINLogging_Test/Include -I../Tests/SINParser_Test/Include -I../Tests/SINSymbolTable_Test/Include -I../Tests/SINTest/Include -MMD -MP -MF $@.d -o ${OBJECTDIR}/_ext/_DOTDOT/SINAST/Src/SINASTTreeEvaluationVisitor.o ../SINAST/Src/SINASTTreeEvaluationVisitor.cpp
 
 ${OBJECTDIR}/_ext/_DOTDOT/SINCommon/Src/SINInputStream.o: nbproject/Makefile-${CND_CONF}.mk ../SINCommon/Src/SINInputStream.cpp 
 	${MKDIR} -p ${OBJECTDIR}/_ext/_DOTDOT/SINCommon/Src

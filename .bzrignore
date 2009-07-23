@@ -42,3 +42,10 @@ SIN/SINmain/Projects/Linux_GNU/vis
 SIN/Tests/SINSymbolTable_Test/Src/SINSymbolTableTester.d
 SIN/Tests/SINTest/Src/SINTestCollection.d
 SIN/Tests/SINTest/Src/SINTestFactory.d
+SIN/SINAST/Src/SINASTNodes.d
+SIN/SINAST/Src/SINASTTreeEvaluationVisitor.d
+SIN/SINAlloc/Src/SINAlloc.d
+SIN/SINParser/Src/LexAndBisonParseArguments.d
+SIN/SINParser/Src/LexUtility.d
+SIN/SINParser/Src/SINLexAnalyzer.d
+SIN/Tests/SINAlloc_Test/Src/SINAllocTester.d

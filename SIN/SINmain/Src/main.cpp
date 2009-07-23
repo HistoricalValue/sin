@@ -73,11 +73,13 @@ MainTestCollection::MainTestCollection(void): test_factory() {
 }
 
 bool MainTestCollection::RunAll(void) {
+	// Allocation test must be first -- unused by anyone
+	SIN::Tests::Alloc::test(&test_factory);
+	// -------------------------------------------------
 	SIN::Tests::AST::test(&test_factory);
 	SIN::Tests::Common::test(&test_factory);
 	SIN::Tests::Logging::test(&test_factory);
 	SIN::Tests::Parser::test(&test_factory);
 	SIN::Tests::ST::test(&test_factory);
-	SIN::Tests::Alloc::test(&test_factory);
 	return true;
 }

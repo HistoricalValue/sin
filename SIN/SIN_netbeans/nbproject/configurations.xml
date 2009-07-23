@@ -30,6 +30,7 @@
           <itemPath>../SINAST/Include/SINASTMITTreeVisualizerXMLProducerVisitor.h</itemPath>
           <itemPath>../SINAST/Include/SINASTNode.h</itemPath>
           <itemPath>../SINAST/Include/SINASTNodes.h</itemPath>
+          <itemPath>../SINAST/Include/SINASTTreeEvaluationVisitor.h</itemPath>
           <itemPath>../SINAST/Include/SINASTTreeVisualisationVisitor.h</itemPath>
           <itemPath>../SINAST/Include/SINASTVisitor.h</itemPath>
           <itemPath>../SINAST/Include/SINTreeNode.h</itemPath>
@@ -39,6 +40,7 @@
           <itemPath>../SINAST/Src/SINASTMITTreeVisualizerXMLProducerVisitor.cpp</itemPath>
           <itemPath>../SINAST/Src/SINASTNode.cpp</itemPath>
           <itemPath>../SINAST/Src/SINASTNodes.cpp</itemPath>
+          <itemPath>../SINAST/Src/SINASTTreeEvaluationVisitor.cpp</itemPath>
           <itemPath>../SINAST/Src/SINASTTreeVisualisationVisitor.cpp</itemPath>
           <itemPath>../SINAST/Src/SINTreeNode.cpp</itemPath>
         </logicalFolder>
@@ -90,7 +92,7 @@
       </logicalFolder>
       <logicalFolder name="SINParser" displayName="SINParser" projectFiles="true">
         <logicalFolder name="Include" displayName="Include" projectFiles="true">
-          <itemPath>../SINParser/Include/BisonParseArguments.h</itemPath>
+          <itemPath>../SINParser/Include/LexAndBisonParseArguments.h</itemPath>
           <itemPath>../SINParser/Include/LexUtility.h</itemPath>
           <itemPath>../SINParser/Include/SINParser.h</itemPath>
           <itemPath>../SINParser/Include/SINParserAPI.h</itemPath>
@@ -99,7 +101,7 @@
           <itemPath>../SINParser/Include/unistd.h</itemPath>
         </logicalFolder>
         <logicalFolder name="Src" displayName="Src" projectFiles="true">
-          <itemPath>../SINParser/Src/BisonParseArguments.cpp</itemPath>
+          <itemPath>../SINParser/Src/LexAndBisonParseArguments.cpp</itemPath>
           <itemPath>../SINParser/Src/LexUtility.cpp</itemPath>
           <itemPath>../SINParser/Src/SINLexAnalyzer.cpp</itemPath>
           <itemPath>../SINParser/Src/SINLexAnalyzer.l</itemPath>
