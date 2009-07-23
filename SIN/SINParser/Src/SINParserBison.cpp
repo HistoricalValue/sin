@@ -1788,7 +1788,7 @@ yyreduce:
 
   case 15:
 
-    {yyclearin;}
+    {	SIN::ParserManage::Manage_Statement_Error(&((yyval.AST)));		yyclearin;	}
     break;
 
   case 16:
