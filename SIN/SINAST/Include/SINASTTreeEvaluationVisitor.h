@@ -1,44 +1,16 @@
-#ifndef __SIN__ASTMITTREEVISUALIZERXMLPRODUCERVISITOR_H__
-#define __SIN__ASTMITTREEVISUALIZERXMLPRODUCERVISITOR_H__
+#ifndef __SIN_AST_TREE_EVALUATION_VISITOR_H__
+#define __SIN_AST_TREE_EVALUATION_VISITOR_H__
 
 #include "SINASTVisitor.h"
-#include "SINOutputStream.h"
-#include <list>
 
-namespace SIN {
 
-	class ASTMITTreeVisualizerXMLProducerVisitor: public ASTVisitor {
-		OutputStream& out;
 
-		typedef struct User {
-			String const& ID(void) const;
-			String const& Name(void) const;
-			User(String const& id = "", String const& name = "");
-		private:
-			String id, name;
-		} users_t;
-		users_t users[1];
-		void makeUsers(void);
+namespace SIN{
 
-		typedef struct Folder {
-			String const& Name(void) const;
-			String const& ID(void) const;
-			Folder(String const& name = "", String const& id = "");
-		private:
-			String name, id;
-		} folders_t;
-		Folder folder(String const& name);
-		Namer folder_id_namer;
-
-		void writeUser(User const& user);
-		void writePrelude(void);
-		void writeFolder(Folder const&, bool empty = false);
-		void writeFolderClosing(void);
-		void writeOutro(void);
-	public:
-		ASTMITTreeVisualizerXMLProducerVisitor(OutputStream& _out);
-		ASTMITTreeVisualizerXMLProducerVisitor(ASTMITTreeVisualizerXMLProducerVisitor const&);
-		~ASTMITTreeVisualizerXMLProducerVisitor(void);
+	class ASTTreeEvaluationVisitor : public ASTVisitor {
+	
+		ASTTreeEvaluationVisitor (void);
+		virtual ~ASTTreeEvaluationVisitor (void);
 
 		SINASTVISITOR_VISIT_SIGNATURE(					) ;
 		SINASTVISITOR_VISIT_SIGNATURE(Number			) ;
@@ -93,7 +65,8 @@ namespace SIN {
 		SINASTVISITOR_VISIT_SIGNATURE(ObjectIndex		) ;
 		SINASTVISITOR_VISIT_SIGNATURE(CallMember		) ;
 		SINASTVISITOR_VISIT_SIGNATURE(CallIndex			) ;
-	}; // class ASTMITTreeVisualizerXMLProducerVisitor
+	};
+
 } // namespace SIN
 
-#endif // __SIN__ASTMITTREEVISUALIZERXMLPRODUCERVISITOR_H__
+#endif //__SIN_AST_TREE_EVALUATION_VISITOR_H__

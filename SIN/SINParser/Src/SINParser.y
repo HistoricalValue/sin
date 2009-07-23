@@ -161,7 +161,7 @@ stmt:			expr ';'			{	SIN::ParserManage::Manage_Statement_Expression($1, &($$));	
 				|	block			{	SIN::ParserManage::Manage_Statement_Block($1, &($$));				}
 				|	funcdef			{	SIN::ParserManage::Manage_Statement_FunctionDefinition($1, &($$));	}
 				|	';'				{	SIN::ParserManage::Manage_Statement_Semicolon(&($$));				}
-				|	error  			{yyclearin;}
+				|	error  			{	SIN::ParserManage::Manage_Statement_Error(&($$));		yyclearin;	}
 				;
 
 

@@ -37,15 +37,17 @@ namespace SIN {
 				ParserAPI test;
 				TRY(test.ParseFile(FILE_PATH) == 0);
 				ASTNode * root = test.GetAST();
-				FileOutputStream _fout("treeVisualisation.txt", FileOutputStream::Mode::Truncate());
-				FileOutputStream _foutxml("treeVisualisation.xml", FileOutputStream::Mode::Truncate());
-				BufferedOutputStream fout(_fout);
-				BufferedOutputStream foutxml(_foutxml);
-				ASTTreeVisualisationVisitor visitor(fout);
-				ASTMITTreeVisualizerXMLProducerVisitor mitvis(foutxml);
-				root->Accept(&visitor);
-				root->Accept(&mitvis);
-				TreeNode::DeleteTree(root);
+				if( root != NULL ){
+					FileOutputStream _fout("treeVisualisation.txt", FileOutputStream::Mode::Truncate());
+					FileOutputStream _foutxml("treeVisualisation.xml", FileOutputStream::Mode::Truncate());
+					BufferedOutputStream fout(_fout);
+					BufferedOutputStream foutxml(_foutxml);
+					ASTTreeVisualisationVisitor visitor(fout);
+					ASTMITTreeVisualizerXMLProducerVisitor mitvis(foutxml);
+					root->Accept(&visitor);
+					root->Accept(&mitvis);
+					TreeNode::DeleteTree(root);
+				}
 			)
 
 			void test(InstanceProxy<TestFactory> const &tf) { 

@@ -12,6 +12,12 @@
 
 #define SIN_ASTTreeVisualisationVisitor_LoggerName "SIN::ASTTreeVisualisationVisitor"
 #define SIN_ASTTreeVisualisationVisitor_IdentationSequence "|---"
+
+#define SINASTTREEVISUALISATION_DEFAULT_VISIT_DEFINITION(NODENAME)				\
+	void ASTTreeVisualisationVisitor::Visit(NODENAME##ASTNode const& _node) {	\
+		Visit(static_cast<ASTNode const&>(_node));								\
+	}
+
 namespace SIN {
 
 	ASTTreeVisualisationVisitor::ASTTreeVisualisationVisitor(OutputStream& _out):
@@ -35,155 +41,70 @@ namespace SIN {
 	//	{ Visit(dynamic_cast<ASTNode const &>(node)); }
 	
 
-	//-----------------------------------------------------------------
-
-	void ASTTreeVisualisationVisitor::Visit (NumberASTNode const & node)
-		{ Visit(dynamic_cast<ASTNode const &>(node)); }
-	
-
-	//-----------------------------------------------------------------
-
-	void ASTTreeVisualisationVisitor::Visit (StringASTNode const & node)
-		{ Visit(dynamic_cast<ASTNode const &>(node)); }
-	
-
-	//-----------------------------------------------------------------
-
-	void ASTTreeVisualisationVisitor::Visit (NilASTNode const & node)
-		{ Visit(dynamic_cast<ASTNode const &>(node)); }
-
-
-	//-----------------------------------------------------------------
-
-	void ASTTreeVisualisationVisitor::Visit (TrueASTNode const & node)
-		{ Visit(dynamic_cast<ASTNode const &>(node)); }
-
-
-	//-----------------------------------------------------------------
-
-	void ASTTreeVisualisationVisitor::Visit (FalseASTNode const & node)
-		{ Visit(dynamic_cast<ASTNode const &>(node)); }
-
-
-	//-----------------------------------------------------------------
-
-	void ASTTreeVisualisationVisitor::Visit (AddASTNode const & node)
-		{ Visit(dynamic_cast<ASTNode const &>(node)); }
-	
-
-	//-----------------------------------------------------------------
-
-	void ASTTreeVisualisationVisitor::Visit (SubASTNode const & node)
-		{ Visit(dynamic_cast<ASTNode const &>(node)); }
-
-
-	//-----------------------------------------------------------------
-
-	void ASTTreeVisualisationVisitor::Visit (MulASTNode const & node)
-		{ Visit(dynamic_cast<ASTNode const &>(node)); }
-
-
-	//-----------------------------------------------------------------
-
-	void ASTTreeVisualisationVisitor::Visit (DivASTNode const & node)
-		{ Visit(dynamic_cast<ASTNode const &>(node)); }
-
-
-	//-----------------------------------------------------------------
-
-	void ASTTreeVisualisationVisitor::Visit (ModASTNode const & node)
-		{ Visit(dynamic_cast<ASTNode const &>(node)); }
-
-
-	////-----------------------------------------------------------------
-
-	//void ASTTreeVisualisationVisitor::Visit (IncrASTNode const & node)
-	//	{ Visit(dynamic_cast<ASTNode const &>(node)); }
-
-
-	////-----------------------------------------------------------------
-
-	//void ASTTreeVisualisationVisitor::Visit (DecrASTNode const & node)
-	//	{ Visit(dynamic_cast<ASTNode const &>(node)); }
-	
-
-	//-----------------------------------------------------------------
-
-	void ASTTreeVisualisationVisitor::Visit (LtASTNode const & node)
-		{ Visit(dynamic_cast<ASTNode const &>(node)); }
-
-
-	//-----------------------------------------------------------------
-
-	void ASTTreeVisualisationVisitor::Visit (GtASTNode const & node)
-		{ Visit(dynamic_cast<ASTNode const &>(node)); }
-
-
-	//-----------------------------------------------------------------
-
-	void ASTTreeVisualisationVisitor::Visit (LeASTNode const & node)
-		{ Visit(dynamic_cast<ASTNode const &>(node)); }
-
-
-	//-----------------------------------------------------------------
-
-	void ASTTreeVisualisationVisitor::Visit (GeASTNode const & node)
-		{ Visit(dynamic_cast<ASTNode const &>(node)); }
-
-
-	//-----------------------------------------------------------------
-
-	void ASTTreeVisualisationVisitor::Visit (EqASTNode const & node)
-		{ Visit(dynamic_cast<ASTNode const &>(node)); }
-
-
-	//-----------------------------------------------------------------
-
-	void ASTTreeVisualisationVisitor::Visit (NeASTNode const & node)
-		{ Visit(dynamic_cast<ASTNode const &>(node)); }
-
-
-	//-----------------------------------------------------------------
-
-	void ASTTreeVisualisationVisitor::Visit (OrASTNode const & node)
-		{ Visit(dynamic_cast<ASTNode const &>(node)); }
-
-
-	//-----------------------------------------------------------------
-
-	//void ASTTreeVisualisationVisitor::Visit (NotASTNode const & node)
-	//	{ Visit(dynamic_cast<ASTNode const &>(node)); }
-
-
-	//-----------------------------------------------------------------
-
-	void ASTTreeVisualisationVisitor::Visit (AndASTNode const & node)
-		{ Visit(dynamic_cast<ASTNode const &>(node)); }
-
-
-	////-----------------------------------------------------------------
-
-	//void ASTTreeVisualisationVisitor::Visit (ForASTNode const & node)
-	//	{ Visit(dynamic_cast<ASTNode const &>(node)); }
-
-
-	////-----------------------------------------------------------------
-
-	//void ASTTreeVisualisationVisitor::Visit (WhileASTNode const & node)
-	//	{ Visit(dynamic_cast<ASTNode const &>(node)); }
-
-
-	////-----------------------------------------------------------------
-
-	//void ASTTreeVisualisationVisitor::Visit (IfASTNode const & node)
-	//	{ Visit(dynamic_cast<ASTNode const &>(node)); }
-
-
-	////-----------------------------------------------------------------
-
-	//void ASTTreeVisualisationVisitor::Visit (IfElseASTNode const & node)
-	//	{ Visit(dynamic_cast<ASTNode const &>(node)); }
-
+	SINASTTREEVISUALISATION_DEFAULT_VISIT_DEFINITION(Number	)
+	SINASTTREEVISUALISATION_DEFAULT_VISIT_DEFINITION(String	)
+	SINASTTREEVISUALISATION_DEFAULT_VISIT_DEFINITION(Nil	)
+	SINASTTREEVISUALISATION_DEFAULT_VISIT_DEFINITION(True	)
+	SINASTTREEVISUALISATION_DEFAULT_VISIT_DEFINITION(False	)
+
+	SINASTTREEVISUALISATION_DEFAULT_VISIT_DEFINITION(Add	)
+	SINASTTREEVISUALISATION_DEFAULT_VISIT_DEFINITION(Sub	)
+	SINASTTREEVISUALISATION_DEFAULT_VISIT_DEFINITION(Mul	)
+	SINASTTREEVISUALISATION_DEFAULT_VISIT_DEFINITION(Div	)
+	SINASTTREEVISUALISATION_DEFAULT_VISIT_DEFINITION(Mod	)
+
+	SINASTTREEVISUALISATION_DEFAULT_VISIT_DEFINITION(Lt	)
+	SINASTTREEVISUALISATION_DEFAULT_VISIT_DEFINITION(Gt	)
+	SINASTTREEVISUALISATION_DEFAULT_VISIT_DEFINITION(Le	)
+	SINASTTREEVISUALISATION_DEFAULT_VISIT_DEFINITION(Ge	)
+	SINASTTREEVISUALISATION_DEFAULT_VISIT_DEFINITION(Eq	)
+	SINASTTREEVISUALISATION_DEFAULT_VISIT_DEFINITION(Ne	)
+
+	SINASTTREEVISUALISATION_DEFAULT_VISIT_DEFINITION(Or	)
+	SINASTTREEVISUALISATION_DEFAULT_VISIT_DEFINITION(Not)
+	SINASTTREEVISUALISATION_DEFAULT_VISIT_DEFINITION(And)
+
+	SINASTTREEVISUALISATION_DEFAULT_VISIT_DEFINITION(For		)
+	SINASTTREEVISUALISATION_DEFAULT_VISIT_DEFINITION(While		)
+	SINASTTREEVISUALISATION_DEFAULT_VISIT_DEFINITION(If			)
+	SINASTTREEVISUALISATION_DEFAULT_VISIT_DEFINITION(IfElse		)
+	SINASTTREEVISUALISATION_DEFAULT_VISIT_DEFINITION(Return		)
+	SINASTTREEVISUALISATION_DEFAULT_VISIT_DEFINITION(Semicolon	)
+	SINASTTREEVISUALISATION_DEFAULT_VISIT_DEFINITION(Break		)
+	SINASTTREEVISUALISATION_DEFAULT_VISIT_DEFINITION(Continue	)
+	SINASTTREEVISUALISATION_DEFAULT_VISIT_DEFINITION(Block		)
+
+	SINASTTREEVISUALISATION_DEFAULT_VISIT_DEFINITION(Assign	)
+
+	SINASTTREEVISUALISATION_DEFAULT_VISIT_DEFINITION(Arguments	)
+
+	SINASTTREEVISUALISATION_DEFAULT_VISIT_DEFINITION(NormalCall	)
+	SINASTTREEVISUALISATION_DEFAULT_VISIT_DEFINITION(MethodCall	)
+	SINASTTREEVISUALISATION_DEFAULT_VISIT_DEFINITION(FuncdefCall)
+
+	SINASTTREEVISUALISATION_DEFAULT_VISIT_DEFINITION(Function		)
+	SINASTTREEVISUALISATION_DEFAULT_VISIT_DEFINITION(LamdaFunction	)
+
+	SINASTTREEVISUALISATION_DEFAULT_VISIT_DEFINITION(ID			)
+	SINASTTREEVISUALISATION_DEFAULT_VISIT_DEFINITION(LocalID	)
+	SINASTTREEVISUALISATION_DEFAULT_VISIT_DEFINITION(GlobalID	)
+
+	SINASTTREEVISUALISATION_DEFAULT_VISIT_DEFINITION(PreIncr	)
+	SINASTTREEVISUALISATION_DEFAULT_VISIT_DEFINITION(PostIncr	)
+	SINASTTREEVISUALISATION_DEFAULT_VISIT_DEFINITION(PreDecr	)
+	SINASTTREEVISUALISATION_DEFAULT_VISIT_DEFINITION(PostDecr	)
+	SINASTTREEVISUALISATION_DEFAULT_VISIT_DEFINITION(UnaryNot	)
+	SINASTTREEVISUALISATION_DEFAULT_VISIT_DEFINITION(UnaryMin	)
+
+	SINASTTREEVISUALISATION_DEFAULT_VISIT_DEFINITION(Object			)
+	SINASTTREEVISUALISATION_DEFAULT_VISIT_DEFINITION(EmptyObject	)
+	SINASTTREEVISUALISATION_DEFAULT_VISIT_DEFINITION(UnindexedMember)
+	SINASTTREEVISUALISATION_DEFAULT_VISIT_DEFINITION(IndexedMember	)
+
+	SINASTTREEVISUALISATION_DEFAULT_VISIT_DEFINITION(ObjectMember	)
+	SINASTTREEVISUALISATION_DEFAULT_VISIT_DEFINITION(ObjectIndex	)
+	SINASTTREEVISUALISATION_DEFAULT_VISIT_DEFINITION(CallMember		)
+	SINASTTREEVISUALISATION_DEFAULT_VISIT_DEFINITION(CallIndex		)
 
 	void ASTTreeVisualisationVisitor::IncreaseIndentationLevel(void) {
 		tabs += SIN_ASTTreeVisualisationVisitor_IdentationSequence;

@@ -158,6 +158,7 @@ namespace SIN {
 		static void Manage_Statement_Block				(ASTNode *_block, ASTNode **_retstmt);
 		static void Manage_Statement_FunctionDefinition	(ASTNode *_funcdef, ASTNode **_retstmt);
 		static void Manage_Statement_Semicolon			(ASTNode **_retstmt);
+		static void Manage_Statement_Error				(ASTNode **_error);
 
 
 		//////////////////////////////////////////////////////////

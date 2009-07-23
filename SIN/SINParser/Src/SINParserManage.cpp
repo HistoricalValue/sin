@@ -725,16 +725,25 @@ namespace SIN {
 		{ *_retstmt = SINEWCLASS(SemicolonASTNode, (";")); }
 
 
+	//-----------------------------------------------------------------
+
+	void ParserManage::Manage_Statement_Error (ASTNode **_error)
+		{ *_error = NULL; }
+
+
 	//////////////////////////////////////////////////////////
 	// Manage statements
 	
 	//-----------------------------------------------------------------
 
 	void ParserManage::Manage_Statements (ASTNode *_stmt, ASTNode *_stmts, ASTNode **_retstmts) {
-		*_retstmts = _stmt;
 
-		if(_stmts != NULL)
-			(*_retstmts)->SetRightSibling(_stmts);	
+		if(_stmt != NULL){
+			*_retstmts = _stmt;
+			if(_stmts != NULL)
+				(*_retstmts)->SetRightSibling(_stmts);	
+		}else
+			*_retstmts = _stmts;
 	}
 		
 	
