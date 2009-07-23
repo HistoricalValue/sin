@@ -32,22 +32,36 @@ namespace SIN {
 			static InstanceProxy<SIN::Logger> logger;
 			static InstanceProxy<TestFactory> test_factory;
 			
+			namespace { static void __list_parsing_errors(ParserAPI const& _papi) {
+				for (
+					register LexAndBisonParseArguments::Errors::const_iterator ite = _papi.GetErrors().begin(),
+						end = _papi.GetErrors().end();
+					ite != end;
+					++ite
+				)
+					logger->Error(string_cast("Parsing error: line ") << ite->second <<
+						": " << ite->first);
+			}}
 			
 			SIN_TESTS_PARSER_TESTDEF(ParserFileTest,
 				ParserAPI test;
 				TRY(test.ParseFile(FILE_PATH) == 0);
-				ASTNode * root = test.GetAST();
-				if( root != NULL ){
-					FileOutputStream _fout("treeVisualisation.txt", FileOutputStream::Mode::Truncate());
-					FileOutputStream _foutxml("treeVisualisation.xml", FileOutputStream::Mode::Truncate());
-					BufferedOutputStream fout(_fout);
-					BufferedOutputStream foutxml(_foutxml);
-					ASTTreeVisualisationVisitor visitor(fout);
-					ASTMITTreeVisualizerXMLProducerVisitor mitvis(foutxml);
-					root->Accept(&visitor);
-					root->Accept(&mitvis);
-					TreeNode::DeleteTree(root);
+				if (test.HasError()) {
+					__list_parsing_errors(test);
+					ASSERT(!test.HasError()); // certain failure here, to stop the test
 				}
+				ASTNode* root = test.GetAST();
+				ASSERT(root != 0x00);
+				
+				FileOutputStream _fout("treeVisualisation.txt", FileOutputStream::Mode::Truncate());
+				FileOutputStream _foutxml("treeVisualisation.xml", FileOutputStream::Mode::Truncate());
+				BufferedOutputStream fout(_fout);
+				BufferedOutputStream foutxml(_foutxml);
+				ASTTreeVisualisationVisitor visitor(fout);
+				ASTMITTreeVisualizerXMLProducerVisitor mitvis(foutxml);
+				root->Accept(&visitor);
+				root->Accept(&mitvis);
+				TreeNode::DeleteTree(root);
 			)
 
 			void test(InstanceProxy<TestFactory> const &tf) { 
