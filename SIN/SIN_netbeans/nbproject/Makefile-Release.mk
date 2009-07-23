@@ -41,8 +41,8 @@ OBJECTFILES= \
 	${OBJECTDIR}/_ext/_DOTDOT/SINCommon/Src/SINString.o \
 	${OBJECTDIR}/_ext/_DOTDOT/SINCommon/Src/SINStream.o \
 	${OBJECTDIR}/_ext/_DOTDOT/Tests/SINAlloc_Test/Src/SINAllocTester.o \
-	${OBJECTDIR}/_ext/_DOTDOT/SINParser/Src/LexAndBisonParseArguments.o \
 	${OBJECTDIR}/_ext/_DOTDOT/SINParser/Src/SINParserManage.o \
+	${OBJECTDIR}/_ext/_DOTDOT/SINParser/Src/LexAndBisonParseArguments.o \
 	${OBJECTDIR}/_ext/_DOTDOT/SINCommon/Src/SINBufferedOutputStream.o \
 	${OBJECTDIR}/_ext/_DOTDOT/SINAST/Src/SINASTTreeEvaluationVisitor.o \
 	${OBJECTDIR}/_ext/_DOTDOT/SINCommon/Src/SINInputStream.o \
@@ -146,15 +146,15 @@ ${OBJECTDIR}/_ext/_DOTDOT/Tests/SINAlloc_Test/Src/SINAllocTester.o: nbproject/Ma
 	${RM} $@.d
 	$(COMPILE.cc) -O2 -MMD -MP -MF $@.d -o ${OBJECTDIR}/_ext/_DOTDOT/Tests/SINAlloc_Test/Src/SINAllocTester.o ../Tests/SINAlloc_Test/Src/SINAllocTester.cpp
 
-${OBJECTDIR}/_ext/_DOTDOT/SINParser/Src/LexAndBisonParseArguments.o: nbproject/Makefile-${CND_CONF}.mk ../SINParser/Src/LexAndBisonParseArguments.cpp 
-	${MKDIR} -p ${OBJECTDIR}/_ext/_DOTDOT/SINParser/Src
-	${RM} $@.d
-	$(COMPILE.cc) -O2 -MMD -MP -MF $@.d -o ${OBJECTDIR}/_ext/_DOTDOT/SINParser/Src/LexAndBisonParseArguments.o ../SINParser/Src/LexAndBisonParseArguments.cpp
-
 ${OBJECTDIR}/_ext/_DOTDOT/SINParser/Src/SINParserManage.o: nbproject/Makefile-${CND_CONF}.mk ../SINParser/Src/SINParserManage.cpp 
 	${MKDIR} -p ${OBJECTDIR}/_ext/_DOTDOT/SINParser/Src
 	${RM} $@.d
 	$(COMPILE.cc) -O2 -MMD -MP -MF $@.d -o ${OBJECTDIR}/_ext/_DOTDOT/SINParser/Src/SINParserManage.o ../SINParser/Src/SINParserManage.cpp
+
+${OBJECTDIR}/_ext/_DOTDOT/SINParser/Src/LexAndBisonParseArguments.o: nbproject/Makefile-${CND_CONF}.mk ../SINParser/Src/LexAndBisonParseArguments.cpp 
+	${MKDIR} -p ${OBJECTDIR}/_ext/_DOTDOT/SINParser/Src
+	${RM} $@.d
+	$(COMPILE.cc) -O2 -MMD -MP -MF $@.d -o ${OBJECTDIR}/_ext/_DOTDOT/SINParser/Src/LexAndBisonParseArguments.o ../SINParser/Src/LexAndBisonParseArguments.cpp
 
 ${OBJECTDIR}/_ext/_DOTDOT/SINCommon/Src/SINBufferedOutputStream.o: nbproject/Makefile-${CND_CONF}.mk ../SINCommon/Src/SINBufferedOutputStream.cpp 
 	${MKDIR} -p ${OBJECTDIR}/_ext/_DOTDOT/SINCommon/Src

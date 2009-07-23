@@ -172,6 +172,9 @@
           <logicalFolder name="Include" displayName="Include" projectFiles="true">
             <itemPath>../Tests/SINParser_Test/Include/SINParserTester.h</itemPath>
           </logicalFolder>
+          <logicalFolder name="Resource" displayName="Resource" projectFiles="true">
+            <itemPath>../Tests/SINParser_Test/Resource/sin_grammar_test.sin</itemPath>
+          </logicalFolder>
           <logicalFolder name="Src" displayName="Src" projectFiles="true">
             <itemPath>../Tests/SINParser_Test/Src/SINParserTester.cpp</itemPath>
           </logicalFolder>
