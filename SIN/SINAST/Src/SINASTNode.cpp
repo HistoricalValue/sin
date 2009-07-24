@@ -174,7 +174,7 @@ namespace SIN {
 
 	void ASTNodeFactory::SingletonDestroy(void) {
 		SINASSERT(singleton_created);
-		delete singleton;
+		SINDELETE(singleton);
 		singleton_created = false;
 	}
 	
