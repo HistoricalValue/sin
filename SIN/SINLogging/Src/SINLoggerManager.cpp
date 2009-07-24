@@ -1,5 +1,6 @@
 #include "SINLoggerManager.h"
 #include "SINAssert.h"
+#include "SINAlloc.h"
 
 namespace SIN {
 	///////////// DefaultLoggerFactory /////////////
@@ -21,10 +22,10 @@ namespace SIN {
 	LoggerManager::DefaultDefaultLoggerFactory::~DefaultDefaultLoggerFactory(void) {
 	}
 	Logger *LoggerManager::DefaultDefaultLoggerFactory::MakeLogger(String const &_name) {
-		return new StreamLogger(_name, *default_severity_p, STDOUT, *rp_p);
+		return SINEWCLASS(StreamLogger, (_name, *default_severity_p, STDOUT, *rp_p));
 	}
 	void LoggerManager::DefaultDefaultLoggerFactory::DestroyLogger(Logger *_logger) {
-		delete _logger;
+		SINDELETE(_logger);
 	}
 
 	///////////// StreamLogger /////////////
@@ -51,7 +52,7 @@ namespace SIN {
 
 	void LoggerManager::SingletonCreate(void) {
 		SINASSERT(!singleton_created);
-		me = new LoggerManager;
+		me = SINEW(LoggerManager);
 		singleton_created = true;
 	}
 
@@ -61,7 +62,7 @@ namespace SIN {
 
 	void LoggerManager::SingletonDestroy(void) {
 		SINASSERT(singleton_created);
-		delete me;
+		SINDELETE(me);
 		singleton_created = false;
 	}
 
@@ -142,22 +143,22 @@ namespace SIN {
 	Logger *LoggerManager::MakeStreamLogger(String const &_logger_name, OutputStream &_out) {
 		return SetLogger(
 			_logger_name,
-			new StreamLogger(
+			SINEWCLASS(StreamLogger, (
 				_logger_name,
 				GetLogger(_logger_name).GetCriticalSeverity(), // TODO get critical severity properyl
 				_out,
-				*dlf_rp)
+				*dlf_rp) )
 			);
 	}
 	//////////////// LoggerManager (Make lvl 2) /////////////
 	Logger *LoggerManager::MakeVoidLogger(String const &_logger_name) {
 		return SetLogger(
 			_logger_name,
-			new StreamLogger(
+			SINEWCLASS(StreamLogger, (
 				_logger_name,
 				GetLogger(_logger_name).GetCriticalSeverity(), // TODO get critical severity properly
 				VOIDOUT,
-				Logging::RecordPrinter(VOIDOUT))
+				Logging::RecordPrinter(VOIDOUT)) )
 			);
 	}
 	Logger *LoggerManager::MakeStdoutLogger(String const &_logger_name) {

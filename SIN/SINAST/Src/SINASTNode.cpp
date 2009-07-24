@@ -158,7 +158,7 @@ namespace SIN {
 	
 	void ASTNodeFactory::SingletonCreate(void) {
 		SINASSERT(!singleton_created);
-		if ((singleton = new ASTNodeFactory) != 0x00)
+		if ((singleton = SINEW(ASTNodeFactory)) != 0x00)
 			singleton_created = true;
 	}
 	

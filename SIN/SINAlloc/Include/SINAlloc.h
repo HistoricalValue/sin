@@ -29,6 +29,7 @@ namespace SIN { namespace Alloc {
 		return result;
 	}
 
+
 	class Chunk {
 		String file; // file allocated in
 		unsigned int line; // line in file
@@ -45,6 +46,20 @@ namespace SIN { namespace Alloc {
 	}; // class Pointer
 
 	extern std::map<void*, Chunk> const UndeallocatedChunks(void);
+	inline Chunk ChunkInformation(void* _ptr) { return UndeallocatedChunks().at(_ptr); }
+
+	inline void* memcpy(register void* const _to, register const void* const _from, register size_t const _len) {
+		if (_len <= ChunkInformation(_to).Size())
+			std::memcpy(_to, _from, _len);
+		else
+			SINASSERT(false);
+		return _to;
+	}
+
+	template <typename _T>
+	inline _T* memcpy(register _T& _to, register _T const& _from)
+		{ return static_cast<_T*>(memcpy(&_to, &_from, sizeof(_T))); }
+
 } } // namespace Alloc / namespace SIN
 
 ////scalar, throwing new and it matching delete
@@ -70,6 +85,6 @@ extern void  operator delete[](void* ptr, SINAllocationIndicator const&, SIN::St
 #define SINEWCLASS(TYPE, ARGS) new(SINAllocationIndicator(), __FILE__, __LINE__) TYPE ARGS
 #define SINEWARRAY(TYPE, LENGTH) new(SINAllocationIndicator(), __FILE__, __LINE__) TYPE[LENGTH]
 #define SINDELETE(PTR) SIN::Alloc::IsArrayAllocated(PTR) ? operator delete[]((PTR), SINAllocationIndicator(), "", 0) : operator delete((PTR), SINAllocationIndicator(), "", 0)
-#define SINPTR(PTR) SIN::Alloc::ValidateAndUse((PTR))
-
+#define SINPTR(PTR) SIN::Alloc::SafeDereferenceable(SIN::Alloc::ValidateAndUse((PTR)))
+#define SINMEMCPY(TO, FROM) if (sizeof((FROM)) <= SIN::Alloc::ChunkInformation(TO).Size())
 #endif // __SIN_ALLOC_H__

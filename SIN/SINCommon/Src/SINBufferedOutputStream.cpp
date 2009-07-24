@@ -1,5 +1,6 @@
 #include "SINBufferedOutputStream.h"
 #include "SINAssert.h"
+#include "SINAlloc.h"
 
 #define SIN_BUFFEREDOUTPUTSTREAM_BUF_USED_LENGTH			(buffer_length)
 #define SIN_BUFFEREDOUTPUTSTREAM_BUF_FREE_LENGTH			(SIN_BUFFERED_OUTPUT_STREAM_BUFFER_LENGTH - SIN_BUFFEREDOUTPUTSTREAM_BUF_USED_LENGTH)
@@ -23,16 +24,16 @@ namespace SIN {
 		register bool result = true;
 		if (buf.wouldOverflow(_len)) {
 			const size_t conjoined_buf_len = buf.length() + _len;
-			char* conjoined_buf = new char[conjoined_buf_len];
+			char* conjoined_buf = SINEWARRAY(char, conjoined_buf_len);
 			result = out.write(static_cast<char*>(
 				memcpy(
-					memcpy(conjoined_buf, buf.buf(), buf.length()),
+					Alloc::memcpy(conjoined_buf, buf.buf(), buf.length()) + buf.length(),
 					_buf, _len
 				)),
 				conjoined_buf_len
 			);
 			buf.empty();
-			delete[] conjoined_buf;
+			SINDELETE(conjoined_buf);
 		}
 		else {
 			const register size_t appended_bytes =  buf.append(_buf, _len);

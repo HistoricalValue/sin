@@ -10,6 +10,7 @@
 #include "SINLogger.h"
 #include "SINLoggerManager.h"
 #include "Common.h"
+#include "SINAlloc.h"
 
 namespace SIN {
 	namespace Tests {
@@ -79,10 +80,10 @@ namespace SIN {
 				{ }
 
 				Logger* MakeLogger(Type<String>::const_ref _name = "") {
-					return new IndicatorLogger(ind, _name == "" ? namer++ : _name);
+					return SINEWCLASS(IndicatorLogger, (ind, _name == "" ? namer++ : _name));
 				}
 				void DestroyLogger(Logger* _logger) {
-					delete _logger;
+					SINDELETE(_logger);
 				}
 			};
 			SINTESTS_TESTDEF(LoggerManager,
