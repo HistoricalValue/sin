@@ -32,7 +32,7 @@ id				{letter}({letter}|{underscore}|{digit})*
 
 
 string			"\""
-ccomments		"\*"
+ccomments		"/*"
 lineComm		\/\/.*
 number			{digit}+(\.{digit}+)?
 
@@ -96,7 +96,7 @@ number			{digit}+(\.{digit}+)?
 "or"			{ return OR;		}	
 
 
-ccomments		{	SIN::LEX::LexUtility::IgnoreCStyleComments(InputWrapper, UnputWrapper, &yylineno, fabpa); }
+{ccomments}		{	SIN::LEX::LexUtility::IgnoreCStyleComments(InputWrapper, UnputWrapper, &yylineno, fabpa); }
 
 {lineComm}		{}
 
@@ -118,7 +118,11 @@ ccomments		{	SIN::LEX::LexUtility::IgnoreCStyleComments(InputWrapper, UnputWrapp
 				}
 
 
-.				{ fprintf(stderr, "Cannot match character `%s' with any rule\n", yytext); return yytext[0]; }
+.				{	SIN::String error;
+					error<<"Cannot match character " << SIN::String(yytext) << "with any rule";
+					fabpa.SetError(std::make_pair(error, yylineno));
+					return yytext[0]; 
+				}
 
 
 %%
