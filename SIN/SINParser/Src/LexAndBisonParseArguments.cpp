@@ -124,7 +124,7 @@ namespace SIN {
 		NodesList::iterator result = std::find_if(nodesList.begin(), nodesList.end(), FindFunctor(node));
 		
 		if (result != nodesList.end()) {
-			nodesList.remove(result);
+			nodesList.erase(result);
 			return true;
 		}
 		return false;
