@@ -67,6 +67,12 @@ namespace SIN{
 	SINASTNODE_NODE_DECL(CallIndex		);
 	SINASTNODE_NODE_DECL(Return			);
 	SINASTNODE_NODE_DECL(Semicolon		);
+	SINASTNODE_NODE_DECL(MetaParse		);
+	SINASTNODE_NODE_DECL(MetaPreserve	);
+	SINASTNODE_NODE_DECL(MetaEvaluate	);
+	SINASTNODE_NODE_DECL(MetaUnparse	);
+	SINASTNODE_NODE_DECL(MetaParseString);
+
 
 } // namespace SIN
 

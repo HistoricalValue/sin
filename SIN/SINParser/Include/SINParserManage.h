@@ -13,6 +13,13 @@ namespace SIN {
 		// Manage Assigne expression
 		static void Manage_AssignExpression	(ASTNode *_lvalue, ASTNode *_expr, ASTNode **_retassignexpr);
 		
+		//////////////////////////////////////////////////////////
+		// Manage Metaexpressions
+		static void Manage_MetaExpression_Expression			(ASTNode *_expr, ASTNode **_retmetaexpr);
+		static void Manage_MetaExpression_ID					(char *_id, ASTNode **_retmetaexpr);
+		static void Manage_MetaExpression_ExecuteMetaExpression(ASTNode *_metaexpr, ASTNode **_retmetaexpr);
+		static void Manage_MetaExpression_UnparseMetaExpression(ASTNode *_expr, ASTNode **_retmetaexpr);
+		static void Manage_MetaExpression_ParseString			(char *_expr, ASTNode **_retmetaexpr);
 
 		//////////////////////////////////////////////////////////
 		// Manage Block

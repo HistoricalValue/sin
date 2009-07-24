@@ -4,6 +4,7 @@
 #include "SINASTVisitor.h"
 #include "SINASTTreeVisualisationVisitor.h"
 #include "SINAssert.h"
+#include "SINAlloc.h"
 
 
 //-------------------------------------------------------------------------------------------------
@@ -16,7 +17,7 @@
         _visitor_p->Visit(*this);															\
     }																						\
     NAME##ASTNode *NAME##ASTNode::Clone(void) const {	                                    \
-		return new NAME##ASTNode(*this);													\
+		return SINEWCLASS(NAME##ASTNode, (*this));											\
 	}																						
 
 
@@ -30,7 +31,7 @@
         _visitor_p->Visit(*this);															\
     }																						\
     NAME##ASTNode *NAME##ASTNode::Clone(void) const {	                                    \
-		return new NAME##ASTNode(*this);													\
+		return SINEWCLASS(NAME##ASTNode, (*this));											\
 	}																						
 
 
@@ -49,7 +50,7 @@
         _visitor_p->Visit(*this);								\
     }															\
     OPNAME##ASTNode *OPNAME##ASTNode::Clone(void) const {	    \
-		return new OPNAME##ASTNode(*this);						\
+		return SINEWCLASS(OPNAME##ASTNode, (*this));			\
 	}																						
 
 
@@ -117,7 +118,7 @@ namespace SIN {
 	//---------------------------------------------------
 
 	ASTNode *ASTNode::Clone(void) const {
-		return new ASTNode(*this);
+		return SINEWCLASS(ASTNode, (*this));
 	}
 	
 

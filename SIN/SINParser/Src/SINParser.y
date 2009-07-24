@@ -187,11 +187,11 @@ expr:			assignexpr 					{	SIN::ParserManage::Manage_Expression_AssignExpression(
 				
 				
 				
-metaexpr:		DOT_LT	expr  GT_DOT			{}
-				|	DOT_TILDE		ID			{/*i am not sure if this is corect*/}
-				|	DOT_EXCl_MARK	metaexpr	{}
-				|	DOT_NUM_SIGN	STRING		{}
-				|	DOT_AT			metaexpr	{}
+metaexpr:		DOT_LT	expr  GT_DOT			{	SIN::ParserManage::Manage_MetaExpression_Expression($2, &($$));				}
+				|	DOT_TILDE		ID			{	SIN::ParserManage::Manage_MetaExpression_ID($2, &($$));						}
+				|	DOT_EXCl_MARK	metaexpr	{	SIN::ParserManage::Manage_MetaExpression_ExecuteMetaExpression($2, &($$));	}
+				|	DOT_NUM_SIGN	STRING		{	SIN::ParserManage::Manage_MetaExpression_ParseString($2, &($$));			}
+				|	DOT_AT			metaexpr	{	SIN::ParserManage::Manage_MetaExpression_UnparseMetaExpression($2, &($$));	}
 				;
 				
 				

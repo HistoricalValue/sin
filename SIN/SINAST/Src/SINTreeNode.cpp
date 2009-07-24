@@ -1,4 +1,6 @@
 #include "SINTreeNode.h"
+#include "SINAssert.h"
+#include "SINAlloc.h"
 #include <cassert>
 #include <stdexcept>
 
@@ -128,12 +130,13 @@ namespace SIN {
 
 	//-----------------------------------------------------------------------
 	void TreeNode::DeleteTree(TreeNode *_root){
+		SINASSERT(_root);
 
-		for(TreeNode *child = (*_root)[0], *nxtChild; child != NULL; child = nxtChild){
-			nxtChild = +(*child);
+		for(TreeNode *child = (*SINPTR(_root))[0], *nxtChild; child != NULL; child = nxtChild){
+			nxtChild = +(*SINPTR(child));
 			DeleteTree(child);
 		}
-		delete _root;
+		SINDELETE(_root);
 	}
 
 } // namespace SIN
