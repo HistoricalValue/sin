@@ -27,6 +27,8 @@ namespace SIN {
 		void	SetError (const ErrorInfo &);
 		void	WriteFine (const String &);
 		void	AppendToNodeList (ASTNode *);
+		bool	RemoveNodeFromList(ASTNode *);
+
 		
 
 		void	CleanNodes (void);

@@ -21,11 +21,22 @@ namespace SIN {
 	//-----------------------------------------------------------------
 	
 	struct CleanListFunctor : public std::unary_function<ASTNode *, void> {
-		void operator() (ASTNode * node) {
-			delete node;
-		}
+		void operator() (ASTNode * node) 
+			{ delete node; }
 	};
 
+
+
+	//-----------------------------------------------------------------
+	struct FindFunctor : public std::unary_function<ASTNode *, bool> {
+		ASTNode * node;
+		FindFunctor(ASTNode * _node) : node(_node) {}
+		
+		bool operator() (ASTNode * _node) 
+			{ return node->ID() == _node->ID() ? true : false; }
+	};
+
+	
 
 
 	//-----------------------------------------------------------------
@@ -98,6 +109,25 @@ namespace SIN {
 	void LexAndBisonParseArguments::CleanErrosAndNodes (void) {
 		CleanNodes();
 		CleanErrors();
+	}
+
+
+	//-----------------------------------------------------------------
+
+	void LexAndBisonParseArguments::AppendToNodeList (ASTNode * node) 
+		{ nodesList.push_back(node); }
+	
+
+	//-----------------------------------------------------------------
+	
+	bool LexAndBisonParseArguments::RemoveNodeFromList(ASTNode * node) {
+		NodesList::iterator result = std::find_if(nodesList.begin(), nodesList.end(), FindFunctor(node));
+		
+		if (result != nodesList.end()) {
+			nodesList.remove(result);
+			return true;
+		}
+		return false;
 	}
 
 }	//namespace SIN
