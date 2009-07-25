@@ -6,7 +6,7 @@
 #include <stdio.h>
 #include <string.h>
 
-
+#include "SINAlloc.h"
 
 #define ERROR_(MSG, RETVAL)		labpa.SetError(std::make_pair(MSG, *line));	\
 								return RETVAL
@@ -24,9 +24,9 @@ namespace LEX {
 	
 	char * LexUtility::SaveStr(const char * yytext) {
 		const size_t yytext_len = strlen(yytext);
-		char * stringV			= new char[yytext_len + 1];
+		char* stringV			= SINEWARRAY(char, yytext_len + 1);
 		
-		strncpy(stringV, yytext, yytext_len);
+		SIN::Alloc::memcpy(stringV, yytext, sizeof(char)*(yytext_len + 1));
 		stringV[yytext_len] = '\0'; // be safe
 		
 		return stringV;

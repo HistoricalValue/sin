@@ -27,7 +27,7 @@ namespace SIN {
 			char* conjoined_buf = SINEWARRAY(char, conjoined_buf_len);
 			result = out.write(static_cast<char*>(
 				memcpy(
-					Alloc::memcpy(conjoined_buf, buf.buf(), buf.length()) + buf.length(),
+					static_cast<char*>(Alloc::memcpy(conjoined_buf, buf.buf(), buf.length())) + buf.length(),
 					_buf, _len
 				)),
 				conjoined_buf_len
