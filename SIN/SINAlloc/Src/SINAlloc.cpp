@@ -34,6 +34,7 @@ namespace SIN {
 				inline void* Allocate(size_t const& _size, String const& _file, unsigned int const& _line) {
 					register void* memory = allocator.Allocate(_size);
 					if (memory != 0x00) {
+						SINASSERT(!IsValid(memory));
 						chunks_map.insert(std::make_pair(memory, Alloc::Chunk(memory, _size, _file, _line)));
 						SINALLOC_ALLOCATED(_size);
 					}
