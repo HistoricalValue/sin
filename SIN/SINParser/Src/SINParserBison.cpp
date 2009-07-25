@@ -521,7 +521,7 @@ static const yytype_uint16 yyprhs[] =
        0,     0,     3,     5,     8,     9,    12,    14,    16,    18,
       20,    23,    26,    28,    30,    32,    34,    36,    40,    44,
       48,    52,    56,    60,    64,    68,    72,    76,    80,    84,
-      88,    92,    94,    96,   100,   103,   106,   109,   112,   116,
+      88,    92,    94,    97,    99,   103,   106,   109,   112,   116,
      119,   122,   125,   128,   131,   134,   136,   140,   142,   144,
      146,   150,   152,   154,   157,   160,   162,   166,   171,   175,
      180,   183,   186,   193,   195,   197,   201,   207,   210,   211,
@@ -542,9 +542,9 @@ static const yytype_int8 yyrhs[] =
       58,    42,    58,    -1,    58,    41,    58,    -1,    58,    43,
       58,    -1,    58,    36,    58,    -1,    58,    37,    58,    -1,
       58,    44,    58,    -1,    58,    45,    58,    -1,    58,    46,
-      58,    -1,    59,    -1,    60,    -1,    47,    58,    48,    -1,
-      49,     4,    -1,    50,    59,    -1,    51,     5,    -1,    52,
-      59,    -1,    10,    58,    11,    -1,    32,    58,    -1,    46,
+      58,    -1,    59,    -1,    51,    59,    -1,    60,    -1,    47,
+      58,    48,    -1,    49,     4,    -1,    50,    59,    -1,    52,
+       5,    -1,    10,    58,    11,    -1,    32,    58,    -1,    46,
       58,    -1,    38,    63,    -1,    63,    38,    -1,    39,    63,
       -1,    63,    39,    -1,    62,    -1,    63,    30,    58,    -1,
       63,    -1,    65,    -1,    71,    -1,    10,    77,    11,    -1,
@@ -574,7 +574,7 @@ static const yytype_uint16 yyrline[] =
        0,   140,   140,   148,   149,   154,   155,   156,   157,   158,
      159,   160,   161,   162,   163,   164,   169,   170,   171,   172,
      173,   174,   175,   176,   177,   178,   179,   180,   181,   182,
-     183,   184,   185,   190,   191,   192,   193,   194,   199,   200,
+     183,   184,   185,   186,   191,   192,   193,   194,   199,   200,
      201,   202,   203,   204,   205,   206,   211,   216,   217,   218,
      219,   220,   225,   226,   227,   228,   233,   234,   235,   236,
      242,   243,   244,   249,   250,   255,   260,   265,   266,   271,
@@ -624,7 +624,7 @@ static const yytype_uint8 yyr1[] =
        0,    54,    55,    56,    56,    57,    57,    57,    57,    57,
       57,    57,    57,    57,    57,    57,    58,    58,    58,    58,
       58,    58,    58,    58,    58,    58,    58,    58,    58,    58,
-      58,    58,    58,    59,    59,    59,    59,    59,    60,    60,
+      58,    58,    58,    58,    59,    59,    59,    59,    60,    60,
       60,    60,    60,    60,    60,    60,    61,    62,    62,    62,
       62,    62,    63,    63,    63,    63,    64,    64,    64,    64,
       65,    65,    65,    66,    66,    67,    68,    69,    69,    70,
@@ -639,7 +639,7 @@ static const yytype_uint8 yyr2[] =
        0,     2,     1,     2,     0,     2,     1,     1,     1,     1,
        2,     2,     1,     1,     1,     1,     1,     3,     3,     3,
        3,     3,     3,     3,     3,     3,     3,     3,     3,     3,
-       3,     1,     1,     3,     2,     2,     2,     2,     3,     2,
+       3,     1,     2,     1,     3,     2,     2,     2,     3,     2,
        2,     2,     2,     2,     2,     1,     3,     1,     1,     1,
        3,     1,     1,     2,     2,     1,     3,     4,     3,     4,
        2,     2,     6,     1,     1,     3,     5,     2,     0,     3,
@@ -656,16 +656,16 @@ static const yytype_uint8 yydefact[] =
        0,    15,    84,    52,    85,     0,    78,     0,    14,     0,
        0,     0,     0,     0,     0,     0,     0,     0,    87,    88,
       86,     0,     0,     0,     0,     0,     0,     0,     0,     0,
-       0,     2,     0,     0,    31,    32,    16,    45,    47,    55,
+       0,     2,     0,     0,    31,    33,    16,    45,    47,    55,
       48,    49,    12,    13,    51,     6,     7,     8,     9,    71,
       77,     0,     0,     0,     0,     0,     0,    68,     0,    90,
       97,     0,    10,    11,    53,    54,    39,     0,    41,     0,
-      43,    40,     0,    34,    35,    36,    37,     1,     3,     5,
+      43,    40,     0,    35,    36,    32,    37,     1,     3,     5,
        0,     0,     0,     0,     0,     0,     0,     0,     0,     0,
        0,     0,     0,     0,     0,    68,     0,     0,     0,    42,
       44,    61,    63,    64,     0,     0,    60,     0,     0,    73,
       72,     0,     0,    38,    50,     0,     0,    70,     0,    90,
-      92,     0,    98,     0,    33,    17,    18,    19,    20,    21,
+      92,     0,    98,     0,    34,    17,    18,    19,    20,    21,
       26,    27,    22,    24,    23,    25,    28,    29,    30,     0,
        0,    56,     0,    46,     0,    58,    77,    77,    80,    79,
       68,     0,     0,     0,    67,     0,     0,     0,    89,     0,
@@ -688,33 +688,33 @@ static const yytype_int16 yydefgoto[] =
 #define YYPACT_NINF -156
 static const yytype_int16 yypact[] =
 {
-     162,  -156,  -156,  -156,  -156,     7,  -156,   304,  -156,     5,
-      13,    16,    18,   334,    28,    29,    33,    40,  -156,  -156,
-    -156,   364,    17,    17,   364,   364,    45,   178,    24,   178,
-      64,  -156,   162,   458,  -156,  -156,  -156,  -156,   609,  -156,
+     162,  -156,  -156,  -156,  -156,     7,  -156,   304,  -156,    -3,
+       5,    13,    18,   334,    -7,    14,    27,    33,  -156,  -156,
+    -156,   364,    17,    17,   364,   364,    36,    94,    94,    39,
+      41,  -156,   162,   458,  -156,  -156,  -156,  -156,   609,  -156,
       56,  -156,  -156,  -156,  -156,  -156,  -156,  -156,  -156,  -156,
-     534,    58,   214,   406,    57,   364,   364,   364,    59,    63,
-    -156,   484,  -156,  -156,  -156,  -156,    27,    50,   143,    56,
-     143,    27,   657,  -156,  -156,  -156,  -156,  -156,  -156,  -156,
+     534,    60,   214,   406,    38,   364,   364,   364,    58,    65,
+    -156,   484,  -156,  -156,  -156,  -156,    45,    50,   143,    56,
+     143,    45,   657,  -156,  -156,  -156,  -156,  -156,  -156,  -156,
      364,   364,   364,   364,   364,   364,   364,   364,   364,   364,
-     364,   364,   364,   364,   364,   364,    87,    90,   364,  -156,
+     364,   364,   364,   364,   364,   364,    69,    90,   364,  -156,
     -156,  -156,  -156,  -156,   364,    91,  -156,   364,   364,  -156,
-    -156,   214,    88,  -156,   101,   423,   442,   618,    86,    63,
-      97,   116,  -156,   125,  -156,   105,   105,    27,    27,    27,
-     595,   595,   164,   164,   164,   164,   691,   675,    27,    89,
-     130,  -156,   132,    73,   387,  -156,   641,   568,  -156,  -156,
-     364,   266,   266,   364,  -156,   364,   133,   139,  -156,   138,
-     101,  -156,  -156,   364,  -156,  -156,   364,  -156,   136,   134,
-    -156,   618,   500,   138,    97,  -156,   144,   641,  -156,   266,
-    -156,   364,  -156,  -156,  -156,  -156,  -156,   145,   266,  -156
+    -156,   214,    88,  -156,   101,   423,   442,   618,    86,    65,
+      97,   116,  -156,   125,  -156,   105,   105,    45,    45,    45,
+     595,   595,   164,   164,   164,   164,   691,   675,    45,    89,
+     131,  -156,   137,    73,   387,  -156,   641,   568,  -156,  -156,
+     364,   266,   266,   364,  -156,   364,   141,   150,  -156,   147,
+     101,  -156,  -156,   364,  -156,  -156,   364,  -156,   145,   142,
+    -156,   618,   500,   147,    97,  -156,   153,   641,  -156,   266,
+    -156,   364,  -156,  -156,  -156,  -156,  -156,   158,   266,  -156
 };
 
 /* YYPGOTO[NTERM-NUM].  */
 static const yytype_int16 yypgoto[] =
 {
-    -156,  -156,   122,   -51,    -5,   -22,  -156,  -156,  -156,     8,
-    -156,    25,   -31,  -156,  -156,   -89,   -11,  -156,  -156,  -122,
-    -155,  -156,    53,    -4,  -156,    52,    -1,  -156,  -156,  -156,
+    -156,  -156,   139,   -51,    -5,     2,  -156,  -156,  -156,    25,
+    -156,    42,   -31,  -156,  -156,   -89,     4,  -156,  -156,  -122,
+    -155,  -156,    62,    -4,  -156,    59,     3,  -156,  -156,  -156,
     -156
 };
 
@@ -725,30 +725,30 @@ static const yytype_int16 yypgoto[] =
 #define YYTABLE_NINF -82
 static const yytype_int16 yytable[] =
 {
-      50,   111,    53,    54,   175,    74,   140,    76,    61,   106,
-       2,     3,     4,     5,    49,    55,    66,     7,   182,    71,
-      72,     3,    58,    56,   165,   167,    57,    67,    59,    75,
-      68,    70,    16,    17,    18,    19,    20,    64,   106,    21,
-      62,    63,    16,    17,    65,    22,    23,    69,    69,    73,
+      50,   111,    53,    54,   175,    62,   140,    55,    61,   106,
+       2,     3,     4,     5,    49,    56,    66,     7,   182,    71,
+      72,     3,    58,    57,   165,   167,    63,    67,    59,    74,
+      75,    64,    16,    17,    18,    19,    20,    65,   106,    21,
+      73,    77,    16,    17,    76,    22,    23,    68,    70,   114,
      115,   116,   117,    24,    25,   185,    26,    27,    28,    29,
-     111,   168,   104,   123,    77,   110,    95,   120,   114,   119,
-     105,    12,    97,    93,   176,   125,   126,   127,   128,   129,
+     111,   168,   104,   123,    69,    69,    95,   110,   119,   120,
+     105,    12,    97,   141,   176,   125,   126,   127,   128,   129,
      130,   131,   132,   133,   134,   135,   136,   137,   138,   139,
-     117,   141,   187,   143,   142,   145,   161,   149,   155,   144,
+     117,    93,   187,   143,   142,   145,   161,   149,   155,   144,
      169,   170,   146,   147,    80,    81,    82,    83,    84,    85,
       86,   150,   157,    87,    88,    89,    90,    91,    92,    93,
       80,    81,    82,    83,    84,    85,    86,   159,   186,    87,
       88,    89,    90,    91,    92,    93,   160,   189,    82,    83,
-      84,   162,   163,   174,   173,   117,     6,   178,   171,    94,
-     172,    93,   179,    95,    78,   184,   188,    96,   117,    97,
-     180,   177,    -4,     1,   148,     2,     3,     4,     5,     0,
-       6,   156,     7,   183,     8,     0,   117,     0,     0,     9,
+      84,    25,   162,    26,    27,   117,    29,   163,   171,    94,
+     172,    93,   173,    95,   174,     6,   178,    96,   117,    97,
+     179,   177,    -4,     1,   184,     2,     3,     4,     5,   188,
+       6,    78,     7,   148,     8,   180,   117,   183,   156,     9,
        0,    10,    11,    12,    13,    14,    15,    16,    17,    18,
       19,    20,     0,     0,    21,    80,    81,    82,    83,    84,
       22,    23,     0,     0,   -82,   -82,   -82,   -82,    24,    25,
       93,    26,    27,    28,    29,     1,     0,     2,     3,     4,
-       5,     0,     6,   -81,     7,    25,     8,    26,    27,    28,
-      29,     9,     0,    10,    11,    12,    13,    14,    15,    16,
+       5,     0,     6,   -81,     7,     0,     8,     0,     0,     0,
+       0,     9,     0,    10,    11,    12,    13,    14,    15,    16,
       17,    18,    19,    20,     0,     0,    21,     0,     0,     0,
        0,     0,    22,    23,     0,     0,     0,     0,     0,     0,
       24,    25,     0,    26,    27,    28,    29,     1,     0,     2,
@@ -803,30 +803,30 @@ static const yytype_int16 yytable[] =
 
 static const yytype_int16 yycheck[] =
 {
-       5,    52,     7,     7,   159,    27,    95,    29,    13,    40,
+       5,    52,     7,     7,   159,    12,    95,    10,    13,    40,
        3,     4,     5,     6,     7,    10,    21,    10,   173,    24,
-      25,     4,     4,    10,   146,   147,    10,    10,    10,     5,
-      22,    23,    25,    26,    27,    28,    29,     4,    69,    32,
-      12,    12,    25,    26,     4,    38,    39,    22,    23,     4,
+      25,     4,     4,    10,   146,   147,    12,    10,    10,    27,
+      28,     4,    25,    26,    27,    28,    29,     4,    69,    32,
+       4,     0,    25,    26,     5,    38,    39,    22,    23,    11,
       55,    56,    57,    46,    47,   177,    49,    50,    51,    52,
-     111,   150,     6,    67,     0,     7,    10,     4,    11,    10,
-      14,    21,    16,    46,   163,    80,    81,    82,    83,    84,
+     111,   150,     6,    67,    22,    23,    10,     7,    10,     4,
+      14,    21,    16,     4,   163,    80,    81,    82,    83,    84,
       85,    86,    87,    88,    89,    90,    91,    92,    93,    94,
-      95,     4,   181,    98,     4,     4,     7,     9,    12,   104,
+      95,    46,   181,    98,     4,     4,     7,     9,    12,   104,
      151,   152,   107,   108,    31,    32,    33,    34,    35,    36,
       37,    10,    15,    40,    41,    42,    43,    44,    45,    46,
       31,    32,    33,    34,    35,    36,    37,    11,   179,    40,
       41,    42,    43,    44,    45,    46,    11,   188,    33,    34,
-      35,    11,    10,     4,    11,   150,     8,    11,   153,     6,
-     155,    46,    18,    10,    32,    11,    11,    14,   163,    16,
-     171,   166,     0,     1,   111,     3,     4,     5,     6,    -1,
-       8,   119,    10,   174,    12,    -1,   181,    -1,    -1,    17,
+      35,    47,    11,    49,    50,   150,    52,    10,   153,     6,
+     155,    46,    11,    10,     4,     8,    11,    14,   163,    16,
+      18,   166,     0,     1,    11,     3,     4,     5,     6,    11,
+       8,    32,    10,   111,    12,   171,   181,   174,   119,    17,
       -1,    19,    20,    21,    22,    23,    24,    25,    26,    27,
       28,    29,    -1,    -1,    32,    31,    32,    33,    34,    35,
       38,    39,    -1,    -1,    40,    41,    42,    43,    46,    47,
       46,    49,    50,    51,    52,     1,    -1,     3,     4,     5,
-       6,    -1,     8,     9,    10,    47,    12,    49,    50,    51,
-      52,    17,    -1,    19,    20,    21,    22,    23,    24,    25,
+       6,    -1,     8,     9,    10,    -1,    12,    -1,    -1,    -1,
+      -1,    17,    -1,    19,    20,    21,    22,    23,    24,    25,
       26,    27,    28,    29,    -1,    -1,    32,    -1,    -1,    -1,
       -1,    -1,    38,    39,    -1,    -1,    -1,    -1,    -1,    -1,
       46,    47,    -1,    49,    50,    51,    52,     1,    -1,     3,
@@ -890,7 +890,7 @@ static const yytype_uint8 yystos[] =
       65,    71,    74,    77,    78,    81,    82,    83,    84,     7,
       58,    72,    75,    58,    77,    10,    10,    10,     4,    10,
       12,    58,    12,    12,     4,     4,    58,    10,    63,    65,
-      63,    58,    58,     4,    59,     5,    59,     0,    56,    12,
+      63,    58,    58,     4,    59,    59,     5,     0,    56,    12,
       31,    32,    33,    34,    35,    36,    37,    40,    41,    42,
       43,    44,    45,    46,     6,    10,    14,    16,    30,    38,
       39,    66,    67,    68,     6,    14,    66,    13,    15,    73,
@@ -1721,384 +1721,384 @@ yyreduce:
         case 2:
 
     {	
-							SIN::ParserManage::Manage_SinCode((yyvsp[(1) - (1)].AST), &((yyval.AST)));	
+							SIN::ParserManage::Manage_SinCode((yyvsp[(1) - (1)].AST), &((yyval.AST)), &fabpa);	
 							fabpa.SetRoot((yyval.AST));
 						}
     break;
 
   case 3:
 
-    {	SIN::ParserManage::Manage_Statements((yyvsp[(1) - (2)].AST), (yyvsp[(2) - (2)].AST), &((yyval.AST)));	}
+    {	SIN::ParserManage::Manage_Statements((yyvsp[(1) - (2)].AST), (yyvsp[(2) - (2)].AST), &((yyval.AST)), &fabpa);	}
     break;
 
   case 4:
 
-    {	SIN::ParserManage::Manage_Statements_Empty(&((yyval.AST)));		}
+    {	SIN::ParserManage::Manage_Statements_Empty(&((yyval.AST)), &fabpa);		}
     break;
 
   case 5:
 
-    {	SIN::ParserManage::Manage_Statement_Expression((yyvsp[(1) - (2)].AST), &((yyval.AST)));			}
+    {	SIN::ParserManage::Manage_Statement_Expression((yyvsp[(1) - (2)].AST), &((yyval.AST)), &fabpa);			}
     break;
 
   case 6:
 
-    {	SIN::ParserManage::Manage_Statement_IfStatement((yyvsp[(1) - (1)].AST), &((yyval.AST)));			}
+    {	SIN::ParserManage::Manage_Statement_IfStatement((yyvsp[(1) - (1)].AST), &((yyval.AST)), &fabpa);			}
     break;
 
   case 7:
 
-    {	SIN::ParserManage::Manage_Statement_WhileStatement((yyvsp[(1) - (1)].AST), &((yyval.AST)));		}
+    {	SIN::ParserManage::Manage_Statement_WhileStatement((yyvsp[(1) - (1)].AST), &((yyval.AST)), &fabpa);		}
     break;
 
   case 8:
 
-    {	SIN::ParserManage::Manage_Statement_ForStatement((yyvsp[(1) - (1)].AST), &((yyval.AST)));		}
+    {	SIN::ParserManage::Manage_Statement_ForStatement((yyvsp[(1) - (1)].AST), &((yyval.AST)), &fabpa);		}
     break;
 
   case 9:
 
-    {	SIN::ParserManage::Manage_Statement_ReturnStatement((yyvsp[(1) - (1)].AST), &((yyval.AST)));		}
+    {	SIN::ParserManage::Manage_Statement_ReturnStatement((yyvsp[(1) - (1)].AST), &((yyval.AST)), &fabpa);		}
     break;
 
   case 10:
 
-    {	SIN::ParserManage::Manage_Statement_Break(&((yyval.AST)));					}
+    {	SIN::ParserManage::Manage_Statement_Break(&((yyval.AST)), &fabpa);					}
     break;
 
   case 11:
 
-    {	SIN::ParserManage::Manage_Statement_Continue(&((yyval.AST)));				}
+    {	SIN::ParserManage::Manage_Statement_Continue(&((yyval.AST)), &fabpa);				}
     break;
 
   case 12:
 
-    {	SIN::ParserManage::Manage_Statement_Block((yyvsp[(1) - (1)].AST), &((yyval.AST)));				}
+    {	SIN::ParserManage::Manage_Statement_Block((yyvsp[(1) - (1)].AST), &((yyval.AST)), &fabpa);				}
     break;
 
   case 13:
 
-    {	SIN::ParserManage::Manage_Statement_FunctionDefinition((yyvsp[(1) - (1)].AST), &((yyval.AST)));	}
+    {	SIN::ParserManage::Manage_Statement_FunctionDefinition((yyvsp[(1) - (1)].AST), &((yyval.AST)), &fabpa);	}
     break;
 
   case 14:
 
-    {	SIN::ParserManage::Manage_Statement_Semicolon(&((yyval.AST)));				}
+    {	SIN::ParserManage::Manage_Statement_Semicolon(&((yyval.AST)), &fabpa);				}
     break;
 
   case 15:
 
-    {	SIN::ParserManage::Manage_Statement_Error(&((yyval.AST)));		yyclearin;	}
+    {	SIN::ParserManage::Manage_Statement_Error(&((yyval.AST)), &fabpa);		yyclearin;	}
     break;
 
   case 16:
 
-    {	SIN::ParserManage::Manage_Expression_AssignExpression((yyvsp[(1) - (1)].AST), &((yyval.AST)));				}
+    {	SIN::ParserManage::Manage_Expression_AssignExpression((yyvsp[(1) - (1)].AST), &((yyval.AST)), &fabpa);				}
     break;
 
   case 17:
 
-    {	SIN::ParserManage::Manage_Expression_ExpressionADDExpression((yyvsp[(1) - (3)].AST), (yyvsp[(3) - (3)].AST), &((yyval.AST)));	}
+    {	SIN::ParserManage::Manage_Expression_ExpressionADDExpression((yyvsp[(1) - (3)].AST), (yyvsp[(3) - (3)].AST), &((yyval.AST)), &fabpa);	}
     break;
 
   case 18:
 
-    {	SIN::ParserManage::Manage_Expression_ExpressionMINExpression((yyvsp[(1) - (3)].AST), (yyvsp[(3) - (3)].AST), &((yyval.AST)));	}
+    {	SIN::ParserManage::Manage_Expression_ExpressionMINExpression((yyvsp[(1) - (3)].AST), (yyvsp[(3) - (3)].AST), &((yyval.AST)), &fabpa);	}
     break;
 
   case 19:
 
-    {	SIN::ParserManage::Manage_Expression_ExpressionMULExpression((yyvsp[(1) - (3)].AST), (yyvsp[(3) - (3)].AST), &((yyval.AST)));	}
+    {	SIN::ParserManage::Manage_Expression_ExpressionMULExpression((yyvsp[(1) - (3)].AST), (yyvsp[(3) - (3)].AST), &((yyval.AST)), &fabpa);	}
     break;
 
   case 20:
 
-    {	SIN::ParserManage::Manage_Expression_ExpressionDIVExpression((yyvsp[(1) - (3)].AST), (yyvsp[(3) - (3)].AST), &((yyval.AST)));	}
+    {	SIN::ParserManage::Manage_Expression_ExpressionDIVExpression((yyvsp[(1) - (3)].AST), (yyvsp[(3) - (3)].AST), &((yyval.AST)), &fabpa);	}
     break;
 
   case 21:
 
-    {	SIN::ParserManage::Manage_Expression_ExpressionMODExpression((yyvsp[(1) - (3)].AST), (yyvsp[(3) - (3)].AST), &((yyval.AST)));	}
+    {	SIN::ParserManage::Manage_Expression_ExpressionMODExpression((yyvsp[(1) - (3)].AST), (yyvsp[(3) - (3)].AST), &((yyval.AST)), &fabpa);	}
     break;
 
   case 22:
 
-    {	SIN::ParserManage::Manage_Expression_ExpressionGTExpression((yyvsp[(1) - (3)].AST), (yyvsp[(3) - (3)].AST), &((yyval.AST)));		}
+    {	SIN::ParserManage::Manage_Expression_ExpressionGTExpression((yyvsp[(1) - (3)].AST), (yyvsp[(3) - (3)].AST), &((yyval.AST)), &fabpa);		}
     break;
 
   case 23:
 
-    {	SIN::ParserManage::Manage_Expression_ExpressionGEExpression((yyvsp[(1) - (3)].AST), (yyvsp[(3) - (3)].AST), &((yyval.AST)));		}
+    {	SIN::ParserManage::Manage_Expression_ExpressionGEExpression((yyvsp[(1) - (3)].AST), (yyvsp[(3) - (3)].AST), &((yyval.AST)), &fabpa);		}
     break;
 
   case 24:
 
-    {	SIN::ParserManage::Manage_Expression_ExpressionLTExpression((yyvsp[(1) - (3)].AST), (yyvsp[(3) - (3)].AST), &((yyval.AST)));		}
+    {	SIN::ParserManage::Manage_Expression_ExpressionLTExpression((yyvsp[(1) - (3)].AST), (yyvsp[(3) - (3)].AST), &((yyval.AST)), &fabpa);		}
     break;
 
   case 25:
 
-    {	SIN::ParserManage::Manage_Expression_ExpressionLEExpression((yyvsp[(1) - (3)].AST), (yyvsp[(3) - (3)].AST), &((yyval.AST)));		}
+    {	SIN::ParserManage::Manage_Expression_ExpressionLEExpression((yyvsp[(1) - (3)].AST), (yyvsp[(3) - (3)].AST), &((yyval.AST)), &fabpa);		}
     break;
 
   case 26:
 
-    {	SIN::ParserManage::Manage_Expression_ExpressionEQExpression((yyvsp[(1) - (3)].AST), (yyvsp[(3) - (3)].AST), &((yyval.AST)));		}
+    {	SIN::ParserManage::Manage_Expression_ExpressionEQExpression((yyvsp[(1) - (3)].AST), (yyvsp[(3) - (3)].AST), &((yyval.AST)), &fabpa);		}
     break;
 
   case 27:
 
-    {	SIN::ParserManage::Manage_Expression_ExpressionNOTEQExpression((yyvsp[(1) - (3)].AST), (yyvsp[(3) - (3)].AST), &((yyval.AST)));	}
+    {	SIN::ParserManage::Manage_Expression_ExpressionNOTEQExpression((yyvsp[(1) - (3)].AST), (yyvsp[(3) - (3)].AST), &((yyval.AST)), &fabpa);	}
     break;
 
   case 28:
 
-    {	SIN::ParserManage::Manage_Expression_ExpressionANDExpression((yyvsp[(1) - (3)].AST), (yyvsp[(3) - (3)].AST), &((yyval.AST)));	}
+    {	SIN::ParserManage::Manage_Expression_ExpressionANDExpression((yyvsp[(1) - (3)].AST), (yyvsp[(3) - (3)].AST), &((yyval.AST)), &fabpa);	}
     break;
 
   case 29:
 
-    {	SIN::ParserManage::Manage_Expression_ExpressionORExpression((yyvsp[(1) - (3)].AST), (yyvsp[(3) - (3)].AST), &((yyval.AST)));		}
+    {	SIN::ParserManage::Manage_Expression_ExpressionORExpression((yyvsp[(1) - (3)].AST), (yyvsp[(3) - (3)].AST), &((yyval.AST)), &fabpa);		}
     break;
 
   case 30:
 
-    {	SIN::ParserManage::Manage_Expression_ExpressionNOTExpression((yyvsp[(1) - (3)].AST), (yyvsp[(3) - (3)].AST), &((yyval.AST)));	}
+    {	SIN::ParserManage::Manage_Expression_ExpressionNOTExpression((yyvsp[(1) - (3)].AST), (yyvsp[(3) - (3)].AST), &((yyval.AST)), &fabpa);	}
     break;
 
   case 31:
 
-    {	SIN::ParserManage::Manage_Expression_MetaExpression((yyvsp[(1) - (1)].AST), &((yyval.AST)));					}
+    {	SIN::ParserManage::Manage_Expression_MetaExpression((yyvsp[(1) - (1)].AST), &((yyval.AST)), &fabpa);					}
     break;
 
   case 32:
 
-    {	SIN::ParserManage::Manage_Expression_Term((yyvsp[(1) - (1)].AST), &((yyval.AST)));							}
+    {	SIN::ParserManage::Manage_Expression_UnparseMetaExpression((yyvsp[(2) - (2)].AST), &((yyval.AST)), &fabpa);			}
     break;
 
   case 33:
 
-    {	SIN::ParserManage::Manage_MetaExpression_Expression((yyvsp[(2) - (3)].AST), &((yyval.AST)));				}
+    {	SIN::ParserManage::Manage_Expression_Term((yyvsp[(1) - (1)].AST), &((yyval.AST)), &fabpa);							}
     break;
 
   case 34:
 
-    {	SIN::ParserManage::Manage_MetaExpression_ID((yyvsp[(2) - (2)].stringV), &((yyval.AST)));						}
+    {	SIN::ParserManage::Manage_MetaExpression_Expression((yyvsp[(2) - (3)].AST), &((yyval.AST)), &fabpa);				}
     break;
 
   case 35:
 
-    {	SIN::ParserManage::Manage_MetaExpression_ExecuteMetaExpression((yyvsp[(2) - (2)].AST), &((yyval.AST)));	}
+    {	SIN::ParserManage::Manage_MetaExpression_ID((yyvsp[(2) - (2)].stringV), &((yyval.AST)), &fabpa);						}
     break;
 
   case 36:
 
-    {	SIN::ParserManage::Manage_MetaExpression_ParseString((yyvsp[(2) - (2)].stringV), &((yyval.AST)));			}
+    {	SIN::ParserManage::Manage_MetaExpression_ExecuteMetaExpression((yyvsp[(2) - (2)].AST), &((yyval.AST)), &fabpa);	}
     break;
 
   case 37:
 
-    {	SIN::ParserManage::Manage_MetaExpression_UnparseMetaExpression((yyvsp[(2) - (2)].AST), &((yyval.AST)));	}
+    {	SIN::ParserManage::Manage_MetaExpression_ParseString((yyvsp[(2) - (2)].stringV), &((yyval.AST)), &fabpa);			}
     break;
 
   case 38:
 
-    {	SIN::ParserManage::Manage_Term_ExpressionParentheses((yyvsp[(2) - (3)].AST), &((yyval.AST)));	}
+    {	SIN::ParserManage::Manage_Term_ExpressionParentheses((yyvsp[(2) - (3)].AST), &((yyval.AST)), &fabpa);	}
     break;
 
   case 39:
 
-    {	SIN::ParserManage::Manage_Term_MINExpression((yyvsp[(2) - (2)].AST), &((yyval.AST)));			}
+    {	SIN::ParserManage::Manage_Term_MINExpression((yyvsp[(2) - (2)].AST), &((yyval.AST)), &fabpa);			}
     break;
 
   case 40:
 
-    {	SIN::ParserManage::Manage_Term_NOTExpression((yyvsp[(2) - (2)].AST), &((yyval.AST)));			}
+    {	SIN::ParserManage::Manage_Term_NOTExpression((yyvsp[(2) - (2)].AST), &((yyval.AST)), &fabpa);			}
     break;
 
   case 41:
 
-    {	SIN::ParserManage::Manage_Term_INCRLValue((yyvsp[(2) - (2)].AST), &((yyval.AST)));				}
+    {	SIN::ParserManage::Manage_Term_INCRLValue((yyvsp[(2) - (2)].AST), &((yyval.AST)), &fabpa);				}
     break;
 
   case 42:
 
-    {	SIN::ParserManage::Manage_Term_LValueINCR((yyvsp[(1) - (2)].AST), &((yyval.AST)));				}
+    {	SIN::ParserManage::Manage_Term_LValueINCR((yyvsp[(1) - (2)].AST), &((yyval.AST)), &fabpa);				}
     break;
 
   case 43:
 
-    {	SIN::ParserManage::Manage_Term_DECRLValue((yyvsp[(2) - (2)].AST), &((yyval.AST)));				}
+    {	SIN::ParserManage::Manage_Term_DECRLValue((yyvsp[(2) - (2)].AST), &((yyval.AST)), &fabpa);				}
     break;
 
   case 44:
 
-    {	SIN::ParserManage::Manage_Term_LValueDECR((yyvsp[(1) - (2)].AST), &((yyval.AST)));				}
+    {	SIN::ParserManage::Manage_Term_LValueDECR((yyvsp[(1) - (2)].AST), &((yyval.AST)), &fabpa);				}
     break;
 
   case 45:
 
-    {	SIN::ParserManage::Manage_Term_Primary((yyvsp[(1) - (1)].AST), &((yyval.AST)));					}
+    {	SIN::ParserManage::Manage_Term_Primary((yyvsp[(1) - (1)].AST), &((yyval.AST)), &fabpa);					}
     break;
 
   case 46:
 
-    {	SIN::ParserManage::Manage_AssignExpression((yyvsp[(1) - (3)].AST), (yyvsp[(3) - (3)].AST), &((yyval.AST)));	}
+    {	SIN::ParserManage::Manage_AssignExpression((yyvsp[(1) - (3)].AST), (yyvsp[(3) - (3)].AST), &((yyval.AST)), &fabpa);	}
     break;
 
   case 47:
 
-    {	SIN::ParserManage::Manage_Primary_LValue((yyvsp[(1) - (1)].AST), &((yyval.AST)));						}
+    {	SIN::ParserManage::Manage_Primary_LValue((yyvsp[(1) - (1)].AST), &((yyval.AST)), &fabpa);						}
     break;
 
   case 48:
 
-    {	SIN::ParserManage::Manage_Primary_Call((yyvsp[(1) - (1)].AST), &((yyval.AST)));							}
+    {	SIN::ParserManage::Manage_Primary_Call((yyvsp[(1) - (1)].AST), &((yyval.AST)), &fabpa);							}
     break;
 
   case 49:
 
-    {	SIN::ParserManage::Manage_Primary_ObjectDefinition((yyvsp[(1) - (1)].AST), &((yyval.AST)));				}
+    {	SIN::ParserManage::Manage_Primary_ObjectDefinition((yyvsp[(1) - (1)].AST), &((yyval.AST)), &fabpa);				}
     break;
 
   case 50:
 
-    {	SIN::ParserManage::Manage_Primary_FunctionDefinitionParentheses((yyvsp[(2) - (3)].AST), &((yyval.AST)));	}
+    {	SIN::ParserManage::Manage_Primary_FunctionDefinitionParentheses((yyvsp[(2) - (3)].AST), &((yyval.AST)), &fabpa);	}
     break;
 
   case 51:
 
-    {	SIN::ParserManage::Manage_Primary_Constant((yyvsp[(1) - (1)].AST), &((yyval.AST)));						}
+    {	SIN::ParserManage::Manage_Primary_Constant((yyvsp[(1) - (1)].AST), &((yyval.AST)), &fabpa);						}
     break;
 
   case 52:
 
-    {	SIN::ParserManage::Manage_LValue_ID((yyvsp[(1) - (1)].stringV), &((yyval.AST)));			}
+    {	SIN::ParserManage::Manage_LValue_ID((yyvsp[(1) - (1)].stringV), &((yyval.AST)), &fabpa);			}
     break;
 
   case 53:
 
-    {	SIN::ParserManage::Manage_LValue_LocalID((yyvsp[(2) - (2)].stringV), &((yyval.AST)));	}
+    {	SIN::ParserManage::Manage_LValue_LocalID((yyvsp[(2) - (2)].stringV), &((yyval.AST)), &fabpa);	}
     break;
 
   case 54:
 
-    {	SIN::ParserManage::Manage_LValue_GlobalID((yyvsp[(2) - (2)].stringV), &((yyval.AST)));	}
+    {	SIN::ParserManage::Manage_LValue_GlobalID((yyvsp[(2) - (2)].stringV), &((yyval.AST)), &fabpa);	}
     break;
 
   case 55:
 
-    {	SIN::ParserManage::Manage_LValue_Member((yyvsp[(1) - (1)].AST), &((yyval.AST)));		}
+    {	SIN::ParserManage::Manage_LValue_Member((yyvsp[(1) - (1)].AST), &((yyval.AST)), &fabpa);		}
     break;
 
   case 56:
 
-    {	SIN::ParserManage::Manage_Member_LValueID((yyvsp[(1) - (3)].AST), (yyvsp[(3) - (3)].stringV), &((yyval.AST)));			}
+    {	SIN::ParserManage::Manage_Member_LValueID((yyvsp[(1) - (3)].AST), (yyvsp[(3) - (3)].stringV), &((yyval.AST)), &fabpa);			}
     break;
 
   case 57:
 
-    {	SIN::ParserManage::Manage_Member_LValueExpression((yyvsp[(1) - (4)].AST), (yyvsp[(3) - (4)].AST), &((yyval.AST)));	}
+    {	SIN::ParserManage::Manage_Member_LValueExpression((yyvsp[(1) - (4)].AST), (yyvsp[(3) - (4)].AST), &((yyval.AST)), &fabpa);	}
     break;
 
   case 58:
 
-    {	SIN::ParserManage::Manage_Member_CallID((yyvsp[(1) - (3)].AST), (yyvsp[(3) - (3)].stringV), &((yyval.AST)));				}
+    {	SIN::ParserManage::Manage_Member_CallID((yyvsp[(1) - (3)].AST), (yyvsp[(3) - (3)].stringV), &((yyval.AST)), &fabpa);				}
     break;
 
   case 59:
 
-    {	SIN::ParserManage::Manage_Member_CallExpression((yyvsp[(1) - (4)].AST), (yyvsp[(3) - (4)].AST), &((yyval.AST)));		}
+    {	SIN::ParserManage::Manage_Member_CallExpression((yyvsp[(1) - (4)].AST), (yyvsp[(3) - (4)].AST), &((yyval.AST)), &fabpa);		}
     break;
 
   case 60:
 
-    {	SIN::ParserManage::Manage_Call_CallCallSuffix((yyvsp[(1) - (2)].AST), (yyvsp[(2) - (2)].AST), &((yyval.AST)));					}
+    {	SIN::ParserManage::Manage_Call_CallCallSuffix((yyvsp[(1) - (2)].AST), (yyvsp[(2) - (2)].AST), &((yyval.AST)), &fabpa);					}
     break;
 
   case 61:
 
-    {	SIN::ParserManage::Manage_Call_LValueCallSuffix((yyvsp[(1) - (2)].AST), (yyvsp[(2) - (2)].AST), &((yyval.AST)));					}
+    {	SIN::ParserManage::Manage_Call_LValueCallSuffix((yyvsp[(1) - (2)].AST), (yyvsp[(2) - (2)].AST), &((yyval.AST)), &fabpa);					}
     break;
 
   case 62:
 
-    {	SIN::ParserManage::Manage_Call_FunctionDefinitionExpressionList((yyvsp[(2) - (6)].AST), (yyvsp[(5) - (6)].AST), &((yyval.AST)));	}
+    {	SIN::ParserManage::Manage_Call_FunctionDefinitionExpressionList((yyvsp[(2) - (6)].AST), (yyvsp[(5) - (6)].AST), &((yyval.AST)), &fabpa);	}
     break;
 
   case 63:
 
-    {	SIN::ParserManage::Manage_CallSuffix_NormalCall((yyvsp[(1) - (1)].AST), &((yyval.AST)));	}
+    {	SIN::ParserManage::Manage_CallSuffix_NormalCall((yyvsp[(1) - (1)].AST), &((yyval.AST)), &fabpa);	}
     break;
 
   case 64:
 
-    {	SIN::ParserManage::Manage_CallSuffix_MethodCall((yyvsp[(1) - (1)].AST), &((yyval.AST)));	}
+    {	SIN::ParserManage::Manage_CallSuffix_MethodCall((yyvsp[(1) - (1)].AST), &((yyval.AST)), &fabpa);	}
     break;
 
   case 65:
 
-    {	SIN::ParserManage::Manage_NormalCall((yyvsp[(2) - (3)].AST), &((yyval.AST)));	}
+    {	SIN::ParserManage::Manage_NormalCall((yyvsp[(2) - (3)].AST), &((yyval.AST)), &fabpa);	}
     break;
 
   case 66:
 
-    {	SIN::ParserManage::Manage_MethodCall((yyvsp[(2) - (5)].stringV), (yyvsp[(4) - (5)].AST), &((yyval.AST)));	}
+    {	SIN::ParserManage::Manage_MethodCall((yyvsp[(2) - (5)].stringV), (yyvsp[(4) - (5)].AST), &((yyval.AST)), &fabpa);	}
     break;
 
   case 67:
 
-    {	SIN::ParserManage::Manage_ExpressionList((yyvsp[(1) - (2)].AST), (yyvsp[(2) - (2)].AST), &((yyval.AST)));	}
+    {	SIN::ParserManage::Manage_ExpressionList((yyvsp[(1) - (2)].AST), (yyvsp[(2) - (2)].AST), &((yyval.AST)), &fabpa);	}
     break;
 
   case 68:
 
-    {	SIN::ParserManage::Manage_ExpressionList_Empty(&((yyval.AST)));		}
+    {	SIN::ParserManage::Manage_ExpressionList_Empty(&((yyval.AST)), &fabpa);		}
     break;
 
   case 69:
 
-    {	SIN::ParserManage::Manage_ExpressionList((yyvsp[(2) - (3)].AST), (yyvsp[(3) - (3)].AST), &((yyval.AST)));	}
+    {	SIN::ParserManage::Manage_ExpressionList((yyvsp[(2) - (3)].AST), (yyvsp[(3) - (3)].AST), &((yyval.AST)), &fabpa);	}
     break;
 
   case 70:
 
-    {	SIN::ParserManage::Manage_ExpressionList_Empty(&((yyval.AST)));		}
+    {	SIN::ParserManage::Manage_ExpressionList_Empty(&((yyval.AST)), &fabpa);		}
     break;
 
   case 71:
 
-    {	SIN::ParserManage::Manage_ObjectDefinition_EmptyObject(&((yyval.AST)));		}
+    {	SIN::ParserManage::Manage_ObjectDefinition_EmptyObject(&((yyval.AST)), &fabpa);		}
     break;
 
   case 72:
 
-    {	SIN::ParserManage::Manage_ObjectDefinition_ObjectList((yyvsp[(2) - (3)].AST), &((yyval.AST)));	}
+    {	SIN::ParserManage::Manage_ObjectDefinition_ObjectList((yyvsp[(2) - (3)].AST), &((yyval.AST)), &fabpa);	}
     break;
 
   case 73:
 
-    {	SIN::ParserManage::Manage_ObjectList_ExpressionObjectLists((yyvsp[(1) - (2)].AST), (yyvsp[(2) - (2)].AST), &((yyval.AST)));					}
+    {	SIN::ParserManage::Manage_ObjectList_ExpressionObjectLists((yyvsp[(1) - (2)].AST), (yyvsp[(2) - (2)].AST), &((yyval.AST)), &fabpa);					}
     break;
 
   case 74:
 
-    {	SIN::ParserManage::Manage_ObjectList_ExpressionExpressionObjectLists((yyvsp[(1) - (4)].AST), (yyvsp[(3) - (4)].AST), (yyvsp[(4) - (4)].AST), &((yyval.AST)));	}
+    {	SIN::ParserManage::Manage_ObjectList_ExpressionExpressionObjectLists((yyvsp[(1) - (4)].AST), (yyvsp[(3) - (4)].AST), (yyvsp[(4) - (4)].AST), &((yyval.AST)), &fabpa);	}
     break;
 
   case 75:
 
-    {	SIN::ParserManage::Manage_ObjectList_ExpressionObjectLists((yyvsp[(2) - (3)].AST), (yyvsp[(3) - (3)].AST), &((yyval.AST)));					}
+    {	SIN::ParserManage::Manage_ObjectList_ExpressionObjectLists((yyvsp[(2) - (3)].AST), (yyvsp[(3) - (3)].AST), &((yyval.AST)), &fabpa);					}
     break;
 
   case 76:
 
-    {	SIN::ParserManage::Manage_ObjectList_ExpressionExpressionObjectLists((yyvsp[(2) - (5)].AST), (yyvsp[(4) - (5)].AST), (yyvsp[(5) - (5)].AST), &((yyval.AST)));	}
+    {	SIN::ParserManage::Manage_ObjectList_ExpressionExpressionObjectLists((yyvsp[(2) - (5)].AST), (yyvsp[(4) - (5)].AST), (yyvsp[(5) - (5)].AST), &((yyval.AST)), &fabpa);	}
     break;
 
   case 77:
 
-    {	SIN::ParserManage::Manage_ObjectList_Empty(&((yyval.AST)));											}
+    {	SIN::ParserManage::Manage_ObjectList_Empty(&((yyval.AST)), &fabpa);											}
     break;
 
   case 78:
@@ -2108,102 +2108,102 @@ yyreduce:
 
   case 79:
 
-    {	SIN::ParserManage::Manage_Block((yyvsp[(3) - (4)].AST), &((yyval.AST)));	}
+    {	SIN::ParserManage::Manage_Block((yyvsp[(3) - (4)].AST), &((yyval.AST)), &fabpa);	}
     break;
 
   case 80:
 
-    {	SIN::ParserManage::Manage_Statements((yyvsp[(1) - (2)].AST), (yyvsp[(2) - (2)].AST), &((yyval.AST)));	}
+    {	SIN::ParserManage::Manage_Statements((yyvsp[(1) - (2)].AST), (yyvsp[(2) - (2)].AST), &((yyval.AST)), &fabpa);	}
     break;
 
   case 81:
 
-    {	SIN::ParserManage::Manage_Statements_Empty(&((yyval.AST)));		}
+    {	SIN::ParserManage::Manage_Statements_Empty(&((yyval.AST)), &fabpa);		}
     break;
 
   case 82:
 
-    {	SIN::ParserManage::Manage_FunctionDefinition_Function((yyvsp[(2) - (6)].stringV), (yyvsp[(4) - (6)].AST), (yyvsp[(6) - (6)].AST), &((yyval.AST)));	}
+    {	SIN::ParserManage::Manage_FunctionDefinition_Function((yyvsp[(2) - (6)].stringV), (yyvsp[(4) - (6)].AST), (yyvsp[(6) - (6)].AST), &((yyval.AST)), &fabpa);	}
     break;
 
   case 83:
 
-    {	SIN::ParserManage::Manage_FunctionDefinition_LamdaFunction((yyvsp[(3) - (5)].AST), (yyvsp[(5) - (5)].AST), &((yyval.AST)));	}
+    {	SIN::ParserManage::Manage_FunctionDefinition_LamdaFunction((yyvsp[(3) - (5)].AST), (yyvsp[(5) - (5)].AST), &((yyval.AST)), &fabpa);	}
     break;
 
   case 84:
 
-    {	SIN::ParserManage::Manage_Constant_Number(atof(yytext), &((yyval.AST)));	}
+    {	SIN::ParserManage::Manage_Constant_Number(atof(yytext), &((yyval.AST)), &fabpa);	}
     break;
 
   case 85:
 
-    {	SIN::ParserManage::Manage_Constant_String((yyvsp[(1) - (1)].stringV), &((yyval.AST)));			}
+    {	SIN::ParserManage::Manage_Constant_String((yyvsp[(1) - (1)].stringV), &((yyval.AST)), &fabpa);			}
     break;
 
   case 86:
 
-    {	SIN::ParserManage::Manage_Constant_Nil(&((yyval.AST)));					}
+    {	SIN::ParserManage::Manage_Constant_Nil(&((yyval.AST)), &fabpa);					}
     break;
 
   case 87:
 
-    {	SIN::ParserManage::Manage_Constant_True(&((yyval.AST)));					}
+    {	SIN::ParserManage::Manage_Constant_True(&((yyval.AST)), &fabpa);					}
     break;
 
   case 88:
 
-    {	SIN::ParserManage::Manage_Constant_False(&((yyval.AST)));				}
+    {	SIN::ParserManage::Manage_Constant_False(&((yyval.AST)), &fabpa);				}
     break;
 
   case 89:
 
-    {	SIN::ParserManage::Manage_IDList((yyvsp[(1) - (2)].stringV), (yyvsp[(2) - (2)].AST), &((yyval.AST)));	}
+    {	SIN::ParserManage::Manage_IDList((yyvsp[(1) - (2)].stringV), (yyvsp[(2) - (2)].AST), &((yyval.AST)), &fabpa);	}
     break;
 
   case 90:
 
-    {	SIN::ParserManage::Manage_IDList_Empty(&((yyval.AST)));		}
+    {	SIN::ParserManage::Manage_IDList_Empty(&((yyval.AST)), &fabpa);		}
     break;
 
   case 91:
 
-    {	SIN::ParserManage::Manage_IDList((yyvsp[(2) - (3)].stringV), (yyvsp[(3) - (3)].AST), &((yyval.AST)));	}
+    {	SIN::ParserManage::Manage_IDList((yyvsp[(2) - (3)].stringV), (yyvsp[(3) - (3)].AST), &((yyval.AST)), &fabpa);	}
     break;
 
   case 92:
 
-    {	SIN::ParserManage::Manage_IDList_Empty(&((yyval.AST)));		}
+    {	SIN::ParserManage::Manage_IDList_Empty(&((yyval.AST)), &fabpa);		}
     break;
 
   case 93:
 
-    {	SIN::ParserManage::Manage_IfStatement_If((yyvsp[(3) - (5)].AST), (yyvsp[(5) - (5)].AST), &((yyval.AST)));			}
+    {	SIN::ParserManage::Manage_IfStatement_If((yyvsp[(3) - (5)].AST), (yyvsp[(5) - (5)].AST), &((yyval.AST)), &fabpa);			}
     break;
 
   case 94:
 
-    {	SIN::ParserManage::Manage_IfStatement_IfElse((yyvsp[(3) - (7)].AST), (yyvsp[(5) - (7)].AST), (yyvsp[(7) - (7)].AST), &((yyval.AST)));	}
+    {	SIN::ParserManage::Manage_IfStatement_IfElse((yyvsp[(3) - (7)].AST), (yyvsp[(5) - (7)].AST), (yyvsp[(7) - (7)].AST), &((yyval.AST)), &fabpa);	}
     break;
 
   case 95:
 
-    {	SIN::ParserManage::Manage_WhileStatement((yyvsp[(3) - (5)].AST), (yyvsp[(5) - (5)].AST), &((yyval.AST)));	}
+    {	SIN::ParserManage::Manage_WhileStatement((yyvsp[(3) - (5)].AST), (yyvsp[(5) - (5)].AST), &((yyval.AST)), &fabpa);	}
     break;
 
   case 96:
 
-    {	SIN::ParserManage::Manage_ForStatement((yyvsp[(3) - (9)].AST), (yyvsp[(5) - (9)].AST), (yyvsp[(7) - (9)].AST), (yyvsp[(9) - (9)].AST), &((yyval.AST)));	}
+    {	SIN::ParserManage::Manage_ForStatement((yyvsp[(3) - (9)].AST), (yyvsp[(5) - (9)].AST), (yyvsp[(7) - (9)].AST), (yyvsp[(9) - (9)].AST), &((yyval.AST)), &fabpa);	}
     break;
 
   case 97:
 
-    {	SIN::ParserManage::Manage_ReturnStatement_Return(&((yyval.AST)));				}
+    {	SIN::ParserManage::Manage_ReturnStatement_Return(&((yyval.AST)), &fabpa);				}
     break;
 
   case 98:
 
-    {	SIN::ParserManage::Manage_ReturnStatement_ReturnExpression((yyvsp[(2) - (3)].AST), &((yyval.AST)));	}
+    {	SIN::ParserManage::Manage_ReturnStatement_ReturnExpression((yyvsp[(2) - (3)].AST), &((yyval.AST)), &fabpa);	}
     break;
 
 
