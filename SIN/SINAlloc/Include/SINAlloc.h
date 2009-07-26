@@ -81,9 +81,9 @@ extern void* operator new     (size_t size, SINAllocationIndicator const&, SIN::
 extern void* operator new[]   (size_t size, SINAllocationIndicator const&, SIN::String const& file, unsigned int line) throw();
 extern void  operator delete  (void* ptr, SINAllocationIndicator const&, SIN::String const& file, unsigned int line) throw();
 extern void  operator delete[](void* ptr, SINAllocationIndicator const&, SIN::String const& file, unsigned int line) throw();
-#define SINEW(TYPE) new(SINAllocationIndicator(), __FILE__, __LINE__) TYPE
-#define SINEWCLASS(TYPE, ARGS) new(SINAllocationIndicator(), __FILE__, __LINE__) TYPE ARGS
-#define SINEWARRAY(TYPE, LENGTH) new(SINAllocationIndicator(), __FILE__, __LINE__) TYPE[LENGTH]
+#define SINEW(TYPE) SIN::Alloc::ValidateAndUse(new(SINAllocationIndicator(), __FILE__, __LINE__) TYPE)
+#define SINEWCLASS(TYPE, ARGS) SIN::Alloc::ValidateAndUse(new(SINAllocationIndicator(), __FILE__, __LINE__) TYPE ARGS)
+#define SINEWARRAY(TYPE, LENGTH) SIN::Alloc::ValidateAndUse(new(SINAllocationIndicator(), __FILE__, __LINE__) TYPE[LENGTH])
 #define SINDELETE(PTR) SIN::Alloc::IsArrayAllocated(PTR) ? operator delete[]((PTR), SINAllocationIndicator(), "", 0) : operator delete((PTR), SINAllocationIndicator(), "", 0)
 #define SINPTR(PTR) SIN::Alloc::ValidateAndUse((PTR))
 #define SINMEMCPY(TO, FROM) if (sizeof((FROM)) <= SIN::Alloc::ChunkInformation(TO).Size())

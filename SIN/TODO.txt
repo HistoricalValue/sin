@@ -11,6 +11,7 @@
 *[024] Implement an internal data type for SIN Object
 *[025] Implement operator == for ASTNode
 
+*[026] Make the testing framework serious (save results and print them later -- especially TestCollections should be serious)
 
 ---logging---
 *[010] LoggerFactory base should internally keep a list of produced loggers

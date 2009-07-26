@@ -15,7 +15,7 @@ namespace SIN {
 			//SINTESTS_TESTDEF(Alloc,
 			//);
 			namespace {
-				struct A { int a,b,c; double d,e,f; long double g,h,i,j,k; };
+				struct A { int a,b,c; double d,e,f; long double g,h,i,j,k; }; // class A
 				class B {
 					int poo;
 					A* as;
@@ -23,14 +23,16 @@ namespace SIN {
 					B(int _poo, A* _as): poo(_poo), as(_as) { }
 					int Poo(void) const { return poo; }
 					A* As(void) const { return as; }
-				};
-			}
+				}; // class B
+			} // namespace
 			static void test_Alloc(void) {
 				class AllocTest : public Test {
-				public:                                         
+				public:
 					AllocTest(void): Test("Alloc" "Test") { }
 				protected:
 					virtual void TestLogic(void) {
+						ASSERT(SIN::Alloc::Initialise());
+
 						int* ip = SINEW(int);
                         *SINPTR(ip) = 5;
 						ASSERT(SIN::Alloc::TotallyAllocated() == sizeof(*ip));
@@ -161,15 +163,52 @@ namespace SIN {
 						ASSERT(SIN::Alloc::IsValid(bp) == false);
 
 						// TODO add more testing
-					}
-				};
-				SINTESTS_RUNTEST(Alloc);
-			}
 
-			void test(InstanceProxy<TestFactory> const& tf) {
-                logger = LoggerManager::SingletonGetInstance()->GetLogger("SIN::Tests::Alloc");
+						SIN::Alloc::CleanUp();
+					} // TestLogic()
+				}; // class AllocTest
+				SINTESTS_RUNTEST(Alloc);
+			} // test_Alloc()
+
+			
+			static void test_Alloc2(void) {
+				struct CtorDtorCalledIndicator {
+					// who has been called
+					bool ctor0, ctor1, ctor2,& dtor;
+					CtorDtorCalledIndicator(void):ctor0(true), ctor1(false), ctor2(false), dtor(ctor2) { }
+					CtorDtorCalledIndicator(CtorDtorCalledIndicator const&):ctor0(false), ctor1(true), ctor2(false), dtor(ctor2) { }
+					CtorDtorCalledIndicator(bool _dtor):ctor0(false), ctor1(false), ctor2(true), dtor(_dtor) { dtor = false; }
+					~CtorDtorCalledIndicator(void) { dtor = true; }
+
+					bool Only0(void) const { return ctor0 && !ctor1 && !ctor2 && !dtor; }
+					bool Only1(void) const { return !ctor0 && ctor1 && !ctor2 && !dtor; }
+					bool Only2(void) const { return !ctor0 && !ctor1 && ctor2 && !dtor; }
+				}; // struct CtorDtorCalledIndicator
+				class Alloc2Test : public Test {
+				public:   
+					Alloc2Test(void): Test("Alloc2" "Test") { }
+				protected:
+					virtual void TestLogic(void) {
+						ASSERT(SIN::Alloc::Initialise());
+
+						bool dtor = false;
+						CtorDtorCalledIndicator* cdci;
+
+						ASSERT(!dtor);
+						cdci = SINEW(CtorDtorCalledIndicator);
+						ASSERT(!dtor);
+						ASSERT(cdci->Only0());
+
+						SIN::Alloc::CleanUp();
+					}
+				}; // class Alloc2Test
+			} // test_Alloc2()
+
+			void test(InstanceProxy<TestFactory> const& tf, InstanceProxy<Logger> const& _logger) {
+                logger = _logger;
 				test_factory = tf;
 				SINTESTS_CALLTEST(Alloc);
+				SINTESTS_CALLTEST(Alloc2);
 			}
         }
     }

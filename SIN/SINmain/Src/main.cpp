@@ -48,16 +48,22 @@ static void quick_test(void) {
 class MainTestCollection: public SIN::Tests::TestCollection {
 	SIN::Tests::TestFactory test_factory;
 public:
-	MainTestCollection(void);
+	MainTestCollection(void): test_factory() { }
+	MainTestCollection(SIN::Tests::TestFactory const& tf): test_factory(tf) { }
 	virtual bool RunAll(void);
 }; // class MainTestCollection
 
 
 
 int main(int argc, char *argv[]) {
+	SIN::Tests::TestFactory test_factory;
+
+	// Early testing: LoggerManager taints the memory module.
+	SIN::LoggerManager::StreamLogger alloc_logger("SIN::Tests::Alloc", SIN::Logging::Record::FINEST, SIN::STDOUT, SIN::Logging::RecordPrinter()); // TODO one day this will be removed, when tests work seriously
+	SIN::Tests::Alloc::test(&test_factory, &alloc_logger); // TODO and one day this will be moved in along with the rest of the tests
 
     if (SIN::Initialise()) {
-		MainTestCollection mtc;
+		MainTestCollection mtc(test_factory);
 		mtc.RunAll();
         quick_test();
     }
@@ -69,13 +75,7 @@ int main(int argc, char *argv[]) {
 }
 
 ///// MainTestCollection ////////////////////
-MainTestCollection::MainTestCollection(void): test_factory() {
-}
-
 bool MainTestCollection::RunAll(void) {
-	// Allocation test must be first -- unused by anyone
-	SIN::Tests::Alloc::test(&test_factory);
-	// -------------------------------------------------
 	SIN::Tests::AST::test(&test_factory);
 	SIN::Tests::Common::test(&test_factory);
 	SIN::Tests::Logging::test(&test_factory);

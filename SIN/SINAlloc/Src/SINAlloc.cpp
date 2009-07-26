@@ -172,7 +172,7 @@ namespace SIN {
 			SINALLOC_DEALLOCATE(_ptr);
 		}
 	} // namespace Alloc
-} // namespace SIN 
+} // namespace SIN
 
 // ************************** New/Delete Operators ************************** //
 namespace {
