@@ -1,16 +1,18 @@
-#ifndef __SIN_AST_TREE_EVALUATION_VISITOR_H__
-#define __SIN_AST_TREE_EVALUATION_VISITOR_H__
+#ifndef __SIN_TREE_EVALUATION_VISITOR_H__
+#define __SIN_TREE_EVALUATION_VISITOR_H__
 
 #include "SINASTVisitor.h"
 
-
-
 namespace SIN{
 
-	class ASTTreeEvaluationVisitor : public ASTVisitor {
+	double numberV;
+	SIN::String stringV;
+
+
+	class TreeEvaluationVisitor : public ASTVisitor {
 	
-		ASTTreeEvaluationVisitor (void);
-		virtual ~ASTTreeEvaluationVisitor (void);
+		TreeEvaluationVisitor (void);
+		virtual ~TreeEvaluationVisitor (void);
 
 		SINASTVISITOR_VISIT_SIGNATURE(					) ;
 		SINASTVISITOR_VISIT_SIGNATURE(Number			) ;
@@ -65,6 +67,12 @@ namespace SIN{
 		SINASTVISITOR_VISIT_SIGNATURE(ObjectIndex		) ;
 		SINASTVISITOR_VISIT_SIGNATURE(CallMember		) ;
 		SINASTVISITOR_VISIT_SIGNATURE(CallIndex			) ;
+		SINASTVISITOR_VISIT_SIGNATURE(MetaParse			) ;
+		SINASTVISITOR_VISIT_SIGNATURE(MetaPreserve		) ;
+		SINASTVISITOR_VISIT_SIGNATURE(MetaEvaluate		) ;
+		SINASTVISITOR_VISIT_SIGNATURE(MetaUnparse		) ;
+		SINASTVISITOR_VISIT_SIGNATURE(MetaParseString	) ;
+		SINASTVISITOR_VISIT_SIGNATURE(SinCode			) ;
 	};
 
 } // namespace SIN

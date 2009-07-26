@@ -35,6 +35,7 @@ namespace SIN{
 		SymbolTable symTable;
 	};
 
+	SINASTNODE_NODE_DECL(SinCode		);
 	SINASTNODE_NODE_DECL(Arguments		);
 	SINASTNODE_NODE_DECL(Assign			);
 	SINASTNODE_NODE_DECL(NormalCall		);

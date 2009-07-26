@@ -792,7 +792,7 @@ namespace SIN {
 	//-----------------------------------------------------------------
 
 	void ParserManage::Manage_SinCode (ASTNode *_stmts, ASTNode **_retsincode, LexAndBisonParseArguments *_lbpa) {
-		*_retsincode = SINEWCLASS(ASTNode, ("AST"));
+		*_retsincode = SINEWCLASS(SinCodeASTNode, ("AST"));
 		_lbpa->AppendToNodeList(*_retsincode);
 
 		for(ASTNode *nxtStmt; _stmts != NULL; _stmts = nxtStmt){
