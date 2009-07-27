@@ -6,6 +6,7 @@
 
 
 #include "Common.h"
+#include "SINAlloc.h"
 #include "SINLogger.h"
 #include "SINConstants.h"
 #include "SINLoggerManager.h"
@@ -22,7 +23,7 @@ namespace SIN {
 	
 	struct CleanListFunctor : public std::unary_function<ASTNode *, void> {
 		void operator() (ASTNode * node) 
-			{ delete node; }
+			{ SINDELETE(node); }
 	};
 
 
@@ -124,6 +125,7 @@ namespace SIN {
 		NodesList::iterator result = std::find_if(nodesList.begin(), nodesList.end(), FindFunctor(node));
 		
 		if (result != nodesList.end()) {
+			SINDELETE(*result);
 			nodesList.erase(result);
 			return true;
 		}
