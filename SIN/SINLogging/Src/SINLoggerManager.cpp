@@ -74,12 +74,12 @@ namespace SIN {
 	//////////////// LoggerManager Set/Get Defaults /////////////
 	LoggerManager::DefaultLoggerFactory*
 	LoggerManager::SetDefaultLoggerFactory(LoggerManager::DefaultLoggerFactory *_f) {
-		register DefaultLoggerFactory *previous = dlf;
+		DefaultLoggerFactory *previous = dlf;
 		dlf = _f;
 		return previous;
 	}
 	RecordPrinter *LoggerManager::SetDefaultRecordPrinter(RecordPrinter *_rp) {
-		register RecordPrinter *previous = dlf_rp;
+		RecordPrinter *previous = dlf_rp;
 		dlf_rp = _rp;
 		return previous;
 	}
@@ -129,7 +129,7 @@ namespace SIN {
 		return *result->second;
 	}
 	Logger *LoggerManager::SetLogger(String const &_logger_name, Logger *_logger_p) {
-		register Logger *result = 0x00;
+		Logger *result = 0x00;
 		std::map<String, Logger*>::iterator previous = loggers.end();
 		if ((previous = loggers.find(_logger_name)) != loggers.end()) {
 			SINASSERT(previous->first == _logger_name);

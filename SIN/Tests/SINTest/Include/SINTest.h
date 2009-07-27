@@ -6,9 +6,9 @@
 /** method-fail: must be run from inside a method of a Test */
 #define FAIL(MSG,COND) Fail(MSG, #COND, __FILE__, __LINE__)
 /** method-try: must be run from inside a method of a Test */
-#define TRY(COND) do{ register bool cond=(COND); if (!cond) FAIL("Condition failed",COND); } while(false)
+#define TRY(COND) do{ bool cond=(COND); if (!cond) FAIL("Condition failed",COND); } while(false)
 /** method-assert: must be run from inside a method of a Test */
-#define ASSERT(COND) do{ register bool cond=(COND); if (!cond) FAIL("Assertion failed",COND); } while(false)
+#define ASSERT(COND) do{ bool cond=(COND); if (!cond) FAIL("Assertion failed",COND); } while(false)
 
 /** Simple test-definition: declares and defines a Test class which only implements TestLogic() */
 #define TESTFOR(NAME, TESTCODE)                     \

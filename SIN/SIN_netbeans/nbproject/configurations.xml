@@ -30,7 +30,6 @@
           <itemPath>../SINAST/Include/SINASTMITTreeVisualizerXMLProducerVisitor.h</itemPath>
           <itemPath>../SINAST/Include/SINASTNode.h</itemPath>
           <itemPath>../SINAST/Include/SINASTNodes.h</itemPath>
-          <itemPath>../SINAST/Include/SINASTTreeEvaluationVisitor.h</itemPath>
           <itemPath>../SINAST/Include/SINASTTreeVisualisationVisitor.h</itemPath>
           <itemPath>../SINAST/Include/SINASTVisitor.h</itemPath>
           <itemPath>../SINAST/Include/SINTreeNode.h</itemPath>
@@ -40,7 +39,6 @@
           <itemPath>../SINAST/Src/SINASTMITTreeVisualizerXMLProducerVisitor.cpp</itemPath>
           <itemPath>../SINAST/Src/SINASTNode.cpp</itemPath>
           <itemPath>../SINAST/Src/SINASTNodes.cpp</itemPath>
-          <itemPath>../SINAST/Src/SINASTTreeEvaluationVisitor.cpp</itemPath>
           <itemPath>../SINAST/Src/SINASTTreeVisualisationVisitor.cpp</itemPath>
           <itemPath>../SINAST/Src/SINTreeNode.cpp</itemPath>
         </logicalFolder>
@@ -115,10 +113,12 @@
         <logicalFolder name="Include" displayName="Include" projectFiles="true">
           <itemPath>../SINRuntime/Include/SINMemoryCell.h</itemPath>
           <itemPath>../SINRuntime/Include/SINSymbolTable.h</itemPath>
+          <itemPath>../SINRuntime/Include/SINTreeEvaluationVisitor.h</itemPath>
         </logicalFolder>
         <logicalFolder name="Src" displayName="Src" projectFiles="true">
           <itemPath>../SINRuntime/Src/SINMemoryCell.cpp</itemPath>
           <itemPath>../SINRuntime/Src/SINSymbolTable.cpp</itemPath>
+          <itemPath>../SINRuntime/Src/SINTreeEvaluationVisitor.cpp</itemPath>
         </logicalFolder>
       </logicalFolder>
       <logicalFolder name="Tests" displayName="Tests" projectFiles="true">

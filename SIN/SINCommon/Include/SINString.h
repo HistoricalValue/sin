@@ -2,7 +2,6 @@
 #define __SIN_STRING_H__
 
 #include <string>
-#include <new>
 #include "Common.h"
 #include "SINOutputStream.h"
 

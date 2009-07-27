@@ -230,4 +230,27 @@ namespace SIN{
 
 	void TreeEvaluationVisitor::Visit(CallIndexASTNode const& _node){}
 
+	//-----------------------------------------------------------------
+
+	void TreeEvaluationVisitor::Visit(MetaParseASTNode const& _node){}
+
+	//-----------------------------------------------------------------
+
+	void TreeEvaluationVisitor::Visit(MetaPreserveASTNode const& _node){}
+
+	//-----------------------------------------------------------------
+
+	void TreeEvaluationVisitor::Visit(MetaEvaluateASTNode const& _node){}
+
+	//-----------------------------------------------------------------
+
+	void TreeEvaluationVisitor::Visit(MetaUnparseASTNode const& _node){}
+
+	//-----------------------------------------------------------------
+
+	void TreeEvaluationVisitor::Visit(MetaParseStringASTNode const& _node){}
+
+	//-----------------------------------------------------------------
+
+	void TreeEvaluationVisitor::Visit(SinCodeASTNode const& _node){}
 } // namespace SIN

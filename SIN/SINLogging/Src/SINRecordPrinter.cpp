@@ -14,7 +14,7 @@ namespace SIN {
             static char buf[1024];
             out                                             <<
                 '['                                         ;
-            register size_t timestamp_len = strftime(
+            size_t timestamp_len = strftime(
                     buf,
                     sizeof(buf),
                     "%Y-%m-%d %H:%M:%S ",

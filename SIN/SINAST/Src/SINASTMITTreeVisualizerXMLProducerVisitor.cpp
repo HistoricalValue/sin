@@ -12,8 +12,8 @@ namespace {
 		char const* str = _str.c_str();
 		const size_t len = _str.Length();
 		SINASSERT(strlen(str) == len);
-		for (register size_t i = 0; i < len; ++i) {
-			register char c = str[i];
+		for (size_t i = 0; i < len; ++i) {
+			char c = str[i];
 			switch (c) {
 				case '"': result << "&quot;"; break;
 				case '<': result << "&lt;"; break;
@@ -51,11 +51,11 @@ namespace SIN {
 
 	void ASTMITTreeVisualizerXMLProducerVisitor::Visit(ASTNode const& _node) {
 		const size_t numberOfChildren = _node.NumberOfChildren();
-		register bool empty =  numberOfChildren == 0;
+		bool empty =  numberOfChildren == 0;
 		writeFolder(folder(_node.Name()), empty);
 
 		if (!empty) {
-			for (register size_t i = 0; i < numberOfChildren; ++i)
+			for (size_t i = 0; i < numberOfChildren; ++i)
 				static_cast<ASTNode*>(_node[i])->Accept(this);
 			writeFolderClosing();
 		}
@@ -65,8 +65,8 @@ namespace SIN {
 
 	void ASTMITTreeVisualizerXMLProducerVisitor::writePrelude(void) {
 		out << "<TreevizFileSystem  created=\"2008-07-04 11:34:08\" name=\"SIN AST\">\n<Users>\n";
-		FOREACH(array_iterable(users))
-			writeUser(*ITER(array_iterable(users)));
+		FOREACHARRAY(users)	
+			writeUser(*ITERARRAY(users));
 		out << "</Users>\n<Files>\n";
 	}
 

@@ -1,6 +1,7 @@
 #ifndef __SIN_TREE_NODE_H__
 #define __SIN_TREE_NODE_H__
 
+#include "SINAlloc.h"
 #include <vector>
 
 namespace SIN {

@@ -6,7 +6,7 @@
 
 namespace SIN {
     bool init_LoggerManager(void) {
-		register bool result = true;
+		bool result = true;
         LoggerManager::SingletonCreate();
 		if (
             LoggerManager::SingletonCreated()               &&

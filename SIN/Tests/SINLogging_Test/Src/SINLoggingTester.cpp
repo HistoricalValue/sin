@@ -33,7 +33,7 @@ namespace SIN {
 				std::vector<Record> r(SIN_LOGGING_RECORD_NUMBER_OF_SEVERITIES, r00);
 				r[ 0] = r00; r[ 1] = r01; r[ 2] = r02; r[ 3] = r03; r[ 4] = r04;
 				r[ 5] = r05; r[ 6] = r06; r[ 7] = r07; r[ 8] = r08;
-				for (register unsigned int i = 0; i < r.size(); ++i) {
+				for (unsigned int i = 0; i < r.size(); ++i) {
 					if (i < r.size() - 1 && !(r[i] < r[i + 1]))
 						Fail(String("r[") << i << "] >= r[" << (i + 1) <<
 								"]", "r[i] < r[i + 1]", __FILE__, __LINE__);

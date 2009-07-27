@@ -21,16 +21,16 @@ namespace Logging {
     // clock_t Record::NextOffset(time_t _timestamp) {
         static time_t last_timestamp = 0;
         //static clock_t last_timesamp_offset = clock();
-        //register clock_t result;
+        //clock_t result;
         static unsigned long int last_offset;
-        register unsigned long int result;
+        unsigned long int result;
         if (_timestamp > last_timestamp) {
             last_timestamp = _timestamp;
             //result = last_timestamp_offset = 0;
             result = last_offset = 0;
         }
         else if (_timestamp == last_timestamp) {
-            //register clock_t new_offset = clock();
+            //clock_t new_offset = clock();
             //if (new_offset >= last_timestamp_offset)
             //    result = new_offset - last_timestamp_offset;
             //else {
@@ -81,7 +81,7 @@ namespace Logging {
 
 #define OP_APPEND_TO_STRING_SEVERITY_CASE(SEV) case Record::SEV: result = #SEV; break
     String const string_cast(enum Record::Severity const &sev) {
-        register char const *result = 0x00;
+        char const *result = 0x00;
         switch (sev) {
             OP_APPEND_TO_STRING_SEVERITY_CASE(FINEST);
             OP_APPEND_TO_STRING_SEVERITY_CASE(FINER);

@@ -44,8 +44,8 @@ OBJECTFILES= \
 	${OBJECTDIR}/_ext/_DOTDOT/SINParser/Src/SINParserManage.o \
 	${OBJECTDIR}/_ext/_DOTDOT/SINParser/Src/LexAndBisonParseArguments.o \
 	${OBJECTDIR}/_ext/_DOTDOT/SINCommon/Src/SINBufferedOutputStream.o \
-	${OBJECTDIR}/_ext/_DOTDOT/SINAST/Src/SINASTTreeEvaluationVisitor.o \
 	${OBJECTDIR}/_ext/_DOTDOT/SINCommon/Src/SINInputStream.o \
+	${OBJECTDIR}/_ext/_DOTDOT/SINRuntime/Src/SINTreeEvaluationVisitor.o \
 	${OBJECTDIR}/_ext/_DOTDOT/SINParser/Src/LexUtility.o \
 	${OBJECTDIR}/_ext/_DOTDOT/SINCommon/Src/SINCommon.o \
 	${OBJECTDIR}/_ext/_DOTDOT/SINLogging/Src/SINRecord.o \
@@ -161,15 +161,15 @@ ${OBJECTDIR}/_ext/_DOTDOT/SINCommon/Src/SINBufferedOutputStream.o: nbproject/Mak
 	${RM} $@.d
 	$(COMPILE.cc) -O2 -MMD -MP -MF $@.d -o ${OBJECTDIR}/_ext/_DOTDOT/SINCommon/Src/SINBufferedOutputStream.o ../SINCommon/Src/SINBufferedOutputStream.cpp
 
-${OBJECTDIR}/_ext/_DOTDOT/SINAST/Src/SINASTTreeEvaluationVisitor.o: nbproject/Makefile-${CND_CONF}.mk ../SINAST/Src/SINASTTreeEvaluationVisitor.cpp 
-	${MKDIR} -p ${OBJECTDIR}/_ext/_DOTDOT/SINAST/Src
-	${RM} $@.d
-	$(COMPILE.cc) -O2 -MMD -MP -MF $@.d -o ${OBJECTDIR}/_ext/_DOTDOT/SINAST/Src/SINASTTreeEvaluationVisitor.o ../SINAST/Src/SINASTTreeEvaluationVisitor.cpp
-
 ${OBJECTDIR}/_ext/_DOTDOT/SINCommon/Src/SINInputStream.o: nbproject/Makefile-${CND_CONF}.mk ../SINCommon/Src/SINInputStream.cpp 
 	${MKDIR} -p ${OBJECTDIR}/_ext/_DOTDOT/SINCommon/Src
 	${RM} $@.d
 	$(COMPILE.cc) -O2 -MMD -MP -MF $@.d -o ${OBJECTDIR}/_ext/_DOTDOT/SINCommon/Src/SINInputStream.o ../SINCommon/Src/SINInputStream.cpp
+
+${OBJECTDIR}/_ext/_DOTDOT/SINRuntime/Src/SINTreeEvaluationVisitor.o: nbproject/Makefile-${CND_CONF}.mk ../SINRuntime/Src/SINTreeEvaluationVisitor.cpp 
+	${MKDIR} -p ${OBJECTDIR}/_ext/_DOTDOT/SINRuntime/Src
+	${RM} $@.d
+	$(COMPILE.cc) -O2 -MMD -MP -MF $@.d -o ${OBJECTDIR}/_ext/_DOTDOT/SINRuntime/Src/SINTreeEvaluationVisitor.o ../SINRuntime/Src/SINTreeEvaluationVisitor.cpp
 
 ${OBJECTDIR}/_ext/_DOTDOT/SINParser/Src/LexUtility.o: nbproject/Makefile-${CND_CONF}.mk ../SINParser/Src/LexUtility.cpp 
 	${MKDIR} -p ${OBJECTDIR}/_ext/_DOTDOT/SINParser/Src

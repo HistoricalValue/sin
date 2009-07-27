@@ -21,7 +21,7 @@ namespace SIN {
 	}
 
 	bool BufferedOutputStream::write(char const *_buf, size_t _len) {
-		register bool result = true;
+		bool result = true;
 		if (buf.wouldOverflow(_len)) {
 			const size_t conjoined_buf_len = buf.length() + _len;
 			char* conjoined_buf = SINEWARRAY(char, conjoined_buf_len);
@@ -36,7 +36,7 @@ namespace SIN {
 			SINDELETE(conjoined_buf);
 		}
 		else {
-			const register size_t appended_bytes =  buf.append(_buf, _len);
+			const size_t appended_bytes =  buf.append(_buf, _len);
 			if (appended_bytes > _len)
 				SINASSERT(!"Weird (append() appends more than indicated bytes)");
 			else if (appended_bytes < _len)
@@ -58,8 +58,8 @@ namespace SIN {
 	BufferedOutputStream::Buf::~Buf(void) {
 	}
 
-	size_t BufferedOutputStream::Buf::append(char const* _buf, register size_t _len) {
-		register const size_t free_len = SIN_BUFFEREDOUTPUTSTREAM_BUF_FREE_LENGTH;
+	size_t BufferedOutputStream::Buf::append(char const* _buf, size_t _len) {
+		const size_t free_len = SIN_BUFFEREDOUTPUTSTREAM_BUF_FREE_LENGTH;
 		if (SIN_BUFFEREDOUTPUTSTREAM_BUF_WOULD_OVERFLOW(_len))
 			_len = free_len;
 		memcpy(buffer + SIN_BUFFEREDOUTPUTSTREAM_BUF_USED_LENGTH, _buf, _len);
@@ -79,7 +79,7 @@ namespace SIN {
 		return SIN_BUFFEREDOUTPUTSTREAM_BUF_USED_LENGTH;
 	}
 
-	bool BufferedOutputStream::Buf::wouldOverflow(register const size_t _len) const {
+	bool BufferedOutputStream::Buf::wouldOverflow(const size_t _len) const {
 		return SIN_BUFFEREDOUTPUTSTREAM_BUF_WOULD_OVERFLOW(_len);
 	}
 

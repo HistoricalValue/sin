@@ -44,8 +44,8 @@ namespace SIN {
 	
 	
 	//-----------------------------------------------------------------------
-	TreeNode &TreeNode::operator <<(register TreeNode *const _new_kid) {
-		register TreeNode *const parent_I = this;
+	TreeNode &TreeNode::operator <<(TreeNode *const _new_kid) {
+		TreeNode *const parent_I = this;
 		_new_kid->parent = parent_I;
 		_new_kid->next = 0x00u;
 		if (parent_I->NumberOfChildren() > 0) {
@@ -60,8 +60,8 @@ namespace SIN {
 	}
 
 	//-----------------------------------------------------------------------
-	TreeNode &TreeNode::operator >>(register TreeNode *const _parent) {
-		register TreeNode *const new_kid_I = this;
+	TreeNode &TreeNode::operator >>(TreeNode *const _parent) {
+		TreeNode *const new_kid_I = this;
 		new_kid_I->parent = _parent;
 		new_kid_I->previous = 0x00u;
 		if (_parent->NumberOfChildren() > 0) {

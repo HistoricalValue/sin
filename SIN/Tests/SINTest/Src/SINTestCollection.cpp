@@ -15,7 +15,7 @@ namespace SIN {
 		}
 
 		bool TestCollection::RunAll(void) {
-			register bool somebody_failed = false;
+			bool somebody_failed = false;
 			for (iterator ite = tests.begin(); ite != tests.end(); ++ite) {
 				(*ite)->Run();
 				somebody_failed = somebody_failed || (*ite)->Status();

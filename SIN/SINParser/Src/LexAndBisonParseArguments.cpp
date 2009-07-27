@@ -10,7 +10,7 @@
 #include "SINLogger.h"
 #include "SINConstants.h"
 #include "SINLoggerManager.h"
-
+#include "SINAlloc.h"
 
 
 #define SIN_BISON_PARSE_ARGUMENTS_LOGGER_NAME "SIN::LexAndBisonParseArguments"
@@ -125,7 +125,6 @@ namespace SIN {
 		NodesList::iterator result = std::find_if(nodesList.begin(), nodesList.end(), FindFunctor(node));
 		
 		if (result != nodesList.end()) {
-			SINDELETE(*result);
 			nodesList.erase(result);
 			return true;
 		}

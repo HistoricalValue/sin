@@ -113,7 +113,7 @@ class AnyHolder {
 	char memory[_Size];
 public:
 	template <typename _FromType> AnyHolder(_FromType const& _holdee) {
-		memcpy(memory, &_holdee, sizeof(memory));
+		std::memcpy(memory, &_holdee, sizeof(memory));
 	}
 	template <typename _ToType> operator _ToType*(void) {
 		assert(sizeof(_ToType) <= _Size);
@@ -130,12 +130,30 @@ public:
 //  std::list<int> lis; lis.push_back(9); lis.push_back(8); lis.push_back(7); lis.push_back(6);
 //  FOREACH(lis)
 //      out.Notice(SIN::string_cast(*ITER(lis)));
-#define ITER(ITERABLE) (Type<void*>::ForType(ITERABLE.begin()).CastRef(ITERABLE__iterator))
-#define FOREACH(ITERABLE)															\
-	for (																			\
-		AnyHolder<sizeof(ITERABLE.begin())> ITERABLE__iterator(ITERABLE.begin());	\
-		ITER(ITERABLE) != ITERABLE.end()										;	\
-		++ITER(ITERABLE)														)
+// RULES: 
+// -		NO TEMPORARIES
+#define GETITER(ITERABLE,ITERNAME,TYPE_INVOKE) \
+	Type<void*>::ForType(ITERABLE.TYPE_INVOKE()).CastRef(ITERNAME)
+#define ITER_IMPL(ITERABLE,ITERNAME) GETITER(ITERABLE,ITERNAME,begin)
+#define ITEREND_IMPL(ITERABLE,ITERNAME) GETITER(ITERABLE,ITERNAME##_end,end)
+#define FOREACH_IMPL(ITERABLE,ITERNAME)										\
+	for (																	\
+	AnyHolder<sizeof(ITERABLE.begin())> ITERNAME(ITERABLE.begin()),	\
+		ITERNAME##_end(ITERABLE.end());										\
+		ITER_IMPL(ITERABLE,ITERNAME) != ITEREND_IMPL(ITERABLE,ITERNAME);	\
+		++ITER_IMPL(ITERABLE,ITERNAME)										)
+#define ITERABLE_ARR(ARR) Type<void*>::ForType(array_iterable(ARR)).CastRef(ARR##_iterable)
+#define FOREACHARRAY_IMPL(ARR, ITERNAME)	\
+	for (bool done = false; !done; )	\
+	for (AnyHolder<sizeof(array_iterable(ARR))> ARR##_iterable(array_iterable(ARR)); !done; done=true) \
+	for (AnyHolder<sizeof(ITERABLE_ARR(ARR).begin())> ITERNAME(ITERABLE_ARR(ARR).begin()),	\
+		ITERNAME##_end(ITERABLE_ARR(ARR).end());	\
+		ITER_IMPL(ITERABLE_ARR(ARR),ITERNAME) != ITEREND_IMPL(ITERABLE_ARR(ARR), ITERNAME); \
+		++ITER_IMPL(ITERABLE_ARR(ARR),ITERNAME))
+#define FOREACH(ITERABLE) FOREACH_IMPL(ITERABLE, ITERABLE##__iterator)
+#define ITER(ITERABLE)	  ITER_IMPL(ITERABLE, ITERABLE##__iterator)
+#define FOREACHARRAY(ARR) FOREACHARRAY_IMPL(ARR, ARR##__iterator)
+#define ITERARRAY(ARR)    ITER_IMPL(ITERABLE_ARR(ARR), ARR##__iterator)
 
 // Native-array-type foreach-wrapper
 template <typename T, const size_t N>

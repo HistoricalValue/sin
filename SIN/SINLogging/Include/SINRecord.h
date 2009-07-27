@@ -4,7 +4,6 @@
 #include <time.h>
 #include "SINString.h"
 #include "Common.h"
-#include <new>
 #include "SINOutputStream.h"
 
 #define SIN_LOGGING_RECORD_NUMBER_OF_SEVERITIES 9

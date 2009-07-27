@@ -34,7 +34,7 @@ namespace SIN {
 			
 			namespace { static void __list_parsing_errors(ParserAPI const& _papi) {
 				for (
-					register LexAndBisonParseArguments::Errors::const_iterator ite = _papi.GetErrors().begin(),
+					LexAndBisonParseArguments::Errors::const_iterator ite = _papi.GetErrors().begin(),
 						end = _papi.GetErrors().end();
 					ite != end;
 					++ite
@@ -61,7 +61,6 @@ namespace SIN {
 				ASTMITTreeVisualizerXMLProducerVisitor mitvis(foutxml);
 				root->Accept(&visitor);
 				root->Accept(&mitvis);
-				TreeNode::DeleteTree(root);
 			)
 
 			void test(InstanceProxy<TestFactory> const &tf) { 
