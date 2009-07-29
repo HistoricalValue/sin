@@ -4,6 +4,7 @@
 #include "SINAssert.h"
 #include <memory>
 #include "Common.h"
+#include <list>
 
 #define SINALLOC_ALLOCATION_TYPE_VARIABLE	(1 << 0)
 #define SINALLOC_ALLOCATION_TYPE_ARRAY		(1 << 1)
@@ -18,34 +19,30 @@
 #define SINALLOC_DEALLOCATED(S)				totally_freed += (S)
 #define SINALLOC_IS_VALID_CHUNK_AND_CACHE_RESULT(C,SAVETO)	\
 											(SAVETO = chunks_map.find(C)) != chunks_map.end()
+#define SINALLOC_MAKE_A_DEFAULT_ALLOCATOR	Allocator<void>(P_singletons_p->allocator)
 
 namespace SIN {
 	namespace Alloc {
 		// *********************** Implementation private ***************** //
 		namespace {
-			class _MemoryAllocator: public MemoryAllocator {
-			public:
-				void* Allocate(size_t size);
-				void  Deallocate(void* ptr);
-			}; // class MemoryAllocator
-
 			class MemoryChunkValidator {
 			public:
-				typedef std::map<void*, Chunk, std::less<void*>, DefaultAllocator<std::pair<void* const, Chunk> > > chunks_map_t;
 				typedef unsigned long int memory_count_t;
 
 				inline void* Allocate(size_t const& _size, char const* _file, unsigned int const& _line) {
 					void* memory = allocator.Allocate(_size);
 					if (memory != 0x00) {
-						SINASSERT(!IsValid(memory));
+						SINASSERT(!IsValid(memory) || !"Reallocating to memory address -- probably not SINDELETEd");
 						chunks_map.insert(std::make_pair(memory, Alloc::Chunk(memory, _size, _file, _line)));
 						SINALLOC_ALLOCATED(_size);
 					}
 					return memory;
 				}
-				inline void  Deallocate(void* const _memory_chunk) {
-					chunks_map_t::iterator deletee;
+				inline void  Deallocate(void* const _memory_chunk, char const* const _file, unsigned int const _line) {
+					ChunksMap::iterator deletee;
 					if (SINALLOC_IS_VALID_CHUNK_AND_CACHE_RESULT(_memory_chunk, deletee)) {
+						deallocations.push_back(std::make_pair(deletee->second, Chunk(_memory_chunk, 0, _file, _line)));
+
 						SINALLOC_DEALLOCATED(deletee->second.Size());
 						chunks_map.erase(deletee);
 					}
@@ -71,34 +68,45 @@ namespace SIN {
 				inline bool const MemoryLeaking(void) const
 					{ return RemainingToBeFreed() > 0; }
 
-				inline chunks_map_t const& UnfreedChunks(void) const
+				inline ChunksMap const& UnfreedChunks(void) const
 					{ return chunks_map; }
+				inline DeallocationsList const& Deallocations(void) const
+					{ return deallocations; }
 
 				MemoryChunkValidator(MemoryAllocator* _allocator):
-				chunks_map(std::less<void*>(), DefaultAllocator<std::pair<void*, Chunk> >(_allocator)),
+				chunks_map(std::less<void*>(), Allocator<std::pair<void*, Chunk> >(_allocator)),
 				allocator(*_allocator),
 				totally_allocated(0),
 				totally_freed(0),
-				maximum_allocated(0)
+				maximum_allocated(0),
+				deallocations(Allocator<std::pair<Chunk, Chunk> >(_allocator))
 				{ }
 			private:
-				chunks_map_t chunks_map;
+				ChunksMap chunks_map;
 
 				MemoryAllocator& allocator;
 
 				memory_count_t totally_allocated;
 				memory_count_t totally_freed;
 				memory_count_t maximum_allocated;
+
+				DeallocationsList deallocations;
 			}; // class MemoryChunkValidator
 
 			typedef unsigned char AllocationType;
 			typedef std::pair<void*, AllocationType> AllocationTypeEntry;
-			typedef DefaultAllocator<AllocationTypeEntry> AllocationsTypesMapAllocator;
+			typedef Allocator<AllocationTypeEntry> AllocationsTypesMapAllocator;
 			typedef std::map<void*, AllocationType, std::less<void*>, AllocationsTypesMapAllocator> AllocationsTypesMap;
 			static struct Singletons {
-				_MemoryAllocator* allocator;
+				MemoryAllocator* allocator;
 				MemoryChunkValidator* validator;
 				AllocationsTypesMap* allocations_types;
+				struct NextDeleteInfo {
+					String file;
+					unsigned int line;
+					NextDeleteInfo(void): file(SINALLOC_MAKE_A_DEFAULT_ALLOCATOR), line(0u) { }
+					void Reset(void) { new(this) NextDeleteInfo; }
+				}* next_delete_info;
 			}* P_singletons_p = 0x00; // struct Singletons
 			static bool P_initialised = false;
 		} // namespace 
@@ -107,19 +115,26 @@ namespace SIN {
 		bool Initialise(void) {
 			if (!P_initialised) {
 				P_singletons_p = SINALLOC_ALLOCATE(1, struct Singletons);
-				P_initialised = (P_singletons_p != 0x00);
-				if (P_initialised) {
-					P_initialised = (P_singletons_p->allocator = SINALLOC_ALLOCATE(1, _MemoryAllocator)) != 0x00;
-					new(P_singletons_p->allocator) _MemoryAllocator;
+				bool nobody_failed = (P_singletons_p != 0x00);
+				if (nobody_failed)
+					new(P_singletons_p) struct Singletons;
+				if (nobody_failed) {
+					nobody_failed = (P_singletons_p->allocator = SINALLOC_ALLOCATE(1, MemoryAllocator)) != 0x00;
+					new(P_singletons_p->allocator) MemoryAllocator;
 				}
-				if (P_initialised) {
-					P_initialised = (P_singletons_p->validator = SINALLOC_ALLOCATE(1, MemoryChunkValidator)) != 0x00;
+				if (nobody_failed) {
+					nobody_failed = (P_singletons_p->validator = SINALLOC_ALLOCATE(1, MemoryChunkValidator)) != 0x00;
 					new(P_singletons_p->validator) MemoryChunkValidator(P_singletons_p->allocator);
 				}
-				if (P_initialised) {
-					P_initialised = (P_singletons_p->allocations_types = SINALLOC_ALLOCATE(1, AllocationsTypesMap)) != 0x00;
+				if (nobody_failed) {
+					nobody_failed = (P_singletons_p->allocations_types = SINALLOC_ALLOCATE(1, AllocationsTypesMap)) != 0x00;
 					new(P_singletons_p->allocations_types) AllocationsTypesMap(std::less<void*>(), AllocationsTypesMapAllocator(P_singletons_p->allocator));
 				}
+				if (nobody_failed) {
+					nobody_failed = (P_singletons_p->next_delete_info = SINALLOC_ALLOCATE(1, Singletons::NextDeleteInfo)) != 0x00;
+					new(P_singletons_p->next_delete_info) struct Singletons::NextDeleteInfo;
+				}
+				P_initialised = nobody_failed;
 			}
 			else
 				SINASSERT(false);
@@ -176,31 +191,66 @@ namespace SIN {
 
 		ChunksMap const UndeallocatedChunks(void) {
 			if (P_initialised) {
-				ChunksMap result(std::less<void*>(), DefaultAllocator<std::pair<void*, Chunk> >(P_singletons_p->allocator));
-				MemoryChunkValidator::chunks_map_t const& chunks(P_singletons_p->validator->UnfreedChunks());
+//				ChunksMap result(std::less<void*>(), Allocator<std::pair<void*, Chunk> >(P_singletons_p->allocator));
+//				MemoryChunkValidator::chunks_map_t const& chunks(P_singletons_p->validator->UnfreedChunks());
 //				FOREACH(chunks)
 //					result.insert(std::make_pair(ITER(chunks)->first, ITER(chunks)->second))
-				MemoryChunkValidator::chunks_map_t::const_iterator const end = chunks.end();
-				for (MemoryChunkValidator::chunks_map_t::const_iterator ite = chunks.begin(); ite != end; ++ite)
-					result.insert(std::make_pair(ite->first, ite->second));
-				return result;
+//				MemoryChunkValidator::chunks_map_t::const_iterator const end = chunks.end();
+//				for (MemoryChunkValidator::chunks_map_t::const_iterator ite = chunks.begin(); ite != end; ++ite)
+//					result.insert(std::make_pair(ite->first, ite->second));
+//				return result;
+				return P_singletons_p->validator->UnfreedChunks();
 			}
 			else
 				SINASSERT(false);
 			return ChunksMap();
 		}
 
-		DefaultAllocator<void*> CreateADefaultAllocator(void) {
+		Allocator<void> CreateADefaultAllocator(void) {
 			SINASSERT(P_initialised);
-			return DefaultAllocator<void*>(P_singletons_p->allocator);
+			return SINALLOC_MAKE_A_DEFAULT_ALLOCATOR;
 		}
 
-		// *********************** Memory Allocator *********************** //
-		void* _MemoryAllocator::Allocate(size_t const _size) {
-			return SINALLOC_ALLOCATE_SIZE(_size);
+		template <typename _PredT>
+		static DeallocationsList __DeallocationsListSelect(_PredT const& _pred) {
+			SINASSERT(P_initialised);
+			DeallocationsList result(CreateADefaultAllocator());
+			DeallocationsList const& deallocs = P_singletons_p->validator->Deallocations();
+			DeallocationsList::const_iterator const end = deallocs.end();
+			DeallocationsList::const_iterator ite = deallocs.begin();
+			for (; ite != end; ++ite)
+				if (_pred(*ite))
+					result.push_back(*ite);
+			return result;
 		}
-		void  _MemoryAllocator::Deallocate(void* const _ptr) {
-			SINALLOC_DEALLOCATE(_ptr);
+
+		namespace DeallocationsListFilters {
+			struct MemEq {
+				void* const mem;
+				MemEq(void* const _mem = 0x00): mem(_mem) { }
+				bool operator ()(DeallocationPair const& _p) const
+					{ return _p.first.Memory() == mem; }
+			}; // struct MemEq
+			struct FileLineEq {
+				String const file;
+				unsigned int const line;
+				FileLineEq(char const* const _file, unsigned int const _line): file(_file), line(_line) { }
+				bool operator ()(DeallocationPair const& _p) const
+					{ return _p.first.File() == file && _p.first.Line() == line; }
+			}; // struct FileLineEq
+		} // namespace DeallocationsListFilters
+		DeallocationsList DeallocatedChunksByMemory(void* const _mem)
+			{ return __DeallocationsListSelect(DeallocationsListFilters::MemEq(_mem)); }
+		DeallocationsList DeallocatedChunksByFileLine(char const* const _file, unsigned int const _line)
+			{ return __DeallocationsListSelect(DeallocationsListFilters::FileLineEq(_file, _line)); }
+		DeallocationsList DeallocatedChunks(void)
+			{ return P_singletons_p->validator->Deallocations(); }
+
+
+		void SetNextDeleteFileLineInfo(char const* const _file, unsigned int const _line) {
+			SINASSERT(P_initialised);
+			P_singletons_p->next_delete_info->file = _file;
+			P_singletons_p->next_delete_info->line = _line;
 		}
 	} // namespace Alloc
 } // namespace SIN
@@ -222,7 +272,8 @@ inline static void* __SINAlloc_new(size_t const _size, SIN::Alloc::AllocationTyp
 inline static void __SINAlloc_delete(void* const _ptr, SIN::Alloc::AllocationType const& _allocation_type) {
 	if (SIN::Alloc::P_initialised) {
 		SINASSERT(SIN::Alloc::P_singletons_p->validator->IsValid(_ptr));
-		SIN::Alloc::P_singletons_p->validator->Deallocate(_ptr);
+		SIN::Alloc::P_singletons_p->validator->Deallocate(_ptr, SIN::Alloc::P_singletons_p->next_delete_info->file.c_str(), SIN::Alloc::P_singletons_p->next_delete_info->line);
+		SIN::Alloc::P_singletons_p->next_delete_info->Reset();
 		SIN::Alloc::P_singletons_p->allocations_types->erase(_ptr);
 	}
 	else
@@ -235,10 +286,10 @@ void* operator new(size_t const _size, SINAllocationIndicator const&, char const
 void* operator new[](size_t const _size, SINAllocationIndicator const&, char const* const _file, unsigned int const _line) throw() {
 	return __SINAlloc_new(_size, SINALLOC_ALLOCATION_TYPE_ARRAY, _file, _line);
 }
-void operator delete(void* const _ptr, SINAllocationIndicator const&, char const*, unsigned int const) throw() {
+void operator delete(void* const _ptr, SINAllocationIndicator const&, char const* const, unsigned int const) throw() {
 	__SINAlloc_delete(_ptr, SINALLOC_ALLOCATION_TYPE_VARIABLE);
 }
-void operator delete[](void* const _ptr, SINAllocationIndicator const&, char const*, unsigned int const) throw() {
+void operator delete[](void* const _ptr, SINAllocationIndicator const&, char const* const, unsigned int const) throw() {
 	__SINAlloc_delete(_ptr, SINALLOC_ALLOCATION_TYPE_ARRAY);
 }
 

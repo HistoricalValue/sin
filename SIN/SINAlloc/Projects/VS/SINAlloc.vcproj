@@ -164,6 +164,14 @@
 				RelativePath="..\..\Include\SINAlloc.h"
 				>
 			</File>
+			<File
+				RelativePath="..\..\Include\SINAllocator.h"
+				>
+			</File>
+			<File
+				RelativePath="..\..\Include\SINMemoryAllocator.h"
+				>
+			</File>
 		</Filter>
 		<Filter
 			Name="Resource Files"

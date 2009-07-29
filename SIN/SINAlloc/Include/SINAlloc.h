@@ -5,11 +5,15 @@
 #include "SINAssert.h"
 #include <string>
 #include <cstring>
+#include "SINAllocator.h"
+#include <list>
 
 //disable the error: C++ exception specification ignored except to indicate a function is not __declspec(nothrow)
 #pragma warning(disable:4290)
 
 namespace SIN { namespace Alloc {
+	typedef std::basic_string<char, std::char_traits<char>, Allocator<char> > String;
+
 	extern bool Initialise(void);
 	inline bool Init(void) { return Initialise(); }
 	extern void CleanUp(void);
@@ -24,87 +28,11 @@ namespace SIN { namespace Alloc {
 
 	extern bool IsArrayAllocated(void*);
 	extern bool IsValid(void*);
-	template <typename T> inline T* ValidateAndUse(T* _ptr) {
-		T* result = _ptr;
-		if (!IsValid(_ptr)) {
-			SINASSERT(false);
-			result = 0x00;
-		}
-		return result;
-	}
 
-
-	// Pure virtual/abstract
-	class MemoryAllocator {
-	public:
-		virtual void* Allocate(size_t size) = 0;
-		virtual void  Deallocate(void* ptr) = 0;
-		virtual ~MemoryAllocator(void) { }
-	}; // class MemoryAllocator
-
-	template <typename _T>
-	// Implementing the std::allocator interface, using malloc instead of new
-	struct DefaultAllocator {
-		typedef _T			value_type;
-		typedef _T*			pointer;
-		typedef _T&			reference;
-		typedef _T const*	const_pointer;
-		typedef _T const&	const_reference;
-		typedef size_t		size_type;
-		typedef	ptrdiff_t	difference_type;
-
-		DefaultAllocator(MemoryAllocator* _allocator = 0x00) throw (): allocator(_allocator) { }
-		template <typename _FromType> DefaultAllocator(const DefaultAllocator<_FromType>& _other) throw (): allocator(_other.allocator) { }
-		~DefaultAllocator(void) throw () { }
-
-		pointer			address(reference		_o) const { return &_o; }
-		const_pointer	address(const_reference	_o) const { return &_o; }
-
-		pointer			allocate(size_type _size, void* const _hint = 0x00)
-						{ return static_cast<pointer>(allocator->Allocate(sizeof(value_type) * _size)); }
-		void			construct(pointer _ptr, const_reference _copy_val)
-						{ new(_ptr) _T(_copy_val); }
-		void			deallocate(pointer _ptr, size_type _num_of_els)
-						{ allocator->Deallocate(_ptr); }
-		void			destroy(pointer _ptr)
-						{ _ptr->~_T(); }
-
-		size_type		max_size(void) const throw ()
-						{ return std::allocator<_T>().max_size(); }
-
-		bool			operator ==(DefaultAllocator<_T> const& _other) const
-						{ return allocator == _other.allocator && allocator != 0x00; }
-
-		template<class _Other>
-		struct rebind {	// convert an allocator<_T> to an allocator <_Other>
-			typedef DefaultAllocator<_Other> other; };
-
-		MemoryAllocator* allocator;
-	}; // struct DefaultAllocator<T>
-
-	template <> struct DefaultAllocator<void> {
-		typedef void		_T;
-		typedef _T			value_type;
-		typedef _T*			pointer;
-		typedef _T const*	const_pointer;
-		typedef size_t		size_type;
-		typedef	ptrdiff_t	difference_type;
-
-		DefaultAllocator(void) throw () { }
-		template <typename _FromType> DefaultAllocator(const DefaultAllocator<_FromType>&) throw () { }
-		~DefaultAllocator(void) throw () { }
-
-		template<class _Other> struct rebind {	// convert an allocator<void> to an allocator <_Other>
-			typedef DefaultAllocator<_Other> other; };
-
-		bool	operator ==(DefaultAllocator<void> const& _other) const { return true; }
-	}; // struct DefaultAllocator<void>
-
-	extern DefaultAllocator<void*> CreateADefaultAllocator(void);
+	extern Allocator<void> CreateADefaultAllocator(void);
 
 	class Chunk {
-		typedef std::basic_string<char, std::char_traits<char>, DefaultAllocator<char> > string;
-		string file; // file allocated in
+		String file; // file allocated in
 		unsigned int line; // line in file
 		void* memory; // memory chunk
 		size_t size;
@@ -112,15 +40,32 @@ namespace SIN { namespace Alloc {
 		inline Chunk(void* const& _chunk, size_t _size, char const* const _file, unsigned int const& _line):
 		file(_file, CreateADefaultAllocator()), line(_line), memory(_chunk), size(_size)
 		{ }
-		inline string const File(void) const { return file; }
+		inline String const File(void) const { return file; }
 		inline unsigned int const Line(void) const { return line; }
 		inline void* const Memory(void) const { return memory; }
 		inline size_t const Size(void) const  { return size; }
 	}; // class Pointer
 
-	typedef std::map<void*, Chunk, std::less<void*>, DefaultAllocator<std::pair<void*, Chunk> > > ChunksMap;
+	typedef std::map<void*, Chunk, std::less<void*>, Allocator<std::pair<void*, Chunk> > > ChunksMap;
 	extern ChunksMap const UndeallocatedChunks(void);
 	inline Chunk ChunkInformation(void* _ptr) { return UndeallocatedChunks().find(_ptr)->second; }
+
+	typedef std::pair<const Chunk, const Chunk> DeallocationPair;
+	typedef std::list<DeallocationPair, Allocator<DeallocationPair> > DeallocationsList;
+	extern DeallocationsList DeallocatedChunks(void);
+	extern DeallocationsList DeallocatedChunksByMemory(void*);
+	extern DeallocationsList DeallocatedChunksByFileLine(char const*, unsigned int);
+
+	template <typename T> inline T* ValidateAndUse(T* _ptr) {
+		T* result = _ptr;
+		if (!IsValid(_ptr)) {
+			// For debugging inspection
+			DeallocationsList by_mem(DeallocatedChunksByMemory(_ptr));
+			SINASSERT(false);
+			result = 0x00;
+		}
+		return result;
+	}
 
 	inline void* memcpy(void* const _to, const void* const _from, size_t const _len) {
 		if (_len <= ChunkInformation(_to).Size())
@@ -134,6 +79,9 @@ namespace SIN { namespace Alloc {
 	inline _T* memcpy(_T& _to, _T const& _from)
 		{ return static_cast<_T*>(memcpy(&_to, &_from, sizeof(_T))); }
 
+
+	extern void SetNextDeleteFileLineInfo(char const*, unsigned int);
+
 } } // namespace Alloc / namespace SIN
 
 // New/delete operators to be used
@@ -145,7 +93,10 @@ extern void  operator delete[](void* ptr, SINAllocationIndicator const&, char co
 #define SINEW(TYPE) SIN::Alloc::ValidateAndUse(new(SINAllocationIndicator(), __FILE__, __LINE__) TYPE)
 #define SINEWCLASS(TYPE, ARGS) SIN::Alloc::ValidateAndUse(new(SINAllocationIndicator(), __FILE__, __LINE__) TYPE ARGS)
 #define SINEWARRAY(TYPE, LENGTH) SIN::Alloc::ValidateAndUse(new(SINAllocationIndicator(), __FILE__, __LINE__) TYPE[LENGTH])
-#define SINDELETE(PTR) SIN::Alloc::IsArrayAllocated(PTR) ? delete[]((PTR)) : delete((PTR))
+#define SINDELETE(PTR) do { \
+	SIN::Alloc::SetNextDeleteFileLineInfo(__FILE__, __LINE__);				\
+	SIN::Alloc::IsArrayAllocated(PTR) ? delete[]((PTR)) : delete((PTR));	\
+	} while(false)
 #define SINPTR(PTR) SIN::Alloc::ValidateAndUse((PTR))
 #define SINMEMCPY(TO, FROM) if (sizeof((FROM)) <= SIN::Alloc::ChunkInformation(TO).Size())
 
