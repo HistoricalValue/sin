@@ -32,7 +32,6 @@
 
 ==== LOW PRIORITY ====
 * SIN Functors
-* "compile time" Warnings
 * string_cast -> to_string
 
 
@@ -77,4 +76,6 @@
 *[022] Add get for line of error
   [ koutsop | done]
 *[023] Fix lex-util
+  [ koutsop | done]
+* "compile time" Warnings
   [ koutsop | done]
