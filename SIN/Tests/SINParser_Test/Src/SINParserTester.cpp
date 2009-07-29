@@ -42,8 +42,20 @@ namespace SIN {
 					logger->Error(string_cast("Parsing error: line ") << ite->second <<
 						": " << ite->first);
 			}}
-			
-			SIN_TESTS_PARSER_TESTDEF(ParserFileTest,
+
+
+			//------------------------------------------------------------------
+			class ParserFileTestTest : public Test {                
+			public:                                         
+				ParserFileTestTest(void): Test("ParserFileTest" "Test") { }    
+			protected:                                      
+				virtual void TestLogic(void);
+			};
+
+
+			//------------------------------------------------------------------
+
+			void ParserFileTestTest::TestLogic(void) {
 				ParserAPI test;
 				TRY(test.ParseFile(FILE_PATH) == 0);
 				if (test.HasError()) {
@@ -61,7 +73,16 @@ namespace SIN {
 				ASTMITTreeVisualizerXMLProducerVisitor mitvis(foutxml);
 				root->Accept(&visitor);
 				root->Accept(&mitvis);
-			)
+			}
+
+
+			//------------------------------------------------------------------
+			static void test_ParserFileTest(void){
+				SINTESTS_RUNTEST(ParserFileTest);
+			}
+
+
+			//------------------------------------------------------------------
 
 			void test(InstanceProxy<TestFactory> const &tf) { 
 				logger = LoggerManager::SingletonGetInstance()->GetLogger("SIN::Tests::Parser");
