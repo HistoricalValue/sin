@@ -22,8 +22,12 @@ namespace SIN {
 	//-----------------------------------------------------------------
 	
 	struct CleanListFunctor : public std::unary_function<ASTNode *, void> {
-		void operator() (ASTNode * node) 
-			{ SINDELETE(node); }
+		void operator() (ASTNode * node) { 
+			if (node != static_cast<ASTNode *>(0)) {
+				SINDELETE(node); 
+				node = static_cast<ASTNode *>(0);
+			}
+		}
 	};
 
 
@@ -95,8 +99,10 @@ namespace SIN {
 
 	//-----------------------------------------------------------------
 	
-	void LexAndBisonParseArguments::CleanNodes (void) 
-		{ std::for_each(nodesList.begin(), nodesList.end(), CleanListFunctor()); }
+	void LexAndBisonParseArguments::CleanNodes (void) { 
+		std::for_each(nodesList.begin(), nodesList.end(), CleanListFunctor()); 
+		nodesList.clear();
+	}
 
 	
 	//-----------------------------------------------------------------
