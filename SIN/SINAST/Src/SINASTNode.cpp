@@ -69,10 +69,21 @@ namespace SIN {
 
 	//---------------------------------------------------
 
-    ASTNode::ASTNode(String const &_name): name(_name) {}
+    ASTNode::ASTNode(String const &_name):
+		name(_name),
+		id(ASTNodeFactory::NextID())
+	{}
 
 
 	//---------------------------------------------------
+
+	ASTNode::ASTNode(ASTNode const&_other):
+		name(_other.name),
+		id(_other.id)
+	{}
+
+	//---------------------------------------------------
+
 
     ASTNode::~ASTNode(void) {}
 

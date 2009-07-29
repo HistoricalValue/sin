@@ -62,6 +62,7 @@ namespace SIN {
 		//Constructor and destructor 
 		ASTNode(void);
         ASTNode(String const &name);
+		ASTNode(ASTNode const&);
 		virtual ~ASTNode(void);
 
         virtual String const &Name(void) const;
