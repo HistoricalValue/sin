@@ -156,6 +156,10 @@
 				Name="Parser"
 				>
 				<File
+					RelativePath="..\..\Include\LexUtility.h"
+					>
+				</File>
+				<File
 					RelativePath="..\..\Src\SINParser.y"
 					>
 				</File>
@@ -219,10 +223,6 @@
 				>
 				<File
 					RelativePath="..\..\Include\LexAndBisonParseArguments.h"
-					>
-				</File>
-				<File
-					RelativePath="..\..\Include\LexUtility.h"
 					>
 				</File>
 				<File

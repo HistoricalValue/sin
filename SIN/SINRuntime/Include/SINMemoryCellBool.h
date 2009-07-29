@@ -18,8 +18,8 @@ namespace SIN {
 
 		virtual MemoryCellType Type(void) { return MemoryCell::OBJECT_MCT; }
 
-		void		SetType (const Boolean & b)	{ value = b; }
-		const bool	GetType (void) const	{ return value; }
+		void		SetValue (const Boolean & b)	{ value = b; }
+		const bool	GetValue (void) const	{ return value; }
 	private:
 		Boolean value;
 	};

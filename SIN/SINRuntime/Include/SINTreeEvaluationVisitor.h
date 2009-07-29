@@ -1,16 +1,17 @@
 #ifndef __SIN_TREE_EVALUATION_VISITOR_H__
 #define __SIN_TREE_EVALUATION_VISITOR_H__
 
+#include <stack>
+
 #include "SINASTVisitor.h"
+#include "SINMemoryCell.h"
 
 namespace SIN{
 
-	double numberV;
-	SIN::String stringV;
-
-
 	class TreeEvaluationVisitor : public ASTVisitor {
 	
+		std::stack<MemoryCell *> memstack;
+		
 		TreeEvaluationVisitor (void);
 		virtual ~TreeEvaluationVisitor (void);
 

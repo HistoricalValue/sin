@@ -15,7 +15,7 @@ namespace SIN {
 
 		MemoryCellNil(void) : MemoryCell() {}
 		~MemoryCellNil() {}
-		virtual MemoryCellType GetType(void) { return MemoryCell::NIL_MCT; }
+		virtual MemoryCellType Type(void) { return MemoryCell::NIL_MCT; }
 	};
 }
 

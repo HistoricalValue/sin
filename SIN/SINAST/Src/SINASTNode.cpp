@@ -18,7 +18,10 @@
     }																						\
     NAME##ASTNode *NAME##ASTNode::Clone(void) const {	                                    \
 		return SINEWCLASS(NAME##ASTNode, (*this));											\
-	}																						
+	}																						\
+	ASTNode::ASTNodeType NAME##ASTNode::Type(void) const {									\
+		return ASTNode::NAME##ASTNode_T;													\
+	}
 
 
 //-------------------------------------------------------------------------------------------------	
@@ -32,7 +35,10 @@
     }																						\
     NAME##ASTNode *NAME##ASTNode::Clone(void) const {	                                    \
 		return SINEWCLASS(NAME##ASTNode, (*this));											\
-	}																						
+	}																						\
+	ASTNode::ASTNodeType NAME##ASTNode::Type(void) const {									\
+		return ASTNode::NAME##ASTNode_T;													\
+	}
 
 
 
@@ -51,7 +57,10 @@
     }															\
     OPNAME##ASTNode *OPNAME##ASTNode::Clone(void) const {	    \
 		return SINEWCLASS(OPNAME##ASTNode, (*this));			\
-	}																						
+	}															\
+	ASTNode::ASTNodeType OPNAME##ASTNode::Type(void) const {	\
+		return ASTNode::OPNAME##ASTNode_T;						\
+	}
 
 
 
@@ -99,6 +108,13 @@ namespace SIN {
 
 	ASTNode::ID_t const& ASTNode::ID(void) const {
 		return id;
+	}
+
+
+	//---------------------------------------------------
+
+	ASTNode::ASTNodeType ASTNode::Type(void) const {
+		return ASTNode::ASTNode_T;
 	}
 
 
@@ -227,8 +243,8 @@ namespace SIN {
 
 	///--------- ConstNodes ---------
     SINASTNODE_DEFAULT_CONSTNODE_DEFS(           Number, CONST_NUMBER, Number         )
-    SINASTNODE_DEFAULT_CONSTNODE_DEFS(           String, CONST_STRING, String_t         )
-    SINASTNODE_DEFAULT_VALUELESS_CONSTNODE_DEFS( Nil   , CONST_NIL   , Nil_t    , NIL   )
+    SINASTNODE_DEFAULT_CONSTNODE_DEFS(           String, CONST_STRING, String_t       )
+    SINASTNODE_DEFAULT_VALUELESS_CONSTNODE_DEFS( Nil   , CONST_NIL   , Nil_t    , NIL )
     SINASTNODE_DEFAULT_VALUELESS_CONSTNODE_DEFS( True  , CONST_TRUE  , Boolean, TRUE  )
     SINASTNODE_DEFAULT_VALUELESS_CONSTNODE_DEFS( False , CONST_FALSE , Boolean, FALSE )
 

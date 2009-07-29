@@ -14,9 +14,31 @@ namespace SIN{
         ~NAME##ASTNode(void);						\
         virtual void Accept(ASTVisitor *) const;	\
 		virtual NAME##ASTNode *Clone(void) const;	\
+		virtual ASTNodeType Type(void) const;		\
     }
 
-	class BlockASTNode : public ASTNode {
+	class SinCodeASTNode : public ASTNode {
+
+	public:
+
+		SinCodeASTNode(void);
+		SinCodeASTNode(String const &name);
+		 ~SinCodeASTNode(void);
+
+		void Accept(ASTVisitor *) const;
+
+		SymbolTable getSymbolTable(void) { return symTable; }
+		void setSymbolTable(SymbolTable _symTable){ symTable = _symTable; }
+
+		SinCodeASTNode *Clone(void) const;
+
+		virtual ASTNodeType Type(void) const;
+
+	private:
+		SymbolTable symTable;
+	};
+
+	class BlockASTNode : public SinCodeASTNode {
 
 	public:
 
@@ -26,16 +48,12 @@ namespace SIN{
 
 		void Accept(ASTVisitor *) const;
 
-		SymbolTable getSymbolTable(void) { return symTable; }
-		void setSymbolTable(SymbolTable _symTable){ symTable = _symTable; }
-
 		BlockASTNode *Clone(void) const;
 
-	private:
-		SymbolTable symTable;
+		virtual ASTNodeType Type(void) const;
 	};
 
-	SINASTNODE_NODE_DECL(SinCode		);
+//	SINASTNODE_NODE_DECL(SinCode		);
 	SINASTNODE_NODE_DECL(Arguments		);
 	SINASTNODE_NODE_DECL(Assign			);
 	SINASTNODE_NODE_DECL(NormalCall		);

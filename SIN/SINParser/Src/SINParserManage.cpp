@@ -442,7 +442,7 @@ namespace SIN {
 	
 	void ParserManage::Manage_FunctionDefinition_Function (char *_id, ASTNode *_idlist, ASTNode *_block, ASTNode **_retfuncdef, LexAndBisonParseArguments *_lbpa) {
 		*_retfuncdef = SINEWCLASS(FunctionASTNode, ("Function"));
-		StringASTNode *id = SINEWCLASS(StringASTNode, (_id));
+		IDASTNode *id = SINEWCLASS(IDASTNode, (_id));
 		_lbpa->AppendToNodeList(*_retfuncdef);
 		_lbpa->AppendToNodeList(id);
 
@@ -573,7 +573,7 @@ namespace SIN {
 
 	void ParserManage::Manage_Member_LValueID (ASTNode *_lvalue, char *_id, ASTNode **_retmember, LexAndBisonParseArguments *_lbpa) {
 		*_retmember = SINEWCLASS(ObjectMemberASTNode, ("lv.id"));
-		StringASTNode *id = SINEWCLASS(StringASTNode, (_id));
+		IDASTNode *id = SINEWCLASS(IDASTNode, (_id));
 		_lbpa->AppendToNodeList(*_retmember);
 		_lbpa->AppendToNodeList(id);
 
@@ -597,7 +597,7 @@ namespace SIN {
 
 	void ParserManage::Manage_Member_CallID (ASTNode *_call, char *_id, ASTNode **_retmember, LexAndBisonParseArguments *_lbpa) {
 		*_retmember = SINEWCLASS(CallMemberASTNode, ("call.id"));
-		StringASTNode *id = SINEWCLASS(StringASTNode, (_id));
+		IDASTNode *id = SINEWCLASS(IDASTNode, (_id));
 		_lbpa->AppendToNodeList(*_retmember);
 		_lbpa->AppendToNodeList(id);
 
@@ -624,7 +624,7 @@ namespace SIN {
 
 	void ParserManage::Manage_MethodCall (char *_id, ASTNode *_elist, ASTNode **_retmethodcall, LexAndBisonParseArguments *_lbpa) {
 		*_retmethodcall = SINEWCLASS(MethodCallASTNode, ("Method call"));
-		StringASTNode *id = SINEWCLASS(StringASTNode, (_id));
+		IDASTNode *id = SINEWCLASS(IDASTNode, (_id));
 		_lbpa->AppendToNodeList(*_retmethodcall);
 		_lbpa->AppendToNodeList(id);
 
@@ -635,6 +635,7 @@ namespace SIN {
 			ASTNode *newelist = SINPTR(_elist)->Clone();
 			*arguments << newelist;
 			_lbpa->AppendToNodeList(newelist);
+			nxtExpr = static_cast<ASTNode*>(+(*_elist));
 			_lbpa->RemoveNodeFromList(_elist);
 			SINDELETE(_elist);
 		}

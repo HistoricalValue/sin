@@ -15,14 +15,53 @@
     }																		\
 	NAME##ASTNode *NAME##ASTNode::Clone(void) const {						\
 		return SINEWCLASS(NAME##ASTNode, (*this));							\
+	}																		\
+	ASTNode::ASTNodeType NAME##ASTNode::Type(void) const {					\
+		return ASTNode::NAME##ASTNode_T;									\
 	}
 
 namespace SIN{
 
+	//-----------------------------------------------------------------
+
+	BlockASTNode::BlockASTNode(void) : SinCodeASTNode() {}
+
+
+	//-----------------------------------------------------------------
+
+	BlockASTNode::BlockASTNode(String const &_name) : SinCodeASTNode(_name) {}
+
+
+	//-----------------------------------------------------------------
+
+	BlockASTNode::~BlockASTNode(void) {}
+
+
+	//-----------------------------------------------------------------
+
+	void BlockASTNode::Accept(ASTVisitor *_v) const {
+        SINASSERT(_v);
+        _v->Visit(*this);
+    }		
+
+
+	//-----------------------------------------------------------------
+
+	BlockASTNode *BlockASTNode::Clone(void) const {						
+		return SINEWCLASS(BlockASTNode, (*this));
+	}
+
+
+	//-----------------------------------------------------------------
+
+	ASTNode::ASTNodeType BlockASTNode::Type(void) const {
+		return ASTNode::BlockASTNode_T;
+	}
+
 	SINASTNODE_DEFAULT_NODE_DEFS(SinCode		)
 	SINASTNODE_DEFAULT_NODE_DEFS(Arguments		)
 	SINASTNODE_DEFAULT_NODE_DEFS(Assign			)
-	SINASTNODE_DEFAULT_NODE_DEFS(Block			)
+//	SINASTNODE_DEFAULT_NODE_DEFS(Block			)
 	SINASTNODE_DEFAULT_NODE_DEFS(NormalCall		)
 	SINASTNODE_DEFAULT_NODE_DEFS(MethodCall		)
 	SINASTNODE_DEFAULT_NODE_DEFS(FuncdefCall	)
