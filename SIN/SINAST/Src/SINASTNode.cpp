@@ -85,12 +85,12 @@ namespace SIN {
 
 
 	//---------------------------------------------------
-/*
+
 	ASTNode::ASTNode(ASTNode const&_other):
 		name(_other.name),
 		id(_other.id)
 	{}
-*/
+
 	//---------------------------------------------------
 
 

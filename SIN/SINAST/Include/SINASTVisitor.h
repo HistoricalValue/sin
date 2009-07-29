@@ -10,6 +10,9 @@
 #include "SINASTNodes.h"
 #include "SINASTCommon.h"
 
+//disable the error: not enough actual parameters for macro 'SINASTVISITOR_VISIT_SIGNATURE'
+#pragma warning(disable:4003)
+
 
 #define SINASTVISITOR_VISIT_SIGNATURE(NODENAME) virtual void Visit(NODENAME##ASTNode const&)
 

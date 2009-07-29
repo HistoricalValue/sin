@@ -6,6 +6,9 @@
 #include <string>
 #include <cstring>
 
+//disable the error: C++ exception specification ignored except to indicate a function is not __declspec(nothrow)
+#pragma warning(disable:4290)
+
 namespace SIN { namespace Alloc {
 	extern bool Initialise(void);
 	inline bool Init(void) { return Initialise(); }
@@ -145,6 +148,7 @@ extern void  operator delete[](void* ptr, SINAllocationIndicator const&, char co
 #define SINDELETE(PTR) SIN::Alloc::IsArrayAllocated(PTR) ? delete[]((PTR)) : delete((PTR))
 #define SINPTR(PTR) SIN::Alloc::ValidateAndUse((PTR))
 #define SINMEMCPY(TO, FROM) if (sizeof((FROM)) <= SIN::Alloc::ChunkInformation(TO).Size())
+
 
 
 
