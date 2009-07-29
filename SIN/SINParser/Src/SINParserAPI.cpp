@@ -66,5 +66,8 @@ namespace SIN {
 		{ return fabpa.GetErrors(); }
 
 
+	void ParserAPI::DeleteAST(void) 
+		{ fabpa.CleanNodes(); }
+
     ////////////////////////////////
 } // namespace SIN

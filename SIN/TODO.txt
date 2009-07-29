@@ -20,13 +20,6 @@
 
 
 ----- Parser (for santa) -----
-*[012] FIX YYPARSE'S ARGUMENTS!!
-  - ASTNode *& root   <--- return result in there
-*[013] Investigate the parser's auto-destruction callbacks on error and stuff
-*[014] Add error querying method in parser
-*[021] Implement DeleteAST()
-*[022] Add get for line of error
-*[023] Fix lex-util
 
 
 
@@ -73,3 +66,15 @@
   [ rudolf| added it]
 *[008] Add unique ID for each ASTNode
   [ rudolf| Added ASTNodeFactory and using ID() or something]
+*[012] FIX YYPARSE'S ARGUMENTS!! - ASTNode *& root   <--- return result in there
+  [ koutsop | done]
+*[013] Investigate the parser's auto-destruction callbacks on error and stuff
+  [ koutsop | done]
+*[014] Add error querying method in parser
+  [ koutsop | done]
+*[021] Implement DeleteAST()
+  [ koutsop | done]
+*[022] Add get for line of error
+  [ koutsop | done]
+*[023] Fix lex-util
+  [ koutsop | done]
