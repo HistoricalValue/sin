@@ -33,6 +33,7 @@ namespace SIN {
 
 
 	//-----------------------------------------------------------------
+	
 	struct FindFunctor : public std::unary_function<ASTNode *, bool> {
 		ASTNode * node;
 		FindFunctor(ASTNode * _node) : node(_node) {}
@@ -42,7 +43,6 @@ namespace SIN {
 	};
 
 	
-
 
 	//-----------------------------------------------------------------
 
