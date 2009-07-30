@@ -1,17 +1,15 @@
 #ifndef __SIN_MEMORY_CELL_AST_H__AST_H__
 #define __SIN_MEMORY_CELL_AST_H__AST_H__
 
+#include "SINASTNode.h"
 #include "SINMemoryCell.h"
 
 namespace SIN {
 
-	// We are an AST type
-	class ASTNode;
-
 	class MemoryCellAST : public MemoryCell {
 	public:
 		MemoryCellAST(void) : MemoryCell() {}
-		//MemoryCellAST(const ASTNode * _node) : MemoryCell(), node(_node) {}
+		MemoryCellAST(const ASTNode * _node) : MemoryCell(), node(_node) {}
 		
 		~MemoryCellAST() {}
 
