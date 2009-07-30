@@ -13,7 +13,7 @@ namespace SIN {
 	public:
 		MemoryCellString(void)  : MemoryCell() {}
 		MemoryCellString(const String & str) : MemoryCell(), value(str) {} 
-		~MemoryCellString();
+		virtual ~MemoryCellString() { }
 
 
 		virtual MemoryCellType Type (void) { return MemoryCell::STRING_MCT; }
