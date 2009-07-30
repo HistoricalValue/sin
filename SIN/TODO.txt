@@ -29,6 +29,10 @@
 * What is the purpose of .~?
 * What about extensible library functions? How can we add library functions?
 
+==== BIG PLANS ====
+* Refactor SINTree: make it appropriate for bottom-up parsing (linking of nodes
+  correctly, notification of ancestry changes, etc)
+* Refactor Manage funcs to use the correct Tree
 
 ==== LOW PRIORITY ====
 * SIN Functors
