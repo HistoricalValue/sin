@@ -90,14 +90,8 @@ namespace SIN {
 		*_retblock = SINEWCLASS(BlockASTNode, ("Block"));
 		_lbpa->AppendToNodeList(*_retblock);
 
-		for(ASTNode *nxtStmt; _stmtd != NULL; _stmtd = nxtStmt){
-			ASTNode *newstmtd = SINPTR(_stmtd)->Clone();
-			**_retblock << newstmtd;
-			_lbpa->AppendToNodeList(newstmtd);
-			nxtStmt = static_cast<ASTNode*>(+(*_stmtd));
-			_lbpa->RemoveNodeFromList(_stmtd);
-			SINDELETE(_stmtd);
-		}	
+		for(; _stmtd; _stmtd = static_cast<ASTNode*>(+(*_stmtd)))
+			(*_retblock)->ConnectChild(_stmtd);
 	}
 
 	
@@ -127,7 +121,7 @@ namespace SIN {
 		_lbpa->AppendToNodeList(*_retcall);
 
 		**_retcall << _funcdef;
-		ASTNode *arguments = SINEWCLASS(ArgumentsASTNode, ("Arguments"));
+		ASTNode *arguments = SINEWCLASS(ActualArgumentsASTNode, ("Actual Arguments"));
 
 		for(; _elist; _elist = static_cast<ASTNode*>(+(*_elist)))
 			arguments->ConnectChild(_elist);
@@ -347,16 +341,6 @@ namespace SIN {
 
 	//---------------------------------------------------------------------
 
-	void ParserManage::Manage_Expression_ExpressionNOTExpression (ASTNode *_expr1, ASTNode *_expr2, ASTNode **_retexpr, LexAndBisonParseArguments *_lbpa){
-
-		*_retexpr = SINEWCLASS(NotASTNode, ());
-		_lbpa->AppendToNodeList(*_retexpr);
-
-		**_retexpr << _expr1 << _expr2;
-	}
-
-	//---------------------------------------------------------------------
-
 	void ParserManage::Manage_Expression_MetaExpression (ASTNode *_metaexpr, ASTNode **_retexpr, LexAndBisonParseArguments *_lbpa){
 
 		*_retexpr = _metaexpr;
@@ -435,10 +419,12 @@ namespace SIN {
 
 		**_retfuncdef << id;	// To remove(No need to keep function names after we use unique IDs)
 
-		for(; _idlist; _idlist = static_cast<ASTNode*>(+(*_idlist)))
-			(*_retfuncdef)->ConnectChild(_idlist);
+		ASTNode *arguments = SINEWCLASS(FormalArgumentsASTNode, ("Formal Arguments"));
 
-		**_retfuncdef << _block;
+		for(; _idlist; _idlist = static_cast<ASTNode*>(+(*_idlist)))
+			arguments->ConnectChild(_idlist);
+
+		**_retfuncdef << arguments << _block;
 
 		SINDELETE(_id);
 	}
@@ -450,10 +436,12 @@ namespace SIN {
 		*_retfuncdef = SINEWCLASS(LamdaFunctionASTNode, ("Lamda Function"));
 		_lbpa->AppendToNodeList(*_retfuncdef);
 
-		for(; _idlist; _idlist = static_cast<ASTNode*>(+(*_idlist)))
-			(*_retfuncdef)->ConnectChild(_idlist);
+		ASTNode *arguments = SINEWCLASS(FormalArgumentsASTNode, ("Formal Arguments"));
 
-		**_retfuncdef << _block;
+		for(; _idlist; _idlist = static_cast<ASTNode*>(+(*_idlist)))
+			arguments->ConnectChild(_idlist);
+
+		**_retfuncdef << arguments << _block;
 	}
 
 
@@ -608,7 +596,7 @@ namespace SIN {
 
 		**_retmethodcall << id;
 
-		ASTNode *arguments = SINEWCLASS(ArgumentsASTNode, ("Arguments"));
+		ASTNode *arguments = SINEWCLASS(ActualArgumentsASTNode, ("Actual Arguments"));
 
 		for(; _elist; _elist = static_cast<ASTNode*>(+(*_elist)))
 			arguments->ConnectChild(_elist);
@@ -625,7 +613,7 @@ namespace SIN {
 		*_retnormalcall = SINEWCLASS(NormalCallASTNode, ("Normal Call"));
 		_lbpa->AppendToNodeList(*_retnormalcall);
 
-		ASTNode *arguments = SINEWCLASS(ArgumentsASTNode, ("Arguments"));
+		ASTNode *arguments = SINEWCLASS(ActualArgumentsASTNode, ("Actual Arguments"));
 
 		for(; _elist; _elist = static_cast<ASTNode*>(+(*_elist)))
 			arguments->ConnectChild(_elist);

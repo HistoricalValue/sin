@@ -393,12 +393,33 @@ namespace SIN{
 			SINDELETE(value);
 		
 		value = tmpmemcell2;
-		symTable->SetLocal((static_cast<MemoryCellString*>(tmpmemcell1))->GetValue(), value);
+		symTable->SetLocal((static_cast<MemoryCellString*>(tmpmemcell1))->GetValue(), value); //TODO Probably push the assigned value to stack in case we have a = b = c = 5;
 	}
 
 	//-----------------------------------------------------------------
 
-	void TreeEvaluationVisitor::Visit(ArgumentsASTNode & _node){
+	void TreeEvaluationVisitor::Visit(FormalArgumentsASTNode & _node){
+
+		const size_t numberOfChildren = _node.NumberOfChildren();
+
+		/* The corresponding function node should be responsible to put the arguments into the symboltable */
+		//SymbolTable *symTable = _node.LocalEnv();
+
+		//if(!symTable)
+		//	symTable = _node.GlobalEnv();
+
+		//MemoryCellFunction *funcmemcell = static_cast<MemoryCellFunction*>( symTable->LookupLocal( string_cast(static_cast<IDASTNode*>(*(*_node)[0])->Name()) ) );
+		//symTable = static_cast<ASTNode*>(*(funcmemcell->GetValue())[1])->LocalEnv();
+
+
+		for(size_t i = 0; i< numberOfChildren; ++i){
+			static_cast<ASTNode*>(_node[i])->Accept(this);
+		}
+	}
+
+	//-----------------------------------------------------------------
+
+	void TreeEvaluationVisitor::Visit(ActualArgumentsASTNode & _node){
 
 		const size_t numberOfChildren = _node.NumberOfChildren();
 
@@ -412,6 +433,7 @@ namespace SIN{
 
 		for(size_t i = 0; i< numberOfChildren; ++i){
 			static_cast<ASTNode*>(_node[i])->Accept(this);
+
 		}
 	}
 

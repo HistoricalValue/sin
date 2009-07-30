@@ -26,8 +26,11 @@
 
 ==== QUESTIONS =====
 * What about native object pointers? Why are they needed for the AST?
+  A: AST pointers are fine
 * What is the purpose of .~?
+  A: For completeness
 * What about extensible library functions? How can we add library functions?
+  A: By adding code
 
 ==== BIG PLANS ====
 * Refactor SINTree: make it appropriate for bottom-up parsing (linking of nodes
