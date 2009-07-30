@@ -34,6 +34,7 @@ namespace SIN {
 					if (memory != 0x00) {
 						SINASSERT(!IsValid(memory) || !"Reallocating to memory address -- probably not SINDELETEd");
 						chunks_map.insert(std::make_pair(memory, Alloc::Chunk(memory, _size, _file, _line)));
+						cache.is_valid = false;
 						SINALLOC_ALLOCATED(_size);
 					}
 					return memory;
@@ -45,13 +46,26 @@ namespace SIN {
 
 						SINALLOC_DEALLOCATED(deletee->second.Size());
 						chunks_map.erase(deletee);
+						cache.is_valid = false;
 					}
 					else
 						SINASSERT(false);
 				}
 
-				inline bool  IsValid(void* const _memory_chunk) const
-					{ return chunks_map.find(_memory_chunk) != chunks_map.end(); }
+				inline bool  IsValid(void* const _memory_chunk) const {
+//					cache.is_valid = true;
+					return
+						//(
+						//	cache.is_valid					&&
+						//	cache.chunk == _memory_chunk	&&
+						//	cache.is_valid_chunk
+						//) ||
+						//(
+						//	(cache.is_valid = true)	&&
+						//	(cache.is_valid_chunk = chunks_map.find(cache.chunk = _memory_chunk) != chunks_map.end())
+						//);
+						chunks_map.find(_memory_chunk) != chunks_map.end();
+				}
 
 				inline memory_count_t const TotallyAllocated(void) const
 					{ return totally_allocated; }
@@ -91,6 +105,12 @@ namespace SIN {
 				memory_count_t maximum_allocated;
 
 				DeallocationsList deallocations;
+
+				struct Cache {
+					volatile bool is_valid; // is the cache valid (or is it outdated?)
+					volatile void* chunk; // last memory chunk validated
+					volatile bool is_valid_chunk; // was last memory chunk validated valid
+				}; volatile Cache cache;
 			}; // class MemoryChunkValidator
 
 			typedef unsigned char AllocationType;

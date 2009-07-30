@@ -29,17 +29,10 @@ public:
 #include "SINASTMITTreeVisualizerXMLProducerVisitor.h"
 static InstanceProxy<out_class> g_out;
 
-//class _MemoryAllocator: public SIN::Alloc::MemoryAllocator {
-//			public:
-//				void* Allocate(size_t size) { void*r=0x00;std::cout << "allocing " << size << " @" << (r= malloc(size)) <<std::endl ; return r; }
-//				void  Deallocate(void* ptr) { std::cout << "killing " << ptr << std::endl; free(ptr); }
-//				~_MemoryAllocator(void) { std::cout<<"dyyinggggg"<<std::endl;}
-//			}; // class MemoryAllocator
-
 void quick_test(void) {
-//	SIN::LoggerManager::SingletonGetInstance()->MakeStdoutLogger("SIN::main::quick_test");
-//	out_class out(SIN::LoggerManager::SingletonGetInstance()->GetLogger("SIN::main::quick_test"));
-//	g_out = out;
+	SIN::LoggerManager::SingletonGetInstance()->MakeStdoutLogger("SIN::main::quick_test");
+	out_class out(SIN::LoggerManager::SingletonGetInstance()->GetLogger("SIN::main::quick_test"));
+	g_out = out;
 	// keep the above for convenience
 
 	// Example of using "out" and "FOREACH"
@@ -47,16 +40,8 @@ void quick_test(void) {
 //	FOREACH(lis)
 //		out << *ITER(lis);
 //	out << (SIN::string_cast("This is") << " horrible " << (4));
-//	_MemoryAllocator mallocator;
-//	typedef std::pair<const int, int> pair_t;
-//	typedef SIN::Alloc::DefaultAllocator<pair_t> alloc_t;
-//	typedef std::map<int, int, std::less<int>, alloc_t> map_t;
-//	alloc_t alloc(&mallocator);
-//	map_t m(std::less<int>(), alloc);
-//	mallocator.Deallocate(mallocator.Allocate(sizeof(int)));
-//	for (int i = 0 ; i < 5; ++i)
-//		m.insert(std::make_pair(i, i));
-//	std::cout<<"right afer this point here" <<std::endl;
+
+
 }
 ////////
 
