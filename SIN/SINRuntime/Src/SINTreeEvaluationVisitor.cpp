@@ -482,7 +482,8 @@ namespace SIN{
 
 		SINASSERT(symTable);
 
-		MemoryCellFunction funcmemcell = symTable->LookupLocal(static_cast<MemoryCellString*>(tmpmemcell1)->GetValue());
+		// TODO check -- it was "MemoryCellFunction funcmemcell" , made into "MemoryCellFunction* funcmemcell"
+		MemoryCellFunction* funcmemcell = static_cast<MemoryCellFunction*>(symTable->LookupLocal(static_cast<MemoryCellString*>(tmpmemcell1)->GetValue()));
 		SINASSERT(funcmemcell);	//TODO Throw runtime error here
 
 		static_cast<ASTNode*>(*(funcmemcell->GetValue())[1])->Accept(this);
