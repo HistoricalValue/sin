@@ -2,6 +2,7 @@
 
 #include "SINAlloc.h"
 #include "SINAssert.h"
+#include "SINMemoryCellString.h"
 
 namespace SIN{
 
@@ -15,46 +16,46 @@ namespace SIN{
 
 	//-----------------------------------------------------------------
 
-	void TreeEvaluationVisitor::Visit(ASTNode const& _node){}
+	void TreeEvaluationVisitor::Visit(ASTNode & _node){}
 
 	//-----------------------------------------------------------------
 
-	void TreeEvaluationVisitor::Visit(NumberASTNode const& _node){
+	void TreeEvaluationVisitor::Visit(NumberASTNode & _node){
 
 		memstack.push(SINEWCLASS(MemoryCellNumber, (_node.GetValue())));
 	}
 
 	//-----------------------------------------------------------------
 
-	void TreeEvaluationVisitor::Visit(StringASTNode const& _node){
+	void TreeEvaluationVisitor::Visit(StringASTNode & _node){
 
 		memstack.push(SINEWCLASS(MemoryCellString, (_node.GetValue())));
 	}
 
 	//-----------------------------------------------------------------
 
-	void TreeEvaluationVisitor::Visit(NilASTNode const& _node){
+	void TreeEvaluationVisitor::Visit(NilASTNode & _node){
 	
 		memstack.push(new MemoryCellNil());
 	}
 
 	//-----------------------------------------------------------------
 
-	void TreeEvaluationVisitor::Visit(TrueASTNode const& _node){
+	void TreeEvaluationVisitor::Visit(TrueASTNode & _node){
 	
 		memstack.push(new MemoryCellBool(_node.GetValue()));
 	}
 
 	//-----------------------------------------------------------------
 
-	void TreeEvaluationVisitor::Visit(FalseASTNode const& _node){
+	void TreeEvaluationVisitor::Visit(FalseASTNode & _node){
 
 		memstack.push(new MemoryCellBool(_node.GetValue()));
 	}
 
 	//-----------------------------------------------------------------
 
-	void TreeEvaluationVisitor::Visit(AddASTNode const& _node){	
+	void TreeEvaluationVisitor::Visit(AddASTNode & _node){	
 
 		SINASSERT(_node.NumberOfChildren() == 2);
 
@@ -65,7 +66,7 @@ namespace SIN{
 		MemoryCell *tmpmemcell2 = memstack.top();
 		memstack.pop();
 
-		SINASSERT(tmpmemcell1->Type() == MemoryCell::NUMBER_MCT || tmpmemcell1->Type() == MemoryCell::NUMBER_MCT);
+		SINASSERT(tmpmemcell1->Type() == MemoryCell::NUMBER_MCT || tmpmemcell1->Type() == MemoryCell::NUMBER_MCT); //TODO Throw evaluation error
 		
 		memstack.push(SINEWCLASS(MemoryCellNumber, (static_cast<MemoryCellNumber*>(tmpmemcell1)->GetValue()+static_cast<MemoryCellNumber*>(tmpmemcell1)->GetValue())));
 		SINDELETE(tmpmemcell1);
@@ -74,7 +75,7 @@ namespace SIN{
 
 	//-----------------------------------------------------------------
 
-	void TreeEvaluationVisitor::Visit(SubASTNode const& _node){
+	void TreeEvaluationVisitor::Visit(SubASTNode & _node){
 	
 		SINASSERT(_node.NumberOfChildren() == 2);
 
@@ -94,7 +95,7 @@ namespace SIN{
 
 	//-----------------------------------------------------------------
 
-	void TreeEvaluationVisitor::Visit(MulASTNode const& _node){
+	void TreeEvaluationVisitor::Visit(MulASTNode & _node){
 	
 		SINASSERT(_node.NumberOfChildren() == 2);
 
@@ -114,7 +115,7 @@ namespace SIN{
 
 	//-----------------------------------------------------------------
 
-	void TreeEvaluationVisitor::Visit(DivASTNode const& _node){
+	void TreeEvaluationVisitor::Visit(DivASTNode & _node){
 	
 		SINASSERT(_node.NumberOfChildren() == 2);
 
@@ -134,7 +135,7 @@ namespace SIN{
 
 	//-----------------------------------------------------------------
 
-	void TreeEvaluationVisitor::Visit(ModASTNode const& _node){
+	void TreeEvaluationVisitor::Visit(ModASTNode & _node){
 	
 		SINASSERT(_node.NumberOfChildren() == 2);
 
@@ -154,7 +155,7 @@ namespace SIN{
 
 	//-----------------------------------------------------------------
 
-	void TreeEvaluationVisitor::Visit(LtASTNode const& _node){
+	void TreeEvaluationVisitor::Visit(LtASTNode & _node){
 	
 		SINASSERT(_node.NumberOfChildren() == 2);
 
@@ -174,7 +175,7 @@ namespace SIN{
 
 	//-----------------------------------------------------------------
 
-	void TreeEvaluationVisitor::Visit(GtASTNode const& _node){
+	void TreeEvaluationVisitor::Visit(GtASTNode & _node){
 	
 		SINASSERT(_node.NumberOfChildren() == 2);
 
@@ -194,7 +195,7 @@ namespace SIN{
 
 	//-----------------------------------------------------------------
 
-	void TreeEvaluationVisitor::Visit(LeASTNode const& _node){
+	void TreeEvaluationVisitor::Visit(LeASTNode & _node){
 	
 		SINASSERT(_node.NumberOfChildren() == 2);
 
@@ -214,7 +215,7 @@ namespace SIN{
 
 	//-----------------------------------------------------------------
 
-	void TreeEvaluationVisitor::Visit(GeASTNode const& _node){
+	void TreeEvaluationVisitor::Visit(GeASTNode & _node){
 	
 		SINASSERT(_node.NumberOfChildren() == 2);
 
@@ -234,7 +235,7 @@ namespace SIN{
 
 	//-----------------------------------------------------------------
 
-	void TreeEvaluationVisitor::Visit(EqASTNode const& _node){
+	void TreeEvaluationVisitor::Visit(EqASTNode & _node){
 	
 		SINASSERT(_node.NumberOfChildren() == 2);
 
@@ -254,7 +255,7 @@ namespace SIN{
 
 	//-----------------------------------------------------------------
 
-	void TreeEvaluationVisitor::Visit(NeASTNode const& _node){
+	void TreeEvaluationVisitor::Visit(NeASTNode & _node){
 	
 		SINASSERT(_node.NumberOfChildren() == 2);
 
@@ -274,7 +275,7 @@ namespace SIN{
 
 	//-----------------------------------------------------------------
 
-	void TreeEvaluationVisitor::Visit(OrASTNode const& _node){
+	void TreeEvaluationVisitor::Visit(OrASTNode & _node){
 	
 		SINASSERT(_node.NumberOfChildren() == 2);
 
@@ -294,7 +295,7 @@ namespace SIN{
 
 	//-----------------------------------------------------------------
 
-	void TreeEvaluationVisitor::Visit(NotASTNode const& _node){
+	void TreeEvaluationVisitor::Visit(NotASTNode & _node){
 	
 		SINASSERT(_node.NumberOfChildren() == 2);
 
@@ -314,7 +315,7 @@ namespace SIN{
 
 	//-----------------------------------------------------------------
 
-	void TreeEvaluationVisitor::Visit(AndASTNode const& _node){
+	void TreeEvaluationVisitor::Visit(AndASTNode & _node){
 	
 		SINASSERT(_node.NumberOfChildren() == 2);
 
@@ -334,43 +335,43 @@ namespace SIN{
 
 	//-----------------------------------------------------------------
 
-	void TreeEvaluationVisitor::Visit(ForASTNode const& _node){}
+	void TreeEvaluationVisitor::Visit(ForASTNode & _node){}
 
 	//-----------------------------------------------------------------
 
-	void TreeEvaluationVisitor::Visit(WhileASTNode const& _node){}
+	void TreeEvaluationVisitor::Visit(WhileASTNode & _node){}
 
 	//-----------------------------------------------------------------
 
-	void TreeEvaluationVisitor::Visit(IfASTNode const& _node){}
+	void TreeEvaluationVisitor::Visit(IfASTNode & _node){}
 
 	//-----------------------------------------------------------------
 
-	void TreeEvaluationVisitor::Visit(IfElseASTNode const& _node){}
+	void TreeEvaluationVisitor::Visit(IfElseASTNode & _node){}
 
 	//-----------------------------------------------------------------
 
-	void TreeEvaluationVisitor::Visit(ReturnASTNode const& _node){}
+	void TreeEvaluationVisitor::Visit(ReturnASTNode & _node){}
 
 	//-----------------------------------------------------------------
 
-	void TreeEvaluationVisitor::Visit(SemicolonASTNode const& _node){}
+	void TreeEvaluationVisitor::Visit(SemicolonASTNode & _node){}
 
 	//-----------------------------------------------------------------
 
-	void TreeEvaluationVisitor::Visit(BreakASTNode const& _node){}
+	void TreeEvaluationVisitor::Visit(BreakASTNode & _node){}
 
 	//-----------------------------------------------------------------
 
-	void TreeEvaluationVisitor::Visit(ContinueASTNode const& _node){}
+	void TreeEvaluationVisitor::Visit(ContinueASTNode & _node){}
 
 	//-----------------------------------------------------------------
 
-	void TreeEvaluationVisitor::Visit(BlockASTNode const& _node){}
+	void TreeEvaluationVisitor::Visit(BlockASTNode & _node){}
 
 	//-----------------------------------------------------------------
 
-	void TreeEvaluationVisitor::Visit(AssignASTNode const& _node){
+	void TreeEvaluationVisitor::Visit(AssignASTNode & _node){
 	
 		SINASSERT(_node.NumberOfChildren() == 2);
 
@@ -381,136 +382,174 @@ namespace SIN{
 		MemoryCell *tmpmemcell2 = memstack.top();
 		memstack.pop();
 
-		ASTNode *blocknode;
-		for(blocknode = static_cast<ASTNode*>(*_node); _node.Type() != ASTNode::SinCodeASTNode_T && _node.Type() != ASTNode::BlockASTNode_T; blocknode = static_cast<ASTNode*>(*_node));
-		SymbolTable symTable = (static_cast<BlockASTNode*>(blocknode))->getSymbolTable();
-		MemoryCell *value = symTable.LookupLocal((static_cast<MemoryCellString*>(tmpmemcell1))->GetValue()); //TODO Check for scope redefinition
+		SymbolTable *symTable = _node.LocalEnv();
+		MemoryCell *value = symTable->LookupLocal((static_cast<MemoryCellString*>(tmpmemcell1))->GetValue()); //TODO Check for scope redefinition
 
 		if(value)
 			SINDELETE(value);
 		
 		value = tmpmemcell2;
-		symTable.SetLocal((static_cast<MemoryCellString*>(tmpmemcell1))->GetValue(), value);
+		symTable->SetLocal((static_cast<MemoryCellString*>(tmpmemcell1))->GetValue(), value);
 	}
 
 	//-----------------------------------------------------------------
 
-	void TreeEvaluationVisitor::Visit(ArgumentsASTNode const& _node){
+	void TreeEvaluationVisitor::Visit(ArgumentsASTNode & _node){
 
 		const size_t numberOfChildren = _node.NumberOfChildren();
 
-		for(size_t i = 0; i< numberOfChildren; ++i){}
+		SymbolTable *symTable = _node.LocalEnv();
+
+		if(!symTable)
+			symTable = _node.GlobalEnv();
+
+		MemoryCellFunction *funcmemcell = static_cast<MemoryCellFunction*>( symTable->LookupLocal( string_cast(static_cast<ASTNode*>(*(*_node)[0])->ID()) ) );
+//		symTable = static_cast<ASTNode*>(*(funcmemcell->GetValue())[1])->LocalEnv();
+
+		for(size_t i = 0; i< numberOfChildren; ++i){
+			static_cast<ASTNode*>(_node[i])->Accept(this);
+		}
 	}
 
 	//-----------------------------------------------------------------
 
-	void TreeEvaluationVisitor::Visit(NormalCallASTNode const& _node){}
+	void TreeEvaluationVisitor::Visit(NormalCallASTNode & _node){}
 
 	//-----------------------------------------------------------------
 
-	void TreeEvaluationVisitor::Visit(MethodCallASTNode const& _node){}
+	void TreeEvaluationVisitor::Visit(MethodCallASTNode & _node){}
 
 	//-----------------------------------------------------------------
 
-	void TreeEvaluationVisitor::Visit(FuncdefCallASTNode const& _node){}
+	void TreeEvaluationVisitor::Visit(FuncdefCallASTNode & _node){}
 
 	//-----------------------------------------------------------------
 
-	void TreeEvaluationVisitor::Visit(FunctionASTNode const& _node){}
+	void TreeEvaluationVisitor::Visit(FunctionASTNode & _node){}
 
 	//-----------------------------------------------------------------
 
-	void TreeEvaluationVisitor::Visit(LamdaFunctionASTNode const& _node){}
+	void TreeEvaluationVisitor::Visit(LamdaFunctionASTNode & _node){}
 
 	//-----------------------------------------------------------------
 
-	void TreeEvaluationVisitor::Visit(IDASTNode const& _node){}
+	void TreeEvaluationVisitor::Visit(IDASTNode & _node){
+	
+		memstack.push(SINEWCLASS(MemoryCellString, (string_cast(_node.ID()))));
+
+		SymbolTable *symTable = _node.LocalEnv();
+
+		if(!symTable)
+			symTable = _node.GlobalEnv();
+
+		symTable->SetLocal(string_cast(_node.ID()), memstack.top());
+	}
 
 	//-----------------------------------------------------------------
 
-	void TreeEvaluationVisitor::Visit(LocalIDASTNode const& _node){}
+	void TreeEvaluationVisitor::Visit(LocalIDASTNode & _node){
+	
+		memstack.push(SINEWCLASS(MemoryCellString, (string_cast(_node.ID()))));
+
+		SymbolTable *symTable = _node.LocalEnv();
+
+		if(!symTable)
+			symTable = _node.GlobalEnv();
+
+		symTable->SetLocal(string_cast(_node.ID()), memstack.top());
+	}
 
 	//-----------------------------------------------------------------
 
-	void TreeEvaluationVisitor::Visit(GlobalIDASTNode const& _node){}
+	void TreeEvaluationVisitor::Visit(GlobalIDASTNode & _node){
+	
+		memstack.push(SINEWCLASS(MemoryCellString, (string_cast(_node.ID()))));
+
+		SymbolTable *symTable = _node.GlobalEnv();
+
+		symTable->SetLocal(string_cast(_node.ID()), memstack.top());
+	}
 
 	//-----------------------------------------------------------------
 
-	void TreeEvaluationVisitor::Visit(PreIncrASTNode const& _node){}
+	void TreeEvaluationVisitor::Visit(PreIncrASTNode & _node){
+	
+
+	}
 
 	//-----------------------------------------------------------------
 
-	void TreeEvaluationVisitor::Visit(PostIncrASTNode const& _node){}
+	void TreeEvaluationVisitor::Visit(PostIncrASTNode & _node){}
 
 	//-----------------------------------------------------------------
 
-	void TreeEvaluationVisitor::Visit(PreDecrASTNode const& _node){}
+	void TreeEvaluationVisitor::Visit(PreDecrASTNode & _node){}
 
 	//-----------------------------------------------------------------
 
-	void TreeEvaluationVisitor::Visit(PostDecrASTNode const& _node){}
+	void TreeEvaluationVisitor::Visit(PostDecrASTNode & _node){}
 
 	//-----------------------------------------------------------------
 
-	void TreeEvaluationVisitor::Visit(UnaryNotASTNode const& _node){}
+	void TreeEvaluationVisitor::Visit(UnaryNotASTNode & _node){}
 
 	//-----------------------------------------------------------------
 
-	void TreeEvaluationVisitor::Visit(UnaryMinASTNode const& _node){}
+	void TreeEvaluationVisitor::Visit(UnaryMinASTNode & _node){}
 
 	//-----------------------------------------------------------------
 
-	void TreeEvaluationVisitor::Visit(ObjectASTNode const& _node){}
+	void TreeEvaluationVisitor::Visit(ObjectASTNode & _node){}
 
 	//-----------------------------------------------------------------
 
-	void TreeEvaluationVisitor::Visit(EmptyObjectASTNode const& _node){}
+	void TreeEvaluationVisitor::Visit(EmptyObjectASTNode & _node){}
 
 	//-----------------------------------------------------------------
 
-	void TreeEvaluationVisitor::Visit(UnindexedMemberASTNode const& _node){}
+	void TreeEvaluationVisitor::Visit(UnindexedMemberASTNode & _node){}
 
 	//-----------------------------------------------------------------
 
-	void TreeEvaluationVisitor::Visit(IndexedMemberASTNode const& _node){}
+	void TreeEvaluationVisitor::Visit(IndexedMemberASTNode & _node){}
 
 	//-----------------------------------------------------------------
 
-	void TreeEvaluationVisitor::Visit(ObjectMemberASTNode const& _node){}
+	void TreeEvaluationVisitor::Visit(ObjectMemberASTNode & _node){}
 
 	//-----------------------------------------------------------------
 
-	void TreeEvaluationVisitor::Visit(ObjectIndexASTNode const& _node){}
+	void TreeEvaluationVisitor::Visit(ObjectIndexASTNode & _node){}
 
 	//-----------------------------------------------------------------
 
-	void TreeEvaluationVisitor::Visit(CallMemberASTNode const& _node){}
+	void TreeEvaluationVisitor::Visit(CallMemberASTNode & _node){}
 
 	//-----------------------------------------------------------------
 
-	void TreeEvaluationVisitor::Visit(CallIndexASTNode const& _node){}
+	void TreeEvaluationVisitor::Visit(CallIndexASTNode & _node){}
 
 	//-----------------------------------------------------------------
 
-	void TreeEvaluationVisitor::Visit(MetaParseASTNode const& _node){}
+	void TreeEvaluationVisitor::Visit(MetaParseASTNode & _node){}
 
 	//-----------------------------------------------------------------
 
-	void TreeEvaluationVisitor::Visit(MetaPreserveASTNode const& _node){}
+	void TreeEvaluationVisitor::Visit(MetaPreserveASTNode & _node){}
 
 	//-----------------------------------------------------------------
 
-	void TreeEvaluationVisitor::Visit(MetaEvaluateASTNode const& _node){}
+	void TreeEvaluationVisitor::Visit(MetaEvaluateASTNode & _node){}
 
 	//-----------------------------------------------------------------
 
-	void TreeEvaluationVisitor::Visit(MetaUnparseASTNode const& _node){}
+	void TreeEvaluationVisitor::Visit(MetaUnparseASTNode & _node){}
 
 	//-----------------------------------------------------------------
 
-	void TreeEvaluationVisitor::Visit(MetaParseStringASTNode const& _node){}
+	void TreeEvaluationVisitor::Visit(MetaParseStringASTNode & _node){}
 
 	//-----------------------------------------------------------------
 
-	void TreeEvaluationVisitor::Visit(SinCodeASTNode const& _node){}
+	void TreeEvaluationVisitor::Visit(SinCodeASTNode & _node){}
 } // namespace SIN

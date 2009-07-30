@@ -9,27 +9,75 @@
     NAME##ASTNode::NAME##ASTNode(void):	ASTNode() {}						\
 	NAME##ASTNode::NAME##ASTNode(String const &_name): ASTNode(_name) {}	\
 	NAME##ASTNode::~NAME##ASTNode(void) {}									\
-	void NAME##ASTNode::Accept(ASTVisitor *_v) const {						\
+	void NAME##ASTNode::Accept(ASTVisitor *_v) {							\
         SINASSERT(_v);														\
         _v->Visit(*this);													\
     }																		\
 	NAME##ASTNode *NAME##ASTNode::Clone(void) const {						\
 		return SINEWCLASS(NAME##ASTNode, (*this));							\
 	}																		\
-	ASTNode::ASTNodeType NAME##ASTNode::Type(void) const {					\
-		return ASTNode::NAME##ASTNode_T;									\
+	SymbolTable *NAME##ASTNode::LocalEnv(void) {							\
+		return static_cast<ASTNode*>(GetParent())->LocalEnv();				\
+	}																		\
+	SymbolTable *NAME##ASTNode::GlobalEnv(void) {							\
+		return static_cast<ASTNode*>(GetParent())->GlobalEnv();				\
 	}
 
 namespace SIN{
 
+	//------ SinCodeASTNode ------------------------------
 	//-----------------------------------------------------------------
 
-	BlockASTNode::BlockASTNode(void) : SinCodeASTNode() {}
+	SinCodeASTNode::SinCodeASTNode(void) : ASTNode() {}
 
 
 	//-----------------------------------------------------------------
 
-	BlockASTNode::BlockASTNode(String const &_name) : SinCodeASTNode(_name) {}
+	SinCodeASTNode::SinCodeASTNode(String const &_name) : ASTNode(_name) {}
+
+
+	//-----------------------------------------------------------------
+
+	SinCodeASTNode::~SinCodeASTNode(void) {}
+
+
+	//-----------------------------------------------------------------
+
+	void SinCodeASTNode::Accept(ASTVisitor *_v) {
+        SINASSERT(_v);
+        _v->Visit(*this);
+    }		
+
+
+	//-----------------------------------------------------------------
+
+	SinCodeASTNode *SinCodeASTNode::Clone(void) const {						
+		return SINEWCLASS(SinCodeASTNode, (*this));
+	}
+
+
+	//-----------------------------------------------------------------
+
+	SymbolTable *SinCodeASTNode::GlobalEnv(void) {
+		return &symTable;
+	}
+
+	//-----------------------------------------------------------------
+
+	SymbolTable *SinCodeASTNode::LocalEnv(void) {
+		return NULL;
+	}
+
+
+	//------ BlockASTNode ------------------------------
+	//-----------------------------------------------------------------
+
+	BlockASTNode::BlockASTNode(void) : ASTNode() {}
+
+
+	//-----------------------------------------------------------------
+
+	BlockASTNode::BlockASTNode(String const &_name) : ASTNode(_name) {}
 
 
 	//-----------------------------------------------------------------
@@ -39,7 +87,7 @@ namespace SIN{
 
 	//-----------------------------------------------------------------
 
-	void BlockASTNode::Accept(ASTVisitor *_v) const {
+	void BlockASTNode::Accept(ASTVisitor *_v) {
         SINASSERT(_v);
         _v->Visit(*this);
     }		
@@ -51,14 +99,20 @@ namespace SIN{
 		return SINEWCLASS(BlockASTNode, (*this));
 	}
 
+	//-----------------------------------------------------------------
+
+	SymbolTable *BlockASTNode::GlobalEnv(void) {						
+		return static_cast<ASTNode*>(GetParent())->GlobalEnv();
+	}
 
 	//-----------------------------------------------------------------
 
-	ASTNode::ASTNodeType BlockASTNode::Type(void) const {
-		return ASTNode::BlockASTNode_T;
+	SymbolTable *BlockASTNode::LocalEnv(void) {						
+		return &symTable;
 	}
 
-	SINASTNODE_DEFAULT_NODE_DEFS(SinCode		)
+
+//	SINASTNODE_DEFAULT_NODE_DEFS(SinCode		)
 	SINASTNODE_DEFAULT_NODE_DEFS(Arguments		)
 	SINASTNODE_DEFAULT_NODE_DEFS(Assign			)
 //	SINASTNODE_DEFAULT_NODE_DEFS(Block			)

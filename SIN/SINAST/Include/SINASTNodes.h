@@ -12,9 +12,10 @@ namespace SIN{
         NAME##ASTNode(void);						\
         NAME##ASTNode(String const &name);			\
         ~NAME##ASTNode(void);						\
-        virtual void Accept(ASTVisitor *) const;	\
+        virtual void Accept(ASTVisitor *);			\
 		virtual NAME##ASTNode *Clone(void) const;	\
-		virtual ASTNodeType Type(void) const;		\
+		virtual SymbolTable *LocalEnv(void);		\
+		virtual SymbolTable *GlobalEnv(void);		\
     }
 
 	class SinCodeASTNode : public ASTNode {
@@ -25,20 +26,21 @@ namespace SIN{
 		SinCodeASTNode(String const &name);
 		 ~SinCodeASTNode(void);
 
-		void Accept(ASTVisitor *) const;
+		void Accept(ASTVisitor *);
 
 		SymbolTable getSymbolTable(void) { return symTable; }
 		void setSymbolTable(SymbolTable _symTable){ symTable = _symTable; }
 
-		SinCodeASTNode *Clone(void) const;
+		virtual SymbolTable *GlobalEnv (void);
+		virtual SymbolTable *LocalEnv (void);
 
-		virtual ASTNodeType Type(void) const;
+		SinCodeASTNode *Clone(void) const;
 
 	private:
 		SymbolTable symTable;
 	};
 
-	class BlockASTNode : public SinCodeASTNode {
+	class BlockASTNode : public ASTNode {
 
 	public:
 
@@ -46,11 +48,18 @@ namespace SIN{
 		BlockASTNode(String const &name);
 		 ~BlockASTNode(void);
 
-		void Accept(ASTVisitor *) const;
+		void Accept(ASTVisitor *);
+
+		SymbolTable getSymbolTable(void) { return symTable; }
+		void setSymbolTable(SymbolTable _symTable){ symTable = _symTable; }
+
+		virtual SymbolTable *GlobalEnv (void);
+		virtual SymbolTable *LocalEnv (void);
 
 		BlockASTNode *Clone(void) const;
 
-		virtual ASTNodeType Type(void) const;
+	private:
+		SymbolTable symTable;
 	};
 
 //	SINASTNODE_NODE_DECL(SinCode		);

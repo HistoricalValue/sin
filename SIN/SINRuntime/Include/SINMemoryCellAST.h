@@ -20,7 +20,7 @@ namespace SIN {
 		virtual MemoryCellType Type (void) { return MemoryCell::AST_MCT; }
 
 		
-		void			SetValue(const ASTNode* _node)	{ node = const_cast<ASTNode *>(_node); }
+		void			SetValue (const ASTNode* _node)	{ node = const_cast<ASTNode *>(_node); }
 		const ASTNode & GetValue (void) const			{ return *node; }
 
 

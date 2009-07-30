@@ -14,7 +14,7 @@
 #pragma warning(disable:4003)
 
 
-#define SINASTVISITOR_VISIT_SIGNATURE(NODENAME) virtual void Visit(NODENAME##ASTNode const&)
+#define SINASTVISITOR_VISIT_SIGNATURE(NODENAME) virtual void Visit(NODENAME##ASTNode &)
 
 
 namespace SIN {

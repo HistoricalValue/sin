@@ -14,8 +14,8 @@
 #define SIN_ASTTreeVisualisationVisitor_IdentationSequence "|---"
 
 #define SINASTTREEVISUALISATION_DEFAULT_VISIT_DEFINITION(NODENAME)				\
-	void ASTTreeVisualisationVisitor::Visit(NODENAME##ASTNode const& _node) {	\
-		Visit(static_cast<ASTNode const&>(_node));								\
+	void ASTTreeVisualisationVisitor::Visit(NODENAME##ASTNode & _node) {		\
+		Visit(static_cast<ASTNode &>(_node));									\
 	}
 
 namespace SIN {
@@ -31,7 +31,7 @@ namespace SIN {
 	ASTTreeVisualisationVisitor::~ASTTreeVisualisationVisitor(void) {
 	}
 
-	void ASTTreeVisualisationVisitor::Visit(Type<ASTNode>::const_ref node) {
+	void ASTTreeVisualisationVisitor::Visit(ASTNode &node) {
 		out << tabs + "+" + node.Name() << SIN::ENDL;
 	}
 

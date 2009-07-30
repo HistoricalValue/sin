@@ -3,7 +3,7 @@
 
 
 #include "SINMemoryCell.h"
-
+#include "SINASTNode.h"
 
 
 namespace SIN {
@@ -12,9 +12,17 @@ namespace SIN {
 	public:
 
 		MemoryCellFunction(void) : MemoryCell() {}
+		MemoryCellFunction(ASTNode *_functionNode) : MemoryCell(), functionNode(_functionNode) {}
 		~MemoryCellFunction() {}
 
 		virtual MemoryCellType Type (void) { return MemoryCell::FUNCTION_MCT; }
+
+		void	       SetValue (ASTNode *_functionNode)	{ functionNode = _functionNode; }
+		const ASTNode *GetValue (void) const	{ return functionNode; }
+
+	private:
+
+		ASTNode *functionNode;
 	};
 }
 

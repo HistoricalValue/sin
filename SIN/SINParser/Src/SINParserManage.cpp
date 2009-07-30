@@ -128,14 +128,10 @@ namespace SIN {
 
 		**_retcall << _funcdef;
 		ASTNode *arguments = SINEWCLASS(ArgumentsASTNode, ("Arguments"));
-		for(ASTNode *nxtExpr; _elist != NULL; _elist = nxtExpr){
-			ASTNode *newelist = SINPTR(_elist)->Clone();
-			*arguments << newelist;
-			_lbpa->AppendToNodeList(newelist);
-			nxtExpr = static_cast<ASTNode*>(+(*_elist));
-			_lbpa->RemoveNodeFromList(_elist);
-			SINDELETE(_elist);
-		}
+
+		for(; _elist; _elist = static_cast<ASTNode*>(+(*_elist)))
+			arguments->ConnectChild(_elist);
+
 		**_retcall << arguments;
 	}
 	
@@ -404,23 +400,14 @@ namespace SIN {
 		*_retforstmt = SINEWCLASS(ForASTNode, ("for"));
 		_lbpa->AppendToNodeList(*_retforstmt);
 
-		for(ASTNode *nxtExpr; _elist1 != NULL; _elist1 = nxtExpr){
-			ASTNode *newelist = SINPTR(_elist1)->Clone();
-			**_retforstmt << newelist;
-			_lbpa->AppendToNodeList(newelist);
-			nxtExpr = static_cast<ASTNode*>(+(*_elist1));
-			_lbpa->RemoveNodeFromList(_elist1);
-			SINDELETE(_elist1);
-		}
+		for(; _elist1; _elist1 = static_cast<ASTNode*>(+(*_elist1)))
+			(*_retforstmt)->ConnectChild(_elist1);
+
 		**_retforstmt << _expr;
-		for(ASTNode *nxtExpr; _elist2 != NULL; _elist2 = nxtExpr){
-			ASTNode *newelist = SINPTR(_elist2)->Clone();
-			**_retforstmt << newelist;
-			_lbpa->AppendToNodeList(newelist);
-			nxtExpr = static_cast<ASTNode*>(+(*_elist2));
-			_lbpa->RemoveNodeFromList(_elist2);
-			SINDELETE(_elist2);
-		}
+
+		for(; _elist2; _elist2 = static_cast<ASTNode*>(+(*_elist2)))
+			(*_retforstmt)->ConnectChild(_elist2);
+
 		**_retforstmt << _stmt;
 	}
 	
@@ -447,14 +434,10 @@ namespace SIN {
 		_lbpa->AppendToNodeList(id);
 
 		**_retfuncdef << id;	// To remove(No need to keep function names after we use unique IDs)
-		for(ASTNode *nxtID; _idlist != NULL; _idlist = nxtID){
-			ASTNode *newidlist = SINPTR(_idlist)->Clone();
-			**_retfuncdef << newidlist;
-			_lbpa->AppendToNodeList(newidlist);
-			nxtID = static_cast<ASTNode*>(+(*_idlist));
-			_lbpa->RemoveNodeFromList(_idlist);
-			SINDELETE(_idlist);
-		}
+
+		for(; _idlist; _idlist = static_cast<ASTNode*>(+(*_idlist)))
+			(*_retfuncdef)->ConnectChild(_idlist);
+
 		**_retfuncdef << _block;
 
 		SINDELETE(_id);
@@ -467,14 +450,9 @@ namespace SIN {
 		*_retfuncdef = SINEWCLASS(LamdaFunctionASTNode, ("Lamda Function"));
 		_lbpa->AppendToNodeList(*_retfuncdef);
 
-		for(ASTNode *nxtID; _idlist != NULL; _idlist = nxtID){
-			ASTNode *newidlist = SINPTR(_idlist)->Clone();
-			**_retfuncdef << newidlist;
-			_lbpa->AppendToNodeList(newidlist);
-			nxtID = static_cast<ASTNode*>(+(*_idlist));
-			_lbpa->RemoveNodeFromList(_idlist);
-			SINDELETE(_idlist);
-		}
+		for(; _idlist; _idlist = static_cast<ASTNode*>(+(*_idlist)))
+			(*_retfuncdef)->ConnectChild(_idlist);
+
 		**_retfuncdef << _block;
 	}
 
@@ -631,14 +609,10 @@ namespace SIN {
 		**_retmethodcall << id;
 
 		ASTNode *arguments = SINEWCLASS(ArgumentsASTNode, ("Arguments"));
-		for(ASTNode *nxtExpr; _elist != NULL; _elist = nxtExpr){
-			ASTNode *newelist = SINPTR(_elist)->Clone();
-			*arguments << newelist;
-			_lbpa->AppendToNodeList(newelist);
-			nxtExpr = static_cast<ASTNode*>(+(*_elist));
-			_lbpa->RemoveNodeFromList(_elist);
-			SINDELETE(_elist);
-		}
+
+		for(; _elist; _elist = static_cast<ASTNode*>(+(*_elist)))
+			arguments->ConnectChild(_elist);
+
 		**_retmethodcall << arguments;
 
 		SINDELETE(_id);
@@ -652,14 +626,10 @@ namespace SIN {
 		_lbpa->AppendToNodeList(*_retnormalcall);
 
 		ASTNode *arguments = SINEWCLASS(ArgumentsASTNode, ("Arguments"));
-		for(ASTNode *nxtExpr; _elist != NULL; _elist = nxtExpr){
-			ASTNode *newelist = SINPTR(_elist)->Clone();
-			*arguments << newelist;
-			_lbpa->AppendToNodeList(newelist);
-			nxtExpr = static_cast<ASTNode*>(+(*_elist));
-			_lbpa->RemoveNodeFromList(_elist);
-			SINDELETE(_elist);
-		}
+
+		for(; _elist; _elist = static_cast<ASTNode*>(+(*_elist)))
+			arguments->ConnectChild(_elist);
+
 		**_retnormalcall << arguments;
 	}
 
@@ -684,14 +654,8 @@ namespace SIN {
 		*_retobjectdef = SINEWCLASS(ObjectASTNode, ("Object"));
 		_lbpa->AppendToNodeList(*_retobjectdef);
 
-		for(ASTNode *nxtObject; _objectlist != NULL; _objectlist = nxtObject){
-			ASTNode *newobjectlist = SINPTR(_objectlist)->Clone();
-			**_retobjectdef << newobjectlist;
-			_lbpa->AppendToNodeList(newobjectlist);
-			nxtObject = static_cast<ASTNode*>(+(*_objectlist));
-			_lbpa->RemoveNodeFromList(_objectlist);
-			SINDELETE(_objectlist);
-		}	
+		for(; _objectlist; _objectlist = static_cast<ASTNode*>(+(*_objectlist)))
+			(*_retobjectdef)->ConnectChild(_objectlist);
 	}
 
 
@@ -796,16 +760,16 @@ namespace SIN {
 		*_retsincode = SINEWCLASS(SinCodeASTNode, ("AST"));
 		_lbpa->AppendToNodeList(*_retsincode);
 
-		for(ASTNode *nxtStmt; _stmts != NULL; _stmts = nxtStmt){
+		for(; _stmts; _stmts = static_cast<ASTNode*>(+(*_stmts)))
 			(*_retsincode)->ConnectChild(_stmts);
-			nxtStmt = static_cast<ASTNode*>(+(*_stmts));
+		//for(ASTNode *nxtStmt; _stmts != NULL; _stmts = nxtStmt){
 			//ASTNode *newstmts = SINPTR(_stmts)->Clone();
 			//**_retsincode << newstmts;
 			//_lbpa->AppendToNodeList(newstmts);
 			//nxtStmt = static_cast<ASTNode*>(+(*_stmts));
 			//_lbpa->RemoveNodeFromList(_stmts);
 			//SINDELETE(_stmts);
-		}	
+		//}	
 	}
 
 

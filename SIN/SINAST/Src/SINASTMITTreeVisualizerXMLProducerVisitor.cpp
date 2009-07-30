@@ -2,8 +2,8 @@
 #include "SINAssert.h"
 
 #define SINASTMITTREEVISUALIZERXMLPRODUCER_DEFAULT_VISIT_DEFINITION(NODENAME)				\
-	void ASTMITTreeVisualizerXMLProducerVisitor::Visit(NODENAME##ASTNode const& _node) {	\
-		Visit(static_cast<ASTNode const&>(_node));											\
+	void ASTMITTreeVisualizerXMLProducerVisitor::Visit(NODENAME##ASTNode & _node) {	\
+		Visit(static_cast<ASTNode &>(_node));											\
 	}
 
 namespace {
@@ -49,7 +49,7 @@ namespace SIN {
 		writeOutro();
 	}
 
-	void ASTMITTreeVisualizerXMLProducerVisitor::Visit(ASTNode const& _node) {
+	void ASTMITTreeVisualizerXMLProducerVisitor::Visit(ASTNode & _node) {
 		const size_t numberOfChildren = _node.NumberOfChildren();
 		bool empty =  numberOfChildren == 0;
 		writeFolder(folder(_node.Name()), empty);

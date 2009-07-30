@@ -12,7 +12,7 @@
 #pragma warning(disable:4003)
 
 
-#define SINASTTREEVISUALIZATIONVISITOR_VISIT_SIGNATURE(NODENAME) virtual void Visit(NODENAME##ASTNode const&)
+#define SINASTTREEVISUALIZATIONVISITOR_VISIT_SIGNATURE(NODENAME) virtual void Visit(NODENAME##ASTNode &)
 
 namespace SIN {
 	class ASTTreeVisualisationVisitor: public ASTVisitor {

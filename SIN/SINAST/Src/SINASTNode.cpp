@@ -5,7 +5,7 @@
 #include "SINASTTreeVisualisationVisitor.h"
 #include "SINAssert.h"
 #include "SINAlloc.h"
-
+#include "SINSymbolTable.h"
 
 //-------------------------------------------------------------------------------------------------
 
@@ -19,10 +19,12 @@
     NAME##ASTNode *NAME##ASTNode::Clone(void) const {	                                    \
 		return SINEWCLASS(NAME##ASTNode, (*this));											\
 	}																						\
-	ASTNode::ASTNodeType NAME##ASTNode::Type(void) const {									\
-		return ASTNode::NAME##ASTNode_T;													\
+	SymbolTable *NAME##ASTNode::LocalEnv(void) {											\
+		return static_cast<ASTNode*>(GetParent())->LocalEnv();								\
+	}																						\
+	SymbolTable *NAME##ASTNode::GlobalEnv(void) {											\
+		return static_cast<ASTNode*>(GetParent())->GlobalEnv();								\
 	}
-
 
 //-------------------------------------------------------------------------------------------------	
 
@@ -36,8 +38,11 @@
     NAME##ASTNode *NAME##ASTNode::Clone(void) const {	                                    \
 		return SINEWCLASS(NAME##ASTNode, (*this));											\
 	}																						\
-	ASTNode::ASTNodeType NAME##ASTNode::Type(void) const {									\
-		return ASTNode::NAME##ASTNode_T;													\
+	SymbolTable *NAME##ASTNode::LocalEnv(void) {											\
+		return static_cast<ASTNode*>(GetParent())->LocalEnv();								\
+	}																						\
+	SymbolTable *NAME##ASTNode::GlobalEnv(void) {											\
+		return static_cast<ASTNode*>(GetParent())->GlobalEnv();								\
 	}
 
 
@@ -58,8 +63,11 @@
     OPNAME##ASTNode *OPNAME##ASTNode::Clone(void) const {	    \
 		return SINEWCLASS(OPNAME##ASTNode, (*this));			\
 	}															\
-	ASTNode::ASTNodeType OPNAME##ASTNode::Type(void) const {	\
-		return ASTNode::OPNAME##ASTNode_T;						\
+	SymbolTable *OPNAME##ASTNode::LocalEnv(void) {				\
+		return static_cast<ASTNode*>(GetParent())->LocalEnv();	\
+	}															\
+	SymbolTable *OPNAME##ASTNode::GlobalEnv(void) {				\
+		return static_cast<ASTNode*>(GetParent())->GlobalEnv();	\
 	}
 
 
@@ -113,14 +121,21 @@ namespace SIN {
 
 	//---------------------------------------------------
 
-	ASTNode::ASTNodeType ASTNode::Type(void) const {
-		return ASTNode::ASTNode_T;
+	SymbolTable *ASTNode::GlobalEnv(void) {
+		return static_cast<ASTNode*>(GetParent())->GlobalEnv();
 	}
 
 
 	//---------------------------------------------------
 
-    void ASTNode::Accept(ASTVisitor *_v) const {
+	SymbolTable *ASTNode::LocalEnv(void) {
+		return static_cast<ASTNode*>(GetParent())->LocalEnv();
+	}
+
+
+	//---------------------------------------------------
+
+    void ASTNode::Accept(ASTVisitor *_v) {
         SINASSERT(_v);
         _v->Visit(*this);
     }
@@ -128,7 +143,7 @@ namespace SIN {
 	
 	//---------------------------------------------------
 
-	void ASTNode::Accept(ASTTreeVisualisationVisitor *_v) const {
+	void ASTNode::Accept(ASTTreeVisualisationVisitor *_v) {
 		SINASSERT(_v);
 		_v->Visit(*this);
 		_v->IncreaseIndentationLevel();

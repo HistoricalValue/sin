@@ -23,7 +23,8 @@ namespace SIN {
         ~NAME##ASTNode(void);                               \
         void Accept(ASTVisitor *);                          \
 		NAME##ASTNode *Clone(void) const;					\
-		virtual ASTNodeType Type(void) const;				\
+		virtual SymbolTable *LocalEnv(void);				\
+		virtual SymbolTable *GlobalEnv(void);				\
     }
 
 
@@ -60,68 +61,7 @@ namespace SIN {
 	public :
 		typedef unsigned long int ID_t;
 
-		enum ASTNodeType{
-
-			ASTNode_T	= 0,
-			NumberASTNode_T,
-			StringASTNode_T,
-			NilASTNode_T,
-			TrueASTNode_T,
-			FalseASTNode_T,
-			AddASTNode_T,
-			SubASTNode_T,
-			MulASTNode_T,
-			DivASTNode_T,
-			ModASTNode_T,
-			LtASTNode_T,
-			GtASTNode_T,
-			LeASTNode_T,
-			GeASTNode_T,
-			EqASTNode_T,
-			NeASTNode_T,
-			AndASTNode_T,
-			OrASTNode_T,
-			NotASTNode_T,
-			ArgumentsASTNode_T,
-			AssignASTNode_T,
-			NormalCallASTNode_T,
-			MethodCallASTNode_T,
-			FuncdefCallASTNode_T,
-			FunctionASTNode_T,
-			LamdaFunctionASTNode_T,
-			BlockASTNode_T,
-			IDASTNode_T,
-			LocalIDASTNode_T,
-			GlobalIDASTNode_T,
-			IfASTNode_T,
-			IfElseASTNode_T,
-			ForASTNode_T,
-			WhileASTNode_T,
-			PreIncrASTNode_T,
-			PostIncrASTNode_T,
-			PreDecrASTNode_T,
-			PostDecrASTNode_T,
-			UnaryNotASTNode_T,
-			UnaryMinASTNode_T,
-			ContinueASTNode_T,
-			BreakASTNode_T,
-			ObjectASTNode_T,
-			EmptyObjectASTNode_T,
-			UnindexedMemberASTNode_T,
-			IndexedMemberASTNode_T,
-			ObjectMemberASTNode_T,
-			ObjectIndexASTNode_T,
-			CallMemberASTNode_T,
-			CallIndexASTNode_T,
-			ReturnASTNode_T,
-			SemicolonASTNode_T,
-			MetaParseASTNode_T,
-			MetaPreserveASTNode_T,
-			MetaEvaluateASTNode_T,
-			MetaUnparseASTNode_T,
-			MetaParseStringASTNode_T,
-			SinCodeASTNode_T
-		};
+		friend class SymbolTable;
 
 		//Constructor and destructor 
 		ASTNode(void);
@@ -132,10 +72,11 @@ namespace SIN {
         virtual String const &Name(void) const;
 		ID_t const& ID(void) const;
 
-		virtual ASTNodeType Type (void) const;
+		virtual SymbolTable *GlobalEnv (void);
+		virtual SymbolTable *LocalEnv (void);
 
-		virtual void Accept(ASTVisitor *) const;
-		virtual void Accept(ASTTreeVisualisationVisitor *) const;
+		virtual void Accept(ASTVisitor *);
+		virtual void Accept(ASTTreeVisualisationVisitor *);
 
 		virtual ASTNode *Clone(void) const;
     private:
@@ -179,7 +120,8 @@ namespace SIN {
 		ConstASTNode(String const &_name, Value const &_value): ASTNode(_name), ValueHolder<_ValueT>(_value) { }
         virtual void Accept(ASTVisitor *) = 0;
 		virtual ConstASTNode *Clone(void) const = 0;
-		virtual ASTNodeType Type(void) const = 0;
+		virtual SymbolTable *GlobalEnv (void) = 0;
+		virtual SymbolTable *LocalEnv (void) = 0;
 	};
 
 
@@ -191,7 +133,8 @@ namespace SIN {
         NumberASTNode(Number const &_value = 0);
         virtual void Accept(ASTVisitor *);
 		virtual NumberASTNode *Clone(void) const;
-		virtual ASTNodeType Type(void) const;
+		virtual SymbolTable *GlobalEnv (void);
+		virtual SymbolTable *LocalEnv (void);
     }; // class NumberASTNode
 
 
@@ -203,7 +146,8 @@ namespace SIN {
         StringASTNode(String_t const &_value = "");
         virtual void Accept(ASTVisitor *);
 		virtual StringASTNode *Clone(void) const;
-		virtual ASTNodeType Type(void) const;
+		virtual SymbolTable *GlobalEnv (void);
+		virtual SymbolTable *LocalEnv (void);
     }; // class StringASTNode
 
 
@@ -215,7 +159,8 @@ namespace SIN {
         NilASTNode(void);
         virtual void Accept(ASTVisitor *);
 		virtual NilASTNode *Clone(void) const;
-		virtual ASTNodeType Type(void) const;
+		virtual SymbolTable *GlobalEnv (void);
+		virtual SymbolTable *LocalEnv (void);
     }; // class NilASTNode
 
 
@@ -227,7 +172,8 @@ namespace SIN {
         TrueASTNode(void);
         virtual void Accept(ASTVisitor *);
 		virtual TrueASTNode *Clone(void) const;
-		virtual ASTNodeType Type(void) const;
+		virtual SymbolTable *GlobalEnv (void);
+		virtual SymbolTable *LocalEnv (void);
     }; // class TrueASTNode
 
 
@@ -239,7 +185,8 @@ namespace SIN {
         FalseASTNode(void);
         virtual void Accept(ASTVisitor *);
 		virtual FalseASTNode *Clone(void) const;
-		virtual ASTNodeType Type(void) const;
+		virtual SymbolTable *GlobalEnv (void);
+		virtual SymbolTable *LocalEnv (void);
     }; // class FalseASTNode
 
 
@@ -253,9 +200,11 @@ namespace SIN {
         virtual ~OpASTNode(void) { }
         virtual void Accept(ASTVisitor *) = 0;
 		virtual OpASTNode *Clone(void) const = 0;
-		virtual ASTNodeType Type(void) const = 0;
+		virtual SymbolTable *GlobalEnv (void) = 0;
+		virtual SymbolTable *LocalEnv (void) = 0;
     };
-    SINASTNODE_OPNODE_DECL(Add,ADD);
+
+	SINASTNODE_OPNODE_DECL(Add,ADD);
     SINASTNODE_OPNODE_DECL(Sub,SUB);
     SINASTNODE_OPNODE_DECL(Mul,MUL);
     SINASTNODE_OPNODE_DECL(Div,DIV);
