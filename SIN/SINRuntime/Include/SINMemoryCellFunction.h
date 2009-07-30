@@ -18,7 +18,7 @@ namespace SIN {
 		virtual MemoryCellType Type (void) { return MemoryCell::FUNCTION_MCT; }
 
 		void	       SetValue (ASTNode *_functionNode)	{ functionNode = _functionNode; }
-		const ASTNode *GetValue (void) const	{ return functionNode; }
+		ASTNode *GetValue (void) const	{ return functionNode; }
 
 	private:
 

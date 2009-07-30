@@ -12,6 +12,7 @@
 *[025] Implement operator == for ASTNode
 
 *[026] Make the testing framework serious (save results and print them later -- especially TestCollections should be serious)
+*[027] Default ctor of LamdaFunctionASTNode should name automatically the node with $lamdaxxx
 
 ---logging---
 *[010] LoggerFactory base should internally keep a list of produced loggers

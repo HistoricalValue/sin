@@ -412,12 +412,8 @@ namespace SIN {
 	//-----------------------------------------------------------------
 	
 	void ParserManage::Manage_FunctionDefinition_Function (char *_id, ASTNode *_idlist, ASTNode *_block, ASTNode **_retfuncdef, LexAndBisonParseArguments *_lbpa) {
-		*_retfuncdef = SINEWCLASS(FunctionASTNode, ("Function"));
-		IDASTNode *id = SINEWCLASS(IDASTNode, (_id));
+		*_retfuncdef = SINEWCLASS(FunctionASTNode, (_id));
 		_lbpa->AppendToNodeList(*_retfuncdef);
-		_lbpa->AppendToNodeList(id);
-
-		**_retfuncdef << id;	// To remove(No need to keep function names after we use unique IDs)
 
 		ASTNode *arguments = SINEWCLASS(FormalArgumentsASTNode, ("Formal Arguments"));
 
@@ -433,7 +429,7 @@ namespace SIN {
 	//-----------------------------------------------------------------
 	
 	void ParserManage::Manage_FunctionDefinition_LamdaFunction (ASTNode *_idlist, ASTNode *_block, ASTNode **_retfuncdef, LexAndBisonParseArguments *_lbpa) {
-		*_retfuncdef = SINEWCLASS(LamdaFunctionASTNode, ("Lamda Function"));
+		*_retfuncdef = SINEWCLASS(LamdaFunctionASTNode, ());
 		_lbpa->AppendToNodeList(*_retfuncdef);
 
 		ASTNode *arguments = SINEWCLASS(FormalArgumentsASTNode, ("Formal Arguments"));
