@@ -10,8 +10,7 @@ namespace SIN{
 
 	class TreeEvaluationVisitor : public ASTVisitor {
 	
-		std::stack<MemoryCell *> memstack;
-		
+	public:
 		TreeEvaluationVisitor (void);
 		virtual ~TreeEvaluationVisitor (void);
 
@@ -75,6 +74,9 @@ namespace SIN{
 		SINASTVISITOR_VISIT_SIGNATURE(MetaUnparse		) ;
 		SINASTVISITOR_VISIT_SIGNATURE(MetaParseString	) ;
 		SINASTVISITOR_VISIT_SIGNATURE(SinCode			) ;
+
+	private:
+		std::stack<MemoryCell *> memstack;
 	};
 
 } // namespace SIN
