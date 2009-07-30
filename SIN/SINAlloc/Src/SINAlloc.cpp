@@ -122,10 +122,11 @@ namespace SIN {
 				MemoryChunkValidator* validator;
 				AllocationsTypesMap* allocations_types;
 				struct NextDeleteInfo {
+					MemoryAllocator* allocator;
 					String file;
 					unsigned int line;
-					NextDeleteInfo(void): file(SINALLOC_MAKE_A_DEFAULT_ALLOCATOR), line(0u) { }
-					void Reset(void) { new(this) NextDeleteInfo; }
+					NextDeleteInfo(MemoryAllocator* _allocator): allocator(_allocator), file(_allocator), line(0u) { }
+					void Reset(void) { MemoryAllocator* _allocator = allocator; new(this) NextDeleteInfo(_allocator); }
 				}* next_delete_info;
 			}* P_singletons_p = 0x00; // struct Singletons
 			static bool P_initialised = false;
@@ -152,7 +153,7 @@ namespace SIN {
 				}
 				if (nobody_failed) {
 					nobody_failed = (P_singletons_p->next_delete_info = SINALLOC_ALLOCATE(1, Singletons::NextDeleteInfo)) != 0x00;
-					new(P_singletons_p->next_delete_info) struct Singletons::NextDeleteInfo;
+					new(P_singletons_p->next_delete_info) struct Singletons::NextDeleteInfo(P_singletons_p->allocator);
 				}
 				P_initialised = nobody_failed;
 			}

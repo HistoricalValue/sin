@@ -13,6 +13,8 @@
       <logicalFolder name="SINAlloc" displayName="SINAlloc" projectFiles="true">
         <logicalFolder name="Include" displayName="Include" projectFiles="true">
           <itemPath>../SINAlloc/Include/SINAlloc.h</itemPath>
+          <itemPath>../SINAlloc/Include/SINAllocator.h</itemPath>
+          <itemPath>../SINAlloc/Include/SINMemoryAllocator.h</itemPath>
         </logicalFolder>
         <logicalFolder name="Projects" displayName="Projects" projectFiles="true">
           <logicalFolder name="Linux_GNU" displayName="Linux_GNU" projectFiles="true">
