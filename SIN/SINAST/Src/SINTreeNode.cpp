@@ -75,6 +75,17 @@ namespace SIN {
 		return *_parent;
 	}
 
+
+	//-----------------------------------------------------------------------
+
+	TreeNode & TreeNode::ConnectChild(TreeNode * child) {
+		TreeNode * parent = this;
+		child->parent = parent;
+		parent->children.push_back(child);
+		return *this;
+	}
+
+
 	//-----------------------------------------------------------------------
 	TreeNode *TreeNode::GetParent(void) const {
 		return parent;

@@ -30,7 +30,11 @@ namespace SIN {
 		/** append a child (returns self). Returns this. */
 		TreeNode &operator<<(TreeNode *_child);
 		/** prepends this node as a child to the given parent. Returns the parent. */
-                TreeNode &operator>>(TreeNode *_parent);
+        TreeNode &operator>>(TreeNode *_parent);
+
+
+
+		TreeNode & ConnectChild(TreeNode * child);
 
 
 		/** get parent or 0x00 if this tree has no parent */

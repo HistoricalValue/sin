@@ -797,12 +797,14 @@ namespace SIN {
 		_lbpa->AppendToNodeList(*_retsincode);
 
 		for(ASTNode *nxtStmt; _stmts != NULL; _stmts = nxtStmt){
-			ASTNode *newstmts = SINPTR(_stmts)->Clone();
-			**_retsincode << newstmts;
-			_lbpa->AppendToNodeList(newstmts);
+			(*_retsincode)->ConnectChild(_stmts);
 			nxtStmt = static_cast<ASTNode*>(+(*_stmts));
-			_lbpa->RemoveNodeFromList(_stmts);
-			SINDELETE(_stmts);
+			//ASTNode *newstmts = SINPTR(_stmts)->Clone();
+			//**_retsincode << newstmts;
+			//_lbpa->AppendToNodeList(newstmts);
+			//nxtStmt = static_cast<ASTNode*>(+(*_stmts));
+			//_lbpa->RemoveNodeFromList(_stmts);
+			//SINDELETE(_stmts);
 		}	
 	}
 
