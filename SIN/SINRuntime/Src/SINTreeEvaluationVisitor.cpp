@@ -2,7 +2,11 @@
 
 #include "SINAlloc.h"
 #include "SINAssert.h"
+#include "SINMemoryCellNil.h"
+#include "SINMemoryCellBool.h"
+#include "SINMemoryCellNumber.h"
 #include "SINMemoryCellString.h"
+#include "SINMemoryCellFunction.h"
 
 namespace SIN{
 

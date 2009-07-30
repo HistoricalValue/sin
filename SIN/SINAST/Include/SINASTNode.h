@@ -8,6 +8,7 @@
 #include "SINTreeNode.h"
 #include "SINString.h"
 #include "SINNamer.h"
+#include "SINSymbolTable.h"
 
 namespace SIN {
 

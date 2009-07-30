@@ -1,9 +1,6 @@
 #ifndef __SIN_MEMORY_CELL_H__
 #define __SIN_MEMORY_CELL_H__
 
-
-#include "SINASTNode.h"
-
 namespace SIN {
 
 	//-----------------------------------------------------------------------
