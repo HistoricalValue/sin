@@ -402,6 +402,9 @@ namespace SIN{
 		memstack.pop();
 
 		SymbolTable *symTable = _node.LocalEnv();
+		if(!symTable)
+			symTable = _node.GlobalEnv();
+
 		MemoryCell *value = symTable->LookupLocal((static_cast<MemoryCellString*>(tmpmemcell1))->GetValue()); //TODO Check for scope redefinition
 
 		if(value)
@@ -510,14 +513,14 @@ namespace SIN{
 
 	void TreeEvaluationVisitor::Visit(IDASTNode & _node){
 	
-		memstack.push(SINEWCLASS(MemoryCellString, (string_cast(_node.ID()))));
+		memstack.push(SINEWCLASS(MemoryCellString, (string_cast(_node.Name()))));
 
 		SymbolTable *symTable = _node.LocalEnv();
 
 		if(!symTable)
 			symTable = _node.GlobalEnv();
 
-		symTable->SetLocal(string_cast(_node.ID()), memstack.top());
+//		symTable->SetLocal(string_cast(_node.Name()), NULL);
 	}
 
 	//-----------------------------------------------------------------
