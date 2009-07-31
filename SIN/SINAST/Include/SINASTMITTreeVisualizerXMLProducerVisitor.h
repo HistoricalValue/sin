@@ -4,30 +4,28 @@
 #include "SINASTVisitor.h"
 #include "SINOutputStream.h"
 #include <list>
+#include <cstring>
 
 namespace SIN {
 
 	class ASTMITTreeVisualizerXMLProducerVisitor: public ASTVisitor {
 		OutputStream& out;
+		//struct Out {Out(OutputStream&){} void write(char const*, size_t){}} out;
 
 		typedef struct User {
-			String const& ID(void) const;
-			String const& Name(void) const;
-			User(String const& id = "", String const& name = "");
-		private:
-			String id, name;
+			User(char const* const _id = "", char const* const _name = ""): id(_id), name(_name) { }
+			char const* const id;
+			char const* const name;
 		} users_t;
 		users_t users[1];
 		void makeUsers(void);
 
 		typedef struct Folder {
-			String const& Name(void) const;
-			String const& ID(void) const;
-			Folder(String const& name = "", String const& id = "");
-		private:
-			String name, id;
+			Folder(char const* const _name = "", char const* const _id = ""): name(_name), id(_id) { }
+			char const* const name;
+			char const* const id;
 		} folders_t;
-		Folder folder(String const& name);
+		Folder folder(char const* const name);
 		Namer folder_id_namer;
 
 		void writeUser(User const& user);
@@ -35,6 +33,10 @@ namespace SIN {
 		void writeFolder(Folder const&, bool empty = false);
 		void writeFolderClosing(void);
 		void writeOutro(void);
+
+		// optimisation
+		void writestr(char const*);
+		void writehtml(char const*);
 	public:
 		ASTMITTreeVisualizerXMLProducerVisitor(OutputStream& _out);
 		ASTMITTreeVisualizerXMLProducerVisitor(ASTMITTreeVisualizerXMLProducerVisitor const&);

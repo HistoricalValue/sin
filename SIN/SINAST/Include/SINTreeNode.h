@@ -11,6 +11,10 @@ namespace SIN {
 		  */
 	class TreeNode {
 	public:
+		typedef std::vector<TreeNode *> children_type;
+		typedef children_type::iterator children_iterator;
+		typedef children_type::const_iterator children_const_iterator;
+
 		TreeNode(void);
 		virtual ~TreeNode();
 
@@ -64,15 +68,17 @@ namespace SIN {
 		/** Deletes the whole subtree under root including root */
 		static void DeleteTree(TreeNode *_root);
 
+		/** crappy iteration */
+		children_iterator begin(void) { return children.begin(); }
+		children_iterator end(void) { return children.end(); }
+		children_const_iterator begin(void) const { return children.begin(); }
+		children_const_iterator end(void) const { return children.end(); }
 	protected:
 		void UpdateWidthOfDescendantsTree(void);
 
 		private:
 		TreeNode *parent, *previous, *next;
 		std::vector<TreeNode *>	children;
-		typedef std::vector<TreeNode *> children_type;
-		typedef children_type::iterator children_iterator;
-		typedef children_type::const_iterator children_const_iterator;
 		size_t width_of_descendants_tree;
 	}; // class TreeNode
 

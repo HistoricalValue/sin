@@ -1,5 +1,6 @@
 #include "SINParserTester.h"
 
+#include <time.h>
 
 #include "Common.h"
 #include "SINTest.h"
@@ -13,6 +14,7 @@
 #include "SINLoggerManager.h"
 #include "SINASTTreeVisualisationVisitor.h"
 #include "SINASTMITTreeVisualizerXMLProducerVisitor.h"
+#include "SINString.h"
 
 #define SIN_TESTS_PARSER_RUN(NAME)               SINTESTS_RUNTEST(NAME)
 #define SIN_TESTS_PARSER_TESTDEF(NAME,TESTCODE)  SINTESTS_TESTDEF(NAME,TESTCODE)
@@ -24,6 +26,14 @@
 #else
 	#define FILE_PATH	"./../../../Tests/SINParser_Test/Resource/sin_grammar_test.sin"
 #endif
+
+#define TIME(CALL) do {	\
+	clock_t start, end;	\
+	start = clock();	\
+	CALL;				\
+	end = clock();		\
+	logger->Fine(string_cast(#CALL) << " took " << (static_cast<double>(end - start) / CLOCKS_PER_SEC) << "sec");	\
+	} while(false);
 
 
 namespace SIN {
@@ -57,7 +67,7 @@ namespace SIN {
 
 			void ParserFileTestTest::TestLogic(void) {
 				ParserAPI test;
-				TRY(test.ParseFile(FILE_PATH) == 0);
+				TIME(TRY(test.ParseFile(FILE_PATH) == 0))
 				if (test.HasError()) {
 					__list_parsing_errors(test);
 					ASSERT(!test.HasError()); // certain failure here, to stop the test
@@ -71,8 +81,8 @@ namespace SIN {
 				BufferedOutputStream foutxml(_foutxml);
 				ASTTreeVisualisationVisitor visitor(fout);
 				ASTMITTreeVisualizerXMLProducerVisitor mitvis(foutxml);
-				root->Accept(&visitor);
-				root->Accept(&mitvis);
+				TIME(root->Accept(&visitor))
+				TIME(root->Accept(&mitvis))
 			}
 
 

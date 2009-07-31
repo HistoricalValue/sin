@@ -6,26 +6,6 @@
 		Visit(static_cast<ASTNode &>(_node));											\
 	}
 
-namespace {
-	static SIN::String const html(SIN::String const& _str) {
-		SIN::String result;
-		char const* str = _str.c_str();
-		const size_t len = _str.Length();
-		SINASSERT(strlen(str) == len);
-		for (size_t i = 0; i < len; ++i) {
-			char c = str[i];
-			switch (c) {
-				case '"': result << "&quot;"; break;
-				case '<': result << "&lt;"; break;
-				case '>': result << "&gt;"; break;
-				case '&': result << "&amp;"; break;
-				default : result << c;
-			}
-		}
-		return result;
-	}
-}
-
 namespace SIN {
 
 	ASTMITTreeVisualizerXMLProducerVisitor::ASTMITTreeVisualizerXMLProducerVisitor(OutputStream& _out):
@@ -49,80 +29,93 @@ namespace SIN {
 		writeOutro();
 	}
 
-	void ASTMITTreeVisualizerXMLProducerVisitor::Visit(ASTNode & _node) {
+	void ASTMITTreeVisualizerXMLProducerVisitor::Visit(ASTNode& _node) {
 		const size_t numberOfChildren = _node.NumberOfChildren();
-		bool empty =  numberOfChildren == 0;
-		writeFolder(folder(_node.Name()), empty);
+		bool const empty =  numberOfChildren == 0;
+		writeFolder(folder(_node.Name().c_str()), empty);
 
 		if (!empty) {
-			for (size_t i = 0; i < numberOfChildren; ++i)
-				static_cast<ASTNode*>(_node[i])->Accept(this);
+			typedef TreeNode::children_const_iterator it_t;
+			it_t const end = _node.end();
+			for (it_t ite = _node.begin(); ite != end; ++ite)
+				static_cast<ASTNode*>(*ite)->Accept(this);
 			writeFolderClosing();
 		}
 	}
 
 	/////////////// private: write* ///////////////
-
-	void ASTMITTreeVisualizerXMLProducerVisitor::writePrelude(void) {
-		out << "<TreevizFileSystem  created=\"2008-07-04 11:34:08\" name=\"SIN AST\">\n<Users>\n";
-		FOREACHARRAY(users)	
-			writeUser(*ITERARRAY(users));
-		out << "</Users>\n<Files>\n";
+	// optimisation
+	inline void ASTMITTreeVisualizerXMLProducerVisitor::writestr(char const* const _str) {
+		out.write(_str, strlen(_str));
 	}
 
-	void ASTMITTreeVisualizerXMLProducerVisitor::writeUser(User const& user) {
-		out << "<User id=\"" << html(user.ID()) << "\" name=\"" << html(user.Name()) << "\" firstname=\"John\" lastname=\"Doe\" email=\"john.doe@email.com\" created=\"2007-08-27 09:11:54\" used=\"2008-06-23 08:29:15\">\n</User>\n";
+	// optimisation
+	inline void ASTMITTreeVisualizerXMLProducerVisitor::writehtml(char const* const _str) {
+		char const* begin = _str;
+		char const* end;
+		do {
+			for (
+				end = begin;
+				*end != '"' && *end != '<' && *end != '>' && *end != '&' && *end != '\0';
+				++end)
+				;
+			out.write(begin, end - begin);
+
+			switch (*end) {
+				case '\0': break;
+				case '"': out.write("&quot;", strlen("&quot;")); break;
+				case '<': out.write("&lt;", strlen("&lt;")); break;
+				case '>': out.write("&gt;", strlen("&gt;")); break;
+				case '&': out.write("&amp;", strlen("&amp;")); break;
+				default: SINASSERT(!"Why so serious?");
+			}
+			
+			begin = end + 1;
+		} while (*end != '\0');
 	}
 
-	void ASTMITTreeVisualizerXMLProducerVisitor::writeFolder(Folder const& folder, bool empty) {
-		out << "<Folder id=\"" << html(folder.ID()) << "\" name=\"" << html(folder.Name()) << "\" created=\"2008-06-24 15:15:03\" modified=\"2005-08-04 17:35:06\" ownerRef=\"" << html(users[0].ID()) << "\" size=\"2048\"" << (empty ? "/" : "") << ">\n";
+	inline void ASTMITTreeVisualizerXMLProducerVisitor::writePrelude(void) {
+		writestr("<TreevizFileSystem  created=\"2008-07-04 11:34:08\" name=\"SIN AST\">\n<Users>\n");
+		size_t const users_len = sizeof(users)/sizeof(users[0]);
+		for (size_t i = 0; i < users_len; ++i)
+			writeUser(users[i]);
+		writestr("</Users>\n<Files>\n");
 	}
 
-	void ASTMITTreeVisualizerXMLProducerVisitor::writeFolderClosing(void) {
-		out << "</Folder>\n";
+	inline void ASTMITTreeVisualizerXMLProducerVisitor::writeUser(User const& user) {
+		writestr("<User id=\"");
+		writestr(user.id);
+		writestr("\" name=\"");
+		writestr(user.name);
+		writestr("\" firstname=\"John\" lastname=\"Doe\" email=\"john.doe@email.com\" created=\"2007-08-27 09:11:54\" used=\"2008-06-23 08:29:15\">\n</User>\n");
 	}
 
-	void ASTMITTreeVisualizerXMLProducerVisitor::writeOutro(void) {
-		out << "</Files>\n</TreevizFileSystem>\n";
+	inline void ASTMITTreeVisualizerXMLProducerVisitor::writeFolder(Folder const& folder, bool empty) {
+		writestr("<Folder id=\"");
+		writestr(folder.id);
+		writestr("\" name=\"");
+		writehtml(folder.name);
+		writestr("\" created=\"2008-06-24 15:15:03\" modified=\"2005-08-04 17:35:06\" ownerRef=\"");
+		writestr(users[0].id);
+		writestr("\" size=\"2048\"");
+		writestr(empty ? "/>\n" : ">\n");
+	}
+
+	inline void ASTMITTreeVisualizerXMLProducerVisitor::writeFolderClosing(void) {
+		writestr("</Folder>\n");
+	}
+
+	inline void ASTMITTreeVisualizerXMLProducerVisitor::writeOutro(void) {
+		writestr("</Files>\n</TreevizFileSystem>\n");
 	}
 
 	/////////////// private: Users ///////////////
-
-	void ASTMITTreeVisualizerXMLProducerVisitor::makeUsers(void) {
-		users[0] = User("operator", "Operator");
+	inline void ASTMITTreeVisualizerXMLProducerVisitor::makeUsers(void) {
+		new(&users[0]) User("operator", "Operator");
 	}
-
-	ASTMITTreeVisualizerXMLProducerVisitor::User::User(String const& _id, String const& _name):
-	id(_id),
-	name(_name)
-	{
-	}
-
-	String const& ASTMITTreeVisualizerXMLProducerVisitor::User::ID(void) const {
-		return id;
-	}
-
-	String const& ASTMITTreeVisualizerXMLProducerVisitor::User::Name(void) const {
-		return name;
-	}
-
 	/////////////// private: Folder ///////////////
-	ASTMITTreeVisualizerXMLProducerVisitor::Folder ASTMITTreeVisualizerXMLProducerVisitor::folder(String const& _name) {
+	inline ASTMITTreeVisualizerXMLProducerVisitor::Folder ASTMITTreeVisualizerXMLProducerVisitor::folder(char const* const _name) {
 		return Folder(_name, folder_id_namer++);
-	}
-
-	ASTMITTreeVisualizerXMLProducerVisitor::Folder::Folder(String const& _name, String const& _id):
-	name(_name),
-	id(_id)
-	{
-	}
-
-	String const& ASTMITTreeVisualizerXMLProducerVisitor::Folder::ID(void) const {
-		return id;
-	}
-
-	String const& ASTMITTreeVisualizerXMLProducerVisitor::Folder::Name(void) const {
-		return name;
 	}
 	///////////////
 
