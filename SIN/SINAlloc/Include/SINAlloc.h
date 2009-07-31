@@ -8,8 +8,10 @@
 #include "SINAllocator.h"
 #include <list>
 
+#ifdef _MSC_VER // compiling with Microsoft Visual Studio
 //disable the error: C++ exception specification ignored except to indicate a function is not __declspec(nothrow)
 #pragma warning(disable:4290)
+#endif // _MSC_VER
 
 namespace SIN { namespace Alloc {
 	typedef std::basic_string<char, std::char_traits<char>, Allocator<char> > String;

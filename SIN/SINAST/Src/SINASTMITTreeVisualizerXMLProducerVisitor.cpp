@@ -63,10 +63,10 @@ namespace SIN {
 
 			switch (*end) {
 				case '\0': break;
-				case '"': out.write("&quot;", strlen("&quot;")); break;
-				case '<': out.write("&lt;", strlen("&lt;")); break;
-				case '>': out.write("&gt;", strlen("&gt;")); break;
-				case '&': out.write("&amp;", strlen("&amp;")); break;
+				case '"': out.write("&quot;", 6u); break;
+				case '<': out.write("&lt;", 4u); break;
+				case '>': out.write("&gt;", 4u); break;
+				case '&': out.write("&amp;", 5u); break;
 				default: SINASSERT(!"Why so serious?");
 			}
 			

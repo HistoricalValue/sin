@@ -10,9 +10,10 @@
 #include "SINASTNodes.h"
 #include "SINASTCommon.h"
 
+#ifdef _MSC_VER // compiling with Microsoft Visual Studio
 //disable the error: not enough actual parameters for macro 'SINASTVISITOR_VISIT_SIGNATURE'
 #pragma warning(disable:4003)
-
+#endif // _MSC_VER
 
 #define SINASTVISITOR_VISIT_SIGNATURE(NODENAME) virtual void Visit(NODENAME##ASTNode &)
 

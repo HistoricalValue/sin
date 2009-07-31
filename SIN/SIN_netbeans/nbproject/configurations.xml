@@ -188,6 +188,20 @@
             <itemPath>../Tests/SINParser_Test/Src/SINParserTester.cpp</itemPath>
           </logicalFolder>
         </logicalFolder>
+        <logicalFolder name="SINRun_Test" displayName="SINRun_Test" projectFiles="true">
+          <logicalFolder name="Include" displayName="Include" projectFiles="true">
+            <itemPath>../Tests/SINRun_Test/Include/SINRunTester.h</itemPath>
+          </logicalFolder>
+          <logicalFolder name="Projects" displayName="Projects" projectFiles="true">
+            <logicalFolder name="VS" displayName="VS" projectFiles="true">
+            </logicalFolder>
+          </logicalFolder>
+          <logicalFolder name="Resource" displayName="Resource" projectFiles="true">
+          </logicalFolder>
+          <logicalFolder name="Src" displayName="Src" projectFiles="true">
+            <itemPath>../Tests/SINRun_Test/Src/SINRunTester.cpp</itemPath>
+          </logicalFolder>
+        </logicalFolder>
         <logicalFolder name="SINSymbolTable_Test"
                        displayName="SINSymbolTable_Test"
                        projectFiles="true">
@@ -247,6 +261,7 @@
             <pElem>../Tests/SINCommon_Test/Include</pElem>
             <pElem>../Tests/SINLogging_Test/Include</pElem>
             <pElem>../Tests/SINParser_Test/Include</pElem>
+            <pElem>../Tests/SINRun_Test/Include</pElem>
             <pElem>../Tests/SINSymbolTable_Test/Include</pElem>
             <pElem>../Tests/SINTest/Include</pElem>
           </incDir>
