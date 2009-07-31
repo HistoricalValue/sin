@@ -49,3 +49,5 @@ SIN/SINParser/Src/LexAndBisonParseArguments.d
 SIN/SINParser/Src/LexUtility.d
 SIN/SINParser/Src/SINLexAnalyzer.d
 SIN/Tests/SINAlloc_Test/Src/SINAllocTester.d
+SIN/SINRuntime/Src/SINTreeEvaluationVisitor.d
+SIN/Tests/SINRun_Test/Src/SINRunTester.d

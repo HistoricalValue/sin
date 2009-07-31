@@ -13,7 +13,8 @@ PROJECTS = $(addprefix $(SIN_BASE_DIR)/, \
                 Logging \
                 SymbolTable \
                 Alloc \
-                Parser )) \
+                Parser \
+                Run )) \
         Tests/SINTest \
         SINParser \
         SINAST \
