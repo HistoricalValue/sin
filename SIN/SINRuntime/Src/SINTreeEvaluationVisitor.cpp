@@ -446,8 +446,8 @@ namespace SIN{
 
 		SINASSERT(symTable);
 
-		MemoryCellFunction *funcmemcell = dynamic_cast<MemoryCellFunction*>( symTable->LookupLocal( string_cast(static_cast<ASTNode*>(*(*_node)[0])->ID()) ) );
-		SINASSERT(funcmemcell);	//TODO Throw runtime error here
+		MemoryCellFunction *funcmemcell = static_cast<MemoryCellFunction*>( symTable->LookupLocal( string_cast(static_cast<ASTNode*>(*(*_node)[0])->ID()) ) );
+		SINASSERT(funcmemcell->Type() == MemoryCell::FUNCTION_MCT);	//TODO Throw runtime error here
 
 		ASTNode *funcnode = funcmemcell->GetValue();
 		symTable = static_cast<ASTNode*>((*funcnode)[1])->LocalEnv();
@@ -482,8 +482,8 @@ namespace SIN{
 
 		SINASSERT(symTable);
 
-		MemoryCellFunction *funcmemcell = dynamic_cast<MemoryCellFunction*>(symTable->LookupLocal(static_cast<MemoryCellString*>(tmpmemcell1)->GetValue()));
-		SINASSERT(funcmemcell);	//TODO Throw runtime error here
+		MemoryCellFunction *funcmemcell = static_cast<MemoryCellFunction*>(symTable->LookupLocal(static_cast<MemoryCellString*>(tmpmemcell1)->GetValue()));
+		SINASSERT(funcmemcell->Type() == MemoryCell::FUNCTION_MCT);	//TODO Throw runtime error here
 
 		static_cast<ASTNode*>(*(funcmemcell->GetValue())[1])->Accept(this);
 	}
@@ -531,7 +531,7 @@ namespace SIN{
 		if(!symTable)
 			symTable = _node.GlobalEnv();
 
-		symTable->SetLocal(string_cast(_node.ID()), memstack.top());
+		symTable->SetLocal(string_cast(_node.Name()), memstack.top());
 	}
 
 	//-----------------------------------------------------------------
@@ -626,5 +626,14 @@ namespace SIN{
 
 	//-----------------------------------------------------------------
 
-	void TreeEvaluationVisitor::Visit(SinCodeASTNode & _node){} //TODO Here we should cleanup stack after every Accept
+	void TreeEvaluationVisitor::Visit(SinCodeASTNode & _node){
+
+		const size_t numberOfChildren = _node.NumberOfChildren();
+
+		for(size_t i = 0; i< numberOfChildren; ++i){
+			static_cast<ASTNode*>(_node[i])->Accept(this);
+			memstack.empty();
+		}
+
+	} //TODO Here we should cleanup stack after every Accept
 } // namespace SIN
