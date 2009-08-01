@@ -2,6 +2,7 @@
 #define __MEMORY_CELL_OBJECT_H__
 
 
+#include "SINObject.h"
 #include "SINMemoryCell.h"
 
 
@@ -16,6 +17,12 @@ namespace SIN {
 
 
 		virtual MemoryCellType Type(void) { return MemoryCell::OBJECT_MCT; }
+	
+		void				SetValue (const SinObject & s)	{ value = s; }
+		const SinObject &	GetValue (void) const			{ return value; }
+
+	private:
+		SinObject value;
 	};
 }
 

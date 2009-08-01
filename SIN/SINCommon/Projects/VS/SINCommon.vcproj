@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="windows-1253"?>
 <VisualStudioProject
 	ProjectType="Visual C++"
-	Version="9,00"
+	Version="9.00"
 	Name="SINCommon"
 	ProjectGUID="{24375CE7-D218-4936-AC99-552B1B4C2E98}"
 	RootNamespace="SINCommon"
@@ -176,6 +176,10 @@
 				>
 			</File>
 			<File
+				RelativePath="..\..\Src\SinObject.cpp"
+				>
+			</File>
+			<File
 				RelativePath="..\..\Src\SINOutputStream.cpp"
 				>
 			</File>
@@ -219,6 +223,10 @@
 			</File>
 			<File
 				RelativePath="..\..\Include\SINNamer.h"
+				>
+			</File>
+			<File
+				RelativePath="..\..\Include\SINObject.h"
 				>
 			</File>
 			<File

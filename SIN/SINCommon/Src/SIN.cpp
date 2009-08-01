@@ -1,8 +1,11 @@
 #include "SIN.h"
-#include "SINLoggerManager.h"
-#include "SINAssert.h"
-#include "SINASTNode.h"
 #include "SINAlloc.h"
+#include "SINAssert.h"
+#include "SINObject.h"
+#include "SINASTNode.h"
+#include "SINLoggerManager.h"
+
+
 
 namespace SIN {
     bool init_LoggerManager(void) {
@@ -26,6 +29,8 @@ namespace SIN {
 			result = false;
 		return result;
     }
+
+	
 	/////////////////////////////////////////////////////////////////
 	static bool init_ASTNodeFactory(void) {
 		ASTNodeFactory::SingletonCreate();
@@ -34,6 +39,18 @@ namespace SIN {
 			&ASTNodeFactory::SingletonInstance() != 0x00	&&
 			true;
 	}
+
+
+	/////////////////////////////////////////////////////////////////
+	static bool init_SinObjectFactory(void) {
+		SinObjectFactory::SingletonCreate();
+		return
+			SinObjectFactory::SingletonCreated()		&&
+			&SinObjectFactory::SingletonInstance() != 0	&&
+			true;
+	}
+	
+
 	/////////////////////////////////////////////////////////////////
 	static bool init_Allocation(void) {
 		return
@@ -41,21 +58,28 @@ namespace SIN {
 			SIN::Alloc::IsInitialised()	&&
 			true;
 	}
+	
+	
 	/////////////////////////////////////////////////////////////////
-
     bool Initialise(void) {
         return
 			init_Allocation()		&&
             init_LoggerManager()    &&
 			init_ASTNodeFactory()	&&
+			init_SinObjectFactory() &&
             true;
     }
 
     void CleanUp(void) {
 		SINASSERT(LoggerManager::SingletonCreated());
 		LoggerManager::SingletonDestroy();
+		
 		SINASSERT(ASTNodeFactory::SingletonCreated());
 		ASTNodeFactory::SingletonDestroy();
+
+		SINASSERT(SinObjectFactory::SingletonCreated());
+		SinObjectFactory::SingletonDestroy();
+
 		SINASSERT(SIN::Alloc::IsInitialised());
 		SIN::Alloc::CleanUp();
     }

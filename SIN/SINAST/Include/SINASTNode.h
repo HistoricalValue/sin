@@ -62,7 +62,7 @@ namespace SIN {
 	public :
 		typedef unsigned long int ID_t;
 
-		friend class SymbolTable;
+		//friend class SymbolTable;
 
 		//Constructor and destructor 
 		ASTNode(void);
