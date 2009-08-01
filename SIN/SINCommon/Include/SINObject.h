@@ -38,7 +38,8 @@ namespace SIN {
 		
 
 		//e.g. a.#keys and a.#size 
-		ObjectKeysList	ObjectKeys(void) const;
+		//create a new object with new. Caller is responsible to delete the new object
+		SinObject *		ObjectKeys(void) const;
 		unsigned		ObjectSize(void) const;
 		const String	ToString(void) const;
 

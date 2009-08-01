@@ -50,8 +50,9 @@ namespace SIN {
 			//------------------------------------------------------------------
 
 			void TestingSinObjectTest::TestLogic(void) {
-				SinObject obj1;
-				SinObject obj2;
+				SinObject	obj1;
+				SinObject	obj2;
+				SinObject * obj_ptr;
 				MemoryCellBool		bool_mc;
 				MemoryCellNumber	number_mc;
 				MemoryCellObject	object_mc;
@@ -77,6 +78,13 @@ namespace SIN {
 				FileOutputStream _fout("objectTestOutput.txt", FileOutputStream::Mode::Truncate());
 				BufferedOutputStream fout(_fout);
 				fout << obj1.ToString();
+
+				fout << "\n\n --------------- Keys ---------------\n\n";
+
+				obj_ptr =  obj1.ObjectKeys();
+				fout <<	obj_ptr->ToString();
+
+				SINDELETE(obj_ptr);
 			}
 
 

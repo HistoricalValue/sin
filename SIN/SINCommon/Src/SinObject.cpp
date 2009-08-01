@@ -38,9 +38,10 @@ namespace SIN {
 	//-----------------------------------------------------------------
 	
 	struct TableKeyFunctor : public std::unary_function<const SinObject::ObjectTableValue &, void> {
-		SinObject::ObjectKeysList keys;	
+		SinObject * keys;
+		TableKeyFunctor(SinObject * obj) : keys(obj){}
 		void operator() (const SinObject::ObjectTableValue & otv) 
-			{ keys.push_back(otv.first); }
+			{ keys->SetValue( SINEW(MemoryCellString(otv.first))); }
 	};
 
 
@@ -127,10 +128,8 @@ namespace SIN {
 
 
 	//-----------------------------------------------------------------
-	SinObject::ObjectKeysList SinObject::ObjectKeys(void) const {
-		TableKeyFunctor keys = std::for_each(table.begin(), table.end(), TableKeyFunctor());		
-		return ObjectKeysList(keys.keys);
-	}
+	SinObject *	 SinObject::ObjectKeys(void) const 
+		{ return std::for_each(table.begin(), table.end(), TableKeyFunctor(SINEW(SinObject))).keys; }
 
 
 	//-----------------------------------------------------------------
