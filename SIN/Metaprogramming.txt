@@ -1,0 +1,19 @@
+==== EXPLAINING METAPROGRAMMING TO OUTSELVES ====
+
+*** Some basics and why .~ is needed
+.!.< x >. 
+--> .![x]
+--> x
+
+function f() { return .< x >.; }
+
+f() -> [x]
+.!f() // syntax error
+.~f() // .~expr --> execute expr and return ast
+.~f() --> [x]
+.!.~f()
+---> .!.~[call:f()]
+---> .![f()'s result]
+---> .![x]
+---> x
+
