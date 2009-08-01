@@ -16,7 +16,7 @@ namespace SIN {
 		MemoryCellBool(const Boolean & b) : MemoryCell(), value(b) {}
 		~MemoryCellBool() {}
 
-		virtual MemoryCellType Type(void) { return MemoryCell::OBJECT_MCT; }
+		virtual MemoryCellType Type(void) { return MemoryCell::BOOL_MCT; }
 
 		void		SetValue (const Boolean & b)	{ value = b; }
 		const bool	GetValue (void) const	{ return value; }

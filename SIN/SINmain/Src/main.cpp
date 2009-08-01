@@ -11,6 +11,7 @@
 #include "SINSymbolTableTester.h"
 #include "SINRunTester.h"
 #include "SINLoggerManager.h"
+#include "SINObjectTester.h"
 
 //////// for quick tests and c++ questions ///////
 // (please restore to original before commits)
@@ -84,6 +85,7 @@ bool MainTestCollection::RunAll(void) {
 	SIN::Tests::Parser::test(&test_factory);
 	SIN::Tests::ST::test(&test_factory);
 	SIN::Tests::Run::test(&test_factory);
+	SIN::Tests::OBJ::test(&test_factory);
 	return true;
 }
 

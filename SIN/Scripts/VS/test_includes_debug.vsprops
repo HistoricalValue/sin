@@ -6,7 +6,7 @@
 	>
 	<Tool
 		Name="VCCLCompilerTool"
-		AdditionalIncludeDirectories=".\..\..\Include;.\..\..\..\Tests\SINTest\Include;.\..\..\..\Tests\SINAST_Test\Include;.\..\..\..\Tests\SINLogging_Test\Include;.\..\..\..\Tests\SINCommon_Test\Include;.\..\..\..\Tests\SINParser_Test\Include;.\..\..\..\Tests\SINSymbolTable_Test\Include;.\..\..\..\Tests\SINAlloc_Test\Include;.\..\..\..\Tests\SINRun_Test\Include"
+		AdditionalIncludeDirectories=".\..\..\Include;.\..\..\..\Tests\SINTest\Include;.\..\..\..\Tests\SINAST_Test\Include;.\..\..\..\Tests\SINLogging_Test\Include;.\..\..\..\Tests\SINCommon_Test\Include;.\..\..\..\Tests\SINParser_Test\Include;.\..\..\..\Tests\SINSymbolTable_Test\Include;.\..\..\..\Tests\SINAlloc_Test\Include;.\..\..\..\Tests\SINRun_Test\Include;.\..\..\..\Tests\SINObject_Test\Include"
 		PreprocessorDefinitions="_CRT_SECURE_NO_WARNINGS"
 	/>
 </VisualStudioPropertySheet>

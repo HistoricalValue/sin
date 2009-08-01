@@ -6,8 +6,8 @@
 #include "SINAlloc.h"
 #include "SINObject.h"
 #include "SINAssert.h"
-//include "SINMemoryCell.h
-//#include "SINMemoryCellAST.h"
+//#include "SINMemoryCell.h
+#include "SINMemoryCellAST.h"
 #include "SINMemoryCellBool.h"
 #include "SINMemoryCellNumber.h"
 #include "SINMemoryCellObject.h"
@@ -144,20 +144,22 @@ namespace SIN {
 		
 		String str = String() << "Object (" << id << "){";
 		
-		for (ObjectTable::const_iterator i = table.begin(); i != table.end(); ++i)
+		for (ObjectTable::const_iterator i = table.begin(); i != table.end(); ++i) {
 			switch(i->second->Type()) {
 				case MemoryCell::BOOL_MCT		: TO_STRING_APPEND(MemoryCellBool);
 				case MemoryCell::STRING_MCT		: TO_STRING_APPEND(MemoryCellString);
 				case MemoryCell::NUMBER_MCT		: TO_STRING_APPEND(MemoryCellNumber);
-				//case MemoryCell::AST_MCT		: APPEND_TO_STR();
+				case MemoryCell::AST_MCT		: TO_STRING_APPEND(MemoryCellAST);
 				case MemoryCell::OBJECT_MCT		:  {				
 					SinObject obj = static_cast<MemoryCellObject *>(i->second)->GetValue();	
-					id == obj.ID() ? str << i->first << ": self" : str << i->first << ":" << obj;
+					id == obj.ID() ? str << i->first << ":self" : str << i->first << ":" << obj;
 					break;
 				}
-				//case MemoryCell::FUNCTION_MCT	: APPEND_TO_STR();
+				//case MemoryCell::FUNCTION_MCT	: TO_STRING_APPEND();
 				default: SINASSERT(0);
 			}
+			str << ", ";
+		}
 		
 		str << "}";
 		return String(str);

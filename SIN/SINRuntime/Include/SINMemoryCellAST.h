@@ -9,7 +9,7 @@ namespace SIN {
 	class MemoryCellAST : public MemoryCell {
 	public:
 		MemoryCellAST(void) : MemoryCell() {}
-		MemoryCellAST(const ASTNode * _node) : MemoryCell(), node(_node) {}
+		//MemoryCellAST(const ASTNode * _node) : MemoryCell(), node(_node) {}
 		
 		~MemoryCellAST() {}
 
