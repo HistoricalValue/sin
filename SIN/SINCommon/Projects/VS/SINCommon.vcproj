@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="windows-1253"?>
 <VisualStudioProject
 	ProjectType="Visual C++"
-	Version="9.00"
+	Version="9,00"
 	Name="SINCommon"
 	ProjectGUID="{24375CE7-D218-4936-AC99-552B1B4C2E98}"
 	RootNamespace="SINCommon"
