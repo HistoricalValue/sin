@@ -48,8 +48,12 @@ number			{digit}+(\.{digit}+)?
 ")"				{ return ')';		}
 ";"				{ return ';';		}
 ":"				{ return ':';		}
-"."				{ return '.';		}
 ","				{ return ',';		}
+"~"				{ return '~';		}
+"!"				{ return '!';		}
+"@"				{ return '@';		}
+"#"				{ return '#';		}
+"."				{ return DOT;		}
 ".."			{ return DOUBLEDOT; }
 
 
@@ -88,17 +92,8 @@ number			{digit}+(\.{digit}+)?
 "or"			{ return OR;		}
 
 
-
-".<"			{ return DOT_LT;		}
-">."			{ return GT_DOT;		}
-".~"			{ return DOT_TILDE;		}
-".!"			{ return DOT_EXCl_MARK; }
-".@"			{ return DOT_AT;		}
-".#"			{ return DOT_NUM_SIGN;	}
-
-
-".#keys"			{ return DOT_KEYS_MEMBER;	}
-".#size"			{ return DOT_SIZE_MEMBER;	}
+"#keys"			{ return KEYS_MEMBER;	}
+"#size"			{ return SIZE_MEMBER;	}
 
 
 {ccomments}		{	SIN::LEX::LexUtility::IgnoreCStyleComments(InputWrapper, UnputWrapper, &yylineno, fabpa); }

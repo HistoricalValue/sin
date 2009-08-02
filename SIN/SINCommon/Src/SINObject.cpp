@@ -159,7 +159,7 @@ namespace SIN {
 					id == obj.ID() ? str << i->first << ":self" : str << i->first << ":" << obj;
 					break;
 				}
-				//case MemoryCell::FUNCTION_MCT	: TO_STRING_APPEND();
+				case MemoryCell::FUNCTION_MCT	: TO_STRING_APPEND(MemoryCellFunction);
 				default: SINASSERT(0);
 			}
 			str << ", ";

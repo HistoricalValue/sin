@@ -115,10 +115,10 @@
 ////////////////////////////////////////////////////////////////////////
 // Untyped tokens
 // 
-%token '[' ']' '{' '}' '(' ')' ';' ':' '.' ',' DOUBLEDOT
+%token '[' ']' '{' '}' '(' ')' ';' ':' ',' '~' '!' '@' '#' DOT DOUBLEDOT
 %token IF ELSE WHILE FOR FUNCTION RETURN BREAK CONTINUE LOCAL GLOBAL TRUE FALSE NIL
 %token ASSIGN ADD MIN MUL DIV MOD EQ NOTEQ INCR DECR GT LT GE LE AND OR NOT 
-%token DOT_LT GT_DOT DOT_TILDE DOT_EXCl_MARK DOT_NUM_SIGN DOT_AT DOT_KEYS_MEMBER DOT_SIZE_MEMBER
+%token KEYS_MEMBER SIZE_MEMBER
 
 
 %left		ASSIGN
@@ -129,7 +129,7 @@
 %left		ADD MIN
 %left		MUL DIV MOD
 %right		NOT INCR DECR UMINUS
-%left		'.'
+%left		DOT
 %left		'[' ']'
 %left		'{' '}'
 %left		'(' ')'
@@ -181,16 +181,16 @@ expr:			assignexpr 					{	SIN::ParserManage::Manage_Expression_AssignExpression(
 				|	expr	AND		expr	{	SIN::ParserManage::Manage_Expression_ExpressionANDExpression($1, $3, &($$), &fabpa);	}
 				|	expr	OR		expr	{	SIN::ParserManage::Manage_Expression_ExpressionORExpression($1, $3, &($$), &fabpa);		}
 				|	metaexpr				{	SIN::ParserManage::Manage_Expression_MetaExpression($1, &($$), &fabpa);					}
-				|	DOT_NUM_SIGN   metaexpr	{	SIN::ParserManage::Manage_Expression_UnparseMetaExpression($2, &($$), &fabpa);			}
+				|	DOT '#'	metaexpr		{	SIN::ParserManage::Manage_Expression_UnparseMetaExpression($3, &($$), &fabpa);			}
 				|	term					{	SIN::ParserManage::Manage_Expression_Term($1, &($$), &fabpa);							}
 				;
 				
 				
 				
-metaexpr:		DOT_LT	expr  GT_DOT			{	SIN::ParserManage::Manage_MetaExpression_Expression($2, &($$), &fabpa);				}
-				|	DOT_TILDE		ID			{	SIN::ParserManage::Manage_MetaExpression_ID($2, &($$), &fabpa);						}
-				|	DOT_EXCl_MARK	metaexpr	{	SIN::ParserManage::Manage_MetaExpression_ExecuteMetaExpression($2, &($$), &fabpa);	}
-				|	DOT_AT			STRING		{	SIN::ParserManage::Manage_MetaExpression_ParseString($2, &($$), &fabpa);			}
+metaexpr:		DOT LT	expr  GT DOT		{	SIN::ParserManage::Manage_MetaExpression_Expression($3, &($$), &fabpa);				}
+				|	DOT '~'	 ID				{	SIN::ParserManage::Manage_MetaExpression_ID($3, &($$), &fabpa);						}
+				|	DOT '!'	 metaexpr		{	SIN::ParserManage::Manage_MetaExpression_ExecuteMetaExpression($3, &($$), &fabpa);	}
+				|	DOT '@'	 STRING			{	SIN::ParserManage::Manage_MetaExpression_ParseString($3, &($$), &fabpa);			}
 				;
 				
 				
@@ -229,11 +229,11 @@ lvalue:			ID 								{	SIN::ParserManage::Manage_LValue_ID($1, &($$), &fabpa);		
 
 
     
-member:			lvalue '.' ID					{	SIN::ParserManage::Manage_Member_LValueID($1, $3, &($$), &fabpa);			}
-				|	lvalue DOT_KEYS_MEMBER		{	}
-				|	lvalue DOT_SIZE_MEMBER		{	}
+member:			lvalue DOT ID					{	SIN::ParserManage::Manage_Member_LValueID($1, $3, &($$), &fabpa);			}
+				|	lvalue DOT KEYS_MEMBER		{	}
+				|	lvalue DOT SIZE_MEMBER		{	}
 				|	lvalue	'[' expr ']'		{	SIN::ParserManage::Manage_Member_LValueExpression($1, $3, &($$), &fabpa);	}
-				|	call	'.' ID				{	SIN::ParserManage::Manage_Member_CallID($1, $3, &($$), &fabpa);				}
+				|	call	DOT ID				{	SIN::ParserManage::Manage_Member_CallID($1, $3, &($$), &fabpa);				}
 				|	call	'[' expr ']'		{	SIN::ParserManage::Manage_Member_CallExpression($1, $3, &($$), &fabpa);		}
 				;
 

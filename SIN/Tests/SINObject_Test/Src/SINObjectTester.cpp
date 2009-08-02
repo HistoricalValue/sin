@@ -15,6 +15,7 @@
 
 
 #include "SINObject.h"
+#include "SINASTNode.h"
 #include "SINMemoryCellAST.h"
 #include "SINMemoryCellBool.h"
 #include "SINMemoryCellNumber.h"
@@ -50,6 +51,7 @@ namespace SIN {
 			//------------------------------------------------------------------
 
 			void TestingSinObjectTest::TestLogic(void) {
+				ASTNode				node("Testing");
 				SINObject			obj1;
 				SINObject			obj2;
 				SINObject *			obj_ptr;
@@ -60,6 +62,7 @@ namespace SIN {
 				MemoryCellNumber	number3_mc(3.0);
 				MemoryCellObject	object_mc(obj2);
 				MemoryCellObject	object2_mc(obj1);				//we want to create a self refrance
+				MemoryCellFunction	function_mc(&node);
 
 				obj1.SetValue(&bool_mc);							// 0	: true
 				obj1.SetValue(std::make_pair("1", &number1_mc));	// 1	: 1
@@ -71,6 +74,7 @@ namespace SIN {
 				obj1.SetValue(std::make_pair("SELF", &object2_mc));	// SELF	: self
 				obj1.SetValue(&object2_mc);							// 6	: self
 				obj1.SetValue("hand", &number_mc);					// hand : 0
+				obj1.SetValue("function", &function_mc);			//function : Tsting
 
 				
 
