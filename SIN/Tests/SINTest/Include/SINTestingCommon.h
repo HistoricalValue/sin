@@ -3,6 +3,7 @@
 
 #include "SINConstants.h"
 #include "SINTest.h"
+#include <ctime>
 
 namespace SIN {
 
@@ -24,6 +25,14 @@ namespace SIN {
     static void test_##NAME(void) { TESTFOR(NAME, TESTCODE); SINTESTS_RUNTEST(NAME); }
 #define SINTESTS_CALLTEST(NAME)   \
     test_##NAME();
+
+#define TIME(CALL) do {	\
+	clock_t start, end;	\
+	start = clock();	\
+	CALL;				\
+	end = clock();		\
+	logger->Fine(string_cast(#CALL) << " took " << (static_cast<double>(end - start) / CLOCKS_PER_SEC) << "sec");	\
+	} while(false);
 
 } // namespace SIN
 

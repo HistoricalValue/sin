@@ -44,6 +44,13 @@ void quick_test(void) {
 //	out << (SIN::string_cast("This is") << " horrible " << (4));
 
 
+	class A { public:
+		A& operator <<(A const& ) { return *this;}
+		A& operator >>(A const&) { return *this;}
+	};
+
+	A a,b,c,d,e,f;
+	a << b >> c >> d << e << f;
 }
 ////////
 

@@ -227,6 +227,17 @@ namespace SIN {
 			return ChunksMap();
 		}
 
+		Chunk const ChunkInformation(void* _ptr) {
+			if (P_initialised) {
+				ChunksMap::const_iterator result = P_singletons_p->validator->UnfreedChunks().find(_ptr);
+				SINASSERT(result != P_singletons_p->validator->UnfreedChunks().end());
+				return result->second;
+			}
+			else
+				SINASSERT(false);
+			return Chunk(0x00, 0x00, "", 0x00);
+		}
+
 		Allocator<void> CreateADefaultAllocator(void) {
 			SINASSERT(P_initialised);
 			return SINALLOC_MAKE_A_DEFAULT_ALLOCATOR;

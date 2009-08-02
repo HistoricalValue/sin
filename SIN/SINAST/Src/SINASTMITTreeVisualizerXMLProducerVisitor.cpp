@@ -35,10 +35,10 @@ namespace SIN {
 		writeFolder(folder(_node.Name().c_str()), empty);
 
 		if (!empty) {
-			typedef TreeNode::children_const_iterator it_t;
+			typedef ASTNode::iterator it_t;
 			it_t const end = _node.end();
 			for (it_t ite = _node.begin(); ite != end; ++ite)
-				static_cast<ASTNode*>(*ite)->Accept(this);
+				static_cast<ASTNode&>(*ite).Accept(this);
 			writeFolderClosing();
 		}
 	}

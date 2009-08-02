@@ -6,6 +6,7 @@
 #include "SINTypes.h"
 #include "SINASTCommon.h"
 #include "SINTreeNode.h"
+#include "SINStrictTreeNode.h"
 #include "SINString.h"
 #include "SINNamer.h"
 #include "SINSymbolTable.h"
@@ -58,7 +59,7 @@ namespace SIN {
 
 	//-----------------------------------------------------------------------
 
-	class ASTNode : public TreeNode {
+	class ASTNode : public StrictTreeNode {
 	public :
 		typedef unsigned long int ID_t;
 

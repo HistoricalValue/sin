@@ -181,7 +181,7 @@ namespace SIN {
                 ASSERT(n.Name() == "LOOOA");
             )
 
-            void test(InstanceProxy<TestFactory> const &tf) {
+            void test_AST(InstanceProxy<TestFactory> const &tf) {
                 logger = LoggerManager::SingletonGetInstance()->GetLogger("SIN::Tests::AST");
 				test_factory = tf;
                 SINTESTSAST_TESTRUN(TreeNode);

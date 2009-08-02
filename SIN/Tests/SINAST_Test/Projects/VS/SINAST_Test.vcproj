@@ -156,7 +156,23 @@
 			UniqueIdentifier="{4FC737F1-C7A5-4376-A066-2A32D752A2FF}"
 			>
 			<File
+				RelativePath="..\..\Src\SINAST_StrictTreeNode_Tester.cpp"
+				>
+			</File>
+			<File
 				RelativePath="..\..\Src\SINAST_Tester.cpp"
+				>
+				<FileConfiguration
+					Name="Debug|Win32"
+					ExcludedFromBuild="true"
+					>
+					<Tool
+						Name="VCCLCompilerTool"
+					/>
+				</FileConfiguration>
+			</File>
+			<File
+				RelativePath="..\..\Src\SINAST_Tester_main.cpp"
 				>
 			</File>
 		</Filter>

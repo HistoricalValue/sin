@@ -147,12 +147,9 @@ namespace SIN {
 		SINASSERT(_v);
 		_v->Visit(*this);
 		_v->IncreaseIndentationLevel();
-		for (size_t i = 0; i < NumberOfChildren(); ++i) {
-			TreeNode* _child = (*this)[i];
-			// TODO check for pointer validity
-			ASTNode* child = static_cast<ASTNode*>(_child);
-			child->Accept(_v);
-		}
+		iterator const end_ = end();
+		for (iterator ite = begin(); ite != end_; ++ite)
+			static_cast<ASTNode&>(*ite).Accept(_v);
 		_v->DecreaseIndentationLevel();
 	}
 	

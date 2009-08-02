@@ -90,7 +90,7 @@ namespace SIN {
 		*_retblock = SINEWCLASS(BlockASTNode, ("Block"));
 		_lbpa->AppendToNodeList(*_retblock);
 
-		for(; _stmtd; _stmtd = static_cast<ASTNode*>(+(*_stmtd)))
+//		for(; _stmtd; _stmtd = static_cast<ASTNode*>(+(*_stmtd)))
 			(*_retblock)->ConnectChild(_stmtd);
 	}
 
@@ -102,7 +102,7 @@ namespace SIN {
 
 	void ParserManage::Manage_Call_CallCallSuffix (ASTNode *_call, ASTNode *_callsuffix, ASTNode **_retcall, LexAndBisonParseArguments *_lbpa) {	
 		*_retcall = _callsuffix;
-		*SINPTR(_call) >> *_retcall;
+		*SINPTR(_call) >> **_retcall;
 	}
 
 
@@ -110,7 +110,7 @@ namespace SIN {
 
 	void ParserManage::Manage_Call_LValueCallSuffix (ASTNode *_lvalue, ASTNode *_callsuffix, ASTNode **_retcall, LexAndBisonParseArguments *_lbpa) {	
 		*_retcall = _callsuffix;
-		*SINPTR(_lvalue) >> *_retcall;
+		*SINPTR(_lvalue) >> **_retcall;
 	}
 	
 
@@ -123,7 +123,7 @@ namespace SIN {
 		**_retcall << _funcdef;
 		ASTNode *arguments = SINEWCLASS(ActualArgumentsASTNode, ("Actual Arguments"));
 
-		for(; _elist; _elist = static_cast<ASTNode*>(+(*_elist)))
+//		for(; _elist; _elist = static_cast<ASTNode*>(+(*_elist)))
 			arguments->ConnectChild(_elist);
 
 		**_retcall << arguments;
@@ -384,14 +384,22 @@ namespace SIN {
 		*_retforstmt = SINEWCLASS(ForASTNode, ("for"));
 		_lbpa->AppendToNodeList(*_retforstmt);
 
-		for(; _elist1; _elist1 = static_cast<ASTNode*>(+(*_elist1)))
-			(*_retforstmt)->ConnectChild(_elist1);
+		// TODO add a real node for this
+		ASTNode* for_preample = SINEWCLASS(ASTNode, ("for-preample"));
+//		for(; _elist1; _elist1 = static_cast<ASTNode*>(+(*_elist1)))
+//			(*_retforstmt)->ConnectChild(_elist1);
+		*for_preample + _elist1; // StrictTree notation: adopt a chain of orphans
 
-		**_retforstmt << _expr;
+		**_retforstmt << for_preample;
+		**_retforstmt << _expr; // condition
 
-		for(; _elist2; _elist2 = static_cast<ASTNode*>(+(*_elist2)))
-			(*_retforstmt)->ConnectChild(_elist2);
+		// TODO add a real node for this too 
+		ASTNode* for_addendum = SINEWCLASS(ASTNode, ("for-addendum"));
+//		for(; _elist2; _elist2 = static_cast<ASTNode*>(+(*_elist2)))
+//			(*_retforstmt)->ConnectChild(_elist2);
+		*for_addendum + _elist2; // StrictTree notation: adopt a chain of orphans
 
+		**_retforstmt << for_addendum;
 		**_retforstmt << _stmt;
 	}
 	
@@ -611,7 +619,7 @@ namespace SIN {
 
 		ASTNode *arguments = SINEWCLASS(ActualArgumentsASTNode, ("Actual Arguments"));
 
-		for(; _elist; _elist = static_cast<ASTNode*>(+(*_elist)))
+//		for(; _elist; _elist = static_cast<ASTNode*>(+(*_elist)))
 			arguments->ConnectChild(_elist);
 
 		**_retnormalcall << arguments;
@@ -638,7 +646,7 @@ namespace SIN {
 		*_retobjectdef = SINEWCLASS(ObjectASTNode, ("Object"));
 		_lbpa->AppendToNodeList(*_retobjectdef);
 
-		for(; _objectlist; _objectlist = static_cast<ASTNode*>(+(*_objectlist)))
+//		for(; _objectlist; _objectlist = static_cast<ASTNode*>(+(*_objectlist)))
 			(*_retobjectdef)->ConnectChild(_objectlist);
 	}
 
@@ -744,7 +752,7 @@ namespace SIN {
 		*_retsincode = SINEWCLASS(SinCodeASTNode, ("AST"));
 		_lbpa->AppendToNodeList(*_retsincode);
 
-		for(; _stmts; _stmts = static_cast<ASTNode*>(+(*_stmts)))
+//		for(; _stmts; _stmts = static_cast<ASTNode*>(+(*_stmts)))
 			(*_retsincode)->ConnectChild(_stmts);
 		//for(ASTNode *nxtStmt; _stmts != NULL; _stmts = nxtStmt){
 			//ASTNode *newstmts = SINPTR(_stmts)->Clone();

@@ -50,7 +50,7 @@ namespace SIN { namespace Alloc {
 
 	typedef std::map<void*, Chunk, std::less<void*>, Allocator<std::pair<void*, Chunk> > > ChunksMap;
 	extern ChunksMap const UndeallocatedChunks(void);
-	inline Chunk ChunkInformation(void* _ptr) { return UndeallocatedChunks().find(_ptr)->second; }
+	extern Chunk const ChunkInformation(void* _ptr);
 
 	typedef std::pair<const Chunk, const Chunk> DeallocationPair;
 	typedef std::list<DeallocationPair, Allocator<DeallocationPair> > DeallocationsList;

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="windows-1253"?>
 <VisualStudioProject
 	ProjectType="Visual C++"
-	Version="9.00"
+	Version="9,00"
 	Name="SINAST"
 	ProjectGUID="{E935FBB8-4670-4ED5-B84E-CE44E3F54B3E}"
 	RootNamespace="SIN"
@@ -203,6 +203,10 @@
 			</File>
 			<File
 				RelativePath="..\..\Include\SINASTVisitor.h"
+				>
+			</File>
+			<File
+				RelativePath="..\..\Include\SINStrictTreeNode.h"
 				>
 			</File>
 			<File

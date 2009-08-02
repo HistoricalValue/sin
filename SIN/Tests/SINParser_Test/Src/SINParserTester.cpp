@@ -1,7 +1,5 @@
 #include "SINParserTester.h"
 
-#include <time.h>
-
 #include "Common.h"
 #include "SINTest.h"
 #include "SINLogger.h"
@@ -15,6 +13,7 @@
 #include "SINASTTreeVisualisationVisitor.h"
 #include "SINASTMITTreeVisualizerXMLProducerVisitor.h"
 #include "SINString.h"
+#include "SINTestingCommon.h"
 
 #define SIN_TESTS_PARSER_RUN(NAME)               SINTESTS_RUNTEST(NAME)
 #define SIN_TESTS_PARSER_TESTDEF(NAME,TESTCODE)  SINTESTS_TESTDEF(NAME,TESTCODE)
@@ -26,14 +25,6 @@
 #else
 	#define FILE_PATH	"./../../../Tests/SINParser_Test/Resource/sin_grammar_test.sin"
 #endif
-
-#define TIME(CALL) do {	\
-	clock_t start, end;	\
-	start = clock();	\
-	CALL;				\
-	end = clock();		\
-	logger->Fine(string_cast(#CALL) << " took " << (static_cast<double>(end - start) / CLOCKS_PER_SEC) << "sec");	\
-	} while(false);
 
 
 namespace SIN {
