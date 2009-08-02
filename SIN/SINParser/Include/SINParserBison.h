@@ -79,7 +79,9 @@
      DOT_EXCl_MARK = 295,
      DOT_NUM_SIGN = 296,
      DOT_AT = 297,
-     UMINUS = 298
+     DOT_KEYS_MEMBER = 298,
+     DOT_SIZE_MEMBER = 299,
+     UMINUS = 300
    };
 #endif
 /* Tokens.  */
@@ -123,7 +125,9 @@
 #define DOT_EXCl_MARK 295
 #define DOT_NUM_SIGN 296
 #define DOT_AT 297
-#define UMINUS 298
+#define DOT_KEYS_MEMBER 298
+#define DOT_SIZE_MEMBER 299
+#define UMINUS 300
 
 
 
