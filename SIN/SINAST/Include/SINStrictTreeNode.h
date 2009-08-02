@@ -22,7 +22,7 @@ namespace SIN {
 	  */
 	class StrictTreeNode {
 	public:
-		StrictTreeNode(void): prev_bro(0x00), parent(0x00), next_bro(0x00), first_child(0x00), last_child(0x00), number_of_children(0u) { }
+		StrictTreeNode(void): first_child(0x00), last_child(0x00), number_of_children(0u), parent(0x00), prev_bro(0x00), next_bro(0x00) { }
 		~StrictTreeNode(void) { }
 
 		inline StrictTreeNode& operator >>(StrictTreeNode& _parent) { _parent.l1InheritFirst(this); return _parent; }
@@ -75,8 +75,8 @@ namespace SIN {
 		template <typename _FunctorType> inline _FunctorType for_each(_FunctorType _f) {
 			const_iterator const end_ = end();
 			bool keep_iterating = true;
-			for (const_iterator ite = begin(); keep_iterating && ite != end; ++ite)
-				done = _f(*ite);
+			for (const_iterator ite = begin(); keep_iterating && ite != end_; ++ite)
+				keep_iterating = _f(*ite);
 			return _f;
 		}
 
@@ -236,8 +236,8 @@ namespace SIN {
 			STRICT_TREE_ASSERT(this != 0x00);
 			STRICT_TREE_ASSERT(_ch->l0IsMyParent(this) && _ch->l0HasParent());
 			STRICT_TREE_ASSERT(l0IsMyChild(_ch));
-			STRICT_TREE_ASSERT(_ch->l0HasPreviousBro() && l0IsMyChild(_ch->prev_bro) && _ch->l0PBNB() == _ch && _ch->prev_bro->l0IsMyParent(this) || !_ch->l0HasPreviousBro() && l0IsMyFirstChild(_ch));
-			STRICT_TREE_ASSERT(_ch->l0HasNextBro() && l0IsMyChild(_ch->next_bro) && _ch->l0NBPB() == _ch && _ch->next_bro->l0IsMyParent(this) || !_ch->l0HasNextBro() && l0IsMyLastChild(_ch));
+			STRICT_TREE_ASSERT((_ch->l0HasPreviousBro() && l0IsMyChild(_ch->prev_bro) && _ch->l0PBNB() == _ch && _ch->prev_bro->l0IsMyParent(this)) || (!_ch->l0HasPreviousBro() && l0IsMyFirstChild(_ch)));
+			STRICT_TREE_ASSERT((_ch->l0HasNextBro() && l0IsMyChild(_ch->next_bro) && _ch->l0NBPB() == _ch && _ch->next_bro->l0IsMyParent(this)) || (!_ch->l0HasNextBro() && l0IsMyLastChild(_ch)));
 			_ch->l0PBNB(_ch->next_bro);
 			_ch->l0NBPB(_ch->prev_bro);
 			if (l0IsMyFirstChild(_ch))
@@ -270,8 +270,8 @@ namespace SIN {
 			STRICT_TREE_ASSERT(_kid_adjuster != 0x00);
 			STRICT_TREE_ASSERT(!_ch->l0IsMyParent(this));
 			STRICT_TREE_ASSERT(!l0IsMyChild(_ch));
-			STRICT_TREE_ASSERT(_ch->l0HasPreviousBro() && !l0IsMyChild(_ch->prev_bro) && _ch->l0PBNB() == _ch && !_ch->prev_bro->l0IsMyParent(this) || !_ch->l0HasPreviousBro());
-			STRICT_TREE_ASSERT(_ch->l0HasNextBro() && !l0IsMyChild(_ch->next_bro) && _ch->l0NBPB() == _ch && !_ch->next_bro->l0IsMyParent(this) || !_ch->l0HasNextBro());
+			STRICT_TREE_ASSERT((_ch->l0HasPreviousBro() && !l0IsMyChild(_ch->prev_bro) && _ch->l0PBNB() == _ch && !_ch->prev_bro->l0IsMyParent(this)) || !_ch->l0HasPreviousBro());
+			STRICT_TREE_ASSERT((_ch->l0HasNextBro() && !l0IsMyChild(_ch->next_bro) && _ch->l0NBPB() == _ch && !_ch->next_bro->l0IsMyParent(this)) || !_ch->l0HasNextBro());
 			_ch->l1LeaveParent();
 			STRICT_TREE_ASSERT(!_ch->l0HasNextBro());
 			STRICT_TREE_ASSERT(!_ch->l0HasPreviousBro());

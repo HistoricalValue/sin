@@ -42,7 +42,7 @@ namespace SIN {
 				inline void  Deallocate(void* const _memory_chunk, char const* const _file, unsigned int const _line) {
 					ChunksMap::iterator deletee;
 					if (SINALLOC_IS_VALID_CHUNK_AND_CACHE_RESULT(_memory_chunk, deletee)) {
-						deallocations.push_back(std::make_pair(deletee->second, Chunk(_memory_chunk, 0, _file, _line)));
+						deallocations.push_back(std::pair<const Chunk, const Chunk>(deletee->second, Chunk(_memory_chunk, 0, _file, _line)));
 
 						SINALLOC_DEALLOCATED(deletee->second.Size());
 						chunks_map.erase(deletee);

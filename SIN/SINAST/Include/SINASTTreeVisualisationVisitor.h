@@ -8,9 +8,10 @@
 #include "SINASTVisitor.h"
 #include "SINOutputStream.h"
 
+#ifdef _MSC_VER // compiling with Microsoft Visual Studio
 //disable the error: not enough actual parameters for macro 'SINASTTREEVISUALIZATIONVISITOR_VISIT_SIGNATURE'
 #pragma warning(disable:4003)
-
+#endif // _MSC_VER
 
 #define SINASTTREEVISUALIZATIONVISITOR_VISIT_SIGNATURE(NODENAME) virtual void Visit(NODENAME##ASTNode &)
 

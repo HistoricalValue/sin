@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <configurationDescriptor version="62">
   <projectmakefile>GNUmakefile</projectmakefile>
-  <defaultConf>0</defaultConf>
+  <defaultConf>2</defaultConf>
   <confs>
     <conf name="Debug" type="1">
       <gdbdebugger version="2">
@@ -9,6 +9,7 @@
         <array_repeat_threshold>10</array_repeat_threshold>
       </gdbdebugger>
       <gizmo_options version="1">
+        <dataprovider>1</dataprovider>
       </gizmo_options>
       <runprofile version="5">
         <args></args>
@@ -21,6 +22,23 @@
       </runprofile>
     </conf>
     <conf name="Release" type="1">
+      <gdbdebugger version="2">
+        <gdb_command>gdb</gdb_command>
+        <array_repeat_threshold>10</array_repeat_threshold>
+      </gdbdebugger>
+      <gizmo_options version="1">
+      </gizmo_options>
+      <runprofile version="5">
+        <args></args>
+        <rundir></rundir>
+        <buildfirst>true</buildfirst>
+        <console-type>0</console-type>
+        <terminal-type>0</terminal-type>
+        <environment>
+        </environment>
+      </runprofile>
+    </conf>
+    <conf name="Debug_SUN" type="1">
       <gdbdebugger version="2">
         <gdb_command>gdb</gdb_command>
         <array_repeat_threshold>10</array_repeat_threshold>
