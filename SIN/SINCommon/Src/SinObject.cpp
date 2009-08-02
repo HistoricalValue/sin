@@ -76,7 +76,7 @@ namespace SIN {
 
 	//-----------------------------------------------------------------
 
-	bool SinObject::CanCollecte (void) const 
+	bool SinObject::IsUnreferenced (void) const 
 		{ return rc == 0 ? true: false; }
 
 	
@@ -103,8 +103,13 @@ namespace SIN {
 
 	//-----------------------------------------------------------------
 	
-	void SinObject::SetValue(MemoryCell * value) 
-		{ table[String() << index++] = value; }
+	void SinObject::SetValue(MemoryCell * value) { 
+		String key = string_cast(index++);
+
+		while(table.find(key) != table.end())
+			{ key = string_cast(index++); }
+		table[key] = value; 
+	}
 
 
 	//-----------------------------------------------------------------
@@ -133,7 +138,7 @@ namespace SIN {
 
 
 	//-----------------------------------------------------------------
-	unsigned SinObject::ObjectSize(void) const  
+	unsigned SinObject::NumberOfElements (void) const  
 		{ return table.size(); }
 
 

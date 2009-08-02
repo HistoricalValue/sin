@@ -13,6 +13,7 @@ namespace SIN {
 		
 	public:
 		MemoryCellObject(void) : MemoryCell() {}
+		MemoryCellObject(const SinObject & obj) : MemoryCell(),  value(obj){}
 		~MemoryCellObject()	{}
 
 

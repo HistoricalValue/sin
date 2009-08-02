@@ -25,7 +25,7 @@ namespace SIN {
 		~SinObject();
 
 		unsigned		ID() const;
-		bool			CanCollecte(void) const;
+		bool			IsUnreferenced(void) const;
 		unsigned		ReferenceCounter(void) const;
 		void			IncrementReferenceCounter(void);
 		void			DecrementReferenceCounter(void);
@@ -40,7 +40,7 @@ namespace SIN {
 		//e.g. a.#keys and a.#size 
 		//create a new object with new. Caller is responsible to delete the new object
 		SinObject *		ObjectKeys(void) const;
-		unsigned		ObjectSize(void) const;
+		unsigned		NumberOfElements (void) const;
 		const String	ToString(void) const;
 
 

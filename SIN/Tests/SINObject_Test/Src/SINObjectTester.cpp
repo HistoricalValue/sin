@@ -50,37 +50,36 @@ namespace SIN {
 			//------------------------------------------------------------------
 
 			void TestingSinObjectTest::TestLogic(void) {
-				SinObject	obj1;
-				SinObject	obj2;
-				SinObject * obj_ptr;
-				MemoryCellBool		bool_mc;
-				MemoryCellNumber	number_mc;
-				MemoryCellObject	object_mc;
-				MemoryCellObject	object2_mc;
+				SinObject			obj1;
+				SinObject			obj2;
+				SinObject *			obj_ptr;
+				MemoryCellBool		bool_mc(true);
+				MemoryCellNumber	number_mc(0.0);
+				MemoryCellNumber	number1_mc(1.0);
+				MemoryCellNumber	number2_mc(2.0);
+				MemoryCellNumber	number3_mc(3.0);
+				MemoryCellObject	object_mc(obj2);
+				MemoryCellObject	object2_mc(obj1);				//we want to create a self refrance
 
-				bool_mc.SetValue(true);
-				number_mc.SetValue(13);
-				object_mc.SetValue(obj2);
-
-				obj1.SetValue(&bool_mc);
-				obj1.SetValue(&number_mc);
-				obj1.SetValue(&object_mc);
-				obj1.SetValue(std::make_pair("BOOL", &bool_mc));
-
-				object2_mc.SetValue(obj1);
-				obj1.SetValue(std::make_pair("SELF", &object2_mc));
-				obj1.SetValue(&object2_mc);
-
-
-				obj1.SetValue("hand", &number_mc);
+				obj1.SetValue(&bool_mc);							// 0	: true
+				obj1.SetValue(std::make_pair("1", &number1_mc));	// 1	: 1
+				obj1.SetValue(std::make_pair("2", &number2_mc));	// 2	: 2
+				obj1.SetValue(std::make_pair("3", &bool_mc));		// 3	: 3
+				obj1.SetValue(&number_mc);							// 4	: 0
+				obj1.SetValue(&object_mc);							// 5	: Object
+				obj1.SetValue(std::make_pair("BOOL", &bool_mc));	// BOOL	: true
+				obj1.SetValue(std::make_pair("SELF", &object2_mc));	// SELF	: self
+				obj1.SetValue(&object2_mc);							// 6	: self
+				obj1.SetValue("hand", &number_mc);					// hand : 0
 
 				
+
+
 				FileOutputStream _fout("objectTestOutput.txt", FileOutputStream::Mode::Truncate());
 				BufferedOutputStream fout(_fout);
 				fout << obj1.ToString();
 
 				fout << "\n\n --------------- Keys ---------------\n\n";
-
 				obj_ptr =  obj1.ObjectKeys();
 				fout <<	obj_ptr->ToString();
 

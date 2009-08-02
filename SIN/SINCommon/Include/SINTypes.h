@@ -30,6 +30,7 @@ namespace SIN {
     
 
 	extern String const string_cast(Nil_t const _nil);
+	extern String const string_cast(Boolean const boolean);
 
 
 } // namespace SIN

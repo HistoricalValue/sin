@@ -91,4 +91,10 @@ namespace SIN {
 		return "NIL";
 	}
 
-} // namespace SIN
+
+	String const string_cast(Boolean const boolean) 
+		{ return boolean? "true" : "false";}
+
+
+
+} // namespace SINCreated
