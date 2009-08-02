@@ -11,18 +11,18 @@
 #include "SINMemoryCell.h"
 
 namespace SIN {
-	class SinObject {
+	class SINObject {
 	public:
 		typedef std::list<String>				ObjectKeysList;
 		typedef std::map<String, MemoryCell *>	ObjectTable;
 		typedef std::pair<String, MemoryCell *> ObjectTableValue;
 
 		//Constructors
-		SinObject();
-		//SinObject(const SinObject &);
+		SINObject();
+		//SINObject(const SINObject &);
 
 		//destructor
-		~SinObject();
+		~SINObject();
 
 		unsigned		ID() const;
 		bool			IsUnreferenced(void) const;
@@ -39,7 +39,7 @@ namespace SIN {
 
 		//e.g. a.#keys and a.#size 
 		//create a new object with new. Caller is responsible to delete the new object
-		SinObject *		ObjectKeys(void) const;
+		SINObject *		ObjectKeys(void) const;
 		unsigned		NumberOfElements (void) const;
 		const String	ToString(void) const;
 
@@ -53,8 +53,8 @@ namespace SIN {
 		bool operator== (const Number) const;		
 		bool operator!= (const Number) const;		
 
-		bool operator== (const SinObject &) const;
-		bool operator!= (const SinObject &) const;
+		bool operator== (const SINObject &) const;
+		bool operator!= (const SINObject &) const;
 
 	private:
 		unsigned	rc;		//The reference counter of the object
@@ -62,7 +62,7 @@ namespace SIN {
 		unsigned	index;	
 		ObjectTable table;
 	};
-	extern String const string_cast(SIN::SinObject const & val);
+	extern String const string_cast(SIN::SINObject const & val);
 
 
 

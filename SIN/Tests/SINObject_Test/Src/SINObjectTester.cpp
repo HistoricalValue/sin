@@ -50,9 +50,9 @@ namespace SIN {
 			//------------------------------------------------------------------
 
 			void TestingSinObjectTest::TestLogic(void) {
-				SinObject			obj1;
-				SinObject			obj2;
-				SinObject *			obj_ptr;
+				SINObject			obj1;
+				SINObject			obj2;
+				SINObject *			obj_ptr;
 				MemoryCellBool		bool_mc(true);
 				MemoryCellNumber	number_mc(0.0);
 				MemoryCellNumber	number1_mc(1.0);
