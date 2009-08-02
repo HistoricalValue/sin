@@ -42,92 +42,82 @@
      NUMBER = 258,
      ID = 259,
      STRING = 260,
-     DOUBLEDOT = 261,
-     IF = 262,
-     ELSE = 263,
-     WHILE = 264,
-     FOR = 265,
-     FUNCTION = 266,
-     RETURN = 267,
-     BREAK = 268,
-     CONTINUE = 269,
-     LOCAL = 270,
-     GLOBAL = 271,
-     TRUE = 272,
-     FALSE = 273,
-     NIL = 274,
-     ASSIGN = 275,
-     ADD = 276,
-     MIN = 277,
-     MUL = 278,
-     DIV = 279,
-     MOD = 280,
-     EQ = 281,
-     NOTEQ = 282,
-     INCR = 283,
-     DECR = 284,
-     GT = 285,
-     LT = 286,
-     GE = 287,
-     LE = 288,
-     AND = 289,
-     OR = 290,
-     NOT = 291,
-     DOT_LT = 292,
-     GT_DOT = 293,
-     DOT_TILDE = 294,
-     DOT_EXCl_MARK = 295,
-     DOT_NUM_SIGN = 296,
-     DOT_AT = 297,
-     DOT_KEYS_MEMBER = 298,
-     DOT_SIZE_MEMBER = 299,
-     UMINUS = 300
+     DOT = 261,
+     DOUBLEDOT = 262,
+     IF = 263,
+     ELSE = 264,
+     WHILE = 265,
+     FOR = 266,
+     FUNCTION = 267,
+     RETURN = 268,
+     BREAK = 269,
+     CONTINUE = 270,
+     LOCAL = 271,
+     GLOBAL = 272,
+     TRUE = 273,
+     FALSE = 274,
+     NIL = 275,
+     ASSIGN = 276,
+     ADD = 277,
+     MIN = 278,
+     MUL = 279,
+     DIV = 280,
+     MOD = 281,
+     EQ = 282,
+     NOTEQ = 283,
+     INCR = 284,
+     DECR = 285,
+     GT = 286,
+     LT = 287,
+     GE = 288,
+     LE = 289,
+     AND = 290,
+     OR = 291,
+     NOT = 292,
+     KEYS_MEMBER = 293,
+     SIZE_MEMBER = 294,
+     UMINUS = 295
    };
 #endif
 /* Tokens.  */
 #define NUMBER 258
 #define ID 259
 #define STRING 260
-#define DOUBLEDOT 261
-#define IF 262
-#define ELSE 263
-#define WHILE 264
-#define FOR 265
-#define FUNCTION 266
-#define RETURN 267
-#define BREAK 268
-#define CONTINUE 269
-#define LOCAL 270
-#define GLOBAL 271
-#define TRUE 272
-#define FALSE 273
-#define NIL 274
-#define ASSIGN 275
-#define ADD 276
-#define MIN 277
-#define MUL 278
-#define DIV 279
-#define MOD 280
-#define EQ 281
-#define NOTEQ 282
-#define INCR 283
-#define DECR 284
-#define GT 285
-#define LT 286
-#define GE 287
-#define LE 288
-#define AND 289
-#define OR 290
-#define NOT 291
-#define DOT_LT 292
-#define GT_DOT 293
-#define DOT_TILDE 294
-#define DOT_EXCl_MARK 295
-#define DOT_NUM_SIGN 296
-#define DOT_AT 297
-#define DOT_KEYS_MEMBER 298
-#define DOT_SIZE_MEMBER 299
-#define UMINUS 300
+#define DOT 261
+#define DOUBLEDOT 262
+#define IF 263
+#define ELSE 264
+#define WHILE 265
+#define FOR 266
+#define FUNCTION 267
+#define RETURN 268
+#define BREAK 269
+#define CONTINUE 270
+#define LOCAL 271
+#define GLOBAL 272
+#define TRUE 273
+#define FALSE 274
+#define NIL 275
+#define ASSIGN 276
+#define ADD 277
+#define MIN 278
+#define MUL 279
+#define DIV 280
+#define MOD 281
+#define EQ 282
+#define NOTEQ 283
+#define INCR 284
+#define DECR 285
+#define GT 286
+#define LT 287
+#define GE 288
+#define LE 289
+#define AND 290
+#define OR 291
+#define NOT 292
+#define KEYS_MEMBER 293
+#define SIZE_MEMBER 294
+#define UMINUS 295
 
 
 
