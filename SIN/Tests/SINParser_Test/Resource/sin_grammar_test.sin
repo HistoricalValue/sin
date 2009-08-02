@@ -1,4 +1,12 @@
 //Here we are testing the grammar of SIN
+
+
+a = [];
+
+print(a.#keys, "\n");
+print(a.#size, "\n");
+
+
 simple_quoted_str = "str";
 simple_int		= 12;
 simple_double	= 12.12;

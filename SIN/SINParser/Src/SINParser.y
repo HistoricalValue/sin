@@ -118,7 +118,7 @@
 %token '[' ']' '{' '}' '(' ')' ';' ':' '.' ',' DOUBLEDOT
 %token IF ELSE WHILE FOR FUNCTION RETURN BREAK CONTINUE LOCAL GLOBAL TRUE FALSE NIL
 %token ASSIGN ADD MIN MUL DIV MOD EQ NOTEQ INCR DECR GT LT GE LE AND OR NOT 
-%token DOT_LT GT_DOT DOT_TILDE DOT_EXCl_MARK DOT_NUM_SIGN DOT_AT
+%token DOT_LT GT_DOT DOT_TILDE DOT_EXCl_MARK DOT_NUM_SIGN DOT_AT DOT_KEYS_MEMBER DOT_SIZE_MEMBER
 
 
 %left		ASSIGN
@@ -230,6 +230,8 @@ lvalue:			ID 								{	SIN::ParserManage::Manage_LValue_ID($1, &($$), &fabpa);		
 
     
 member:			lvalue '.' ID					{	SIN::ParserManage::Manage_Member_LValueID($1, $3, &($$), &fabpa);			}
+				|	lvalue DOT_KEYS_MEMBER		{	}
+				|	lvalue DOT_SIZE_MEMBER		{	}
 				|	lvalue	'[' expr ']'		{	SIN::ParserManage::Manage_Member_LValueExpression($1, $3, &($$), &fabpa);	}
 				|	call	'.' ID				{	SIN::ParserManage::Manage_Member_CallID($1, $3, &($$), &fabpa);				}
 				|	call	'[' expr ']'		{	SIN::ParserManage::Manage_Member_CallExpression($1, $3, &($$), &fabpa);		}
