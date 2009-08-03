@@ -3,6 +3,7 @@
 
 
 #include <map>
+#include <set>
 #include <list>
 #include <utility>
 
@@ -61,6 +62,9 @@ namespace SIN {
 		unsigned	id;		//The signle id of the object
 		unsigned	index;	//Current arithemtic index for the next key
 		ObjectTable table;
+
+		const String ToString(std::set<String> &) const;
+		//const String 
 	};
 	extern String const string_cast(SIN::SINObject const * val);
 	extern String const string_cast(SIN::SINObject const & val);
@@ -88,7 +92,6 @@ namespace SIN {
 
 		static SinObjectFactory *	singleton;
 		static bool					singleton_created;
-
 	}; // class SinObjectFactory
 
 }

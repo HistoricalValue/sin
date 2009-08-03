@@ -1,8 +1,5 @@
 //Here we are testing the grammar of SIN
 a = b;
-
-/*
-
 a = [];
 
 print(a.#keys, "\n");
@@ -134,4 +131,3 @@ z = .!.~y;
 a = .@"1+2+3";
 
 b = .#.~y;
-*/

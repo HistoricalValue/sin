@@ -55,13 +55,13 @@ namespace SIN {
 				SINObject *			obj1		= SINEW(SINObject);
 				SINObject *			obj2		= SINEW(SINObject);
 				SINObject *			obj3		= SINEW(SINObject);
-				SINObject *			obj4		= SINEW(SINObject);
+				
 
 
 				MemoryCellObject *	object1_mc	= SINEW(MemoryCellObject());
 				MemoryCellObject *	object2_mc	= SINEW(MemoryCellObject());
 				MemoryCellObject *	object3_mc	= SINEW(MemoryCellObject());
-				MemoryCellObject *	object4_mc	= SINEW(MemoryCellObject());
+				
 				
 				obj1->IncrementReferenceCounter();
 				obj2->IncrementReferenceCounter();
@@ -79,15 +79,10 @@ namespace SIN {
 				object1_mc->SetValue(obj1);
 				object2_mc->SetValue(obj2);
 				object3_mc->SetValue(obj3);
-				object4_mc->SetValue(obj4);
 
-				obj1->SetValue(object2_mc);										// 4 : object(1)
-				obj2->SetValue(object3_mc);
-				obj3->SetValue(object2_mc);
-				
-				//obj1->SetValue(object2_mc);										// 4		: Object(1)
-				//obj1->SetValue(std::make_pair("SELF", object1_mc));				// SELF		: self
-				
+				obj1->SetValue(object2_mc);										// 4 : object(1){...}
+				obj2->SetValue(object1_mc);
+								
 				FileOutputStream _fout("objectTestOutput.txt", FileOutputStream::Mode::Truncate());
 				BufferedOutputStream fout(_fout);
 				fout << obj1->ToString();
@@ -96,11 +91,8 @@ namespace SIN {
 				SINObject * obj_ptr =  obj1->ObjectKeys();
 				fout <<	obj_ptr->ToString();
 
-				//SINDELETE(obj_ptr);
-				//obj1->DecrementReferenceCounter();
-				//obj2->IncrementReferenceCounter();
-				//SINDELETE(object1_mc);
-				//SINDELETE(object1_mc);
+				SINDELETE(obj_ptr);
+				SINDELETE(object1_mc);
 			}
 
 

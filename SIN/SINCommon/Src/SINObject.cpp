@@ -21,6 +21,12 @@
 									static_cast<TYPE *>(i->second)->GetValue();		\
 									break
 
+#define TO_STRING_APPEND_OBJECT()	const SINObject * obj = static_cast<MemoryCellObject *>(i->second)->GetValue();		\
+									if (parentsId.find(string_cast(obj->ID())) !=  parentsId.end())						\
+										str << i->first << ":self-->Object(" << obj->ID() << ")<--";					\
+									else																				\
+										str << i->first << ":" << obj->ToString(parentsId);								\
+									break
 
 
 
@@ -152,11 +158,11 @@ namespace SIN {
 		{ return table.size(); }
 
 
-	//-----------------------------------------------------------------
 
-	const String SINObject::ToString(void) const {
+	const String SINObject::ToString(std::set<String> & parentsId) const {
 		
-		String str = String() << "Object (" << id << "){";
+		String str = String() << "Object(" << id << "){";
+		parentsId.insert(string_cast(id));
 		
 		for (ObjectTable::const_iterator i = table.begin(); i != table.end(); ++i) {
 			switch(i->second->Type()) {
@@ -164,11 +170,7 @@ namespace SIN {
 				case MemoryCell::STRING_MCT		: TO_STRING_APPEND(MemoryCellString);
 				case MemoryCell::NUMBER_MCT		: TO_STRING_APPEND(MemoryCellNumber);
 				case MemoryCell::AST_MCT		: TO_STRING_APPEND(MemoryCellAST);
-				case MemoryCell::OBJECT_MCT		:  {				
-					const SINObject * obj = static_cast<MemoryCellObject *>(i->second)->GetValue();	
-					id == obj->ID() ? str << i->first << ":self" : str << i->first << ":" << obj;
-					break;
-				}
+				case MemoryCell::OBJECT_MCT		: { TO_STRING_APPEND_OBJECT(); }
 				case MemoryCell::FUNCTION_MCT	: TO_STRING_APPEND(MemoryCellFunction);
 				default: SINASSERT(0);
 			}
@@ -177,6 +179,15 @@ namespace SIN {
 		
 		str << "}";
 		return String(str);
+		
+	}
+
+
+
+	//-----------------------------------------------------------------
+
+	const String SINObject::ToString(void) const {
+		return ToString(std::set<String>()); //If we wont to eleminat the last ',' we must do this: Erase(1, str_size - 3);
 	}
 
 
