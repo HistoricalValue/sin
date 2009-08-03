@@ -13,17 +13,17 @@ namespace SIN {
 		
 	public:
 		MemoryCellObject(void) : MemoryCell() {}
-		MemoryCellObject(const SINObject & obj) : MemoryCell(),  value(obj){}
-		~MemoryCellObject()	{}
+		MemoryCellObject(SINObject * _obj) : MemoryCell(),  obj(_obj){}
+		~MemoryCellObject();
 
 
 		virtual MemoryCellType Type(void) { return MemoryCell::OBJECT_MCT; }
 	
-		void				SetValue (const SINObject & s)	{ value = s; }
-		const SINObject &	GetValue (void) const			{ return value; }
+		void				SetValue (SINObject * s)		{ obj = s; }
+		const SINObject *	GetValue (void) const			{ return obj; }
 
 	private:
-		SINObject value;
+		SINObject * obj;
 	};
 }
 

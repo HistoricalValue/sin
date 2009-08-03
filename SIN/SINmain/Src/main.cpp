@@ -12,6 +12,7 @@
 #include "SINRunTester.h"
 #include "SINLoggerManager.h"
 #include "SINObjectTester.h"
+#include "SINString.h"
 
 //////// for quick tests and c++ questions ///////
 // (please restore to original before commits)
@@ -44,13 +45,7 @@ void quick_test(void) {
 //	out << (SIN::string_cast("This is") << " horrible " << (4));
 
 
-	class A { public:
-		A& operator <<(A const& ) { return *this;}
-		A& operator >>(A const&) { return *this;}
-	};
-
-	A a,b,c,d,e,f;
-	a << b >> c >> d << e << f;
+	(*g_out) << (SIN::String() << "Memory leak: " << SIN::Alloc::MemoryLeaking() << " bytes");
 }
 ////////
 
@@ -79,6 +74,7 @@ int main(int argc, char *argv[]) {
 	else
 		SINASSERT(!"Initialisation failed");
 
+	SIN::Alloc::ChunksMap undeallocated_chunks(SIN::Alloc::UndeallocatedChunks());
 	SIN::CleanUp();
 	return 0;
 }
@@ -86,7 +82,7 @@ int main(int argc, char *argv[]) {
 ///// MainTestCollection ////////////////////
 bool MainTestCollection::RunAll(void) {
 	emulateAllocTest();
-	SIN::Tests::AST::test(&test_factory);
+	//SIN::Tests::AST::test(&test_factory);
 	SIN::Tests::Common::test(&test_factory);
 	SIN::Tests::Logging::test(&test_factory);
 	SIN::Tests::Parser::test(&test_factory);

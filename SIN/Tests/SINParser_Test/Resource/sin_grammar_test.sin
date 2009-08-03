@@ -1,5 +1,7 @@
 //Here we are testing the grammar of SIN
+a = b;
 
+/*
 
 a = [];
 
@@ -132,3 +134,4 @@ z = .!.~y;
 a = .@"1+2+3";
 
 b = .#.~y;
+*/

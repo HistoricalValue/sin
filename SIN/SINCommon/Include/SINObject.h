@@ -59,9 +59,10 @@ namespace SIN {
 	private:
 		unsigned	rc;		//The reference counter of the object
 		unsigned	id;		//The signle id of the object
-		unsigned	index;	
+		unsigned	index;	//Current arithemtic index for the next key
 		ObjectTable table;
 	};
+	extern String const string_cast(SIN::SINObject const * val);
 	extern String const string_cast(SIN::SINObject const & val);
 
 

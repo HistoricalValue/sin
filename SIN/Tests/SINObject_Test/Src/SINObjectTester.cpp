@@ -13,7 +13,7 @@
 #include "SINBufferedOutputStream.h"
 
 
-
+#include "SINAlloc.h"
 #include "SINObject.h"
 #include "SINASTNode.h"
 #include "SINMemoryCellAST.h"
@@ -52,42 +52,52 @@ namespace SIN {
 
 			void TestingSinObjectTest::TestLogic(void) {
 				ASTNode				node("Testing");
-				SINObject			obj1;
-				SINObject			obj2;
-				SINObject *			obj_ptr;
-				MemoryCellBool		bool_mc(true);
-				MemoryCellNumber	number_mc(0.0);
-				MemoryCellNumber	number1_mc(1.0);
-				MemoryCellNumber	number2_mc(2.0);
-				MemoryCellNumber	number3_mc(3.0);
-				MemoryCellObject	object_mc(obj2);
-				MemoryCellObject	object2_mc(obj1);				//we want to create a self refrance
-				MemoryCellFunction	function_mc(&node);
+				SINObject *			obj1		= SINEW(SINObject);
+				SINObject *			obj2		= SINEW(SINObject);
+				SINObject *			obj3		= SINEW(SINObject);
 
-				obj1.SetValue(&bool_mc);							// 0	: true
-				obj1.SetValue(std::make_pair("1", &number1_mc));	// 1	: 1
-				obj1.SetValue(std::make_pair("2", &number2_mc));	// 2	: 2
-				obj1.SetValue(std::make_pair("3", &bool_mc));		// 3	: 3
-				obj1.SetValue(&number_mc);							// 4	: 0
-				obj1.SetValue(&object_mc);							// 5	: Object
-				obj1.SetValue(std::make_pair("BOOL", &bool_mc));	// BOOL	: true
-				obj1.SetValue(std::make_pair("SELF", &object2_mc));	// SELF	: self
-				obj1.SetValue(&object2_mc);							// 6	: self
-				obj1.SetValue("hand", &number_mc);					// hand : 0
-				obj1.SetValue("function", &function_mc);			//function : Tsting
 
+				MemoryCellObject *	object1_mc	= SINEW(MemoryCellObject());
+				MemoryCellObject *	object2_mc	= SINEW(MemoryCellObject());
+				MemoryCellObject *	object3_mc	= SINEW(MemoryCellObject());
 				
+				obj1->IncrementReferenceCounter();
+				obj2->IncrementReferenceCounter();
+				obj3->IncrementReferenceCounter();
 
+				obj1->SetValue(SINEW(MemoryCellBool(true)));					// 0		: true
+				obj1->SetValue("1", SINEW(MemoryCellNumber(1.0)));				// 1		: 1
+				obj1->SetValue("2", SINEW(MemoryCellNumber(2.0)));				// 2		: 2
+				obj1->SetValue(SINEW(MemoryCellNumber(0.0)));					// 3		: 0
+				obj1->SetValue("NUMBER", SINEW(MemoryCellNumber(3.0)));			// NUMBER	: 0
+				obj1->SetValue("function", SINEW(MemoryCellFunction(&node)));	//function	: Tsting
+				
+				
+				//Now we will try ti create a cycle inside the first object
+				object1_mc->SetValue(obj1);
+				object2_mc->SetValue(obj2);
+				object3_mc->SetValue(obj3);
 
+				obj1->SetValue(object2_mc);										// 4 : object(1)
+				obj2->SetValue(object3_mc);
+				obj3->SetValue(object1_mc);
+				
+				//obj1->SetValue(object2_mc);										// 4		: Object(1)
+				//obj1->SetValue(std::make_pair("SELF", object1_mc));				// SELF		: self
+				
 				FileOutputStream _fout("objectTestOutput.txt", FileOutputStream::Mode::Truncate());
 				BufferedOutputStream fout(_fout);
-				fout << obj1.ToString();
+				fout << obj1->ToString();
 
 				fout << "\n\n --------------- Keys ---------------\n\n";
-				obj_ptr =  obj1.ObjectKeys();
+				SINObject * obj_ptr =  obj1->ObjectKeys();
 				fout <<	obj_ptr->ToString();
 
-				SINDELETE(obj_ptr);
+				//SINDELETE(obj_ptr);
+				//obj1->DecrementReferenceCounter();
+				//obj2->IncrementReferenceCounter();
+				//SINDELETE(object1_mc);
+				//SINDELETE(object1_mc);
 			}
 
 

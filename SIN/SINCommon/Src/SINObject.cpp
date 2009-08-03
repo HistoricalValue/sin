@@ -6,7 +6,7 @@
 #include "SINAlloc.h"
 #include "SINObject.h"
 #include "SINAssert.h"
-//#include "SINMemoryCell.h
+#include "SINMemoryCell.h"
 #include "SINMemoryCellAST.h"
 #include "SINMemoryCellBool.h"
 #include "SINMemoryCellNumber.h"
@@ -45,6 +45,12 @@ namespace SIN {
 	};
 
 
+	struct CleanTableFunctor : public std::unary_function <const SINObject::ObjectTableValue &, void> {
+		void operator() (const SINObject::ObjectTableValue & otv) 
+			{ SINDELETE(otv.second); }
+	};
+
+
 
 
 	///--------------------------------------------------
@@ -57,13 +63,17 @@ namespace SIN {
 	
 	//-----------------------------------------------------------------
 	//constructors
-	SINObject::SINObject() : id(SinObjectFactory::NextID()), index(0) {}
+	SINObject::SINObject() : id(SinObjectFactory::NextID()), index(0), rc(0) {}
 	
 
 
 	//-----------------------------------------------------------------
 	//destructors
-	SINObject::~SINObject() {}
+	SINObject::~SINObject() { 
+		SINASSERT(rc == 0);
+		for_each(table.begin(), table.end(), CleanTableFunctor());
+		table.clear();
+	}
 
 
 
@@ -94,7 +104,7 @@ namespace SIN {
 
 	//-----------------------------------------------------------------
 
-	void SINObject::DecrementReferenceCounter	(void) { 
+	void SINObject::DecrementReferenceCounter (void) { 
 		SINASSERT(rc > 0);
 		--rc;
 	}
@@ -155,8 +165,8 @@ namespace SIN {
 				case MemoryCell::NUMBER_MCT		: TO_STRING_APPEND(MemoryCellNumber);
 				case MemoryCell::AST_MCT		: TO_STRING_APPEND(MemoryCellAST);
 				case MemoryCell::OBJECT_MCT		:  {				
-					SINObject obj = static_cast<MemoryCellObject *>(i->second)->GetValue();	
-					id == obj.ID() ? str << i->first << ":self" : str << i->first << ":" << obj;
+					const SINObject * obj = static_cast<MemoryCellObject *>(i->second)->GetValue();	
+					id == obj->ID() ? str << i->first << ":self" : str << i->first << ":" << obj;
 					break;
 				}
 				case MemoryCell::FUNCTION_MCT	: TO_STRING_APPEND(MemoryCellFunction);
@@ -225,7 +235,10 @@ namespace SIN {
 		{ return val.ToString(); }
 	
 
-
+	//-----------------------------------------------------------------
+	
+	String const string_cast(SIN::SINObject const * val) 
+		{ return val->ToString(); }
 
 
 
