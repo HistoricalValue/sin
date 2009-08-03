@@ -1,0 +1,5 @@
+=== LibFuncs ===
+
+- LibFuncs have predefined signatures (probably return_type libfunc(SymbolTable*)).
+- Install libfuncs at init
+- At func call check if sin func or lib func and do the appropriate actions.

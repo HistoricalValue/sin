@@ -1,0 +1,19 @@
+Assignment proceedure:
+
+1. Evaluate left node --> should be a lvalue --> lvalue's evaluation is a symbol table lookup --> results in a MemoryCell*
+2. Evaluate right node --> should be an expression --> expr's evaluation results in a MemCell* 
+3. Do memcell_assign(left**, right*)
+
+
+memcell_assign(left*, right*) {
+	delete *left;
+
+	*left = memcell_duplicate(right);
+	if (right->type == MemCellObj)
+		right->increase_refcounter;
+}
+
+
+// Allagi stoivas se MemoryCell
+
+
