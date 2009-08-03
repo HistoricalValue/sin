@@ -81,7 +81,8 @@ namespace SIN {
 				object3_mc->SetValue(obj3);
 
 				obj1->SetValue(object2_mc);										// 4 : object(1){...}
-				obj2->SetValue(object1_mc);
+				obj2->SetValue(object3_mc);
+				//obj2->SetValue(object1_mc);				//uncomment this if you wont to create cycle
 								
 				FileOutputStream _fout("objectTestOutput.txt", FileOutputStream::Mode::Truncate());
 				BufferedOutputStream fout(_fout);
