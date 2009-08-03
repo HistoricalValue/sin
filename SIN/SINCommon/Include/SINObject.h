@@ -63,7 +63,7 @@ namespace SIN {
 		unsigned	index;	//Current arithemtic index for the next key
 		ObjectTable table;
 
-		const String ToString(std::set<String> &) const;
+		const String ToString(std::set<unsigned> &) const;
 		//const String 
 	};
 	extern String const string_cast(SIN::SINObject const * val);

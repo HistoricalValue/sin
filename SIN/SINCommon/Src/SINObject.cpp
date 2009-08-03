@@ -21,12 +21,12 @@
 									static_cast<TYPE *>(i->second)->GetValue();		\
 									break
 
-#define TO_STRING_APPEND_OBJECT()	const SINObject * obj = static_cast<MemoryCellObject *>(i->second)->GetValue();		\
-									if (parentsId.find(string_cast(obj->ID())) !=  parentsId.end())						\
+#define TO_STRING_APPEND_OBJECT()	{const SINObject * obj = static_cast<MemoryCellObject *>(i->second)->GetValue();		\
+									if (parentsId.find(obj->ID()) !=  parentsId.end())						\
 										str << i->first << ":self-->Object(" << obj->ID() << ")<--";					\
 									else																				\
 										str << i->first << ":" << obj->ToString(parentsId);								\
-									break
+										break;}
 
 
 
@@ -52,8 +52,22 @@ namespace SIN {
 
 
 	struct CleanTableFunctor : public std::unary_function <const SINObject::ObjectTableValue &, void> {
-		void operator() (const SINObject::ObjectTableValue & otv) 
-			{ SINDELETE(otv.second); }
+		std::set<unsigned> objectsId;
+		void operator() (const SINObject::ObjectTableValue & otv) {
+			
+			if (otv.second != static_cast<MemoryCell *>(0)) {
+				if(otv.second->Type() == MemoryCell::OBJECT_MCT){
+					MemoryCellObject * obj = static_cast<MemoryCellObject *>(otv.second);
+					//An to exoume 3anadei simenei oti eixame kuklo kai to exoume idi kanei delete
+					if (objectsId.find(obj->GetValue()->ID()) == objectsId.end()) {
+						objectsId.insert(obj->GetValue()->ID());
+						SINDELETE(otv.second); 
+					}
+				}
+				else
+					SINDELETE(otv.second); 
+			}
+		}
 	};
 
 
@@ -61,7 +75,30 @@ namespace SIN {
 
 	///--------------------------------------------------
 	///	private methods
+	
+	//-----------------------------------------------------------------
 
+	const String SINObject::ToString(std::set<unsigned> & parentsId) const {
+		
+		String str = String() << "Object(" << id << "){";
+		parentsId.insert(id);
+		
+		for (ObjectTable::const_iterator i = table.begin(); i != table.end(); ++i) {
+			switch(i->second->Type()) {
+				case MemoryCell::BOOL_MCT		: TO_STRING_APPEND(MemoryCellBool);
+				case MemoryCell::STRING_MCT		: TO_STRING_APPEND(MemoryCellString);
+				case MemoryCell::NUMBER_MCT		: TO_STRING_APPEND(MemoryCellNumber);
+				case MemoryCell::AST_MCT		: TO_STRING_APPEND(MemoryCellAST);
+				case MemoryCell::OBJECT_MCT		: TO_STRING_APPEND_OBJECT();
+				case MemoryCell::FUNCTION_MCT	: TO_STRING_APPEND(MemoryCellFunction);
+				default: SINASSERT(0);
+			}
+			str << ", ";
+		}
+		
+		str << "}";
+		return String(str);	
+	}
 
 
 	///--------------------------------------------------
@@ -158,36 +195,10 @@ namespace SIN {
 		{ return table.size(); }
 
 
-
-	const String SINObject::ToString(std::set<String> & parentsId) const {
-		
-		String str = String() << "Object(" << id << "){";
-		parentsId.insert(string_cast(id));
-		
-		for (ObjectTable::const_iterator i = table.begin(); i != table.end(); ++i) {
-			switch(i->second->Type()) {
-				case MemoryCell::BOOL_MCT		: TO_STRING_APPEND(MemoryCellBool);
-				case MemoryCell::STRING_MCT		: TO_STRING_APPEND(MemoryCellString);
-				case MemoryCell::NUMBER_MCT		: TO_STRING_APPEND(MemoryCellNumber);
-				case MemoryCell::AST_MCT		: TO_STRING_APPEND(MemoryCellAST);
-				case MemoryCell::OBJECT_MCT		: { TO_STRING_APPEND_OBJECT(); }
-				case MemoryCell::FUNCTION_MCT	: TO_STRING_APPEND(MemoryCellFunction);
-				default: SINASSERT(0);
-			}
-			str << ", ";
-		}
-		
-		str << "}";
-		return String(str);
-		
-	}
-
-
-
 	//-----------------------------------------------------------------
 
 	const String SINObject::ToString(void) const {
-		return ToString(std::set<String>()); //If we wont to eleminat the last ',' we must do this: Erase(1, str_size - 3);
+		return ToString(std::set<unsigned>()); //If we wont to eleminat the last ',' we must do this: Erase(1, str_size - 3);
 	}
 
 
