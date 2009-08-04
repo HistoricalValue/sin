@@ -3,7 +3,7 @@
 
 ==== Do once ====
 
-*[016] Make a reserved type for all SIN-types and string_cast them
+*[016] Make a reserved type for all SIN-types and to_string them
 
 *[019] Fill up Symbol Table's tester
 
@@ -38,7 +38,7 @@
 
 ==== LOW PRIORITY ====
 * SIN Functors
-* string_cast -> to_string
+
 
 
 ===== IGNORED =====
@@ -94,4 +94,6 @@
 *[030] Object's destructor deletes the  table elements.
   [ koutsop | done]
 *[031] MemoryCell* MemoryCellClone()
+  [ koutsop | done]
+* string_cast -> to_string
   [ koutsop | done]
