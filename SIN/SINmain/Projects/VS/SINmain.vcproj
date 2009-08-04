@@ -222,6 +222,10 @@
 			ReferencedProjectIdentifier="{3CB848E4-2455-4F0F-8303-EDBA099C0284}"
 			RelativePathToProject=".\Tests\SINObject_Test\Projects\VS\SINObject_Test.vcproj"
 		/>
+		<ProjectReference
+			ReferencedProjectIdentifier="{D6319BFB-3D16-4136-A931-B736E8116DC6}"
+			RelativePathToProject=".\SINLibraryFunctions\Projects\VS\SINLibraryFunctions.vcproj"
+		/>
 	</References>
 	<Files>
 		<Filter

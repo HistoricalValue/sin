@@ -6,7 +6,7 @@
 	>
 	<Tool
 		Name="VCCLCompilerTool"
-		AdditionalIncludeDirectories=".\..\..\Include;.\..\..\..\Common\Include;.\..\..\..\SINAST\Include;.\..\..\..\SINCommon\Include;.\..\..\..\SINParser\Include;.\..\..\..\SINLogging\Include;.\..\..\..\SINRuntime\Include;.\..\..\..\SINAlloc\Include"
+		AdditionalIncludeDirectories=".\..\..\Include;.\..\..\..\Common\Include;.\..\..\..\SINAST\Include;.\..\..\..\SINCommon\Include;.\..\..\..\SINParser\Include;.\..\..\..\SINLogging\Include;.\..\..\..\SINRuntime\Include;.\..\..\..\SINAlloc\Include;.\..\..\..\SINLibraryFunctions\Include"
 		PreprocessorDefinitions="_CRT_SECURE_NO_WARNINGS"
 	/>
 </VisualStudioPropertySheet>

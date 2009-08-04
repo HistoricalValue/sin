@@ -2,8 +2,9 @@
 #define __SIN_MEMORY_CELL_AST_H__FUNCTION_H__
 
 
-#include "SINMemoryCell.h"
 #include "SINASTNode.h"
+#include "SINMemoryCell.h"
+
 
 
 namespace SIN {
