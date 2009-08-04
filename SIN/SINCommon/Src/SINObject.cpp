@@ -112,7 +112,7 @@ namespace SIN {
 	
 	//-----------------------------------------------------------------
 	//constructors
-	SINObject::SINObject() : id(SinObjectFactory::NextID()), index(0), rc(0) {}
+	SINObject::SINObject() : rc(0), id(SinObjectFactory::NextID()), index(0) {}
 	
 
 
@@ -204,7 +204,8 @@ namespace SIN {
 	//-----------------------------------------------------------------
 
 	const String SINObject::ToString(void) const {
-		return ToString(std::set<unsigned>()); //If we wont to eleminat the last ',' we must do this: Erase(1, str_size - 3);
+		std::set<unsigned> parents;
+		return ToString(parents); //If we wont to eleminat the last ',' we must do this: Erase(1, str_size - 3);
 	}
 
 

@@ -129,6 +129,13 @@
         </logicalFolder>
         <logicalFolder name="Src" displayName="Src" projectFiles="true">
           <itemPath>../SINRuntime/Src/SINMemoryCell.cpp</itemPath>
+          <itemPath>../SINRuntime/Src/SINMemoryCellAST.cpp</itemPath>
+          <itemPath>../SINRuntime/Src/SINMemoryCellBool.cpp</itemPath>
+          <itemPath>../SINRuntime/Src/SINMemoryCellFunction.cpp</itemPath>
+          <itemPath>../SINRuntime/Src/SINMemoryCellNil.cpp</itemPath>
+          <itemPath>../SINRuntime/Src/SINMemoryCellNumber.cpp</itemPath>
+          <itemPath>../SINRuntime/Src/SINMemoryCellObject.cpp</itemPath>
+          <itemPath>../SINRuntime/Src/SINMemoryCellString.cpp</itemPath>
           <itemPath>../SINRuntime/Src/SINSymbolTable.cpp</itemPath>
           <itemPath>../SINRuntime/Src/SINTreeEvaluationVisitor.cpp</itemPath>
         </logicalFolder>
