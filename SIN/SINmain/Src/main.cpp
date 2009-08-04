@@ -23,7 +23,7 @@ public:
 	out_class(SIN::Logger& _out): out(_out) { }
 	template <typename _T>
 	out_class& operator <<(_T const& something) {
-		out.Notice(SIN::string_cast(something));
+		out.Notice(SIN::to_string(something));
 		return *this;
 	}
 };
@@ -42,7 +42,7 @@ void quick_test(void) {
 //	std::list<int> lis; lis.push_back(9); lis.push_back(8); lis.push_back(7); lis.push_back(6);
 //	FOREACH(lis)
 //		out << *ITER(lis);
-//	out << (SIN::string_cast("This is") << " horrible " << (4));
+//	out << (SIN::to_string("This is") << " horrible " << (4));
 
 
 	(*g_out) << (SIN::String() << "Memory leak: " << SIN::Alloc::MemoryLeaking() << " bytes");
@@ -94,5 +94,5 @@ bool MainTestCollection::RunAll(void) {
 
 void MainTestCollection::emulateAllocTest(void) const {
 	SIN::Logger& logga(SIN::LoggerManager::SingletonGetInstance()->GetLogger("SIN::Tests::Alloc"));
-	logga.Notice(alloc_test_status.failed ? SIN::string_cast("FAIL'D at line ") << alloc_test_status.at_line : "OK");
+	logga.Notice(alloc_test_status.failed ? SIN::to_string("FAIL'D at line ") << alloc_test_status.at_line : "OK");
 }

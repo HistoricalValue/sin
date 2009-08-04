@@ -29,8 +29,8 @@ namespace SIN {
     typedef class Nil   Nil_t;
     
 
-	extern String const string_cast(Nil_t const _nil);
-	extern String const string_cast(Boolean const boolean);
+	extern String const to_string(Nil_t const _nil);
+	extern String const to_string(Boolean const boolean);
 
 
 } // namespace SIN

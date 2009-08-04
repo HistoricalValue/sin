@@ -48,7 +48,7 @@ namespace SIN {
         void operator =(const Value &_value) { SetValue(_value); }
 
 		const Value &GetValue(void) const { return value; }
-		const String GetValueStr (void) const { return string_cast(value); }
+		const String GetValueStr (void) const { return to_string(value); }
 
 	private:
 		Value value;
@@ -85,7 +85,7 @@ namespace SIN {
         String const name;
 		ID_t id;
 	}; // class ASTNode
-	extern String const string_cast(SIN::ASTNode const        &_val);
+	extern String const to_string(SIN::ASTNode const        &_val);
 
 	class ASTNodeFactory {
 		Namer namer;
@@ -118,7 +118,7 @@ namespace SIN {
 	class ConstASTNode : public ASTNode, public ValueHolder<_ValueT> {
 	public :
         typedef typename ValueHolder<_ValueT>::Value Value;
-        ConstASTNode(Value const &_value): ASTNode(string_cast(_value)), ValueHolder<_ValueT>(_value) { }
+        ConstASTNode(Value const &_value): ASTNode(to_string(_value)), ValueHolder<_ValueT>(_value) { }
 		ConstASTNode(String const &_name, Value const &_value): ASTNode(_name), ValueHolder<_ValueT>(_value) { }
         virtual void Accept(ASTVisitor *) = 0;
 		virtual ConstASTNode *Clone(void) const = 0;

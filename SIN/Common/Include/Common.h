@@ -129,7 +129,7 @@ public:
 // example:
 //  std::list<int> lis; lis.push_back(9); lis.push_back(8); lis.push_back(7); lis.push_back(6);
 //  FOREACH(lis)
-//      out.Notice(SIN::string_cast(*ITER(lis)));
+//      out.Notice(SIN::to_string(*ITER(lis)));
 // RULES: 
 // -		NO TEMPORARIES
 #define GETITER(ITERABLE,ITERNAME,TYPE_INVOKE) \

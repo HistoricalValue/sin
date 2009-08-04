@@ -66,8 +66,8 @@ namespace SIN {
 		const String ToString(std::set<unsigned> &) const;
 		//const String 
 	};
-	extern String const string_cast(SIN::SINObject const * val);
-	extern String const string_cast(SIN::SINObject const & val);
+	extern String const to_string(SIN::SINObject const * val);
+	extern String const to_string(SIN::SINObject const & val);
 
 
 

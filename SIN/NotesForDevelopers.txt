@@ -1,17 +1,17 @@
 ===== Using strings and output streams ======
 * Instead of std::string we use SIN::String (#include "SINString.h" / project SINCommon)
-* To define a string conversion method for a type we declare "extern String const string_cast(OurType const &)".
-  Note that "string_cast" is a global function and not a member of anything.
+* To define a string conversion method for a type we declare "extern String const to_string(OurType const &)".
+  Note that "to_string" is a global function and not a member of anything.
 * String overloads operator << so that appending "__obj__" to a string equals appending the result
-  of "string_cast(__obj__)" to the string.
-  - So, inside a string_cast() definition one can easily write the same code that would write for
+  of "to_string(__obj__)" to the string.
+  - So, inside a to_string() definition one can easily write the same code that would write for
     overloading operator << for the std::ostream. Exmple:
         =================================================================
         struct Lollipop { int length, duration; };
-        SIN::String const string_cast(Lollipop const &lolli) {
+        SIN::String const to_string(Lollipop const &lolli) {
             return String() << lolli.length << ', ' << lolli.duration;
             // or
-            return string_cast(lolli.length) << ', ' << lolli.duration;
+            return to_string(lolli.length) << ', ' << lolli.duration;
         }
         =================================================================
 * Overloading operator << for an output stream is something else (has different semantics).

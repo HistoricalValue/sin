@@ -3,15 +3,15 @@
 #include <cstring>
 #include <sstream>
 
-#define SINSTRING_STRING_CAST_DEF(ARGCLASS)         \
-    String const string_cast(ARGCLASS const &_val) {\
-        return to_string(_val);                     \
+#define SINSTRING_STRING_CAST_DEF(ARGCLASS)				\
+    String const to_string(ARGCLASS const &_val){		\
+        return string_cast(_val);						\
     }
 
 namespace SIN {
 
     //// Privates of shame
-    template <typename T> static String to_string(T const &o) {
+    template <typename T> static String string_cast(T const &o) {
         std::ostringstream imp;
         imp << o;
         return imp.str();
@@ -64,7 +64,7 @@ namespace SIN {
     }
 
 
-    String const string_cast(String const &_val) {
+    String const to_string(String const &_val) {
         return _val;
     }
     SINSTRING_STRING_CAST_DEF(char const *       )

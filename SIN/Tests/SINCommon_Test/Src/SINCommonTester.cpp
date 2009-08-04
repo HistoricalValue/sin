@@ -31,7 +31,7 @@ namespace SIN {
                 str = "18";
                 ASSERT(str == str);
                 ASSERT(str == String("18"));
-                ASSERT(str == string_cast("18"));
+                ASSERT(str == to_string("18"));
                 ASSERT(str == "18");
                 ASSERT(str + "24" == "1824");
                 ASSERT(str << "25" == "1825");

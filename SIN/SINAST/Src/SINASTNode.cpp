@@ -163,8 +163,8 @@ namespace SIN {
 
 	//---------------------------------------------------
 
-	String const string_cast(ASTNode const &_node) {
-		return string_cast(_node.Name());
+	String const to_string(ASTNode const &_node) {
+		return to_string(_node.Name());
 	}
 
 	///--------- AST Node Factory ----------

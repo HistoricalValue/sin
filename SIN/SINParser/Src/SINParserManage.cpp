@@ -152,7 +152,7 @@ namespace SIN {
 	
 	void ParserManage::Manage_Constant_Number (double _number, ASTNode **_retconst, LexAndBisonParseArguments *_lbpa) {
 		SIN::Logger &logger = SIN::LoggerManager::SingletonGetInstance()->GetLogger("SIN::Tests::Parser::Manage");
-		logger.Notice(SIN::String("Entered const : Number Rule. Number ") + SIN::string_cast(_number));
+		logger.Notice(SIN::String("Entered const : Number Rule. Number ") + SIN::to_string(_number));
 
 		*_retconst = SINEWCLASS(NumberASTNode, (_number));	
 		_lbpa->AppendToNodeList(*_retconst);
@@ -513,7 +513,7 @@ namespace SIN {
 	//-----------------------------------------------------------------
 
 	void ParserManage::Manage_LValue_LocalID (char *_localID, ASTNode **_retlvalue, LexAndBisonParseArguments *_lbpa){
-		*_retlvalue = SINEWCLASS(LocalIDASTNode, (string_cast("local ") << _localID));
+		*_retlvalue = SINEWCLASS(LocalIDASTNode, (to_string("local ") << _localID));
 		_lbpa->AppendToNodeList(*_retlvalue);
 
 		SINDELETE(_localID);
@@ -523,7 +523,7 @@ namespace SIN {
 	//-----------------------------------------------------------------
 
 	void ParserManage::Manage_LValue_GlobalID (char *_globalID, ASTNode **_retlvalue, LexAndBisonParseArguments *_lbpa){
-		*_retlvalue = SINEWCLASS(GlobalIDASTNode, (string_cast("global ") << _globalID));
+		*_retlvalue = SINEWCLASS(GlobalIDASTNode, (to_string("global ") << _globalID));
 		_lbpa->AppendToNodeList(*_retlvalue);
 
 		SINDELETE(_globalID);

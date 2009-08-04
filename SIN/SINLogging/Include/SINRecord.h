@@ -41,7 +41,7 @@ namespace SIN {
             bool operator  <(Record const &) const;
         }; // class Record
 
-        extern String const string_cast(enum Record::Severity const &);
+        extern String const to_string(enum Record::Severity const &);
         extern OutputStream &operator <<(OutputStream &, enum Record::Severity const &);
         extern bool operator <(enum Record::Severity const &, enum Record::Severity const &);
     } // namespace Logging

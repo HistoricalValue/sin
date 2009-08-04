@@ -163,10 +163,10 @@ namespace SIN {
 	//-----------------------------------------------------------------
 	
 	void SINObject::SetValue(MemoryCell * value) { 
-		String key = string_cast(index++);
+		String key = to_string(index++);
 
 		while(table.find(key) != table.end())
-			{ key = string_cast(index++); }
+			{ key = to_string(index++); }
 		table[key] = value; 
 	}
 
@@ -260,13 +260,13 @@ namespace SIN {
 
 	//-----------------------------------------------------------------
 	
-	String const string_cast(SIN::SINObject const & val) 
+	String const to_string(SIN::SINObject const & val) 
 		{ return val.ToString(); }
 	
 
 	//-----------------------------------------------------------------
 	
-	String const string_cast(SIN::SINObject const * val) 
+	String const to_string(SIN::SINObject const * val) 
 		{ return val->ToString(); }
 
 

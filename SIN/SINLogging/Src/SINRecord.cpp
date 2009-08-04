@@ -80,7 +80,7 @@ namespace Logging {
     }
 
 #define OP_APPEND_TO_STRING_SEVERITY_CASE(SEV) case Record::SEV: result = #SEV; break
-    String const string_cast(enum Record::Severity const &sev) {
+    String const to_string(enum Record::Severity const &sev) {
         char const *result = 0x00;
         switch (sev) {
             OP_APPEND_TO_STRING_SEVERITY_CASE(FINEST);
@@ -98,7 +98,7 @@ namespace Logging {
     }
 
     OutputStream &operator <<(OutputStream &_o, enum Record::Severity const &_sev) {
-        return _o << string_cast(_sev);
+        return _o << to_string(_sev);
     }
 
 } // namespace Logging

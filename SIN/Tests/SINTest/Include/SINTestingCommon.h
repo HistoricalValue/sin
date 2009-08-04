@@ -31,7 +31,7 @@ namespace SIN {
 	start = clock();	\
 	CALL;				\
 	end = clock();		\
-	logger->Fine(string_cast(#CALL) << " took " << (static_cast<double>(end - start) / CLOCKS_PER_SEC) << "sec");	\
+	logger->Fine(to_string(#CALL) << " took " << (static_cast<double>(end - start) / CLOCKS_PER_SEC) << "sec");	\
 	} while(false);
 
 } // namespace SIN

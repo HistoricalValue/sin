@@ -40,7 +40,7 @@ namespace SIN {
 					ite != end;
 					++ite
 				)
-					logger->Error(string_cast("Parsing error: line ") << ite->second <<
+					logger->Error(to_string("Parsing error: line ") << ite->second <<
 						": " << ite->first);
 			}}
 

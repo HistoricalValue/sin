@@ -442,7 +442,7 @@ namespace SIN{
 		//if(!symTable)
 		//	symTable = _node.GlobalEnv();
 
-		//MemoryCellFunction *funcmemcell = static_cast<MemoryCellFunction*>( symTable->LookupLocal( string_cast(static_cast<IDASTNode*>(*(*_node)[0])->Name()) ) );
+		//MemoryCellFunction *funcmemcell = static_cast<MemoryCellFunction*>( symTable->LookupLocal( to_string(static_cast<IDASTNode*>(*(*_node)[0])->Name()) ) );
 		//symTable = static_cast<ASTNode*>(*(funcmemcell->GetValue())[1])->LocalEnv();
 
 
@@ -464,7 +464,7 @@ namespace SIN{
 
 		SINASSERT(symTable);
 
-		MemoryCellFunction *funcmemcell = static_cast<MemoryCellFunction*>( symTable->LookupLocal( string_cast(static_cast<ASTNode*>(_node.GetParent()->begin()->GetParent())->ID()) ) );
+		MemoryCellFunction *funcmemcell = static_cast<MemoryCellFunction*>( symTable->LookupLocal( to_string(static_cast<ASTNode*>(_node.GetParent()->begin()->GetParent())->ID()) ) );
 		SINASSERT(funcmemcell->Type() == MemoryCell::FUNCTION_MCT);	//TODO Throw runtime error here
 
 		ASTNode *funcnode = funcmemcell->GetValue();
@@ -533,39 +533,39 @@ namespace SIN{
 
 	void TreeEvaluationVisitor::Visit(IDASTNode & _node){
 	
-		memstack.push(SINEWCLASS(MemoryCellString, (string_cast(_node.Name()))));
+		memstack.push(SINEWCLASS(MemoryCellString, (to_string(_node.Name()))));
 
 		SymbolTable *symTable = _node.LocalEnv();
 
 		if(!symTable)
 			symTable = _node.GlobalEnv();
 
-//		symTable->SetLocal(string_cast(_node.Name()), NULL);
+//		symTable->SetLocal(to_string(_node.Name()), NULL);
 	}
 
 	//-----------------------------------------------------------------
 
 	void TreeEvaluationVisitor::Visit(LocalIDASTNode & _node){
 	
-		memstack.push(SINEWCLASS(MemoryCellString, (string_cast(_node.ID()))));
+		memstack.push(SINEWCLASS(MemoryCellString, (to_string(_node.ID()))));
 
 		SymbolTable *symTable = _node.LocalEnv();
 
 		if(!symTable)
 			symTable = _node.GlobalEnv();
 
-		symTable->SetLocal(string_cast(_node.Name()), memstack.top());
+		symTable->SetLocal(to_string(_node.Name()), memstack.top());
 	}
 
 	//-----------------------------------------------------------------
 
 	void TreeEvaluationVisitor::Visit(GlobalIDASTNode & _node){
 	
-		memstack.push(SINEWCLASS(MemoryCellString, (string_cast(_node.ID()))));
+		memstack.push(SINEWCLASS(MemoryCellString, (to_string(_node.ID()))));
 
 		SymbolTable *symTable = _node.GlobalEnv();
 
-		symTable->SetLocal(string_cast(_node.ID()), memstack.top());
+		symTable->SetLocal(to_string(_node.ID()), memstack.top());
 	}
 
 	//-----------------------------------------------------------------

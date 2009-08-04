@@ -87,12 +87,12 @@ namespace SIN {
 
 	/////////////////////////////////////////////////////////////////
 	/////////////////////////////////////////////////////////////////
-	String const string_cast(Nil_t const _nil) {
+	String const to_string(Nil_t const _nil) {
 		return "NIL";
 	}
 
 
-	String const string_cast(Boolean const boolean) 
+	String const to_string(Boolean const boolean) 
 		{ return boolean? "true" : "false";}
 
 
