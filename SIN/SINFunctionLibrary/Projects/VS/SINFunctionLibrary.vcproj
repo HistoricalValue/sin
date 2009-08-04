@@ -2,9 +2,9 @@
 <VisualStudioProject
 	ProjectType="Visual C++"
 	Version="9.00"
-	Name="SINLibraryFunctions"
+	Name="SINFunctionLibrary"
 	ProjectGUID="{D6319BFB-3D16-4136-A931-B736E8116DC6}"
-	RootNamespace="SINLibraryFunctions"
+	RootNamespace="SINFunctionLibrary"
 	Keyword="Win32Proj"
 	TargetFrameworkVersion="196613"
 	>

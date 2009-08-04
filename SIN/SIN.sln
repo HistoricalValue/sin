@@ -50,7 +50,7 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "SINRun_Test", "Tests\SINRun
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "SINObject_Test", "Tests\SINObject_Test\Projects\VS\SINObject_Test.vcproj", "{3CB848E4-2455-4F0F-8303-EDBA099C0284}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "SINLibraryFunctions", "SINLibraryFunctions\Projects\VS\SINLibraryFunctions.vcproj", "{D6319BFB-3D16-4136-A931-B736E8116DC6}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "SINFunctionLibrary", "SINFunctionLibrary\Projects\VS\SINFunctionLibrary.vcproj", "{D6319BFB-3D16-4136-A931-B736E8116DC6}"
 EndProject
 Global
 	GlobalSection(SubversionScc) = preSolution
