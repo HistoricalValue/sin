@@ -168,10 +168,6 @@
 				>
 			</File>
 			<File
-				RelativePath="..\..\Src\SINFucntion.cpp"
-				>
-			</File>
-			<File
 				RelativePath="..\..\Src\SINInputStream.cpp"
 				>
 			</File>
@@ -180,19 +176,11 @@
 				>
 			</File>
 			<File
-				RelativePath="..\..\Src\SINObject.cpp"
-				>
-			</File>
-			<File
 				RelativePath="..\..\Src\SINOutputStream.cpp"
 				>
 			</File>
 			<File
 				RelativePath="..\..\Src\SINStream.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\Src\SINString.cpp"
 				>
 			</File>
 			<File
@@ -235,6 +223,22 @@
 					>
 				</File>
 			</Filter>
+			<Filter
+				Name="SIN_Types"
+				>
+				<File
+					RelativePath="..\..\Src\SINFucntion.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\..\Src\SINObject.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\..\Src\SINString.cpp"
+					>
+				</File>
+			</Filter>
 		</Filter>
 		<Filter
 			Name="Header Files"
@@ -262,23 +266,11 @@
 				>
 			</File>
 			<File
-				RelativePath="..\..\Include\SINFunction.h"
-				>
-			</File>
-			<File
 				RelativePath="..\..\Include\SINInputStream.h"
 				>
 			</File>
 			<File
-				RelativePath="..\..\Include\SINLibFunction.h"
-				>
-			</File>
-			<File
 				RelativePath="..\..\Include\SINNamer.h"
-				>
-			</File>
-			<File
-				RelativePath="..\..\Include\SINObject.h"
 				>
 			</File>
 			<File
@@ -290,15 +282,7 @@
 				>
 			</File>
 			<File
-				RelativePath="..\..\Include\SINString.h"
-				>
-			</File>
-			<File
 				RelativePath="..\..\Include\SINSymbolTable.h"
-				>
-			</File>
-			<File
-				RelativePath="..\..\Include\SINTypes.h"
 				>
 			</File>
 			<Filter
@@ -334,6 +318,30 @@
 				</File>
 				<File
 					RelativePath="..\..\Include\SINMemoryCellString.h"
+					>
+				</File>
+			</Filter>
+			<Filter
+				Name="SIN_Types"
+				>
+				<File
+					RelativePath="..\..\Include\SINFunction.h"
+					>
+				</File>
+				<File
+					RelativePath="..\..\Include\SINLibFunction.h"
+					>
+				</File>
+				<File
+					RelativePath="..\..\Include\SINObject.h"
+					>
+				</File>
+				<File
+					RelativePath="..\..\Include\SINString.h"
+					>
+				</File>
+				<File
+					RelativePath="..\..\Include\SINTypes.h"
 					>
 				</File>
 			</Filter>
