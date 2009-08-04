@@ -5,8 +5,6 @@
 
 *[016] Make a reserved type for all SIN-types and to_string them
 
-*[019] Fill up Symbol Table's tester
-
 *[025] Implement operator == for ASTNode
 
 *[026] Make the testing framework serious (save results and print them later -- especially TestCollections should be serious)
@@ -32,8 +30,6 @@
   A: By adding code
 
 ==== BIG PLANS ====
-* Refactor SINTree: make it appropriate for bottom-up parsing (linking of nodes
-  correctly, notification of ancestry changes, etc)
 * Refactor Manage funcs to use the correct Tree
 
 ==== LOW PRIORITY ====
@@ -96,4 +92,9 @@
 *[031] MemoryCell* MemoryCellClone()
   [ koutsop | done]
 * string_cast -> to_string
-  [ koutsop | done]
+  [ koutsop | done]=======
+*[019] Fill up Symbol Table's tester
+  [ koutsop | done it]
+* Refactor SINTree: make it appropriate for bottom-up parsing (linking of nodes
+  correctly, notification of ancestry changes, etc)
+  [ rudolf | DID IT!]
