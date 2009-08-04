@@ -7,18 +7,10 @@
 
 *[019] Fill up Symbol Table's tester
 
-*[023] Implement an internal data type for SIN Object
-*[024] Implement an internal data type for SIN Object
 *[025] Implement operator == for ASTNode
 
 *[026] Make the testing framework serious (save results and print them later -- especially TestCollections should be serious)
 *[027] Default ctor of LamdaFunctionASTNode should name automatically the node with $lamdaxxx
-
-==== OBJECT ====
-*[029] MemoryCellObject destructor decreases reference counter AND if refcounter==0 then delete obj too.
-*[030] Object's destructor deletes the  table elements.
-*[031] MemoryCell* MemoryCellClone()
-
 
 ---logging---
 *[010] LoggerFactory base should internally keep a list of produced loggers
@@ -92,4 +84,14 @@
 *[023] Fix lex-util
   [ koutsop | done]
 * "compile time" Warnings
+  [ koutsop | done]
+*[023] Implement an internal data type for SIN Object
+   [ koutsop | done]
+*[024] Implement an internal data type for SIN Object
+  [ koutsop | done]
+*[029] MemoryCellObject destructor decreases reference counter AND if refcounter==0 then delete obj too.
+  [ koutsop | done]
+*[030] Object's destructor deletes the  table elements.
+  [ koutsop | done]
+*[031] MemoryCell* MemoryCellClone()
   [ koutsop | done]
