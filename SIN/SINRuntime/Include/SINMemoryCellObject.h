@@ -3,6 +3,7 @@
 
 
 #include "SINObject.h"
+#include "SINAssert.h"
 #include "SINMemoryCell.h"
 
 
@@ -19,8 +20,8 @@ namespace SIN {
 
 		virtual MemoryCellType Type(void) { return MemoryCell::OBJECT_MCT; }
 	
-		void				SetValue (SINObject * s)		{ obj = s; }
-		const SINObject *	GetValue (void) const			{ return obj; }
+		void				SetValue (SINObject * _obj)		{ SINASSERT(_obj);	obj = _obj; }
+		const SINObject *	GetValue (void) const			{ SINASSERT(obj);	return obj; }
 
 	private:
 		SINObject * obj;

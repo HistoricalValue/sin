@@ -32,7 +32,7 @@
 
 namespace SIN {
 	
-
+	//static std::set<unsigned> objectsId;
 
 	///--------------------		SINObject		---------------------------///
 
@@ -52,15 +52,21 @@ namespace SIN {
 
 
 	struct CleanTableFunctor : public std::unary_function <const SINObject::ObjectTableValue &, void> {
-		std::set<unsigned> objectsId;
+		//std::set<unsigned> objectsId;
+
+		CleanTableFunctor(SINObject * obj) { 
+			if ( !SinObjectFactory::ExistsObjectID(obj->ID()) )
+				SinObjectFactory::InsertObjectID(obj->ID());
+		}
+
 		void operator() (const SINObject::ObjectTableValue & otv) {
 			
 			if (otv.second != static_cast<MemoryCell *>(0)) {
 				if(otv.second->Type() == MemoryCell::OBJECT_MCT){
 					MemoryCellObject * obj = static_cast<MemoryCellObject *>(otv.second);
 					//An to exoume 3anadei simenei oti eixame kuklo kai to exoume idi kanei delete
-					if (objectsId.find(obj->GetValue()->ID()) == objectsId.end()) {
-						objectsId.insert(obj->GetValue()->ID());
+					if ( !SinObjectFactory::ExistsObjectID(obj->GetValue()->ID()) ) {
+						SinObjectFactory::InsertObjectID(obj->GetValue()->ID());
 						SINDELETE(otv.second); 
 					}
 				}
@@ -114,7 +120,7 @@ namespace SIN {
 	//destructors
 	SINObject::~SINObject() { 
 		SINASSERT(rc == 0);
-		for_each(table.begin(), table.end(), CleanTableFunctor());
+		for_each(table.begin(), table.end(), CleanTableFunctor(this));
 		table.clear();
 	}
 
@@ -327,12 +333,37 @@ namespace SIN {
 	unsigned const SinObjectFactory::NextID(void) 
 		{ return SingletonInstance().InstanceNextID(); }
 	
-	
+
+	//---------------------------------------------------
+
+	void SinObjectFactory::InsertObjectID(const unsigned id) 
+		{ SingletonInstance().InstanceInsertObjectID(id); }
+
+
+	//---------------------------------------------------
+
+	bool SinObjectFactory::ExistsObjectID(const unsigned id)
+		{ return SingletonInstance().InstanceExistsObjectID(id); }
+
+
 	//---------------------------------------------------
 	// instance factory methods
 
 	//---------------------------------------------------
 	unsigned const SinObjectFactory::InstanceNextID(void) 
 		{ return next_id++; }
+
+
+	//---------------------------------------------------
+
+	void SinObjectFactory::InstanceInsertObjectID(const unsigned id)
+		{ objectsId.insert(id); }
+	
+
+	//---------------------------------------------------
+
+	bool SinObjectFactory::InstanceExistsObjectID(const unsigned id) 
+		{ return objectsId.find(id) != objectsId.end() ? true : false; }
+
 
 }

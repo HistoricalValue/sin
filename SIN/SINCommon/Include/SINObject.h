@@ -83,9 +83,17 @@ namespace SIN {
 
 		static const unsigned		NextID(void);
 		const unsigned				InstanceNextID(void);
-	
+
+		static void					InsertObjectID(const unsigned);
+		static bool					ExistsObjectID(const unsigned);
+
+		void						InstanceInsertObjectID(const unsigned);
+		bool						InstanceExistsObjectID(const unsigned);
+
+
 	private:
-		unsigned next_id;
+		unsigned			next_id;
+		std::set<unsigned>	objectsId;
 
 		SinObjectFactory(void);
 		~SinObjectFactory(void);
