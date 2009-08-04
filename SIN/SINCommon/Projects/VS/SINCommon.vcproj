@@ -195,6 +195,46 @@
 				RelativePath="..\..\Src\SINString.cpp"
 				>
 			</File>
+			<File
+				RelativePath="..\..\Src\SINSymbolTable.cpp"
+				>
+			</File>
+			<Filter
+				Name="MemoryCell"
+				>
+				<File
+					RelativePath="..\..\Src\SINMemoryCell.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\..\Src\SINMemoryCellAST.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\..\Src\SINMemoryCellBool.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\..\Src\SINMemoryCellFunction.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\..\Src\SINMemoryCellNil.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\..\Src\SINMemoryCellNumber.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\..\Src\SINMemoryCellObject.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\..\Src\SINMemoryCellString.cpp"
+					>
+				</File>
+			</Filter>
 		</Filter>
 		<Filter
 			Name="Header Files"
@@ -254,9 +294,49 @@
 				>
 			</File>
 			<File
+				RelativePath="..\..\Include\SINSymbolTable.h"
+				>
+			</File>
+			<File
 				RelativePath="..\..\Include\SINTypes.h"
 				>
 			</File>
+			<Filter
+				Name="MemoryCell"
+				>
+				<File
+					RelativePath="..\..\Include\SINMemoryCell.h"
+					>
+				</File>
+				<File
+					RelativePath="..\..\Include\SINMemoryCellAST.h"
+					>
+				</File>
+				<File
+					RelativePath="..\..\Include\SINMemoryCellBool.h"
+					>
+				</File>
+				<File
+					RelativePath="..\..\Include\SINMemoryCellFunction.h"
+					>
+				</File>
+				<File
+					RelativePath="..\..\Include\SINMemoryCellNil.h"
+					>
+				</File>
+				<File
+					RelativePath="..\..\Include\SINMemoryCellNumber.h"
+					>
+				</File>
+				<File
+					RelativePath="..\..\Include\SINMemoryCellObject.h"
+					>
+				</File>
+				<File
+					RelativePath="..\..\Include\SINMemoryCellString.h"
+					>
+				</File>
+			</Filter>
 		</Filter>
 		<Filter
 			Name="Resource Files"

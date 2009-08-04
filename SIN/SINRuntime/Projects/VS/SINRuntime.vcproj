@@ -155,49 +155,9 @@
 			UniqueIdentifier="{4FC737F1-C7A5-4376-A066-2A32D752A2FF}"
 			>
 			<File
-				RelativePath="..\..\Src\SINSymbolTable.cpp"
-				>
-			</File>
-			<File
 				RelativePath="..\..\Src\SINTreeEvaluationVisitor.cpp"
 				>
 			</File>
-			<Filter
-				Name="MemoryCell"
-				>
-				<File
-					RelativePath="..\..\Src\SINMemoryCell.cpp"
-					>
-				</File>
-				<File
-					RelativePath="..\..\Src\SINMemoryCellAST.cpp"
-					>
-				</File>
-				<File
-					RelativePath="..\..\Src\SINMemoryCellBool.cpp"
-					>
-				</File>
-				<File
-					RelativePath="..\..\Src\SINMemoryCellFunction.cpp"
-					>
-				</File>
-				<File
-					RelativePath="..\..\Src\SINMemoryCellNil.cpp"
-					>
-				</File>
-				<File
-					RelativePath="..\..\Src\SINMemoryCellNumber.cpp"
-					>
-				</File>
-				<File
-					RelativePath="..\..\Src\SINMemoryCellObject.cpp"
-					>
-				</File>
-				<File
-					RelativePath="..\..\Src\SINMemoryCellString.cpp"
-					>
-				</File>
-			</Filter>
 		</Filter>
 		<Filter
 			Name="Header Files"
@@ -205,49 +165,9 @@
 			UniqueIdentifier="{93995380-89BD-4b04-88EB-625FBE52EBFB}"
 			>
 			<File
-				RelativePath="..\..\Include\SINSymbolTable.h"
-				>
-			</File>
-			<File
 				RelativePath="..\..\Include\SINTreeEvaluationVisitor.h"
 				>
 			</File>
-			<Filter
-				Name="MemoryCell"
-				>
-				<File
-					RelativePath="..\..\Include\SINMemoryCell.h"
-					>
-				</File>
-				<File
-					RelativePath="..\..\Include\SINMemoryCellAST.h"
-					>
-				</File>
-				<File
-					RelativePath="..\..\Include\SINMemoryCellBool.h"
-					>
-				</File>
-				<File
-					RelativePath="..\..\Include\SINMemoryCellFunction.h"
-					>
-				</File>
-				<File
-					RelativePath="..\..\Include\SINMemoryCellNil.h"
-					>
-				</File>
-				<File
-					RelativePath="..\..\Include\SINMemoryCellNumber.h"
-					>
-				</File>
-				<File
-					RelativePath="..\..\Include\SINMemoryCellObject.h"
-					>
-				</File>
-				<File
-					RelativePath="..\..\Include\SINMemoryCellString.h"
-					>
-				</File>
-			</Filter>
 		</Filter>
 		<Filter
 			Name="Resource Files"
