@@ -9,21 +9,21 @@ namespace SIN {
 	class MemoryCellAST : public MemoryCell {
 	public:
 		MemoryCellAST(void) : MemoryCell() {}
-		//MemoryCellAST(const ASTNode * _node) : MemoryCell(), node(_node) {}
+		MemoryCellAST(ASTNode * node) : MemoryCell(), value(node) {}
 		
 		~MemoryCellAST() {}
 
 
-
-		virtual enum MemoryCellType Type (void) { return MemoryCell::AST_MCT; }
+		virtual MemoryCell *		Clone(void);
+		virtual enum MemoryCellType Type (void);
 
 		
-		void			SetValue (const ASTNode* _node)	{ node = const_cast<ASTNode *>(_node); }
-		const ASTNode & GetValue (void) const			{ return *node; }
+		void						SetValue (const ASTNode*);
+		const ASTNode &				GetValue (void) const;
 
 
 	private:
-		ASTNode * node;
+		ASTNode * value;
 	};
 }
 

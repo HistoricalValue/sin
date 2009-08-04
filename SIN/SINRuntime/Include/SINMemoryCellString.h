@@ -16,11 +16,11 @@ namespace SIN {
 		virtual ~MemoryCellString() { }
 
 
-		virtual MemoryCellType Type (void) { return MemoryCell::STRING_MCT; }
+		virtual MemoryCell *	Clone(void);
+		virtual MemoryCellType	Type (void);
 
-
-		void			SetValue (const String & s) { value = s; }
-		const String &	GetValue (void) const		{ return value; }
+		void					SetValue (const String & s);
+		const String &			GetValue (void) const;
 
 
 	private:

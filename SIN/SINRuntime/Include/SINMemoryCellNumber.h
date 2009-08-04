@@ -15,11 +15,14 @@ namespace SIN {
 		MemoryCellNumber(const Number & num) : MemoryCell(), value(num) {}
 		~MemoryCellNumber() {}
 		
-		virtual MemoryCellType Type (void) { return MemoryCell::NUMBER_MCT; }
 
 
-		void			SetValue (const Number & num)	{ value = num; }
-		const Number &	GetValue (void) const			{ return value; }
+		virtual MemoryCell *	Clone(void);
+		virtual MemoryCellType	Type (void);
+
+
+		void					SetValue (const Number & num);
+		const Number &			GetValue (void) const;
 
 	private:
 		Number value;

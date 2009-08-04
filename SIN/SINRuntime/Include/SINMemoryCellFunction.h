@@ -12,17 +12,18 @@ namespace SIN {
 	public:
 
 		MemoryCellFunction(void) : MemoryCell() {}
-		MemoryCellFunction(ASTNode *_functionNode) : MemoryCell(), functionNode(_functionNode) {}
+		MemoryCellFunction(ASTNode *functionNode) : MemoryCell(), value(functionNode) {}
 		~MemoryCellFunction() {}
 
-		virtual MemoryCellType Type (void) { return MemoryCell::FUNCTION_MCT; }
+		virtual MemoryCell *	Clone(void);
+		virtual MemoryCellType	Type (void);
 
-		void	       SetValue (ASTNode *_functionNode)	{ functionNode = _functionNode; }
-		ASTNode *GetValue (void) const	{ return functionNode; }
+		void					SetValue (const ASTNode *functionNode);
+		ASTNode *				GetValue (void) const;
 
 	private:
 
-		ASTNode *functionNode;
+		ASTNode *value;
 	};
 }
 

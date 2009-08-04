@@ -155,14 +155,6 @@
 			UniqueIdentifier="{4FC737F1-C7A5-4376-A066-2A32D752A2FF}"
 			>
 			<File
-				RelativePath="..\..\Src\MemoryCellObject.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\Src\SINMemoryCell.cpp"
-				>
-			</File>
-			<File
 				RelativePath="..\..\Src\SINSymbolTable.cpp"
 				>
 			</File>
@@ -170,6 +162,42 @@
 				RelativePath="..\..\Src\SINTreeEvaluationVisitor.cpp"
 				>
 			</File>
+			<Filter
+				Name="MemoryCell"
+				>
+				<File
+					RelativePath="..\..\Src\SINMemoryCell.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\..\Src\SINMemoryCellAST.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\..\Src\SINMemoryCellBool.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\..\Src\SINMemoryCellFunction.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\..\Src\SINMemoryCellNil.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\..\Src\SINMemoryCellNumber.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\..\Src\SINMemoryCellObject.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\..\Src\SINMemoryCellString.cpp"
+					>
+				</File>
+			</Filter>
 		</Filter>
 		<Filter
 			Name="Header Files"

@@ -20,8 +20,9 @@ namespace SIN {
 		};
 
 
-		virtual MemoryCellType Type (void) = 0;
-
+		virtual MemoryCell *	Clone(void) = 0;
+		virtual MemoryCellType	Type (void) = 0;
+		
 		MemoryCell(void) {}
 		virtual ~MemoryCell() {}
 	};
