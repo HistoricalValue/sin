@@ -68,7 +68,7 @@
 %type <AST> stmt ifstmt whilestmt forstmt returnstmt block
 %type <AST> expr assignexpr term metaexpr
 %type <AST> lvalue primary
-%type <AST> call objectdef funcdef const
+%type <AST> call objectdef funcdef objectfuncdef const
 %type <AST> member
 %type <AST> callsuffix elist
 %type <AST> normalcall methodcall
@@ -290,7 +290,7 @@ objectlist:	 	expr objectlists					{	SIN::ParserManage::Manage_ObjectList_Expres
 
 objectlists:	',' expr objectlists				{	SIN::ParserManage::Manage_ObjectList_ExpressionObjectLists($2, $3, &($$), &fabpa);					}
 				|	',' expr ':' expr objectlists	{	SIN::ParserManage::Manage_ObjectList_ExpressionExpressionObjectLists($2, $4, $5, &($$), &fabpa);	}
-				|	',' funcdef objectlists			{}
+				|	',' objectfuncdef objectlists	{}
 				|									{	SIN::ParserManage::Manage_ObjectList_Empty(&($$), &fabpa);											}
 				;
 
@@ -305,6 +305,10 @@ stmtd:			stmt stmtd							{	SIN::ParserManage::Manage_Statements($1, $2, &($$), 
 				|									{	SIN::ParserManage::Manage_Statements_Empty(&($$), &fabpa);		}
 				;
 				
+objectfuncdef:	FUNCTION ID	'(' idlist ')' block	{}
+				|	FUNCTION '(' idlist ')' block	{}
+				;
+
 				
 funcdef:		FUNCTION ID	'(' idlist ')' block	{	SIN::ParserManage::Manage_FunctionDefinition_Function($2, $4, $6, &($$), &fabpa);	}
 				|	FUNCTION '(' idlist ')' block	{	SIN::ParserManage::Manage_FunctionDefinition_LamdaFunction($3, $5, &($$), &fabpa);	}
