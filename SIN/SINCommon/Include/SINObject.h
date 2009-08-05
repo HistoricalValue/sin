@@ -21,9 +21,8 @@ namespace SIN {
 			typedef std::map<String, MemoryCell *>	ObjectTable;
 			typedef std::pair<String, MemoryCell *> ObjectTableValue;
 
-			//Constructors
+			//Constructor
 			Object();
-			//Object(const Object &);
 
 			//destructor
 			~Object();
@@ -46,8 +45,10 @@ namespace SIN {
 			//e.g. a.#keys and a.#size 
 			//create a new object with new. Caller is responsible to delete the new object
 			Object *		ObjectKeys(void) const;
+			Object *		Clone(void) const;
 			unsigned		NumberOfElements (void) const;
 			const String	ToString(void) const;
+
 
 
 			bool operator== (const Nil_t &) const;	
@@ -69,8 +70,13 @@ namespace SIN {
 			unsigned	index;	//Current arithemtic index for the next key
 			ObjectTable table;
 
+			
+			///////////////////////////////
+			//	private method API
+			Object(const Object &);
 			const String ToString(std::set<unsigned> &) const;
-			//const String 
+			
+			
 		};
 
 

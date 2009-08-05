@@ -94,9 +94,16 @@ namespace SIN {
 				fout << "\n\n --------------- Keys ---------------\n\n";
 				Types::Object * obj_ptr =  obj1->ObjectKeys();
 				fout <<	obj_ptr->ToString();
+
+
+				fout << "\n\n --------------- clone keys ---------------\n\n";
+				Types::Object * obj_ptr_clone =  obj_ptr->Clone();
+				fout <<	obj_ptr_clone->ToString();
 				
 				obj_ptr->MarckedForDeletion();
+				obj_ptr_clone->MarckedForDeletion();
 				SINDELETE(obj_ptr);
+				SINDELETE(obj_ptr_clone);
 				SINDELETE(object1_mc);
 			}
 

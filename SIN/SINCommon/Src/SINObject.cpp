@@ -63,6 +63,15 @@ struct ClearTableFunctor : public std::unary_function <const SIN::Types::Object:
 };
 
 
+struct CopyTableFunctor : public std::unary_function <const SIN::Types::Object::ObjectTableValue &, void> {
+	SIN::Types::Object::ObjectTable & table;
+
+	CopyTableFunctor(SIN::Types::Object::ObjectTable & ot) : table(ot){}
+
+	void operator() (const SIN::Types::Object::ObjectTableValue & otv) 
+		{ table[otv.first] = otv.second->Clone(); }
+};
+
 
 
 
@@ -74,6 +83,11 @@ namespace SIN {
 
 		///--------------------------------------------------
 		///	private methods
+		
+		Object::Object(const Object & obj)  : marckedForDeletion(false), rc(0), id(ObjectFactory::NextID()), index(0)  
+			{ std::for_each(obj.table.begin(), obj.table.end(), CopyTableFunctor(this->table)); }
+		
+		
 		
 		//-----------------------------------------------------------------
 
@@ -202,6 +216,12 @@ namespace SIN {
 			{ return std::for_each(table.begin(), table.end(), TableKeyFunctor(SINEW(Object))).keys; }
 
 
+		//-----------------------------------------------------------------
+
+		Object * Object::Clone(void) const 
+			{ return SINEW(Object(*this)); }
+		
+		
 		//-----------------------------------------------------------------
 		unsigned Object::NumberOfElements (void) const  
 			{ return table.size(); }
