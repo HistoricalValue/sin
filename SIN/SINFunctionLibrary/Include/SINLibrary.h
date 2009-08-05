@@ -2,7 +2,7 @@
 #define __SIN_LIBRARY_LIBRARY_H__
 
 #include <utility>
-#include "SINFunction.h"
+#include "SINLibraryFunction.h"
 #include "SINSymbolTable.h"
 #include "SINMemoryCell.h"
 

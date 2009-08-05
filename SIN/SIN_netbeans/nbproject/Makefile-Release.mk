@@ -59,8 +59,8 @@ OBJECTFILES= \
 	${OBJECTDIR}/_ext/_DOTDOT/Tests/SINAST_Test/Src/SINAST_StrictTreeNode_Tester.o \
 	${OBJECTDIR}/_ext/_DOTDOT/Common/Src/Common.o \
 	${OBJECTDIR}/_ext/_DOTDOT/SINLogging/Src/SINLoggerManager.o \
-	${OBJECTDIR}/_ext/_DOTDOT/SINCommon/Src/SINString.o \
 	${OBJECTDIR}/_ext/_DOTDOT/Tests/SINLogging_Test/Src/SINLoggingTester.o \
+	${OBJECTDIR}/_ext/_DOTDOT/SINCommon/Src/SINString.o \
 	${OBJECTDIR}/_ext/_DOTDOT/Tests/SINAlloc_Test/Src/SINAllocTester.o \
 	${OBJECTDIR}/_ext/_DOTDOT/SINCommon/Src/SINBufferedOutputStream.o \
 	${OBJECTDIR}/_ext/_DOTDOT/SINParser/Src/LexAndBisonParseArguments.o \
@@ -249,15 +249,15 @@ ${OBJECTDIR}/_ext/_DOTDOT/SINLogging/Src/SINLoggerManager.o: nbproject/Makefile-
 	${RM} $@.d
 	$(COMPILE.cc) -O2 -MMD -MP -MF $@.d -o ${OBJECTDIR}/_ext/_DOTDOT/SINLogging/Src/SINLoggerManager.o ../SINLogging/Src/SINLoggerManager.cpp
 
-${OBJECTDIR}/_ext/_DOTDOT/SINCommon/Src/SINString.o: nbproject/Makefile-${CND_CONF}.mk ../SINCommon/Src/SINString.cpp 
-	${MKDIR} -p ${OBJECTDIR}/_ext/_DOTDOT/SINCommon/Src
-	${RM} $@.d
-	$(COMPILE.cc) -O2 -MMD -MP -MF $@.d -o ${OBJECTDIR}/_ext/_DOTDOT/SINCommon/Src/SINString.o ../SINCommon/Src/SINString.cpp
-
 ${OBJECTDIR}/_ext/_DOTDOT/Tests/SINLogging_Test/Src/SINLoggingTester.o: nbproject/Makefile-${CND_CONF}.mk ../Tests/SINLogging_Test/Src/SINLoggingTester.cpp 
 	${MKDIR} -p ${OBJECTDIR}/_ext/_DOTDOT/Tests/SINLogging_Test/Src
 	${RM} $@.d
 	$(COMPILE.cc) -O2 -MMD -MP -MF $@.d -o ${OBJECTDIR}/_ext/_DOTDOT/Tests/SINLogging_Test/Src/SINLoggingTester.o ../Tests/SINLogging_Test/Src/SINLoggingTester.cpp
+
+${OBJECTDIR}/_ext/_DOTDOT/SINCommon/Src/SINString.o: nbproject/Makefile-${CND_CONF}.mk ../SINCommon/Src/SINString.cpp 
+	${MKDIR} -p ${OBJECTDIR}/_ext/_DOTDOT/SINCommon/Src
+	${RM} $@.d
+	$(COMPILE.cc) -O2 -MMD -MP -MF $@.d -o ${OBJECTDIR}/_ext/_DOTDOT/SINCommon/Src/SINString.o ../SINCommon/Src/SINString.cpp
 
 ${OBJECTDIR}/_ext/_DOTDOT/Tests/SINAlloc_Test/Src/SINAllocTester.o: nbproject/Makefile-${CND_CONF}.mk ../Tests/SINAlloc_Test/Src/SINAllocTester.cpp 
 	${MKDIR} -p ${OBJECTDIR}/_ext/_DOTDOT/Tests/SINAlloc_Test/Src
