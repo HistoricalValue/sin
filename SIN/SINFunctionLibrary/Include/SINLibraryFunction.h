@@ -4,6 +4,7 @@
 #include "SINString.h"
 #include "SINSymbolTable.h"
 #include "SINMemoryCell.h"
+#include "SINVirtualMachine.h"
 
 namespace SIN {
 	namespace Library {
@@ -17,7 +18,7 @@ namespace SIN {
 			String const& Name(void) const { return name; }
 
 			// Invoke
-			virtual return_type operator ()(SymbolTable const&) const = 0;
+			virtual return_type operator ()(InstanceProxy<VM::VirtualMachine> const&, SymbolTable const&) const = 0;
 		protected:
 			String const name;
 		}; // class Function

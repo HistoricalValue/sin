@@ -304,6 +304,7 @@
             <pElem>../Tests/SINAlloc_Test/Include</pElem>
             <pElem>../Tests/SINAST_Test/Include</pElem>
             <pElem>../Tests/SINCommon_Test/Include</pElem>
+            <pElem>../Tests/SINFunctionLibrary_Test/Include</pElem>
             <pElem>../Tests/SINLogging_Test/Include</pElem>
             <pElem>../Tests/SINObject_Test/Include</pElem>
             <pElem>../Tests/SINParser_Test/Include</pElem>

@@ -46,6 +46,7 @@ OBJECTFILES= \
 	${OBJECTDIR}/_ext/_DOTDOT/SINAST/Src/SINTreeNode.o \
 	${OBJECTDIR}/_ext/_DOTDOT/SINCommon/Src/SINNamer.o \
 	${OBJECTDIR}/_ext/_DOTDOT/SINCommon/Src/SINMemoryCellAST.o \
+	${OBJECTDIR}/_ext/_DOTDOT/Tests/SINFunctionLibrary_Test/Src/SINFunctionLibraryTester.o \
 	${OBJECTDIR}/_ext/_DOTDOT/Tests/SINAST_Test/Src/SINAST_Tester_main.o \
 	${OBJECTDIR}/_ext/_DOTDOT/Tests/SINTest/Src/SINTest.o \
 	${OBJECTDIR}/_ext/_DOTDOT/SINCommon/Src/SINFileOutputStream.o \
@@ -184,6 +185,11 @@ ${OBJECTDIR}/_ext/_DOTDOT/SINCommon/Src/SINMemoryCellAST.o: nbproject/Makefile-$
 	${MKDIR} -p ${OBJECTDIR}/_ext/_DOTDOT/SINCommon/Src
 	${RM} $@.d
 	$(COMPILE.cc) -O2 -MMD -MP -MF $@.d -o ${OBJECTDIR}/_ext/_DOTDOT/SINCommon/Src/SINMemoryCellAST.o ../SINCommon/Src/SINMemoryCellAST.cpp
+
+${OBJECTDIR}/_ext/_DOTDOT/Tests/SINFunctionLibrary_Test/Src/SINFunctionLibraryTester.o: nbproject/Makefile-${CND_CONF}.mk ../Tests/SINFunctionLibrary_Test/Src/SINFunctionLibraryTester.c 
+	${MKDIR} -p ${OBJECTDIR}/_ext/_DOTDOT/Tests/SINFunctionLibrary_Test/Src
+	${RM} $@.d
+	$(COMPILE.cc) -O2 -MMD -MP -MF $@.d -o ${OBJECTDIR}/_ext/_DOTDOT/Tests/SINFunctionLibrary_Test/Src/SINFunctionLibraryTester.o ../Tests/SINFunctionLibrary_Test/Src/SINFunctionLibraryTester.c
 
 ${OBJECTDIR}/_ext/_DOTDOT/Tests/SINAST_Test/Src/SINAST_Tester_main.o: nbproject/Makefile-${CND_CONF}.mk ../Tests/SINAST_Test/Src/SINAST_Tester_main.cpp 
 	${MKDIR} -p ${OBJECTDIR}/_ext/_DOTDOT/Tests/SINAST_Test/Src

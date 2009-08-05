@@ -9,7 +9,7 @@ namespace SIN {
 		// *** Private API ************************************************/
 		// ****************************************************************/
 
-		Library::Library(void): functions(), f_imit(0x00) { }
+		Library::Library(VM_P_t const& _vm_p): functions(), f_imit(0x00), vm_p(_vm_p) { }
 		Library::~Library(void) { }
 
 		// returns a pair which contains true if this function has been replaced,
@@ -52,7 +52,7 @@ namespace SIN {
 		Library::f_ret_t Library::Invoke(name_t const& _name, SymbolTable const& _env) const {
 			fciter_t fi = functions.find(_name);
 			SINASSERT(fi != functions.end());
-			return (*fi->second)(_env);
+			return (*fi->second)(vm_p, _env);
 		}
 
 	} // namespace Library
