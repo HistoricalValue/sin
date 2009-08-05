@@ -54,11 +54,20 @@
           <itemPath>../SINCommon/Include/SINConstants.h</itemPath>
           <itemPath>../SINCommon/Include/SINFileOutputStream.h</itemPath>
           <itemPath>../SINCommon/Include/SINInputStream.h</itemPath>
+          <itemPath>../SINCommon/Include/SINMemoryCell.h</itemPath>
+          <itemPath>../SINCommon/Include/SINMemoryCellAST.h</itemPath>
+          <itemPath>../SINCommon/Include/SINMemoryCellBool.h</itemPath>
+          <itemPath>../SINCommon/Include/SINMemoryCellFunction.h</itemPath>
+          <itemPath>../SINCommon/Include/SINMemoryCellNil.h</itemPath>
+          <itemPath>../SINCommon/Include/SINMemoryCellNumber.h</itemPath>
+          <itemPath>../SINCommon/Include/SINMemoryCellObject.h</itemPath>
+          <itemPath>../SINCommon/Include/SINMemoryCellString.h</itemPath>
           <itemPath>../SINCommon/Include/SINNamer.h</itemPath>
           <itemPath>../SINCommon/Include/SINObject.h</itemPath>
           <itemPath>../SINCommon/Include/SINOutputStream.h</itemPath>
           <itemPath>../SINCommon/Include/SINStream.h</itemPath>
           <itemPath>../SINCommon/Include/SINString.h</itemPath>
+          <itemPath>../SINCommon/Include/SINSymbolTable.h</itemPath>
           <itemPath>../SINCommon/Include/SINTypes.h</itemPath>
         </logicalFolder>
         <logicalFolder name="Src" displayName="Src" projectFiles="true">
@@ -67,11 +76,31 @@
           <itemPath>../SINCommon/Src/SINCommon.cpp</itemPath>
           <itemPath>../SINCommon/Src/SINFileOutputStream.cpp</itemPath>
           <itemPath>../SINCommon/Src/SINInputStream.cpp</itemPath>
+          <itemPath>../SINCommon/Src/SINMemoryCell.cpp</itemPath>
+          <itemPath>../SINCommon/Src/SINMemoryCellAST.cpp</itemPath>
+          <itemPath>../SINCommon/Src/SINMemoryCellBool.cpp</itemPath>
+          <itemPath>../SINCommon/Src/SINMemoryCellFunction.cpp</itemPath>
+          <itemPath>../SINCommon/Src/SINMemoryCellNil.cpp</itemPath>
+          <itemPath>../SINCommon/Src/SINMemoryCellNumber.cpp</itemPath>
+          <itemPath>../SINCommon/Src/SINMemoryCellObject.cpp</itemPath>
+          <itemPath>../SINCommon/Src/SINMemoryCellString.cpp</itemPath>
           <itemPath>../SINCommon/Src/SINNamer.cpp</itemPath>
           <itemPath>../SINCommon/Src/SINObject.cpp</itemPath>
           <itemPath>../SINCommon/Src/SINOutputStream.cpp</itemPath>
           <itemPath>../SINCommon/Src/SINStream.cpp</itemPath>
           <itemPath>../SINCommon/Src/SINString.cpp</itemPath>
+          <itemPath>../SINCommon/Src/SINSymbolTable.cpp</itemPath>
+        </logicalFolder>
+      </logicalFolder>
+      <logicalFolder name="SINFunctionLibrary"
+                     displayName="SINFunctionLibrary"
+                     projectFiles="true">
+        <logicalFolder name="Include" displayName="Include" projectFiles="true">
+          <itemPath>../SINFunctionLibrary/Include/SINFunction.h</itemPath>
+          <itemPath>../SINFunctionLibrary/Include/SINLibrary.h</itemPath>
+        </logicalFolder>
+        <logicalFolder name="Src" displayName="Src" projectFiles="true">
+          <itemPath>../SINFunctionLibrary/Src/SINLibrary.cpp</itemPath>
         </logicalFolder>
       </logicalFolder>
       <logicalFolder name="SINLogging" displayName="SINLogging" projectFiles="true">
@@ -116,27 +145,9 @@
       </logicalFolder>
       <logicalFolder name="SINRuntime" displayName="SINRuntime" projectFiles="true">
         <logicalFolder name="Include" displayName="Include" projectFiles="true">
-          <itemPath>../SINRuntime/Include/SINMemoryCell.h</itemPath>
-          <itemPath>../SINRuntime/Include/SINMemoryCellAST.h</itemPath>
-          <itemPath>../SINRuntime/Include/SINMemoryCellBool.h</itemPath>
-          <itemPath>../SINRuntime/Include/SINMemoryCellFunction.h</itemPath>
-          <itemPath>../SINRuntime/Include/SINMemoryCellNil.h</itemPath>
-          <itemPath>../SINRuntime/Include/SINMemoryCellNumber.h</itemPath>
-          <itemPath>../SINRuntime/Include/SINMemoryCellObject.h</itemPath>
-          <itemPath>../SINRuntime/Include/SINMemoryCellString.h</itemPath>
-          <itemPath>../SINRuntime/Include/SINSymbolTable.h</itemPath>
           <itemPath>../SINRuntime/Include/SINTreeEvaluationVisitor.h</itemPath>
         </logicalFolder>
         <logicalFolder name="Src" displayName="Src" projectFiles="true">
-          <itemPath>../SINRuntime/Src/SINMemoryCell.cpp</itemPath>
-          <itemPath>../SINRuntime/Src/SINMemoryCellAST.cpp</itemPath>
-          <itemPath>../SINRuntime/Src/SINMemoryCellBool.cpp</itemPath>
-          <itemPath>../SINRuntime/Src/SINMemoryCellFunction.cpp</itemPath>
-          <itemPath>../SINRuntime/Src/SINMemoryCellNil.cpp</itemPath>
-          <itemPath>../SINRuntime/Src/SINMemoryCellNumber.cpp</itemPath>
-          <itemPath>../SINRuntime/Src/SINMemoryCellObject.cpp</itemPath>
-          <itemPath>../SINRuntime/Src/SINMemoryCellString.cpp</itemPath>
-          <itemPath>../SINRuntime/Src/SINSymbolTable.cpp</itemPath>
           <itemPath>../SINRuntime/Src/SINTreeEvaluationVisitor.cpp</itemPath>
         </logicalFolder>
       </logicalFolder>
@@ -283,6 +294,7 @@
             <pElem>../SINAlloc/Include</pElem>
             <pElem>../SINAST/Include</pElem>
             <pElem>../SINCommon/Include</pElem>
+            <pElem>../SINFunctionLibrary/Include</pElem>
             <pElem>../SINLogging/Include</pElem>
             <pElem>../SINmain/Include</pElem>
             <pElem>../SINParser/Include</pElem>

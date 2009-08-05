@@ -37,7 +37,7 @@ namespace SIN {
 		// if a function with such a name was installed. Does nothing and returns
 		// 0x00 otherwise.
 		Library::func_t Library::Uninstall(name_t const& _name) {
-			fciter_t deathee = functions.find(_name);
+			fiter_t deathee = functions.find(_name);
 			func_t result = 0x00;
 			if (deathee != functions.end()) {
 				result = deathee->second;

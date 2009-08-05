@@ -14,7 +14,7 @@ namespace SIN {
 			inline Function(String const& _name): name(_name) { }
 			inline virtual ~Function(void) { }
 
-			String const& Name(void) const;
+			String const& Name(void) const { return name; }
 
 			// Invoke
 			virtual return_type operator ()(SymbolTable const&) const = 0;
