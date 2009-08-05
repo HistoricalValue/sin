@@ -13,7 +13,7 @@ namespace SIN {
 			Function(ASTNode * _node) : node (_node) {}
 
 
-			~Function();
+			~Function(){}
 
 
 			ASTNode *		GetASTNode(void);

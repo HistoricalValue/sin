@@ -30,48 +30,47 @@
 
 
 
+///--------------------------------------------------
+///	static functions and functors
+
+//-----------------------------------------------------------------
+
+struct TableKeyFunctor : public std::unary_function<const SIN::Types::Object::ObjectTableValue &, void> {
+	SIN::Types::Object * keys;
+	TableKeyFunctor(SIN::Types::Object * obj) : keys(obj){}
+	void operator() (const SIN::Types::Object::ObjectTableValue & otv) 
+		{ keys->SetValue( SINEW(SIN::MemoryCellString(otv.first))); }
+};
+
+
+struct ClearTableFunctor : public std::unary_function <const SIN::Types::Object::ObjectTableValue &, void> {
+
+	void operator() (const SIN::Types::Object::ObjectTableValue & otv) {
+		if (otv.second != static_cast<SIN::MemoryCell *>(0)) {
+			if(otv.second->Type() == SIN::MemoryCell::OBJECT_MCT){
+				SIN::MemoryCellObject * obj = static_cast<SIN::MemoryCellObject *>(otv.second);
+
+				//An to exoume 3anadei simenei oti eixame kuklo kai to exoume idi kanei delete
+				if ( !obj->GetValue()->IsMarckedForDeletion() ) {
+					obj->GetValue()->MarckedForDeletion();	
+					SINDELETE(otv.second); 
+				}
+			}
+			else
+				SINDELETE(otv.second); 
+		}
+	}
+};
+
+
+
+
+
 namespace SIN {
 	
 	namespace Types {
 
 		///--------------------		Object		---------------------------///
-
-
-
-		///--------------------------------------------------
-		///	static functions and functors
-
-		//-----------------------------------------------------------------
-		
-		struct TableKeyFunctor : public std::unary_function<const Object::ObjectTableValue &, void> {
-			Object * keys;
-			TableKeyFunctor(Object * obj) : keys(obj){}
-			void operator() (const Object::ObjectTableValue & otv) 
-				{ keys->SetValue( SINEW(MemoryCellString(otv.first))); }
-		};
-
-
-		struct CleanTableFunctor : public std::unary_function <const Object::ObjectTableValue &, void> {
-
-			void operator() (const Object::ObjectTableValue & otv) {
-				if (otv.second != static_cast<MemoryCell *>(0)) {
-					if(otv.second->Type() == MemoryCell::OBJECT_MCT){
-						MemoryCellObject * obj = static_cast<MemoryCellObject *>(otv.second);
-
-						//An to exoume 3anadei simenei oti eixame kuklo kai to exoume idi kanei delete
-						if ( !obj->GetValue()->IsMarckedForDeletion() ) {
-							obj->GetValue()->MarckedForDeletion();	
-							SINDELETE(otv.second); 
-						}
-					}
-					else
-						SINDELETE(otv.second); 
-				}
-			}
-		};
-
-
-
 
 		///--------------------------------------------------
 		///	private methods
@@ -114,7 +113,7 @@ namespace SIN {
 		//destructors
 		Object::~Object() { 
 			SINASSERT(rc == 0 && marckedForDeletion);
-			for_each(table.begin(), table.end(), CleanTableFunctor());
+			for_each(table.begin(), table.end(), ClearTableFunctor());
 			table.clear();
 		}
 

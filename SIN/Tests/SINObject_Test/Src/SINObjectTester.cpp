@@ -16,6 +16,7 @@
 #include "SINAlloc.h"
 #include "SINObject.h"
 #include "SINASTNode.h"
+#include "SINFunction.h"
 #include "SINMemoryCellAST.h"
 #include "SINMemoryCellBool.h"
 #include "SINMemoryCellNumber.h"
@@ -72,7 +73,9 @@ namespace SIN {
 				obj1->SetValue("2", SINEW(MemoryCellNumber(2.0)));				// 2		: 2
 				obj1->SetValue(SINEW(MemoryCellNumber(0.0)));					// 3		: 0
 				obj1->SetValue("NUMBER", SINEW(MemoryCellNumber(3.0)));			// NUMBER	: 0
-				obj1->SetValue("function", SINEW(MemoryCellFunction(&node)));	//function	: Tsting
+				
+				Types::Function function(&node);
+				obj1->SetValue("function", SINEW(MemoryCellFunction(&function)));	//function	: Tsting
 				
 				
 				//Now we will try ti create a cycle inside the first object

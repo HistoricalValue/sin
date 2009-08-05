@@ -467,7 +467,7 @@ namespace SIN{
 		MemoryCellFunction *funcmemcell = static_cast<MemoryCellFunction*>( symTable->LookupLocal( to_string(static_cast<ASTNode*>(_node.GetParent()->begin()->GetParent())->ID()) ) );
 		SINASSERT(funcmemcell->Type() == MemoryCell::FUNCTION_MCT);	//TODO Throw runtime error here
 
-		ASTNode *funcnode = funcmemcell->GetValue();
+		ASTNode *funcnode = funcmemcell->GetValue()->GetASTNode();
 		ASTNode::iterator imp = funcnode->begin();
 		ASTNode *arguments = static_cast<ASTNode*>(&*imp++/*[0]*/);
 		symTable = static_cast<ASTNode*>(&*imp++/*[1]*/)->LocalEnv();
@@ -507,7 +507,7 @@ namespace SIN{
 		MemoryCellFunction *funcmemcell = static_cast<MemoryCellFunction*>(symTable->LookupLocal(static_cast<MemoryCellString*>(tmpmemcell1)->GetValue()));
 		SINASSERT(funcmemcell->Type() == MemoryCell::FUNCTION_MCT);	//TODO Throw runtime error here
 
-		ASTNode::iterator imp = funcmemcell->GetValue()->GetParent()->begin();
+		ASTNode::iterator imp = funcmemcell->GetValue()->GetASTNode()->GetParent()->begin();
 		static_cast<ASTNode*>(&*++imp)->Accept(this);
 	}
 

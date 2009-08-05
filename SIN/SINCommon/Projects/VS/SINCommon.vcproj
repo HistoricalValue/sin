@@ -333,10 +333,6 @@
 					>
 				</File>
 				<File
-					RelativePath="..\..\Include\SINLibFunction.h"
-					>
-				</File>
-				<File
 					RelativePath="..\..\Include\SINObject.h"
 					>
 				</File>

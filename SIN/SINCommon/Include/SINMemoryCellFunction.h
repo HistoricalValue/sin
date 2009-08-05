@@ -2,7 +2,7 @@
 #define __SIN_MEMORY_CELL_AST_H__FUNCTION_H__
 
 
-#include "SINASTNode.h"
+#include "SINFunction.h"
 #include "SINMemoryCell.h"
 
 
@@ -13,18 +13,18 @@ namespace SIN {
 	public:
 
 		MemoryCellFunction(void) : MemoryCell() {}
-		MemoryCellFunction(ASTNode *functionNode) : MemoryCell(), value(functionNode) {}
+		MemoryCellFunction(Types::Function * function) : MemoryCell(), value(function) {}
 		~MemoryCellFunction() {}
 
 		virtual MemoryCell *	Clone(void);
 		virtual MemoryCellType	Type (void);
 
-		void					SetValue (const ASTNode *functionNode);
-		ASTNode *				GetValue (void);
+		void					SetValue (const Types::Function * function);
+		SIN::Types::Function *	GetValue (void);
 
 	private:
 
-		ASTNode *value;
+		Types::Function * value;
 	};
 }
 

@@ -22,15 +22,15 @@ namespace SIN {
 
 	//-----------------------------------------------------------------
 	
-	void MemoryCellFunction::SetValue (const ASTNode *functionNode)	{ 
-		SINASSERT(functionNode);
-		value = const_cast<ASTNode *>(functionNode); 
+	void MemoryCellFunction::SetValue (const Types::Function * function)	{ 
+		SINASSERT(function);
+		value = const_cast<Types::Function *>(function); 
 	}
 
 
 	//-----------------------------------------------------------------
 	
-	ASTNode * MemoryCellFunction::GetValue (void) { 
+	SIN::Types::Function * MemoryCellFunction::GetValue (void) { 
 		SINASSERT(value);
 		return value; 
 	}
