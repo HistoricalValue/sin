@@ -14,6 +14,7 @@ PROJECTS = $(addprefix $(SIN_BASE_DIR)/, \
                 SymbolTable \
                 Alloc \
                 Parser \
+                Object \
                 Run )) \
         Tests/SINTest \
         SINParser \

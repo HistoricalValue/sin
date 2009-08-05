@@ -9,7 +9,7 @@
         <array_repeat_threshold>10</array_repeat_threshold>
       </gdbdebugger>
       <gizmo_options version="1">
-        <dataprovider>1</dataprovider>
+        <profileOnRun>false</profileOnRun>
       </gizmo_options>
       <runprofile version="5">
         <args></args>

@@ -52,3 +52,4 @@ SIN/Tests/SINAlloc_Test/Src/SINAllocTester.d
 SIN/SINRuntime/Src/SINTreeEvaluationVisitor.d
 SIN/Tests/SINRun_Test/Src/SINRunTester.d
 SIN/SINmain/Projects/Linux_GNU/objectTestOutput.txt
+SIN/Tests/SINAST_Test/Src/SINAST_StrictTreeNode_Tester.d

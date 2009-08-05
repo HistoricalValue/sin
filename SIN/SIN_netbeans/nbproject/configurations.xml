@@ -53,6 +53,7 @@
           <itemPath>../SINCommon/Include/SINBufferedOutputStream.h</itemPath>
           <itemPath>../SINCommon/Include/SINConstants.h</itemPath>
           <itemPath>../SINCommon/Include/SINFileOutputStream.h</itemPath>
+          <itemPath>../SINCommon/Include/SINFunction.h</itemPath>
           <itemPath>../SINCommon/Include/SINInputStream.h</itemPath>
           <itemPath>../SINCommon/Include/SINMemoryCell.h</itemPath>
           <itemPath>../SINCommon/Include/SINMemoryCellAST.h</itemPath>
@@ -75,6 +76,7 @@
           <itemPath>../SINCommon/Src/SINBufferedOutputStream.cpp</itemPath>
           <itemPath>../SINCommon/Src/SINCommon.cpp</itemPath>
           <itemPath>../SINCommon/Src/SINFileOutputStream.cpp</itemPath>
+          <itemPath>../SINCommon/Src/SINFucntion.cpp</itemPath>
           <itemPath>../SINCommon/Src/SINInputStream.cpp</itemPath>
           <itemPath>../SINCommon/Src/SINMemoryCell.cpp</itemPath>
           <itemPath>../SINCommon/Src/SINMemoryCellAST.cpp</itemPath>

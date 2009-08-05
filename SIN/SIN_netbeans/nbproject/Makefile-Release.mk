@@ -78,6 +78,7 @@ OBJECTFILES= \
 	${OBJECTDIR}/_ext/_DOTDOT/Tests/SINTest/Src/SINTestCollection.o \
 	${OBJECTDIR}/_ext/_DOTDOT/SINCommon/Src/SINOutputStream.o \
 	${OBJECTDIR}/_ext/_DOTDOT/SINAST/Src/SINASTMITTreeVisualizerXMLProducerVisitor.o \
+	${OBJECTDIR}/_ext/_DOTDOT/SINCommon/Src/SINFucntion.o \
 	${OBJECTDIR}/_ext/_DOTDOT/SINCommon/Src/SIN.o \
 	${OBJECTDIR}/_ext/_DOTDOT/SINAST/Src/SINASTTreeVisualisationVisitor.o \
 	${OBJECTDIR}/_ext/_DOTDOT/SINCommon/Src/SINMemoryCellBool.o \
@@ -343,6 +344,11 @@ ${OBJECTDIR}/_ext/_DOTDOT/SINAST/Src/SINASTMITTreeVisualizerXMLProducerVisitor.o
 	${MKDIR} -p ${OBJECTDIR}/_ext/_DOTDOT/SINAST/Src
 	${RM} $@.d
 	$(COMPILE.cc) -O2 -MMD -MP -MF $@.d -o ${OBJECTDIR}/_ext/_DOTDOT/SINAST/Src/SINASTMITTreeVisualizerXMLProducerVisitor.o ../SINAST/Src/SINASTMITTreeVisualizerXMLProducerVisitor.cpp
+
+${OBJECTDIR}/_ext/_DOTDOT/SINCommon/Src/SINFucntion.o: nbproject/Makefile-${CND_CONF}.mk ../SINCommon/Src/SINFucntion.cpp 
+	${MKDIR} -p ${OBJECTDIR}/_ext/_DOTDOT/SINCommon/Src
+	${RM} $@.d
+	$(COMPILE.cc) -O2 -MMD -MP -MF $@.d -o ${OBJECTDIR}/_ext/_DOTDOT/SINCommon/Src/SINFucntion.o ../SINCommon/Src/SINFucntion.cpp
 
 ${OBJECTDIR}/_ext/_DOTDOT/SINCommon/Src/SIN.o: nbproject/Makefile-${CND_CONF}.mk ../SINCommon/Src/SIN.cpp 
 	${MKDIR} -p ${OBJECTDIR}/_ext/_DOTDOT/SINCommon/Src
