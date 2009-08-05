@@ -319,8 +319,6 @@
           </linkerLibItems>
         </linkerTool>
       </compileType>
-      <item path="../Tests/SINAST_Test/Src/SINAST_Tester.cpp" ex="true" tool="1">
-      </item>
     </conf>
     <conf name="Release" type="1">
       <toolsSet>

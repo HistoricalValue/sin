@@ -1,3 +1,5 @@
+#if 0
+
 #include "SINASTTester.h"
 
 #include "SINASTNode.h"
@@ -194,3 +196,7 @@ namespace SIN {
         }
     }
 }
+
+
+#endif // 0
+

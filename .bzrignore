@@ -53,3 +53,16 @@ SIN/SINRuntime/Src/SINTreeEvaluationVisitor.d
 SIN/Tests/SINRun_Test/Src/SINRunTester.d
 SIN/SINmain/Projects/Linux_GNU/objectTestOutput.txt
 SIN/Tests/SINAST_Test/Src/SINAST_StrictTreeNode_Tester.d
+SIN/SINCommon/Src/SINFucntion.d
+SIN/SINCommon/Src/SINMemoryCell.d
+SIN/SINCommon/Src/SINMemoryCellAST.d
+SIN/SINCommon/Src/SINMemoryCellBool.d
+SIN/SINCommon/Src/SINMemoryCellFunction.d
+SIN/SINCommon/Src/SINMemoryCellNil.d
+SIN/SINCommon/Src/SINMemoryCellNumber.d
+SIN/SINCommon/Src/SINMemoryCellObject.d
+SIN/SINCommon/Src/SINMemoryCellString.d
+SIN/SINCommon/Src/SINObject.d
+SIN/SINCommon/Src/SINSymbolTable.d
+SIN/Tests/SINAST_Test/Src/SINAST_Tester_main.d
+SIN/Tests/SINObject_Test/Src/SINObjectTester.d
