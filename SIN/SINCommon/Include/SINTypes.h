@@ -1,7 +1,10 @@
 #ifndef __SIN_TYPES_H__
 #define __SIN_TYPES_H__
 
+
 #include "SINString.h"
+
+
 
 //TODO we must create types for object, functions 
 
@@ -21,10 +24,12 @@ namespace SIN {
 		};
 
 		/** SIN internal constant values' representation types */
-		typedef bool		Boolean;
-		typedef double      Number;
-		typedef String      String_t;
-		typedef class Nil   Nil_t;
+		typedef bool			Boolean;
+		typedef double			Number;
+		typedef String			String_t;
+		typedef class Nil		Nil_t;
+		typedef class Object	Object_t;
+		typedef class Function	Function_t;
 	}	//namespace Types
 
 	extern String const to_string(SIN::Types::Nil_t const _nil);
