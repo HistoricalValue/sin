@@ -224,7 +224,11 @@
 		/>
 		<ProjectReference
 			ReferencedProjectIdentifier="{D6319BFB-3D16-4136-A931-B736E8116DC6}"
-			RelativePathToProject=".\SINLibraryFunctions\Projects\VS\SINLibraryFunctions.vcproj"
+			RelativePathToProject=".\SINFunctionLibrary\Projects\VS\SINFunctionLibrary.vcproj"
+		/>
+		<ProjectReference
+			ReferencedProjectIdentifier="{58A2FBCF-DAF5-4F2F-95AE-B11EDF558DB2}"
+			RelativePathToProject=".\Tests\SINFunctionLibrary_Test\Projects\VS\SINFunctionLibrary_Tester.vcproj"
 		/>
 	</References>
 	<Files>
