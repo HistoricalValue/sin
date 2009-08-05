@@ -3,7 +3,7 @@
 
 ==== Do once ====
 
-*[016] Make a reserved type for all SIN-types and to_string them
+
 
 *[025] Implement operator == for ASTNode
 
@@ -98,3 +98,5 @@
 * Refactor SINTree: make it appropriate for bottom-up parsing (linking of nodes
   correctly, notification of ancestry changes, etc)
   [ rudolf | DID IT!]
+*[016] Make a reserved type for all SIN-types and to_string them
+  [ koutsop | done]
