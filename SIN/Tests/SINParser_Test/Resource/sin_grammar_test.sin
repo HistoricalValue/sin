@@ -1,11 +1,14 @@
 //Here we are testing the grammar of SIN
 
 a = [
+	function A() {},	//same with "A" : (function (){})
 	"a" : 12,
 	13,
-	function A() {}	//same with "A" : (function (){})
-	,14,
-	"a" : 12
+	function B() {},	//same with "B" : (function (){})
+	14,
+	"a" : 12,
+	"Function" : (function (){}),
+	"Function2" : (function (){})
 ];
 
 
