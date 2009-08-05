@@ -25,7 +25,7 @@ namespace SIN {
 
 	//-----------------------------------------------------------------
 	
-	const Number & MemoryCellNumber::GetValue (void) const	
+	Number & MemoryCellNumber::GetValue (void) 	
 		{ return value; }
 
 

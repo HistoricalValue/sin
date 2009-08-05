@@ -20,7 +20,7 @@ namespace SIN {
 		virtual MemoryCellType	Type(void);
 
 		void					SetValue (const Boolean & b);
-		const bool				GetValue (void) const;
+		Boolean &				GetValue (void);
 
 	private:
 		Boolean value;

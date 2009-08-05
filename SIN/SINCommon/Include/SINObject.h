@@ -37,7 +37,9 @@ namespace SIN {
 		void			SetValue(const String &, MemoryCell *);		
 		MemoryCell*		GetValue(const String &) const;
 		
-
+		void			MarckedForDeletion(void);
+		bool			IsMarckedForDeletion(void) const;
+		
 		//e.g. a.#keys and a.#size 
 		//create a new object with new. Caller is responsible to delete the new object
 		SINObject *		ObjectKeys(void) const;
@@ -58,6 +60,7 @@ namespace SIN {
 		bool operator!= (const SINObject &) const;
 
 	private:
+		bool		marckedForDeletion;
 		unsigned	rc;		//The reference counter of the object
 		unsigned	id;		//The signle id of the object
 		unsigned	index;	//Current arithemtic index for the next key
@@ -84,16 +87,8 @@ namespace SIN {
 		static const unsigned		NextID(void);
 		const unsigned				InstanceNextID(void);
 
-		static void					InsertObjectID(const unsigned);
-		static bool					ExistsObjectID(const unsigned);
-
-		void						InstanceInsertObjectID(const unsigned);
-		bool						InstanceExistsObjectID(const unsigned);
-
-
 	private:
 		unsigned			next_id;
-		std::set<unsigned>	objectsId;
 
 		SinObjectFactory(void);
 		~SinObjectFactory(void);

@@ -91,7 +91,8 @@ namespace SIN {
 				fout << "\n\n --------------- Keys ---------------\n\n";
 				SINObject * obj_ptr =  obj1->ObjectKeys();
 				fout <<	obj_ptr->ToString();
-
+				
+				obj_ptr->MarckedForDeletion();
 				SINDELETE(obj_ptr);
 				SINDELETE(object1_mc);
 			}

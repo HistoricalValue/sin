@@ -16,10 +16,8 @@ namespace SIN {
 
 
 		const ASTNode *	GetASTNode(void) const;
-		const String &  GetName(void) const;
-
-		void SetName(const String &);
-		void SetASTNode(const ASTNode *);
+		const String &  Name(void) const;
+		void			SetASTNode(const ASTNode *);
 
 
 	private:

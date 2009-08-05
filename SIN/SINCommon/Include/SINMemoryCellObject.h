@@ -21,7 +21,7 @@ namespace SIN {
 		virtual MemoryCellType	Type(void);
 	
 		void					SetValue (const SINObject *);
-		const SINObject *		GetValue (void) const;
+		SINObject *				GetValue (void);
 
 	private:
 		SINObject * value;

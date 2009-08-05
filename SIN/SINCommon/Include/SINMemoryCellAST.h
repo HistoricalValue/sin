@@ -19,7 +19,7 @@ namespace SIN {
 
 		
 		void						SetValue (const ASTNode*);
-		const ASTNode &				GetValue (void) const;
+		ASTNode *					GetValue (void);
 
 
 	private:

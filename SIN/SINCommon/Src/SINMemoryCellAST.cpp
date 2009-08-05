@@ -28,9 +28,9 @@ namespace SIN {
 
 	//-----------------------------------------------------------------
 
-	const ASTNode & MemoryCellAST::GetValue (void) const { 
+	ASTNode * MemoryCellAST::GetValue (void) { 
 		SINASSERT(value);
-		return *value; 
+		return value; 
 	}
 	
 }

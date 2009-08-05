@@ -52,21 +52,15 @@ namespace SIN {
 
 
 	struct CleanTableFunctor : public std::unary_function <const SINObject::ObjectTableValue &, void> {
-		//std::set<unsigned> objectsId;
-
-		CleanTableFunctor(SINObject * obj) { 
-			if ( !SinObjectFactory::ExistsObjectID(obj->ID()) )
-				SinObjectFactory::InsertObjectID(obj->ID());
-		}
 
 		void operator() (const SINObject::ObjectTableValue & otv) {
-			
 			if (otv.second != static_cast<MemoryCell *>(0)) {
 				if(otv.second->Type() == MemoryCell::OBJECT_MCT){
 					MemoryCellObject * obj = static_cast<MemoryCellObject *>(otv.second);
+
 					//An to exoume 3anadei simenei oti eixame kuklo kai to exoume idi kanei delete
-					if ( !SinObjectFactory::ExistsObjectID(obj->GetValue()->ID()) ) {
-						SinObjectFactory::InsertObjectID(obj->GetValue()->ID());
+					if ( !obj->GetValue()->IsMarckedForDeletion() ) {
+						obj->GetValue()->MarckedForDeletion();	
 						SINDELETE(otv.second); 
 					}
 				}
@@ -112,15 +106,15 @@ namespace SIN {
 	
 	//-----------------------------------------------------------------
 	//constructors
-	SINObject::SINObject() : rc(0), id(SinObjectFactory::NextID()), index(0) {}
+	SINObject::SINObject() : marckedForDeletion(false), rc(0), id(SinObjectFactory::NextID()), index(0) {}
 	
 
 
 	//-----------------------------------------------------------------
 	//destructors
 	SINObject::~SINObject() { 
-		SINASSERT(rc == 0);
-		for_each(table.begin(), table.end(), CleanTableFunctor(this));
+		SINASSERT(rc == 0 && marckedForDeletion);
+		for_each(table.begin(), table.end(), CleanTableFunctor());
 		table.clear();
 	}
 
@@ -183,6 +177,19 @@ namespace SIN {
 		{ SetValue(otv.first, otv.second); }
 	
 	
+	//-----------------------------------------------------------------
+	
+	void SINObject::MarckedForDeletion(void)
+		{ marckedForDeletion = true;}
+
+
+
+	//-----------------------------------------------------------------
+	
+	bool SINObject::IsMarckedForDeletion(void) const
+		{ return marckedForDeletion; }
+
+
 	//-----------------------------------------------------------------
 
 	MemoryCell * SINObject::GetValue (const String & key) const {
@@ -336,35 +343,10 @@ namespace SIN {
 	
 
 	//---------------------------------------------------
-
-	void SinObjectFactory::InsertObjectID(const unsigned id) 
-		{ SingletonInstance().InstanceInsertObjectID(id); }
-
-
-	//---------------------------------------------------
-
-	bool SinObjectFactory::ExistsObjectID(const unsigned id)
-		{ return SingletonInstance().InstanceExistsObjectID(id); }
-
-
-	//---------------------------------------------------
 	// instance factory methods
 
 	//---------------------------------------------------
 	unsigned const SinObjectFactory::InstanceNextID(void) 
 		{ return next_id++; }
-
-
-	//---------------------------------------------------
-
-	void SinObjectFactory::InstanceInsertObjectID(const unsigned id)
-		{ objectsId.insert(id); }
-	
-
-	//---------------------------------------------------
-
-	bool SinObjectFactory::InstanceExistsObjectID(const unsigned id) 
-		{ return objectsId.find(id) != objectsId.end() ? true : false; }
-
 
 }

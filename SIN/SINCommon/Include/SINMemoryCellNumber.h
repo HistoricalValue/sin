@@ -22,7 +22,7 @@ namespace SIN {
 
 
 		void					SetValue (const Number & num);
-		const Number &			GetValue (void) const;
+		Number &				GetValue (void);
 
 	private:
 		Number value;

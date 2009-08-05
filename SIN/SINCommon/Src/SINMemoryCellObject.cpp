@@ -11,6 +11,7 @@ namespace SIN {
 		SINASSERT(value);
 		value->DecrementReferenceCounter();
 		if (value->IsUnreferenced()) {
+			value->MarckedForDeletion();
 			delete value;
 			value = static_cast<SINObject *>(0);
 		}
@@ -39,7 +40,7 @@ namespace SIN {
 
 	//-----------------------------------------------------------------	
 
-	const SINObject * MemoryCellObject::GetValue (void) const { 
+	SINObject * MemoryCellObject::GetValue (void){ 
 		SINASSERT(value);	
 		return value; 
 	}

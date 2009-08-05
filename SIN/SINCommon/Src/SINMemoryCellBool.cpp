@@ -26,7 +26,7 @@ namespace SIN {
 
 	//-----------------------------------------------------------------
 
-	const bool MemoryCellBool::GetValue (void) const	
+	Boolean & MemoryCellBool::GetValue (void) 	
 		{ return value; }
 
 }

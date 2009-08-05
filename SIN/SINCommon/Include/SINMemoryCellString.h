@@ -20,7 +20,7 @@ namespace SIN {
 		virtual MemoryCellType	Type (void);
 
 		void					SetValue (const String & s);
-		const String &			GetValue (void) const;
+		String &				GetValue (void);
 
 
 	private:

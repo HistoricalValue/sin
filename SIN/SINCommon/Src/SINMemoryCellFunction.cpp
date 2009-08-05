@@ -28,7 +28,7 @@ namespace SIN {
 
 	//-----------------------------------------------------------------
 	
-	ASTNode * MemoryCellFunction::GetValue (void) const	{ 
+	ASTNode * MemoryCellFunction::GetValue (void) { 
 		SINASSERT(value);
 		return value; 
 	}

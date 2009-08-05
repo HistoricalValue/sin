@@ -20,7 +20,7 @@ namespace SIN {
 		virtual MemoryCellType	Type (void);
 
 		void					SetValue (const ASTNode *functionNode);
-		ASTNode *				GetValue (void) const;
+		ASTNode *				GetValue (void);
 
 	private:
 
