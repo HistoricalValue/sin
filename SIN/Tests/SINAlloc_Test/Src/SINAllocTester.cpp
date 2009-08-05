@@ -210,7 +210,8 @@ namespace SIN {
 			} } // test_Alloc2()
 
 			void test(Status& _status) {
-				SINASSERT(SIN::Alloc::Initialise());
+				bool result = SIN::Alloc::Initialise();
+				SINASSERT(result);
 
 				_status.at_line = 0;
 				test_Alloc(_status.at_line);
