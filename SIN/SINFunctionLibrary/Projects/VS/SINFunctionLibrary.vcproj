@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="windows-1253"?>
 <VisualStudioProject
 	ProjectType="Visual C++"
-	Version="9.00"
+	Version="9,00"
 	Name="SINFunctionLibrary"
 	ProjectGUID="{D6319BFB-3D16-4136-A931-B736E8116DC6}"
 	RootNamespace="SINFunctionLibrary"
@@ -151,7 +151,7 @@
 			UniqueIdentifier="{4FC737F1-C7A5-4376-A066-2A32D752A2FF}"
 			>
 			<File
-				RelativePath="..\..\Src\Temp.cpp"
+				RelativePath="..\..\Src\SINLibrary.cpp"
 				>
 			</File>
 		</Filter>
@@ -160,6 +160,14 @@
 			Filter="h;hpp;hxx;hm;inl;inc;xsd"
 			UniqueIdentifier="{93995380-89BD-4b04-88EB-625FBE52EBFB}"
 			>
+			<File
+				RelativePath="..\..\Include\SINFunction.h"
+				>
+			</File>
+			<File
+				RelativePath="..\..\Include\SINLibrary.h"
+				>
+			</File>
 		</Filter>
 		<Filter
 			Name="Resource Files"
