@@ -1,4 +1,15 @@
 //Here we are testing the grammar of SIN
+
+a = [
+	"a" : 12,
+	13,
+	function A() {}	//same with "A" : (function (){})
+	,14,
+	"a" : 12
+];
+
+
+
 a = b;
 a = [];
 

@@ -283,12 +283,14 @@ objectdef:		'[' ']'								{	SIN::ParserManage::Manage_ObjectDefinition_EmptyObj
 			
 objectlist:	 	expr objectlists					{	SIN::ParserManage::Manage_ObjectList_ExpressionObjectLists($1, $2, &($$), &fabpa);					}
 				|	expr ':' expr objectlists		{	SIN::ParserManage::Manage_ObjectList_ExpressionExpressionObjectLists($1, $3, $4, &($$), &fabpa);	}
+				|	funcdef objectlists				{}
 				;
 
 
 
 objectlists:	',' expr objectlists				{	SIN::ParserManage::Manage_ObjectList_ExpressionObjectLists($2, $3, &($$), &fabpa);					}
 				|	',' expr ':' expr objectlists	{	SIN::ParserManage::Manage_ObjectList_ExpressionExpressionObjectLists($2, $4, $5, &($$), &fabpa);	}
+				|	',' funcdef objectlists			{}
 				|									{	SIN::ParserManage::Manage_ObjectList_Empty(&($$), &fabpa);											}
 				;
 
@@ -299,12 +301,11 @@ block:			'{' {} stmtd '}'					{	SIN::ParserManage::Manage_Block($3, &($$), &fabp
 
 
 
-stmtd:			stmt stmtd	{	SIN::ParserManage::Manage_Statements($1, $2, &($$), &fabpa);	}
-				|			{	SIN::ParserManage::Manage_Statements_Empty(&($$), &fabpa);		}
+stmtd:			stmt stmtd							{	SIN::ParserManage::Manage_Statements($1, $2, &($$), &fabpa);	}
+				|									{	SIN::ParserManage::Manage_Statements_Empty(&($$), &fabpa);		}
 				;
-
-
-
+				
+				
 funcdef:		FUNCTION ID	'(' idlist ')' block	{	SIN::ParserManage::Manage_FunctionDefinition_Function($2, $4, $6, &($$), &fabpa);	}
 				|	FUNCTION '(' idlist ')' block	{	SIN::ParserManage::Manage_FunctionDefinition_LamdaFunction($3, $5, &($$), &fabpa);	}
 				;
