@@ -15,18 +15,18 @@ namespace SIN {
 
 	namespace Types {
 
-		class SINObject {
+		class Object {
 		public:
 			typedef std::list<String>				ObjectKeysList;
 			typedef std::map<String, MemoryCell *>	ObjectTable;
 			typedef std::pair<String, MemoryCell *> ObjectTableValue;
 
 			//Constructors
-			SINObject();
-			//SINObject(const SINObject &);
+			Object();
+			//Object(const Object &);
 
 			//destructor
-			~SINObject();
+			~Object();
 
 			unsigned		ID() const;
 			bool			IsUnreferenced(void) const;
@@ -45,7 +45,7 @@ namespace SIN {
 			
 			//e.g. a.#keys and a.#size 
 			//create a new object with new. Caller is responsible to delete the new object
-			SINObject *		ObjectKeys(void) const;
+			Object *		ObjectKeys(void) const;
 			unsigned		NumberOfElements (void) const;
 			const String	ToString(void) const;
 
@@ -59,8 +59,8 @@ namespace SIN {
 			bool operator== (const Number) const;		
 			bool operator!= (const Number) const;		
 
-			bool operator== (const SINObject &) const;
-			bool operator!= (const SINObject &) const;
+			bool operator== (const Object &) const;
+			bool operator!= (const Object &) const;
 
 		private:
 			bool		marckedForDeletion;
@@ -96,8 +96,8 @@ namespace SIN {
 			static bool					singleton_created;
 		}; // class SinObjectFactory
 	}	//namespace Types
-	extern String const to_string(SIN::Types::SINObject const * val);
-	extern String const to_string(SIN::Types::SINObject const & val);
+	extern String const to_string(SIN::Types::Object const * val);
+	extern String const to_string(SIN::Types::Object const & val);
 
 }	//namespace SIN
 

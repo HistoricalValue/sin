@@ -21,7 +21,7 @@
 									static_cast<TYPE *>(i->second)->GetValue();		\
 									break
 
-#define TO_STRING_APPEND_OBJECT()	{const SINObject * obj = static_cast<MemoryCellObject *>(i->second)->GetValue();		\
+#define TO_STRING_APPEND_OBJECT()	{const Object * obj = static_cast<MemoryCellObject *>(i->second)->GetValue();		\
 									if (parentsId.find(obj->ID()) !=  parentsId.end())						\
 										str << i->first << ":self-->Object(" << obj->ID() << ")<--";					\
 									else																				\
@@ -34,7 +34,7 @@ namespace SIN {
 	
 	namespace Types {
 
-		///--------------------		SINObject		---------------------------///
+		///--------------------		Object		---------------------------///
 
 
 
@@ -43,17 +43,17 @@ namespace SIN {
 
 		//-----------------------------------------------------------------
 		
-		struct TableKeyFunctor : public std::unary_function<const SINObject::ObjectTableValue &, void> {
-			SINObject * keys;
-			TableKeyFunctor(SINObject * obj) : keys(obj){}
-			void operator() (const SINObject::ObjectTableValue & otv) 
+		struct TableKeyFunctor : public std::unary_function<const Object::ObjectTableValue &, void> {
+			Object * keys;
+			TableKeyFunctor(Object * obj) : keys(obj){}
+			void operator() (const Object::ObjectTableValue & otv) 
 				{ keys->SetValue( SINEW(MemoryCellString(otv.first))); }
 		};
 
 
-		struct CleanTableFunctor : public std::unary_function <const SINObject::ObjectTableValue &, void> {
+		struct CleanTableFunctor : public std::unary_function <const Object::ObjectTableValue &, void> {
 
-			void operator() (const SINObject::ObjectTableValue & otv) {
+			void operator() (const Object::ObjectTableValue & otv) {
 				if (otv.second != static_cast<MemoryCell *>(0)) {
 					if(otv.second->Type() == MemoryCell::OBJECT_MCT){
 						MemoryCellObject * obj = static_cast<MemoryCellObject *>(otv.second);
@@ -78,7 +78,7 @@ namespace SIN {
 		
 		//-----------------------------------------------------------------
 
-		const String SINObject::ToString(std::set<unsigned> & parentsId) const {
+		const String Object::ToString(std::set<unsigned> & parentsId) const {
 			
 			String str = String() << "Object(" << id << "){";
 			parentsId.insert(id);
@@ -106,13 +106,13 @@ namespace SIN {
 		
 		//-----------------------------------------------------------------
 		//constructors
-		SINObject::SINObject() : marckedForDeletion(false), rc(0), id(SinObjectFactory::NextID()), index(0) {}
+		Object::Object() : marckedForDeletion(false), rc(0), id(SinObjectFactory::NextID()), index(0) {}
 		
 
 
 		//-----------------------------------------------------------------
 		//destructors
-		SINObject::~SINObject() { 
+		Object::~Object() { 
 			SINASSERT(rc == 0 && marckedForDeletion);
 			for_each(table.begin(), table.end(), CleanTableFunctor());
 			table.clear();
@@ -122,32 +122,32 @@ namespace SIN {
 
 		//-----------------------------------------------------------------
 
-		unsigned SINObject::ID() const 
+		unsigned Object::ID() const 
 			{ return id; }
 
 
 
 		//-----------------------------------------------------------------
 
-		bool SINObject::IsUnreferenced (void) const 
+		bool Object::IsUnreferenced (void) const 
 			{ return rc == 0 ? true: false; }
 
 		
 		//-----------------------------------------------------------------
 
-		unsigned SINObject::ReferenceCounter (void) const 
+		unsigned Object::ReferenceCounter (void) const 
 			{ return rc; }
 		
 		
 		//-----------------------------------------------------------------
 
-		void SINObject::IncrementReferenceCounter (void)
+		void Object::IncrementReferenceCounter (void)
 			{ ++rc;}
 		
 
 		//-----------------------------------------------------------------
 
-		void SINObject::DecrementReferenceCounter (void) { 
+		void Object::DecrementReferenceCounter (void) { 
 			SINASSERT(rc > 0);
 			--rc;
 		}
@@ -156,7 +156,7 @@ namespace SIN {
 
 		//-----------------------------------------------------------------
 		
-		void SINObject::SetValue(MemoryCell * value) { 
+		void Object::SetValue(MemoryCell * value) { 
 			String key = to_string(index++);
 
 			while(table.find(key) != table.end())
@@ -167,50 +167,50 @@ namespace SIN {
 
 		//-----------------------------------------------------------------
 
-		void SINObject::SetValue (const String & key, MemoryCell * value) 
+		void Object::SetValue (const String & key, MemoryCell * value) 
 			{ table[key] = value; }
 
 
 		//-----------------------------------------------------------------
 
-		void SINObject::SetValue (const ObjectTableValue & otv) 
+		void Object::SetValue (const ObjectTableValue & otv) 
 			{ SetValue(otv.first, otv.second); }
 		
 		
 		//-----------------------------------------------------------------
 		
-		void SINObject::MarckedForDeletion(void)
+		void Object::MarckedForDeletion(void)
 			{ marckedForDeletion = true;}
 
 
 
 		//-----------------------------------------------------------------
 		
-		bool SINObject::IsMarckedForDeletion(void) const
+		bool Object::IsMarckedForDeletion(void) const
 			{ return marckedForDeletion; }
 
 
 		//-----------------------------------------------------------------
 
-		MemoryCell * SINObject::GetValue (const String & key) const {
+		MemoryCell * Object::GetValue (const String & key) const {
 			ObjectTable::const_iterator result = table.find(key);
 			return result != table.end() ? result->second : static_cast<MemoryCell *>(0);
 		}
 
 
 		//-----------------------------------------------------------------
-		SINObject *	 SINObject::ObjectKeys(void) const 
-			{ return std::for_each(table.begin(), table.end(), TableKeyFunctor(SINEW(SINObject))).keys; }
+		Object *	 Object::ObjectKeys(void) const 
+			{ return std::for_each(table.begin(), table.end(), TableKeyFunctor(SINEW(Object))).keys; }
 
 
 		//-----------------------------------------------------------------
-		unsigned SINObject::NumberOfElements (void) const  
+		unsigned Object::NumberOfElements (void) const  
 			{ return table.size(); }
 
 
 		//-----------------------------------------------------------------
 
-		const String SINObject::ToString(void) const {
+		const String Object::ToString(void) const {
 			std::set<unsigned> parents;
 			return ToString(parents); //If we wont to eleminat the last ',' we must do this: Erase(1, str_size - 3);
 		}
@@ -218,49 +218,49 @@ namespace SIN {
 
 		//-----------------------------------------------------------------
 
-		bool SINObject::operator== (const Nil_t & n) const 
+		bool Object::operator== (const Nil_t & n) const 
 			{ return false; }
 		
 		
 		//-----------------------------------------------------------------
 
-		bool SINObject::operator!= (const Nil_t & n) const 
+		bool Object::operator!= (const Nil_t & n) const 
 			{ return true; }
 		
 
 		//-----------------------------------------------------------------
 
-		bool SINObject::operator== (const String & str) const 
+		bool Object::operator== (const String & str) const 
 			{ return false; }
 
 
 		//-----------------------------------------------------------------
 		
-		bool SINObject::operator!= (const String & str) const 
+		bool Object::operator!= (const String & str) const 
 			{ return true; }
 		
 
 		//-----------------------------------------------------------------
 
-		bool SINObject::operator== (const Number num) const 
+		bool Object::operator== (const Number num) const 
 			{ return false; }
 		
 
 		//-----------------------------------------------------------------
 
-		bool SINObject::operator!= (const Number num) const 
+		bool Object::operator!= (const Number num) const 
 			{ return true; }
 		
 
 		//-----------------------------------------------------------------
 		
-		bool SINObject::operator== (const SINObject & obj) const 
+		bool Object::operator== (const Object & obj) const 
 			{ return id == obj.ID(); }
 
 
 		//-----------------------------------------------------------------
 		
-		bool SINObject::operator!= (const SINObject & obj) const 
+		bool Object::operator!= (const Object & obj) const 
 			{ return id != obj.ID(); }
 
 
@@ -339,13 +339,13 @@ namespace SIN {
 
 	//-----------------------------------------------------------------
 	
-	String const to_string(SIN::Types::SINObject const & val) 
+	String const to_string(SIN::Types::Object const & val) 
 		{ return val.ToString(); }
 	
 
 	//-----------------------------------------------------------------
 	
-	String const to_string(SIN::Types::SINObject const * val) 
+	String const to_string(SIN::Types::Object const * val) 
 		{ return val->ToString(); }
 
 }	//namespace SIN

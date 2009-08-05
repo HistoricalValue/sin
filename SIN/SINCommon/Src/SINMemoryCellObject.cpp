@@ -15,7 +15,7 @@ namespace SIN {
 		if (value->IsUnreferenced()) {
 			value->MarckedForDeletion();
 			delete value;
-			value = static_cast<SINObject *>(0);
+			value = static_cast<Object *>(0);
 		}
 	}
 
@@ -34,15 +34,15 @@ namespace SIN {
 
 	//-----------------------------------------------------------------	
 
-	void MemoryCellObject::SetValue (const SINObject * obj) { 
+	void MemoryCellObject::SetValue (const Object * obj) { 
 		SINASSERT(obj);	
-		value = const_cast<SINObject *>(obj); 
+		value = const_cast<Object *>(obj); 
 	}
 	
 
 	//-----------------------------------------------------------------	
 
-	SINObject * MemoryCellObject::GetValue (void){ 
+	Object * MemoryCellObject::GetValue (void){ 
 		SINASSERT(value);	
 		return value; 
 	}
