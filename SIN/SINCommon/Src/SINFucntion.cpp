@@ -2,22 +2,37 @@
 
 
 namespace SIN {
-	//const ASTNode *	SINFunction::GetASTNode(void) const;
-	//const String &  SINFunction::Name(void) const;
-	//void			SINFunction::SetASTNode(const ASTNode *);
+	namespace Types {
 
+
+		//-----------------------------------------------------------------
+		
+		ASTNode * Function::GetASTNode(void) 
+			{ return node; }
+		
+
+		//-----------------------------------------------------------------
+
+		const String &  Function::Name(void) const
+			{ return node->Name(); }
+		
+		
+		void Function::SetASTNode(const ASTNode * _node)
+			{ node = const_cast<ASTNode *>(_node); }
+	
+	}	//namespace Types
 
 	
 	//-----------------------------------------------------------------
 
-	//String const to_string(SIN::SINFunction const & val)
-	//	{ return val.node.Name(); }
+	String const to_string(SIN::Types::Function const & val)
+		{ return val.Name(); }
 
 
-	////-----------------------------------------------------------------
+	//-----------------------------------------------------------------
 
-	//String const to_string(SIN::SINFunction const * val)
-	//	{ return val->node->Name(); }
-	//
+	String const to_string(SIN::Types::Function const * val)
+		{ return val->Name(); }
+	
 
-}
+}	//namespace SIN
