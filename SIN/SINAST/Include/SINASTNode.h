@@ -12,7 +12,7 @@
 #include "SINSymbolTable.h"
 
 
-using namespace SIN::Types;
+//using namespace SIN::Types;
 
 namespace SIN {
 
@@ -133,9 +133,9 @@ namespace SIN {
 
 	//-----------------------------------------------------------------------
 
-    class NumberASTNode : public ConstASTNode<CONST_NUMBER, Number> {
+    class NumberASTNode : public ConstASTNode<CONST_NUMBER, Types::Number_t> {
     public:
-        NumberASTNode(Number const &_value = 0);
+        NumberASTNode(Types::Number_t const &_value = 0);
         virtual void Accept(ASTVisitor *);
 		virtual NumberASTNode *Clone(void) const;
 		virtual SymbolTable *GlobalEnv (void);
@@ -146,9 +146,9 @@ namespace SIN {
 
 	//-----------------------------------------------------------------------
     
-	class StringASTNode : public ConstASTNode<CONST_STRING, String_t> {
+	class StringASTNode : public ConstASTNode<CONST_STRING, Types::String_t> {
     public:
-        StringASTNode(String_t const &_value = "");
+        StringASTNode(Types::String_t const &_value = "");
         virtual void Accept(ASTVisitor *);
 		virtual StringASTNode *Clone(void) const;
 		virtual SymbolTable *GlobalEnv (void);
@@ -159,7 +159,7 @@ namespace SIN {
 
 	//-----------------------------------------------------------------------
     
-	class NilASTNode : public ConstASTNode<CONST_NIL, Nil_t> {
+	class NilASTNode : public ConstASTNode<CONST_NIL, Types::Nil_t> {
     public:
         NilASTNode(void);
         virtual void Accept(ASTVisitor *);
@@ -172,7 +172,7 @@ namespace SIN {
 
 	//-----------------------------------------------------------------------
 
-    class TrueASTNode : public ConstASTNode<CONST_TRUE, Boolean> {
+    class TrueASTNode : public ConstASTNode<CONST_TRUE, Types::Boolean_t> {
     public:
         TrueASTNode(void);
         virtual void Accept(ASTVisitor *);
@@ -185,7 +185,7 @@ namespace SIN {
 
 	//-----------------------------------------------------------------------
 
-    class FalseASTNode : public ConstASTNode<CONST_FALSE, Boolean> {
+    class FalseASTNode : public ConstASTNode<CONST_FALSE, Types::Boolean_t> {
     public:
         FalseASTNode(void);
         virtual void Accept(ASTVisitor *);

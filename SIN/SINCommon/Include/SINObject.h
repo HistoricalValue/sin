@@ -53,14 +53,14 @@ namespace SIN {
 			bool operator== (const Nil_t &) const;	
 			bool operator!= (const Nil_t &) const;	
 
-			bool operator== (const String &) const;	
-			bool operator!= (const String &) const;	
+			bool operator== (const String_t &) const;	
+			bool operator!= (const String_t &) const;	
 
-			bool operator== (const Number) const;		
-			bool operator!= (const Number) const;		
+			bool operator== (const Number_t) const;		
+			bool operator!= (const Number_t) const;		
 
-			bool operator== (const Object &) const;
-			bool operator!= (const Object &) const;
+			bool operator== (const Object_t &) const;
+			bool operator!= (const Object_t &) const;
 
 		private:
 			bool		marckedForDeletion;
@@ -76,25 +76,25 @@ namespace SIN {
 
 		//////////////////////////////////////////////////////////////////////////////
 
-		class SinObjectFactory {
+		class ObjectFactory {
 		public:
-			static void					SingletonCreate(void);
-			static bool					SingletonCreated(void);
-			static void					SingletonDestroy(void);
-			static SinObjectFactory&	SingletonInstance(void);
+			static void				SingletonCreate(void);
+			static bool				SingletonCreated(void);
+			static void				SingletonDestroy(void);
+			static ObjectFactory&	SingletonInstance(void);
 
-			static const unsigned		NextID(void);
-			const unsigned				InstanceNextID(void);
+			static const unsigned	NextID(void);
+			const unsigned			InstanceNextID(void);
 
 		private:
 			unsigned			next_id;
 
-			SinObjectFactory(void);
-			~SinObjectFactory(void);
+			ObjectFactory(void);
+			~ObjectFactory(void);
 
-			static SinObjectFactory *	singleton;
+			static ObjectFactory *	singleton;
 			static bool					singleton_created;
-		}; // class SinObjectFactory
+		}; // class ObjectFactory
 	}	//namespace Types
 	extern String const to_string(SIN::Types::Object const * val);
 	extern String const to_string(SIN::Types::Object const & val);

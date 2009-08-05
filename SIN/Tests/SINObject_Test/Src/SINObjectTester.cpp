@@ -52,10 +52,10 @@ namespace SIN {
 			//------------------------------------------------------------------
 
 			void TestingSinObjectTest::TestLogic(void) {
-				ASTNode				node("Testing");
-				Object *			obj1		= SINEW(Object);
-				Object *			obj2		= SINEW(Object);
-				Object *			obj3		= SINEW(Object);
+				ASTNode	node("Testing");
+				Types::Object *	obj1 = SINEW(Types::Object);
+				Types::Object *	obj2 = SINEW(Types::Object);
+				Types::Object *	obj3 = SINEW(Types::Object);
 				
 
 
@@ -92,7 +92,7 @@ namespace SIN {
 				fout << obj1->ToString();
 
 				fout << "\n\n --------------- Keys ---------------\n\n";
-				Object * obj_ptr =  obj1->ObjectKeys();
+				Types::Object * obj_ptr =  obj1->ObjectKeys();
 				fout <<	obj_ptr->ToString();
 				
 				obj_ptr->MarckedForDeletion();

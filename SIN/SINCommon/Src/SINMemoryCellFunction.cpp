@@ -4,7 +4,7 @@
 #include "SINAlloc.h"
 #include "SINAssert.h"
 
-using namespace SIN::Types;
+
 
 namespace SIN {
 
@@ -22,15 +22,15 @@ namespace SIN {
 
 	//-----------------------------------------------------------------
 	
-	void MemoryCellFunction::SetValue (const Types::Function * function)	{ 
+	void MemoryCellFunction::SetValue (const Types::Function_t * function)	{ 
 		SINASSERT(function);
-		value = const_cast<Types::Function *>(function); 
+		value = const_cast<Types::Function_t *>(function); 
 	}
 
 
 	//-----------------------------------------------------------------
 	
-	SIN::Types::Function * MemoryCellFunction::GetValue (void) { 
+	SIN::Types::Function_t * MemoryCellFunction::GetValue (void) { 
 		SINASSERT(value);
 		return value; 
 	}

@@ -3,7 +3,7 @@
 #include "SINAlloc.h"
 #include "SINAssert.h"
 
-using namespace SIN::Types;
+//using namespace SIN::Types;
 
 namespace SIN {
 
@@ -15,7 +15,7 @@ namespace SIN {
 		if (value->IsUnreferenced()) {
 			value->MarckedForDeletion();
 			delete value;
-			value = static_cast<Object *>(0);
+			value = static_cast<Types::Object *>(0);
 		}
 	}
 
@@ -34,15 +34,15 @@ namespace SIN {
 
 	//-----------------------------------------------------------------	
 
-	void MemoryCellObject::SetValue (const Object * obj) { 
+	void MemoryCellObject::SetValue (const Types::Object * obj) { 
 		SINASSERT(obj);	
-		value = const_cast<Object *>(obj); 
+		value = const_cast<Types::Object *>(obj); 
 	}
 	
 
 	//-----------------------------------------------------------------	
 
-	Object * MemoryCellObject::GetValue (void){ 
+	Types::Object * MemoryCellObject::GetValue (void){ 
 		SINASSERT(value);	
 		return value; 
 	}

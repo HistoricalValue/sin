@@ -12,7 +12,7 @@
 #define SINTESTSCOMMON_TESTDEF(NAME,TESTCODE)   SINTESTS_TESTDEF(NAME,TESTCODE)
 #define SINTESTSCOMMON_TESTRUN(NAME)            SINTESTS_CALLTEST(NAME)
 
-using namespace SIN::Types;
+//using namespace SIN::Types;
 
 namespace SIN {
     namespace Tests {
@@ -21,10 +21,10 @@ namespace SIN {
 			static InstanceProxy<TestFactory> test_factory;
 
             SINTESTSCOMMON_TESTDEF(Types,
-                Number num;
-                String_t str;
-                Nil_t nil;
-                Boolean bln;
+				Types::Number_t num;
+                Types::String_t str;
+                Types::Nil_t nil;
+                Types::Boolean_t bln;
 
                 num = 12; ASSERT(num == 12); ASSERT(num + 1 == 13); ASSERT(num - 1 == 11);
                 ASSERT(num++ == 12); ASSERT(num == 13); ASSERT(++num == 14); ASSERT(num == 14);

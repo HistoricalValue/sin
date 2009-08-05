@@ -3,7 +3,7 @@
 #include "SINAlloc.h"
 
 
-using namespace SIN::Types;
+//using namespace SIN::Types;
 
 namespace SIN {
 	
@@ -22,13 +22,13 @@ namespace SIN {
 
 	//-----------------------------------------------------------------
 
-	void MemoryCellBool::SetValue (const Boolean & b)	
+	void MemoryCellBool::SetValue (const Types::Boolean_t & b)	
 		{ value = b; }
 	
 
 	//-----------------------------------------------------------------
 
-	Boolean & MemoryCellBool::GetValue (void) 	
+	Types::Boolean_t & MemoryCellBool::GetValue (void) 	
 		{ return value; }
 
 }

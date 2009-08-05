@@ -1,7 +1,7 @@
 #include "SINMemoryCellNumber.h"
 #include "SINAlloc.h"
 
-using namespace SIN::Types;
+//using namespace SIN::Types;
 
 namespace SIN {
 
@@ -20,13 +20,13 @@ namespace SIN {
 
 	//-----------------------------------------------------------------
 
-	void MemoryCellNumber::SetValue (const Number & num)	
+	void MemoryCellNumber::SetValue (const Types::Number_t & num)	
 		{ value = num; }
 	
 
 	//-----------------------------------------------------------------
 	
-	Number & MemoryCellNumber::GetValue (void) 	
+	Types::Number_t & MemoryCellNumber::GetValue (void) 	
 		{ return value; }
 
 

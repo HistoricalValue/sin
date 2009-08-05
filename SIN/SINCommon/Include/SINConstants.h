@@ -8,8 +8,8 @@
 namespace SIN {
 	
     /** Boolean constants */
-	READONLY(TRUE, Types::Boolean, 0x01u);
-    READONLY(FALSE, Types::Boolean, 0x00u);
+	READONLY(TRUE, Types::Boolean_t, 0x01u);
+    READONLY(FALSE, Types::Boolean_t, 0x00u);
 
     /** Nil value constants */
     READONLY(NIL, Types::Nil_t, Types::Nil());

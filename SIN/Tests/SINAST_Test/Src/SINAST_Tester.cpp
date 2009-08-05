@@ -124,8 +124,8 @@ namespace SIN {
             )
 
             SINTESTSAST_TESTDEF(ConstNodes,
-                Number num_val = 0xfaceful;
-                String_t str_val = "Ludvich Rudolf Santa Bach";
+				Types::Number_t num_val = 0xfaceful;
+                Types::String_t str_val = "Ludvich Rudolf Santa Bach";
 
                 NumberASTNode num(num_val);
                 StringASTNode str(str_val);

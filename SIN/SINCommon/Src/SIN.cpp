@@ -42,11 +42,11 @@ namespace SIN {
 
 
 	/////////////////////////////////////////////////////////////////
-	static bool init_SinObjectFactory(void) {
-		SinObjectFactory::SingletonCreate();
+	static bool init_ObjectFactory(void) {
+		Types::ObjectFactory::SingletonCreate();
 		return
-			SinObjectFactory::SingletonCreated()		&&
-			&SinObjectFactory::SingletonInstance() != 0	&&
+			Types::ObjectFactory::SingletonCreated()			&&
+			&Types::ObjectFactory::SingletonInstance() != 0	&&
 			true;
 	}
 	
@@ -66,7 +66,7 @@ namespace SIN {
 			init_Allocation()		&&
             init_LoggerManager()    &&
 			init_ASTNodeFactory()	&&
-			init_SinObjectFactory() &&
+			init_ObjectFactory() &&
             true;
     }
 
@@ -77,8 +77,8 @@ namespace SIN {
 		SINASSERT(ASTNodeFactory::SingletonCreated());
 		ASTNodeFactory::SingletonDestroy();
 
-		SINASSERT(SinObjectFactory::SingletonCreated());
-		SinObjectFactory::SingletonDestroy();
+		SINASSERT(Types::ObjectFactory::SingletonCreated());
+		Types::ObjectFactory::SingletonDestroy();
 
 		SINASSERT(SIN::Alloc::IsInitialised());
 		SIN::Alloc::CleanUp();
@@ -87,12 +87,12 @@ namespace SIN {
 
 	/////////////////////////////////////////////////////////////////
 	/////////////////////////////////////////////////////////////////
-	String const to_string(Nil_t const _nil) {
+	String const to_string(Types::Nil_t const _nil) {
 		return "NIL";
 	}
 
 
-	String const to_string(Boolean const boolean) 
+	String const to_string(Types::Boolean_t const boolean) 
 		{ return boolean? "true" : "false";}
 
 

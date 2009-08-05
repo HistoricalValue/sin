@@ -105,7 +105,7 @@ namespace SIN {
 		
 		//-----------------------------------------------------------------
 		//constructors
-		Object::Object() : marckedForDeletion(false), rc(0), id(SinObjectFactory::NextID()), index(0) {}
+		Object::Object() : marckedForDeletion(false), rc(0), id(ObjectFactory::NextID()), index(0) {}
 		
 
 
@@ -229,82 +229,82 @@ namespace SIN {
 
 		//-----------------------------------------------------------------
 
-		bool Object::operator== (const String & str) const 
+		bool Object::operator== (const String_t & str) const 
 			{ return false; }
 
 
 		//-----------------------------------------------------------------
 		
-		bool Object::operator!= (const String & str) const 
+		bool Object::operator!= (const String_t & str) const 
 			{ return true; }
 		
 
 		//-----------------------------------------------------------------
 
-		bool Object::operator== (const Number num) const 
+		bool Object::operator== (const Number_t num) const 
 			{ return false; }
 		
 
 		//-----------------------------------------------------------------
 
-		bool Object::operator!= (const Number num) const 
+		bool Object::operator!= (const Number_t num) const 
 			{ return true; }
 		
 
 		//-----------------------------------------------------------------
 		
-		bool Object::operator== (const Object & obj) const 
+		bool Object::operator== (const Object_t & obj) const 
 			{ return id == obj.ID(); }
 
 
 		//-----------------------------------------------------------------
 		
-		bool Object::operator!= (const Object & obj) const 
+		bool Object::operator!= (const Object_t & obj) const 
 			{ return id != obj.ID(); }
 
 
 
-		///--------------------		SinObjectFactory	---------------------------///
+		///--------------------		ObjectFactory	---------------------------///
 
 
 		//---------------------------------------------------
 
-		SinObjectFactory::SinObjectFactory(void): next_id(0) {}
+		ObjectFactory::ObjectFactory(void): next_id(0) {}
 
 		
 		//---------------------------------------------------
-		SinObjectFactory::~SinObjectFactory(void) {}
+		ObjectFactory::~ObjectFactory(void) {}
 		
 		
 		//---------------------------------------------------
 		// singleton related
-		SinObjectFactory* SinObjectFactory::singleton = 0;
+		ObjectFactory* ObjectFactory::singleton = 0;
 		
 		
 		//---------------------------------------------------
 		
-		bool SinObjectFactory::singleton_created = false;
+		bool ObjectFactory::singleton_created = false;
 		
 		
 		//---------------------------------------------------
 		
-		void SinObjectFactory::SingletonCreate(void) {
+		void ObjectFactory::SingletonCreate(void) {
 			SINASSERT(!singleton_created);
-			if ((singleton = SINEW(SinObjectFactory)) != 0)
+			if ((singleton = SINEW(ObjectFactory)) != 0)
 				singleton_created = true;
 		}
 		
 		
 		//---------------------------------------------------
 		
-		bool SinObjectFactory::SingletonCreated(void) {
+		bool ObjectFactory::SingletonCreated(void) {
 			return singleton_created;
 		}
 		
 		
 		//---------------------------------------------------
 
-		void SinObjectFactory::SingletonDestroy(void) {
+		void ObjectFactory::SingletonDestroy(void) {
 			SINASSERT(singleton_created);
 			SINDELETE(singleton);
 			singleton_created = false;
@@ -313,7 +313,7 @@ namespace SIN {
 		
 		//---------------------------------------------------
 
-		SinObjectFactory& SinObjectFactory::SingletonInstance(void) {
+		ObjectFactory& ObjectFactory::SingletonInstance(void) {
 			SINASSERT(singleton_created);
 			return *(singleton_created ? singleton : 0);
 		}
@@ -323,7 +323,7 @@ namespace SIN {
 		// convenience methods	
 		
 		//---------------------------------------------------
-		unsigned const SinObjectFactory::NextID(void) 
+		unsigned const ObjectFactory::NextID(void) 
 			{ return SingletonInstance().InstanceNextID(); }
 		
 
@@ -331,7 +331,7 @@ namespace SIN {
 		// instance factory methods
 
 		//---------------------------------------------------
-		unsigned const SinObjectFactory::InstanceNextID(void) 
+		unsigned const ObjectFactory::InstanceNextID(void) 
 			{ return next_id++; }
 	}	//namespace Types
 

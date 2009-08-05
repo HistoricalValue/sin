@@ -24,8 +24,8 @@ namespace SIN {
 		};
 
 		/** SIN internal constant values' representation types */
-		typedef bool			Boolean;
-		typedef double			Number;
+		typedef bool			Boolean_t;
+		typedef double			Number_t;
 		typedef String			String_t;
 		typedef class Nil		Nil_t;
 		typedef class Object	Object_t;
@@ -33,7 +33,7 @@ namespace SIN {
 	}	//namespace Types
 
 	extern String const to_string(SIN::Types::Nil_t const _nil);
-	extern String const to_string(SIN::Types::Boolean const boolean);
+	extern String const to_string(SIN::Types::Boolean_t const boolean);
 
 
 } // namespace SIN

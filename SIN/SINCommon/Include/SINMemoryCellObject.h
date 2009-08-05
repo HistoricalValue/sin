@@ -13,18 +13,18 @@ namespace SIN {
 		
 	public:
 		MemoryCellObject(void) : MemoryCell() {}
-		MemoryCellObject(Types::Object * obj) : MemoryCell(),  value(obj){}
+		MemoryCellObject(Types::Object_t * obj) : MemoryCell(),  value(obj){}
 		~MemoryCellObject();
 
 
 		virtual MemoryCell *	Clone(void);
 		virtual MemoryCellType	Type(void);
 	
-		void					SetValue (const Types::Object *);
-		Types::Object *		GetValue (void);
+		void					SetValue (const Types::Object_t *);
+		Types::Object_t *		GetValue (void);
 
 	private:
-		Types::Object * value;
+		Types::Object_t * value;
 	};
 }
 
