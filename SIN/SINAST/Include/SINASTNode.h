@@ -11,6 +11,9 @@
 #include "SINNamer.h"
 #include "SINSymbolTable.h"
 
+
+using namespace SIN::Types;
+
 namespace SIN {
 
 	// Visitors' forward declarations

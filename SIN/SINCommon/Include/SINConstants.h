@@ -4,14 +4,15 @@
 #include "Common.h"
 #include "SINTypes.h"
 
-namespace SIN {
 
+namespace SIN {
+	
     /** Boolean constants */
-    READONLY(TRUE, Boolean, 0x01u);
-    READONLY(FALSE, Boolean, 0x00u);
+	READONLY(TRUE, Types::Boolean, 0x01u);
+    READONLY(FALSE, Types::Boolean, 0x00u);
 
     /** Nil value constants */
-    READONLY(NIL, Nil_t, Nil());
+    READONLY(NIL, Types::Nil_t, Types::Nil());
 
     /** End of line constants */
     READONLY(ENDL, char const *, "\n");

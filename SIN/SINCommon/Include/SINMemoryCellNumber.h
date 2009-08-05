@@ -12,7 +12,7 @@ namespace SIN {
 	class MemoryCellNumber : public MemoryCell {
 	public:
 		MemoryCellNumber(void) : MemoryCell() {}
-		MemoryCellNumber(const Number & num) : MemoryCell(), value(num) {}
+		MemoryCellNumber(const Types::Number & num) : MemoryCell(), value(num) {}
 		~MemoryCellNumber() {}
 		
 
@@ -21,11 +21,11 @@ namespace SIN {
 		virtual MemoryCellType	Type (void);
 
 
-		void					SetValue (const Number & num);
-		Number &				GetValue (void);
+		void					SetValue (const Types::Number & num);
+		Types::Number &			GetValue (void);
 
 	private:
-		Number value;
+		Types::Number value;
 	};
 }
 

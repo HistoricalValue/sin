@@ -12,6 +12,8 @@
 #define SINTESTSCOMMON_TESTDEF(NAME,TESTCODE)   SINTESTS_TESTDEF(NAME,TESTCODE)
 #define SINTESTSCOMMON_TESTRUN(NAME)            SINTESTS_CALLTEST(NAME)
 
+using namespace SIN::Types;
+
 namespace SIN {
     namespace Tests {
         namespace Common {

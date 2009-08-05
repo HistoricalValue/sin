@@ -8,6 +8,6 @@ namespace SIN {
     READONLYDEF(ENDL);
 
     // ----------- Nil class -------------- //
-    bool Nil::operator ==(Nil  const &_o) const { return true       ; }
-    bool Nil::operator ==(long const &_l) const { return _l == 0x00l; }
+	bool Types::Nil::operator ==(Types::Nil  const &_o) const { return true       ; }
+	bool Types::Nil::operator ==(long const &_l) const { return _l == 0x00l; }
 } // namespace SIN

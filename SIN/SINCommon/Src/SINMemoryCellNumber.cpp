@@ -1,6 +1,7 @@
 #include "SINMemoryCellNumber.h"
 #include "SINAlloc.h"
 
+using namespace SIN::Types;
 
 namespace SIN {
 

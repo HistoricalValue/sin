@@ -7,8 +7,8 @@ namespace SIN {
 	//void			SINFunction::SetASTNode(const ASTNode *);
 
 
-	//
-	////-----------------------------------------------------------------
+	
+	//-----------------------------------------------------------------
 
 	//String const to_string(SIN::SINFunction const & val)
 	//	{ return val.node.Name(); }

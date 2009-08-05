@@ -13,17 +13,17 @@ namespace SIN {
 		
 	public:
 		MemoryCellBool(void) : MemoryCell() {}
-		MemoryCellBool(const Boolean & b) : MemoryCell(), value(b) {}
+		MemoryCellBool(const Types::Boolean & b) : MemoryCell(), value(b) {}
 		~MemoryCellBool() {}
 
 		virtual MemoryCell *	Clone(void);
 		virtual MemoryCellType	Type(void);
 
-		void					SetValue (const Boolean & b);
-		Boolean &				GetValue (void);
+		void					SetValue (const Types::Boolean & b);
+		Types::Boolean &		GetValue (void);
 
 	private:
-		Boolean value;
+		Types::Boolean value;
 	};
 }
 

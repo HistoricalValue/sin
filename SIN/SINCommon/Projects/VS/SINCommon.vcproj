@@ -184,6 +184,10 @@
 				>
 			</File>
 			<File
+				RelativePath="..\..\Src\SINString.cpp"
+				>
+			</File>
+			<File
 				RelativePath="..\..\Src\SINSymbolTable.cpp"
 				>
 			</File>
@@ -234,10 +238,6 @@
 					RelativePath="..\..\Src\SINObject.cpp"
 					>
 				</File>
-				<File
-					RelativePath="..\..\Src\SINString.cpp"
-					>
-				</File>
 			</Filter>
 		</Filter>
 		<Filter
@@ -279,6 +279,10 @@
 			</File>
 			<File
 				RelativePath="..\..\Include\SINStream.h"
+				>
+			</File>
+			<File
+				RelativePath="..\..\Include\SINString.h"
 				>
 			</File>
 			<File
@@ -334,10 +338,6 @@
 				</File>
 				<File
 					RelativePath="..\..\Include\SINObject.h"
-					>
-				</File>
-				<File
-					RelativePath="..\..\Include\SINString.h"
 					>
 				</File>
 				<File

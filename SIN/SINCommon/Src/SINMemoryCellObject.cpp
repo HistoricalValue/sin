@@ -3,6 +3,8 @@
 #include "SINAlloc.h"
 #include "SINAssert.h"
 
+using namespace SIN::Types;
+
 namespace SIN {
 
 	//-----------------------------------------------------------------	

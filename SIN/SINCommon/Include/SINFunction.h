@@ -5,29 +5,32 @@
 #include "SINASTNode.h"
 
 namespace SIN {
-	class SINFunction { 
-	public:
 
-		SINFunction(void);
-		SINFunction(ASTNode * _node) : node (_node) {}
+	namespace Types {
+		class SINFunction { 
+		public:
 
-
-		~SINFunction();
-
-
-		const ASTNode *	GetASTNode(void) const;
-		const String &  Name(void) const;
-		void			SetASTNode(const ASTNode *);
+			SINFunction(void);
+			SINFunction(ASTNode * _node) : node (_node) {}
 
 
-	private:
-		ASTNode	*	node;
-		
-	};
+			~SINFunction();
 
-	extern String const to_string(SIN::SINFunction const * val);
-	extern String const to_string(SIN::SINFunction const & val);
-}
+
+			const ASTNode *	GetASTNode(void) const;
+			const String &  Name(void) const;
+			void			SetASTNode(const ASTNode *);
+
+
+		private:
+			ASTNode	*	node;
+			
+		};
+
+		extern String const to_string(SIN::Types::SINFunction const * val);
+		extern String const to_string(SIN::Types::SINFunction const & val);
+	}	//namespace Types
+}	//namespace SIN
 
 
 
