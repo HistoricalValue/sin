@@ -39,6 +39,7 @@ OBJECTFILES= \
 	${OBJECTDIR}/_ext/_DOTDOT/SINCommon/Src/SINMemoryCellString.o \
 	${OBJECTDIR}/_ext/_DOTDOT/SINCommon/Src/SINStream.o \
 	${OBJECTDIR}/_ext/_DOTDOT/SINFunctionLibrary/Src/SINLibrary.o \
+	${OBJECTDIR}/_ext/_DOTDOT/SINFunctionLibrary/Src/SINLibraryFunctions.o \
 	${OBJECTDIR}/_ext/_DOTDOT/Tests/SINCommon_Test/Src/SINCommonTester.o \
 	${OBJECTDIR}/_ext/_DOTDOT/SINCommon/Src/SINMemoryCellNil.o \
 	${OBJECTDIR}/_ext/_DOTDOT/Tests/SINTest/Src/SINTestFactory.o \
@@ -150,6 +151,11 @@ ${OBJECTDIR}/_ext/_DOTDOT/SINFunctionLibrary/Src/SINLibrary.o: nbproject/Makefil
 	${MKDIR} -p ${OBJECTDIR}/_ext/_DOTDOT/SINFunctionLibrary/Src
 	${RM} $@.d
 	$(COMPILE.cc) -O2 -MMD -MP -MF $@.d -o ${OBJECTDIR}/_ext/_DOTDOT/SINFunctionLibrary/Src/SINLibrary.o ../SINFunctionLibrary/Src/SINLibrary.cpp
+
+${OBJECTDIR}/_ext/_DOTDOT/SINFunctionLibrary/Src/SINLibraryFunctions.o: nbproject/Makefile-${CND_CONF}.mk ../SINFunctionLibrary/Src/SINLibraryFunctions.cpp 
+	${MKDIR} -p ${OBJECTDIR}/_ext/_DOTDOT/SINFunctionLibrary/Src
+	${RM} $@.d
+	$(COMPILE.cc) -O2 -MMD -MP -MF $@.d -o ${OBJECTDIR}/_ext/_DOTDOT/SINFunctionLibrary/Src/SINLibraryFunctions.o ../SINFunctionLibrary/Src/SINLibraryFunctions.cpp
 
 ${OBJECTDIR}/_ext/_DOTDOT/Tests/SINCommon_Test/Src/SINCommonTester.o: nbproject/Makefile-${CND_CONF}.mk ../Tests/SINCommon_Test/Src/SINCommonTester.cpp 
 	${MKDIR} -p ${OBJECTDIR}/_ext/_DOTDOT/Tests/SINCommon_Test/Src

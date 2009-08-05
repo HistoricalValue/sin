@@ -6,6 +6,8 @@
 #include "SINMemoryCell.h"
 #include "SINVirtualMachine.h"
 
+#define SIN_FUNCTIONLIBRARY_FUNC_ARGS InstanceProxy<VM::VirtualMachine> const& _vm, SymbolTable const& _st
+
 namespace SIN {
 	namespace Library {
 		class Function {
@@ -18,7 +20,7 @@ namespace SIN {
 			String const& Name(void) const { return name; }
 
 			// Invoke
-			virtual return_type operator ()(InstanceProxy<VM::VirtualMachine> const&, SymbolTable const&) const = 0;
+			virtual return_type operator ()(SIN_FUNCTIONLIBRARY_FUNC_ARGS) const = 0;
 		protected:
 			String const name;
 		}; // class Function

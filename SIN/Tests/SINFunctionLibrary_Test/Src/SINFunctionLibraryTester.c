@@ -1,6 +1,7 @@
 #include "SINFunctionLibraryTester.h"
 #include "SINLogger.h"
 #include "SINLoggerManager.h"
+#include "SINTestingCommon.h"
 
 namespace SIN {
     namespace Tests {
@@ -19,6 +20,7 @@ namespace SIN {
             void test(InstanceProxy<TestFactory> const& _tf) {
 				tf = _tf;
 				logger = SIN::LoggerManager::SingletonGetInstance()->GetLogger("SIN::Tests::FunctionLibrary");
+				SINTESTS_RUNTEST(FunctionLibrary);
 			}
         } // namespace Common
     } // namespace Tests
