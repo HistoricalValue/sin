@@ -3,6 +3,9 @@
 
 ==== Do once ====
 
+*[032] Make following lib funcs.
+		tostrin, strtonum, strsavetofile, typeof, input, print, println, openfile, closefile, writefile,
+		totalarguments, arguments, objectcopy
 
 
 *[025] Implement operator == for ASTNode
