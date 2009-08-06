@@ -6,6 +6,7 @@
 #include "SINSymbolTable.h"
 #include "SINMemoryCell.h"
 #include "SINVirtualMachine.h"
+#include <map>
 
 namespace SIN {
 	namespace Library {

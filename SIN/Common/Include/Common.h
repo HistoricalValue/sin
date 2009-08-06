@@ -53,16 +53,16 @@ class InstanceProxy {
 public:
     InstanceProxy(T *_p = 0x00): p(_p) { }
     void operator =(T *_p) { p = _p; }
-    T &operator  *(void) const { assert(p != 0x00); return *p; }
-    operator T *(void) const { return p; }
+    T& operator *(void) const { assert(p != 0x00); return *p; }
+    operator T* (void) const { return p; }
 
 	template <typename _FromType>
 	static InstanceProxy<_FromType> ProxyFor(_FromType &_obj) {
 		return InstanceProxy<_FromType>(&_obj);
 	}
     ///////////
-    void operator =(T &_p) { (*this) = &_p; }
-    T *operator ->(void) const { return &**this; }
+    void operator =(T& _p) { (*this) = &_p; }
+    T* operator ->(void) const { return &**this; }
 	template <typename _FromType>
 	static InstanceProxy<_FromType> ProxyFor(_FromType *_p)
 		{ return ProxyFor(*_p); }
@@ -98,6 +98,11 @@ struct Type {
 	typedef type const const_type;
 	typedef type& ref;
 	typedef type const& const_ref;
+
+	template <typename _FromType> Type(_FromType const& _) { }
+	template <typename _FromType> Type(_FromType& _) { }
+	template <typename _FromType> Type(_FromType* _) { }
+	template <typename _FromType> Type(_FromType const* _) { }
 
 	template <typename _FromType> static Type<_FromType> ForType(_FromType const& _) { return Type<_FromType>(); }
 

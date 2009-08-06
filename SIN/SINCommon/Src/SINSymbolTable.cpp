@@ -2,124 +2,69 @@
 
 
 #include "SINAssert.h"
+#include "SINAlloc.h"
+#include "Common.h"
+#include <map>
+#include <vector>
 
-
-
-//-----------------------------------------------------------------
-#define LOOKUP_(WHERE, ITERATOR, STR)	MemoryMap::ITERATOR mit;						\
-										if ((mit = WHERE.find(str)) != WHERE.end())		\
-											return mit->second;							\
-										return static_cast<MemoryCell *>(0)
-
-
-//-----------------------------------------------------------------
-#define LOOKUP_LOCALS(STR)				LOOKUP_(locals, iterator, STR)
-#define LOOKUP_LOCALS_CONST(STR)		LOOKUP_(locals, const_iterator, STR)
-
-
-
-//-----------------------------------------------------------------
-#define LOOKUP_ARGUMENTS(STR)			LOOKUP_(arguments, iterator, STR)
-#define LOOKUP_ARGUMENTS_CONST(STR)		LOOKUP_(arguments, const_iterator, STR)
-
-
-
-
-//-----------------------------------------------------------------
-
-#define SET_VALUE(WHERE, STR, MC)	SINASSERT(MC && STR != "");	\
-									WHERE[STR] = MC	
-
-#define SET_VALUES(WHERE, LIST)		std::list<SymbolTableValue>::const_iterator clit = LIST.begin();	\
-									for (; clit != LIST.end(); ++clit) {								\
-										SET_VALUE(WHERE, clit->first, clit->second);					\
-									}
-
-
-//-----------------------------------------------------------------
-
-#define SET_LOCAL(STR, MC)			SET_VALUE(locals, STR, MC)
-#define SET_ARGUMENT(STR, MC)		SET_VALUE(arguments, STR, MC)
-
-
-//-----------------------------------------------------------------
-
-#define SET_LOCAL_P(PAIR)			SET_VALUE(locals, PAIR.first, PAIR.second)
-#define SET_ARGUMENT_P(PAIR)		SET_VALUE(arguments, PAIR.first, PAIR.second)
-
-
-//-----------------------------------------------------------------
-
-#define SET_LOCALS(LIST)			SET_VALUES(locals, LIST)
-#define SET_ARGUMENTS(LIST)			SET_VALUES(arguments, LIST)
+#define SIN_SYMBOLTABLE_LOOKUP(WHERE)												\
+		names_t::iterator result = DATA->WHERE.find(_name);							\
+		SINASSERT(static_cast<MemoryCell*>(DATA->not_found) == 0x00);				\
+		return result != DATA->names.end() ? result->second : DATA->not_found;
 
 namespace SIN {
-	
 
-	//-----------------------------------------------------------------
-	SymbolTable::SymbolTable(void) {}
+	// *** Private API ***************** /
+	namespace hsdfsd98sdfjk5t6ASFjadlfsdg0DFADfADf99999999AsdyuasdAASd7ad3 {
+		typedef SymbolTable::name_t key_t;
+		typedef SymbolTable::elem_t val_t;
+		struct Entry {
+			key_t const& key;
+			val_t& value;
+			Entry(key_t const& _key, val_t& _value): key(_key), value(_value) { }
+			Entry(Entry const& _o): key(_o.key), value(_o.value) { }
+			void operator =(Entry const& _o) { new(this) Entry(_o); }
+		};
+		typedef std::map<key_t, val_t> names_t;
+		typedef std::map<key_t, val_t> args_t;
+		typedef std::vector<Entry> args_ordered_t;
+		struct Data {
+			names_t names;
+			args_t args;
+			args_ordered_t args_ordered;
+			val_t not_found;
+		}; // struct Data
 
+		typedef std::pair<names_t::iterator, bool> ins_pair_t;
+		typedef std::pair<key_t const, val_t> entry_t;
+	}
+	using namespace hsdfsd98sdfjk5t6ASFjadlfsdg0DFADfADf99999999AsdyuasdAASd7ad3;
 
-	//-----------------------------------------------------------------
-	SymbolTable::~SymbolTable() {
-		locals.clear();
-		arguments.clear();
+	SymbolTable::SymbolTable(void): data(SINEW(Data)) { }
+	SymbolTable::~SymbolTable(void) { }
+
+#define DATA static_cast<Data*>(data)
+	void SymbolTable::AppendArgument(Type<name_t>::const_ref _name, Type<elem_t>::const_ref _elem) {
+		ins_pair_t ins_r = DATA->args.insert(entry_t(_name, _elem));
+		SINASSERT(ins_r.second /* node inserted == true */);
+		DATA->args_ordered.push_back(Entry(ins_r.first->first, ins_r.first->second));
 	}
 
+	void SymbolTable::SetLocal(Type<name_t>::const_ref _name, Type<elem_t>::const_ref _elem) {
+		DATA->names.insert(entry_t(_name, _elem));
+	}
 
-	//-----------------------------------------------------------------
-	void SymbolTable::SetArgument (const String & str, MemoryCell * mc) 
-		{ SET_ARGUMENT(str, mc); }
-	
+	SymbolTable::elem_t& SymbolTable::LookupLocal(Type<name_t>::const_ref _name) const {
+		SIN_SYMBOLTABLE_LOOKUP(names);
+	}
 
-	//-----------------------------------------------------------------
-	void SymbolTable::SetArgument (const SymbolTableValue & stv) 
-		{ SET_ARGUMENT_P(stv); }
-	
-	//-----------------------------------------------------------------
+	SymbolTable::elem_t& SymbolTable::LookupArgument(name_t const& _name) const {
+		SIN_SYMBOLTABLE_LOOKUP(args);
+	}
 
-	void SymbolTable::SetArguments (const std::list<SymbolTableValue> & _arguments) 
-		{ SET_ARGUMENTS(_arguments) }
-	
-
-	//-----------------------------------------------------------------
-	void SymbolTable::SetLocal (const String & str, MemoryCell * mc) 
-		{ SET_LOCAL(str, mc); }
-	
-
-	//-----------------------------------------------------------------
-
-	void SymbolTable::SetLocal (const SymbolTableValue & stv)
-		{ SET_LOCAL_P(stv); }
-	
-	
-	//-----------------------------------------------------------------
-
-	void SymbolTable::SetLocals (const std::list<SymbolTableValue> & _locals) 
-		{ SET_LOCALS(_locals) }
-
-
-	//-----------------------------------------------------------------
-
-	const MemoryCell * SymbolTable::LookupLocal (const String & str) const 
-		{ LOOKUP_LOCALS_CONST(str); }
-	
-
-	//-----------------------------------------------------------------
-	
-	MemoryCell * SymbolTable::LookupLocal (const String & str) 
-		{ LOOKUP_LOCALS(str); }
-
-
-	//-----------------------------------------------------------------
-
-	const MemoryCell * SymbolTable::LookupArgument (const String & str) const 
-		{ LOOKUP_ARGUMENTS_CONST(str); }
-	
-	
-	//-----------------------------------------------------------------
-
-	MemoryCell * SymbolTable::LookupArgument (const String & str) 
-		{ LOOKUP_ARGUMENTS(str); }
+	SymbolTable::elem_t& SymbolTable::Argument(size_t _index) const {
+		Type<args_ordered_t>::ref args = DATA->args_ordered;
+		return _index >= args.size() ? DATA->not_found : args.at(_index).value;
+	}
 
 }	//namepsace SIN
