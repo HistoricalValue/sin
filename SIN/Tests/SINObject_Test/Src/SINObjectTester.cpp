@@ -59,23 +59,23 @@ namespace SIN {
 				
 
 
-				MemoryCellObject *	object1_mc	= SINEW(MemoryCellObject());
-				MemoryCellObject *	object2_mc	= SINEW(MemoryCellObject());
-				MemoryCellObject *	object3_mc	= SINEW(MemoryCellObject());
+				MemoryCellObject *	object1_mc	= SINEW(MemoryCellObject);
+				MemoryCellObject *	object2_mc	= SINEW(MemoryCellObject);
+				MemoryCellObject *	object3_mc	= SINEW(MemoryCellObject);
 				
 				
 				obj1->IncrementReferenceCounter();
 				obj2->IncrementReferenceCounter();
 				obj3->IncrementReferenceCounter();
 
-				obj1->SetValue(SINEW(MemoryCellBool(true)));					// 0		: true
-				obj1->SetValue("1", SINEW(MemoryCellNumber(1.0)));				// 1		: 1
-				obj1->SetValue("2", SINEW(MemoryCellNumber(2.0)));				// 2		: 2
-				obj1->SetValue(SINEW(MemoryCellNumber(0.0)));					// 3		: 0
-				obj1->SetValue("NUMBER", SINEW(MemoryCellNumber(3.0)));			// NUMBER	: 0
+				obj1->SetValue(SINEW(MemoryCellBool(true)));							// 0		: true
+				obj1->SetValue("1", SINEWCLASS(MemoryCellNumber, (1.0)));				// 1		: 1
+				obj1->SetValue("2", SINEWCLASS(MemoryCellNumber, (2.0)));				// 2		: 2
+				obj1->SetValue(SINEWCLASS(MemoryCellNumber, (0.0)));					// 3		: 0
+				obj1->SetValue("NUMBER", SINEWCLASS(MemoryCellNumber, (3.0)));			// NUMBER	: 0
 				
 				Types::Function function(&node);
-				obj1->SetValue("function", SINEW(MemoryCellFunction(&function)));	//function	: Tsting
+				obj1->SetValue("function", SINEWCLASS(MemoryCellFunction, (&function)));	//function	: Tsting
 				
 				
 				//Now we will try ti create a cycle inside the first object
