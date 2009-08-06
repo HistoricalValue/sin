@@ -6,10 +6,12 @@
 #include "SINMemoryCell.h"
 #include "SINVirtualMachine.h"
 
-#define SIN_FUNCTIONLIBRARY_FUNC_ARGS VM::VirtualMachine& _vm, SymbolTable const& _st
+#define SIN_FUNCTIONLIBRARY_FUNC_ARGS VM::VirtualMachine& _vm, SymbolTable& _st, SIN::Library::Library& _lib
 
 namespace SIN {
 	namespace Library {
+		class Library;
+
 		class Function {
 		public:
 			typedef void const return_type;

@@ -49,10 +49,10 @@ namespace SIN {
 		// Invokes the function with the given name, passing the argument(s) and
 		// returning the result of the function.
 		// Invoking a function which is not insalled is an error.
-		Library::f_ret_t Library::Invoke(name_t const& _name, SymbolTable const& _env) const {
+		Library::f_ret_t Library::Invoke(name_t const& _name, SymbolTable& _env) {
 			fciter_t fi = functions.find(_name);
 			SINASSERT(fi != functions.end());
-			return (*fi->second)(*vm_p, _env);
+			return (*fi->second)(*vm_p, _env, *this);
 		}
 
 	} // namespace Library

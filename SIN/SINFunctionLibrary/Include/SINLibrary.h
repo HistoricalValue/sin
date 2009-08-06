@@ -34,7 +34,9 @@ namespace SIN {
 			// Invokes the function with the given name, passing the argument(s) and
 			// returning the result of the function.
 			// Invoking a function which is not insalled is an error.
-			f_ret_t Invoke(name_t const& name, SymbolTable const& env) const;
+			f_ret_t Invoke(name_t const& name, SymbolTable& env);
+			f_ret_t Invoke(name_t const& _name, SymbolTable const& _env)
+				{ SymbolTable env(_env); return Invoke(_name, env); }
 
 			Library(InstanceProxy<VM::VirtualMachine> const& vm_p);
 			~Library(void);
