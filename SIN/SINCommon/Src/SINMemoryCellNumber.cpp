@@ -9,7 +9,7 @@ namespace SIN {
 	//-----------------------------------------------------------------
 	
 	MemoryCell * MemoryCellNumber::Clone(void) 
-	{ return SINEW(MemoryCellNumber(value)); }
+	{ return SINEWCLASS(MemoryCellNumber, (value)); }
 
 
 	//-----------------------------------------------------------------
