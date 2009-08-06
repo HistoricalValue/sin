@@ -6,6 +6,17 @@
 *[032] Make following lib funcs.
 		tostrin, strtonum, strsavetofile, typeof, input, print, println, openfile, closefile, writefile,
 		totalarguments, arguments, objectcopy
+		
+*[033] Make manage functions for the fllowing rules:
+		1) DOT '~'	'(' expr ')'
+		2) DOT '~' call
+		3) lvalue DOT KEYS_MEMBER
+		4) lvalue DOT SIZE_MEMBER
+		5) ',' objectfuncdef objectlists
+		6) {
+			objectfuncdef:	FUNCTION ID	'(' idlist ')' block
+							|	FUNCTION '(' idlist ')' block
+		}
 
 
 *[025] Implement operator == for ASTNode
