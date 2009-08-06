@@ -38,7 +38,7 @@ namespace SIN {
 
 	//-----------------------------------------------------------------
 
-	void ParserManage::Manage_MetaExpression_PreserveAST (char *_id, ASTNode **_retmetaexpr, LexAndBisonParseArguments *_lbpa){
+	void ParserManage::Manage_MetaExpression_PreserveAST_ID (char *_id, ASTNode **_retmetaexpr, LexAndBisonParseArguments *_lbpa){
 		*_retmetaexpr = SINEWCLASS(MetaPreserveASTNode, (".~"));
 		IDASTNode *id = SINEWCLASS(IDASTNode, (_id));
 		_lbpa->AppendToNodeList(*_retmetaexpr);
