@@ -63,8 +63,6 @@ namespace SIN{
 
 		SINASSERT(_node.NumberOfChildren() == 2);
 
-		SymbolTable *symTable = _node.LocalEnv();
-
 		ASTNode::iterator kid = _node.begin();
 
 		static_cast<ASTNode&>(*kid++).Accept(this);
@@ -83,8 +81,6 @@ namespace SIN{
 	void TreeEvaluationVisitor::Visit(SubASTNode & _node){
 	
 		SINASSERT(_node.NumberOfChildren() == 2);
-
-		SymbolTable *symTable = _node.LocalEnv();
 
 		ASTNode::iterator kid = _node.begin();
 
@@ -105,8 +101,6 @@ namespace SIN{
 	
 		SINASSERT(_node.NumberOfChildren() == 2);
 
-		SymbolTable *symTable = _node.LocalEnv();
-
 		ASTNode::iterator kid = _node.begin();
 
 		static_cast<ASTNode&>(*kid++).Accept(this);
@@ -125,8 +119,6 @@ namespace SIN{
 	void TreeEvaluationVisitor::Visit(DivASTNode & _node){
 	
 		SINASSERT(_node.NumberOfChildren() == 2);
-
-		SymbolTable *symTable = _node.LocalEnv();
 
 		ASTNode::iterator kid = _node.begin();
 
@@ -147,8 +139,6 @@ namespace SIN{
 	
 		SINASSERT(_node.NumberOfChildren() == 2);
 
-		SymbolTable *symTable = _node.LocalEnv();
-
 		ASTNode::iterator kid = _node.begin();
 
 		static_cast<ASTNode&>(*kid++).Accept(this);
@@ -167,8 +157,6 @@ namespace SIN{
 	void TreeEvaluationVisitor::Visit(LtASTNode & _node){
 	
 		SINASSERT(_node.NumberOfChildren() == 2);
-
-		SymbolTable *symTable = _node.LocalEnv();
 
 		ASTNode::iterator kid = _node.begin();
 
@@ -189,8 +177,6 @@ namespace SIN{
 	
 		SINASSERT(_node.NumberOfChildren() == 2);
 
-		SymbolTable *symTable = _node.LocalEnv();
-
 		ASTNode::iterator kid = _node.begin();
 
 		static_cast<ASTNode&>(*kid++).Accept(this);
@@ -209,8 +195,6 @@ namespace SIN{
 	void TreeEvaluationVisitor::Visit(LeASTNode & _node){
 	
 		SINASSERT(_node.NumberOfChildren() == 2);
-
-		SymbolTable *symTable = _node.LocalEnv();
 
 		ASTNode::iterator kid = _node.begin();
 
@@ -231,8 +215,6 @@ namespace SIN{
 	
 		SINASSERT(_node.NumberOfChildren() == 2);
 
-		SymbolTable *symTable = _node.LocalEnv();
-
 		ASTNode::iterator kid = _node.begin();
 
 		static_cast<ASTNode&>(*kid++).Accept(this);
@@ -251,8 +233,6 @@ namespace SIN{
 	void TreeEvaluationVisitor::Visit(EqASTNode & _node){
 	
 		SINASSERT(_node.NumberOfChildren() == 2);
-
-		SymbolTable *symTable = _node.LocalEnv();
 
 		ASTNode::iterator kid = _node.begin();
 
@@ -273,8 +253,6 @@ namespace SIN{
 	
 		SINASSERT(_node.NumberOfChildren() == 2);
 
-		SymbolTable *symTable = _node.LocalEnv();
-
 		ASTNode::iterator kid = _node.begin();
 
 		static_cast<ASTNode&>(*kid++).Accept(this);
@@ -294,8 +272,6 @@ namespace SIN{
 	
 		SINASSERT(_node.NumberOfChildren() == 2);
 
-		SymbolTable *symTable = _node.LocalEnv();
-
 		ASTNode::iterator kid = _node.begin();
 
 		static_cast<ASTNode&>(*kid++).Accept(this);
@@ -314,8 +290,6 @@ namespace SIN{
 	void TreeEvaluationVisitor::Visit(AndASTNode & _node){
 	
 		SINASSERT(_node.NumberOfChildren() == 2);
-
-		SymbolTable *symTable = _node.LocalEnv();
 
 		ASTNode::iterator kid = _node.begin();
 
