@@ -29,7 +29,7 @@ namespace SIN {
 
 	//-----------------------------------------------------------------
 
-	void ParserManage::Manage_MetaExpression_Expression (ASTNode *_expr, ASTNode **_retmetaexpr, LexAndBisonParseArguments *_lbpa){
+	void ParserManage::Manage_MetaExpression_ShiftToMetaExpression (ASTNode *_expr, ASTNode **_retmetaexpr, LexAndBisonParseArguments *_lbpa){
 		*_retmetaexpr = SINEWCLASS(MetaParseASTNode, (".<>."));
 		_lbpa->AppendToNodeList(*_retmetaexpr);
 
@@ -38,7 +38,7 @@ namespace SIN {
 
 	//-----------------------------------------------------------------
 
-	void ParserManage::Manage_MetaExpression_ID (char *_id, ASTNode **_retmetaexpr, LexAndBisonParseArguments *_lbpa){
+	void ParserManage::Manage_MetaExpression_PreserveAST (char *_id, ASTNode **_retmetaexpr, LexAndBisonParseArguments *_lbpa){
 		*_retmetaexpr = SINEWCLASS(MetaPreserveASTNode, (".~"));
 		IDASTNode *id = SINEWCLASS(IDASTNode, (_id));
 		_lbpa->AppendToNodeList(*_retmetaexpr);
@@ -51,7 +51,7 @@ namespace SIN {
 
 	//-----------------------------------------------------------------
 
-	void ParserManage::Manage_MetaExpression_ExecuteMetaExpression (ASTNode *_metaexpr, ASTNode **_retmetaexpr, LexAndBisonParseArguments *_lbpa){
+	void ParserManage::Manage_MetaExpression_CompileMetaExpression (ASTNode *_metaexpr, ASTNode **_retmetaexpr, LexAndBisonParseArguments *_lbpa){
 		*_retmetaexpr = SINEWCLASS(MetaEvaluateASTNode, (".!"));
 		_lbpa->AppendToNodeList(*_retmetaexpr);
 

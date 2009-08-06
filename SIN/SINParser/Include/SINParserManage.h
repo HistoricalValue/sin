@@ -16,9 +16,9 @@ namespace SIN {
 		
 		//////////////////////////////////////////////////////////
 		// Manage Metaexpressions
-		static void Manage_MetaExpression_Expression			(ASTNode *_expr, ASTNode **_retmetaexpr, LexAndBisonParseArguments *_lbpa);
-		static void Manage_MetaExpression_ID					(char *_id, ASTNode **_retmetaexpr, LexAndBisonParseArguments *_lbpa);
-		static void Manage_MetaExpression_ExecuteMetaExpression	(ASTNode *_metaexpr, ASTNode **_retmetaexpr, LexAndBisonParseArguments *_lbpa);
+		static void Manage_MetaExpression_ShiftToMetaExpression			(ASTNode *_expr, ASTNode **_retmetaexpr, LexAndBisonParseArguments *_lbpa);
+		static void Manage_MetaExpression_PreserveAST					(char *_id, ASTNode **_retmetaexpr, LexAndBisonParseArguments *_lbpa);
+		static void Manage_MetaExpression_CompileMetaExpression	(ASTNode *_metaexpr, ASTNode **_retmetaexpr, LexAndBisonParseArguments *_lbpa);
 		static void Manage_MetaExpression_ParseString			(char *_expr, ASTNode **_retmetaexpr, LexAndBisonParseArguments *_lbpa);
 
 		//////////////////////////////////////////////////////////

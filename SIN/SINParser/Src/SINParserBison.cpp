@@ -1881,17 +1881,17 @@ yyreduce:
 
   case 33:
 
-    {	SIN::ParserManage::Manage_MetaExpression_Expression((yyvsp[(3) - (5)].AST), &((yyval.AST)), &fabpa);				}
+    {	SIN::ParserManage::Manage_MetaExpression_ShiftToMetaExpression((yyvsp[(3) - (5)].AST), &((yyval.AST)), &fabpa);				}
     break;
 
   case 34:
 
-    {	SIN::ParserManage::Manage_MetaExpression_ID((yyvsp[(3) - (3)].stringV), &((yyval.AST)), &fabpa);						}
+    {	SIN::ParserManage::Manage_MetaExpression_PreserveAST((yyvsp[(3) - (3)].stringV), &((yyval.AST)), &fabpa);						}
     break;
 
   case 35:
 
-    {	SIN::ParserManage::Manage_MetaExpression_ExecuteMetaExpression((yyvsp[(3) - (3)].AST), &((yyval.AST)), &fabpa);	}
+    {	SIN::ParserManage::Manage_MetaExpression_CompileMetaExpression((yyvsp[(3) - (3)].AST), &((yyval.AST)), &fabpa);	}
     break;
 
   case 36:
