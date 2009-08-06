@@ -26,35 +26,35 @@ namespace SIN{
 
 	void TreeEvaluationVisitor::Visit(NumberASTNode & _node){
 
-		memstack.push(SINEWCLASS(MemoryCellNumber, (_node.GetValue())));
+		memory = SINEWCLASS(MemoryCellNumber, (_node.GetValue()));
 	}
 
 	//-----------------------------------------------------------------
 
 	void TreeEvaluationVisitor::Visit(StringASTNode & _node){
 
-		memstack.push(SINEWCLASS(MemoryCellString, (_node.GetValue())));
+		memory = SINEWCLASS(MemoryCellString, (_node.GetValue()));
 	}
 
 	//-----------------------------------------------------------------
 
 	void TreeEvaluationVisitor::Visit(NilASTNode & _node){
 	
-		memstack.push(SINEWCLASS(MemoryCellNil, ()));
+		memory = SINEWCLASS(MemoryCellNil, ());
 	}
 
 	//-----------------------------------------------------------------
 
 	void TreeEvaluationVisitor::Visit(TrueASTNode & _node){
 	
-		memstack.push(SINEWCLASS(MemoryCellBool, (_node.GetValue())));
+		memory = SINEWCLASS(MemoryCellBool, (_node.GetValue()));
 	}
 
 	//-----------------------------------------------------------------
 
 	void TreeEvaluationVisitor::Visit(FalseASTNode & _node){
 
-		memstack.push(SINEWCLASS(MemoryCellBool, (_node.GetValue())));
+		memory = SINEWCLASS(MemoryCellBool, (_node.GetValue()));
 	}
 
 	//-----------------------------------------------------------------
@@ -62,21 +62,20 @@ namespace SIN{
 	void TreeEvaluationVisitor::Visit(AddASTNode & _node){	
 
 		SINASSERT(_node.NumberOfChildren() == 2);
+
+		SymbolTable *symTable = _node.LocalEnv();
+
 		ASTNode::iterator kid = _node.begin();
 
-		static_cast<ASTNode&>(*kid++/*[0]*/).Accept(this);
-		MemoryCell *tmpmemcell1 = memstack.top();
-		memstack.pop();
+		static_cast<ASTNode&>(*kid++).Accept(this);
+		MemoryCell *tmpmemcell1 = memory;
 
-		static_cast<ASTNode&>(*kid++/*[1]*/).Accept(this);
-		MemoryCell *tmpmemcell2 = memstack.top();
-		memstack.pop();
+		static_cast<ASTNode&>(*kid++).Accept(this);
+		MemoryCell *tmpmemcell2 = memory;
 
-		SINASSERT(tmpmemcell1->Type() == MemoryCell::NUMBER_MCT || tmpmemcell1->Type() == MemoryCell::NUMBER_MCT); //TODO Throw evaluation error
+		SINASSERT(tmpmemcell1->Type() == MemoryCell::NUMBER_MCT && tmpmemcell2->Type() == MemoryCell::NUMBER_MCT); //TODO Throw evaluation error
 		
-		memstack.push(SINEWCLASS(MemoryCellNumber, (static_cast<MemoryCellNumber*>(tmpmemcell1)->GetValue()+static_cast<MemoryCellNumber*>(tmpmemcell1)->GetValue())));
-		SINDELETE(tmpmemcell1);
-		SINDELETE(tmpmemcell2);
+		memory = SINEWCLASS(MemoryCellNumber, (static_cast<MemoryCellNumber*>(tmpmemcell1)->GetValue()+static_cast<MemoryCellNumber*>(tmpmemcell2)->GetValue()));
 	}
 
 	//-----------------------------------------------------------------
@@ -84,21 +83,20 @@ namespace SIN{
 	void TreeEvaluationVisitor::Visit(SubASTNode & _node){
 	
 		SINASSERT(_node.NumberOfChildren() == 2);
+
+		SymbolTable *symTable = _node.LocalEnv();
+
 		ASTNode::iterator kid = _node.begin();
 
-		static_cast<ASTNode*>(&*kid++/*[0]*/)->Accept(this);
-		MemoryCell *tmpmemcell1 = memstack.top();
-		memstack.pop();
+		static_cast<ASTNode&>(*kid++).Accept(this);
+		MemoryCell *tmpmemcell1 = memory;
 
-		static_cast<ASTNode*>(&*kid++/*[1]*/)->Accept(this);
-		MemoryCell *tmpmemcell2 = memstack.top();
-		memstack.pop();
+		static_cast<ASTNode&>(*kid++).Accept(this);
+		MemoryCell *tmpmemcell2 = memory;
 
-		SINASSERT(tmpmemcell1->Type() == MemoryCell::NUMBER_MCT || tmpmemcell1->Type() == MemoryCell::NUMBER_MCT);
+		SINASSERT(tmpmemcell1->Type() == MemoryCell::NUMBER_MCT && tmpmemcell2->Type() == MemoryCell::NUMBER_MCT);
 		
-		memstack.push(SINEWCLASS(MemoryCellNumber, (static_cast<MemoryCellNumber*>(tmpmemcell1)->GetValue()-static_cast<MemoryCellNumber*>(tmpmemcell1)->GetValue())));
-		SINDELETE(tmpmemcell1);
-		SINDELETE(tmpmemcell2);
+		memory = SINEWCLASS(MemoryCellNumber, (static_cast<MemoryCellNumber*>(tmpmemcell1)->GetValue()-static_cast<MemoryCellNumber*>(tmpmemcell2)->GetValue()));
 	}
 
 	//-----------------------------------------------------------------
@@ -106,21 +104,20 @@ namespace SIN{
 	void TreeEvaluationVisitor::Visit(MulASTNode & _node){
 	
 		SINASSERT(_node.NumberOfChildren() == 2);
+
+		SymbolTable *symTable = _node.LocalEnv();
+
 		ASTNode::iterator kid = _node.begin();
 
-		static_cast<ASTNode*>(&*kid++/*[0]*/)->Accept(this);
-		MemoryCell *tmpmemcell1 = memstack.top();
-		memstack.pop();
+		static_cast<ASTNode&>(*kid++).Accept(this);
+		MemoryCell *tmpmemcell1 = memory;
 
-		static_cast<ASTNode*>(&*kid++/*[1]*/)->Accept(this);
-		MemoryCell *tmpmemcell2 = memstack.top();
-		memstack.pop();
+		static_cast<ASTNode&>(*kid++).Accept(this);
+		MemoryCell *tmpmemcell2 = memory;
 
-		SINASSERT(tmpmemcell1->Type() == MemoryCell::NUMBER_MCT || tmpmemcell1->Type() == MemoryCell::NUMBER_MCT);
+		SINASSERT(tmpmemcell1->Type() == MemoryCell::NUMBER_MCT && tmpmemcell2->Type() == MemoryCell::NUMBER_MCT); //TODO Throw run-time error
 		
-		memstack.push(SINEWCLASS(MemoryCellNumber, (static_cast<MemoryCellNumber*>(tmpmemcell1)->GetValue()*static_cast<MemoryCellNumber*>(tmpmemcell1)->GetValue())));
-		SINDELETE(tmpmemcell1);
-		SINDELETE(tmpmemcell2);
+		memory = SINEWCLASS(MemoryCellNumber, (static_cast<MemoryCellNumber*>(tmpmemcell1)->GetValue()*static_cast<MemoryCellNumber*>(tmpmemcell2)->GetValue()));
 	}
 
 	//-----------------------------------------------------------------
@@ -128,21 +125,20 @@ namespace SIN{
 	void TreeEvaluationVisitor::Visit(DivASTNode & _node){
 	
 		SINASSERT(_node.NumberOfChildren() == 2);
+
+		SymbolTable *symTable = _node.LocalEnv();
+
 		ASTNode::iterator kid = _node.begin();
 
-		static_cast<ASTNode*>(&*kid++/*[0]*/)->Accept(this);
-		MemoryCell *tmpmemcell1 = memstack.top();
-		memstack.pop();
+		static_cast<ASTNode&>(*kid++).Accept(this);
+		MemoryCell *tmpmemcell1 = memory;
 
-		static_cast<ASTNode*>(&*kid++/*[1]*/)->Accept(this);
-		MemoryCell *tmpmemcell2 = memstack.top();
-		memstack.pop();
+		static_cast<ASTNode&>(*kid++).Accept(this);
+		MemoryCell *tmpmemcell2 = memory;
 
-		SINASSERT(tmpmemcell1->Type() == MemoryCell::NUMBER_MCT || tmpmemcell1->Type() == MemoryCell::NUMBER_MCT);
+		SINASSERT(tmpmemcell1->Type() == MemoryCell::NUMBER_MCT && tmpmemcell2->Type() == MemoryCell::NUMBER_MCT);
 		
-		memstack.push(SINEWCLASS(MemoryCellNumber, (static_cast<MemoryCellNumber*>(tmpmemcell1)->GetValue()/static_cast<MemoryCellNumber*>(tmpmemcell1)->GetValue())));
-		SINDELETE(tmpmemcell1);
-		SINDELETE(tmpmemcell2);
+		memory = SINEWCLASS(MemoryCellNumber, (static_cast<MemoryCellNumber*>(tmpmemcell1)->GetValue()/static_cast<MemoryCellNumber*>(tmpmemcell2)->GetValue()));
 	}
 
 	//-----------------------------------------------------------------
@@ -150,21 +146,20 @@ namespace SIN{
 	void TreeEvaluationVisitor::Visit(ModASTNode & _node){
 	
 		SINASSERT(_node.NumberOfChildren() == 2);
+
+		SymbolTable *symTable = _node.LocalEnv();
+
 		ASTNode::iterator kid = _node.begin();
 
-		static_cast<ASTNode*>(&*kid++/*[0]*/)->Accept(this);
-		MemoryCell *tmpmemcell1 = memstack.top();
-		memstack.pop();
+		static_cast<ASTNode&>(*kid++).Accept(this);
+		MemoryCell *tmpmemcell1 = memory;
 
-		static_cast<ASTNode*>(&*kid++/*[1]*/)->Accept(this);
-		MemoryCell *tmpmemcell2 = memstack.top();
-		memstack.pop();
+		static_cast<ASTNode&>(*kid++).Accept(this);
+		MemoryCell *tmpmemcell2 = memory;
 
-		SINASSERT(tmpmemcell1->Type() == MemoryCell::NUMBER_MCT || tmpmemcell1->Type() == MemoryCell::NUMBER_MCT);
+		SINASSERT(tmpmemcell1->Type() == MemoryCell::NUMBER_MCT && tmpmemcell2->Type() == MemoryCell::NUMBER_MCT);
 		
-		memstack.push(SINEWCLASS(MemoryCellNumber, ((int)(static_cast<MemoryCellNumber*>(tmpmemcell1)->GetValue()) % (int)(static_cast<MemoryCellNumber*>(tmpmemcell1)->GetValue())))); // TODO how to support modulo for Numnber type
-		SINDELETE(tmpmemcell1);
-		SINDELETE(tmpmemcell2);
+		memory = SINEWCLASS(MemoryCellNumber, ((int)(static_cast<MemoryCellNumber*>(tmpmemcell1)->GetValue()) % (int)(static_cast<MemoryCellNumber*>(tmpmemcell2)->GetValue()))); // TODO how to support modulo for Numnber type
 	}
 
 	//-----------------------------------------------------------------
@@ -172,21 +167,20 @@ namespace SIN{
 	void TreeEvaluationVisitor::Visit(LtASTNode & _node){
 	
 		SINASSERT(_node.NumberOfChildren() == 2);
+
+		SymbolTable *symTable = _node.LocalEnv();
+
 		ASTNode::iterator kid = _node.begin();
 
-		static_cast<ASTNode*>(&*kid++/*[0]*/)->Accept(this);
-		MemoryCell *tmpmemcell1 = memstack.top();
-		memstack.pop();
+		static_cast<ASTNode&>(*kid++).Accept(this);
+		MemoryCell *tmpmemcell1 = memory;
 
-		static_cast<ASTNode*>(&*kid++/*[1]*/)->Accept(this);
-		MemoryCell *tmpmemcell2 = memstack.top();
-		memstack.pop();
+		static_cast<ASTNode&>(*kid++).Accept(this);
+		MemoryCell *tmpmemcell2 = memory;
 
-		SINASSERT(tmpmemcell1->Type() == MemoryCell::NUMBER_MCT || tmpmemcell1->Type() == MemoryCell::NUMBER_MCT);
+		SINASSERT(tmpmemcell1->Type() == MemoryCell::NUMBER_MCT && tmpmemcell2->Type() == MemoryCell::NUMBER_MCT);
 		
-		memstack.push(SINEWCLASS(MemoryCellBool, (static_cast<MemoryCellNumber*>(tmpmemcell1)->GetValue() < static_cast<MemoryCellNumber*>(tmpmemcell1)->GetValue())));
-		SINDELETE(tmpmemcell1);
-		SINDELETE(tmpmemcell2);
+		memory = SINEWCLASS(MemoryCellBool, (static_cast<MemoryCellNumber*>(tmpmemcell1)->GetValue() < static_cast<MemoryCellNumber*>(tmpmemcell2)->GetValue()));
 	}
 
 	//-----------------------------------------------------------------
@@ -194,21 +188,20 @@ namespace SIN{
 	void TreeEvaluationVisitor::Visit(GtASTNode & _node){
 	
 		SINASSERT(_node.NumberOfChildren() == 2);
+
+		SymbolTable *symTable = _node.LocalEnv();
+
 		ASTNode::iterator kid = _node.begin();
 
-		static_cast<ASTNode*>(&*kid++/*[0]*/)->Accept(this);
-		MemoryCell *tmpmemcell1 = memstack.top();
-		memstack.pop();
+		static_cast<ASTNode&>(*kid++).Accept(this);
+		MemoryCell *tmpmemcell1 = memory;
 
-		static_cast<ASTNode*>(&*kid++/*[1]*/)->Accept(this);
-		MemoryCell *tmpmemcell2 = memstack.top();
-		memstack.pop();
+		static_cast<ASTNode&>(*kid++).Accept(this);
+		MemoryCell *tmpmemcell2 = memory;
 
-		SINASSERT(tmpmemcell1->Type() == MemoryCell::NUMBER_MCT || tmpmemcell1->Type() == MemoryCell::NUMBER_MCT);
+		SINASSERT(tmpmemcell1->Type() == MemoryCell::NUMBER_MCT && tmpmemcell2->Type() == MemoryCell::NUMBER_MCT);
 		
-		memstack.push(SINEWCLASS(MemoryCellBool, (static_cast<MemoryCellNumber*>(tmpmemcell1)->GetValue() > static_cast<MemoryCellNumber*>(tmpmemcell1)->GetValue())));
-		SINDELETE(tmpmemcell1);
-		SINDELETE(tmpmemcell2);
+		memory = SINEWCLASS(MemoryCellBool, (static_cast<MemoryCellNumber*>(tmpmemcell1)->GetValue() > static_cast<MemoryCellNumber*>(tmpmemcell2)->GetValue()));
 	}
 
 	//-----------------------------------------------------------------
@@ -216,21 +209,20 @@ namespace SIN{
 	void TreeEvaluationVisitor::Visit(LeASTNode & _node){
 	
 		SINASSERT(_node.NumberOfChildren() == 2);
+
+		SymbolTable *symTable = _node.LocalEnv();
+
 		ASTNode::iterator kid = _node.begin();
 
-		static_cast<ASTNode*>(&*kid++/*[0]*/)->Accept(this);
-		MemoryCell *tmpmemcell1 = memstack.top();
-		memstack.pop();
+		static_cast<ASTNode&>(*kid++).Accept(this);
+		MemoryCell *tmpmemcell1 = memory;
 
-		static_cast<ASTNode*>(&*kid++/*[1]*/)->Accept(this);
-		MemoryCell *tmpmemcell2 = memstack.top();
-		memstack.pop();
+		static_cast<ASTNode&>(*kid++).Accept(this);
+		MemoryCell *tmpmemcell2 = memory;
 
-		SINASSERT(tmpmemcell1->Type() == MemoryCell::NUMBER_MCT || tmpmemcell1->Type() == MemoryCell::NUMBER_MCT);
+		SINASSERT(tmpmemcell1->Type() == MemoryCell::NUMBER_MCT && tmpmemcell2->Type() == MemoryCell::NUMBER_MCT);
 		
-		memstack.push(SINEWCLASS(MemoryCellBool, (static_cast<MemoryCellNumber*>(tmpmemcell1)->GetValue() <= static_cast<MemoryCellNumber*>(tmpmemcell1)->GetValue())));
-		SINDELETE(tmpmemcell1);
-		SINDELETE(tmpmemcell2);
+		memory = SINEWCLASS(MemoryCellBool, (static_cast<MemoryCellNumber*>(tmpmemcell1)->GetValue() <= static_cast<MemoryCellNumber*>(tmpmemcell2)->GetValue()));
 	}
 
 	//-----------------------------------------------------------------
@@ -238,21 +230,20 @@ namespace SIN{
 	void TreeEvaluationVisitor::Visit(GeASTNode & _node){
 	
 		SINASSERT(_node.NumberOfChildren() == 2);
+
+		SymbolTable *symTable = _node.LocalEnv();
+
 		ASTNode::iterator kid = _node.begin();
 
-		static_cast<ASTNode*>(&*kid++/*[0]*/)->Accept(this);
-		MemoryCell *tmpmemcell1 = memstack.top();
-		memstack.pop();
+		static_cast<ASTNode&>(*kid++).Accept(this);
+		MemoryCell *tmpmemcell1 = memory;
 
-		static_cast<ASTNode*>(&*kid++/*[1]*/)->Accept(this);
-		MemoryCell *tmpmemcell2 = memstack.top();
-		memstack.pop();
+		static_cast<ASTNode&>(*kid++).Accept(this);
+		MemoryCell *tmpmemcell2 = memory;
 
-		SINASSERT(tmpmemcell1->Type() == MemoryCell::NUMBER_MCT || tmpmemcell1->Type() == MemoryCell::NUMBER_MCT);
+		SINASSERT(tmpmemcell1->Type() == MemoryCell::NUMBER_MCT && tmpmemcell2->Type() == MemoryCell::NUMBER_MCT);
 		
-		memstack.push(SINEWCLASS(MemoryCellBool, (static_cast<MemoryCellNumber*>(tmpmemcell1)->GetValue() >= static_cast<MemoryCellNumber*>(tmpmemcell1)->GetValue())));
-		SINDELETE(tmpmemcell1);
-		SINDELETE(tmpmemcell2);
+		memory = SINEWCLASS(MemoryCellBool, (static_cast<MemoryCellNumber*>(tmpmemcell1)->GetValue() >= static_cast<MemoryCellNumber*>(tmpmemcell2)->GetValue()));
 	}
 
 	//-----------------------------------------------------------------
@@ -260,21 +251,20 @@ namespace SIN{
 	void TreeEvaluationVisitor::Visit(EqASTNode & _node){
 	
 		SINASSERT(_node.NumberOfChildren() == 2);
+
+		SymbolTable *symTable = _node.LocalEnv();
+
 		ASTNode::iterator kid = _node.begin();
 
-		static_cast<ASTNode*>(&*kid++/*[0]*/)->Accept(this);
-		MemoryCell *tmpmemcell1 = memstack.top();
-		memstack.pop();
+		static_cast<ASTNode&>(*kid++).Accept(this);
+		MemoryCell *tmpmemcell1 = memory;
 
-		static_cast<ASTNode*>(&*kid++/*[1]*/)->Accept(this);
-		MemoryCell *tmpmemcell2 = memstack.top();
-		memstack.pop();
+		static_cast<ASTNode&>(*kid++).Accept(this);
+		MemoryCell *tmpmemcell2 = memory;
 
-		SINASSERT(tmpmemcell1->Type() == MemoryCell::NUMBER_MCT || tmpmemcell1->Type() == MemoryCell::NUMBER_MCT);
+		SINASSERT( tmpmemcell1->Type() == tmpmemcell2->Type() );
 		
-		memstack.push(SINEWCLASS(MemoryCellBool, (static_cast<MemoryCellNumber*>(tmpmemcell1)->GetValue() == static_cast<MemoryCellNumber*>(tmpmemcell1)->GetValue())));
-		SINDELETE(tmpmemcell1);
-		SINDELETE(tmpmemcell2);
+		memory = SINEWCLASS(MemoryCellBool, (static_cast<MemoryCellNumber*>(tmpmemcell1)->GetValue() == static_cast<MemoryCellNumber*>(tmpmemcell2)->GetValue()));
 	}
 
 	//-----------------------------------------------------------------
@@ -282,21 +272,20 @@ namespace SIN{
 	void TreeEvaluationVisitor::Visit(NeASTNode & _node){
 	
 		SINASSERT(_node.NumberOfChildren() == 2);
+
+		SymbolTable *symTable = _node.LocalEnv();
+
 		ASTNode::iterator kid = _node.begin();
 
-		static_cast<ASTNode*>(&*kid++/*[0]*/)->Accept(this);
-		MemoryCell *tmpmemcell1 = memstack.top();
-		memstack.pop();
+		static_cast<ASTNode&>(*kid++).Accept(this);
+		MemoryCell *tmpmemcell1 = memory;
 
-		static_cast<ASTNode*>(&*kid++/*[1]*/)->Accept(this);
-		MemoryCell *tmpmemcell2 = memstack.top();
-		memstack.pop();
+		static_cast<ASTNode&>(*kid++).Accept(this);
+		MemoryCell *tmpmemcell2 = memory;
 
-		SINASSERT(tmpmemcell1->Type() == MemoryCell::NUMBER_MCT || tmpmemcell1->Type() == MemoryCell::NUMBER_MCT);
+		SINASSERT(tmpmemcell1->Type() == MemoryCell::NUMBER_MCT && tmpmemcell2->Type() == MemoryCell::NUMBER_MCT); //TODO Support comparison between other types than number
 		
-		memstack.push(SINEWCLASS(MemoryCellBool, (static_cast<MemoryCellNumber*>(tmpmemcell1)->GetValue() != static_cast<MemoryCellNumber*>(tmpmemcell1)->GetValue())));
-		SINDELETE(tmpmemcell1);
-		SINDELETE(tmpmemcell2);
+		memory = SINEWCLASS(MemoryCellBool, (static_cast<MemoryCellNumber*>(tmpmemcell1)->GetValue() != static_cast<MemoryCellNumber*>(tmpmemcell2)->GetValue()));
 	}
 
 	//-----------------------------------------------------------------
@@ -304,43 +293,20 @@ namespace SIN{
 	void TreeEvaluationVisitor::Visit(OrASTNode & _node){
 	
 		SINASSERT(_node.NumberOfChildren() == 2);
+
+		SymbolTable *symTable = _node.LocalEnv();
+
 		ASTNode::iterator kid = _node.begin();
 
-		static_cast<ASTNode*>(&*kid++/*[0]*/)->Accept(this);
-		MemoryCell *tmpmemcell1 = memstack.top();
-		memstack.pop();
+		static_cast<ASTNode&>(*kid++).Accept(this);
+		MemoryCell *tmpmemcell1 = memory;
 
-		static_cast<ASTNode*>(&*kid++/*[1]*/)->Accept(this);
-		MemoryCell *tmpmemcell2 = memstack.top();
-		memstack.pop();
+		static_cast<ASTNode&>(*kid++).Accept(this);
+		MemoryCell *tmpmemcell2 = memory;
 
-		SINASSERT(tmpmemcell1->Type() == MemoryCell::BOOL_MCT || tmpmemcell1->Type() == MemoryCell::BOOL_MCT);
+		SINASSERT(tmpmemcell1->Type() == MemoryCell::BOOL_MCT && tmpmemcell2->Type() == MemoryCell::BOOL_MCT);
 		
-		memstack.push(SINEWCLASS(MemoryCellBool, (static_cast<MemoryCellBool*>(tmpmemcell1)->GetValue() || static_cast<MemoryCellBool*>(tmpmemcell1)->GetValue())));
-		SINDELETE(tmpmemcell1);
-		SINDELETE(tmpmemcell2);
-	}
-
-	//-----------------------------------------------------------------
-
-	void TreeEvaluationVisitor::Visit(NotASTNode & _node){
-	
-		SINASSERT(_node.NumberOfChildren() == 2);
-		ASTNode::iterator kid = _node.begin();
-
-		static_cast<ASTNode*>(&*kid++/*[0]*/)->Accept(this);
-		MemoryCell *tmpmemcell1 = memstack.top();
-		memstack.pop();
-
-		static_cast<ASTNode*>(&*kid++/*[1]*/)->Accept(this);
-		MemoryCell *tmpmemcell2 = memstack.top();
-		memstack.pop();
-
-		SINASSERT(tmpmemcell1->Type() == MemoryCell::BOOL_MCT || tmpmemcell1->Type() == MemoryCell::BOOL_MCT);
-		
-		memstack.push(SINEWCLASS(MemoryCellBool, (! static_cast<MemoryCellBool*>(tmpmemcell1)->GetValue())));
-		SINDELETE(tmpmemcell1);
-		SINDELETE(tmpmemcell2);
+		memory = SINEWCLASS(MemoryCellBool, (static_cast<MemoryCellBool*>(tmpmemcell1)->GetValue() || static_cast<MemoryCellBool*>(tmpmemcell2)->GetValue()));
 	}
 
 	//-----------------------------------------------------------------
@@ -348,26 +314,49 @@ namespace SIN{
 	void TreeEvaluationVisitor::Visit(AndASTNode & _node){
 	
 		SINASSERT(_node.NumberOfChildren() == 2);
+
+		SymbolTable *symTable = _node.LocalEnv();
+
 		ASTNode::iterator kid = _node.begin();
 
-		static_cast<ASTNode*>(&*kid++/*[0]*/)->Accept(this);
-		MemoryCell *tmpmemcell1 = memstack.top();
-		memstack.pop();
+		static_cast<ASTNode&>(*kid++).Accept(this);
+		MemoryCell *tmpmemcell1 = memory;
 
-		static_cast<ASTNode*>(&*kid++/*[1]*/)->Accept(this);
-		MemoryCell *tmpmemcell2 = memstack.top();
-		memstack.pop();
+		static_cast<ASTNode&>(*kid++).Accept(this);
+		MemoryCell *tmpmemcell2 = memory;
 
-		SINASSERT(tmpmemcell1->Type() == MemoryCell::BOOL_MCT || tmpmemcell1->Type() == MemoryCell::BOOL_MCT);
+		SINASSERT(tmpmemcell1->Type() == MemoryCell::BOOL_MCT && tmpmemcell2->Type() == MemoryCell::BOOL_MCT);
 		
-		memstack.push(SINEWCLASS(MemoryCellBool, (static_cast<MemoryCellBool*>(tmpmemcell1)->GetValue() && static_cast<MemoryCellBool*>(tmpmemcell1)->GetValue())));
-		SINDELETE(tmpmemcell1);
-		SINDELETE(tmpmemcell2);
+		memory = SINEWCLASS(MemoryCellBool, (static_cast<MemoryCellBool*>(tmpmemcell1)->GetValue() && static_cast<MemoryCellBool*>(tmpmemcell2)->GetValue()));
 	}
 
 	//-----------------------------------------------------------------
 
-	void TreeEvaluationVisitor::Visit(ForASTNode & _node){}
+	void TreeEvaluationVisitor::Visit(ExpressionListASTNode & _node){
+	
+		SINASSERT(_node.NumberOfChildren() == 4);
+
+		SymbolTable *symTable = _node.LocalEnv();
+
+		ASTNode::iterator kid = _node.begin();
+
+		static_cast<ASTNode&>(*kid++).Accept(this);
+		//for(  )
+	}
+
+	//-----------------------------------------------------------------
+
+	void TreeEvaluationVisitor::Visit(ForASTNode & _node){
+	
+		SINASSERT(_node.NumberOfChildren() == 4);
+
+		SymbolTable *symTable = _node.LocalEnv();
+
+		ASTNode::iterator kid = _node.begin();
+
+		static_cast<ASTNode&>(*kid++).Accept(this);
+		//for(  )
+	}
 
 	//-----------------------------------------------------------------
 
@@ -399,35 +388,37 @@ namespace SIN{
 
 	//-----------------------------------------------------------------
 
-	void TreeEvaluationVisitor::Visit(BlockASTNode & _node){}
+	void TreeEvaluationVisitor::Visit(BlockASTNode & _node){
+	
+		const size_t numberOfChildren = _node.NumberOfChildren();
+
+		ASTNode::iterator kid = _node.begin();
+
+		for(size_t i = 0; i< numberOfChildren; ++i){
+			static_cast<ASTNode&>(*kid++).Accept(this);
+		}
+	}
 
 	//-----------------------------------------------------------------
 
 	void TreeEvaluationVisitor::Visit(AssignASTNode & _node){
 	
 		SINASSERT(_node.NumberOfChildren() == 2);
+
 		ASTNode::iterator kid = _node.begin();
 
-		static_cast<ASTNode*>(&*kid++/*[0]*/)->Accept(this);
-		MemoryCell *tmpmemcell1 = memstack.top();
-		memstack.pop();
+		static_cast<ASTNode&>(*kid++).Accept(this);
+		MemoryCell *tmpmemcell1 = memory;
 
-		static_cast<ASTNode*>(&*kid++/*[1]*/)->Accept(this);
-		MemoryCell *tmpmemcell2 = memstack.top();
-		memstack.pop();
+		SINASSERT(tmpmemcell1->Type() != MemoryCell::FUNCTION_MCT); //TODO Throw run-time error
+
+		static_cast<ASTNode&>(*kid++).Accept(this);
+		MemoryCell *tmpmemcell2 = memory;
 
 		SymbolTable *symTable = _node.LocalEnv();
-		if(!symTable)
-			symTable = _node.GlobalEnv();
 
-		MemoryCell *value = symTable->LookupLocal((static_cast<MemoryCellString*>(tmpmemcell1))->GetValue()); //TODO Check for scope redefinition
-
-		if(value)
-			SINDELETE(value);
-		
-		value = tmpmemcell2;
-		symTable->SetLocal((static_cast<MemoryCellString*>(tmpmemcell1))->GetValue(), value);
-		memstack.push(value);
+		symTable->SetLocal((static_cast<MemoryCellString*>(tmpmemcell1))->GetValue(), tmpmemcell2);
+		memory = tmpmemcell2;
 	}
 
 	//-----------------------------------------------------------------
@@ -446,69 +437,63 @@ namespace SIN{
 		//symTable = static_cast<ASTNode*>(*(funcmemcell->GetValue())[1])->LocalEnv();
 
 
-		ASTNode::iterator const end = _node.end();
-		for (ASTNode::iterator ite = _node.begin(); ite != end; ++ite)
-			static_cast<ASTNode&>(*ite).Accept(this);
+		ASTNode::iterator kid = _node.begin();
+
+		for(size_t i = 0; i< numberOfChildren; ++i){
+			static_cast<ASTNode&>(*kid++).Accept(this);
+		}
 	}
 
 	//-----------------------------------------------------------------
 
 	void TreeEvaluationVisitor::Visit(ActualArgumentsASTNode & _node){
 
-		const size_t numberOfChildren = _node.NumberOfChildren();
+		//const size_t numberOfChildren = _node.NumberOfChildren();
 
-		SymbolTable *symTable = _node.LocalEnv();
+		//SymbolTable *symTable = _node.LocalEnv();
 
-		if(!symTable)
-			symTable = _node.GlobalEnv();
+		//SINASSERT(symTable);
 
-		SINASSERT(symTable);
+		//MemoryCellFunction *funcmemcell = static_cast<MemoryCellFunction*>( symTable->LookupLocal( to_string(static_cast<ASTNode&>(*(_node.begin())).ID()) ) );
+		//SINASSERT(funcmemcell->Type() == MemoryCell::FUNCTION_MCT);	//TODO Throw runtime error here
 
-		MemoryCellFunction *funcmemcell = static_cast<MemoryCellFunction*>( symTable->LookupLocal( to_string(static_cast<ASTNode*>(_node.GetParent()->begin()->GetParent())->ID()) ) );
-		SINASSERT(funcmemcell->Type() == MemoryCell::FUNCTION_MCT);	//TODO Throw runtime error here
+		//ASTNode *funcnode = funcmemcell->GetValue();
+		//ASTNode::iterator kid = funcnode->begin();
 
-		ASTNode *funcnode = funcmemcell->GetValue()->GetASTNode();
-		ASTNode::iterator imp = funcnode->begin();
-		ASTNode *arguments = static_cast<ASTNode*>(&*imp++/*[0]*/);
-		symTable = static_cast<ASTNode*>(&*imp++/*[1]*/)->LocalEnv();
+		//ASTNode::iterator arguments = static_cast<ASTNode&>(*kid++);
+		//symTable = static_cast<ASTNode&>(*kid++).LocalEnv();
 
-		ASTNode::iterator const end = _node.end();
-		ASTNode::iterator node_iter = _node.begin(), args_iter = arguments->begin();
-		for (; node_iter != end; ++node_iter, ++args_iter) {
-			static_cast<ASTNode*>(&*imp)->Accept(this);
-			MemoryCell *tmpmemcell = memstack.top();
-			memstack.pop();
-			symTable->SetArgument( static_cast<ASTNode*>(&*args_iter)->Name(), tmpmemcell); //TODO Support more arguments than defined
-		}
+		//for(size_t i = 0; i< numberOfChildren; ++i){
+		//	static_cast<ASTNode&>(*kid++).Accept(this);
+		//	MemoryCell *tmpmemcell = memory;
+		//	symTable->SetArgument( static_cast<ASTNode*>((*arguments)[i])->Name(), tmpmemcell); //TODO Support more arguments than defined
+		//}
 	}
 
 	//-----------------------------------------------------------------
 
 	void TreeEvaluationVisitor::Visit(NormalCallASTNode & _node){
 
-		SINASSERT(_node.NumberOfChildren() == 2);
-		ASTNode::iterator kid = _node.begin();
+		//SINASSERT(_node.NumberOfChildren() == 2);
 
-		static_cast<ASTNode*>(&*kid++/*[0]*/)->Accept(this);
-		MemoryCell *tmpmemcell1 = memstack.top();
-		memstack.pop();
+		//ASTNode::iterator kid = _node.begin();
 
-		static_cast<ASTNode*>(&*kid++/*[0]*/)->Accept(this);
-		MemoryCell *tmpmemcell2 = memstack.top();
-		memstack.pop();
+		//static_cast<ASTNode&>(*kid++).Accept(this);
+		//MemoryCell *tmpmemcell1 = memstack.top();
+		//memstack.pop();
 
-		SymbolTable *symTable = _node.LocalEnv();
+		//static_cast<ASTNode&>(*kid++).Accept(this);
+		//MemoryCell *tmpmemcell2 = memstack.top();
+		//memstack.pop();
 
-		if(!symTable)
-			symTable = _node.GlobalEnv();
+		//SymbolTable *symTable = _node.LocalEnv();
 
-		SINASSERT(symTable);
+		//SINASSERT(symTable);
 
-		MemoryCellFunction *funcmemcell = static_cast<MemoryCellFunction*>(symTable->LookupLocal(static_cast<MemoryCellString*>(tmpmemcell1)->GetValue()));
-		SINASSERT(funcmemcell->Type() == MemoryCell::FUNCTION_MCT);	//TODO Throw runtime error here
+		//MemoryCellFunction *funcmemcell = static_cast<MemoryCellFunction*>(symTable->LookupLocal(static_cast<MemoryCellString*>(tmpmemcell1)->GetValue()));
+		//SINASSERT(funcmemcell->Type() == MemoryCell::FUNCTION_MCT);	//TODO Throw runtime error here
 
-		ASTNode::iterator imp = funcmemcell->GetValue()->GetASTNode()->GetParent()->begin();
-		static_cast<ASTNode*>(&*++imp)->Accept(this);
+		//static_cast<ASTNode*>(*(funcmemcell->GetValue())[1])->Accept(this);
 	}
 
 	//-----------------------------------------------------------------
@@ -533,12 +518,12 @@ namespace SIN{
 
 	void TreeEvaluationVisitor::Visit(IDASTNode & _node){
 	
-		memstack.push(SINEWCLASS(MemoryCellString, (to_string(_node.Name()))));
+		//memstack.push(SINEWCLASS(MemoryCellID, (_node.Name())));
 
-		SymbolTable *symTable = _node.LocalEnv();
+		//SymbolTable *symTable = _node.LocalEnv();
 
-		if(!symTable)
-			symTable = _node.GlobalEnv();
+		//if(!symTable)
+		//	symTable = _node.GlobalEnv();
 
 //		symTable->SetLocal(to_string(_node.Name()), NULL);
 	}
@@ -547,53 +532,191 @@ namespace SIN{
 
 	void TreeEvaluationVisitor::Visit(LocalIDASTNode & _node){
 	
-		memstack.push(SINEWCLASS(MemoryCellString, (to_string(_node.ID()))));
+		//memstack.push(SINEWCLASS(MemoryCellID, (_node.Name())));
 
-		SymbolTable *symTable = _node.LocalEnv();
+		//SymbolTable *symTable = _node.LocalEnv();
 
-		if(!symTable)
-			symTable = _node.GlobalEnv();
+		//if(!symTable)
+		//	symTable = _node.GlobalEnv();
 
-		symTable->SetLocal(to_string(_node.Name()), memstack.top());
+		//symTable->SetLocal(to_string(_node.Name()), memstack.top());
 	}
 
 	//-----------------------------------------------------------------
 
 	void TreeEvaluationVisitor::Visit(GlobalIDASTNode & _node){
 	
-		memstack.push(SINEWCLASS(MemoryCellString, (to_string(_node.ID()))));
+		//memstack.push(SINEWCLASS(MemoryCellString, (_node.Name())));
 
-		SymbolTable *symTable = _node.GlobalEnv();
+		//SymbolTable *symTable = _node.GlobalEnv();
 
-		symTable->SetLocal(to_string(_node.ID()), memstack.top());
+		//symTable->SetLocal(to_string(_node.ID()), memstack.top());
 	}
 
 	//-----------------------------------------------------------------
 
 	void TreeEvaluationVisitor::Visit(PreIncrASTNode & _node){
 	
+		//SINASSERT(_node.NumberOfChildren() == 1);
 
+		//SymbolTable *symTable = _node.LocalEnv();
+
+		//ASTNode::iterator kid = _node.begin();
+
+		//static_cast<ASTNode&>(*kid).Accept(this);
+		//MemoryCell *tmpmemcell1 = memory;
+
+		//MemoryCell *value;
+		//if(tmpmemcell1->Type() == MemoryCell::ID_MCT)
+		//	value = symTable->LookupLocal( static_cast<MemoryCellID*>(tmpmemcell1)->GetValue() );
+		//else
+		//	value = tmpmemcell1;
+		//
+		//static_cast<MemoryCellNumber*>(value)->SetValue(static_cast<MemoryCellNumber*>(value)->GetValue()+1);
+		//SINASSERT(tmpmemcell1->Type() == MemoryCell::NUMBER_MCT || (tmpmemcell1->Type() == MemoryCell::ID_MCT && value->Type() == MemoryCell::NUMBER_MCT) );
+
+		//if(tmpmemcell1->Type() == MemoryCell::ID_MCT)
+		//	symTable->SetLocal(static_cast<MemoryCellID*>(tmpmemcell1)->GetValue(), value);
+
+		//memstack.push(value);
 	}
 
 	//-----------------------------------------------------------------
 
-	void TreeEvaluationVisitor::Visit(PostIncrASTNode & _node){}
+	void TreeEvaluationVisitor::Visit(PostIncrASTNode & _node){
+	
+		//SINASSERT(_node.NumberOfChildren() == 1);
+
+		//SymbolTable *symTable = _node.LocalEnv();
+
+		//ASTNode::iterator kid = _node.begin();
+
+		//static_cast<ASTNode&>(*kid).Accept(this);
+		//MemoryCell *tmpmemcell1 = memstack.top();
+		//memstack.pop();
+
+		//MemoryCell *value;
+		//if(tmpmemcell1->Type() == MemoryCell::ID_MCT)
+		//	value = symTable->LookupLocal( static_cast<MemoryCellID*>(tmpmemcell1)->GetValue() );
+		//else
+		//	value = tmpmemcell1;
+		//
+		//memstack.push(SINEWCLASS(MemoryCellNumber, (static_cast<MemoryCellNumber*>(value)->GetValue())));
+		//static_cast<MemoryCellNumber*>(value)->SetValue(static_cast<MemoryCellNumber*>(value)->GetValue()+1);
+		//SINASSERT(tmpmemcell1->Type() == MemoryCell::NUMBER_MCT || (tmpmemcell1->Type() == MemoryCell::ID_MCT && value->Type() == MemoryCell::NUMBER_MCT) );
+
+		//if(tmpmemcell1->Type() == MemoryCell::ID_MCT)
+		//	symTable->SetLocal(static_cast<MemoryCellID*>(tmpmemcell1)->GetValue(), value);
+	}
 
 	//-----------------------------------------------------------------
 
-	void TreeEvaluationVisitor::Visit(PreDecrASTNode & _node){}
+	void TreeEvaluationVisitor::Visit(PreDecrASTNode & _node){
+	
+		//SINASSERT(_node.NumberOfChildren() == 1);
+
+		//SymbolTable *symTable = _node.LocalEnv();
+
+		//ASTNode::iterator kid = _node.begin();
+
+		//static_cast<ASTNode&>(*kid).Accept(this);
+		//MemoryCell *tmpmemcell1 = memstack.top();
+		//memstack.pop();
+
+		//MemoryCell *value;
+		//if(tmpmemcell1->Type() == MemoryCell::ID_MCT)
+		//	value = symTable->LookupLocal( static_cast<MemoryCellID*>(tmpmemcell1)->GetValue() );
+		//else
+		//	value = tmpmemcell1;
+		//
+		//static_cast<MemoryCellNumber*>(value)->SetValue(static_cast<MemoryCellNumber*>(value)->GetValue()-1);
+		//SINASSERT(tmpmemcell1->Type() == MemoryCell::NUMBER_MCT || (tmpmemcell1->Type() == MemoryCell::ID_MCT && value->Type() == MemoryCell::NUMBER_MCT) );
+
+		//if(tmpmemcell1->Type() == MemoryCell::ID_MCT)
+		//	symTable->SetLocal(static_cast<MemoryCellID*>(tmpmemcell1)->GetValue(), value);
+
+		//memstack.push(value);
+	}
 
 	//-----------------------------------------------------------------
 
-	void TreeEvaluationVisitor::Visit(PostDecrASTNode & _node){}
+	void TreeEvaluationVisitor::Visit(PostDecrASTNode & _node){
+	
+		//SINASSERT(_node.NumberOfChildren() == 1);
+
+		//SymbolTable *symTable = _node.LocalEnv();
+
+		//ASTNode::iterator kid = _node.begin();
+
+		//static_cast<ASTNode&>(*kid).Accept(this);
+		//MemoryCell *tmpmemcell1 = memstack.top();
+		//memstack.pop();
+
+		//MemoryCell *value;
+		//if(tmpmemcell1->Type() == MemoryCell::ID_MCT)
+		//	value = symTable->LookupLocal( static_cast<MemoryCellID*>(tmpmemcell1)->GetValue() );
+		//else
+		//	value = tmpmemcell1;
+		//
+		//memstack.push(SINEWCLASS(MemoryCellNumber, (static_cast<MemoryCellNumber*>(value)->GetValue())));
+		//static_cast<MemoryCellNumber*>(value)->SetValue(static_cast<MemoryCellNumber*>(value)->GetValue()-1);
+		//SINASSERT(tmpmemcell1->Type() == MemoryCell::NUMBER_MCT || (tmpmemcell1->Type() == MemoryCell::ID_MCT && value->Type() == MemoryCell::NUMBER_MCT) );
+
+		//if(tmpmemcell1->Type() == MemoryCell::ID_MCT)
+		//	symTable->SetLocal(static_cast<MemoryCellID*>(tmpmemcell1)->GetValue(), value);
+	}
 
 	//-----------------------------------------------------------------
 
-	void TreeEvaluationVisitor::Visit(UnaryNotASTNode & _node){}
+	void TreeEvaluationVisitor::Visit(UnaryNotASTNode & _node){
+	
+		//SINASSERT(_node.NumberOfChildren() == 1);
+
+		//SymbolTable *symTable = _node.LocalEnv();
+
+		//ASTNode::iterator kid = _node.begin();
+
+		//static_cast<ASTNode&>(*kid).Accept(this);
+		//MemoryCell *tmpmemcell1 = memstack.top();
+		//memstack.pop();
+
+		//MemoryCell *value;
+		//if(tmpmemcell1->Type() == MemoryCell::ID_MCT)
+		//	value = symTable->LookupLocal( static_cast<MemoryCellID*>(tmpmemcell1)->GetValue() );
+		//else
+		//	value = tmpmemcell1;
+
+		//SINASSERT(value->Type() == MemoryCell::BOOL_MCT);
+
+		//static_cast<MemoryCellBool*>(value)->SetValue( !(static_cast<MemoryCellBool*>(value)->GetValue()) );
+		//memstack.push(value);
+	}
 
 	//-----------------------------------------------------------------
 
-	void TreeEvaluationVisitor::Visit(UnaryMinASTNode & _node){}
+	void TreeEvaluationVisitor::Visit(UnaryMinASTNode & _node){
+	
+		//SINASSERT(_node.NumberOfChildren() == 1);
+
+		//SymbolTable *symTable = _node.LocalEnv();
+
+		//ASTNode::iterator kid = _node.begin();
+
+		//static_cast<ASTNode&>(*kid).Accept(this);
+		//MemoryCell *tmpmemcell1 = memstack.top();
+		//memstack.pop();
+
+		//MemoryCell *value;
+		//if(tmpmemcell1->Type() == MemoryCell::ID_MCT)
+		//	value = symTable->LookupLocal( static_cast<MemoryCellID*>(tmpmemcell1)->GetValue() );
+		//else
+		//	value = tmpmemcell1;
+
+		//SINASSERT(value->Type() == MemoryCell::NUMBER_MCT);
+
+		//static_cast<MemoryCellNumber*>(value)->SetValue( -(static_cast<MemoryCellNumber*>(value)->GetValue()) );
+		//memstack.push(value);
+	}
 
 	//-----------------------------------------------------------------
 
@@ -650,10 +773,13 @@ namespace SIN{
 	//-----------------------------------------------------------------
 
 	void TreeEvaluationVisitor::Visit(SinCodeASTNode & _node){
-		ASTNode::iterator const end = _node.end();
-		for (ASTNode::iterator ite = _node.begin(); ite != end; ++ite) {
-			static_cast<ASTNode*>(&*ite)->Accept(this);
-			memstack.empty();
+
+		const size_t numberOfChildren = _node.NumberOfChildren();
+
+		ASTNode::iterator kid = _node.begin();
+
+		for(size_t i = 0; i< numberOfChildren; ++i){
+			static_cast<ASTNode&>(*kid++).Accept(this);
 		}
 
 	} //TODO Here we should cleanup stack after every Accept

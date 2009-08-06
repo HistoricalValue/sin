@@ -5,7 +5,6 @@
 #include "SINASTTreeVisualisationVisitor.h"
 #include "SINAssert.h"
 #include "SINAlloc.h"
-#include "SINSymbolTable.h"
 
 //-------------------------------------------------------------------------------------------------
 

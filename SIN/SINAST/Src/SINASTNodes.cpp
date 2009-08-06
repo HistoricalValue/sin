@@ -65,7 +65,7 @@ namespace SIN{
 	//-----------------------------------------------------------------
 
 	SymbolTable *SinCodeASTNode::LocalEnv(void) {
-		return NULL;
+		return &symTable;
 	}
 
 
@@ -119,6 +119,7 @@ namespace SIN{
 	SINASTNODE_DEFAULT_NODE_DEFS(MethodCall		)
 	SINASTNODE_DEFAULT_NODE_DEFS(FuncdefCall	)
 	SINASTNODE_DEFAULT_NODE_DEFS(ActualArguments)
+	SINASTNODE_DEFAULT_NODE_DEFS(ExpressionList	)
 	SINASTNODE_DEFAULT_NODE_DEFS(Function		)
 	SINASTNODE_DEFAULT_NODE_DEFS(LamdaFunction	)
 	SINASTNODE_DEFAULT_NODE_DEFS(FormalArguments)

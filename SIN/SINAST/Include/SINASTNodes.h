@@ -68,6 +68,7 @@ namespace SIN{
 	SINASTNODE_NODE_DECL(MethodCall		);
 	SINASTNODE_NODE_DECL(FuncdefCall	);
 	SINASTNODE_NODE_DECL(ActualArguments);
+	SINASTNODE_NODE_DECL(ExpressionList	);
 	SINASTNODE_NODE_DECL(Function		);
 	SINASTNODE_NODE_DECL(LamdaFunction	);
 	SINASTNODE_NODE_DECL(FormalArguments);

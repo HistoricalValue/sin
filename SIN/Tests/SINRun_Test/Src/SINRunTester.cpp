@@ -10,6 +10,9 @@
 #include "SINTestingCommon.h"
 #include "SINLoggerManager.h"
 #include "SINTreeEvaluationVisitor.h"
+#include "SINBufferedOutputStream.h"
+#include "SINFileOutputStream.h"
+#include "SINASTMITTreeVisualizerXMLProducerVisitor.h"
 
 #define SIN_TESTS_RUN_RUN(NAME)               SINTESTS_RUNTEST(NAME)
 #define SIN_TESTS_RUN_TESTDEF(NAME,TESTCODE)  SINTESTS_TESTDEF(NAME,TESTCODE)
@@ -61,6 +64,11 @@ namespace SIN {
 				}
 				ASTNode* root = test.GetAST();
 				ASSERT(root != 0x00);
+				
+				FileOutputStream _foutxml("RunTreeVisualisation.xml", FileOutputStream::Mode::Truncate());
+				BufferedOutputStream foutxml(_foutxml);
+				ASTMITTreeVisualizerXMLProducerVisitor mitvis(foutxml);
+				root->Accept(&mitvis);
 				
 				TreeEvaluationVisitor eval;
 				root->Accept(&eval);
