@@ -18,6 +18,7 @@
 							|	FUNCTION '(' idlist ')' block
 		}
 
+*[034] Refactor:rename:VM::VirtualMachine to VM::VirtualState
 
 *[025] Implement operator == for ASTNode
 
