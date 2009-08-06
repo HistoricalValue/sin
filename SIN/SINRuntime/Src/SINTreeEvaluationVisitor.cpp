@@ -417,7 +417,7 @@ namespace SIN{
 
 		SymbolTable *symTable = _node.LocalEnv();
 
-		symTable->SetLocal((static_cast<MemoryCellString*>(tmpmemcell1))->GetValue(), tmpmemcell2);
+		symTable->SetLocal( static_cast<ASTNode&>(*(_node.begin())).Name(), tmpmemcell2);
 		memory = tmpmemcell2;
 	}
 
@@ -518,39 +518,45 @@ namespace SIN{
 
 	void TreeEvaluationVisitor::Visit(IDASTNode & _node){
 	
-		//memstack.push(SINEWCLASS(MemoryCellID, (_node.Name())));
+		SymbolTable *localSymTable = _node.LocalEnv();
+		SymbolTable *globalSymTable = _node.GlobalEnv();
+		MemoryCell * memcell = localSymTable->LookupLocal(_node.Name());
+		if(!memcell)
+			memcell = globalSymTable->LookupLocal(_node.Name());
 
-		//SymbolTable *symTable = _node.LocalEnv();
-
-		//if(!symTable)
-		//	symTable = _node.GlobalEnv();
-
-//		symTable->SetLocal(to_string(_node.Name()), NULL);
+		if(memcell)
+			memory = memcell;
+		else{
+			memory = SINEWCLASS(MemoryCellNil, ());
+		}
 	}
 
 	//-----------------------------------------------------------------
 
 	void TreeEvaluationVisitor::Visit(LocalIDASTNode & _node){
 	
-		//memstack.push(SINEWCLASS(MemoryCellID, (_node.Name())));
+		SymbolTable *localSymTable = _node.LocalEnv();
+		MemoryCell * memcell = localSymTable->LookupLocal(_node.Name());
 
-		//SymbolTable *symTable = _node.LocalEnv();
-
-		//if(!symTable)
-		//	symTable = _node.GlobalEnv();
-
-		//symTable->SetLocal(to_string(_node.Name()), memstack.top());
+		if(memcell)
+			memory = memcell;
+		else{
+			memory = SINEWCLASS(MemoryCellNil, ());
+		}
 	}
 
 	//-----------------------------------------------------------------
 
 	void TreeEvaluationVisitor::Visit(GlobalIDASTNode & _node){
 	
-		//memstack.push(SINEWCLASS(MemoryCellString, (_node.Name())));
+		SymbolTable *globalSymTable = _node.GlobalEnv();
+		MemoryCell * memcell = globalSymTable->LookupLocal(_node.Name());
 
-		//SymbolTable *symTable = _node.GlobalEnv();
-
-		//symTable->SetLocal(to_string(_node.ID()), memstack.top());
+		if(memcell)
+			memory = memcell;
+		else{
+			memory = SINEWCLASS(MemoryCellNil, ());
+		}
 	}
 
 	//-----------------------------------------------------------------
