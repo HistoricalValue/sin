@@ -605,7 +605,7 @@ namespace SIN{
 		static_cast<ASTNode&>(*kid).Accept(this);
 		MemoryCell *tmpmemcell1 = memory;
 
-		static_cast<MemoryCellNumber*>(tmpmemcell1)->SetValue(!static_cast<MemoryCellBool*>(tmpmemcell1)->GetValue());
+		static_cast<MemoryCellBool*>(tmpmemcell1)->SetValue(!(static_cast<MemoryCellBool*>(tmpmemcell1)->GetValue()));
 		SINASSERT(tmpmemcell1->Type() == MemoryCell::BOOL_MCT);
 
 		memory = tmpmemcell1;
@@ -684,13 +684,7 @@ namespace SIN{
 
 	void TreeEvaluationVisitor::Visit(SinCodeASTNode & _node){
 
-		const size_t numberOfChildren = _node.NumberOfChildren();
-
-		ASTNode::iterator kid = _node.begin();
-
-		for(size_t i = 0; i< numberOfChildren; ++i){
-			static_cast<ASTNode&>(*kid++).Accept(this);
-		}
-
-	} //TODO Here we should cleanup stack after every Accept
+		for(ASTNode::iterator kid = _node.begin(); kid != _node.end(); ++kid)
+			static_cast<ASTNode&>(*kid).Accept(this);
+	}
 } // namespace SIN
