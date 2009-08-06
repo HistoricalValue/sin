@@ -21,6 +21,11 @@ namespace SIN {
 
 
 	//-----------------------------------------------------------------
+	
+	const String MemoryCellBool::ToString(void) const
+		{ return to_string(value); }
+
+	//-----------------------------------------------------------------
 
 	void MemoryCellBool::SetValue (const Types::Boolean_t & b)	
 		{ value = b; }

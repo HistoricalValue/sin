@@ -16,10 +16,12 @@ namespace SIN {
 
 		virtual MemoryCell *		Clone(void);
 		virtual enum MemoryCellType Type (void);
+		virtual const String		ToString(void) const;
 
 		
 		void						SetValue (const ASTNode*);
 		ASTNode *					GetValue (void);
+
 
 
 	private:

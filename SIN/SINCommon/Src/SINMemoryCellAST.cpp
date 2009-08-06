@@ -21,6 +21,13 @@ namespace SIN {
 
 	//-----------------------------------------------------------------
 
+	const String MemoryCellAST::ToString(void) const
+		{ return to_string(value); }
+		
+
+
+	//-----------------------------------------------------------------
+
 	void MemoryCellAST::SetValue (const ASTNode* node)	{ 
 		SINASSERT(node);
 		value = const_cast<ASTNode *>(node); 

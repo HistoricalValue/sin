@@ -33,6 +33,11 @@ namespace SIN {
 
 
 	//-----------------------------------------------------------------	
+	const String MemoryCellObject::ToString(void) const
+		{ return value->ToString(); }
+
+
+	//-----------------------------------------------------------------	
 
 	void MemoryCellObject::SetValue (const Types::Object * obj) { 
 		SINASSERT(obj);	

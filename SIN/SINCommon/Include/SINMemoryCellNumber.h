@@ -19,6 +19,7 @@ namespace SIN {
 
 		virtual MemoryCell *	Clone(void);
 		virtual MemoryCellType	Type (void);
+		virtual const String	ToString(void) const;
 
 
 		void					SetValue (const Types::Number_t & num);

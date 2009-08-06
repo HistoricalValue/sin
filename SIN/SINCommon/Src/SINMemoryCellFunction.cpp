@@ -21,6 +21,12 @@ namespace SIN {
 
 
 	//-----------------------------------------------------------------
+
+	const String MemoryCellFunction::ToString(void) const 
+		{ return to_string(value); }
+
+
+	//-----------------------------------------------------------------
 	
 	void MemoryCellFunction::SetValue (const Types::Function_t * function)	{ 
 		SINASSERT(function);

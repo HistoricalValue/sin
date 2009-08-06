@@ -1,6 +1,8 @@
 #ifndef __SIN_MEMORY_CELL_H__
 #define __SIN_MEMORY_CELL_H__
 
+#include "SINString.h"
+
 namespace SIN {
 
 	//-----------------------------------------------------------------------
@@ -22,6 +24,7 @@ namespace SIN {
 
 		virtual MemoryCell *	Clone(void) = 0;
 		virtual MemoryCellType	Type (void) = 0;
+		virtual const String	ToString(void) const = 0;
 		
 		MemoryCell(void) {}
 		virtual ~MemoryCell() {}

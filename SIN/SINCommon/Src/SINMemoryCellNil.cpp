@@ -16,5 +16,11 @@ namespace SIN {
 	MemoryCell::MemoryCellType MemoryCellNil::Type(void) 
 		{ return MemoryCell::NIL_MCT; }
 
+
+	//-----------------------------------------------------------------
+
+	const String MemoryCellNil::ToString(void) const
+		{ return String("Nil"); }
+
 	
 }

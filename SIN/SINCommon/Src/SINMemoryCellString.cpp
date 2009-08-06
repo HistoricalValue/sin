@@ -15,6 +15,10 @@ namespace SIN {
 	
 	MemoryCell::MemoryCellType MemoryCellString::Type (void) 
 		{ return MemoryCell::STRING_MCT; }
+
+
+	const String MemoryCellString::ToString(void) const
+		{ return value; }
 	
 
 	//-----------------------------------------------------------------

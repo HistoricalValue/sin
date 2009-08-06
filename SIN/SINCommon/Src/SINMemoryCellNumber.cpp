@@ -20,6 +20,12 @@ namespace SIN {
 
 	//-----------------------------------------------------------------
 
+	const String MemoryCellNumber::ToString(void) const 
+		{ return to_string(value); }
+
+
+	//-----------------------------------------------------------------
+
 	void MemoryCellNumber::SetValue (const Types::Number_t & num)	
 		{ value = num; }
 	

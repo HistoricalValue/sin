@@ -6,13 +6,20 @@
 #include "SINASTVisitor.h"
 #include "SINMemoryCell.h"
 
+
 namespace SIN{
+
+	class PreserveASTEvaluatorVisitor;	//forword declaretion
 
 	class TreeEvaluationVisitor : public ASTVisitor {
 	
 	public:
 		TreeEvaluationVisitor (void);
 		virtual ~TreeEvaluationVisitor (void);
+
+
+		MetaPreserveASTNode * PreserveASTNode() { return preserveNode; };
+		
 
 		SINASTVISITOR_VISIT_SIGNATURE(					) ;
 		SINASTVISITOR_VISIT_SIGNATURE(Number			) ;
@@ -76,7 +83,8 @@ namespace SIN{
 		SINASTVISITOR_VISIT_SIGNATURE(SinCode			) ;
 
 	private:
-		MemoryCell * memory;
+		MemoryCell *			memory;
+		MetaPreserveASTNode	*	preserveNode;
 	};
 
 } // namespace SIN
