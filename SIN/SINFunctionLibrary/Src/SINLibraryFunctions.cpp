@@ -5,7 +5,7 @@ namespace SIN {
 		namespace Functions {
 			// Print -----------------------------------------------------------
 			Print::return_type Print::operator ()(SIN_FUNCTIONLIBRARY_FUNC_ARGS) const {
-				
+				return NULL;
 			}
 		} // namespace Functions
 	} // namespace Library
