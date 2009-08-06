@@ -22,6 +22,17 @@ namespace SIN {
 		~LexAndBisonParseArguments();
 
 
+
+		struct ParsingFalgs {
+		} parsingFlags;
+
+
+
+		struct ParsingCounters {
+		} parsingCounters;
+
+
+
 		bool	HasError () const;
 		void	SetRoot (ASTNode *);
 		void	SetError (const ErrorInfo &);
