@@ -1895,12 +1895,12 @@ yyreduce:
 
   case 33:
 
-    {	SIN::ParserManage::Manage_MetaExpression_PreserveAST((yyvsp[(4) - (5)].AST), &((yyval.AST)), &fabpa);			}
+    {}
     break;
 
   case 34:
 
-    {}
+    {	SIN::ParserManage::Manage_MetaExpression_PreserveAST((yyvsp[(3) - (3)].stringV), &((yyval.AST)), &fabpa);			}
     break;
 
   case 35:
@@ -1920,7 +1920,7 @@ yyreduce:
 
   case 38:
 
-    {	SIN::ParserManage::Manage_Expression_UnparseMetaExpression((yyvsp[(3) - (3)].AST), &((yyval.AST)), &fabpa);		}
+    {	SIN::ParserManage::Manage_MetaExpression_UnparseMetaExpression((yyvsp[(3) - (3)].AST), &((yyval.AST)), &fabpa);		}
     break;
 
   case 39:

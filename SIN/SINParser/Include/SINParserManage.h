@@ -65,7 +65,7 @@ namespace SIN {
 		static void Manage_Expression_ExpressionORExpression		(ASTNode *_expr1, ASTNode *_expr2, ASTNode **_retexpr, LexAndBisonParseArguments *_lbpa);
 		static void Manage_Expression_ExpressionNOTExpression		(ASTNode *_expr1, ASTNode *_expr2, ASTNode **_retexpr, LexAndBisonParseArguments *_lbpa);
 		static void Manage_Expression_MetaExpression				(ASTNode *_metaexpr, ASTNode **_retexpr, LexAndBisonParseArguments *_lbpa);
-		static void Manage_Expression_UnparseMetaExpression			(ASTNode *_expr, ASTNode **_retmetaexpr, LexAndBisonParseArguments *_lbpa);
+		static void Manage_MetaExpression_UnparseMetaExpression			(ASTNode *_expr, ASTNode **_retmetaexpr, LexAndBisonParseArguments *_lbpa);
 		static void Manage_Expression_Term							(ASTNode *_term, ASTNode **_retexpr, LexAndBisonParseArguments *_lbpa);
 
 

@@ -60,7 +60,7 @@ namespace SIN {
 
 	//-----------------------------------------------------------------
 
-	void ParserManage::Manage_Expression_UnparseMetaExpression (ASTNode *_expr, ASTNode **_retmetaexpr, LexAndBisonParseArguments *_lbpa){
+	void ParserManage::Manage_MetaExpression_UnparseMetaExpression (ASTNode *_expr, ASTNode **_retmetaexpr, LexAndBisonParseArguments *_lbpa){
 		*_retmetaexpr = SINEWCLASS(MetaEvaluateASTNode, (".#"));
 		_lbpa->AppendToNodeList(*_retmetaexpr);
 

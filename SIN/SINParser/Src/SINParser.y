@@ -187,8 +187,8 @@ expr:			assignexpr 					{	SIN::ParserManage::Manage_Expression_AssignExpression(
 				
 				
 metaexpr:		DOT LT	expr  GT DOT		{	SIN::ParserManage::Manage_MetaExpression_ShiftToMetaExpression($3, &($$), &fabpa);	}
-				|	DOT '~'	'(' expr ')'	{	SIN::ParserManage::Manage_MetaExpression_PreserveAST($4, &($$), &fabpa);			}
-				|	DOT '~' ID				{}
+				|	DOT '~'	'(' expr ')'	{}
+				|	DOT '~' ID				{	SIN::ParserManage::Manage_MetaExpression_PreserveAST($3, &($$), &fabpa);			}
 				|	DOT '~' call			{}
 				|	DOT '!'	metaexpr		{	SIN::ParserManage::Manage_MetaExpression_CompileMetaExpression($3, &($$), &fabpa);	}
 				|	DOT '@'	STRING			{	SIN::ParserManage::Manage_MetaExpression_ParseString($3, &($$), &fabpa);			}
