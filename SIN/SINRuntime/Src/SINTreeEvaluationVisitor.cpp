@@ -666,7 +666,9 @@ namespace SIN{
 
 	//-----------------------------------------------------------------
 
-	void TreeEvaluationVisitor::Visit(MetaPreserveASTNode & _node){}
+	void TreeEvaluationVisitor::Visit(MetaPreserveASTNode & _node){
+		preserveNode = &_node;
+	}
 
 	//-----------------------------------------------------------------
 

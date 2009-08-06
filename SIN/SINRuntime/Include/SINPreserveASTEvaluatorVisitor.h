@@ -4,6 +4,7 @@
 #include <stack>
 
 #include "SINASTVisitor.h"
+#include "SINTreeEvaluationVisitor.h"
 
 /*
 #ifdef _MSC_VER // compiling with Microsoft Visual Studio
@@ -18,7 +19,7 @@
 
 namespace SIN{
 
-	class TreeEvaluationVisitor;	//forword 
+	//class TreeEvaluationVisitor;	//forword 
 
 
 
