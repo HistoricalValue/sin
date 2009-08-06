@@ -18,8 +18,6 @@
 							|	FUNCTION '(' idlist ')' block
 		}
 
-*[034] Refactor:rename:VM::VirtualMachine to VM::VirtualState
-
 *[025] Implement operator == for ASTNode
 
 *[026] Make the testing framework serious (save results and print them later -- especially TestCollections should be serious)
@@ -115,3 +113,5 @@
   [ rudolf | DID IT!]
 *[016] Make a reserved type for all SIN-types and to_string them
   [ koutsop | done]
+*[034] Refactor:rename:VM::VirtualMachine to VM::VirtualState
+  [ rudolf | done]

@@ -5,7 +5,7 @@
 #include "SINLibraryFunction.h"
 #include "SINSymbolTable.h"
 #include "SINMemoryCell.h"
-#include "SINVirtualMachine.h"
+#include "SINVirtualState.h"
 #include <map>
 
 namespace SIN {
@@ -38,7 +38,7 @@ namespace SIN {
 			f_ret_t Invoke(name_t const& _name, SymbolTable const& _env)
 				{ SymbolTable env(_env); return Invoke(_name, env); }
 
-			Library(InstanceProxy<VM::VirtualMachine> const& vm_p);
+			Library(InstanceProxy<VM::VirtualState> const& vm_p);
 			~Library(void);
 		private:
 			typedef std::map<String, func_t> functions_map_t;
@@ -49,7 +49,7 @@ namespace SIN {
 
 			func_t f_imit;
 
-			typedef InstanceProxy<VM::VirtualMachine> VM_P_t;
+			typedef InstanceProxy<VM::VirtualState> VM_P_t;
 			VM_P_t vm_p;
 		}; // class Library
 	} // namespace Library

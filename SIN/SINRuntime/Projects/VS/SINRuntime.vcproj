@@ -177,7 +177,7 @@
 				>
 			</File>
 			<File
-				RelativePath="..\..\Include\SINVirtualMachine.h"
+				RelativePath="..\..\Include\SINVirtualState.h"
 				>
 			</File>
 		</Filter>

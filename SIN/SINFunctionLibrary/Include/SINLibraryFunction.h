@@ -4,9 +4,9 @@
 #include "SINString.h"
 #include "SINSymbolTable.h"
 #include "SINMemoryCell.h"
-#include "SINVirtualMachine.h"
+#include "SINVirtualState.h"
 
-#define SIN_FUNCTIONLIBRARY_FUNC_ARGS VM::VirtualMachine& _vm, SymbolTable& _st, SIN::Library::Library& _lib
+#define SIN_FUNCTIONLIBRARY_FUNC_ARGS VM::VirtualState& _vm, SymbolTable& _st, SIN::Library::Library& _lib
 
 namespace SIN {
 	namespace Library {

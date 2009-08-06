@@ -11,7 +11,7 @@
 
 namespace SIN {
 	namespace VM {
-		class VirtualMachine {
+		class VirtualState {
 		public:
 			typedef void (*print_handler_t)(String const&);
 			void SetPrintHandler(print_handler_t _h) { print_handler = _h; }
