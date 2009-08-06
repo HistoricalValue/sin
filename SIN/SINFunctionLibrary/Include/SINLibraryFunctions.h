@@ -8,6 +8,7 @@ namespace SIN {
 		namespace Functions {
 			// Print -----------------------------------------------------------
 			class Print: public Function {
+			public:
 				inline Print(void): Function("print") { }
 				inline virtual ~Print(void) { }
 				virtual return_type operator ()(SIN_FUNCTIONLIBRARY_FUNC_ARGS) const;

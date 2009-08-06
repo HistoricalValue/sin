@@ -17,6 +17,7 @@ namespace SIN {
         explicit Namer(char const _base[SINNAMER_BASELEN]);
         Namer(Namer const &);
         ~Namer(void);
+		void operator =(Namer const& _other) { new(this) Namer(_other); }
 
         char const *operator++(void);
         char const *operator++(int);

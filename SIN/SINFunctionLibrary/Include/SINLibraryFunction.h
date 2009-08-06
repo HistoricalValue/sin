@@ -6,13 +6,13 @@
 #include "SINMemoryCell.h"
 #include "SINVirtualMachine.h"
 
-#define SIN_FUNCTIONLIBRARY_FUNC_ARGS InstanceProxy<VM::VirtualMachine> const& _vm, SymbolTable const& _st
+#define SIN_FUNCTIONLIBRARY_FUNC_ARGS VM::VirtualMachine& _vm, SymbolTable const& _st
 
 namespace SIN {
 	namespace Library {
 		class Function {
 		public:
-			typedef MemoryCell* const return_type;
+			typedef void const return_type;
 
 			inline Function(String const& _name): name(_name) { }
 			inline virtual ~Function(void) { }

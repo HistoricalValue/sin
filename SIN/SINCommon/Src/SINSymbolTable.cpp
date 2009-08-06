@@ -40,8 +40,8 @@ namespace SIN {
 	}
 	using namespace hsdfsd98sdfjk5t6ASFjadlfsdg0DFADfADf99999999AsdyuasdAASd7ad3;
 
-	SymbolTable::SymbolTable(void): data(SINEW(Data)) { }
-	SymbolTable::~SymbolTable(void) { }
+	SymbolTable::SymbolTable(void): data(SINEW(Data)), argument_namer("arg") { }
+	SymbolTable::~SymbolTable(void) { SINDELETE(data); }
 
 #define DATA static_cast<Data*>(data)
 	void SymbolTable::AppendArgument(Type<name_t>::const_ref _name, Type<elem_t>::const_ref _elem) {
@@ -67,4 +67,8 @@ namespace SIN {
 		return _index >= args.size() ? DATA->not_found : args.at(_index).value;
 	}
 
+	size_t SymbolTable::NumberOfArguments(void) const {
+		return DATA->args_ordered.size();
+	}
+	 
 }	//namepsace SIN

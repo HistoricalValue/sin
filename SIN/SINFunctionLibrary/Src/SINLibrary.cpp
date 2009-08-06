@@ -52,7 +52,7 @@ namespace SIN {
 		Library::f_ret_t Library::Invoke(name_t const& _name, SymbolTable const& _env) const {
 			fciter_t fi = functions.find(_name);
 			SINASSERT(fi != functions.end());
-			return (*fi->second)(vm_p, _env);
+			return (*fi->second)(*vm_p, _env);
 		}
 
 	} // namespace Library

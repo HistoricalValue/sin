@@ -13,6 +13,8 @@
 #include "SINLoggerManager.h"
 #include "SINObjectTester.h"
 #include "SINFunctionLibraryTester.h"
+#include "SINLibrary.h"
+#include "SINLibraryFunctions.h"
 
 //////// for quick tests and c++ questions ///////
 // (please restore to original before commits)
@@ -44,6 +46,9 @@ void quick_test(void) {
 //		out << *ITER(lis);
 //	out << (SIN::to_string("This is") << " horrible " << (4));
 
+	SIN::VM::VirtualMachine vm;
+	SIN::Library::Library lib(&vm);
+	lib.InstallFunction(SIN::Library::Functions::Print());
 
 	(*g_out) << (SIN::String() << "Memory leak: " << SIN::Alloc::MemoryLeaking() << " bytes");
 }

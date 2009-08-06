@@ -14,6 +14,7 @@ namespace SIN {
 				FunctionLibraryTest(void): Test("FunctionLibraryTest" "Test") { }
 			protected:
 				virtual void TestLogic(void) {
+
 				}
 			}; // class FunctionLibraryTest
 

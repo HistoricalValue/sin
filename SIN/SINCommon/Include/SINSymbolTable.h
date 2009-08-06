@@ -3,6 +3,7 @@
 
 #include "SINString.h"
 #include "SINMemoryCell.h"
+#include "SINNamer.h"
 
 namespace SIN {
 	class SymbolTable {
@@ -14,6 +15,7 @@ namespace SIN {
 		~SymbolTable();
 
 		void AppendArgument(Type<name_t>::const_ref, Type<elem_t>::const_ref);
+		void AppendArgument(Type<elem_t>::const_ref _elem) { AppendArgument(argument_namer++, _elem); }
 		void SetLocal(Type<name_t>::const_ref, Type<elem_t>::const_ref);
 
 
@@ -21,9 +23,11 @@ namespace SIN {
 		Type<elem_t>::ref LookupLocal(Type<name_t>::const_ref) const;
 		Type<elem_t>::ref LookupArgument(Type<name_t>::const_ref) const;
 		Type<elem_t>::ref Argument(size_t index) const;
+		size_t NumberOfArguments(void) const;
 
 	private:
 		void* data;
+		Namer argument_namer;
 	};
 
 }	//namespace SIN
