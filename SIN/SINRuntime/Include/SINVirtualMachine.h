@@ -7,6 +7,7 @@
 #include "SINMemoryCellNumber.h"
 #include <list>
 #include <stack>
+#include "SINFunction.h"
 
 namespace SIN {
 	namespace VM {
