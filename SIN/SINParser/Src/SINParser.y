@@ -181,6 +181,7 @@ expr:			assignexpr 					{	SIN::ParserManage::Manage_Expression_AssignExpression(
 				|	expr	AND		expr	{	SIN::ParserManage::Manage_Expression_ExpressionANDExpression($1, $3, &($$), &fabpa);	}
 				|	expr	OR		expr	{	SIN::ParserManage::Manage_Expression_ExpressionORExpression($1, $3, &($$), &fabpa);		}
 				|	metaexpr				{	SIN::ParserManage::Manage_Expression_MetaExpression($1, &($$), &fabpa);					}
+				|	DOT '#'	metaexpr		{	SIN::ParserManage::Manage_Expression_UnparseMetaExpression($3, &($$), &fabpa);		}
 				|	term					{	SIN::ParserManage::Manage_Expression_Term($1, &($$), &fabpa);							}
 				;
 				
@@ -192,7 +193,6 @@ metaexpr:		DOT LT	expr  GT DOT		{	SIN::ParserManage::Manage_MetaExpression_Shift
 				|	DOT '~' call			{}
 				|	DOT '!'	metaexpr		{	SIN::ParserManage::Manage_MetaExpression_CompileMetaExpression($3, &($$), &fabpa);	}
 				|	DOT '@'	STRING			{	SIN::ParserManage::Manage_MetaExpression_ParseString($3, &($$), &fabpa);			}
-				|	DOT '#'	metaexpr		{	SIN::ParserManage::Manage_MetaExpression_UnparseMetaExpression($3, &($$), &fabpa);		}
 				;
 				
 				
