@@ -3,6 +3,7 @@
 
 #include "Common.h"
 #include <cstdlib>
+#include <new>
 
 #define SINNAMER_BASELEN 128
 
