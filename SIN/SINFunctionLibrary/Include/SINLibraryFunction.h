@@ -6,7 +6,7 @@
 #include "SINMemoryCell.h"
 #include "SINVirtualState.h"
 
-#define SIN_FUNCTIONLIBRARY_FUNC_ARGS VM::VirtualState& _vm, SymbolTable& _st, SIN::Library::Library& _lib
+#define SIN_FUNCTIONLIBRARY_FUNC_ARGS VM::VirtualState& _vs, SIN::Library::Library& _lib
 
 namespace SIN {
 	namespace Library {

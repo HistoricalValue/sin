@@ -8,54 +8,65 @@ namespace SIN {
 	namespace Library {
 		namespace Functions {
 			// print -----------------------------------------------------------
+			namespace {
+				struct ArgumentPrinter: public SymbolTable::Callable {
+					virtual bool operator ()(SymbolTable::Entry const& _entry) const {
+						vs.Print(_entry.value->ToString());
+						return true;
+					}
+					ArgumentPrinter(VM::VirtualState& _vs): vs(_vs) { }
+				private:
+					VM::VirtualState& vs;
+				};
+			} // namespace
 			SIN_LIBRARYFUNCTIONS_LIBFUNC(print) {
-				size_t const num_args = _st.NumberOfArguments();
-				for (size_t i = 0; i < num_args; i++)
-					_vm.Print(_st.Argument(i)->ToString());
-				_vm.ReturnValueNil();
+				_vs.CurrentFrame().stable.for_each_argument(ArgumentPrinter(_vs));
+				_vs.ReturnValueNil();
 			}
 			// println ---------------------------------------------------------
 			SIN_LIBRARYFUNCTIONS_LIBFUNC(println) {
 				MemoryCellString str("\n");
-				_st.AppendArgument(&str);
-				_lib.Invoke("print", _st);
+				_vs.CurrentFrame().stable.AppendArgument(&str);
+				_lib.Invoke("print", _vs);
 			}
 			// tostring ---------------------------------------------------------
 			SIN_LIBRARYFUNCTIONS_LIBFUNC(tostring) {
-				if (_st.NumberOfArguments() > 0)
-					_vm.ReturnValueString(_st.Argument(0)->ToString());
+				SymbolTable& st = _vs.CurrentFrame().stable;
+				if (st.NumberOfArguments() > 0)
+					_vs.ReturnValueString(st.Argument(0)->ToString());
 				else
-					_vm.AppendError("not enough arguments passed to tostring(obj)", "", 0u);
+					_vs.AppendError("not enough arguments passed to tostring(obj)", "", 0u);
 			}
 			// strtonum ---------------------------------------------------------
 			SIN_LIBRARYFUNCTIONS_LIBFUNC(strtonum) {
-				if (_st.NumberOfArguments() > 0) {
-					double const num = strtod(_st.Argument(0)->ToString().c_str(), NULL);
-					_vm.ReturnValueNumber(num);
+				SymbolTable& st = _vs.CurrentFrame().stable;
+				if (st.NumberOfArguments() > 0) {
+					double const num = strtod(st.Argument(0)->ToString().c_str(), NULL);
+					_vs.ReturnValueNumber(num);
 				}
 				else
-					_vm.AppendError("not enough arguments passed to strtonum(str)", "", 0u);
+					_vs.AppendError("not enough arguments passed to strtonum(str)", "", 0u);
 			}
 			// strsavetofile ----------------------------------------------------
 			SIN_LIBRARYFUNCTIONS_LIBFUNC(strsavetofile) {
-				if (_st.NumberOfArguments() > 1) {
-					FileOutputStream fout(_st.Argument(0)->ToString());
-					String const str(_st.Argument(1)->ToString());
+				SymbolTable& st = _vs.CurrentFrame().stable;
+				if (st.NumberOfArguments() > 1) {
+					FileOutputStream fout(st.Argument(0)->ToString());
+					String const str(st.Argument(1)->ToString());
 					char const* const c_str = str.c_str();
 					size_t const len = strlen(c_str);
 					fout.write(c_str, len);
-					_vm.ReturnValueNumber(len);
+					_vs.ReturnValueNumber(len);
 				}
 				else
-					_vm.AppendError("not enough arguments passed to strsavetofile(file,str)", "", 0u);
+					_vs.AppendError("not enough arguments passed to strsavetofile(file,str)", "", 0u);
 			}
 			// typeof -----------------------------------------------------------
 			SIN_LIBRARYFUNCTIONS_LIBFUNC(typeof) {
-				VM::VirtualState::Frame& frame = _vm.CurrentFrame();
-				SymbolTable& stable = frame.st;
+				SymbolTable& stable = _vs.CurrentFrame().stable;
 				if (stable.NumberOfArguments() > 0) {
 					char const* type_desc = 0x00;
-					switch (_vm.CurrentFrame().st.Argument(0)->Type()) {
+					switch (stable.Argument(0)->Type()) {
 						case MemoryCell::AST_MCT:
 							type_desc = "metacode";
 							break;
@@ -83,10 +94,10 @@ namespace SIN {
 							SINASSERT(!"Illegal program state");
 							break;
 					}
-					_vm.ReturnValueString(type_desc);
+					_vs.ReturnValueString(type_desc);
 				}
 				else
-					_vm.AppendError("not enough arguments passed to typeof(obj)", "", 0u);
+					_vs.AppendError("not enough arguments passed to typeof(obj)", "", 0u);
 			}
 			// input ------------------------------------------------------------
 			//SIN_LIBRARYFUNCTIONS_LIBFUNC(input);
@@ -98,8 +109,8 @@ namespace SIN {
 			//SIN_LIBRARYFUNCTIONS_LIBFUNC(writefile);
 			// totalarguments ---------------------------------------------------
 			SIN_LIBRARYFUNCTIONS_LIBFUNC(totalarguments) {
-				_vm.ReturnValueNumber(_vm.Down().CurrentFrame().st.NumberOfArguments());
-				_vm.Top();
+				_vs.ReturnValueNumber(_vs.Down().CurrentFrame().stable.NumberOfArguments());
+				_vs.Top();
 			}
 			// arguments --------------------------------------------------------
 			namespace {
@@ -114,13 +125,13 @@ namespace SIN {
 				}; // struct ArgumentToTableCopier
 			} // namespace
 			SIN_LIBRARYFUNCTIONS_LIBFUNC(arguments) {
-				if (_vm.InCall()) {
+				if (_vs.InCall()) {
 					Types::Object* obj = SINEW(Types::Object);
-					_st.for_each_argument(ArgumentToTableCopier(obj));
-					_vm.ReturnValueObject(obj);
+					_vs.CurrentFrame().stable.for_each_argument(ArgumentToTableCopier(obj));
+					_vs.ReturnValueObject(obj);
 				}
 				else
-					_vm.AppendError("arguments() called not from within a function", "", 0u);
+					_vs.AppendError("arguments() called not from within a function", "", 0u);
 			}
 			// objectcopy -------------------------------------------------------
 			//SIN_LIBRARYFUNCTIONS_LIBFUNC(objectcopy);

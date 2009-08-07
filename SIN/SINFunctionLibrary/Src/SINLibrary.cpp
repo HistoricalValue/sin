@@ -9,7 +9,7 @@ namespace SIN {
 		// *** Private API ************************************************/
 		// ****************************************************************/
 
-		Library::Library(VM_P_t const& _vm_p): functions(), f_imit(0x00), vm_p(_vm_p) { }
+		Library::Library(void): functions(), f_imit(0x00) { }
 		Library::~Library(void) { }
 
 		// returns a pair which contains true if this function has been replaced,
@@ -49,10 +49,10 @@ namespace SIN {
 		// Invokes the function with the given name, passing the argument(s) and
 		// returning the result of the function.
 		// Invoking a function which is not insalled is an error.
-		Library::f_ret_t Library::Invoke(name_t const& _name, SymbolTable& _env) {
+		Library::f_ret_t Library::Invoke(name_t const& _name, VM::VirtualState& _vs) {
 			fciter_t fi = functions.find(_name);
 			SINASSERT(fi != functions.end());
-			return (*fi->second)(*vm_p, _env, *this);
+			return (*fi->second)(_vs, *this);
 		}
 
 	} // namespace Library

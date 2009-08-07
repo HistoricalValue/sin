@@ -106,10 +106,10 @@ struct Type {
 
 	template <typename _FromType> static Type<_FromType> ForType(_FromType const& _) { return Type<_FromType>(); }
 
-	template <typename _FromType> type Cast(_FromType const& _o) const { return _o; }
-	template <typename _FromType> ref CastRef(_FromType& _o) const { return _o; }
-	template <typename _FromType> const_ref CastConstRef(_FromType const& _o) { return _o; }
-	template <typename _FromType> const_type CastConst(_FromType const& _o) { return _o; }
+	template <typename _FromType> static type Cast(_FromType const& _o) { return static_cast<type>(_o); }
+	template <typename _FromType> static ref CastRef(_FromType& _o) { return static_cast<ref>(_o); }
+	template <typename _FromType> static const_ref CastConstRef(_FromType const& _o) { return static_cast<const_ref>(_o); }
+	template <typename _FromType> static const_type CastConst(_FromType const& _o) { return static_cast<const_type>(_o); }
 }; // class Type<T>
 
 // A very very nasty AnyHolder

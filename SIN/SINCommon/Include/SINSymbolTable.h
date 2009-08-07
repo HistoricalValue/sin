@@ -20,6 +20,7 @@ namespace SIN {
 		};
 
 		SymbolTable(void);
+		SymbolTable(SymbolTable const&);
 		~SymbolTable();
 
 		void AppendArgument(Type<name_t>::const_ref, Type<elem_t>::const_ref);

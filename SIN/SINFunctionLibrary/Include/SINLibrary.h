@@ -34,11 +34,9 @@ namespace SIN {
 			// Invokes the function with the given name, passing the argument(s) and
 			// returning the result of the function.
 			// Invoking a function which is not insalled is an error.
-			f_ret_t Invoke(name_t const& name, SymbolTable& env);
-			f_ret_t Invoke(name_t const& _name, SymbolTable const& _env)
-				{ SymbolTable env(_env); return Invoke(_name, env); }
+			f_ret_t Invoke(name_t const& name, VM::VirtualState& vs);
 
-			Library(InstanceProxy<VM::VirtualState> const& vm_p);
+			Library(void);
 			~Library(void);
 		private:
 			typedef std::map<String, func_t> functions_map_t;
@@ -48,9 +46,6 @@ namespace SIN {
 			functions_map_t functions;
 
 			func_t f_imit;
-
-			typedef InstanceProxy<VM::VirtualState> VM_P_t;
-			VM_P_t vm_p;
 		}; // class Library
 	} // namespace Library
 } // namespace SIN

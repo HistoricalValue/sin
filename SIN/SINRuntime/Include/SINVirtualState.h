@@ -38,10 +38,10 @@ namespace SIN {
 			};
 
 			struct Frame {
-				SIN::Types::Function_t& f;
-				SymbolTable st;
+				SymbolTable stable;
 				SymbolTable* previous_environment;
-				Frame(Types::Function_t& _f, SymbolTable* _pe): f(_f), previous_environment(_pe) { }
+				Frame(SymbolTable* _previous_environment): previous_environment(_previous_environment) { }
+				~Frame(void) { }
 			};
 
 			typedef std::list<Error> errors_t;
@@ -51,9 +51,9 @@ namespace SIN {
 			bool HasError(void) const { return errors.size() > 0; }
 
 			typedef std::deque<Frame> stack_t;
-			void PushFrame(Types::Function_t* _f_p, SymbolTable* _previous_environment) {INVAR
+			void PushFrame(SymbolTable* _previous_environment) {INVAR
 				SINASSERT(curr_frame == stack.size() - 1);
-				stack.push_back(Frame(*_f_p, _previous_environment));
+				stack.push_back(Frame(_previous_environment));
 				++curr_frame;
 			INVAR}
 			void PopFrame(void) {INVAR
@@ -64,12 +64,14 @@ namespace SIN {
 			Frame& CurrentFrame(void) {INVAR return stack.at(curr_frame); }
 			VirtualState& Down(void) {INVAR SINASSERT(curr_frame > 0u); --curr_frame; INVAR return *this; }
 			VirtualState& Up(void) {INVAR SINASSERT(curr_frame < stack.size() - 1); ++curr_frame; INVAR return *this; }
-			VirtualState& Top(void) {INVAR curr_frame = stack.size(); INVAR return *this; }
-			bool InCall(void) {INVAR return !stack.empty(); }
+			VirtualState& Top(void) {INVAR curr_frame = stack.size() - 1; INVAR return *this; }
+			bool InCall(void) {INVAR return curr_frame > 0; }
 
 			VirtualState(void): print_handler(0x00), retval(&nil), nil(), str(), num(), obj(),
-				stack(), curr_frame(0u), errors()
+				stack(1, Frame(0x00)), curr_frame(0u), errors()
 				{ }
+			VirtualState(VirtualState const&) { SINASSERT(!"not yet"); }
+			~VirtualState(void) { obj.SetValue(0x00); }
 		private:
 			print_handler_t print_handler;
 			MemoryCell* retval;

@@ -35,6 +35,8 @@ namespace SIN {
 	using namespace hsdfsd98sdfjk5t6ASFjadlfsdg0DFADfADf99999999AsdyuasdAASd7ad3;
 
 	SymbolTable::SymbolTable(void): data(SINEW(Data)), argument_namer("arg") { }
+	SymbolTable::SymbolTable(SymbolTable const& _other): data(SIN::Alloc::memcpy(*SINEW(Data), *Type<Data* const>::Cast(_other.data))),
+		argument_namer(_other.argument_namer) { }
 	SymbolTable::~SymbolTable(void) { SINDELETE(data); }
 
 #define DATA static_cast<Data*>(data)

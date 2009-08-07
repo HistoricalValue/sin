@@ -15,6 +15,7 @@
 #include "SINFunctionLibraryTester.h"
 #include "SINLibrary.h"
 #include "SINLibraryFunctions.h"
+#include "SINVirtualState.h"
 
 //////// for quick tests and c++ questions ///////
 // (please restore to original before commits)
@@ -45,6 +46,10 @@ void quick_test(void) {
 //	FOREACH(lis)
 //		out << *ITER(lis);
 //	out << (SIN::to_string("This is") << " horrible " << (4));
+
+	SIN::VM::VirtualState vs;
+	vs.PushFrame(0x00);
+	vs.Down().Up().Down().Top().PopFrame();
 
 	(*g_out) << (SIN::String() << "Memory leak: " << SIN::Alloc::MemoryLeaking() << " bytes");
 }

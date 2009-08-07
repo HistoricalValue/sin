@@ -10,12 +10,13 @@ namespace SIN {
 	//-----------------------------------------------------------------	
 
 	MemoryCellObject::~MemoryCellObject()	{
-		SINASSERT(value);
-		value->DecrementReferenceCounter();
-		if (value->IsUnreferenced()) {
-			value->MarckedForDeletion();
-			delete value;
-			value = static_cast<Types::Object *>(0);
+		if (value != 0x00) {
+			value->DecrementReferenceCounter();
+			if (value->IsUnreferenced()) {
+				value->MarckedForDeletion();
+				delete value;
+				value = static_cast<Types::Object *>(0);
+			}
 		}
 	}
 
@@ -34,13 +35,12 @@ namespace SIN {
 
 	//-----------------------------------------------------------------	
 	const String MemoryCellObject::ToString(void) const
-		{ return value->ToString(); }
+	{ return value != 0x00 ? value->ToString() : ""; }
 
 
 	//-----------------------------------------------------------------	
 
 	void MemoryCellObject::SetValue (const Types::Object * obj) { 
-		SINASSERT(obj);	
 		value = const_cast<Types::Object *>(obj); 
 	}
 	
