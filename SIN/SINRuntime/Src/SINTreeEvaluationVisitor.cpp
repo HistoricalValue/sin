@@ -8,6 +8,7 @@
 #include "SINMemoryCellNumber.h"
 #include "SINMemoryCellString.h"
 #include "SINMemoryCellFunction.h"
+#include "SINPreserveASTEvaluatorVisitor.h"
 
 namespace SIN{
 

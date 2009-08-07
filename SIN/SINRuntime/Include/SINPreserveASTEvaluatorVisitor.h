@@ -28,7 +28,7 @@ namespace SIN{
 
 		//constructor and destructor
 		PreserveASTEvaluatorVisitor (TreeEvaluationVisitor & visitor) : treeEvalVisitor(visitor){}
-		virtual ~PreserveASTEvaluatorVisitor (void);
+		virtual ~PreserveASTEvaluatorVisitor (void) { }
 
 
 
