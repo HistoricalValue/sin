@@ -4,7 +4,6 @@
 
 #include "SINAssert.h"
 
-
 #define VISIT_NODE_WITH_ONE_CHILD()			ASTNode::iterator kid = _node.begin();			\
 											static_cast<ASTNode&>(*kid++).Accept(this)
 
@@ -330,16 +329,19 @@ namespace SIN{
 
 
 	//-----------------------------------------------------------------
-
-	void PreserveASTEvaluatorVisitor::Visit(MetaParseASTNode & _node)
-		{ VISIT_NODE_WITH_ONE_CHILD(); }
+	//Edw 8a soze ton kombo mou kai 8a 
+	//mporei kapoios na ton parei apo mena
+	void PreserveASTEvaluatorVisitor::Visit(MetaParseASTNode & _node){ 
+		VISIT_NODE_WITH_ONE_CHILD(); 
+		memCellAst = SINEWCLASS(MemoryCellAST, (&_node));
+	}
 
 
 	//-----------------------------------------------------------------
 
 	void PreserveASTEvaluatorVisitor::Visit(MetaPreserveASTNode & _node){
 		treeEvalVisitor.Visit(_node);
-		*(_node.GetParent()) << treeEvalVisitor.PreserveASTNode();
+		//*(_node.GetParent()) << treeEvalVisitor.PreserveASTNode();
 	}
 
 

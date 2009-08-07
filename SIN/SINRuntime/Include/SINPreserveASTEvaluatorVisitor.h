@@ -4,6 +4,7 @@
 #include <stack>
 
 #include "SINASTVisitor.h"
+#include "SINMemoryCellAST.h"
 #include "SINTreeEvaluationVisitor.h"
 
 /*
@@ -30,6 +31,7 @@ namespace SIN{
 		PreserveASTEvaluatorVisitor (TreeEvaluationVisitor & visitor) : treeEvalVisitor(visitor){}
 		virtual ~PreserveASTEvaluatorVisitor (void) { }
 
+		MemoryCellAST * GetMemoryCellAST(void) { return memCellAst; }
 
 
 		PRESERVE_AST_EVALUATION_VISITOR_SIGNATURE(					) ;
@@ -94,6 +96,7 @@ namespace SIN{
 		PRESERVE_AST_EVALUATION_VISITOR_SIGNATURE(SinCode			) ;
 
 	private:
+		MemoryCellAST	*		memCellAst;
 		TreeEvaluationVisitor & treeEvalVisitor;
 	
 	};

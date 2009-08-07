@@ -1,3 +1,4 @@
+
 a = 5 + (2*3) - (4/2) + 3%2; // a = 10
 b = "str";
 c = true and (true or false); //Should be true
@@ -5,3 +6,6 @@ d = nil;
 e = (c == true) or (-a != 10);
 f = ++a > 10 or a++ >= 10 or --a < 10 or a-- <= 10;
 g = not f;
+
+
+meta_testing = .<x = "a" + "b">.;

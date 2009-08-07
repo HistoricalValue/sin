@@ -74,9 +74,17 @@
      AND = 290,
      OR = 291,
      NOT = 292,
-     KEYS_MEMBER = 293,
-     SIZE_MEMBER = 294,
-     UMINUS = 295
+     DOT_LT = 293,
+     GT_DOT = 294,
+     DOT_TILDE = 295,
+     DOT_EXCl_MARK = 296,
+     DOT_AT = 297,
+     DOT_HASH = 298,
+     DOT_KEYS_MEMBER = 299,
+     DOT_SIZE_MEMBER = 300,
+     KEYS_MEMBER = 301,
+     SIZE_MEMBER = 302,
+     UMINUS = 303
    };
 #endif
 /* Tokens.  */
@@ -115,9 +123,17 @@
 #define AND 290
 #define OR 291
 #define NOT 292
-#define KEYS_MEMBER 293
-#define SIZE_MEMBER 294
-#define UMINUS 295
+#define DOT_LT 293
+#define GT_DOT 294
+#define DOT_TILDE 295
+#define DOT_EXCl_MARK 296
+#define DOT_AT 297
+#define DOT_HASH 298
+#define DOT_KEYS_MEMBER 299
+#define DOT_SIZE_MEMBER 300
+#define KEYS_MEMBER 301
+#define SIZE_MEMBER 302
+#define UMINUS 303
 
 
 

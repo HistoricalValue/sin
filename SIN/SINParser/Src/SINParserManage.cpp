@@ -864,7 +864,7 @@ namespace SIN {
 	}
 		
 	
-	//-----------------------------------------------------------------
+	//-----------------------.------------------------------------------
 
 	void ParserManage::Manage_Statements_Empty (ASTNode **_retstmts, LexAndBisonParseArguments *_lbpa)
 		{ *_retstmts = NULL; }

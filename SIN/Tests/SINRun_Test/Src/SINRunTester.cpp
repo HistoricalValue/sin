@@ -9,9 +9,10 @@
 #include "SINParserAPI.h"
 #include "SINTestingCommon.h"
 #include "SINLoggerManager.h"
-#include "SINTreeEvaluationVisitor.h"
-#include "SINBufferedOutputStream.h"
 #include "SINFileOutputStream.h"
+#include "SINBufferedOutputStream.h"
+#include "SINTreeEvaluationVisitor.h"
+#include "SINPreserveASTEvaluatorVisitor.h"
 #include "SINASTMITTreeVisualizerXMLProducerVisitor.h"
 
 #define SIN_TESTS_RUN_RUN(NAME)               SINTESTS_RUNTEST(NAME)

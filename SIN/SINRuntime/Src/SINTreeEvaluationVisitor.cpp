@@ -663,16 +663,18 @@ namespace SIN{
 	void TreeEvaluationVisitor::Visit(CallIndexASTNode & _node){}
 
 	//-----------------------------------------------------------------
-
 	void TreeEvaluationVisitor::Visit(MetaParseASTNode & _node){
-		PreserveASTEvaluatorVisitor * preservVisitor = SINEWCLASS(SIN::PreserveASTEvaluatorVisitor, (*this));
+		PreserveASTEvaluatorVisitor * preservVisitor = SINEWCLASS(PreserveASTEvaluatorVisitor, (*this));
 		preservVisitor->Visit(_node);
+		MemoryCellAST * a = preservVisitor->GetMemoryCellAST();
+		SINDELETE(preservVisitor);
 	}
 
 	//-----------------------------------------------------------------
 
 	void TreeEvaluationVisitor::Visit(MetaPreserveASTNode & _node){
 		preserveNode = &_node;
+		
 	}
 
 	//-----------------------------------------------------------------
