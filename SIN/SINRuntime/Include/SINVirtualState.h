@@ -6,8 +6,11 @@
 #include "SINMemoryCellString.h"
 #include "SINMemoryCellNumber.h"
 #include <list>
-#include <stack>
+#include <deque>
 #include "SINFunction.h"
+
+
+#define INVAR SINASSERT(curr_frame >= 0u); SINASSERT(curr_frame < stack.size());
 
 namespace SIN {
 	namespace VM {
@@ -44,10 +47,23 @@ namespace SIN {
 			errors_t const& Errors(void) const { return errors; }
 			bool HasError(void) const { return errors.size() > 0; }
 
-			typedef std::stack<Frame> stack_t;
-			void PushFrame(Types::Function_t* _f_p, SymbolTable* _previous_environment) { stack.push(Frame(*_f_p, _previous_environment)); }
-			void PopFrame(void) { stack.pop(); }
-			stack_t const& Stack(void) const { return stack; }
+			typedef std::deque<Frame> stack_t;
+			void PushFrame(Types::Function_t* _f_p, SymbolTable* _previous_environment) {INVAR
+				SINASSERT(curr_frame == stack.size() - 1);
+				stack.push(Frame(*_f_p, _previous_environment));
+				++curr_frame;
+			INVAR}
+			void PopFrame(void) {INVAR
+				SINASSERT(curr_frame == stack.size() - 1);
+				stack.pop();
+				--curr_frame;
+			INVAR}
+			Frame& CurrentFrame(void) {INVAR return stack.at(curr_frame); }
+			void Down(void) {INVAR SINASSERT(curr_frame > 0u); --curr_frame; INVAR}
+			void Up(void) {INVAR SINASSERT(curr_frame < stack.size() - 1); ++curr_frame; INVAR}
+			void Top(void) {INVAR curr_frame = stack.size(); INVAR}
+
+			VirtualState(void): print_handler(0x00), retval(&nil), nil(), str(), num(), stack(), curr_frame(0u), errors() { }
 		private:
 			print_handler_t print_handler;
 			MemoryCell* retval;
@@ -56,6 +72,7 @@ namespace SIN {
 			MemoryCellNumber num;
 
 			stack_t stack;
+			int curr_frame;
 			errors_t errors;
 		}; // class VirtualMachine
 	} // namespace VM
