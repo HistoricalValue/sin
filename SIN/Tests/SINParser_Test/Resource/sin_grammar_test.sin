@@ -153,8 +153,13 @@ a = .@"1+2+3";
 
 b = .#.~y;
 
+function A(){}
+  
+A(1,2,3)()()();
+
 
 // Problematic things
+
 
 
 // Ex-problematic things
@@ -162,7 +167,7 @@ function A (a, b, c, d, e, f, g) {
 	return a + b + c + d + e + f + g;
 }
 //---
-a = ["A" : (function(self){ return self})];
+a = ["A" : (function(self){ return self;})];
 
 a..A(1,2);
 //---
