@@ -16,6 +16,7 @@
 #include "SINLibrary.h"
 #include "SINLibraryFunctions.h"
 #include "SINVirtualState.h"
+#include "SINStandardLibrary.h"
 
 //////// for quick tests and c++ questions ///////
 // (please restore to original before commits)
@@ -36,6 +37,11 @@ public:
 #include "SINASTMITTreeVisualizerXMLProducerVisitor.h"
 static InstanceProxy<out_class> g_out;
 
+static void __print_handler(SIN::String const& _msg) {
+	SIN::LoggerManager::StreamLogger oot("STDOUT: ", SIN::Logging::Record::FINEST, SIN::STDOUT, SIN::Logging::RecordPrinter());
+	oot.Notice(_msg);
+}
+
 void quick_test(void) {
 	SIN::LoggerManager::SingletonGetInstance()->MakeStdoutLogger("SIN::main::quick_test");
 	out_class out(SIN::LoggerManager::SingletonGetInstance()->GetLogger("SIN::main::quick_test"));
@@ -47,10 +53,13 @@ void quick_test(void) {
 //	FOREACH(lis)
 //		out << *ITER(lis);
 //	out << (SIN::to_string("This is") << " horrible " << (4));
+__print_handler("hi");
 
 	SIN::VM::VirtualState vs;
 	vs.PushFrame(0x00);
 	vs.Down().Up().Down().Top().PopFrame();
+
+	SIN::Library::StandardLibrary stdlib;
 
 	SIN::LoggerManager::SingletonGetInstance()->GetDefaultLoggerFactory()->DestroyLogger(g_out->logger());
 	SIN::LoggerManager::StreamLogger loolis("Memory reporter", SIN::Logging::Record::FINEST, SIN::STDOUT, SIN::Logging::RecordPrinter());
@@ -83,6 +92,7 @@ int main(int argc, char *argv[]) {
 	else
 		SINASSERT(!"Initialisation failed");
 
+	SIN::Alloc::ChunksMap undeallocated_chunks(SIN::Alloc::UndeallocatedChunks());
 	SIN::CleanUp();
 	return 0;
 }

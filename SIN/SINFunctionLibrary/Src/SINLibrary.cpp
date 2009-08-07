@@ -54,6 +54,5 @@ namespace SIN {
 			SINASSERT(fi != functions.end());
 			return (*fi->second)(_vs, *this);
 		}
-
 	} // namespace Library
 } // namespace SIN

@@ -15,6 +15,9 @@ namespace SIN {
 			typedef String name_t;
 			typedef Function const* func_t;
 			typedef Function::return_type const f_ret_t;
+			typedef std::map<String, func_t> functions_map_t;
+			typedef functions_map_t::iterator fiter_t;
+			typedef functions_map_t::const_iterator fciter_t;
 
 			// returns a pair which contains true if this function has been replaced,
 			// false otherwise. In the earlier case, the previous function's pointer
@@ -36,12 +39,17 @@ namespace SIN {
 			// Invoking a function which is not insalled is an error.
 			f_ret_t Invoke(name_t const& name, VM::VirtualState& vs);
 
+
+			// iteration methods
+			fiter_t begin(void) { return functions.begin(); }
+			fciter_t begin(void) const { return functions.begin(); }
+			fiter_t end(void) { return functions.end(); }
+			fciter_t end(void) const { return functions.end(); }
+
+
 			Library(void);
 			~Library(void);
 		private:
-			typedef std::map<String, func_t> functions_map_t;
-			typedef functions_map_t::iterator fiter_t;
-			typedef functions_map_t::const_iterator fciter_t;
 			typedef functions_map_t::value_type entry_t;
 			functions_map_t functions;
 

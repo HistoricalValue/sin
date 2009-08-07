@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="windows-1253"?>
 <VisualStudioProject
 	ProjectType="Visual C++"
-	Version="9.00"
+	Version="9,00"
 	Name="SINFunctionLibrary"
 	ProjectGUID="{D6319BFB-3D16-4136-A931-B736E8116DC6}"
 	RootNamespace="SINFunctionLibrary"
@@ -158,6 +158,10 @@
 				RelativePath="..\..\Src\SINLibraryFunctions.cpp"
 				>
 			</File>
+			<File
+				RelativePath="..\..\Src\SINStandardLibrary.cpp"
+				>
+			</File>
 		</Filter>
 		<Filter
 			Name="Header Files"
@@ -174,6 +178,10 @@
 			</File>
 			<File
 				RelativePath="..\..\Include\SINLibraryFunctions.h"
+				>
+			</File>
+			<File
+				RelativePath="..\..\Include\SINStandardLibrary.h"
 				>
 			</File>
 		</Filter>
