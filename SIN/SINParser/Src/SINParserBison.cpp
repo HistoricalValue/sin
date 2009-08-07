@@ -2491,7 +2491,7 @@ void yyerror (SIN::LexAndBisonParseArguments & fabpa, char const* yaccProvidedMe
 	SIN::String error = SIN::String() << yaccProvidedMessage;
 	
 	if (*yytext == 0)
-		error << " maybe missing ';'";
+		error << "maybe missing ';'";
 	else
 		error << ", before token: " << yytext;
 	fabpa.SetError(std::make_pair(error, yylineno));

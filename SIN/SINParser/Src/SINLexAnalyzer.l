@@ -49,10 +49,6 @@ number			{digit}+(\.{digit}+)?
 ";"				{ return ';';			}
 ":"				{ return ':';			}
 ","				{ return ',';			}	
-"~"				{ return '~';			}
-"!"				{ return '!';			}
-"@"				{ return '@';			}
-"#"				{ return '#';			}
 ".<"			{ return DOT_LT;		}
 ">."			{ return GT_DOT;		}
 ".~"			{ return DOT_TILDE;		}
@@ -98,8 +94,8 @@ number			{digit}+(\.{digit}+)?
 "or"			{ return OR;		}
 
 
-"#keys"			{ return KEYS_MEMBER;	}
-"#size"			{ return SIZE_MEMBER;	}
+"$keys"			{ return KEYS_MEMBER;	}
+"$size"			{ return SIZE_MEMBER;	}
 
 
 {ccomments}		{	SIN::LEX::LexUtility::IgnoreCStyleComments(InputWrapper, UnputWrapper, &yylineno, fabpa); }

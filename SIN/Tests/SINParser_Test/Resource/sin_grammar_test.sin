@@ -23,8 +23,8 @@ a = [
 a = b;
 a = [];
 
-print(a.#keys, "\n");
-print(a.#size, "\n");
+print(a.$keys, "\n");
+print(a.$size, "\n");
 
 
 simple_quoted_str = "str";
