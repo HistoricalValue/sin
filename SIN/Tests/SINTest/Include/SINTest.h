@@ -30,9 +30,9 @@ namespace SIN {
             String failure_file;
             unsigned long failure_line;
 
-			void testEnvironmentSetUp(void);
-			void testEnvironmentCleanUp(void);
         protected:
+			virtual void testEnvironmentSetUp(void);
+			virtual void testEnvironmentCleanUp(void);
             virtual void TestLogic(void) = 0;
         public:
             Test(String const &test_name);
