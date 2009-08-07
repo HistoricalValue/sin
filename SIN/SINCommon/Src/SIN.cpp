@@ -81,6 +81,7 @@ namespace SIN {
 		Types::ObjectFactory::SingletonDestroy();
 
 		SINASSERT(SIN::Alloc::IsInitialised());
+		SIN::Alloc::ChunksMap undeallocated_chunks(SIN::Alloc::UndeallocatedChunks());
 		SIN::Alloc::CleanUp();
     }
 

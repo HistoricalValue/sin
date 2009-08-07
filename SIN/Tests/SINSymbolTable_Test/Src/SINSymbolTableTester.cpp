@@ -35,6 +35,7 @@ namespace SIN {
 				logger = LoggerManager::SingletonGetInstance()->GetLogger("SIN::Tests::ST");
 				test_factory = tf;
 				SIN_TESTS_SYMBOL_TABLE_TESTRUN(SymbolTableTest);
+				LoggerManager::SingletonGetInstance()->GetDefaultLoggerFactory()->DestroyLogger(logger);
 			}
 		}	//namespace ST
 	}		//namespace Tests

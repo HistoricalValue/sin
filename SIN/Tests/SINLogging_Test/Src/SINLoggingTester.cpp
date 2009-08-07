@@ -136,6 +136,7 @@ namespace SIN {
 				test_factory = tf;
 				SINTESTS_CALLTEST(Record);
 				SINTESTS_CALLTEST(LoggerManager);
+				LoggerManager::SingletonGetInstance()->GetDefaultLoggerFactory()->DestroyLogger(logger);
 			}
 		} // namespace Logging
 	} // namespace Tests

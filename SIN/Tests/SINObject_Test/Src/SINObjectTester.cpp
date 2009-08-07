@@ -120,6 +120,7 @@ namespace SIN {
 				logger = LoggerManager::SingletonGetInstance()->GetLogger("SIN::Tests::OBJ");
 				test_factory = tf;
 				SIN_TESTS_OBJECT_TESTRUN(TestingSinObject);
+				LoggerManager::SingletonGetInstance()->GetDefaultLoggerFactory()->DestroyLogger(logger);
 			}
 		}	//namespace OBJ
 	}		//namespace Tests

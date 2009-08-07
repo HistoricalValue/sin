@@ -18,6 +18,7 @@ namespace SIN {
                 logger = LoggerManager::SingletonGetInstance()->GetLogger("SIN::Tests::AST");
 				test_factory = tf;
 				SINTESTS_CALLTEST(StrictTreeNode);
+				LoggerManager::SingletonGetInstance()->GetDefaultLoggerFactory()->DestroyLogger(logger);
 			}
 		}
 	}

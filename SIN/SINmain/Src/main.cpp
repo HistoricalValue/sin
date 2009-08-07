@@ -21,14 +21,15 @@
 // (please restore to original before commits)
 #include "SINConstants.h"
 class out_class {
-	SIN::Logger& out;
+	SIN::Logger* out_p;
 public:
-	out_class(SIN::Logger& _out): out(_out) { }
+	out_class(SIN::Logger& _out): out_p(&_out) { }
 	template <typename _T>
-	out_class& operator <<(_T const& something) {
-		out.Notice(SIN::to_string(something));
+	out_class const& operator <<(_T const& something) const {
+		out_p->Notice(SIN::to_string(something));
 		return *this;
 	}
+	SIN::Logger* logger(void) const { return out_p; }
 };
 // keep the above for convenience. ex:
 // out << (SIN::String() << "This is" << " horrible " << (4));
@@ -51,7 +52,9 @@ void quick_test(void) {
 	vs.PushFrame(0x00);
 	vs.Down().Up().Down().Top().PopFrame();
 
-	(*g_out) << (SIN::String() << "Memory leak: " << SIN::Alloc::MemoryLeaking() << " bytes");
+	SIN::LoggerManager::SingletonGetInstance()->GetDefaultLoggerFactory()->DestroyLogger(g_out->logger());
+	SIN::LoggerManager::StreamLogger loolis("Memory reporter", SIN::Logging::Record::FINEST, SIN::STDOUT, SIN::Logging::RecordPrinter());
+	out_class(loolis) << (SIN::String() << "Memory leak: " << SIN::Alloc::MemoryLeaking() << " bytes");
 }
 ////////
 
@@ -80,7 +83,6 @@ int main(int argc, char *argv[]) {
 	else
 		SINASSERT(!"Initialisation failed");
 
-	SIN::Alloc::ChunksMap undeallocated_chunks(SIN::Alloc::UndeallocatedChunks());
 	SIN::CleanUp();
 	return 0;
 }
@@ -102,4 +104,5 @@ bool MainTestCollection::RunAll(void) {
 void MainTestCollection::emulateAllocTest(void) const {
 	SIN::Logger& logga(SIN::LoggerManager::SingletonGetInstance()->GetLogger("SIN::Tests::Alloc"));
 	logga.Notice(alloc_test_status.failed ? SIN::to_string("FAIL'D at line ") << alloc_test_status.at_line : "OK");
+	SIN::LoggerManager::SingletonGetInstance()->GetDefaultLoggerFactory()->DestroyLogger(&logga);
 }

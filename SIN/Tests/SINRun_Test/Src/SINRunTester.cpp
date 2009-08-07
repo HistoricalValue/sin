@@ -88,6 +88,7 @@ namespace SIN {
 				logger = LoggerManager::SingletonGetInstance()->GetLogger("SIN::Tests::Run");
 				test_factory = tf;
 				SIN_TESTS_RUN_TESTRUN(RunFile);
+				LoggerManager::SingletonGetInstance()->GetDefaultLoggerFactory()->DestroyLogger(logger);
 			}
 		}	//namespace Parser
 	}		//namespace Tests

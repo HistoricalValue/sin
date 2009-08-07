@@ -241,6 +241,10 @@
 				RelativePath="..\..\Src\main.cpp"
 				>
 			</File>
+			<File
+				RelativePath="..\..\Src\sin.cpp"
+				>
+			</File>
 		</Filter>
 		<Filter
 			Name="Header Files"

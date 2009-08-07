@@ -22,6 +22,7 @@ namespace SIN {
 				tf = _tf;
 				logger = SIN::LoggerManager::SingletonGetInstance()->GetLogger("SIN::Tests::FunctionLibrary");
 				SINTESTS_RUNTEST(FunctionLibrary);
+				LoggerManager::SingletonGetInstance()->GetDefaultLoggerFactory()->DestroyLogger(logger);
 			}
         } // namespace Common
     } // namespace Tests

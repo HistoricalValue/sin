@@ -58,6 +58,7 @@ namespace SIN {
                 logger = LoggerManager::SingletonGetInstance()->GetLogger("SIN::Tests::Common");
 				test_factory = tf;
                 SINTESTSCOMMON_TESTRUN(Types);
+				LoggerManager::SingletonGetInstance()->GetDefaultLoggerFactory()->DestroyLogger(logger);
             }
         } // namespace Common
     } // namespace Tests
