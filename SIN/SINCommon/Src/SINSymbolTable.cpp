@@ -6,6 +6,7 @@
 #include "Common.h"
 #include <map>
 #include <vector>
+#include <algorithm>
 
 #define SIN_SYMBOLTABLE_LOOKUP(WHERE)												\
 		names_t::iterator result = DATA->WHERE.find(_name);							\
@@ -18,16 +19,9 @@ namespace SIN {
 	namespace hsdfsd98sdfjk5t6ASFjadlfsdg0DFADfADf99999999AsdyuasdAASd7ad3 {
 		typedef SymbolTable::name_t key_t;
 		typedef SymbolTable::elem_t val_t;
-		struct Entry {
-			key_t const& key;
-			val_t& value;
-			Entry(key_t const& _key, val_t& _value): key(_key), value(_value) { }
-			Entry(Entry const& _o): key(_o.key), value(_o.value) { }
-			void operator =(Entry const& _o) { new(this) Entry(_o); }
-		};
 		typedef std::map<key_t, val_t> names_t;
 		typedef std::map<key_t, val_t> args_t;
-		typedef std::vector<Entry> args_ordered_t;
+		typedef std::vector<SymbolTable::Entry> args_ordered_t;
 		struct Data {
 			names_t names;
 			args_t args;
@@ -69,6 +63,22 @@ namespace SIN {
 
 	size_t SymbolTable::NumberOfArguments(void) const {
 		return DATA->args_ordered.size();
+	}
+
+	SymbolTable::Callable& SymbolTable::for_each_argument(Callable& _f) const {
+		args_ordered_t::const_iterator end = DATA->args_ordered.end();
+		bool more = true;
+		for (args_ordered_t::const_iterator ite = DATA->args_ordered.begin(); more && ite != end; ++ite)
+			more = _f(*ite);
+		return _f;
+	}
+
+	SymbolTable::Callable const& SymbolTable::for_each_argument(Callable const& _f) const {
+		args_ordered_t::const_iterator end = DATA->args_ordered.end();
+		bool more = true;
+		for (args_ordered_t::const_iterator ite = DATA->args_ordered.begin(); more && ite != end; ++ite)
+			more = _f(*ite);
+		return _f;
 	}
 	 
 }	//namepsace SIN

@@ -50,7 +50,44 @@ namespace SIN {
 					_vm.AppendError("not enough arguments passed to strsavetofile(file,str)", "", 0u);
 			}
 			// typeof -----------------------------------------------------------
-			//SIN_LIBRARYFUNCTIONS_LIBFUNC(typeof);
+			SIN_LIBRARYFUNCTIONS_LIBFUNC(typeof) {
+				VM::VirtualState::Frame& frame = _vm.CurrentFrame();
+				SymbolTable& stable = frame.st;
+				if (stable.NumberOfArguments() > 0) {
+					char const* type_desc = 0x00;
+					switch (_vm.CurrentFrame().st.Argument(0)->Type()) {
+						case MemoryCell::AST_MCT:
+							type_desc = "metacode";
+							break;
+						case MemoryCell::BOOL_MCT:
+							type_desc = "boolean";
+							break;
+						case MemoryCell::FUNCTION_MCT:
+							type_desc = "function";
+							break;
+						case MemoryCell::LIB_FUNCTION_MCT:
+							type_desc = "library function";
+							break;
+						case MemoryCell::NIL_MCT:
+							type_desc = "nil";
+							break;
+						case MemoryCell::NUMBER_MCT:
+							type_desc = "number";
+							break;
+						case MemoryCell::OBJECT_MCT:
+							type_desc = "object";
+							break;
+						case MemoryCell::STRING_MCT:
+							break;
+						default:
+							SINASSERT(!"Illegal program state");
+							break;
+					}
+					_vm.ReturnValueString(type_desc);
+				}
+				else
+					_vm.AppendError("not enough arguments passed to typeof(obj)", "", 0u);
+			}
 			// input ------------------------------------------------------------
 			//SIN_LIBRARYFUNCTIONS_LIBFUNC(input);
 			// openfile ---------------------------------------------------------
@@ -61,10 +98,17 @@ namespace SIN {
 			//SIN_LIBRARYFUNCTIONS_LIBFUNC(writefile);
 			// totalarguments ---------------------------------------------------
 			SIN_LIBRARYFUNCTIONS_LIBFUNC(totalarguments) {
-				_vm.ReturnValueNumber(_vm.CurrentFrame().f.GetASTNode()->LocalEnv()->NumberOfArguments());
+				_vm.ReturnValueNumber(_vm.Down().CurrentFrame().st.NumberOfArguments());
+				_vm.Top();
 			}
 			// arguments --------------------------------------------------------
-			//SIN_LIBRARYFUNCTIONS_LIBFUNC(arguments);
+			SIN_LIBRARYFUNCTIONS_LIBFUNC(arguments) {
+				if (_vm.InCall()) {
+					// TODO continue here
+				}
+				else
+					_vm.AppendError("arguments() called not from within a function", "", 0u);
+			}
 			// objectcopy -------------------------------------------------------
 			//SIN_LIBRARYFUNCTIONS_LIBFUNC(objectcopy);
 		} // namespace Functions

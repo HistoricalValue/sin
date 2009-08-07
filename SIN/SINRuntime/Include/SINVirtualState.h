@@ -5,6 +5,8 @@
 #include "SINMemoryCellNil.h"
 #include "SINMemoryCellString.h"
 #include "SINMemoryCellNumber.h"
+#include "SINMemoryCellObject.h"
+#include "SINObject.h"
 #include <list>
 #include <deque>
 #include "SINFunction.h"
@@ -59,17 +61,22 @@ namespace SIN {
 				--curr_frame;
 			INVAR}
 			Frame& CurrentFrame(void) {INVAR return stack.at(curr_frame); }
-			void Down(void) {INVAR SINASSERT(curr_frame > 0u); --curr_frame; INVAR}
-			void Up(void) {INVAR SINASSERT(curr_frame < stack.size() - 1); ++curr_frame; INVAR}
-			void Top(void) {INVAR curr_frame = stack.size(); INVAR}
+			VirtualState& Down(void) {INVAR SINASSERT(curr_frame > 0u); --curr_frame; INVAR return *this; }
+			VirtualState& Up(void) {INVAR SINASSERT(curr_frame < stack.size() - 1); ++curr_frame; INVAR return *this; }
+			VirtualState& Top(void) {INVAR curr_frame = stack.size(); INVAR return *this; }
+			bool InCall(void) {INVAR return !stack.empty(); }
 
-			VirtualState(void): print_handler(0x00), retval(&nil), nil(), str(), num(), stack(), curr_frame(0u), errors() { }
+			VirtualState(void): print_handler(0x00), retval(&nil), nil(), str(), num(), obj(&obj_inst), obj_inst(),
+				stack(), curr_frame(0u), errors()
+				{ }
 		private:
 			print_handler_t print_handler;
 			MemoryCell* retval;
 			MemoryCellNil nil;
 			MemoryCellString str;
 			MemoryCellNumber num;
+			MemoryCellObject obj;
+			Types::Object obj_inst;
 
 			stack_t stack;
 			stack_t::size_type curr_frame;

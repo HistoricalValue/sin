@@ -11,6 +11,14 @@ namespace SIN {
 		typedef String name_t;
 		typedef InstanceProxy<MemoryCell> elem_t;
 
+		struct Entry {
+			name_t const& name;
+			elem_t& value;
+			Entry(name_t const& _name, elem_t& _value): name(_name), value(_value) { }
+			Entry(Entry const& _o): name(_o.name), value(_o.value) { }
+			void operator =(Entry const& _o) { new(this) Entry(_o); }
+		};
+
 		SymbolTable(void);
 		~SymbolTable();
 
@@ -24,6 +32,12 @@ namespace SIN {
 		Type<elem_t>::ref LookupArgument(Type<name_t>::const_ref) const;
 		Type<elem_t>::ref Argument(size_t index) const;
 		size_t NumberOfArguments(void) const;
+		struct Callable { // returns false to stop iterating
+			virtual bool operator ()(Entry const&) = 0;
+			virtual bool operator ()(Entry const&) const = 0;
+		};
+		Callable& for_each_argument(Callable&) const;
+		Callable const& for_each_argument(Callable const&) const;
 
 	private:
 		void* data;
