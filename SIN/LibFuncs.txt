@@ -3,3 +3,15 @@
 - LibFuncs have predefined signatures (probably return_type libfunc(SymbolTable*)).
 - Install libfuncs at init
 - At func call check if sin func or lib func and do the appropriate actions.
+
+
+=== How to prepare/call libfuncs ===
+- Create a VirtualState (SINVirtualState.h)
+- Create a Library, passing the VirtualStete's pointer (SINLibrary.h)
+- Create the standard library functions from SINLibraryFunctions.h
+- Install them all in the library
+- Pass the library to the evaluator.
+- Invoke functions with their name through the library's Invoke method.
+  Only argument needed is their environment (a stable).
+- A libfunc can alter all its arguments (the VirtualState, the SymbolTable
+  and the Library itself). Keep that in mind, no temporary instances, etc.
