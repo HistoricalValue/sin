@@ -5,11 +5,16 @@
 #include "SINAssert.h"
 
 
-#define VISIT_NODE_WITH_ONE_CHILD()			ASTNode::iterator kid = _node.begin();		\
+#define VISIT_NODE_WITH_ONE_CHILD()			ASTNode::iterator kid = _node.begin();			\
 											static_cast<ASTNode&>(*kid++).Accept(this)
 
-#define VISIT_NODE_WITH_TWO_CHILDREN()		VISIT_NODE_WITH_ONE_CHILD();				\
+#define VISIT_NODE_WITH_TWO_CHILDREN()		VISIT_NODE_WITH_ONE_CHILD();					\
 											static_cast<ASTNode&>(*kid++).Accept(this)
+
+#define VISIT_NODE_WITH_MANY_CHILDREN()		for(ASTNode::iterator kid = _node.begin();		\
+												kid != _node.end();							\
+												++kid)										\
+												static_cast<ASTNode&>(*kid).Accept(this)
 								
 
 namespace SIN{
@@ -20,27 +25,27 @@ namespace SIN{
 
 
 	//-----------------------------------------------------------------
-
+	//no visit
 	void PreserveASTEvaluatorVisitor::Visit(NumberASTNode & _node){}
 
 
 	//-----------------------------------------------------------------
-
+	//no visit
 	void PreserveASTEvaluatorVisitor::Visit(StringASTNode & _node){}
 
 
 	//-----------------------------------------------------------------
-
+	//no visit
 	void PreserveASTEvaluatorVisitor::Visit(NilASTNode & _node){}
 
 
 	//-----------------------------------------------------------------
-
+	//no visit
 	void PreserveASTEvaluatorVisitor::Visit(TrueASTNode & _node){}
 
 
 	//-----------------------------------------------------------------
-
+	//no visit
 	void PreserveASTEvaluatorVisitor::Visit(FalseASTNode & _node){}
 
 
@@ -131,47 +136,53 @@ namespace SIN{
 
 	//-----------------------------------------------------------------
 
-	void PreserveASTEvaluatorVisitor::Visit(ForASTNode & _node){}
+	void PreserveASTEvaluatorVisitor::Visit(ForASTNode & _node)
+		{ VISIT_NODE_WITH_MANY_CHILDREN(); }
 
 
 	//-----------------------------------------------------------------
 
-	void PreserveASTEvaluatorVisitor::Visit(WhileASTNode & _node){}
+	void PreserveASTEvaluatorVisitor::Visit(WhileASTNode & _node)
+		{ VISIT_NODE_WITH_TWO_CHILDREN(); }
 
 
 	//-----------------------------------------------------------------
 
-	void PreserveASTEvaluatorVisitor::Visit(IfASTNode & _node){}
+	void PreserveASTEvaluatorVisitor::Visit(IfASTNode & _node)
+		{ VISIT_NODE_WITH_ONE_CHILD(); }
 
 
 	//-----------------------------------------------------------------
 
-	void PreserveASTEvaluatorVisitor::Visit(IfElseASTNode & _node){}
+	void PreserveASTEvaluatorVisitor::Visit(IfElseASTNode & _node)
+		{ VISIT_NODE_WITH_MANY_CHILDREN(); }
 
 
 	//-----------------------------------------------------------------
 
-	void PreserveASTEvaluatorVisitor::Visit(ReturnASTNode & _node){}
+	void PreserveASTEvaluatorVisitor::Visit(ReturnASTNode & _node)
+		{ VISIT_NODE_WITH_ONE_CHILD();	}
 
 
 	//-----------------------------------------------------------------
-
+	//no visit
 	void PreserveASTEvaluatorVisitor::Visit(SemicolonASTNode & _node){}
 
 
 	//-----------------------------------------------------------------
-
+	//no visit
 	void PreserveASTEvaluatorVisitor::Visit(BreakASTNode & _node){}
 
 
 	//-----------------------------------------------------------------
-
+	//no visit
 	void PreserveASTEvaluatorVisitor::Visit(ContinueASTNode & _node){}
 
 
 	//-----------------------------------------------------------------
 
-	void PreserveASTEvaluatorVisitor::Visit(BlockASTNode & _node){}
+	void PreserveASTEvaluatorVisitor::Visit(BlockASTNode & _node)
+		{ VISIT_NODE_WITH_MANY_CHILDREN(); }
 
 
 	//-----------------------------------------------------------------
@@ -182,51 +193,58 @@ namespace SIN{
 
 	//-----------------------------------------------------------------
 
-	void PreserveASTEvaluatorVisitor::Visit(FormalArgumentsASTNode & _node){}
+	void PreserveASTEvaluatorVisitor::Visit(FormalArgumentsASTNode & _node)
+		{ VISIT_NODE_WITH_MANY_CHILDREN(); }
 
 
 	//-----------------------------------------------------------------
 
-	void PreserveASTEvaluatorVisitor::Visit(ActualArgumentsASTNode & _node){}
+	void PreserveASTEvaluatorVisitor::Visit(ActualArgumentsASTNode & _node)
+		{ VISIT_NODE_WITH_MANY_CHILDREN(); }
 
 
 	//-----------------------------------------------------------------
 
-	void PreserveASTEvaluatorVisitor::Visit(NormalCallASTNode & _node){}
+	void PreserveASTEvaluatorVisitor::Visit(NormalCallASTNode & _node)
+		{ VISIT_NODE_WITH_TWO_CHILDREN(); }
 
 
 	//-----------------------------------------------------------------
 
-	void PreserveASTEvaluatorVisitor::Visit(MethodCallASTNode & _node){}
+	void PreserveASTEvaluatorVisitor::Visit(MethodCallASTNode & _node)
+		{ VISIT_NODE_WITH_MANY_CHILDREN(); }
 
 
 	//-----------------------------------------------------------------
 
-	void PreserveASTEvaluatorVisitor::Visit(FuncdefCallASTNode & _node){}
+	void PreserveASTEvaluatorVisitor::Visit(FuncdefCallASTNode & _node)
+		{ VISIT_NODE_WITH_TWO_CHILDREN(); }
 
 
 	//-----------------------------------------------------------------
 
-	void PreserveASTEvaluatorVisitor::Visit(FunctionASTNode & _node){}
+	void PreserveASTEvaluatorVisitor::Visit(FunctionASTNode & _node)
+		{ VISIT_NODE_WITH_TWO_CHILDREN(); }
 
 
 	//-----------------------------------------------------------------
 
-	void PreserveASTEvaluatorVisitor::Visit(LamdaFunctionASTNode & _node){}
+	void PreserveASTEvaluatorVisitor::Visit(LamdaFunctionASTNode & _node)
+		{ VISIT_NODE_WITH_TWO_CHILDREN(); }
 
 
 	//-----------------------------------------------------------------
-
+	//no visit
 	void PreserveASTEvaluatorVisitor::Visit(IDASTNode & _node){}
 
 
 	//-----------------------------------------------------------------
-
+	//no visit
 	void PreserveASTEvaluatorVisitor::Visit(LocalIDASTNode & _node){}
 
 
 	//-----------------------------------------------------------------
-
+	//no visit
 	void PreserveASTEvaluatorVisitor::Visit(GlobalIDASTNode & _node){}
 
 
@@ -267,43 +285,48 @@ namespace SIN{
 
 
 	//-----------------------------------------------------------------
-
-	void PreserveASTEvaluatorVisitor::Visit(ObjectASTNode & _node){}
+	
+	void PreserveASTEvaluatorVisitor::Visit(ObjectASTNode & _node)
+		{ VISIT_NODE_WITH_MANY_CHILDREN(); }
 
 
 	//-----------------------------------------------------------------
-
+	//no visit
 	void PreserveASTEvaluatorVisitor::Visit(EmptyObjectASTNode & _node){}
 
 
 	//-----------------------------------------------------------------
 
-	void PreserveASTEvaluatorVisitor::Visit(UnindexedMemberASTNode & _node){}
+	void PreserveASTEvaluatorVisitor::Visit(UnindexedMemberASTNode & _node)
+		{ VISIT_NODE_WITH_ONE_CHILD(); }
 
 
 	//-----------------------------------------------------------------
 
-	void PreserveASTEvaluatorVisitor::Visit(IndexedMemberASTNode & _node){}
+	void PreserveASTEvaluatorVisitor::Visit(IndexedMemberASTNode & _node)
+		{ VISIT_NODE_WITH_TWO_CHILDREN(); }
+
+	//-----------------------------------------------------------------
+
+	void PreserveASTEvaluatorVisitor::Visit(ObjectMemberASTNode & _node)
+		{ VISIT_NODE_WITH_TWO_CHILDREN(); }
 
 
 	//-----------------------------------------------------------------
 
-	void PreserveASTEvaluatorVisitor::Visit(ObjectMemberASTNode & _node){}
+	void PreserveASTEvaluatorVisitor::Visit(ObjectIndexASTNode & _node)
+		{ VISIT_NODE_WITH_TWO_CHILDREN(); }
+
+	//-----------------------------------------------------------------
+
+	void PreserveASTEvaluatorVisitor::Visit(CallMemberASTNode & _node)
+		{ VISIT_NODE_WITH_TWO_CHILDREN(); }
 
 
 	//-----------------------------------------------------------------
 
-	void PreserveASTEvaluatorVisitor::Visit(ObjectIndexASTNode & _node){}
-
-
-	//-----------------------------------------------------------------
-
-	void PreserveASTEvaluatorVisitor::Visit(CallMemberASTNode & _node){}
-
-
-	//-----------------------------------------------------------------
-
-	void PreserveASTEvaluatorVisitor::Visit(CallIndexASTNode & _node){}
+	void PreserveASTEvaluatorVisitor::Visit(CallIndexASTNode & _node)
+		{ VISIT_NODE_WITH_TWO_CHILDREN(); }
 
 
 	//-----------------------------------------------------------------
@@ -340,10 +363,8 @@ namespace SIN{
 
 	//-----------------------------------------------------------------
 
-	void PreserveASTEvaluatorVisitor::Visit(SinCodeASTNode & _node){
-		for(ASTNode::iterator kid = _node.begin(); kid != _node.end(); ++kid)
-			static_cast<ASTNode&>(*kid).Accept(this);
-	}
+	void PreserveASTEvaluatorVisitor::Visit(SinCodeASTNode & _node)
+		{ VISIT_NODE_WITH_MANY_CHILDREN();	}
 
 
 

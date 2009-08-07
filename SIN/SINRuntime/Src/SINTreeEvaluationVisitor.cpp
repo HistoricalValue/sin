@@ -1,5 +1,6 @@
 #include "SINTreeEvaluationVisitor.h"
 
+
 #include "SINAlloc.h"
 #include "SINAssert.h"
 #include "SINMemoryCellNil.h"
@@ -662,7 +663,10 @@ namespace SIN{
 
 	//-----------------------------------------------------------------
 
-	void TreeEvaluationVisitor::Visit(MetaParseASTNode & _node){}
+	void TreeEvaluationVisitor::Visit(MetaParseASTNode & _node){
+		PreserveASTEvaluatorVisitor * preservVisitor = SINEWCLASS(SIN::PreserveASTEvaluatorVisitor, (*this));
+		preservVisitor->Visit(_node);
+	}
 
 	//-----------------------------------------------------------------
 
