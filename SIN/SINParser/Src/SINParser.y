@@ -21,6 +21,7 @@
 
 
 
+	#include "SINString.h"
 	#include "SINASTNode.h"
 	#include "SINParserManage.h"
 	#include "LexAndBisonParseArguments.h"
@@ -357,7 +358,8 @@ returnstmt:		RETURN ';'			{	SIN::ParserManage::Manage_ReturnStatement_Return(&($
 void yyerror (SIN::LexAndBisonParseArguments & fabpa, char const* yaccProvidedMessage)
 {
 	//fprintf(stderr, "%s: at line %d, before token: >%s<\n", yaccProvidedMessage, yylineno, yytext);
-	fabpa.SetError(std::make_pair(yaccProvidedMessage, yylineno));
+	String error = String() << yaccProvidedMessage << ", before token: " << yytext;
+	fabpa.SetError(std::make_pair(error, yylineno));
 	//return -1;
 }
 

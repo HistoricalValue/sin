@@ -84,6 +84,7 @@
 
 
 
+	#include "SINString.h"
 	#include "SINASTNode.h"
 	#include "SINParserManage.h"
 	#include "LexAndBisonParseArguments.h"
@@ -586,17 +587,17 @@ static const yytype_int8 yyrhs[] =
 /* YYRLINE[YYN] -- source line where rule number YYN was defined.  */
 static const yytype_uint16 yyrline[] =
 {
-       0,   141,   141,   149,   150,   155,   156,   157,   158,   159,
-     160,   161,   162,   163,   164,   165,   170,   171,   172,   173,
-     174,   175,   176,   177,   178,   179,   180,   181,   182,   183,
-     184,   185,   186,   191,   192,   193,   194,   195,   196,   201,
-     202,   203,   204,   205,   206,   207,   208,   213,   218,   219,
-     220,   221,   222,   227,   228,   229,   230,   235,   236,   237,
-     238,   239,   240,   246,   247,   248,   253,   254,   259,   264,
-     269,   270,   275,   276,   281,   282,   287,   288,   289,   294,
-     295,   296,   297,   302,   302,   307,   308,   311,   312,   316,
-     317,   321,   322,   323,   324,   325,   329,   330,   335,   336,
-     341,   342,   345,   348,   351,   352
+       0,   142,   142,   150,   151,   156,   157,   158,   159,   160,
+     161,   162,   163,   164,   165,   166,   171,   172,   173,   174,
+     175,   176,   177,   178,   179,   180,   181,   182,   183,   184,
+     185,   186,   187,   192,   193,   194,   195,   196,   197,   202,
+     203,   204,   205,   206,   207,   208,   209,   214,   219,   220,
+     221,   222,   223,   228,   229,   230,   231,   236,   237,   238,
+     239,   240,   241,   247,   248,   249,   254,   255,   260,   265,
+     270,   271,   276,   277,   282,   283,   288,   289,   290,   295,
+     296,   297,   298,   303,   303,   308,   309,   312,   313,   317,
+     318,   322,   323,   324,   325,   326,   330,   331,   336,   337,
+     342,   343,   346,   349,   352,   353
 };
 #endif
 
@@ -2487,7 +2488,8 @@ yyreturn:
 void yyerror (SIN::LexAndBisonParseArguments & fabpa, char const* yaccProvidedMessage)
 {
 	//fprintf(stderr, "%s: at line %d, before token: >%s<\n", yaccProvidedMessage, yylineno, yytext);
-	fabpa.SetError(std::make_pair(yaccProvidedMessage, yylineno));
+	SIN::String error = SIN::String() << yaccProvidedMessage << ", before token: " << yytext;
+	fabpa.SetError(std::make_pair(error, yylineno));
 	//return -1;
 }
 
