@@ -18,7 +18,8 @@ namespace SIN {
 			NUMBER_MCT,
 			AST_MCT,
 			OBJECT_MCT,
-			FUNCTION_MCT
+			FUNCTION_MCT,
+			LIB_FUNCTION_MCT
 		};
 
 

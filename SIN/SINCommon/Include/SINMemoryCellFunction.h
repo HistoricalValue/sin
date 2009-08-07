@@ -1,5 +1,5 @@
-#ifndef __SIN_MEMORY_CELL_AST_H__FUNCTION_H__
-#define __SIN_MEMORY_CELL_AST_H__FUNCTION_H__
+#ifndef __SIN_MEMORY_CELL_FUNCTION_H__
+#define __SIN_MEMORY_CELL_FUNCTION_H__
 
 
 #include "SINFunction.h"
@@ -29,4 +29,4 @@ namespace SIN {
 	};
 }
 
-#endif	//__SIN_MEMORY_CELL_AST_H__FUNCTION_H__
+#endif	//__SIN_MEMORY_CELL_FUNCTION_H__

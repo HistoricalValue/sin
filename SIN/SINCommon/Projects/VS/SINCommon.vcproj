@@ -211,6 +211,10 @@
 					>
 				</File>
 				<File
+					RelativePath="..\..\Include\SINMemoryCellLibFunction.cpp"
+					>
+				</File>
+				<File
 					RelativePath="..\..\Src\SINMemoryCellNil.cpp"
 					>
 				</File>
@@ -306,6 +310,10 @@
 				</File>
 				<File
 					RelativePath="..\..\Include\SINMemoryCellFunction.h"
+					>
+				</File>
+				<File
+					RelativePath="..\..\Include\SINMemoryCellLibFunction.h"
 					>
 				</File>
 				<File
