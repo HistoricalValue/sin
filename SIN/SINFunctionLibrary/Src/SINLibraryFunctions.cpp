@@ -89,6 +89,7 @@ namespace SIN {
 							type_desc = "object";
 							break;
 						case MemoryCell::STRING_MCT:
+							type_desc = "string";
 							break;
 						default:
 							SINASSERT(!"Illegal program state");
