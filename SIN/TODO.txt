@@ -22,6 +22,10 @@
 
 *[026] Make the testing framework serious (save results and print them later -- especially TestCollections should be serious)
 *[027] Default ctor of LamdaFunctionASTNode should name automatically the node with $lamdaxxx
+*[035] Remove ST from libfunc arguments
+*[036] Remove Function * from PushFrame arguments (useless)
+*[037] Fix curr_frame in VirtualState (throws pointless assertions)
+*[038] Remove VirtualState from inside Library class
 
 ---logging---
 *[010] LoggerFactory base should internally keep a list of produced loggers

@@ -8,7 +8,7 @@ Assignment proceedure:
 memcell_assign(left*, right*) {
 	delete *left;
 
-	*left = memcell_duplicate(right);
+	*left = right->Clone();
 	if (right->type == MemCellObj)
 		right->increase_refcounter;
 }
