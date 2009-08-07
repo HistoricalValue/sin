@@ -156,7 +156,16 @@ b = .#.~y;
 
 // Problematic things
 
+
 // Ex-problematic things
 function A (a, b, c, d, e, f, g) {
 	return a + b + c + d + e + f + g;
 }
+//---
+a = ["A" : (function(self){ return self})];
+
+a..A(1,2);
+//---
+a = (function (a, b, c, d, e, f, g){ 
+return a + b + c + d + e + f + g; } 
+) (1,2,3,4,5,6);
