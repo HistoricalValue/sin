@@ -148,6 +148,8 @@ b = .#.~y;
 
 
 // Problematic things
+
+// Ex-problematic things
 function A (a, b, c, d, e, f, g) {
 	return a + b + c + d + e + f + g;
 }

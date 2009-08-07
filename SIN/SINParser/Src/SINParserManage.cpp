@@ -425,8 +425,10 @@ namespace SIN {
 
 		ASTNode *arguments = SINEWCLASS(FormalArgumentsASTNode, ("Formal Arguments"));
 
-		for(; _idlist; _idlist = static_cast<ASTNode*>(+(*_idlist)))
-			arguments->ConnectChild(_idlist);
+//		for(; _idlist; _idlist = static_cast<ASTNode*>(+(*_idlist)))
+//			arguments->ConnectChild(_idlist);
+		if (_idlist != 0x00)
+			*arguments + _idlist;
 
 		**_retfuncdef << arguments << _block;
 
