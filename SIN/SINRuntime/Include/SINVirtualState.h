@@ -50,12 +50,12 @@ namespace SIN {
 			typedef std::deque<Frame> stack_t;
 			void PushFrame(Types::Function_t* _f_p, SymbolTable* _previous_environment) {INVAR
 				SINASSERT(curr_frame == stack.size() - 1);
-				stack.push(Frame(*_f_p, _previous_environment));
+				stack.push_back(Frame(*_f_p, _previous_environment));
 				++curr_frame;
 			INVAR}
 			void PopFrame(void) {INVAR
 				SINASSERT(curr_frame == stack.size() - 1);
-				stack.pop();
+				stack.pop_back();
 				--curr_frame;
 			INVAR}
 			Frame& CurrentFrame(void) {INVAR return stack.at(curr_frame); }
@@ -72,7 +72,7 @@ namespace SIN {
 			MemoryCellNumber num;
 
 			stack_t stack;
-			int curr_frame;
+			stack_t::size_type curr_frame;
 			errors_t errors;
 		}; // class VirtualMachine
 	} // namespace VM

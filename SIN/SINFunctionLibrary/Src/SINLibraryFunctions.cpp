@@ -61,7 +61,7 @@ namespace SIN {
 			//SIN_LIBRARYFUNCTIONS_LIBFUNC(writefile);
 			// totalarguments ---------------------------------------------------
 			SIN_LIBRARYFUNCTIONS_LIBFUNC(totalarguments) {
-				_vm.ReturnValueNumber(_vm.Stack().top().f.GetASTNode()->LocalEnv()->NumberOfArguments());
+				_vm.ReturnValueNumber(_vm.CurrentFrame().f.GetASTNode()->LocalEnv()->NumberOfArguments());
 			}
 			// arguments --------------------------------------------------------
 			//SIN_LIBRARYFUNCTIONS_LIBFUNC(arguments);
