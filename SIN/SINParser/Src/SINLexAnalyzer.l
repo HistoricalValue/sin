@@ -40,21 +40,27 @@ number			{digit}+(\.{digit}+)?
 %%
 
 
-"["				{ return '[';		}
-"]"				{ return ']';		}
-"{"				{ return '{';		}
-"}"				{ return '}';		}
-"("				{ return '(';		}
-")"				{ return ')';		}
-";"				{ return ';';		}
-":"				{ return ':';		}
-","				{ return ',';		}
-"~"				{ return '~';		}
-"!"				{ return '!';		}
-"@"				{ return '@';		}
-"#"				{ return '#';		}
-"."				{ return DOT;		}
-".."			{ return DOUBLEDOT; }
+"["				{ return '[';			}
+"]"				{ return ']';			}
+"{"				{ return '{';			}
+"}"				{ return '}';			}
+"("				{ return '(';			}
+")"				{ return ')';			}
+";"				{ return ';';			}
+":"				{ return ':';			}
+","				{ return ',';			}	
+"~"				{ return '~';			}
+"!"				{ return '!';			}
+"@"				{ return '@';			}
+"#"				{ return '#';			}
+".<"			{ return DOT_LT;		}
+">."			{ return GT_DOT;		}
+".~"			{ return DOT_TILDE;		}
+".!"			{ return DOT_EXCl_MARK;	}
+".@"			{ return DOT_AT;		}
+".#"			{ return DOT_HASH;		}
+"."				{ return DOT;			}
+".."			{ return DOUBLEDOT;		}
 
 
 

@@ -118,6 +118,7 @@
 %token '[' ']' '{' '}' '(' ')' ';' ':' ',' '~' '!' '@' '#' DOT DOUBLEDOT
 %token IF ELSE WHILE FOR FUNCTION RETURN BREAK CONTINUE LOCAL GLOBAL TRUE FALSE NIL
 %token ASSIGN ADD MIN MUL DIV MOD EQ NOTEQ INCR DECR GT LT GE LE AND OR NOT 
+%token DOT_LT GT_DOT DOT_TILDE DOT_EXCl_MARK DOT_AT DOT_HASH DOT_KEYS_MEMBER DOT_SIZE_MEMBER
 %token KEYS_MEMBER SIZE_MEMBER
 
 
@@ -181,18 +182,18 @@ expr:			assignexpr 					{	SIN::ParserManage::Manage_Expression_AssignExpression(
 				|	expr	AND		expr	{	SIN::ParserManage::Manage_Expression_ExpressionANDExpression($1, $3, &($$), &fabpa);	}
 				|	expr	OR		expr	{	SIN::ParserManage::Manage_Expression_ExpressionORExpression($1, $3, &($$), &fabpa);		}
 				|	metaexpr				{	SIN::ParserManage::Manage_Expression_MetaExpression($1, &($$), &fabpa);					}
-				|	DOT '#'	metaexpr		{	SIN::ParserManage::Manage_Expression_UnparseMetaExpression($3, &($$), &fabpa);		}
+				|	DOT_HASH	metaexpr	{	SIN::ParserManage::Manage_Expression_UnparseMetaExpression($2, &($$), &fabpa);		}
 				|	term					{	SIN::ParserManage::Manage_Expression_Term($1, &($$), &fabpa);							}
 				;
 				
 				
 				
-metaexpr:		DOT LT	expr  GT DOT		{	SIN::ParserManage::Manage_MetaExpression_ShiftToMetaExpression($3, &($$), &fabpa);	}
-				|	DOT '~'	'(' expr ')'	{}
-				|	DOT '~' ID				{	SIN::ParserManage::Manage_MetaExpression_PreserveAST_ID($3, &($$), &fabpa);			}
-				|	DOT '~' call			{}
-				|	DOT '!'	metaexpr		{	SIN::ParserManage::Manage_MetaExpression_CompileMetaExpression($3, &($$), &fabpa);	}
-				|	DOT '@'	STRING			{	SIN::ParserManage::Manage_MetaExpression_ParseString($3, &($$), &fabpa);			}
+metaexpr:		DOT_LT	expr  GT_DOT			{	SIN::ParserManage::Manage_MetaExpression_ShiftToMetaExpression($2, &($$), &fabpa);	}
+				|	DOT_TILDE	'(' expr ')'	{}
+				|	DOT_TILDE ID				{	SIN::ParserManage::Manage_MetaExpression_PreserveAST_ID($2, &($$), &fabpa);			}
+				|	DOT_TILDE call				{}
+				|	DOT_EXCl_MARK	metaexpr	{	SIN::ParserManage::Manage_MetaExpression_CompileMetaExpression($2, &($$), &fabpa);	}
+				|	DOT_AT	STRING				{	SIN::ParserManage::Manage_MetaExpression_ParseString($2, &($$), &fabpa);			}
 				;
 				
 				
