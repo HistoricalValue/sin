@@ -33,7 +33,9 @@ namespace SIN {
 
 			struct Frame {
 				SIN::Types::Function_t& f;
-				Frame(Types::Function_t& _f): f(_f) { }
+				SymbolTable st;
+				SymbolTable* previous_environment;
+				Frame(Types::Function_t& _f, SymbolTable* _pe): f(_f), previous_environment(_pe) { }
 			};
 
 			typedef std::list<Error> errors_t;
@@ -43,7 +45,7 @@ namespace SIN {
 			bool HasError(void) const { return errors.size() > 0; }
 
 			typedef std::stack<Frame> stack_t;
-			void PushFrame(Types::Function_t* _f_p) { stack.push(Frame(*_f_p)); }
+			void PushFrame(Types::Function_t* _f_p, SymbolTable* _previous_environment) { stack.push(Frame(*_f_p, _previous_environment)); }
 			void PopFrame(void) { stack.pop(); }
 			stack_t const& Stack(void) const { return stack; }
 		private:
