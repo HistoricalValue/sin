@@ -10,8 +10,6 @@
 
 namespace SIN{
 
-	class PreserveASTEvaluatorVisitor;	//forword declaretion
-
 	class TreeEvaluationVisitor : public ASTVisitor {
 	
 	public:
