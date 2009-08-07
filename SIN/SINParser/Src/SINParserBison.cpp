@@ -2488,9 +2488,13 @@ yyreturn:
 void yyerror (SIN::LexAndBisonParseArguments & fabpa, char const* yaccProvidedMessage)
 {
 	//fprintf(stderr, "%s: at line %d, before token: >%s<\n", yaccProvidedMessage, yylineno, yytext);
-	SIN::String error = SIN::String() << yaccProvidedMessage << ", before token: " << yytext;
+	SIN::String error = SIN::String() << yaccProvidedMessage;
+	
+	if (*yytext == 0)
+		error << " maybe missing ';'";
+	else
+		error << ", before token: " << yytext;
 	fabpa.SetError(std::make_pair(error, yylineno));
-	//return -1;
 }
 
 
