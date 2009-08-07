@@ -27,6 +27,7 @@ namespace SIN {
 			void ReturnValueNil(void) { retval = &nil; }
 			void ReturnValueString(String const& _s) { str.SetValue(_s); retval = &str; }
 			void ReturnValueNumber(SIN::Types::Number_t const& _num) { num.SetValue(_num); retval = &num; }
+			void ReturnValueObject(SIN::Types::Object* const& _obj) { obj.SetValue(_obj); retval = &obj; }
 
 			struct Error {
 				String const message;
@@ -66,7 +67,7 @@ namespace SIN {
 			VirtualState& Top(void) {INVAR curr_frame = stack.size(); INVAR return *this; }
 			bool InCall(void) {INVAR return !stack.empty(); }
 
-			VirtualState(void): print_handler(0x00), retval(&nil), nil(), str(), num(), obj(&obj_inst), obj_inst(),
+			VirtualState(void): print_handler(0x00), retval(&nil), nil(), str(), num(), obj(),
 				stack(), curr_frame(0u), errors()
 				{ }
 		private:
@@ -76,7 +77,6 @@ namespace SIN {
 			MemoryCellString str;
 			MemoryCellNumber num;
 			MemoryCellObject obj;
-			Types::Object obj_inst;
 
 			stack_t stack;
 			stack_t::size_type curr_frame;

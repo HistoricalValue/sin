@@ -33,8 +33,8 @@ namespace SIN {
 		Type<elem_t>::ref Argument(size_t index) const;
 		size_t NumberOfArguments(void) const;
 		struct Callable { // returns false to stop iterating
-			virtual bool operator ()(Entry const&) = 0;
-			virtual bool operator ()(Entry const&) const = 0;
+			virtual bool operator ()(Entry const&) { return false; }
+			virtual bool operator ()(Entry const&) const { return false; }
 		};
 		Callable& for_each_argument(Callable&) const;
 		Callable const& for_each_argument(Callable const&) const;

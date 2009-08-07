@@ -102,9 +102,22 @@ namespace SIN {
 				_vm.Top();
 			}
 			// arguments --------------------------------------------------------
+			namespace {
+				struct ArgumentToTableCopier: public SymbolTable::Callable {
+					ArgumentToTableCopier(Types::Object* _obj): obj(_obj) { }
+					virtual bool operator ()(SymbolTable::Entry const& _entry) const {
+						obj->SetValue(_entry.name, _entry.value->Clone());
+						return true;
+					}
+				private:
+					Types::Object* obj;
+				}; // struct ArgumentToTableCopier
+			} // namespace
 			SIN_LIBRARYFUNCTIONS_LIBFUNC(arguments) {
 				if (_vm.InCall()) {
-					// TODO continue here
+					Types::Object* obj = SINEW(Types::Object);
+					_st.for_each_argument(ArgumentToTableCopier(obj));
+					_vm.ReturnValueObject(obj);
 				}
 				else
 					_vm.AppendError("arguments() called not from within a function", "", 0u);
