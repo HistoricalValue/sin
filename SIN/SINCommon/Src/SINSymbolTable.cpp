@@ -27,6 +27,10 @@ namespace SIN {
 			args_t args;
 			args_ordered_t args_ordered;
 			val_t not_found;
+			Data(void) { }
+			~Data(void) { }
+		private:
+			explicit Data(Data const&) { }
 		}; // struct Data
 
 		typedef std::pair<names_t::iterator, bool> ins_pair_t;

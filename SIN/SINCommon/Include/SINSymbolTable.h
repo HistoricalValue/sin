@@ -16,6 +16,7 @@ namespace SIN {
 			elem_t& value;
 			Entry(name_t const& _name, elem_t& _value): name(_name), value(_value) { }
 			Entry(Entry const& _o): name(_o.name), value(_o.value) { }
+			~Entry(void) { }
 			void operator =(Entry const& _o) { new(this) Entry(_o); }
 		};
 
