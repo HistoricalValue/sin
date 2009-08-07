@@ -5,7 +5,7 @@
 
 *[032] Make following lib funcs.
 		tostrin, strtonum, strsavetofile, typeof, input, print, println, openfile, closefile, writefile,
-		totalarguments, arguments, objectcopy
+		readfile, totalarguments, arguments, objectcopy
 		
 *[033] Make manage functions for the fllowing rules:
 		1) DOT '~'	'(' expr ')'
