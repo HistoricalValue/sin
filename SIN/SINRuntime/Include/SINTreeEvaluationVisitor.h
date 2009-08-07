@@ -5,8 +5,8 @@
 
 #include "SINASTVisitor.h"
 #include "SINMemoryCell.h"
-
-
+#include "SINLibrary.h"
+#include "SINVirtualState.h"
 
 namespace SIN{
 
@@ -14,6 +14,7 @@ namespace SIN{
 	
 	public:
 		TreeEvaluationVisitor (void);
+		TreeEvaluationVisitor (Library::Library *_lib, VM::VirtualState *_vm);
 		virtual ~TreeEvaluationVisitor (void);
 
 
@@ -84,6 +85,8 @@ namespace SIN{
 	private:
 		MemoryCell *			memory;
 		MetaPreserveASTNode	*	preserveNode;
+		Library::Library *		lib;
+		VM::VirtualState *		vm;
 	};
 
 } // namespace SIN

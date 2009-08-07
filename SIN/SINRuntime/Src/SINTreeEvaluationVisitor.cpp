@@ -8,13 +8,19 @@
 #include "SINMemoryCellNumber.h"
 #include "SINMemoryCellString.h"
 #include "SINMemoryCellFunction.h"
+#include "SINMemoryCellLibFunction.h"
+#include "SINLibraryFunction.h"
 #include "SINPreserveASTEvaluatorVisitor.h"
 
 namespace SIN{
 
 	//-----------------------------------------------------------------
 
-	TreeEvaluationVisitor::TreeEvaluationVisitor(void){}
+	TreeEvaluationVisitor::TreeEvaluationVisitor(void) : lib(NULL){}
+
+	//-----------------------------------------------------------------
+
+	TreeEvaluationVisitor::TreeEvaluationVisitor(Library::Library *_lib, VM::VirtualState *_vm) : lib(_lib), vm(_vm){}
 
 	//-----------------------------------------------------------------
 
@@ -417,52 +423,43 @@ namespace SIN{
 
 	void TreeEvaluationVisitor::Visit(ActualArgumentsASTNode & _node){
 
-		//const size_t numberOfChildren = _node.NumberOfChildren();
+		SymbolTable *symTable = &(vm->CurrentFrame().stable);
 
-		//SymbolTable *symTable = _node.LocalEnv();
-
-		//SINASSERT(symTable);
-
-		//MemoryCellFunction *funcmemcell = static_cast<MemoryCellFunction*>( symTable->LookupLocal( to_string(static_cast<ASTNode&>(*(_node.begin())).ID()) ) );
-		//SINASSERT(funcmemcell->Type() == MemoryCell::FUNCTION_MCT);	//TODO Throw runtime error here
-
-		//ASTNode *funcnode = funcmemcell->GetValue();
-		//ASTNode::iterator kid = funcnode->begin();
-
-		//ASTNode::iterator arguments = static_cast<ASTNode&>(*kid++);
-		//symTable = static_cast<ASTNode&>(*kid++).LocalEnv();
-
-		//for(size_t i = 0; i< numberOfChildren; ++i){
-		//	static_cast<ASTNode&>(*kid++).Accept(this);
-		//	MemoryCell *tmpmemcell = memory;
-		//	symTable->SetArgument( static_cast<ASTNode*>((*arguments)[i])->Name(), tmpmemcell); //TODO Support more arguments than defined
-		//}
+		for(ASTNode::iterator arguments = _node.begin(); arguments != _node.end(); ++arguments){
+			static_cast<ASTNode&>(*arguments).Accept(this);
+			MemoryCell *tmpmemcell = memory;
+			symTable->AppendArgument( tmpmemcell );
+		}
 	}
 
 	//-----------------------------------------------------------------
 
 	void TreeEvaluationVisitor::Visit(NormalCallASTNode & _node){
 
-		//SINASSERT(_node.NumberOfChildren() == 2);
+		SINASSERT(_node.NumberOfChildren() == 2);
 
-		//ASTNode::iterator kid = _node.begin();
+		ASTNode::iterator kid = _node.begin();
 
-		//static_cast<ASTNode&>(*kid++).Accept(this);
-		//MemoryCell *tmpmemcell1 = memstack.top();
-		//memstack.pop();
+		static_cast<ASTNode&>(*kid++).Accept(this);
+		MemoryCell *tmpmemcell1 = memory;
 
-		//static_cast<ASTNode&>(*kid++).Accept(this);
-		//MemoryCell *tmpmemcell2 = memstack.top();
-		//memstack.pop();
+		SymbolTable st;
+		vm->PushFrame(&st);
 
-		//SymbolTable *symTable = _node.LocalEnv();
+		static_cast<ASTNode&>(*kid++).Accept(this);
+		MemoryCell *tmpmemcell2 = memory;
 
-		//SINASSERT(symTable);
+		SINASSERT(tmpmemcell1->Type() == MemoryCell::FUNCTION_MCT || tmpmemcell1->Type() == MemoryCell::LIB_FUNCTION_MCT);	//TODO Throw runtime error here
 
-		//MemoryCellFunction *funcmemcell = static_cast<MemoryCellFunction*>(symTable->LookupLocal(static_cast<MemoryCellString*>(tmpmemcell1)->GetValue()));
-		//SINASSERT(funcmemcell->Type() == MemoryCell::FUNCTION_MCT);	//TODO Throw runtime error here
+		if(tmpmemcell1->Type() == MemoryCell::FUNCTION_MCT){
+			FunctionASTNode *func = static_cast<FunctionASTNode*>(static_cast<MemoryCellFunction*>(tmpmemcell1)->GetValue()->GetASTNode());
+			ASTNode::iterator funckid = _node.begin();
+			static_cast<ASTNode&>(*++funckid).Accept(this);
+		}else{
+			Library::Function *libfunc = static_cast<MemoryCellLibFunction*>(tmpmemcell1)->GetValue();
 
-		//static_cast<ASTNode*>(*(funcmemcell->GetValue())[1])->Accept(this);
+			(*libfunc)(*vm, *lib);
+		}
 	}
 
 	//-----------------------------------------------------------------

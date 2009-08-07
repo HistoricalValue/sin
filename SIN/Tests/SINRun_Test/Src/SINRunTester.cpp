@@ -14,6 +14,10 @@
 #include "SINTreeEvaluationVisitor.h"
 #include "SINPreserveASTEvaluatorVisitor.h"
 #include "SINASTMITTreeVisualizerXMLProducerVisitor.h"
+#include "SINLibrary.h"
+#include "SINLibraryFunction.h"
+#include "SINLibraryFunctions.h"
+#include "SINMemoryCellLibFunction.h"
 
 #define SIN_TESTS_RUN_RUN(NAME)               SINTESTS_RUNTEST(NAME)
 #define SIN_TESTS_RUN_TESTDEF(NAME,TESTCODE)  SINTESTS_TESTDEF(NAME,TESTCODE)
@@ -53,6 +57,12 @@ namespace SIN {
 				virtual void TestLogic(void);
 			};
 
+			static void __print_handler(SIN::String const& _msg) {
+				SIN::LoggerManager::StreamLogger oot("STDOUT: ", SIN::Logging::Record::FINEST, SIN::STDOUT, SIN::Logging::RecordPrinter());
+				oot.Notice(_msg);
+			}
+
+
 
 			//------------------------------------------------------------------
 
@@ -70,8 +80,38 @@ namespace SIN {
 				BufferedOutputStream foutxml(_foutxml);
 				ASTMITTreeVisualizerXMLProducerVisitor mitvis(foutxml);
 				root->Accept(&mitvis);
+
+				VM::VirtualState vm;
+				vm.SetPrintHandler(&__print_handler);
+
+				Library::Library lib;
+
+				Library::Functions::print			print;
+				Library::Functions::println			println;
+				Library::Functions::arguments		arguments;
+				Library::Functions::totalarguments	totalarguments;
+				Library::Functions::tostring		tostring;
+				Library::Functions::strtonum		strtonum;
+				Library::Functions::typeof			typeof;
 				
-				TreeEvaluationVisitor eval;
+				lib.InstallFunction(&print			);
+				lib.InstallFunction(&println		);
+				lib.InstallFunction(&arguments		);
+				lib.InstallFunction(&totalarguments	);
+				lib.InstallFunction(&tostring		);
+				lib.InstallFunction(&strtonum		);
+				lib.InstallFunction(&typeof			);
+
+				SymbolTable globalSymTable = static_cast<SinCodeASTNode*>(root)->getSymbolTable();
+				globalSymTable.SetLocal("print",			SINEWCLASS(MemoryCellLibFunction, (&print)));
+				globalSymTable.SetLocal("println",			SINEWCLASS(MemoryCellLibFunction, (&println)));
+				globalSymTable.SetLocal("arguments",		SINEWCLASS(MemoryCellLibFunction, (&arguments)));
+				globalSymTable.SetLocal("totalarguments",	SINEWCLASS(MemoryCellLibFunction, (&totalarguments)));
+				globalSymTable.SetLocal("tostring",			SINEWCLASS(MemoryCellLibFunction, (&tostring)));
+				globalSymTable.SetLocal("strtonum",			SINEWCLASS(MemoryCellLibFunction, (&strtonum)));
+				globalSymTable.SetLocal("typeof",			SINEWCLASS(MemoryCellLibFunction, (&typeof)));
+
+				TreeEvaluationVisitor eval(&lib, &vm);
 				root->Accept(&eval);
 			}
 

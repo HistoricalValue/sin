@@ -1,11 +1,17 @@
 
 a = 5 + (2*3) - (4/2) + 3%2; // a = 10
+println(a);
 b = "str";
+println(b);
 c = true and (true or false); //Should be true
+println(c);
 d = nil;
+println(d);
 e = (c == true) or (-a != 10);
+println(e);
 f = ++a > 10 or a++ >= 10 or --a < 10 or a-- <= 10;
+println(f);
 g = not f;
-
+println(g);
 
 meta_testing = .<x = "a" + "b">.;
