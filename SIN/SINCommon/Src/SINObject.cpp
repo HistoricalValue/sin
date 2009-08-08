@@ -14,7 +14,6 @@
 #include "SINMemoryCellString.h"
 #include "SINMemoryCellFunction.h"
 
-
 #define TO_STRING_APPEND(TYPE)		str			<<									\
 									i->first	<<									\
 									":"			<<									\

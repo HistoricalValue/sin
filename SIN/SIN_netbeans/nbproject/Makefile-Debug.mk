@@ -80,8 +80,6 @@ OBJECTFILES= \
 	${OBJECTDIR}/_ext/_DOTDOT/SINCommon/Src/SINObject.o \
 	${OBJECTDIR}/_ext/_DOTDOT/Tests/SINTest/Src/SINTestCollection.o \
 	${OBJECTDIR}/_ext/_DOTDOT/SINCommon/Src/SINOutputStream.o \
-	${OBJECTDIR}/_ext/_DOTDOT/SINCommon/Src/SINMemoryCellLibFunction.o \
-	${OBJECTDIR}/_ext/_DOTDOT/SINFunctionLibrary/Src/SINStandardLibrary.o \
 	${OBJECTDIR}/_ext/_DOTDOT/SINAST/Src/SINASTMITTreeVisualizerXMLProducerVisitor.o \
 	${OBJECTDIR}/_ext/_DOTDOT/SINCommon/Src/SINFucntion.o \
 	${OBJECTDIR}/_ext/_DOTDOT/SINCommon/Src/SIN.o \
@@ -359,16 +357,6 @@ ${OBJECTDIR}/_ext/_DOTDOT/SINCommon/Src/SINOutputStream.o: nbproject/Makefile-${
 	${MKDIR} -p ${OBJECTDIR}/_ext/_DOTDOT/SINCommon/Src
 	${RM} $@.d
 	$(COMPILE.cc) -g -Wall -I../Common/Include -I../SINAlloc/Include -I../SINAST/Include -I../SINCommon/Include -I../SINFunctionLibrary/Include -I../SINLogging/Include -I../SINmain/Include -I../SINParser/Include -I../SINRuntime/Include -I../Tests/SINAlloc_Test/Include -I../Tests/SINAST_Test/Include -I../Tests/SINCommon_Test/Include -I../Tests/SINFunctionLibrary_Test/Include -I../Tests/SINLogging_Test/Include -I../Tests/SINObject_Test/Include -I../Tests/SINParser_Test/Include -I../Tests/SINRun_Test/Include -I../Tests/SINSymbolTable_Test/Include -I../Tests/SINTest/Include -MMD -MP -MF $@.d -o ${OBJECTDIR}/_ext/_DOTDOT/SINCommon/Src/SINOutputStream.o ../SINCommon/Src/SINOutputStream.cpp
-
-${OBJECTDIR}/_ext/_DOTDOT/SINCommon/Src/SINMemoryCellLibFunction.o: nbproject/Makefile-${CND_CONF}.mk ../SINCommon/Src/SINMemoryCellLibFunction.cpp 
-	${MKDIR} -p ${OBJECTDIR}/_ext/_DOTDOT/SINCommon/Src
-	${RM} $@.d
-	$(COMPILE.cc) -g -Wall -I../Common/Include -I../SINAlloc/Include -I../SINAST/Include -I../SINCommon/Include -I../SINFunctionLibrary/Include -I../SINLogging/Include -I../SINmain/Include -I../SINParser/Include -I../SINRuntime/Include -I../Tests/SINAlloc_Test/Include -I../Tests/SINAST_Test/Include -I../Tests/SINCommon_Test/Include -I../Tests/SINFunctionLibrary_Test/Include -I../Tests/SINLogging_Test/Include -I../Tests/SINObject_Test/Include -I../Tests/SINParser_Test/Include -I../Tests/SINRun_Test/Include -I../Tests/SINSymbolTable_Test/Include -I../Tests/SINTest/Include -MMD -MP -MF $@.d -o ${OBJECTDIR}/_ext/_DOTDOT/SINCommon/Src/SINMemoryCellLibFunction.o ../SINCommon/Src/SINMemoryCellLibFunction.cpp
-
-${OBJECTDIR}/_ext/_DOTDOT/SINFunctionLibrary/Src/SINStandardLibrary.o: nbproject/Makefile-${CND_CONF}.mk ../SINFunctionLibrary/Src/SINStandardLibrary.cpp 
-	${MKDIR} -p ${OBJECTDIR}/_ext/_DOTDOT/SINFunctionLibrary/Src
-	${RM} $@.d
-	$(COMPILE.cc) -g -Wall -I../Common/Include -I../SINAlloc/Include -I../SINAST/Include -I../SINCommon/Include -I../SINFunctionLibrary/Include -I../SINLogging/Include -I../SINmain/Include -I../SINParser/Include -I../SINRuntime/Include -I../Tests/SINAlloc_Test/Include -I../Tests/SINAST_Test/Include -I../Tests/SINCommon_Test/Include -I../Tests/SINFunctionLibrary_Test/Include -I../Tests/SINLogging_Test/Include -I../Tests/SINObject_Test/Include -I../Tests/SINParser_Test/Include -I../Tests/SINRun_Test/Include -I../Tests/SINSymbolTable_Test/Include -I../Tests/SINTest/Include -MMD -MP -MF $@.d -o ${OBJECTDIR}/_ext/_DOTDOT/SINFunctionLibrary/Src/SINStandardLibrary.o ../SINFunctionLibrary/Src/SINStandardLibrary.cpp
 
 ${OBJECTDIR}/_ext/_DOTDOT/SINAST/Src/SINASTMITTreeVisualizerXMLProducerVisitor.o: nbproject/Makefile-${CND_CONF}.mk ../SINAST/Src/SINASTMITTreeVisualizerXMLProducerVisitor.cpp 
 	${MKDIR} -p ${OBJECTDIR}/_ext/_DOTDOT/SINAST/Src

@@ -3,9 +3,7 @@
 
 #include <string>
 #include "Common.h"
-#include "SINTypes.h"
 #include "SINASTCommon.h"
-#include "SINTreeNode.h"
 #include "SINStrictTreeNode.h"
 #include "SINString.h"
 #include "SINNamer.h"
@@ -19,19 +17,6 @@ namespace SIN {
 	// Visitors' forward declarations
     class ASTVisitor;
 	class ASTTreeVisualisationVisitor;
-
-
-	#define SINASTNODE_OPNODE_DECL(NAME, OPNAME)            \
-    class NAME##ASTNode : public OpASTNode<OP_##OPNAME> {   \
-    public:                                                 \
-        NAME##ASTNode(void);                                \
-        ~NAME##ASTNode(void);                               \
-        void Accept(ASTVisitor *);                          \
-		NAME##ASTNode *Clone(void) const;					\
-		virtual SymbolTable *LocalEnv(void);				\
-		virtual SymbolTable *GlobalEnv(void);				\
-    }
-
 
 
 	//-----------------------------------------------------------------------
@@ -128,101 +113,6 @@ namespace SIN {
 		virtual SymbolTable *GlobalEnv (void) = 0;
 		virtual SymbolTable *LocalEnv (void) = 0;
 	};
-
-
-
-	//-----------------------------------------------------------------------
-
-    class NumberASTNode : public ConstASTNode<CONST_NUMBER, Types::Number_t> {
-    public:
-        NumberASTNode(Types::Number_t const &_value = 0);
-        virtual void Accept(ASTVisitor *);
-		virtual NumberASTNode *Clone(void) const;
-		virtual SymbolTable *GlobalEnv (void);
-		virtual SymbolTable *LocalEnv (void);
-    }; // class NumberASTNode
-
-
-
-	//-----------------------------------------------------------------------
-    
-	class StringASTNode : public ConstASTNode<CONST_STRING, Types::String_t> {
-    public:
-        StringASTNode(Types::String_t const &_value = "");
-        virtual void Accept(ASTVisitor *);
-		virtual StringASTNode *Clone(void) const;
-		virtual SymbolTable *GlobalEnv (void);
-		virtual SymbolTable *LocalEnv (void);
-    }; // class StringASTNode
-
-
-
-	//-----------------------------------------------------------------------
-    
-	class NilASTNode : public ConstASTNode<CONST_NIL, Types::Nil_t> {
-    public:
-        NilASTNode(void);
-        virtual void Accept(ASTVisitor *);
-		virtual NilASTNode *Clone(void) const;
-		virtual SymbolTable *GlobalEnv (void);
-		virtual SymbolTable *LocalEnv (void);
-    }; // class NilASTNode
-
-
-
-	//-----------------------------------------------------------------------
-
-    class TrueASTNode : public ConstASTNode<CONST_TRUE, Types::Boolean_t> {
-    public:
-        TrueASTNode(void);
-        virtual void Accept(ASTVisitor *);
-		virtual TrueASTNode *Clone(void) const;
-		virtual SymbolTable *GlobalEnv (void);
-		virtual SymbolTable *LocalEnv (void);
-    }; // class TrueASTNode
-
-
-
-	//-----------------------------------------------------------------------
-
-    class FalseASTNode : public ConstASTNode<CONST_FALSE, Types::Boolean_t> {
-    public:
-        FalseASTNode(void);
-        virtual void Accept(ASTVisitor *);
-		virtual FalseASTNode *Clone(void) const;
-		virtual SymbolTable *GlobalEnv (void);
-		virtual SymbolTable *LocalEnv (void);
-    }; // class FalseASTNode
-
-
-    
-	//-----------------------------------------------------------------------
-    
-	template <enum SIN::OpValueType>
-    class OpASTNode : public ASTNode {
-    public:
-        OpASTNode(String const &_name): ASTNode(_name) { }
-        virtual ~OpASTNode(void) { }
-        virtual void Accept(ASTVisitor *) = 0;
-		virtual OpASTNode *Clone(void) const = 0;
-		virtual SymbolTable *GlobalEnv (void) = 0;
-		virtual SymbolTable *LocalEnv (void) = 0;
-    };
-
-	SINASTNODE_OPNODE_DECL(Add,ADD);
-    SINASTNODE_OPNODE_DECL(Sub,SUB);
-    SINASTNODE_OPNODE_DECL(Mul,MUL);
-    SINASTNODE_OPNODE_DECL(Div,DIV);
-    SINASTNODE_OPNODE_DECL(Mod,MOD);
-    SINASTNODE_OPNODE_DECL(Lt ,LT );
-    SINASTNODE_OPNODE_DECL(Gt ,GT );
-    SINASTNODE_OPNODE_DECL(Le ,LE );
-    SINASTNODE_OPNODE_DECL(Ge ,GE );
-    SINASTNODE_OPNODE_DECL(Eq ,EQ );
-    SINASTNODE_OPNODE_DECL(Ne ,NE );
-    SINASTNODE_OPNODE_DECL(Or ,OR );
-    SINASTNODE_OPNODE_DECL(And,AND);
-    SINASTNODE_OPNODE_DECL(Not,NOT);
 
 
 } // namespace SIN

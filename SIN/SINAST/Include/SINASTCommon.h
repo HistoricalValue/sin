@@ -1,9 +1,6 @@
 #ifndef __SIN_AST_COMMON_H__
 #define __SIN_AST_COMMON_H__
 
-#include <string>
-#include "SINASTNode.h"
-
 namespace SIN {
 	enum ConstNodeType {
 		CONST_NUMBER,
@@ -31,7 +28,7 @@ namespace SIN {
 		OP_NE,
 		OP_OR,
 		OP_AND,
-                OP_NOT
+		OP_NOT
 	};
 
 	enum ExprValueType {

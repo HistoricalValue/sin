@@ -103,7 +103,7 @@ namespace SIN {
 				lib.InstallFunction(&typeof			);
 
 				// TODO remove the reference here and watch it burn 
-				SymbolTable& globalSymTable = static_cast<SinCodeASTNode*>(root)->getSymbolTable();
+				SymbolTable globalSymTable = static_cast<SinCodeASTNode*>(root)->getSymbolTable();
 				globalSymTable.SetLocal("print",			SINEWCLASS(MemoryCellLibFunction, (&print)));
 				globalSymTable.SetLocal("println",			SINEWCLASS(MemoryCellLibFunction, (&println)));
 				globalSymTable.SetLocal("arguments",		SINEWCLASS(MemoryCellLibFunction, (&arguments)));

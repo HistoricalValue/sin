@@ -290,8 +290,11 @@
     <logicalFolder name="ExternalFiles"
                    displayName="Important Files"
                    projectFiles="false">
+      <itemPath>../Assignments.txt</itemPath>
       <itemPath>GNUmakefile</itemPath>
+      <itemPath>../LibFuncs.txt</itemPath>
       <itemPath>../Linux_static_lib_base.mk</itemPath>
+      <itemPath>../MemoryModel.txt</itemPath>
       <itemPath>../Metaprogramming.txt</itemPath>
       <itemPath>../NotesForDevelopers.txt</itemPath>
       <itemPath>../TODO.txt</itemPath>
