@@ -54,7 +54,9 @@ MemoryCell onto another. This MUST ALWAYS be done with memcell_assign (whatever
 and wherever its implementation lies).
 
 Conceptually, the place of storage for variables (and every other MemoryCell entity)
-is a SymbolTable.
+is a SymbolTable (for local, global variables and arguments) and Objects (for members).
+Copying from variables/objects to objects/variables is a copy-assignment and MemoryCells
+get copied.
               THEREFOR: === Commandments ===
              1. SymbolTable-s DELETE ALL VARIABLES (of their own) when they are destructed.
              2. A SymbolTable is THE ONLY PLACE where a variable's storage memory lies.

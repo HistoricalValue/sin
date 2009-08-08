@@ -13,7 +13,7 @@ namespace SIN {
 			value->DecrementReferenceCounter();
 			if (value->IsUnreferenced()) {
 				value->MarckedForDeletion();
-				delete value;
+				SINDELETE(value);
 				value = static_cast<Types::Object *>(0);
 			}
 		}
@@ -23,7 +23,7 @@ namespace SIN {
 	//-----------------------------------------------------------------	
 
 	MemoryCell * MemoryCellObject::Clone(void)
-		{ return SINEW(MemoryCellObject(value)); }
+		{ return SINEWCLASS(MemoryCellObject, (value)); }
 
 
 	//-----------------------------------------------------------------	

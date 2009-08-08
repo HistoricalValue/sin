@@ -44,12 +44,12 @@ struct ClearTableFunctor : public std::unary_function <const SIN::Types::Object:
 	void operator() (const SIN::Types::Object::ObjectTableValue & otv) {
 		if (otv.second != static_cast<SIN::MemoryCell *>(0)) {
 			if(otv.second->Type() == SIN::MemoryCell::OBJECT_MCT){
-				SIN::MemoryCellObject * obj = static_cast<SIN::MemoryCellObject *>(otv.second);
+				MemoryCellObject* obj = static_cast<SIN::MemoryCellObject *>(otv.second);
 
 				//An to exoume 3anadei simenei oti eixame kuklo kai to exoume idi kanei delete
 				if ( !obj->GetValue()->IsMarckedForDeletion() ) {
 					obj->GetValue()->MarckedForDeletion();	
-					SINDELETE(otv.second); 
+					SINDELETE(obj); 
 				}
 			}
 			else
