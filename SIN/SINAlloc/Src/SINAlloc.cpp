@@ -5,6 +5,7 @@
 #include <memory>
 #include "Common.h"
 #include <list>
+#include <setjmp.h>
 
 #define SINALLOC_ALLOCATION_TYPE_VARIABLE	(1 << 0)
 #define SINALLOC_ALLOCATION_TYPE_ARRAY		(1 << 1)
@@ -126,7 +127,9 @@ namespace SIN {
 					String file;
 					unsigned int line;
 					NextDeleteInfo(MemoryAllocator* _allocator): allocator(_allocator), file(_allocator), line(0u) { }
-					void Reset(void) { MemoryAllocator* _allocator = allocator; new(this) NextDeleteInfo(_allocator); }
+					NextDeleteInfo(NextDeleteInfo const& _o): allocator(_o.allocator), file(_o.allocator), line(_o.line) { SINASSERT(!"not yet"); }
+					~NextDeleteInfo(void) { }
+					void Reset(void) { file = "(undefined)"; line = 0u; }
 				}* next_delete_info;
 			}* P_singletons_p = 0x00; // struct Singletons
 			static bool P_initialised = false;
@@ -284,6 +287,10 @@ namespace SIN {
 			P_singletons_p->next_delete_info->file = _file;
 			P_singletons_p->next_delete_info->line = _line;
 		}
+		void ResetNextDeleteFileLineInfo(void) {
+			SINASSERT(P_initialised);
+			SIN::Alloc::P_singletons_p->next_delete_info->Reset();
+		}
 	} // namespace Alloc
 } // namespace SIN
 
@@ -303,9 +310,12 @@ inline static void* __SINAlloc_new(size_t const _size, SIN::Alloc::AllocationTyp
 }
 inline static void __SINAlloc_delete(void* const _ptr, SIN::Alloc::AllocationType const& _allocation_type) {
 	if (SIN::Alloc::P_initialised) {
-		SINASSERT(SIN::Alloc::P_singletons_p->validator->IsValid(_ptr));
-		SIN::Alloc::P_singletons_p->validator->Deallocate(_ptr, SIN::Alloc::P_singletons_p->next_delete_info->file.c_str(), SIN::Alloc::P_singletons_p->next_delete_info->line);
-		SIN::Alloc::P_singletons_p->next_delete_info->Reset();
+		if (!SIN::Alloc::P_singletons_p->validator->IsValid(_ptr)) {
+			SIN::Alloc::DeallocationsList deallocated_chunks(SIN::Alloc::DeallocatedChunksByMemory(_ptr));
+			SINASSERT(false);
+		}
+		unsigned int l_line = SIN::Alloc::P_singletons_p->next_delete_info->line;
+		SIN::Alloc::P_singletons_p->validator->Deallocate(_ptr, SIN::Alloc::P_singletons_p->next_delete_info->file.c_str(), l_line);
 		SIN::Alloc::P_singletons_p->allocations_types->erase(_ptr);
 	}
 	else
@@ -329,28 +339,28 @@ void operator delete[](void* const _ptr, SINAllocationIndicator const&, char con
 // Default C++ new/delete operators
 //scalar, throwing new and it matching delete
 void* operator new (std::size_t const _size) throw (std::bad_alloc) {
-	return __SINAlloc_new(_size, SINALLOC_ALLOCATION_TYPE_VARIABLE, "", 0);
+	return __SINAlloc_new(_size, SINALLOC_ALLOCATION_TYPE_VARIABLE, "::operator new", 0);
 }
 void operator delete (void* const _ptr) throw() {
 	__SINAlloc_delete(_ptr, SINALLOC_ALLOCATION_TYPE_ARRAY);
 }
 //scalar, nothrow new and it matching delete
 void* operator new (std::size_t const _size, const std::nothrow_t&) throw () {
-	return __SINAlloc_new(_size, SINALLOC_ALLOCATION_TYPE_VARIABLE, "", 0);
+	return __SINAlloc_new(_size, SINALLOC_ALLOCATION_TYPE_VARIABLE, "::operator new(std::nothrow_t)", 0);
 }
 void operator delete (void* const _ptr, const std::nothrow_t&) throw () {
 	__SINAlloc_delete(_ptr, SINALLOC_ALLOCATION_TYPE_ARRAY);
 }
 //array throwing new and matching delete[]
 void* operator new  [](std::size_t const _size) throw (std::bad_alloc) {
-	return __SINAlloc_new(_size, SINALLOC_ALLOCATION_TYPE_ARRAY, "", 0);
+	return __SINAlloc_new(_size, SINALLOC_ALLOCATION_TYPE_ARRAY, "::operator new[]", 0);
 }
 void operator delete[](void* const _ptr) throw() {
 	__SINAlloc_delete(_ptr, SINALLOC_ALLOCATION_TYPE_ARRAY);
 }
 //array, nothrow new and matching delete[]
 void* operator new [](std::size_t const _size, const std::nothrow_t&) throw() { // array nothrow new
-	return __SINAlloc_new(_size, SINALLOC_ALLOCATION_TYPE_ARRAY, "", 0);
+	return __SINAlloc_new(_size, SINALLOC_ALLOCATION_TYPE_ARRAY, "::operator new[](std::nothrow_t)", 0);
 }
 void operator delete[](void* const _ptr, const std::nothrow_t&) throw() { // matching delete[]
 	__SINAlloc_delete(_ptr, SINALLOC_ALLOCATION_TYPE_ARRAY);

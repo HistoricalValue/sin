@@ -274,6 +274,10 @@
 				>
 			</File>
 			<File
+				RelativePath="..\..\Pears.txt"
+				>
+			</File>
+			<File
 				RelativePath="..\..\..\TODO.txt"
 				>
 			</File>

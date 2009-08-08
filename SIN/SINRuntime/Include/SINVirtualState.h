@@ -41,6 +41,7 @@ namespace SIN {
 				SymbolTable stable;
 				SymbolTable* previous_environment;
 				Frame(SymbolTable* _previous_environment): previous_environment(_previous_environment) { }
+				Frame(Frame const& _o): stable(_o.stable), previous_environment(_o.previous_environment) { }
 				~Frame(void) { }
 			};
 
@@ -70,7 +71,6 @@ namespace SIN {
 			VirtualState(void): print_handler(0x00), retval(&nil), nil(), str(), num(), obj(),
 				stack(1, Frame(0x00)), curr_frame(0u), errors()
 				{ }
-			VirtualState(VirtualState const&) { SINASSERT(!"not yet"); }
 			~VirtualState(void) { obj.SetValue(0x00); }
 		private:
 			print_handler_t print_handler;
@@ -83,6 +83,9 @@ namespace SIN {
 			stack_t stack;
 			stack_t::size_type curr_frame;
 			errors_t errors;
+
+			// Unusable
+			VirtualState(VirtualState const&);
 		}; // class VirtualMachine
 	} // namespace VM
 } // namespace SIN

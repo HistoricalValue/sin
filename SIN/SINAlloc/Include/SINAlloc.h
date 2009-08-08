@@ -83,7 +83,7 @@ namespace SIN { namespace Alloc {
 
 
 	extern void SetNextDeleteFileLineInfo(char const*, unsigned int);
-
+	extern void ResetNextDeleteFileLineInfo(void);
 } } // namespace Alloc / namespace SIN
 
 // New/delete operators to be used
@@ -98,6 +98,7 @@ extern void  operator delete[](void* ptr, SINAllocationIndicator const&, char co
 #define SINDELETE(PTR) do { \
 	SIN::Alloc::SetNextDeleteFileLineInfo(__FILE__, __LINE__);				\
 	SIN::Alloc::IsArrayAllocated(PTR) ? delete[]((PTR)) : delete((PTR));	\
+	SIN::Alloc::ResetNextDeleteFileLineInfo();								\
 	} while(false)
 #define SINPTR(PTR) SIN::Alloc::ValidateAndUse((PTR))
 #define SINMEMCPY(TO, FROM) if (sizeof((FROM)) <= SIN::Alloc::ChunkInformation(TO).Size())

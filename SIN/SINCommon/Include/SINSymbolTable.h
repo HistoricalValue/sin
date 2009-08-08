@@ -23,6 +23,7 @@ namespace SIN {
 		SymbolTable(void);
 		SymbolTable(SymbolTable const&);
 		~SymbolTable();
+		void operator =(SymbolTable const& _other) { new(this) SymbolTable(_other); }
 
 		void AppendArgument(Type<name_t>::const_ref, Type<elem_t>::const_ref);
 		void AppendArgument(Type<elem_t>::const_ref _elem) { AppendArgument(argument_namer++, _elem); }

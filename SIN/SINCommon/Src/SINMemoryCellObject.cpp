@@ -40,8 +40,8 @@ namespace SIN {
 
 	//-----------------------------------------------------------------	
 
-	void MemoryCellObject::SetValue (const Types::Object * obj) { 
-		value = const_cast<Types::Object *>(obj); 
+	void MemoryCellObject::SetValue (Types::Object * obj) { 
+		value = obj; 
 	}
 	
 
