@@ -1,15 +1,15 @@
 #ifndef __SIN_MEMORY_CELL_AST_H__AST_H__
 #define __SIN_MEMORY_CELL_AST_H__AST_H__
 
-#include "SINASTNode.h"
 #include "SINMemoryCell.h"
+#include "SINTypes.h"
 
 namespace SIN {
 
 	class MemoryCellAST : public MemoryCell {
 	public:
 		MemoryCellAST(void) : MemoryCell() {}
-		MemoryCellAST(ASTNode * node) : MemoryCell(), value(node) {}
+		MemoryCellAST(Types::Metacode_t const& node) : MemoryCell(), value(node) {}
 		
 		~MemoryCellAST() {}
 
@@ -19,13 +19,13 @@ namespace SIN {
 		virtual const String		ToString(void) const;
 
 		
-		void						SetValue (const ASTNode*);
-		ASTNode *					GetValue (void);
+		void						SetValue (Types::Metacode_t const&);
+		Types::Metacode_t			GetValue (void) const;
 
 
 
 	private:
-		ASTNode * value;
+		Types::Metacode_t value;
 	};
 }
 

@@ -23,7 +23,7 @@ namespace SIN {
 
 
 		void					SetValue (const Types::Number_t & num);
-		Types::Number_t &			GetValue (void);
+		Types::Number_t			GetValue (void) const;
 
 	private:
 		Types::Number_t value;

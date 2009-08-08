@@ -452,7 +452,7 @@ namespace SIN{
 		SINASSERT(tmpmemcell1->Type() == MemoryCell::FUNCTION_MCT || tmpmemcell1->Type() == MemoryCell::LIB_FUNCTION_MCT);	//TODO Throw runtime error here
 
 		if(tmpmemcell1->Type() == MemoryCell::FUNCTION_MCT){
-			FunctionASTNode *func = static_cast<FunctionASTNode*>(static_cast<MemoryCellFunction*>(tmpmemcell1)->GetValue()->GetASTNode());
+			FunctionASTNode *func = static_cast<FunctionASTNode*>(static_cast<MemoryCellFunction*>(tmpmemcell1)->GetValue().GetASTNode());
 			ASTNode::iterator funckid = _node.begin();
 			static_cast<ASTNode&>(*++funckid).Accept(this);
 		}else{

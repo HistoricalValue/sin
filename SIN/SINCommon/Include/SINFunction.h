@@ -16,11 +16,9 @@ namespace SIN {
 			~Function(){}
 
 
-			ASTNode *		GetASTNode(void);
+			ASTNode *		GetASTNode(void) const;
 			const String &  Name(void) const;
-			void			SetASTNode(const ASTNode *);
-
-
+			void			SetASTNode(ASTNode *);
 		private:
 			ASTNode	*	node;
 			

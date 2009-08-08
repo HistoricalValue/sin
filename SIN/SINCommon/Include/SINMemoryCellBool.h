@@ -21,7 +21,7 @@ namespace SIN {
 		virtual const String	ToString(void) const;
 
 		void					SetValue (const Types::Boolean_t & b);
-		Types::Boolean_t &		GetValue (void);
+		Types::Boolean_t		GetValue (void) const;
 
 	private:
 		Types::Boolean_t value;

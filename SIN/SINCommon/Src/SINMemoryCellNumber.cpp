@@ -32,7 +32,7 @@ namespace SIN {
 
 	//-----------------------------------------------------------------
 	
-	Types::Number_t & MemoryCellNumber::GetValue (void) 	
+	Types::Number_t MemoryCellNumber::GetValue (void) const
 		{ return value; }
 
 

@@ -2,7 +2,6 @@
 
 #include "SINAlloc.h"
 
-
 //using namespace SIN::Types;
 
 namespace SIN {
@@ -33,7 +32,7 @@ namespace SIN {
 
 	//-----------------------------------------------------------------
 
-	Types::Boolean_t & MemoryCellBool::GetValue (void) 	
+	Types::Boolean_t MemoryCellBool::GetValue(void) const
 		{ return value; }
 
 }

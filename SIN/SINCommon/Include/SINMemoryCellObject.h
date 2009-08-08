@@ -1,10 +1,8 @@
 #ifndef __MEMORY_CELL_OBJECT_H__
 #define __MEMORY_CELL_OBJECT_H__
 
-
-#include "SINObject.h"
 #include "SINMemoryCell.h"
-
+#include "SINTypes.h"
 
 
 namespace SIN {
@@ -13,7 +11,7 @@ namespace SIN {
 		
 	public:
 		MemoryCellObject(void) : MemoryCell() {}
-		MemoryCellObject(Types::Object_t * obj) : MemoryCell(),  value(obj){}
+		MemoryCellObject(const Types::Object_t& obj) : MemoryCell(),  value(obj){}
 		~MemoryCellObject();
 
 
@@ -21,11 +19,11 @@ namespace SIN {
 		virtual MemoryCellType	Type(void);
 		virtual const String	ToString(void) const;
 	
-		void					SetValue (Types::Object_t *);
-		Types::Object_t *		GetValue (void);
+		void					SetValue (const Types::Object_t& );
+		Types::Object_t			GetValue (void) const;
 
 	private:
-		Types::Object_t * value;
+		Types::Object_t value;
 	};
 }
 

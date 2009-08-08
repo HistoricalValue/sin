@@ -28,16 +28,16 @@ namespace SIN {
 
 	//-----------------------------------------------------------------
 	
-	void MemoryCellFunction::SetValue (const Types::Function_t * function)	{ 
-		SINASSERT(function);
-		value = const_cast<Types::Function_t *>(function); 
+	void MemoryCellFunction::SetValue (const Types::Function_t& function)	{ 
+		SINASSERT(function.GetASTNode());
+		value = function; 
 	}
 
 
 	//-----------------------------------------------------------------
 	
-	SIN::Types::Function_t * MemoryCellFunction::GetValue (void) { 
-		SINASSERT(value);
+	SIN::Types::Function_t MemoryCellFunction::GetValue (void) const { 
+		SINASSERT(value.GetASTNode());
 		return value; 
 	}
 

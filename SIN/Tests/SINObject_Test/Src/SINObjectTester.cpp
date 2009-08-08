@@ -75,7 +75,7 @@ namespace SIN {
 				obj1->SetValue("NUMBER", SINEWCLASS(MemoryCellNumber, (3.0)));			// NUMBER	: 0
 				
 				Types::Function function(&node);
-				obj1->SetValue("function", SINEWCLASS(MemoryCellFunction, (&function)));	//function	: Tsting
+				obj1->SetValue("function", SINEWCLASS(MemoryCellFunction, (function)));	//function	: Tsting
 				
 				
 				//Now we will try ti create a cycle inside the first object

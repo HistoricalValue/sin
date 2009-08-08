@@ -13,19 +13,19 @@ namespace SIN {
 	public:
 
 		MemoryCellFunction(void) : MemoryCell() {}
-		MemoryCellFunction(Types::Function_t * function) : MemoryCell(), value(function) {}
+		MemoryCellFunction(Types::Function_t function) : MemoryCell(), value(function) {}
 		~MemoryCellFunction() {}
 
 		virtual MemoryCell *		Clone(void);
 		virtual MemoryCellType		Type (void);
 		virtual const String		ToString(void) const;
 
-		void						SetValue (const Types::Function_t * function);
-		SIN::Types::Function_t *	GetValue (void);
+		void						SetValue (const Types::Function_t& function);
+		Types::Function_t			GetValue (void) const;
 
 	private:
 
-		Types::Function * value;
+		Types::Function_t value;
 	};
 }
 

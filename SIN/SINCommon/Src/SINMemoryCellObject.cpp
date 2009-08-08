@@ -2,8 +2,7 @@
 
 #include "SINAlloc.h"
 #include "SINAssert.h"
-
-//using namespace SIN::Types;
+#include "SINObject.h"
 
 namespace SIN {
 
@@ -40,14 +39,14 @@ namespace SIN {
 
 	//-----------------------------------------------------------------	
 
-	void MemoryCellObject::SetValue (Types::Object * obj) { 
+	void MemoryCellObject::SetValue (const Types::Object_t& obj) { 
 		value = obj; 
 	}
 	
 
 	//-----------------------------------------------------------------	
 
-	Types::Object * MemoryCellObject::GetValue (void){ 
+	Types::Object_t MemoryCellObject::GetValue (void) const { 
 		SINASSERT(value);	
 		return value; 
 	}

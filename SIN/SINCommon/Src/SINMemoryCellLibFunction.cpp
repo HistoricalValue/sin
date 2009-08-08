@@ -28,15 +28,15 @@ namespace SIN {
 
 	//-----------------------------------------------------------------
 	
-	void MemoryCellLibFunction::SetValue (const Library::Function * function)	{ 
+	void MemoryCellLibFunction::SetValue (const Types::LibraryFunction_t& function) { 
 		SINASSERT(function);
-		value = const_cast<Library::Function *>(function); 
+		value = function; 
 	}
 
 
 	//-----------------------------------------------------------------
 	
-	SIN::Library::Function * MemoryCellLibFunction::GetValue (void) { 
+	SIN::Library::Function * MemoryCellLibFunction::GetValue (void) const { 
 		SINASSERT(value);
 		return value; 
 	}

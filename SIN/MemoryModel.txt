@@ -1,0 +1,72 @@
+There are 8 data types build in in SIN:
+1- Boolean
+2- Number
+3- String
+4- Metacode
+5- Function
+6- Library Function
+7- Object
+8- Nil
+
+Each one of those build-in types corresponds to a C++ data type in 
+namespace SIN::Types. Specifically:
+1- Boolean_t            (bool)
+2- Number_t             (double)
+3- String_t             (SIN::String)
+4- Metacode_t           (SIN::ASTNode*)
+5- Function_t           (SIN::Types::Function)
+6- LibraryFunction_t    (SIN::Library::Function*)
+7- Object_t             (SIN::Types::Object*)
+8- Nil_t                (SIN::Types::Nil)
+
+The SIN::Types types are "concrete" in sin, which means that when
+they are all copied by value.
+
+As wrappers for the SIN::Types types above, there are the corresponding
+MemoryCell subclasses (in SIN::):
+1- MemoryCellBool           ( holds an instance of SIN::Types::Boolean_t         )
+2- MemoryCellNumber         ( holds an instance of SIN::Types::Number_t          )
+3- MemoryCellString         ( holds an instance of SIN::Types::String_t          )
+4- MemoryCellAST            ( holds an instance of SIN::Types::Metacode_t        )
+5- MemoryCellFunction       ( holds an instance of SIN::Types::Function_t        )
+6- MemoryCellLibFunction    ( holds an instance of SIN::Types::LibraryFunction_t )
+7- MemoryCellObject         ( holds an instance of SIN::Types::Object_t          )
+8- MemoryCellNil            ( holds an instance of SIN::Types::Nil_t             )
+
+Copying a MemoryCell is equivalent to copying a SIN::Types type; it's copied-by-value.
+
+NOTICE that for objects, Object_t (and consequently MemoryCellObject as well) act
+as reference-to-an-object, and not as a solid object! This is what we intend for.
+Object instances are not represented in the SIN language at all. Only references to
+objects. For convenience (??? really) though, typeof(ref_to_obj) is "object"
+and not "reference to object". Anyhow.
+
+During evaluation, all SIN types must be used and handled
+!!! THROUGH MEMORY CELLS ONLY !!!
+Any exception to this rule must mean DIRECTLY that the used type
+is not existant in the languge's runtime model/environment/contract.
+
+In addition to that, no MemoryCell must ever be constructed as an instance
+variable. They all have to be allocated (with SINEW).
+
+Every assignment in SIN, semantically corresponds to a copy-by-value of a
+MemoryCell onto another. This MUST ALWAYS be done with memcell_assign (whatever
+and wherever its implementation lies).
+
+Conceptually, the place of storage for variables (and every other MemoryCell entity)
+is a SymbolTable.
+              THEREFOR: === Commandments ===
+             1. SymbolTable-s DELETE ALL VARIABLES (of their own) when they are destructed.
+             2. A SymbolTable is THE ONLY PLACE where a variable's storage memory lies.
+             3. A SymbolTable returns references to the EXISTING storage, and they should not be messed up
+                with (other that assigning).
+
+Keeping those things in mind, every other usage of a MemoryCell (such as the return register, for example)
+should comply and make the correct assumptions.
+
+AND SO SHOULD THE REST OF THE EVALUATOR(s) AND EVERYBODY ELSE.
+
+Now go and fix those assertions, boys!
+
+
+

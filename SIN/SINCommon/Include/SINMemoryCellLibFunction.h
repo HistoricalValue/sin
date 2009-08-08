@@ -1,8 +1,8 @@
 #ifndef __SIN_MEMORY_CELL_LIB_FUNCTION_H__
 #define __SIN_MEMORY_CELL_LIB_FUNCTION_H__
 
-
-#include "SINLibraryFunction.h"
+#include "SINTypes.h"
+#include "SINMemoryCell.h"
 
 namespace SIN {
 
@@ -10,19 +10,19 @@ namespace SIN {
 	public:
 
 		MemoryCellLibFunction(void) : MemoryCell() {}
-		MemoryCellLibFunction(Library::Function * function) : MemoryCell(), value(function) {}
+		MemoryCellLibFunction(Types::LibraryFunction_t function) : MemoryCell(), value(function) {}
 		~MemoryCellLibFunction() {}
 
 		virtual MemoryCell *		Clone(void);
 		virtual MemoryCellType		Type (void);
 		virtual const String		ToString(void) const;
 
-		void						SetValue (const Library::Function * function);
-		SIN::Library::Function *	GetValue (void);
+		void						SetValue (const Types::LibraryFunction_t& function);
+		Types::LibraryFunction_t	GetValue (void) const;
 
 	private:
 
-		Library::Function * value;
+		Types::LibraryFunction_t value;
 	};
 }
 

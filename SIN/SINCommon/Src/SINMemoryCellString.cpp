@@ -29,7 +29,7 @@ namespace SIN {
 	
 	//-----------------------------------------------------------------
 
-	String & MemoryCellString::GetValue (void) 
+	Types::String_t const MemoryCellString::GetValue (void) const
 		{ return value; }
 
 }

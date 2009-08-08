@@ -4,7 +4,7 @@
 
 #include "SINString.h"
 #include "SINMemoryCell.h"
-
+#include "SINTypes.h"
 
 
 namespace SIN {
@@ -12,7 +12,7 @@ namespace SIN {
 	class MemoryCellString: public MemoryCell {
 	public:
 		MemoryCellString(void)  : MemoryCell() {}
-		MemoryCellString(const String & str) : MemoryCell(), value(str) {} 
+		MemoryCellString(const Types::String_t & str) : MemoryCell(), value(str) {} 
 		virtual ~MemoryCellString() { }
 
 
@@ -20,12 +20,12 @@ namespace SIN {
 		virtual MemoryCellType	Type (void);
 		virtual const String	ToString(void) const;
 
-		void					SetValue (const String & s);
-		String &				GetValue (void);
+		void					SetValue (const Types::String_t & s);
+		Types::String_t const	GetValue (void) const;
 
 
 	private:
-		String value;
+		Types::String_t value;
 	
 	};
 }

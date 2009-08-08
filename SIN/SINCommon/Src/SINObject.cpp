@@ -235,52 +235,52 @@ namespace SIN {
 		}
 
 
-		//-----------------------------------------------------------------
+		////-----------------------------------------------------------------
 
-		bool Object::operator== (const Nil_t & n) const 
-			{ return false; }
-		
-		
-		//-----------------------------------------------------------------
+		//bool Object::operator== (const Nil_t & n) const 
+		//	{ return false; }
+		//
+		//
+		////-----------------------------------------------------------------
 
-		bool Object::operator!= (const Nil_t & n) const 
-			{ return true; }
-		
+		//bool Object::operator!= (const Nil_t & n) const 
+		//	{ return true; }
+		//
 
-		//-----------------------------------------------------------------
+		////-----------------------------------------------------------------
 
-		bool Object::operator== (const String_t & str) const 
-			{ return false; }
-
-
-		//-----------------------------------------------------------------
-		
-		bool Object::operator!= (const String_t & str) const 
-			{ return true; }
-		
-
-		//-----------------------------------------------------------------
-
-		bool Object::operator== (const Number_t num) const 
-			{ return false; }
-		
-
-		//-----------------------------------------------------------------
-
-		bool Object::operator!= (const Number_t num) const 
-			{ return true; }
-		
-
-		//-----------------------------------------------------------------
-		
-		bool Object::operator== (const Object_t & obj) const 
-			{ return id == obj.ID(); }
+		//bool Object::operator== (const String_t & str) const 
+		//	{ return false; }
 
 
-		//-----------------------------------------------------------------
-		
-		bool Object::operator!= (const Object_t & obj) const 
-			{ return id != obj.ID(); }
+		////-----------------------------------------------------------------
+		//
+		//bool Object::operator!= (const String_t & str) const 
+		//	{ return true; }
+		//
+
+		////-----------------------------------------------------------------
+
+		//bool Object::operator== (const Number_t num) const 
+		//	{ return false; }
+		//
+
+		////-----------------------------------------------------------------
+
+		//bool Object::operator!= (const Number_t num) const 
+		//	{ return true; }
+		//
+
+		////-----------------------------------------------------------------
+		//
+		//bool Object::operator== (const Object_t & obj) const 
+		//	{ return id == obj->ID(); }
+
+
+		////-----------------------------------------------------------------
+		//
+		//bool Object::operator!= (const Object_t & obj) const 
+		//	{ return id != obj->ID(); }
 
 
 

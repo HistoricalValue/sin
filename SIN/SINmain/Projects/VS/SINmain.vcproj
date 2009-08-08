@@ -266,6 +266,10 @@
 				>
 			</File>
 			<File
+				RelativePath="..\..\..\MemoryModel.txt"
+				>
+			</File>
+			<File
 				RelativePath="..\..\..\Metaprogramming.txt"
 				>
 			</File>

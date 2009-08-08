@@ -28,15 +28,15 @@ namespace SIN {
 
 	//-----------------------------------------------------------------
 
-	void MemoryCellAST::SetValue (const ASTNode* node)	{ 
+	void MemoryCellAST::SetValue (const Types::Metacode_t& node) { 
 		SINASSERT(node);
-		value = const_cast<ASTNode *>(node); 
+		value = node; 
 	}
 
 
 	//-----------------------------------------------------------------
 
-	ASTNode * MemoryCellAST::GetValue (void) { 
+	Types::Metacode_t MemoryCellAST::GetValue (void) const { 
 		SINASSERT(value);
 		return value; 
 	}

@@ -51,17 +51,17 @@ namespace SIN {
 
 
 
-			bool operator== (const Nil_t &) const;	
-			bool operator!= (const Nil_t &) const;	
+			//bool operator== (const Nil_t &) const;	
+			//bool operator!= (const Nil_t &) const;	
 
-			bool operator== (const String_t &) const;	
-			bool operator!= (const String_t &) const;	
+			//bool operator== (const String_t &) const;	
+			//bool operator!= (const String_t &) const;	
 
-			bool operator== (const Number_t) const;		
-			bool operator!= (const Number_t) const;		
+			//bool operator== (const Number_t) const;		
+			//bool operator!= (const Number_t) const;		
 
-			bool operator== (const Object_t &) const;
-			bool operator!= (const Object_t &) const;
+			//bool operator== (const Object_t &) const;
+			//bool operator!= (const Object_t &) const;
 
 		private:
 			bool		marckedForDeletion;

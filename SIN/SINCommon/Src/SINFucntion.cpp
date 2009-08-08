@@ -7,7 +7,7 @@ namespace SIN {
 
 		//-----------------------------------------------------------------
 		
-		ASTNode * Function::GetASTNode(void) 
+		ASTNode * Function::GetASTNode(void) const 
 			{ return node; }
 		
 
@@ -17,8 +17,8 @@ namespace SIN {
 			{ return node->Name(); }
 		
 		
-		void Function::SetASTNode(const ASTNode * _node)
-			{ node = const_cast<ASTNode *>(_node); }
+		void Function::SetASTNode(ASTNode * _node)
+			{ node = _node; }
 	
 	}	//namespace Types
 
