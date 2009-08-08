@@ -25,8 +25,8 @@ namespace SIN {
 		};
 	}	//namespace Types
 
-	extern String const to_string(SIN::Types::Function const * val);
-	extern String const to_string(SIN::Types::Function const & val);
+	extern String const to_string(Types::Function const * val);
+	extern String const to_string(Types::Function const & val);
 	
 }	//namespace SIN
 

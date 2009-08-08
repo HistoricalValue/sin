@@ -1,6 +1,7 @@
 #include "SINLibraryFunctions.h"
 #include "SINLibrary.h"
 #include "SINFileOutputStream.h"
+#include "SINAlloc.h"
 
 #define SIN_LIBRARYFUNCTIONS_LIBFUNC(FNAME) FNAME::return_type FNAME::operator ()(SIN_FUNCTIONLIBRARY_FUNC_ARGS) const
 

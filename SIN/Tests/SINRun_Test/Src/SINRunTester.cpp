@@ -18,6 +18,7 @@
 #include "SINLibraryFunction.h"
 #include "SINLibraryFunctions.h"
 #include "SINMemoryCellLibFunction.h"
+#include "SINAlloc.h"
 
 #define SIN_TESTS_RUN_RUN(NAME)               SINTESTS_RUNTEST(NAME)
 #define SIN_TESTS_RUN_TESTDEF(NAME,TESTCODE)  SINTESTS_TESTDEF(NAME,TESTCODE)

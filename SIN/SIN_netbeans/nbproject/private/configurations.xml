@@ -55,5 +55,23 @@
         </environment>
       </runprofile>
     </conf>
+    <conf name="remote_rudolf_debug" type="1">
+      <gdbdebugger version="2">
+        <gdb_command>gdb</gdb_command>
+        <array_repeat_threshold>10</array_repeat_threshold>
+      </gdbdebugger>
+      <gizmo_options version="1">
+        <profileOnRun>false</profileOnRun>
+      </gizmo_options>
+      <runprofile version="5">
+        <args></args>
+        <rundir>./../SINmain/Projects/Linux_GNU/</rundir>
+        <buildfirst>false</buildfirst>
+        <console-type>1</console-type>
+        <terminal-type>1</terminal-type>
+        <environment>
+        </environment>
+      </runprofile>
+    </conf>
   </confs>
 </configurationDescriptor>

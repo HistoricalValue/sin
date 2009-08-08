@@ -17,6 +17,7 @@
 #include "SINLibraryFunctions.h"
 #include "SINVirtualState.h"
 #include "SINStandardLibrary.h"
+#include "SINAlloc.h"
 
 //////// for quick tests and c++ questions ///////
 // (please restore to original before commits)

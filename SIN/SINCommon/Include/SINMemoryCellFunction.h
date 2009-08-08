@@ -4,7 +4,7 @@
 
 #include "SINFunction.h"
 #include "SINMemoryCell.h"
-
+#include "SINTypes.h"
 
 
 namespace SIN {

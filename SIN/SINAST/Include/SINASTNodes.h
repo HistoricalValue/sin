@@ -4,6 +4,7 @@
 #include "SINASTNode.h"
 #include "SINSymbolTable.h"
 #include "SINASTCommon.h"
+#include "SINTypes.h"
 
 namespace SIN{
 

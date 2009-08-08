@@ -1,7 +1,7 @@
 #include "SINPreserveASTEvaluatorVisitor.h"
 
 
-
+#include "SINAlloc.h"
 #include "SINAssert.h"
 
 #define VISIT_NODE_WITH_ONE_CHILD()			ASTNode::iterator kid = _node.begin();			\

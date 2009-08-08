@@ -7,12 +7,9 @@
 #include "SINObject.h"
 #include "SINAssert.h"
 #include "SINMemoryCell.h"
-#include "SINMemoryCellAST.h"
-#include "SINMemoryCellBool.h"
-#include "SINMemoryCellNumber.h"
-#include "SINMemoryCellObject.h"
 #include "SINMemoryCellString.h"
-#include "SINMemoryCellFunction.h"
+#include "SINMemoryCellObject.h"
+#include "SINFunction.h"
 
 #define TO_STRING_APPEND(TYPE)		str			<<									\
 									i->first	<<									\
@@ -92,24 +89,17 @@ namespace SIN {
 
 		const String Object::ToString(std::set<unsigned> & parentsId) const {
 			
-			String str = String() << "Object(" << id << "){";
+			String str;
+			str << "Object(" << id << "){";
 			parentsId.insert(id);
 			
 			for (ObjectTable::const_iterator i = table.begin(); i != table.end(); ++i) {
-				switch(i->second->Type()) {
-					case MemoryCell::BOOL_MCT		: TO_STRING_APPEND(MemoryCellBool);
-					case MemoryCell::STRING_MCT		: TO_STRING_APPEND(MemoryCellString);
-					case MemoryCell::NUMBER_MCT		: TO_STRING_APPEND(MemoryCellNumber);
-					case MemoryCell::AST_MCT		: TO_STRING_APPEND(MemoryCellAST);
-					case MemoryCell::OBJECT_MCT		: TO_STRING_APPEND_OBJECT();
-					case MemoryCell::FUNCTION_MCT	: TO_STRING_APPEND(MemoryCellFunction);
-					default: SINASSERT(0);
-				}
+				str << i->first << ":" << i->second->ToString();
 				str << ", ";
 			}
 			
 			str << "}";
-			return String(str);	
+			return str;
 		}
 
 

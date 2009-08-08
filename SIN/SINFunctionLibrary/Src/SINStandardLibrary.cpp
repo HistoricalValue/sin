@@ -1,8 +1,9 @@
 #include "SINStandardLibrary.h"
 #include "SINLibraryFunctions.h"
 #include "SINAssert.h"
+#include "SINAlloc.h"
 
-#define SIN_LIBRARY_LIBRARYFUNCTIONS_INSTALL(FNAME) if (InstallFunction(functions[i++] = SINEW(Functions::FNAME)).first != false) SINASSERT(false);
+#define SIN_LIBRARY_LIBRARYFUNCTIONS_INSTALL(FNAME) if (InstallFunction(functions[i++] = SINEW(Functions::FNAME)).first != false) SINASSERT(false)
 
 namespace SIN {
 	namespace Library {

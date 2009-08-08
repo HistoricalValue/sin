@@ -25,13 +25,13 @@ namespace SIN {
 	
 	//-----------------------------------------------------------------
 
-	String const to_string(SIN::Types::Function const & val)
+	String const to_string(Types::Function const & val)
 		{ return val.Name(); }
 
 
 	//-----------------------------------------------------------------
 
-	String const to_string(SIN::Types::Function const * val)
+	String const to_string(Types::Function const * val)
 		{ return val->Name(); }
 	
 

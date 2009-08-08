@@ -6,9 +6,7 @@
 #define __SIN_SIN_AST_VISITOR_H__
 
 
-#include "SINASTNode.h"
 #include "SINASTNodes.h"
-#include "SINASTCommon.h"
 
 #ifdef _MSC_VER // compiling with Microsoft Visual Studio
 //disable the error: not enough actual parameters for macro 'SINASTVISITOR_VISIT_SIGNATURE'
