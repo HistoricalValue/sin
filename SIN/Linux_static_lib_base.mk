@@ -24,6 +24,7 @@ PROJECTS = $(addprefix $(SIN_BASE_DIR)/, \
         SINLogging \
         SINCommon \
         SINAlloc \
+        SINFunctionLibrary \
         Common)
 INCLUDE_DIRS = $(addsuffix /Include/,$(PROJECTS))
 LIBRARY_DIRS = $(addsuffix /Projects/Linux_GNU/,$(PROJECTS))
