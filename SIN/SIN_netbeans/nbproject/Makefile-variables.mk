@@ -23,10 +23,10 @@ CND_PACKAGE_DIR_Release=dist/Release/GNU-Linux-x86/package
 CND_PACKAGE_NAME_Release=sinnetbeans.tar
 CND_PACKAGE_PATH_Release=dist/Release/GNU-Linux-x86/package/sinnetbeans.tar
 # Debug_SUN configuration
-CND_PLATFORM_Debug_SUN=
-CND_ARTIFACT_DIR_Debug_SUN=dist/Debug_SUN/
+CND_PLATFORM_Debug_SUN=SunStudio_12.1-Linux-x86
+CND_ARTIFACT_DIR_Debug_SUN=dist/Debug_SUN/SunStudio_12.1-Linux-x86
 CND_ARTIFACT_NAME_Debug_SUN=sin_netbeans
-CND_ARTIFACT_PATH_Debug_SUN=dist/Debug_SUN//sin_netbeans
-CND_PACKAGE_DIR_Debug_SUN=dist/Debug_SUN//package
+CND_ARTIFACT_PATH_Debug_SUN=dist/Debug_SUN/SunStudio_12.1-Linux-x86/sin_netbeans
+CND_PACKAGE_DIR_Debug_SUN=dist/Debug_SUN/SunStudio_12.1-Linux-x86/package
 CND_PACKAGE_NAME_Debug_SUN=sinnetbeans.tar
-CND_PACKAGE_PATH_Debug_SUN=dist/Debug_SUN//package/sinnetbeans.tar
+CND_PACKAGE_PATH_Debug_SUN=dist/Debug_SUN/SunStudio_12.1-Linux-x86/package/sinnetbeans.tar

@@ -6,7 +6,7 @@
 
 # Macros
 TOP=`pwd`
-CND_PLATFORM=
+CND_PLATFORM=SunStudio_12.1-Linux-x86
 CND_CONF=Debug_SUN
 CND_DISTDIR=dist
 TMPDIR=build/${CND_CONF}/${CND_PLATFORM}/tmp-packaging

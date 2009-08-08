@@ -66,3 +66,4 @@ SIN/SINCommon/Src/SINObject.d
 SIN/SINCommon/Src/SINSymbolTable.d
 SIN/Tests/SINAST_Test/Src/SINAST_Tester_main.d
 SIN/Tests/SINObject_Test/Src/SINObjectTester.d
+SIN/SINmain/Projects/Linux_GNU/RunTreeVisualisation.xml

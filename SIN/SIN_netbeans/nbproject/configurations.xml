@@ -98,11 +98,13 @@
                      displayName="SINFunctionLibrary"
                      projectFiles="true">
         <logicalFolder name="Include" displayName="Include" projectFiles="true">
-          <itemPath>../SINFunctionLibrary/Include/SINFunction.h</itemPath>
           <itemPath>../SINFunctionLibrary/Include/SINLibrary.h</itemPath>
+          <itemPath>../SINFunctionLibrary/Include/SINLibraryFunction.h</itemPath>
+          <itemPath>../SINFunctionLibrary/Include/SINLibraryFunctions.h</itemPath>
         </logicalFolder>
         <logicalFolder name="Src" displayName="Src" projectFiles="true">
           <itemPath>../SINFunctionLibrary/Src/SINLibrary.cpp</itemPath>
+          <itemPath>../SINFunctionLibrary/Src/SINLibraryFunctions.cpp</itemPath>
         </logicalFolder>
       </logicalFolder>
       <logicalFolder name="SINLogging" displayName="SINLogging" projectFiles="true">
@@ -147,9 +149,12 @@
       </logicalFolder>
       <logicalFolder name="SINRuntime" displayName="SINRuntime" projectFiles="true">
         <logicalFolder name="Include" displayName="Include" projectFiles="true">
+          <itemPath>../SINRuntime/Include/SINPreserveASTEvaluatorVisitor.h</itemPath>
           <itemPath>../SINRuntime/Include/SINTreeEvaluationVisitor.h</itemPath>
+          <itemPath>../SINRuntime/Include/SINVirtualState.h</itemPath>
         </logicalFolder>
         <logicalFolder name="Src" displayName="Src" projectFiles="true">
+          <itemPath>../SINRuntime/Src/SINPreserveASTEvaluatorVisitor.cpp</itemPath>
           <itemPath>../SINRuntime/Src/SINTreeEvaluationVisitor.cpp</itemPath>
         </logicalFolder>
       </logicalFolder>
@@ -188,6 +193,22 @@
           </logicalFolder>
           <logicalFolder name="Src" displayName="Src" projectFiles="true">
             <itemPath>../Tests/SINCommon_Test/Src/SINCommonTester.cpp</itemPath>
+          </logicalFolder>
+        </logicalFolder>
+        <logicalFolder name="SINFunctionLibrary_Test"
+                       displayName="SINFunctionLibrary_Test"
+                       projectFiles="true">
+          <logicalFolder name="Include" displayName="Include" projectFiles="true">
+            <itemPath>../Tests/SINFunctionLibrary_Test/Include/SINFunctionLibraryTester.h</itemPath>
+          </logicalFolder>
+          <logicalFolder name="Projects" displayName="Projects" projectFiles="true">
+            <logicalFolder name="Linux_GNU" displayName="Linux_GNU" projectFiles="true">
+            </logicalFolder>
+            <logicalFolder name="VS" displayName="VS" projectFiles="true">
+            </logicalFolder>
+          </logicalFolder>
+          <logicalFolder name="Src" displayName="Src" projectFiles="true">
+            <itemPath>../Tests/SINFunctionLibrary_Test/Src/SINFunctionLibraryTester.cpp</itemPath>
           </logicalFolder>
         </logicalFolder>
         <logicalFolder name="SINLogging_Test"
