@@ -29,6 +29,8 @@ namespace SIN {
 		
 		MemoryCell(void) {}
 		virtual ~MemoryCell() {}
+
+		static void Assign(MemoryCell*& to, MemoryCell* from);
 	};
 
 }	//namespace sin

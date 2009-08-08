@@ -1,7 +1,7 @@
 Assignment proceedure:
 
-1. Evaluate left node --> should be a lvalue --> lvalue's evaluation is a symbol table lookup --> results in a MemoryCell*
-2. Evaluate right node --> should be an expression --> expr's evaluation results in a MemCell* 
+1. Evaluate right node --> should be an expression --> expr's evaluation results in a MemCell* 
+2. Evaluate left node --> should be a lvalue --> lvalue's evaluation is a symbol table lookup --> results in a MemoryCell*
 3. Do memcell_assign(left**, right*)
 
 
