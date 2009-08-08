@@ -8,7 +8,7 @@ namespace SIN {
 		//////////////// Test /////////////////////
         Test::Test(String const &_name): name(_name), successful(true), 
         failure_message("No failure"), failed_condition("false"),
-        failure_file("/dev/null"), failure_line(-1)
+        failure_file("/dev/null"), failure_line(0)
         {
         }
 

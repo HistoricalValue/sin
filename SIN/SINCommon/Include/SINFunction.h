@@ -32,4 +32,4 @@ namespace SIN {
 
 
 
-#endif
+#endif // __SIN_FUNCTION_H__

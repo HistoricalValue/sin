@@ -8,6 +8,10 @@ namespace SIN {
     {
     }
 
+	Logger::~Logger(void) {
+
+	}
+
     bool Logger::shouldLog(enum Logging::Record::Severity const &_this_severity) const {
         return _this_severity >= critical_severity;
     }

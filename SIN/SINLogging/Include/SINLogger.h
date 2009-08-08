@@ -33,6 +33,7 @@ namespace SIN {
         void Error    (String const &_message) { Message(Logging::Record::CreateRecord(Logging::Record::ERROR    , _message)); }
         void Fatality (String const &_message) { Message(Logging::Record::CreateRecord(Logging::Record::FATALITY , _message)); }
 
+		virtual ~Logger(void);
     }; // class Logger
 
 } // namespace SIN

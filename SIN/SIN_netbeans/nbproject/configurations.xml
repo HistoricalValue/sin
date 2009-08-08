@@ -59,6 +59,7 @@
           <itemPath>../SINCommon/Include/SINMemoryCellAST.h</itemPath>
           <itemPath>../SINCommon/Include/SINMemoryCellBool.h</itemPath>
           <itemPath>../SINCommon/Include/SINMemoryCellFunction.h</itemPath>
+          <itemPath>../SINCommon/Include/SINMemoryCellLibFunction.h</itemPath>
           <itemPath>../SINCommon/Include/SINMemoryCellNil.h</itemPath>
           <itemPath>../SINCommon/Include/SINMemoryCellNumber.h</itemPath>
           <itemPath>../SINCommon/Include/SINMemoryCellObject.h</itemPath>
@@ -82,6 +83,7 @@
           <itemPath>../SINCommon/Src/SINMemoryCellAST.cpp</itemPath>
           <itemPath>../SINCommon/Src/SINMemoryCellBool.cpp</itemPath>
           <itemPath>../SINCommon/Src/SINMemoryCellFunction.cpp</itemPath>
+          <itemPath>../SINCommon/Src/SINMemoryCellLibFunction.cpp</itemPath>
           <itemPath>../SINCommon/Src/SINMemoryCellNil.cpp</itemPath>
           <itemPath>../SINCommon/Src/SINMemoryCellNumber.cpp</itemPath>
           <itemPath>../SINCommon/Src/SINMemoryCellObject.cpp</itemPath>
@@ -101,10 +103,12 @@
           <itemPath>../SINFunctionLibrary/Include/SINLibrary.h</itemPath>
           <itemPath>../SINFunctionLibrary/Include/SINLibraryFunction.h</itemPath>
           <itemPath>../SINFunctionLibrary/Include/SINLibraryFunctions.h</itemPath>
+          <itemPath>../SINFunctionLibrary/Include/SINStandardLibrary.h</itemPath>
         </logicalFolder>
         <logicalFolder name="Src" displayName="Src" projectFiles="true">
           <itemPath>../SINFunctionLibrary/Src/SINLibrary.cpp</itemPath>
           <itemPath>../SINFunctionLibrary/Src/SINLibraryFunctions.cpp</itemPath>
+          <itemPath>../SINFunctionLibrary/Src/SINStandardLibrary.cpp</itemPath>
         </logicalFolder>
       </logicalFolder>
       <logicalFolder name="SINLogging" displayName="SINLogging" projectFiles="true">
@@ -429,6 +433,45 @@
         <developmentServer>rudolf@192.168.56.102:22</developmentServer>
         <compilerSet>GNU|GNU</compilerSet>
         <platform>2</platform>
+      </toolsSet>
+      <compileType>
+        <ccTool>
+          <commandlineTool>g++</commandlineTool>
+          <incDir>
+            <pElem>../Common/Include</pElem>
+            <pElem>../SINAlloc/Include</pElem>
+            <pElem>../SINAST/Include</pElem>
+            <pElem>../SINCommon/Include</pElem>
+            <pElem>../SINFunctionLibrary/Include</pElem>
+            <pElem>../SINLogging/Include</pElem>
+            <pElem>../SINmain/Include</pElem>
+            <pElem>../SINParser/Include</pElem>
+            <pElem>../SINRuntime/Include</pElem>
+            <pElem>../Tests/SINAlloc_Test/Include</pElem>
+            <pElem>../Tests/SINAST_Test/Include</pElem>
+            <pElem>../Tests/SINCommon_Test/Include</pElem>
+            <pElem>../Tests/SINFunctionLibrary_Test/Include</pElem>
+            <pElem>../Tests/SINLogging_Test/Include</pElem>
+            <pElem>../Tests/SINObject_Test/Include</pElem>
+            <pElem>../Tests/SINParser_Test/Include</pElem>
+            <pElem>../Tests/SINRun_Test/Include</pElem>
+            <pElem>../Tests/SINSymbolTable_Test/Include</pElem>
+            <pElem>../Tests/SINTest/Include</pElem>
+          </incDir>
+          <commandLine>-pedantic -ansi -Wall -O0 -g -fno-rtti</commandLine>
+          <warningLevel>2</warningLevel>
+        </ccTool>
+        <linkerTool>
+          <linkerLibItems>
+          </linkerLibItems>
+        </linkerTool>
+      </compileType>
+    </conf>
+    <conf name="Cygwin_Debug" type="1">
+      <toolsSet>
+        <developmentServer>localhost</developmentServer>
+        <compilerSet>Cygwin|Cygwin</compilerSet>
+        <platform>3</platform>
       </toolsSet>
       <compileType>
         <ccTool>
