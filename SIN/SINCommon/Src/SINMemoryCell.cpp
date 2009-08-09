@@ -2,6 +2,7 @@
 
 #include "SINAlloc.h"
 #include "SINMemoryCellObject.h"
+#include "SINObject.h"
 
 namespace SIN {
 	void MemoryCell::Assign(MemoryCell*& _to, MemoryCell* _from) {
