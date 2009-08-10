@@ -105,14 +105,14 @@ namespace SIN {
 				lib.InstallFunction(&typeof			);
 
 				// TODO remove the reference here and watch it burn 
-				SymbolTable& globalSymTable = static_cast<SinCodeASTNode*>(root)->getEnv();
-				globalSymTable.SetLocal("print",			SINEWCLASS(MemoryCellLibFunction, (&print)));
-				globalSymTable.SetLocal("println",			SINEWCLASS(MemoryCellLibFunction, (&println)));
-				globalSymTable.SetLocal("arguments",		SINEWCLASS(MemoryCellLibFunction, (&arguments)));
-				globalSymTable.SetLocal("totalarguments",	SINEWCLASS(MemoryCellLibFunction, (&totalarguments)));
-				globalSymTable.SetLocal("tostring",			SINEWCLASS(MemoryCellLibFunction, (&tostring)));
-				globalSymTable.SetLocal("strtonum",			SINEWCLASS(MemoryCellLibFunction, (&strtonum)));
-				globalSymTable.SetLocal("typeof",			SINEWCLASS(MemoryCellLibFunction, (&typeof)));
+				SymbolTable *globalSymTable = static_cast<SinCodeASTNode*>(root)->getEnv();
+				globalSymTable->SetLocal("print",			SINEWCLASS(MemoryCellLibFunction, (&print)));
+				globalSymTable->SetLocal("println",			SINEWCLASS(MemoryCellLibFunction, (&println)));
+				globalSymTable->SetLocal("arguments",		SINEWCLASS(MemoryCellLibFunction, (&arguments)));
+				globalSymTable->SetLocal("totalarguments",	SINEWCLASS(MemoryCellLibFunction, (&totalarguments)));
+				globalSymTable->SetLocal("tostring",		SINEWCLASS(MemoryCellLibFunction, (&tostring)));
+				globalSymTable->SetLocal("strtonum",		SINEWCLASS(MemoryCellLibFunction, (&strtonum)));
+				globalSymTable->SetLocal("typeof",			SINEWCLASS(MemoryCellLibFunction, (&typeof)));
 
 				TreeEvaluationVisitor eval(&lib, &vm);
 				root->Accept(&eval);
