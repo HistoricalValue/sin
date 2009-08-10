@@ -6,7 +6,8 @@
 
 namespace SIN {
 	void MemoryCell::Assign(MemoryCell*& _to, MemoryCell* _from) {
-		SINDELETE(_to);
+		if (_to != 0x00)
+			SINDELETE(_to);
 
 		_to = _from->Clone();
 		if (_from->Type() == MemoryCell::OBJECT_MCT)
