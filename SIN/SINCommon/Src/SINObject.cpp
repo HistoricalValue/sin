@@ -94,11 +94,24 @@ namespace SIN {
 			parentsId.insert(id);
 			
 			for (ObjectTable::const_iterator i = table.begin(); i != table.end(); ++i) {
-				str << i->first << ":" << i->second->ToString();
+				str << i->first << ":";
+				MemoryCell* element = i->second;
+				if (element->Type() == MemoryCell::OBJECT_MCT) {
+					Object* obj = static_cast<MemoryCellObject*>(element)->GetValue();
+					unsigned int id = obj->ID();
+					if (parentsId.find(id) != parentsId.end()) {
+						str << obj->ToString(parentsId);
+						parentsId.insert(id);
+					}
+					else
+						str << "object(" << id << ')';
+				}
+				else
+					str << element->ToString();
 				str << ", ";
 			}
 			
-			str << "}";
+			str << '}';
 			return str;
 		}
 
