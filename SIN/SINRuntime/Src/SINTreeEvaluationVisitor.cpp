@@ -390,9 +390,7 @@ namespace SIN{
 		static_cast<ASTNode&>(*kid++).Accept(this);
 		MemoryCell *tmpmemcell2 = memory;
 
-		SymbolTable *symTable = _node.LocalEnv();
-
-		symTable->SetLocal( static_cast<ASTNode&>(*(_node.begin())).Name(), tmpmemcell2);
+		MemoryCell::Assign(tmpmemcell1, tmpmemcell2);
 		memory = tmpmemcell2;
 	}
 
@@ -427,8 +425,7 @@ namespace SIN{
 
 		for(ASTNode::iterator arguments = _node.begin(); arguments != _node.end(); ++arguments){
 			static_cast<ASTNode&>(*arguments).Accept(this);
-			MemoryCell *tmpmemcell = memory;
-			symTable->AppendArgument( tmpmemcell );
+			symTable->AppendArgument( memory );
 		}
 	}
 
@@ -443,8 +440,8 @@ namespace SIN{
 		static_cast<ASTNode&>(*kid++).Accept(this);
 		MemoryCell *tmpmemcell1 = memory;
 
-		SymbolTable st;
-		vm->PushFrame(&st);
+		SymbolTable *st = SINEW(SymbolTable);
+		vm->PushFrame(st);
 
 		static_cast<ASTNode&>(*kid++).Accept(this);
 //		MemoryCell *tmpmemcell2 = memory;
@@ -459,6 +456,7 @@ namespace SIN{
 			Library::Function *libfunc = static_cast<MemoryCellLibFunction*>(tmpmemcell1)->GetValue();
 
 			(*libfunc)(*vm, *lib);
+			memory = vm->ReturnValue();
 		}
 	}
 
@@ -494,6 +492,7 @@ namespace SIN{
 			memory = memcell;
 		else{
 			memory = SINEW(MemoryCellNil);
+			localSymTable->SetLocal(_node.Name(), memory);
 		}
 	}
 

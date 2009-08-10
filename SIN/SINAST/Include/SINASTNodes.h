@@ -30,8 +30,8 @@ namespace SIN{
 
 		void Accept(ASTVisitor *);
 
-		SymbolTable getSymbolTable(void) { return symTable; }
-		void setSymbolTable(SymbolTable _symTable){ symTable = _symTable; }
+		SymbolTable *getEnv(void) { return &symTable; }
+		void setEnv(SymbolTable *_symTable){ symTable = *_symTable; }
 
 		virtual SymbolTable *GlobalEnv (void);
 		virtual SymbolTable *LocalEnv (void);
@@ -52,8 +52,8 @@ namespace SIN{
 
 		void Accept(ASTVisitor *);
 
-		SymbolTable getSymbolTable(void) { return symTable; }
-		void setSymbolTable(SymbolTable _symTable){ symTable = _symTable; }
+		SymbolTable *getEnv(void) { return &symTable; }
+		void setEnv(SymbolTable *_symTable){ symTable = *_symTable; }
 
 		virtual SymbolTable *GlobalEnv (void);
 		virtual SymbolTable *LocalEnv (void);

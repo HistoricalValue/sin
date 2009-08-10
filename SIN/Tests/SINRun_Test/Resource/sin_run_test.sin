@@ -1,17 +1,17 @@
 
 a = 5 + (2*3) - (4/2) + 3%2; // a = 10
-println(a);
+print(a);
 b = "str";
-println(b);
+print(b);
 c = true and (true or false); //Should be true
-println(c);
+print(c);
 d = nil;
-println(d);
+print(d);
 e = (c == true) or (-a != 10);
-println(e);
+print(e);
 f = ++a > 10 or a++ >= 10 or --a < 10 or a-- <= 10;
-println(f);
+print(f);
 g = not f;
-println(g);
+print("Type of g", typeof(g));
 
 //meta_testing = .<x = "a" + "b">.;
