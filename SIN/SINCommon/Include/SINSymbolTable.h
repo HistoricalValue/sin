@@ -43,7 +43,8 @@ namespace SIN {
 		Callable const& for_each_argument(Callable const&) const;
 
 	private:
-		void* data;
+		struct Data;
+		Data* data;
 		Namer argument_namer;
 	};
 

@@ -16,7 +16,8 @@
 namespace SIN {
 
 	// *** Private API ***************** /
-	namespace hsdfsd98sdfjk5t6ASFjadlfsdg0DFADfADf99999999AsdyuasdAASd7ad3 {
+	//namespace hsdfsd98sdfjk5t6ASFjadlfsdg0DFADfADf99999999AsdyuasdAASd7ad3 {
+	namespace {
 		typedef SymbolTable::name_t key_t;
 		typedef SymbolTable::elem_t val_t;
 		//typedef std::map<key_t, val_t> names_t;
@@ -38,21 +39,21 @@ namespace SIN {
 		typedef names_t::const_iterator nciter_t;
 		typedef args_t::const_iterator aciter_t;
 		typedef args_ordered_t::const_iterator oaciter_t;
-		struct Data {
-			names_t names;
-			args_t args;
-			args_ordered_t args_ordered;
-			val_t not_found;
-			Data(void) { }
-			~Data(void) { }
-		private:
-			explicit Data(Data const&) { SINASSERT(!"Not yet"); }
-		}; // struct Data
 
 		typedef std::pair<names_t::iterator, bool> ins_pair_t;
 		typedef std::pair<key_t const, val_t> entry_t;
 	}
-	using namespace hsdfsd98sdfjk5t6ASFjadlfsdg0DFADfADf99999999AsdyuasdAASd7ad3;
+	//using namespace hsdfsd98sdfjk5t6ASFjadlfsdg0DFADfADf99999999AsdyuasdAASd7ad3;
+	struct SymbolTable::Data {
+		names_t names;
+		args_t args;
+		args_ordered_t args_ordered;
+		val_t not_found;
+		Data(void) { }
+		~Data(void) { }
+	private:
+		explicit Data(Data const&) { SINASSERT(!"Not yet"); }
+	}; // struct Data
 
 	#define DATA static_cast<Data*>(data)
 
