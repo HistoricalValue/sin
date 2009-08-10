@@ -14,4 +14,4 @@ println(f);
 g = not f;
 println(g);
 
-meta_testing = .<x = "a" + "b">.;
+//meta_testing = .<x = "a" + "b">.;
