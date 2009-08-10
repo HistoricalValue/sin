@@ -51,7 +51,6 @@ namespace SIN {
 			errors_t const& Errors(void) const { return errors; }
 			bool HasError(void) const { return errors.size() > 0; }
 
-			typedef std::deque<Frame> stack_t;
 			void PushFrame(SymbolTable* _previous_environment) {INVAR
 				SINASSERT(curr_frame == stack.size() - 1);
 				stack.push_back(Frame(_previous_environment));
@@ -80,6 +79,12 @@ namespace SIN {
 			MemoryCellNumber num;
 			MemoryCellObject obj;
 
+			//typedef std::deque<Frame> stack_t;
+			// Debugging
+			struct stack_t: public std::deque<Frame> {
+				stack_t(size_type _how_many = 0, Frame const& _stuff = Frame(0x00)): std::deque<Frame>(_how_many, _stuff) { }
+				~stack_t(void) { }
+			}; // struct stack_t
 			stack_t stack;
 			stack_t::size_type curr_frame;
 			errors_t errors;
