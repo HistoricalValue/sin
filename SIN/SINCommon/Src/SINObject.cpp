@@ -11,18 +11,18 @@
 #include "SINMemoryCellObject.h"
 #include "SINFunction.h"
 
-#define TO_STRING_APPEND(TYPE)		str			<<									\
-									i->first	<<									\
-									":"			<<									\
-									static_cast<TYPE *>(i->second)->GetValue();		\
-									break
-
-#define TO_STRING_APPEND_OBJECT()	{const Object * obj = static_cast<MemoryCellObject *>(i->second)->GetValue();		\
-									if (parentsId.find(obj->ID()) !=  parentsId.end())						\
-										str << i->first << ":self-->Object(" << obj->ID() << ")<--";					\
-									else																				\
-										str << i->first << ":" << obj->ToString(parentsId);								\
-										break;}
+//#define TO_STRING_APPEND(TYPE)		str			<<									\
+//									i->first	<<									\
+//									":"			<<									\
+//									static_cast<TYPE *>(i->second)->GetValue();		\
+//									break
+//
+//#define TO_STRING_APPEND_OBJECT()	{const Object * obj = static_cast<MemoryCellObject *>(i->second)->GetValue();		\
+//									if (parentsId.find(obj->ID()) !=  parentsId.end())						\
+//										str << i->first << ":self-->Object(" << obj->ID() << ")<--";					\
+//									else																				\
+//										str << i->first << ":" << obj->ToString(parentsId);								\
+//										break;}
 
 
 
@@ -104,7 +104,7 @@ namespace SIN {
 						parentsId.insert(id);
 					}
 					else
-						str << "object(" << id << ')';
+						str << "self (object(" << id << "))";
 				}
 				else
 					str << element->ToString();
