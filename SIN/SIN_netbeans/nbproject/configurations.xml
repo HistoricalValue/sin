@@ -154,11 +154,13 @@
       <logicalFolder name="SINRuntime" displayName="SINRuntime" projectFiles="true">
         <logicalFolder name="Include" displayName="Include" projectFiles="true">
           <itemPath>../SINRuntime/Include/SINPreserveASTEvaluatorVisitor.h</itemPath>
+          <itemPath>../SINRuntime/Include/SINShiftToMetaEvaluatorASTVisitor.h</itemPath>
           <itemPath>../SINRuntime/Include/SINTreeEvaluationVisitor.h</itemPath>
           <itemPath>../SINRuntime/Include/SINVirtualState.h</itemPath>
         </logicalFolder>
         <logicalFolder name="Src" displayName="Src" projectFiles="true">
           <itemPath>../SINRuntime/Src/SINPreserveASTEvaluatorVisitor.cpp</itemPath>
+          <itemPath>../SINRuntime/Src/SINShiftToMetaEvaluatorASTVisitor.cpp</itemPath>
           <itemPath>../SINRuntime/Src/SINTreeEvaluationVisitor.cpp</itemPath>
         </logicalFolder>
       </logicalFolder>
