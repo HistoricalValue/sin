@@ -21,8 +21,8 @@ namespace SIN {
 
 	//-----------------------------------------------------------------
 	
-	struct CleanListFunctor : public std::unary_function<ASTNode *, void> {
-		void operator() (ASTNode * node) { 
+	struct CleanListFunctor : public std::unary_function<ASTNode *&, void> {
+		void operator() (ASTNode *& node) { 
 			if (node != static_cast<ASTNode *>(0)) {
 				SINDELETE(node); 
 				node = static_cast<ASTNode *>(0);

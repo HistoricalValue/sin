@@ -1,4 +1,4 @@
-
+/*
 a = 5 + (2*3) - (4/2) + 3%2; // a = 10
 print(a);
 b = "str";
@@ -15,3 +15,8 @@ g = not f;
 print("Type of g", typeof(g));
 
 //meta_testing = .<x = "a" + "b">.;
+
+*/
+a = 4;
+println(a);
+

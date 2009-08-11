@@ -30,6 +30,7 @@ namespace SIN {
 		MemoryCell(void) {}
 		virtual ~MemoryCell() {}
 
+		static void Assign(InstanceProxy<MemoryCell>& _to, InstanceProxy<MemoryCell> const& _from);
 		static void Assign(MemoryCell*& to, MemoryCell* from);
 	};
 

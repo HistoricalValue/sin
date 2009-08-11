@@ -159,6 +159,10 @@
 				>
 			</File>
 			<File
+				RelativePath="..\..\Src\SINShiftToMetaEvaluatorASTVisitor.cpp"
+				>
+			</File>
+			<File
 				RelativePath="..\..\Src\SINTreeEvaluationVisitor.cpp"
 				>
 			</File>
@@ -170,6 +174,10 @@
 			>
 			<File
 				RelativePath="..\..\Include\SINPreserveASTEvaluatorVisitor.h"
+				>
+			</File>
+			<File
+				RelativePath="..\..\Include\SINShiftToMetaEvaluatorASTVisitor.h"
 				>
 			</File>
 			<File

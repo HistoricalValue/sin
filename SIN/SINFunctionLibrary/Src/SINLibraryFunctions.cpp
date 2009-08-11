@@ -26,9 +26,11 @@ namespace SIN {
 			}
 			// println ---------------------------------------------------------
 			SIN_LIBRARYFUNCTIONS_LIBFUNC(println) {
-				MemoryCellString str("\n");
-				_vs.CurrentFrame().stable.AppendArgument(&str);
-				_lib.Invoke("print", _vs);
+				_vs.CurrentFrame().stable.for_each_argument(ArgumentPrinter(_vs));
+				MemoryCellString newline_inst("\n");
+				InstanceProxy<MemoryCell> newline(&newline_inst);
+				(ArgumentPrinter(_vs))(SymbolTable::Entry("newline", newline));
+				_vs.ReturnValueNil();
 			}
 			// tostring ---------------------------------------------------------
 			SIN_LIBRARYFUNCTIONS_LIBFUNC(tostring) {

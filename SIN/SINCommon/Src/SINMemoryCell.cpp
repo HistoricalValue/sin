@@ -5,6 +5,12 @@
 #include "SINObject.h"
 
 namespace SIN {
+	void MemoryCell::Assign(InstanceProxy<MemoryCell>& _to, InstanceProxy<MemoryCell> const& _from) {
+		MemoryCell* _to_p = _to;
+		Assign(_to_p, _from);
+		_to = _to_p;
+	}
+
 	void MemoryCell::Assign(MemoryCell*& _to, MemoryCell* _from) {
 		if (_to != 0x00)
 			SINDELETE(_to);

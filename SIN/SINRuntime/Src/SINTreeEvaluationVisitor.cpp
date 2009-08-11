@@ -16,11 +16,11 @@ namespace SIN{
 
 	//-----------------------------------------------------------------
 
-	TreeEvaluationVisitor::TreeEvaluationVisitor(void) : lib(NULL){}
+	TreeEvaluationVisitor::TreeEvaluationVisitor(void) : memory(NULL), lookuped(NULL), preserveNode(NULL), lib(NULL), vm(NULL) { }
 
 	//-----------------------------------------------------------------
 
-	TreeEvaluationVisitor::TreeEvaluationVisitor(Library::Library *_lib, VM::VirtualState *_vm) : lib(_lib), vm(_vm){}
+	TreeEvaluationVisitor::TreeEvaluationVisitor(Library::Library *_lib, VM::VirtualState *_vm) : memory(NULL), lookuped(NULL), preserveNode(NULL), lib(_lib), vm(_vm) { }
 
 	//-----------------------------------------------------------------
 
@@ -390,7 +390,7 @@ namespace SIN{
 		static_cast<ASTNode&>(*kid++).Accept(this);
 		MemoryCell *tmpmemcell2 = memory;
 
-		MemoryCell::Assign(tmpmemcell1, tmpmemcell2);
+		MemoryCell::Assign(*lookuped, tmpmemcell2);
 		memory = tmpmemcell2;
 	}
 
@@ -425,7 +425,9 @@ namespace SIN{
 
 		for(ASTNode::iterator arguments = _node.begin(); arguments != _node.end(); ++arguments){
 			static_cast<ASTNode&>(*arguments).Accept(this);
-			symTable->AppendArgument( memory );
+			// NOTICE: symbol Tables hold COPIES OF VALUES! Every assignment is a copy of
+			// a value!
+			symTable->AppendArgument( memory->Clone() );
 		}
 	}
 
@@ -481,19 +483,21 @@ namespace SIN{
 	//-----------------------------------------------------------------
 
 	void TreeEvaluationVisitor::Visit(IDASTNode & _node){
-	
+		String const& id = _node.Name();
 		SymbolTable *localSymTable = _node.LocalEnv();
 		SymbolTable *globalSymTable = _node.GlobalEnv();
-		MemoryCell * memcell = localSymTable->LookupLocal(_node.Name());
-		if(!memcell)
-			memcell = globalSymTable->LookupLocal(_node.Name());
+		lookuped = &localSymTable->LookupLocal(id);
+		if(static_cast<MemoryCell*>(*lookuped) == NULL)
+			lookuped = &globalSymTable->LookupLocal(id);
 
-		if(memcell)
-			memory = memcell;
-		else{
+		// DO NOT ASSIGN TO *lookuped if it NULL
+		if(static_cast<MemoryCell*>(*lookuped) == NULL) {
 			memory = SINEW(MemoryCellNil);
+			// TODO check about inserting in local or global
 			localSymTable->SetLocal(_node.Name(), memory);
+			lookuped = &localSymTable->LookupLocal(id);
 		}
+		memory = *lookuped;
 	}
 
 	//-----------------------------------------------------------------

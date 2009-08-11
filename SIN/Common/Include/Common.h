@@ -54,7 +54,7 @@ public:
     InstanceProxy(T *_p = 0x00): p(_p) { }
     void operator =(T *_p) { p = _p; }
     T& operator *(void) const { assert(p != 0x00); return *p; }
-    operator T* (void) const { return p; }
+    operator T* const (void) const { return p; }
 
 	template <typename _FromType>
 	static InstanceProxy<_FromType> ProxyFor(_FromType &_obj) {

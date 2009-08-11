@@ -84,6 +84,7 @@ namespace SIN{
 
 	private:
 		MemoryCell *			memory;
+		InstanceProxy<MemoryCell>*	lookuped;
 		MetaPreserveASTNode	*	preserveNode;
 		Library::Library *		lib;
 		VM::VirtualState *		vm;
