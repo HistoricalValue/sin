@@ -427,7 +427,12 @@ namespace SIN{
 			static_cast<ASTNode&>(*arguments).Accept(this);
 			// NOTICE: symbol Tables hold COPIES OF VALUES! Every assignment is a copy of
 			// a value!
-			symTable->AppendArgument( memory->Clone() );
+			// Conceptually, actual arguments are *assignments* of some variables to the
+			// argument-variables of a function.
+			// Assignment is needed for correct handling of objects;
+			MemoryCell* argument = SINEW(MemoryCellNil);
+			MemoryCell::Assign(argument, memory);
+			symTable->AppendArgument( argument  );
 		}
 	}
 
