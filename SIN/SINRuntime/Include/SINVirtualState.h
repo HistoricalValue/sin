@@ -67,6 +67,9 @@ namespace SIN {
 			VirtualState& Top(void) {INVAR curr_frame = stack.size() - 1; INVAR return *this; }
 			bool InCall(void) {INVAR return curr_frame > 0; }
 
+			// Convenience
+			SymbolTable& CurrentStable(void) { return CurrentFrame().stable; }
+
 			VirtualState(void): print_handler(0x00), retval(&nil), nil(), str(), num(), obj(),
 				stack(1, Frame(0x00)), curr_frame(0u), errors()
 				{ }
