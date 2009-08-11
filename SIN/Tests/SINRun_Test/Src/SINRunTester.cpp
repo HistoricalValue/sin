@@ -19,6 +19,7 @@
 #include "SINLibraryFunctions.h"
 #include "SINMemoryCellLibFunction.h"
 #include "SINAlloc.h"
+#include "SINShiftToMetaEvaluatorASTVisitor.h"
 
 #define SIN_TESTS_RUN_RUN(NAME)               SINTESTS_RUNTEST(NAME)
 #define SIN_TESTS_RUN_TESTDEF(NAME,TESTCODE)  SINTESTS_TESTDEF(NAME,TESTCODE)
@@ -116,6 +117,10 @@ namespace SIN {
 
 				TreeEvaluationVisitor eval(&lib, &vm);
 				root->Accept(&eval);
+
+				ShiftToMetaEvaluatorASTVisitor shifter;
+				root->Accept(&shifter);
+				//ASTNode* metacode = shifter;
 			}
 
 
