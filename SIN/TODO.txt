@@ -3,6 +3,8 @@
 
 ==== Do once ====
 
+*[034] Refactor returnValue()s in VirtualState to use assign.
+
 *[032] Make following lib funcs.
 		tostrin, strtonum, strsavetofile, typeof, input, print, println, openfile, closefile, writefile,
 		readfile, totalarguments, arguments, objectcopy
