@@ -22,13 +22,13 @@ namespace SIN {
 
 	//-----------------------------------------------------------------	
 
-	MemoryCell * MemoryCellObject::Clone(void)
+	MemoryCell * MemoryCellObject::Clone(void) const
 		{ return SINEWCLASS(MemoryCellObject, (value)); }
 
 
 	//-----------------------------------------------------------------	
 
-	MemoryCell::MemoryCellType MemoryCellObject::Type(void) 
+	MemoryCell::MemoryCellType MemoryCellObject::Type(void)  const
 		{ return MemoryCell::OBJECT_MCT; }
 
 

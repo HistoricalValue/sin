@@ -8,13 +8,13 @@ namespace SIN {
 
 	//-----------------------------------------------------------------
 	
-	MemoryCell * MemoryCellNumber::Clone(void) 
+	MemoryCell * MemoryCellNumber::Clone(void)  const
 	{ return SINEWCLASS(MemoryCellNumber, (value)); }
 
 
 	//-----------------------------------------------------------------
 
-	MemoryCell::MemoryCellType MemoryCellNumber::Type (void) 
+	MemoryCell::MemoryCellType MemoryCellNumber::Type (void)  const
 		{ return MemoryCell::NUMBER_MCT; }
 
 

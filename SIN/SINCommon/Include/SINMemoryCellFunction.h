@@ -16,8 +16,8 @@ namespace SIN {
 		MemoryCellFunction(Types::Function_t function) : MemoryCell(), value(function) {}
 		~MemoryCellFunction() {}
 
-		virtual MemoryCell *		Clone(void);
-		virtual MemoryCellType		Type (void);
+		virtual MemoryCell *		Clone(void) const;
+		virtual MemoryCellType		Type (void) const;
 		virtual const String		ToString(void) const;
 
 		void						SetValue (const Types::Function_t& function);

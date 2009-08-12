@@ -19,12 +19,13 @@ namespace SIN {
 			AST_MCT,
 			OBJECT_MCT,
 			FUNCTION_MCT,
-			LIB_FUNCTION_MCT
+			LIB_FUNCTION_MCT,
+			NATIVE_RESOURCE_MCT
 		};
 
 
-		virtual MemoryCell *	Clone(void) = 0;
-		virtual MemoryCellType	Type (void) = 0;
+		virtual MemoryCell *	Clone(void) const = 0;
+		virtual MemoryCellType	Type (void) const = 0;
 		virtual const String	ToString(void) const = 0;
 		
 		MemoryCell(void) {}

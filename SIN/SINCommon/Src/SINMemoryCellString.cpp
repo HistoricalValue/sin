@@ -7,13 +7,13 @@ namespace SIN {
 
 	//-----------------------------------------------------------------
 	
-	MemoryCell * MemoryCellString::Clone(void) 
+	MemoryCell * MemoryCellString::Clone(void)  const
 		{ return SINEW(MemoryCellString(value)); }
 	
 
 	//-----------------------------------------------------------------	
 	
-	MemoryCell::MemoryCellType MemoryCellString::Type (void) 
+	MemoryCell::MemoryCellType MemoryCellString::Type (void)  const
 		{ return MemoryCell::STRING_MCT; }
 
 

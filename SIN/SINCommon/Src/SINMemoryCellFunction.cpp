@@ -10,13 +10,13 @@ namespace SIN {
 
 	//-----------------------------------------------------------------
 
-	MemoryCell * MemoryCellFunction::Clone(void)
+	MemoryCell * MemoryCellFunction::Clone(void) const
 		{ return SINEW(MemoryCellFunction(value)); }
 	
 
 	//-----------------------------------------------------------------
 
-	MemoryCell::MemoryCellType MemoryCellFunction::Type (void) 
+	MemoryCell::MemoryCellType MemoryCellFunction::Type (void)  const
 		{ return MemoryCell::FUNCTION_MCT; }
 
 

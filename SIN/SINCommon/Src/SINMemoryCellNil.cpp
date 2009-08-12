@@ -8,12 +8,12 @@ namespace SIN {
 
 	//-----------------------------------------------------------------
 	
-	MemoryCell * MemoryCellNil::Clone(void) 
+	MemoryCell * MemoryCellNil::Clone(void)  const
 		{ return SINEW(MemoryCellNil()); }
 	
 	
 	//-----------------------------------------------------------------
-	MemoryCell::MemoryCellType MemoryCellNil::Type(void) 
+	MemoryCell::MemoryCellType MemoryCellNil::Type(void)  const
 		{ return MemoryCell::NIL_MCT; }
 
 

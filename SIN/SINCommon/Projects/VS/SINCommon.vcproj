@@ -195,6 +195,10 @@
 				Name="MemoryCell"
 				>
 				<File
+					RelativePath="..\..\Src\MemoryCellNativeResource.cpp"
+					>
+				</File>
+				<File
 					RelativePath="..\..\Src\SINMemoryCell.cpp"
 					>
 				</File>
@@ -314,6 +318,10 @@
 				</File>
 				<File
 					RelativePath="..\..\Include\SINMemoryCellLibFunction.h"
+					>
+				</File>
+				<File
+					RelativePath="..\..\Include\SINMemoryCellNativeResource.h"
 					>
 				</File>
 				<File

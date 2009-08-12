@@ -16,8 +16,8 @@ namespace SIN {
 		MemoryCellBool(const Types::Boolean_t & b) : MemoryCell(), value(b) {}
 		~MemoryCellBool() {}
 
-		virtual MemoryCell *	Clone(void);
-		virtual MemoryCellType	Type(void);
+		virtual MemoryCell *	Clone(void) const;
+		virtual MemoryCellType	Type(void) const;
 		virtual const String	ToString(void) const;
 
 		void					SetValue (const Types::Boolean_t & b);

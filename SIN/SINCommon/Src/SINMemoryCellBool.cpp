@@ -8,14 +8,14 @@ namespace SIN {
 	
 	//-----------------------------------------------------------------
 
-	MemoryCell * MemoryCellBool::Clone(void) {
+	MemoryCell * MemoryCellBool::Clone(void) const {
 		return SINEW(MemoryCellBool(value));
 	}
 	
 
 	//-----------------------------------------------------------------
 
-	MemoryCell::MemoryCellType MemoryCellBool::Type(void) 
+	MemoryCell::MemoryCellType MemoryCellBool::Type(void)  const
 		{ return MemoryCell::BOOL_MCT; }
 
 

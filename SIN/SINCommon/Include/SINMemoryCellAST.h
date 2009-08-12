@@ -14,8 +14,8 @@ namespace SIN {
 		~MemoryCellAST() {}
 
 
-		virtual MemoryCell *		Clone(void);
-		virtual enum MemoryCellType Type (void);
+		virtual MemoryCell *		Clone(void) const;
+		virtual enum MemoryCellType Type (void) const;
 		virtual const String		ToString(void) const;
 
 		
