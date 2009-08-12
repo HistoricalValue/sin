@@ -21,12 +21,12 @@ namespace SIN {
 				};
 			} // namespace
 			SIN_LIBRARYFUNCTIONS_LIBFUNC(print) {
-				_vs.CurrentFrame().stable.for_each_argument(ArgumentPrinter(_vs));
+				_vs.CurrentStable().for_each_argument(ArgumentPrinter(_vs));
 				_vs.ReturnValueNil();
 			}
 			// println ---------------------------------------------------------
 			SIN_LIBRARYFUNCTIONS_LIBFUNC(println) {
-				_vs.CurrentFrame().stable.for_each_argument(ArgumentPrinter(_vs));
+				_vs.CurrentStable().for_each_argument(ArgumentPrinter(_vs));
 				MemoryCellString newline_inst("\n");
 				InstanceProxy<MemoryCell> newline(&newline_inst);
 				(ArgumentPrinter(_vs))(SymbolTable::Entry("newline", newline));
@@ -34,7 +34,7 @@ namespace SIN {
 			}
 			// tostring ---------------------------------------------------------
 			SIN_LIBRARYFUNCTIONS_LIBFUNC(tostring) {
-				SymbolTable& st = _vs.CurrentFrame().stable;
+				SymbolTable& st = _vs.CurrentStable();
 				if (st.NumberOfArguments() > 0)
 					_vs.ReturnValueString(st.Argument(0)->ToString());
 				else
@@ -42,7 +42,7 @@ namespace SIN {
 			}
 			// strtonum ---------------------------------------------------------
 			SIN_LIBRARYFUNCTIONS_LIBFUNC(strtonum) {
-				SymbolTable& st = _vs.CurrentFrame().stable;
+				SymbolTable& st = _vs.CurrentStable();
 				if (st.NumberOfArguments() > 0) {
 					double const num = strtod(st.Argument(0)->ToString().c_str(), NULL);
 					_vs.ReturnValueNumber(num);
@@ -94,6 +94,9 @@ namespace SIN {
 						case MemoryCell::STRING_MCT:
 							type_desc = "string";
 							break;
+						case MemoryCell::NATIVE_RESOURCE_MCT:
+							type_desc = "native resource";
+							break;
 						default:
 							SINASSERT(!"Illegal program state");
 							break;
@@ -113,7 +116,7 @@ namespace SIN {
 			//SIN_LIBRARYFUNCTIONS_LIBFUNC(writefile);
 			// totalarguments ---------------------------------------------------
 			SIN_LIBRARYFUNCTIONS_LIBFUNC(totalarguments) {
-				_vs.ReturnValueNumber(_vs.Down().CurrentFrame().stable.NumberOfArguments());
+				_vs.ReturnValueNumber(_vs.Down().CurrentStable().NumberOfArguments());
 				_vs.Top();
 			}
 			// arguments --------------------------------------------------------
@@ -131,14 +134,25 @@ namespace SIN {
 			SIN_LIBRARYFUNCTIONS_LIBFUNC(arguments) {
 				if (_vs.InCall()) {
 					Types::Object* obj = SINEW(Types::Object);
-					_vs.CurrentFrame().stable.for_each_argument(ArgumentToTableCopier(obj));
+					_vs.CurrentStable().for_each_argument(ArgumentToTableCopier(obj));
 					_vs.ReturnValueObject(obj);
 				}
 				else
 					_vs.AppendError("arguments() called not from within a function", "", 0u);
 			}
 			// objectcopy -------------------------------------------------------
-			//SIN_LIBRARYFUNCTIONS_LIBFUNC(objectcopy);
+			SIN_LIBRARYFUNCTIONS_LIBFUNC(objectcopy) {
+				SymbolTable& stable = _vs.CurrentStable();
+				if (stable.NumberOfArguments() > 0) {
+					MemoryCell* obj = stable.Argument(0);
+					if (obj->Type() == MemoryCell::OBJECT_MCT)
+						_vs.ReturnValueObject(static_cast<MemoryCellObject*>(obj)->GetValue()->Clone());
+					else
+						_vs.AppendError("argument passed to objectcopy() is not an object", "", 0u);
+				}
+				else
+					_vs.AppendError("not enough arguments passed to objectcopy()", "", 0u);
+			}
 		} // namespace Functions
 	} // namespace Library
 } // namespace SIN

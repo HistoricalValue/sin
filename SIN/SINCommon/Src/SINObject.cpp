@@ -64,8 +64,12 @@ struct CopyTableFunctor : public std::unary_function <const SIN::Types::Object::
 
 	CopyTableFunctor(SIN::Types::Object::ObjectTable & ot) : table(ot){}
 
-	void operator() (const SIN::Types::Object::ObjectTableValue & otv) 
-		{ table[otv.first] = otv.second->Clone(); }
+	void operator() (const SIN::Types::Object::ObjectTableValue& otv) const {
+		std::pair<SIN::Types::Object::ObjectTable::iterator, bool> ins_pair = 
+			table.insert(SIN::Types::Object::ObjectTableValue(otv.first, 0x00));
+		SINASSERT(ins_pair.second);
+		SIN::MemoryCell::Assign(ins_pair.first->second, otv.second->Clone());
+	}
 };
 
 

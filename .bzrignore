@@ -89,3 +89,8 @@ SIN/Tests/SINParser_Test/Projects/VS/Debug
 SIN/Tests/SINRun_Test/Projects/VS/Debug
 SIN/Tests/SINSymbolTable_Test/Projects/VS/Debug
 SIN/Tests/SINTest/Projects/VS/Debug
+SIN/SINmain/Projects/VS/RunTreeVisualisation.xml
+SIN/SINmain/Projects/VS/SINmain.vcproj.TURBO-X-PC.TURBO_X.user
+SIN/SINmain/Projects/VS/objectTestOutput.txt
+SIN/SINmain/Projects/VS/treeVisualisation.txt
+SIN/SINmain/Projects/VS/treeVisualisation.xml

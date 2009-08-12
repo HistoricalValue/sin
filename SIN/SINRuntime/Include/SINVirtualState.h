@@ -24,6 +24,7 @@ namespace SIN {
 			void Print(String const& _msg) { (*print_handler)(_msg); }
 
 			MemoryCell* ReturnValue(void) const { return retval; }
+			// TODO fix these return Values crap to use Assign. Properly!
 			void ReturnValueNil(void) { retval = &nil; }
 			void ReturnValueString(String const& _s) { str.SetValue(_s); retval = &str; }
 			void ReturnValueNumber(SIN::Types::Number_t const& _num) { num.SetValue(_num); retval = &num; }
