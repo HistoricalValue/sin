@@ -12,15 +12,15 @@ MKDIR=mkdir
 CP=cp
 CCADMIN=CCadmin
 RANLIB=ranlib
-CC=
+CC=gcc
 CCC=g++
 CXX=g++
 FC=
-AS=
+AS=as
 
 # Macros
-CND_PLATFORM=GNU-Windows
-CND_CONF=Debug
+CND_PLATFORM=GNU-Linux-x86
+CND_CONF=remote_rudolf_debug
 CND_DISTDIR=dist
 
 # Include project Makefile
@@ -110,10 +110,10 @@ LDLIBSOPTIONS=
 
 # Build Targets
 .build-conf: ${BUILD_SUBPROJECTS}
-	${MAKE}  -f nbproject/Makefile-Debug.mk dist/Debug/GNU-Windows/sin_netbeans.exe
+	${MAKE}  -f nbproject/Makefile-remote_rudolf_debug.mk dist/remote_rudolf_debug/GNU-Linux-x86/sin_netbeans
 
-dist/Debug/GNU-Windows/sin_netbeans.exe: ${OBJECTFILES}
-	${MKDIR} -p dist/Debug/GNU-Windows
+dist/remote_rudolf_debug/GNU-Linux-x86/sin_netbeans: ${OBJECTFILES}
+	${MKDIR} -p dist/remote_rudolf_debug/GNU-Linux-x86
 	${LINK.cc} -o ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/sin_netbeans ${OBJECTFILES} ${LDLIBSOPTIONS} 
 
 ${OBJECTDIR}/_ext/_DOTDOT/SINRuntime/Src/SINPreserveASTEvaluatorVisitor.o: nbproject/Makefile-${CND_CONF}.mk ../SINRuntime/Src/SINPreserveASTEvaluatorVisitor.cpp 
@@ -421,8 +421,8 @@ ${OBJECTDIR}/_ext/_DOTDOT/SINAST/Src/SINASTNode.o: nbproject/Makefile-${CND_CONF
 
 # Clean Targets
 .clean-conf:
-	${RM} -r build/Debug
-	${RM} dist/Debug/GNU-Windows/sin_netbeans.exe
+	${RM} -r build/remote_rudolf_debug
+	${RM} dist/remote_rudolf_debug/GNU-Linux-x86/sin_netbeans
 
 # Subprojects
 .clean-subprojects:

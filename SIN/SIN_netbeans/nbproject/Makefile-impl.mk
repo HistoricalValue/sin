@@ -31,7 +31,7 @@ DEFAULTCONF=Debug
 CONF=${DEFAULTCONF}
 
 # All Configurations
-ALLCONFS=Debug Release Debug_SUN 
+ALLCONFS=Debug Release Debug_SUN remote_rudolf_debug Cygwin_Debug 
 
 
 # build
