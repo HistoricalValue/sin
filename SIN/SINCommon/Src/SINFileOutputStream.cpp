@@ -15,6 +15,15 @@ namespace SIN {
 		fout.close();
 	}
 
+	FileOutputStream::FileOutputStream(FileOutputStream const& _other):
+		filepath(_other.filepath),
+		mode(_other.mode),
+		fout(_other.filepath.c_str(), Mode(_other.mode).HasTruncate() ? std::ios_base::trunc : std::ios_base::out),
+		file_open(_other.file_open)
+	{
+		fout.close();
+	}
+
 	FileOutputStream::~FileOutputStream(void) {
 		if (file_open) {
 			SINASSERT(fout.is_open());
@@ -28,6 +37,14 @@ namespace SIN {
 			fout.write(buf, len).good()	&&
 			closeFile()					&&
 			true;
+	}
+	
+	bool FileOutputStream::DoesTruncate(void) const {
+		return mode.HasTruncate();
+	}
+
+	String const FileOutputStream::Filepath(void) const {
+		return filepath;
 	}
 
 	/// private utilities
@@ -48,10 +65,6 @@ namespace SIN {
 		file_open = false;
 
 		return fout.good();
-	}
-
-	bool FileOutputStream::DoesTruncate(void) const {
-		return mode.HasTruncate();
 	}
 
 } // namespace SIN

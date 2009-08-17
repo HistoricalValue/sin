@@ -12,8 +12,15 @@
 
 namespace SIN {
 
+	BufferedOutputStream::BufferedOutputStream(OutputStream* _out_p):
+	out_p(_out_p)
+	{ }
+
 	BufferedOutputStream::BufferedOutputStream(OutputStream& _out):
-	out(_out)
+	out_p(&_out)
+	{ }
+	BufferedOutputStream::BufferedOutputStream(BufferedOutputStream const& _o):
+	out_p(_o.out_p), buf(_o.buf)
 	{ }
 
 	BufferedOutputStream::~BufferedOutputStream(void) {
@@ -23,17 +30,19 @@ namespace SIN {
 	bool BufferedOutputStream::write(char const *_buf, size_t _len) {
 		bool result = true;
 		if (buf.wouldOverflow(_len)) {
-			const size_t conjoined_buf_len = buf.length() + _len;
-			char* conjoined_buf = SINEWARRAY(char, conjoined_buf_len);
-			result = out.write(static_cast<char*>(
-				memcpy(
-					static_cast<char*>(Alloc::memcpy(conjoined_buf, buf.buf(), buf.length())) + buf.length(),
-					_buf, _len
-				)),
-				conjoined_buf_len
-			);
-			buf.empty();
-			SINDELETE(conjoined_buf);
+			if ((result = (out_p != 0x00))) {
+				const size_t conjoined_buf_len = buf.length() + _len;
+				char* conjoined_buf = SINEWARRAY(char, conjoined_buf_len);
+				result = out_p->write(static_cast<char*>(
+					memcpy(
+						static_cast<char*>(Alloc::memcpy(conjoined_buf, buf.buf(), buf.length())) + buf.length(),
+						_buf, _len
+					)),
+					conjoined_buf_len
+				);
+				buf.empty();
+				SINDELETE(conjoined_buf);
+			}
 		}
 		else {
 			const size_t appended_bytes =  buf.append(_buf, _len);
@@ -47,14 +56,27 @@ namespace SIN {
 		return result;
 	}
 
+	void BufferedOutputStream::SetOut(OutputStream* _out_p) {
+		out_p = _out_p;
+	}
+	OutputStream* BufferedOutputStream::GetOut(void) const {
+		return out_p;
+	}
+	bool BufferedOutputStream::IsBuffer(void) const {
+		return out_p == 0x00;
+	}
+
 	void BufferedOutputStream::flush(void) {
-		out.write(buf.buf(), buf.length());
+		out_p->write(buf.buf(), buf.length());
 		buf.empty();
 	}
 
 	// private buffer manipulation
 	BufferedOutputStream::Buf::Buf(void): buffer_length(0u)
 	{ }
+	BufferedOutputStream::Buf::Buf(Buf const& _o): buffer_length(_o.buffer_length) {
+		::memcpy(buffer, _o.buffer, sizeof(buffer)/sizeof(buffer[0]));
+	}
 	BufferedOutputStream::Buf::~Buf(void) {
 	}
 

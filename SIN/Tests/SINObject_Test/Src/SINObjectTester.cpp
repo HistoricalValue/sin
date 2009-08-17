@@ -100,8 +100,8 @@ namespace SIN {
 				Types::Object * obj_ptr_clone =  obj_ptr->Clone();
 				fout <<	obj_ptr_clone->ToString();
 				
-				obj_ptr->MarckedForDeletion();
-				obj_ptr_clone->MarckedForDeletion();
+				obj_ptr->MarkForDeletion();
+				obj_ptr_clone->MarkForDeletion();
 				SINDELETE(obj_ptr);
 				SINDELETE(obj_ptr_clone);
 				SINDELETE(object1_mc);

@@ -112,3 +112,4 @@ SIN/Tests/SINParser_Test/Projects/VS/SINParser_Test.vcproj.TURBO-X-PC.TURBO_X.us
 SIN/Tests/SINRun_Test/Projects/VS/SINRun_Test.vcproj.TURBO-X-PC.TURBO_X.user
 SIN/Tests/SINSymbolTable_Test/Projects/VS/SINSymbolTable_Test.vcproj.TURBO-X-PC.TURBO_X.user
 SIN/Tests/SINTest/Projects/VS/SINTest.vcproj.TURBO-X-PC.TURBO_X.user
+SIN/SINmain/Projects/VS/sin_run_test.sin

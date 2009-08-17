@@ -12,8 +12,12 @@ namespace SIN {
 	}
 
 	void MemoryCell::Assign(MemoryCell*& _to, MemoryCell* _from) {
-		if (_to != 0x00)
+		if (_to != 0x00) {
+			SINASSERT(_to->Type() != MemoryCell::FUNCTION_MCT);
+			SINASSERT(_to->Type() != MemoryCell::LIB_FUNCTION_MCT);
+			SINASSERT(_to->Type() != MemoryCell::NIL_MCT);
 			SINDELETE(_to);
+		}
 
 		_to = _from->Clone();
 		if (_from->Type() == MemoryCell::OBJECT_MCT)

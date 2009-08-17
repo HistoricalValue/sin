@@ -27,8 +27,11 @@ namespace SIN {
 		};
 		// Mode is a a bitwise-OR of Neutral and other modes
         FileOutputStream(String const &filepath, mode_t mode = Mode::Neutral());
+		FileOutputStream(FileOutputStream const&);
         virtual ~FileOutputStream(void);
         virtual bool write(char const *buf, size_t len); // returns true on success
+
+		String const Filepath(void) const;
 
 		bool DoesTruncate(void) const; // returns true if this truncates files on opening
 	private:

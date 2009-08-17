@@ -2,13 +2,19 @@
 #define __SIN_LIBRARY_LIBRARY_FUNCTIONS_H__
 
 #include "SINLibraryFunction.h"
+#include "SINMemoryCellNativeResource.h"
+#include "SINFileOutputStream.h"
+#include "SINBufferedOutputStream.h"
 
 #define SIN_FUNCTIONLIBRARY_FUNC(FNAME)											\
 	class FNAME: public Function {												\
+		void* data;																\
 	public:																		\
-		inline FNAME(void): Function(#FNAME) { }								\
+		inline FNAME(void): Function(#FNAME), data(0x00) { }					\
 		virtual inline ~FNAME(void) { }											\
 		virtual return_type operator ()(SIN_FUNCTIONLIBRARY_FUNC_ARGS) const;	\
+																				\
+		void Initialise(void); void CleanUp(void);								\
 	}
 
 namespace SIN {
@@ -21,9 +27,9 @@ namespace SIN {
 			SIN_FUNCTIONLIBRARY_FUNC(input);
 			SIN_FUNCTIONLIBRARY_FUNC(print);
 			SIN_FUNCTIONLIBRARY_FUNC(println);
-			SIN_FUNCTIONLIBRARY_FUNC(openfile);
-			SIN_FUNCTIONLIBRARY_FUNC(closefile);
-			SIN_FUNCTIONLIBRARY_FUNC(writefile);
+			SIN_FUNCTIONLIBRARY_FUNC(fileopen);
+			SIN_FUNCTIONLIBRARY_FUNC(fileclose);
+			SIN_FUNCTIONLIBRARY_FUNC(filewrite);
 			SIN_FUNCTIONLIBRARY_FUNC(totalarguments);
 			SIN_FUNCTIONLIBRARY_FUNC(arguments);
 			SIN_FUNCTIONLIBRARY_FUNC(objectcopy);

@@ -6,21 +6,15 @@
 namespace SIN {
 	class MemoryCellNativeResource: public MemoryCell {
 	public:
-		typedef void* enclosed_t;
-
-		virtual MemoryCell* Clone(void) const;
+		virtual MemoryCell* Clone(void) const = 0;
 		virtual MemoryCellType Type(void) const;
-		virtual String const ToString(void) const;
+		virtual String const ToString(void) const = 0;
 
-		MemoryCellNativeResource(enclosed_t const& data = 0x00);
-		MemoryCellNativeResource(MemoryCellNativeResource const& = MemoryCellNativeResource(0x00));
+		MemoryCellNativeResource(void);
 		virtual ~MemoryCellNativeResource(void);
-
-		void SetValue(enclosed_t const& value);
-		enclosed_t const& GetValue(void) const;
-
 	private:
-		enclosed_t data;
+		// Unusable
+		inline MemoryCellNativeResource(MemoryCellNativeResource const&);
 	}; // class MemoryCellNativeResource
 } // namespace SIN
 

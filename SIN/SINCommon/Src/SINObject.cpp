@@ -48,7 +48,7 @@ struct ClearTableFunctor : public std::unary_function <const SIN::Types::Object:
 
 				//An to exoume 3anadei simenei oti eixame kuklo kai to exoume idi kanei delete
 				if ( !obj->GetValue()->IsMarckedForDeletion() ) {
-					obj->GetValue()->MarckedForDeletion();	
+					obj->GetValue()->MarkForDeletion();	
 					SINDELETE(obj); 
 				}
 			}
@@ -125,13 +125,11 @@ namespace SIN {
 		
 		//-----------------------------------------------------------------
 		//constructors
-		Object::Object() : marckedForDeletion(false), rc(0), id(ObjectFactory::NextID()), index(0) {}
-		
-
+		Object::Object(void) : marckedForDeletion(false), rc(0), id(ObjectFactory::NextID()), index(0), table() {}
 
 		//-----------------------------------------------------------------
 		//destructors
-		Object::~Object() { 
+		Object::~Object(void) {
 			SINASSERT(rc == 0 && marckedForDeletion);
 			for_each(table.begin(), table.end(), ClearTableFunctor());
 			table.clear();
@@ -198,7 +196,7 @@ namespace SIN {
 		
 		//-----------------------------------------------------------------
 		
-		void Object::MarckedForDeletion(void)
+		void Object::MarkForDeletion(void)
 			{ marckedForDeletion = true;}
 
 
@@ -225,7 +223,7 @@ namespace SIN {
 		//-----------------------------------------------------------------
 
 		Object * Object::Clone(void) const 
-			{ return SINEW(Object(*this)); }
+			{ return SINEWCLASS(Object, (*this)); }
 		
 		
 		//-----------------------------------------------------------------

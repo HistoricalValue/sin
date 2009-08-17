@@ -22,10 +22,11 @@ namespace SIN {
 			typedef std::pair<String, MemoryCell *> ObjectTableValue;
 
 			//Constructor
-			Object();
+			Object(void);
+			Object(Object const&);
 
 			//destructor
-			~Object();
+			~Object(void);
 
 			unsigned		ID() const;
 			bool			IsUnreferenced(void) const;
@@ -39,7 +40,7 @@ namespace SIN {
 			void			SetValue(const String &, MemoryCell *);		
 			MemoryCell*		GetValue(const String &) const;
 			
-			void			MarckedForDeletion(void);
+			void			MarkForDeletion(void);
 			bool			IsMarckedForDeletion(void) const;
 			
 			//e.g. a.#keys and a.#size 
@@ -73,10 +74,7 @@ namespace SIN {
 			
 			///////////////////////////////
 			//	private method API
-			Object(const Object &);
 			const String ToString(std::set<unsigned> &) const;
-			
-			
 		};
 
 

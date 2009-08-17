@@ -384,13 +384,14 @@ namespace SIN{
 
 		static_cast<ASTNode&>(*kid++).Accept(this);
 		MemoryCell *tmpmemcell1 = memory;
+		InstanceProxy<MemoryCell>* lookedup_l = lookuped; // looked-up and memory must be saved after each eval of a kid
 
-		SINASSERT(tmpmemcell1->Type() != MemoryCell::FUNCTION_MCT); //TODO Throw run-time error
+		SINASSERT(tmpmemcell1 == 0x00 || tmpmemcell1->Type() != MemoryCell::FUNCTION_MCT); //TODO Throw run-time error
 
 		static_cast<ASTNode&>(*kid++).Accept(this);
 		MemoryCell *tmpmemcell2 = memory;
 
-		MemoryCell::Assign(*lookuped, tmpmemcell2);
+		MemoryCell::Assign(*lookedup_l, tmpmemcell2);
 		memory = tmpmemcell2;
 	}
 
@@ -421,7 +422,7 @@ namespace SIN{
 
 	void TreeEvaluationVisitor::Visit(ActualArgumentsASTNode & _node){
 
-		SymbolTable *symTable = &(vm->CurrentFrame().stable);
+		SymbolTable *symTable = &vm->CurrentStable();
 
 		for(ASTNode::iterator arguments = _node.begin(); arguments != _node.end(); ++arguments){
 			static_cast<ASTNode&>(*arguments).Accept(this);
@@ -430,7 +431,7 @@ namespace SIN{
 			// Conceptually, actual arguments are *assignments* of some variables to the
 			// argument-variables of a function.
 			// Assignment is needed for correct handling of objects;
-			MemoryCell* argument = SINEW(MemoryCellNil);
+			MemoryCell* argument = 0x00;
 			MemoryCell::Assign(argument, memory);
 			symTable->AppendArgument( argument  );
 		}
@@ -463,7 +464,8 @@ namespace SIN{
 			Library::Function *libfunc = static_cast<MemoryCellLibFunction*>(tmpmemcell1)->GetValue();
 
 			(*libfunc)(*vm, *lib);
-			memory = vm->ReturnValue();
+			memory = 0x00;
+			MemoryCell::Assign(memory, vm->ReturnValue());
 		}
 	}
 
@@ -495,11 +497,10 @@ namespace SIN{
 		if(static_cast<MemoryCell*>(*lookuped) == NULL)
 			lookuped = &globalSymTable->LookupLocal(id);
 
-		// DO NOT ASSIGN TO *lookuped if it NULL
+		// DO NOT ASSIGN TO *lookuped if it is NULL
 		if(static_cast<MemoryCell*>(*lookuped) == NULL) {
-			memory = SINEW(MemoryCellNil);
 			// TODO check about inserting in local or global
-			localSymTable->SetLocal(_node.Name(), memory);
+			localSymTable->SetLocal(_node.Name(), 0x00);
 			lookuped = &localSymTable->LookupLocal(id);
 		}
 		memory = *lookuped;

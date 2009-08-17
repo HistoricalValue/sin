@@ -12,7 +12,7 @@ namespace SIN {
 		if (value != 0x00) {
 			value->DecrementReferenceCounter();
 			if (value->IsUnreferenced()) {
-				value->MarckedForDeletion();
+				value->MarkForDeletion();
 				SINDELETE(value);
 				value = static_cast<Types::Object *>(0);
 			}

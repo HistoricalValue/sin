@@ -60,6 +60,7 @@
           <itemPath>../SINCommon/Include/SINMemoryCellBool.h</itemPath>
           <itemPath>../SINCommon/Include/SINMemoryCellFunction.h</itemPath>
           <itemPath>../SINCommon/Include/SINMemoryCellLibFunction.h</itemPath>
+          <itemPath>../SINCommon/Include/SINMemoryCellNativeResource.h</itemPath>
           <itemPath>../SINCommon/Include/SINMemoryCellNil.h</itemPath>
           <itemPath>../SINCommon/Include/SINMemoryCellNumber.h</itemPath>
           <itemPath>../SINCommon/Include/SINMemoryCellObject.h</itemPath>
@@ -84,6 +85,7 @@
           <itemPath>../SINCommon/Src/SINMemoryCellBool.cpp</itemPath>
           <itemPath>../SINCommon/Src/SINMemoryCellFunction.cpp</itemPath>
           <itemPath>../SINCommon/Src/SINMemoryCellLibFunction.cpp</itemPath>
+          <itemPath>../SINCommon/Src/SINMemoryCellNativeResource.cpp</itemPath>
           <itemPath>../SINCommon/Src/SINMemoryCellNil.cpp</itemPath>
           <itemPath>../SINCommon/Src/SINMemoryCellNumber.cpp</itemPath>
           <itemPath>../SINCommon/Src/SINMemoryCellObject.cpp</itemPath>

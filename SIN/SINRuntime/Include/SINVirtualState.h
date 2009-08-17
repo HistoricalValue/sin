@@ -6,6 +6,7 @@
 #include "SINMemoryCellString.h"
 #include "SINMemoryCellNumber.h"
 #include "SINMemoryCellObject.h"
+#include "SINMemoryCellNativeResource.h"
 #include "SINObject.h"
 #include <list>
 #include <deque>
@@ -23,12 +24,13 @@ namespace SIN {
 			print_handler_t GetPrintHandler(void) const { return print_handler; }
 			void Print(String const& _msg) { (*print_handler)(_msg); }
 
+			// ReturnValue has to be Memcell::Assign-ed !!! if used
 			MemoryCell* ReturnValue(void) const { return retval; }
-			// TODO fix these return Values crap to use Assign. Properly!
 			void ReturnValueNil(void) { retval = &nil; }
 			void ReturnValueString(String const& _s) { str.SetValue(_s); retval = &str; }
-			void ReturnValueNumber(SIN::Types::Number_t const& _num) { num.SetValue(_num); retval = &num; }
-			void ReturnValueObject(SIN::Types::Object* const& _obj) { obj.SetValue(_obj); retval = &obj; }
+			void ReturnValueNumber(Types::Number_t const& _num) { num.SetValue(_num); retval = &num; }
+			void ReturnValueObject(Types::Object_t const& _obj_inst) { obj.SetValue(_obj_inst); retval = &obj; }
+			void ReturnValueResource(MemoryCellNativeResource* const& _r) { retval = _r; }
 
 			struct Error {
 				String const message;
@@ -71,9 +73,9 @@ namespace SIN {
 			// Convenience
 			SymbolTable& CurrentStable(void) { return CurrentFrame().stable; }
 
-			VirtualState(void): print_handler(0x00), retval(&nil), nil(), str(), num(), obj(),
+			VirtualState(void): print_handler(0x00), retval(&nil), nil(), str(), num(), obj(), r(),
 				stack(1, Frame(0x00)), curr_frame(0u), errors()
-				{ }
+			{ }
 			~VirtualState(void) { obj.SetValue(0x00); }
 		private:
 			print_handler_t print_handler;
@@ -82,6 +84,7 @@ namespace SIN {
 			MemoryCellString str;
 			MemoryCellNumber num;
 			MemoryCellObject obj;
+			MemoryCellNativeResource* r;
 
 			//typedef std::deque<Frame> stack_t;
 			// Debugging

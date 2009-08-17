@@ -17,6 +17,14 @@ print("Type of g", typeof(g));
 //meta_testing = .<x = "a" + "b">.;
 
 */
-a = 4;
-println(a);
+/*** Simple tests that work ***/
+// -------------
+//	println(4);
+// -------------
+//	a = 4;
+//	println(a);
+// -------------
+a = fileopen("sin_run_test.sin");
+println("The open file is: ", a);
+// -------------
 

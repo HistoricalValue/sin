@@ -96,6 +96,7 @@ namespace SIN {
 				Library::Functions::tostring		tostring;
 				Library::Functions::strtonum		strtonum;
 				Library::Functions::typeof			typeof;
+				Library::Functions::fileopen        fileopen;
 				
 				lib.InstallFunction(&print			);
 				lib.InstallFunction(&println		);
@@ -104,6 +105,7 @@ namespace SIN {
 				lib.InstallFunction(&tostring		);
 				lib.InstallFunction(&strtonum		);
 				lib.InstallFunction(&typeof			);
+				lib.InstallFunction(&fileopen       );
 
 				// TODO remove the reference here and watch it burn 
 				SymbolTable *globalSymTable = static_cast<SinCodeASTNode*>(root)->getEnv();
@@ -114,6 +116,7 @@ namespace SIN {
 				globalSymTable->SetLocal("tostring",		SINEWCLASS(MemoryCellLibFunction, (&tostring)));
 				globalSymTable->SetLocal("strtonum",		SINEWCLASS(MemoryCellLibFunction, (&strtonum)));
 				globalSymTable->SetLocal("typeof",			SINEWCLASS(MemoryCellLibFunction, (&typeof)));
+				globalSymTable->SetLocal("fileopen",        SINEWCLASS(MemoryCellLibFunction, (&fileopen)));
 
 				TreeEvaluationVisitor eval(&lib, &vm);
 				root->Accept(&eval);

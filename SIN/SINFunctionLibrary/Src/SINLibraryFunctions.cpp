@@ -2,8 +2,13 @@
 #include "SINLibrary.h"
 #include "SINFileOutputStream.h"
 #include "SINAlloc.h"
+#include "SINFileOutputStream.h"
+#include "SINBufferedOutputStream.h"
+#include <new>
 
 #define SIN_LIBRARYFUNCTIONS_LIBFUNC(FNAME) FNAME::return_type FNAME::operator ()(SIN_FUNCTIONLIBRARY_FUNC_ARGS) const
+#define SIN_LIBRARYFUNCTIONS_DEFAULTS(FNAME) void FNAME::Initialise(void) { } void FNAME::CleanUp(void) { }
+#define SIN_LIBRARYFUNCTIONS_DEFAULTS_AND_LIBFUNC(FNAME) SIN_LIBRARYFUNCTIONS_DEFAULTS(FNAME) SIN_LIBRARYFUNCTIONS_LIBFUNC(FNAME)
 
 namespace SIN {
 	namespace Library {
@@ -20,12 +25,12 @@ namespace SIN {
 					VM::VirtualState& vs;
 				};
 			} // namespace
-			SIN_LIBRARYFUNCTIONS_LIBFUNC(print) {
+			SIN_LIBRARYFUNCTIONS_DEFAULTS_AND_LIBFUNC(print) {
 				_vs.CurrentStable().for_each_argument(ArgumentPrinter(_vs));
 				_vs.ReturnValueNil();
 			}
 			// println ---------------------------------------------------------
-			SIN_LIBRARYFUNCTIONS_LIBFUNC(println) {
+			SIN_LIBRARYFUNCTIONS_DEFAULTS_AND_LIBFUNC(println) {
 				_vs.CurrentStable().for_each_argument(ArgumentPrinter(_vs));
 				MemoryCellString newline_inst("\n");
 				InstanceProxy<MemoryCell> newline(&newline_inst);
@@ -33,7 +38,7 @@ namespace SIN {
 				_vs.ReturnValueNil();
 			}
 			// tostring ---------------------------------------------------------
-			SIN_LIBRARYFUNCTIONS_LIBFUNC(tostring) {
+			SIN_LIBRARYFUNCTIONS_DEFAULTS_AND_LIBFUNC(tostring) {
 				SymbolTable& st = _vs.CurrentStable();
 				if (st.NumberOfArguments() > 0)
 					_vs.ReturnValueString(st.Argument(0)->ToString());
@@ -41,7 +46,7 @@ namespace SIN {
 					_vs.AppendError("not enough arguments passed to tostring(obj)", "", 0u);
 			}
 			// strtonum ---------------------------------------------------------
-			SIN_LIBRARYFUNCTIONS_LIBFUNC(strtonum) {
+			SIN_LIBRARYFUNCTIONS_DEFAULTS_AND_LIBFUNC(strtonum) {
 				SymbolTable& st = _vs.CurrentStable();
 				if (st.NumberOfArguments() > 0) {
 					double const num = strtod(st.Argument(0)->ToString().c_str(), NULL);
@@ -51,7 +56,7 @@ namespace SIN {
 					_vs.AppendError("not enough arguments passed to strtonum(str)", "", 0u);
 			}
 			// strsavetofile ----------------------------------------------------
-			SIN_LIBRARYFUNCTIONS_LIBFUNC(strsavetofile) {
+			SIN_LIBRARYFUNCTIONS_DEFAULTS_AND_LIBFUNC(strsavetofile) {
 				SymbolTable& st = _vs.CurrentFrame().stable;
 				if (st.NumberOfArguments() > 1) {
 					FileOutputStream fout(st.Argument(0)->ToString());
@@ -65,7 +70,7 @@ namespace SIN {
 					_vs.AppendError("not enough arguments passed to strsavetofile(file,str)", "", 0u);
 			}
 			// typeof -----------------------------------------------------------
-			SIN_LIBRARYFUNCTIONS_LIBFUNC(typeof) {
+			SIN_LIBRARYFUNCTIONS_DEFAULTS_AND_LIBFUNC(typeof) {
 				SymbolTable& stable = _vs.CurrentFrame().stable;
 				if (stable.NumberOfArguments() > 0) {
 					char const* type_desc = 0x00;
@@ -107,15 +112,42 @@ namespace SIN {
 					_vs.AppendError("not enough arguments passed to typeof(obj)", "", 0u);
 			}
 			// input ------------------------------------------------------------
-			//SIN_LIBRARYFUNCTIONS_LIBFUNC(input);
+			//SIN_LIBRARYFUNCTIONS_DEFAULTS_AND_LIBFUNC(input);
 			// openfile ---------------------------------------------------------
-			//SIN_LIBRARYFUNCTIONS_LIBFUNC(openfile);
-			// closefile --------------------------------------------------------
-			//SIN_LIBRARYFUNCTIONS_LIBFUNC(closefile);
-			// writefile --------------------------------------------------------
-			//SIN_LIBRARYFUNCTIONS_LIBFUNC(writefile);
+			namespace {
+				struct file {
+					String const path;
+					BufferedOutputStream buf;
+					file(String const& _path): path(_path) { }
+					file(file const& _o): path(_o.path), buf(_o.buf) { }
+				};
+				struct filememcell: public MemoryCellNativeResource {
+					struct file file;
+					filememcell(String const& _path): file(_path) { }
+					filememcell(filememcell const& _o): file(_o.file) { }
+					filememcell* Clone(void) const { return SINEWCLASS(filememcell, (*this)); }
+					String const ToString(void) const { return file.path; }
+				}; // struct filememcell
+			} // namespace
+			SIN_LIBRARYFUNCTIONS_DEFAULTS_AND_LIBFUNC(fileopen) {
+				SymbolTable& stable = _vs.CurrentStable();
+				if (stable.NumberOfArguments() > 0) {
+					Types::Object& obj_inst = *SINEW(Types::Object);
+					MemoryCell* const arg0 = stable.Argument(0);
+					obj_inst.SetValue("file", SINEWCLASS(filememcell, (arg0->ToString())));
+					_vs.ReturnValueObject(&obj_inst);
+				}
+				else {
+					_vs.AppendError("not enough arguments passed to fileopen(filepath)", "", 0u);
+					_vs.ReturnValueNil();
+				}
+			}
+			// fileclose --------------------------------------------------------
+			//SIN_LIBRARYFUNCTIONS_DEFAULTS_AND_LIBFUNC(fileclose);
+			// filewrite --------------------------------------------------------
+			//SIN_LIBRARYFUNCTIONS_DEFAULTS_AND_LIBFUNC(filewrite);
 			// totalarguments ---------------------------------------------------
-			SIN_LIBRARYFUNCTIONS_LIBFUNC(totalarguments) {
+			SIN_LIBRARYFUNCTIONS_DEFAULTS_AND_LIBFUNC(totalarguments) {
 				_vs.ReturnValueNumber(_vs.Down().CurrentStable().NumberOfArguments());
 				_vs.Top();
 			}
@@ -131,28 +163,32 @@ namespace SIN {
 					Types::Object* obj;
 				}; // struct ArgumentToTableCopier
 			} // namespace
-			SIN_LIBRARYFUNCTIONS_LIBFUNC(arguments) {
+			SIN_LIBRARYFUNCTIONS_DEFAULTS_AND_LIBFUNC(arguments) {
 				if (_vs.InCall()) {
-					Types::Object* obj = SINEW(Types::Object);
-					_vs.CurrentStable().for_each_argument(ArgumentToTableCopier(obj));
-					_vs.ReturnValueObject(obj);
+					Types::Object* obj_inst_p = SINEW(Types::Object);
+					_vs.CurrentStable().for_each_argument(ArgumentToTableCopier(obj_inst_p));
+					_vs.ReturnValueObject(obj_inst_p);
 				}
 				else
 					_vs.AppendError("arguments() called not from within a function", "", 0u);
 			}
 			// objectcopy -------------------------------------------------------
-			SIN_LIBRARYFUNCTIONS_LIBFUNC(objectcopy) {
+			SIN_LIBRARYFUNCTIONS_DEFAULTS_AND_LIBFUNC(objectcopy) {
 				SymbolTable& stable = _vs.CurrentStable();
 				if (stable.NumberOfArguments() > 0) {
 					MemoryCell* obj = stable.Argument(0);
-					if (obj->Type() == MemoryCell::OBJECT_MCT)
+					if (obj->Type() == MemoryCell::OBJECT_MCT) {
 						_vs.ReturnValueObject(static_cast<MemoryCellObject*>(obj)->GetValue()->Clone());
+					}
 					else
 						_vs.AppendError("argument passed to objectcopy() is not an object", "", 0u);
 				}
 				else
 					_vs.AppendError("not enough arguments passed to objectcopy()", "", 0u);
 			}
+			// -------------------------------------------------------------------
+			// Utility classes
+			// -------------------------------------------------------------------
 		} // namespace Functions
 	} // namespace Library
 } // namespace SIN
