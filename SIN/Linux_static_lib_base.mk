@@ -28,7 +28,7 @@ PROJECTS = $(addprefix $(SIN_BASE_DIR)/, \
         Common)
 INCLUDE_DIRS = $(addsuffix /Include/,$(PROJECTS))
 LIBRARY_DIRS = $(addsuffix /Projects/Linux_GNU/,$(PROJECTS))
-SINLIBSNAMES = $(notdir $(abspath $(PROJECTS)))
+SINLIBSNAMES = $(foreach PROJ,$(PROJECTS),$(shell basename '$(shell ( cd $(PROJ) && pwd ) )' ) )
 LIBSNAMES = $(SINLIBSNAMES)
 LIBS = $(addprefix lib,$(addsuffix .a,$(LIBSNAMES)))
 
@@ -41,7 +41,7 @@ SRCS = $(wildcard ../../Src/*.cpp)
 OBJS = $(SRCS:.cpp=.o)
 DEPS = $(SRCS:.cpp=.d)
 
-LIBNAME = $(notdir $(abspath $(shell pwd)/../../))
+LIBNAME = $(shell basename '$(shell ( cd '$(shell pwd)'/../../ && pwd ) )' )
 TARGET_LIB = lib$(LIBNAME).a
 linux_static_lib_all : $(TARGET_LIB)
 
