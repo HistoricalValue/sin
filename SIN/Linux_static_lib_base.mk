@@ -19,12 +19,12 @@ PROJECTS = $(addprefix $(SIN_BASE_DIR)/, \
                 Run )) \
         Tests/SINTest \
         SINParser \
+        SINFunctionLibrary \
         SINAST \
         SINRuntime \
         SINLogging \
         SINCommon \
         SINAlloc \
-        SINFunctionLibrary \
         Common)
 INCLUDE_DIRS = $(addsuffix /Include/,$(PROJECTS))
 LIBRARY_DIRS = $(addsuffix /Projects/Linux_GNU/,$(PROJECTS))
