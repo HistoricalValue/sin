@@ -24,7 +24,10 @@ print("Type of g", typeof(g));
 //	a = 4;
 //	println(a);
 // -------------
-a = fileopen("sin_run_test.sin");
-println("The open file is: ", a);
+	filepath = ".\\..\\..\\..\\Tests\\SINRun_Test\\Resource\\sin_run_test.sin";
+	a = fileopen(filepath);
+	println("The open file is: ", a);
+// -------------
+	println("Contents: ", fileread(a));
 // -------------
 

@@ -5,6 +5,7 @@
 #include "SINFileOutputStream.h"
 #include "SINBufferedOutputStream.h"
 #include <new>
+#include <sstream>
 
 #define SIN_LIBRARYFUNCTIONS_LIBFUNC(FNAME) FNAME::return_type FNAME::operator ()(SIN_FUNCTIONLIBRARY_FUNC_ARGS) const
 #define SIN_LIBRARYFUNCTIONS_DEFAULTS(FNAME) void FNAME::Initialise(void) { } void FNAME::CleanUp(void) { }
@@ -127,6 +128,8 @@ namespace SIN {
 					filememcell(filememcell const& _o): file(_o.file) { }
 					filememcell* Clone(void) const { return SINEWCLASS(filememcell, (*this)); }
 					String const ToString(void) const { return file.path; }
+					id_t ID(void) const { return &id; }
+					static void id(void) { }
 				}; // struct filememcell
 			} // namespace
 			SIN_LIBRARYFUNCTIONS_DEFAULTS_AND_LIBFUNC(fileopen) {
@@ -146,6 +149,41 @@ namespace SIN {
 			//SIN_LIBRARYFUNCTIONS_DEFAULTS_AND_LIBFUNC(fileclose);
 			// filewrite --------------------------------------------------------
 			//SIN_LIBRARYFUNCTIONS_DEFAULTS_AND_LIBFUNC(filewrite);
+			// fileread ---------------------------------------------------------
+			SIN_LIBRARYFUNCTIONS_DEFAULTS_AND_LIBFUNC(fileread) {
+				SymbolTable& stable = _vs.CurrentStable();
+				if (stable.NumberOfArguments() > 0) {
+					MemoryCell* const arg0 = stable.Argument(0);
+					if (arg0->Type() == MemoryCell::OBJECT_MCT) {
+						Types::Object_t const obj = static_cast<MemoryCellObject*>(arg0)->GetValue();
+						filememcell* const fres = static_cast<filememcell*>(obj->GetValue("file"));
+						if (fres != 0x00) {
+							std::ifstream fin(fres->file.path.c_str());
+							if (fin) {
+								std::ostringstream imp;
+								fin.get(*imp.rdbuf(), '\0');
+								_vs.ReturnValueString(imp.str());
+							}
+							else {
+								_vs.AppendError(to_string("error while reading from file ") << fres->file.path, "", 0U);
+								_vs.ReturnValueNil();
+							}
+						}
+						else {
+							_vs.AppendError("no \"file\" element in file resource passed to fileread()", "", 0u);
+							_vs.ReturnValueNil();
+						}
+					}
+					else {
+						_vs.AppendError("invalid argument in fileread(file)", "", 0u);
+						_vs.ReturnValueNil();
+					}
+				}
+				else {
+					_vs.AppendError("not enough arguments passed to fileread(file)", "", 0u);
+					_vs.ReturnValueNil();
+				}
+			}
 			// totalarguments ---------------------------------------------------
 			SIN_LIBRARYFUNCTIONS_DEFAULTS_AND_LIBFUNC(totalarguments) {
 				_vs.ReturnValueNumber(_vs.Down().CurrentStable().NumberOfArguments());

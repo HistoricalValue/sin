@@ -166,6 +166,10 @@
 				RelativePath="..\..\Src\SINTreeEvaluationVisitor.cpp"
 				>
 			</File>
+			<File
+				RelativePath="..\..\Src\SINVirtualState.cpp"
+				>
+			</File>
 		</Filter>
 		<Filter
 			Name="Header Files"

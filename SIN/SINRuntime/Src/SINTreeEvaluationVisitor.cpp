@@ -467,6 +467,8 @@ namespace SIN{
 			memory = 0x00;
 			MemoryCell::Assign(memory, vm->ReturnValue());
 		}
+		// TODO restore environment
+		vm->PopFrame();
 	}
 
 	//-----------------------------------------------------------------

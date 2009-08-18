@@ -12,6 +12,10 @@ namespace SIN {
 
 		MemoryCellNativeResource(void);
 		virtual ~MemoryCellNativeResource(void);
+
+		typedef void (*id_t)(void);
+		virtual id_t ID(void) const = 0;
+
 	private:
 		// Unusable
 		inline MemoryCellNativeResource(MemoryCellNativeResource const&);

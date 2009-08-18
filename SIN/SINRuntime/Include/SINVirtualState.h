@@ -49,8 +49,7 @@ namespace SIN {
 			};
 
 			typedef std::list<Error> errors_t;
-			void AppendError(String const& _message, char const* _file, unsigned int _line)
-				{ errors.push_back(Error(_message, _file, _line)); }
+			void AppendError(String const& _message, char const* _file, unsigned int _line);
 			errors_t const& Errors(void) const { return errors; }
 			bool HasError(void) const { return errors.size() > 0; }
 
