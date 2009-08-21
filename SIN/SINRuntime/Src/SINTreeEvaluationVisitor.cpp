@@ -157,7 +157,7 @@ namespace SIN{
 
 		SINASSERT(tmpmemcell1->Type() == MemoryCell::NUMBER_MCT && tmpmemcell2->Type() == MemoryCell::NUMBER_MCT);
 		
-		memory = SINEWCLASS(MemoryCellNumber, ((int)(static_cast<MemoryCellNumber*>(tmpmemcell1)->GetValue()) % (int)(static_cast<MemoryCellNumber*>(tmpmemcell2)->GetValue()))); // TODO how to support modulo for Numnber type
+		memory = SINEWCLASS(MemoryCellNumber, ((int)(static_cast<MemoryCellNumber*>(tmpmemcell1)->GetValue()) % (int)(static_cast<MemoryCellNumber*>(tmpmemcell2)->GetValue())));
 	}
 
 	//-----------------------------------------------------------------
@@ -195,7 +195,7 @@ namespace SIN{
 
 		SINASSERT(tmpmemcell1->Type() == MemoryCell::NUMBER_MCT && tmpmemcell2->Type() == MemoryCell::NUMBER_MCT);
 		
-		memory = SINEWCLASS(MemoryCellBool, (static_cast<MemoryCellNumber*>(tmpmemcell1)->GetValue() > static_cast<MemoryCellNumber*>(tmpmemcell2)->GetValue()));
+		memory = SINEWCLASS(MemoryCellBool, (static_cast<MemoryCellNumber*>(tmpmemcell1)->GetValue()>static_cast<MemoryCellNumber*>(tmpmemcell2)->GetValue()));
 	}
 
 	//-----------------------------------------------------------------
@@ -214,7 +214,7 @@ namespace SIN{
 
 		SINASSERT(tmpmemcell1->Type() == MemoryCell::NUMBER_MCT && tmpmemcell2->Type() == MemoryCell::NUMBER_MCT);
 		
-		memory = SINEWCLASS(MemoryCellBool, (static_cast<MemoryCellNumber*>(tmpmemcell1)->GetValue() <= static_cast<MemoryCellNumber*>(tmpmemcell2)->GetValue()));
+		memory = SINEWCLASS(MemoryCellBool, (static_cast<MemoryCellNumber*>(tmpmemcell1)->GetValue()<=static_cast<MemoryCellNumber*>(tmpmemcell2)->GetValue()));
 	}
 
 	//-----------------------------------------------------------------
@@ -233,7 +233,7 @@ namespace SIN{
 
 		SINASSERT(tmpmemcell1->Type() == MemoryCell::NUMBER_MCT && tmpmemcell2->Type() == MemoryCell::NUMBER_MCT);
 		
-		memory = SINEWCLASS(MemoryCellBool, (static_cast<MemoryCellNumber*>(tmpmemcell1)->GetValue() >= static_cast<MemoryCellNumber*>(tmpmemcell2)->GetValue()));
+		memory = SINEWCLASS(MemoryCellBool, (static_cast<MemoryCellNumber*>(tmpmemcell1)->GetValue()>=static_cast<MemoryCellNumber*>(tmpmemcell2)->GetValue()));
 	}
 
 	//-----------------------------------------------------------------
@@ -252,7 +252,7 @@ namespace SIN{
 
 		SINASSERT( tmpmemcell1->Type() == tmpmemcell2->Type() );
 		
-		memory = SINEWCLASS(MemoryCellBool, (static_cast<MemoryCellNumber*>(tmpmemcell1)->GetValue() == static_cast<MemoryCellNumber*>(tmpmemcell2)->GetValue()));
+		memory = SINEWCLASS(MemoryCellBool, (static_cast<MemoryCellNumber*>(tmpmemcell1)->GetValue()==static_cast<MemoryCellNumber*>(tmpmemcell2)->GetValue()));
 	}
 
 	//-----------------------------------------------------------------
@@ -271,7 +271,7 @@ namespace SIN{
 
 		SINASSERT(tmpmemcell1->Type() == MemoryCell::NUMBER_MCT && tmpmemcell2->Type() == MemoryCell::NUMBER_MCT); //TODO Support comparison between other types than number
 		
-		memory = SINEWCLASS(MemoryCellBool, (static_cast<MemoryCellNumber*>(tmpmemcell1)->GetValue() != static_cast<MemoryCellNumber*>(tmpmemcell2)->GetValue()));
+		memory = SINEWCLASS(MemoryCellBool, (static_cast<MemoryCellNumber*>(tmpmemcell1)->GetValue()!=static_cast<MemoryCellNumber*>(tmpmemcell2)->GetValue()));
 	}
 
 	//-----------------------------------------------------------------
@@ -323,15 +323,27 @@ namespace SIN{
 	//-----------------------------------------------------------------
 
 	void TreeEvaluationVisitor::Visit(ForASTNode & _node){
-	
+
 		SINASSERT(_node.NumberOfChildren() == 4);
 
 //		SymbolTable *symTable = _node.LocalEnv();
 
-		ASTNode::iterator kid = _node.begin();
+		//ASTNode::iterator kid = _node.begin();
 
-		static_cast<ASTNode&>(*kid++).Accept(this);
-		//for(  )
+		//static_cast<ASTNode&>(*kid++).Accept(this);
+
+		//ASTNode& condition = static_cast<ASTNode&>(*kid++);
+		//condition.Accept(this);
+		//MemoryCellBool *tmpmemcell1 = static_cast<MemoryCellBool*>(memory);
+		//SINASSERT(tmpmemcell1->Type() == MemoryCell::BOOL_MCT);
+
+		//ASTNode& elist = static_cast<ASTNode&>(*kid++);
+
+		//while(tmpmemcell1->GetValue() == true){
+		//	static_cast<ASTNode&>(*kid).Accept(this);
+		//	elist.Accept(this);
+		//	condition.Accept
+		//}
 	}
 
 	//-----------------------------------------------------------------
@@ -513,13 +525,14 @@ namespace SIN{
 	void TreeEvaluationVisitor::Visit(LocalIDASTNode & _node){
 	
 		SymbolTable *localSymTable = _node.LocalEnv();
-		MemoryCell * memcell = localSymTable->LookupLocal(_node.Name());
+		lookuped = &localSymTable->LookupLocal(_node.Name());
 
-		if(memcell)
-			memory = memcell;
-		else{
-			memory = SINEW(MemoryCellNil);
+		if(static_cast<MemoryCell*>(*lookuped) == NULL){
+			localSymTable->SetLocal(_node.Name(), 0x00);
+			lookuped = &localSymTable->LookupLocal(_node.Name());
 		}
+
+		memory = *lookuped;
 	}
 
 	//-----------------------------------------------------------------
@@ -527,13 +540,14 @@ namespace SIN{
 	void TreeEvaluationVisitor::Visit(GlobalIDASTNode & _node){
 	
 		SymbolTable *globalSymTable = _node.GlobalEnv();
-		MemoryCell * memcell = globalSymTable->LookupLocal(_node.Name());
+		lookuped = &globalSymTable->LookupLocal(_node.Name());
 
-		if(memcell)
-			memory = memcell;
-		else{
-			memory = SINEW(MemoryCellNil);
+		if(static_cast<MemoryCell*>(*lookuped) == NULL){
+			globalSymTable->SetLocal(_node.Name(), 0x00);
+			lookuped = &globalSymTable->LookupLocal(_node.Name());
 		}
+
+		memory = *lookuped;
 	}
 
 	//-----------------------------------------------------------------
@@ -613,12 +627,11 @@ namespace SIN{
 		ASTNode::iterator kid = _node.begin();
 
 		static_cast<ASTNode&>(*kid).Accept(this);
-		MemoryCell *tmpmemcell1 = memory;
 
-		static_cast<MemoryCellBool*>(tmpmemcell1)->SetValue(!(static_cast<MemoryCellBool*>(tmpmemcell1)->GetValue()));
-		SINASSERT(tmpmemcell1->Type() == MemoryCell::BOOL_MCT);
+		SINASSERT(memory->Type() == MemoryCell::BOOL_MCT);
 
-		memory = tmpmemcell1;
+		memory = memory->Clone();
+		static_cast<MemoryCellBool*>(memory)->SetValue(!(static_cast<MemoryCellBool*>(memory)->GetValue()));
 	}
 
 	//-----------------------------------------------------------------
@@ -630,12 +643,11 @@ namespace SIN{
 		ASTNode::iterator kid = _node.begin();
 
 		static_cast<ASTNode&>(*kid).Accept(this);
-		MemoryCell *tmpmemcell1 = memory;
 
-		static_cast<MemoryCellNumber*>(tmpmemcell1)->SetValue(-static_cast<MemoryCellNumber*>(tmpmemcell1)->GetValue());
-		SINASSERT(tmpmemcell1->Type() == MemoryCell::NUMBER_MCT);
+		SINASSERT(memory->Type() == MemoryCell::NUMBER_MCT);
 
-		memory = tmpmemcell1;
+		memory = memory->Clone();
+		static_cast<MemoryCellNumber*>(memory)->SetValue(-static_cast<MemoryCellNumber*>(memory)->GetValue());
 	}
 
 	//-----------------------------------------------------------------
