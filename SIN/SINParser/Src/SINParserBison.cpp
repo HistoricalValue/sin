@@ -1898,7 +1898,7 @@ yyreduce:
 
   case 31:
 
-    {	SIN::ParserManage::Manage_Expression_UnparseMetaExpression((yyvsp[(2) - (2)].AST), &((yyval.AST)), &fabpa);		}
+    {	SIN::ParserManage::Manage_Expression_UnparseMetaExpression((yyvsp[(2) - (2)].AST), &((yyval.AST)), &fabpa);			}
     break;
 
   case 32:
@@ -2133,7 +2133,7 @@ yyreduce:
 
   case 78:
 
-    {}
+    {	SIN::ParserManage::Manage_ObjectList_ExpressionObjectLists((yyvsp[(1) - (2)].AST), (yyvsp[(2) - (2)].AST), &((yyval.AST)), &fabpa);					}
     break;
 
   case 79:
@@ -2148,7 +2148,7 @@ yyreduce:
 
   case 81:
 
-    {}
+    {	SIN::ParserManage::Manage_ObjectList_ExpressionObjectLists((yyvsp[(2) - (3)].AST), (yyvsp[(3) - (3)].AST), &((yyval.AST)), &fabpa);					}
     break;
 
   case 82:
@@ -2178,12 +2178,12 @@ yyreduce:
 
   case 87:
 
-    {}
+    {	SIN::ParserManage::Manage_FunctionDefinition_Function((yyvsp[(2) - (6)].stringV), (yyvsp[(4) - (6)].AST), (yyvsp[(6) - (6)].AST), &((yyval.AST)), &fabpa);	}
     break;
 
   case 88:
 
-    {}
+    {	SIN::ParserManage::Manage_FunctionDefinition_LamdaFunction((yyvsp[(3) - (5)].AST), (yyvsp[(5) - (5)].AST), &((yyval.AST)), &fabpa);	}
     break;
 
   case 89:
