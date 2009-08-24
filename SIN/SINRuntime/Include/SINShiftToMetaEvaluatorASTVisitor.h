@@ -12,7 +12,7 @@ namespace SIN {
 		ShiftToMetaEvaluatorASTVisitor(ShiftToMetaEvaluatorASTVisitor const&);
 		~ShiftToMetaEvaluatorASTVisitor(void);
 
-		SINASTVISITOR_VISIT_SIGNATURE(					);
+		//SINASTVISITOR_VISIT_SIGNATURE(					);
 		SINASTVISITOR_VISIT_SIGNATURE(Number			);
 		SINASTVISITOR_VISIT_SIGNATURE(String			);
 		SINASTVISITOR_VISIT_SIGNATURE(Nil				);
@@ -69,6 +69,10 @@ namespace SIN {
 		SINASTVISITOR_VISIT_SIGNATURE(MetaUnparse		);
 		SINASTVISITOR_VISIT_SIGNATURE(MetaParseString	);
 		SINASTVISITOR_VISIT_SIGNATURE(SinCode			);
+		SINASTVISITOR_VISIT_SIGNATURE(IndexedMember		);
+		SINASTVISITOR_VISIT_SIGNATURE(While				);
+		SINASTVISITOR_VISIT_SIGNATURE(Block				);
+		SINASTVISITOR_VISIT_SIGNATURE(Not				);
 	}; // class ShiftToMetaEvaluatorASTVisitor
 } // namespace SIN
 

@@ -21,7 +21,7 @@ namespace SIN{
 		MetaPreserveASTNode * PreserveASTNode() { return preserveNode; };
 		
 
-		SINASTVISITOR_VISIT_SIGNATURE(					) ;
+		//SINASTVISITOR_VISIT_SIGNATURE(					) ;
 		SINASTVISITOR_VISIT_SIGNATURE(Number			) ;
 		SINASTVISITOR_VISIT_SIGNATURE(String			) ;
 		SINASTVISITOR_VISIT_SIGNATURE(Nil				) ;
@@ -35,6 +35,7 @@ namespace SIN{
 		SINASTVISITOR_VISIT_SIGNATURE(Lt				) ;
 		SINASTVISITOR_VISIT_SIGNATURE(Gt				) ;
 		SINASTVISITOR_VISIT_SIGNATURE(Le				) ;
+		SINASTVISITOR_VISIT_SIGNATURE(Not				) ;
 		SINASTVISITOR_VISIT_SIGNATURE(Ge				) ;	
 		SINASTVISITOR_VISIT_SIGNATURE(Eq				) ;
 		SINASTVISITOR_VISIT_SIGNATURE(Ne				) ;
@@ -88,6 +89,9 @@ namespace SIN{
 		MetaPreserveASTNode	*	preserveNode;
 		Library::Library *		lib;
 		VM::VirtualState *		vm;
+		Types::Object_t			obj_imp; // as in "object-imp", not "object implementation"
+		void resetObjectImp(void);
+		void assignObjectImpToMemory(void);
 	};
 
 } // namespace SIN

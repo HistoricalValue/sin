@@ -31,8 +31,12 @@ namespace SIN {
 		MemoryCell(void) {}
 		virtual ~MemoryCell() {}
 
-		static void Assign(InstanceProxy<MemoryCell>& _to, InstanceProxy<MemoryCell> const& _from);
+		static void Assign(InstanceProxy<MemoryCell>& to, InstanceProxy<MemoryCell> const& from);
 		static void Assign(MemoryCell*& to, MemoryCell* from);
+		static void UnobtrusiveAssign(InstanceProxy<MemoryCell>& to, InstanceProxy<MemoryCell> const& from); // doesn't delete
+		static void UnobtrusiveAssign(MemoryCell*& to, MemoryCell* from);
+		static void SimpleAssign(InstanceProxy<MemoryCell>& to, InstanceProxy<MemoryCell> const& from); // doesn't clone
+		static void SimpleAssign(MemoryCell*& to, MemoryCell* from);
 	};
 
 }	//namespace sin

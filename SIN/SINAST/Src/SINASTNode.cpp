@@ -134,10 +134,7 @@ namespace SIN {
 
 	//---------------------------------------------------
 
-    void ASTNode::Accept(ASTVisitor *_v) {
-        SINASSERT(_v);
-        _v->Visit(*this);
-    }
+    void ASTNode::Accept(ASTVisitor *_v) { SINASSERT(!"Not accepting the general visitor"); }
 	
 	
 	//---------------------------------------------------
@@ -155,9 +152,7 @@ namespace SIN {
 
 	//---------------------------------------------------
 
-	ASTNode *ASTNode::Clone(void) const {
-		return SINEWCLASS(ASTNode, (*this));
-	}
+	ASTNode *ASTNode::Clone(void) const { SINASSERT(!"Not cloning generally"); return 0x00;}
 	
 
 	//---------------------------------------------------

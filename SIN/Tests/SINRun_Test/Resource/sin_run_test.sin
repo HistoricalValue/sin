@@ -1,18 +1,21 @@
-
 a = 5 + (2*3) - (4/2) + 3%2; // a = 10
-print(a);
+println("a = 10: ", a);
 b = "str";
-print(b);
+println("b = \"str\": ", b);
 c = true and (true or false); //Should be true
-print(c);
+println("c = true: ", c);
 d = nil;
-print(d);
+println("d = nil: ", d);
 e = (c == true) or (-a != 10);
-print(e);
+println("e = true: ", e);
 f = ++a > 10 or a++ >= 10 or --a < 10 or a-- <= 10;
-print(f);
+println("f = true: ", f);
 g = not f;
-print("Type of g", typeof(g));
+println("g = false: ", g);
+println("Type of g: ", typeof(g));
+// --- Objects
+a = [ 12, antzuja: 42 ];
+println(a);
 
 //meta_testing = .<x = "a" + "b">.;
 
@@ -24,10 +27,10 @@ print("Type of g", typeof(g));
 //	a = 4;
 //	println(a);
 // -------------
-	filepath = ".\\..\\..\\..\\Tests\\SINRun_Test\\Resource\\sin_run_test.sin";
-	a = fileopen(filepath);
-	println("The open file is: ", a);
+//	filepath = ".\\..\\..\\..\\Tests\\SINRun_Test\\Resource\\sin_run_test.sin";
+//	a = fileopen(filepath);
+//	println("The open file is: ", a);
 // -------------
-	println("Contents: ", fileread(a));
+//	println("Contents: ", fileread(a));
 // -------------
 

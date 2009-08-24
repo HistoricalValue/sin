@@ -15,7 +15,7 @@
 
 #include "SINAlloc.h"
 #include "SINObject.h"
-#include "SINASTNode.h"
+#include "SINASTNodes.h"
 #include "SINFunction.h"
 #include "SINMemoryCellAST.h"
 #include "SINMemoryCellBool.h"
@@ -52,7 +52,7 @@ namespace SIN {
 			//------------------------------------------------------------------
 
 			void TestingSinObjectTest::TestLogic(void) {
-				ASTNode	node("Testing");
+				BlockASTNode	node("Testing");
 				Types::Object *	obj1 = SINEW(Types::Object);
 				Types::Object *	obj2 = SINEW(Types::Object);
 				Types::Object *	obj3 = SINEW(Types::Object);
