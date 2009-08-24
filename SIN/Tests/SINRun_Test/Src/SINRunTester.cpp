@@ -60,8 +60,9 @@ namespace SIN {
 			};
 
 			static void __print_handler(SIN::String const& _msg) {
-				SIN::LoggerManager::StreamLogger oot("STDOUT: ", SIN::Logging::Record::FINEST, SIN::STDOUT, SIN::Logging::RecordPrinter());
-				oot.Notice(_msg);
+				//SIN::LoggerManager::StreamLogger oot("STDOUT: ", SIN::Logging::Record::FINEST, SIN::STDOUT, SIN::Logging::RecordPrinter());
+				//oot.Notice(_msg);
+				static_cast<OutputStream&>(STDOUT) << _msg;
 			}
 
 

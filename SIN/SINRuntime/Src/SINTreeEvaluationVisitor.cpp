@@ -13,6 +13,32 @@
 #include "SINPreserveASTEvaluatorVisitor.h"
 
 namespace SIN{
+	//-----------------------------------------------------------------
+	// Privates (hihihi)
+	//-----------------------------------------------------------------
+	void TreeEvaluationVisitor::resetObjectImp(void) {
+		obj_imp = SINEW(Types::Object);
+	}
+
+	void TreeEvaluationVisitor::assignObjectImpToMemory(void) {
+		MemoryCell::SimpleAssign(memory, SINEWCLASS(MemoryCellObject, (obj_imp)));
+	}
+	//-----------------------------------------------------------------
+	namespace {
+		class AcceptanceForwardationOperator {
+		public:
+			typedef TreeEvaluationVisitor* acceptable_t;
+			typedef StrictTreeNode& acceptor1_t;
+			typedef ASTNode& acceptor2_t;
+			AcceptanceForwardationOperator(acceptable_t const& _acceptable): acceptable(_acceptable) { }
+			bool operator ()(acceptor1_t _acceptor) const {
+				static_cast<acceptor2_t>(_acceptor).Accept(acceptable);
+				return true;
+			}
+		private:
+			acceptable_t const& acceptable;
+		}; // class Acceptor
+	} // namespace
 
 	//-----------------------------------------------------------------
 
@@ -28,7 +54,7 @@ namespace SIN{
 
 	//-----------------------------------------------------------------
 
-	void TreeEvaluationVisitor::Visit(ASTNode & _node){}
+//	void TreeEvaluationVisitor::Visit(ASTNode & _node) { SINASSERT(!"Cannot be here any more"); }
 
 	//-----------------------------------------------------------------
 
@@ -468,7 +494,7 @@ namespace SIN{
 			MemoryCell::Assign(memory, vm->ReturnValue());
 		}
 		// TODO restore environment
-		vm->PopFrame();
+		vm->PopFrame(); 
 	}
 
 	//-----------------------------------------------------------------
@@ -640,27 +666,45 @@ namespace SIN{
 
 	//-----------------------------------------------------------------
 
-	void TreeEvaluationVisitor::Visit(ObjectASTNode & _node){}
+	void TreeEvaluationVisitor::Visit(ObjectASTNode & _node) {
+		resetObjectImp();
+		_node.for_each(AcceptanceForwardationOperator(this));
+		assignObjectImpToMemory();
+	}
 
 	//-----------------------------------------------------------------
 
-	void TreeEvaluationVisitor::Visit(EmptyObjectASTNode & _node){}
+	void TreeEvaluationVisitor::Visit(EmptyObjectASTNode & _node){
+		resetObjectImp();
+		assignObjectImpToMemory();
+	}
 
 	//-----------------------------------------------------------------
 
-	void TreeEvaluationVisitor::Visit(UnindexedMemberASTNode & _node){}
+	void TreeEvaluationVisitor::Visit(UnindexedMemberASTNode & _node) {
+		static_cast<ASTNode&>(*_node.begin()).Accept(this);
+		obj_imp->SetValue(memory);
+	}
 
 	//-----------------------------------------------------------------
 
-	void TreeEvaluationVisitor::Visit(IndexedMemberASTNode & _node){}
+	void TreeEvaluationVisitor::Visit(IndexedMemberASTNode & _node) {
+		ASTNode::iterator kite(_node.begin());
+		IDASTNode const& id = static_cast<IDASTNode const&>(*kite++);
+		static_cast<ASTNode&>(*kite++).Accept(this);
+		obj_imp->SetValue(id.Name(), memory);
+		SINASSERT(kite == _node.end());
+	}
 
 	//-----------------------------------------------------------------
 
-	void TreeEvaluationVisitor::Visit(ObjectMemberASTNode & _node){}
+	void TreeEvaluationVisitor::Visit(ObjectMemberASTNode & _node) {
+	}
 
 	//-----------------------------------------------------------------
 
-	void TreeEvaluationVisitor::Visit(ObjectIndexASTNode & _node){}
+	void TreeEvaluationVisitor::Visit(ObjectIndexASTNode & _node) {
+	}
 
 	//-----------------------------------------------------------------
 
@@ -704,4 +748,8 @@ namespace SIN{
 		for(ASTNode::iterator kid = _node.begin(); kid != _node.end(); ++kid)
 			static_cast<ASTNode&>(*kid).Accept(this);
 	}
+
+	//-----------------------------------------------------------------
+
+	void TreeEvaluationVisitor::Visit(NotASTNode & _node){}
 } // namespace SIN

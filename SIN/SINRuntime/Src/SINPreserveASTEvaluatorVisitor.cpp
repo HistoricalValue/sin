@@ -20,7 +20,7 @@ namespace SIN{
 
 	//-----------------------------------------------------------------
 
-	void PreserveASTEvaluatorVisitor::Visit(ASTNode & _node) {}
+	//void PreserveASTEvaluatorVisitor::Visit(ASTNode & _node) {}
 
 
 	//-----------------------------------------------------------------
@@ -368,7 +368,9 @@ namespace SIN{
 	void PreserveASTEvaluatorVisitor::Visit(SinCodeASTNode & _node)
 		{ VISIT_NODE_WITH_MANY_CHILDREN();	}
 
+	//-----------------------------------------------------------------
 
-
+	void PreserveASTEvaluatorVisitor::Visit(NotASTNode & _node)
+		{ VISIT_NODE_WITH_ONE_CHILD();	}
 
 } // namespace SIN

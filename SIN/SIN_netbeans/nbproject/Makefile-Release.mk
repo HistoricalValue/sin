@@ -49,6 +49,7 @@ OBJECTFILES= \
 	${OBJECTDIR}/_ext/_DOTDOT/Tests/SINFunctionLibrary_Test/Src/SINFunctionLibraryTester.o \
 	${OBJECTDIR}/_ext/_DOTDOT/SINAST/Src/SINTreeNode.o \
 	${OBJECTDIR}/_ext/_DOTDOT/SINCommon/Src/SINNamer.o \
+	${OBJECTDIR}/_ext/_DOTDOT/SINRuntime/Src/SINVirtualState.o \
 	${OBJECTDIR}/_ext/_DOTDOT/SINCommon/Src/SINMemoryCellAST.o \
 	${OBJECTDIR}/_ext/_DOTDOT/Tests/SINAST_Test/Src/SINAST_Tester_main.o \
 	${OBJECTDIR}/_ext/_DOTDOT/Tests/SINTest/Src/SINTest.o \
@@ -206,6 +207,11 @@ ${OBJECTDIR}/_ext/_DOTDOT/SINCommon/Src/SINNamer.o: nbproject/Makefile-${CND_CON
 	${MKDIR} -p ${OBJECTDIR}/_ext/_DOTDOT/SINCommon/Src
 	${RM} $@.d
 	$(COMPILE.cc) -O2 -I../Common/Include -I../SINAlloc/Include -I../SINAST/Include -I../SINCommon/Include -I../SINFunctionLibrary/Include -I../SINLogging/Include -I../SINmain/Include -I../SINParser/Include -I../SINRuntime/Include -I../Tests/SINAlloc_Test/Include -I../Tests/SINAST_Test/Include -I../Tests/SINCommon_Test/Include -I../Tests/SINFunctionLibrary_Test/Include -I../Tests/SINLogging_Test/Include -I../Tests/SINObject_Test/Include -I../Tests/SINParser_Test/Include -I../Tests/SINRun_Test/Include -I../Tests/SINSymbolTable_Test/Include -I../Tests/SINTest/Include -MMD -MP -MF $@.d -o ${OBJECTDIR}/_ext/_DOTDOT/SINCommon/Src/SINNamer.o ../SINCommon/Src/SINNamer.cpp
+
+${OBJECTDIR}/_ext/_DOTDOT/SINRuntime/Src/SINVirtualState.o: nbproject/Makefile-${CND_CONF}.mk ../SINRuntime/Src/SINVirtualState.cpp 
+	${MKDIR} -p ${OBJECTDIR}/_ext/_DOTDOT/SINRuntime/Src
+	${RM} $@.d
+	$(COMPILE.cc) -O2 -I../Common/Include -I../SINAlloc/Include -I../SINAST/Include -I../SINCommon/Include -I../SINFunctionLibrary/Include -I../SINLogging/Include -I../SINmain/Include -I../SINParser/Include -I../SINRuntime/Include -I../Tests/SINAlloc_Test/Include -I../Tests/SINAST_Test/Include -I../Tests/SINCommon_Test/Include -I../Tests/SINFunctionLibrary_Test/Include -I../Tests/SINLogging_Test/Include -I../Tests/SINObject_Test/Include -I../Tests/SINParser_Test/Include -I../Tests/SINRun_Test/Include -I../Tests/SINSymbolTable_Test/Include -I../Tests/SINTest/Include -MMD -MP -MF $@.d -o ${OBJECTDIR}/_ext/_DOTDOT/SINRuntime/Src/SINVirtualState.o ../SINRuntime/Src/SINVirtualState.cpp
 
 ${OBJECTDIR}/_ext/_DOTDOT/SINCommon/Src/SINMemoryCellAST.o: nbproject/Makefile-${CND_CONF}.mk ../SINCommon/Src/SINMemoryCellAST.cpp 
 	${MKDIR} -p ${OBJECTDIR}/_ext/_DOTDOT/SINCommon/Src

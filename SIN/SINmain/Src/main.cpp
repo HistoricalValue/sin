@@ -54,7 +54,8 @@ void quick_test(void) {
 //	FOREACH(lis)
 //		out << *ITER(lis);
 //	out << (SIN::to_string("This is") << " horrible " << (4));
-__print_handler("hi");
+
+	//__print_handler("hi");
 
 	SIN::VM::VirtualState vs;
 	vs.PushFrame(0x00);
@@ -100,15 +101,15 @@ int main(int argc, char *argv[]) {
 
 ///// MainTestCollection ////////////////////
 bool MainTestCollection::RunAll(void) {
-	emulateAllocTest();
+	//emulateAllocTest();
 	//SIN::Tests::AST::test(&test_factory);
-	SIN::Tests::Common::test(&test_factory);
-	SIN::Tests::Logging::test(&test_factory);
-	SIN::Tests::Parser::test(&test_factory);
-	SIN::Tests::ST::test(&test_factory);
+	//SIN::Tests::Common::test(&test_factory);
+	//SIN::Tests::Logging::test(&test_factory);
+	//SIN::Tests::Parser::test(&test_factory);
+	//SIN::Tests::ST::test(&test_factory);
 	SIN::Tests::Run::test(&test_factory);
-	SIN::Tests::OBJ::test(&test_factory);
-	SIN::Tests::FunctionLibrary::test(&test_factory);
+	//SIN::Tests::OBJ::test(&test_factory);
+	//SIN::Tests::FunctionLibrary::test(&test_factory);
 	return true;
 }
 

@@ -53,8 +53,10 @@ namespace SIN {
 			iterator_base<type> const operator --(void) { p = p->prev_bro; return *this; }
 			iterator_base<type> const operator ++(int)  { ptr const _p = p; ++*this; return iterator_base<type>(_p); }
 			iterator_base<type> const operator --(int)  { ptr const _p = p; --*this; return iterator_base<type>(_p); }
-			bool operator ==(iterator_base<type> const& _o) const { return p == _o.p; }
-			bool operator !=(iterator_base<type> const& _o) const { return p != _o.p; }
+			bool operator ==(iterator_base<const type> const& _o) const { return p == &*_o; }
+			bool operator !=(iterator_base<const type> const& _o) const { return p != &*_o; }
+			// iterator to const_iterator conversion
+			operator iterator_base<const type> const(void) const { return iterator_base<const type>(p); }
 		private:
 			ptr p;
 		};
@@ -72,10 +74,17 @@ namespace SIN {
 
 
 		// functor returns false to stop iterating
-		template <typename _FunctorType> inline _FunctorType for_each(_FunctorType _f) {
+		template <typename _FunctorType> inline _FunctorType for_each(_FunctorType _f) const {
 			const_iterator const end_ = end();
 			bool keep_iterating = true;
 			for (const_iterator ite = begin(); keep_iterating && ite != end_; ++ite)
+				keep_iterating = _f(*ite);
+			return _f;
+		}
+		template <typename _FunctorType> inline _FunctorType for_each(_FunctorType _f) {
+			const_iterator const end_ = end();
+			bool keep_iterating = true;
+			for (iterator ite = begin(); keep_iterating && ite != end_; ++ite)
 				keep_iterating = _f(*ite);
 			return _f;
 		}

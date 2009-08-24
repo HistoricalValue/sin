@@ -164,6 +164,7 @@
           <itemPath>../SINRuntime/Src/SINPreserveASTEvaluatorVisitor.cpp</itemPath>
           <itemPath>../SINRuntime/Src/SINShiftToMetaEvaluatorASTVisitor.cpp</itemPath>
           <itemPath>../SINRuntime/Src/SINTreeEvaluationVisitor.cpp</itemPath>
+          <itemPath>../SINRuntime/Src/SINVirtualState.cpp</itemPath>
         </logicalFolder>
       </logicalFolder>
       <logicalFolder name="Tests" displayName="Tests" projectFiles="true">
