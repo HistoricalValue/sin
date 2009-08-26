@@ -54,7 +54,7 @@ namespace SIN {
 	
 	//-----------------------------------------------------------------
 	// in given scope
-	SymbolTable::elem_t& SymbolTable::LookupByIndex(const scope_id&, const unsigned int index) {
+	SymbolTable::elem_t& SymbolTable::LookupByIndex(const scope_id& , const unsigned int index) {
 		SINASSERT(!"not implemented");
 		RETURN_VALUE(currScope, Argument, index);
 	}
@@ -86,8 +86,8 @@ namespace SIN {
 
 	//-----------------------------------------------------------------
 
-//	const scope_id SymbolTable::CurrentScope(void) const 
-//		{ return currScope;	}
+	const SymbolTable::scope_id SymbolTable::CurrentScope(void) const 
+		{ return currScope;	}
 
 
 	
