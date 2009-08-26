@@ -29,8 +29,14 @@ namespace SIN {
 	//-----------------------------------------------------------------
 	// in current and smaller scopes
 	SymbolTable::elem_t& SymbolTable::Lookup(const name_t& name) {
-		SINASSERT(!"not implemented");
-		RETURN_VALUE(currScope, LookupArgument, name);
+		ASSERT_CURRENT_SCOPE();
+		
+		elem_t& element = static_cast<elem_t>(0x00);
+		for(scope_id scope = currScope; scope >= 0; --scope)
+			if(element = Lookup(scope, name))
+				return element;
+		
+		return element;
 	}
 
 	
@@ -105,6 +111,12 @@ namespace SIN {
 
 	
 
+
+
+
+
+	//-----------------------------------------------------------------
+
 	struct CallableToEntryHolderAdaptor: public VariableHolder::Callable {
 		typedef VariableHolder::Entry entry_t;
 		typedef SymbolTable::EntryHandler handler_t;
@@ -121,23 +133,24 @@ namespace SIN {
 			{ return const_entry_handler(_entry.name, _entry.value); }
 	}; // struct CallableToEntryHolderAdaptor
 
+
+
+
+
+#define FOR_EACH_SYMBOL()	ASSERT_CURRENT_SCOPE();													\
+							table[currScope].for_each_argument(CallableToEntryHolderAdaptor(eh));	\
+							return eh
+
 	//-----------------------------------------------------------------
 	// in current scope
-	SymbolTable::EntryHandler& SymbolTable::for_each_symbol(SymbolTable::EntryHandler& eh) const {
-		// TODO koutsop tidy up -- add your asserts and stuff
-		CallableToEntryHolderAdaptor ceac(eh);
-		table[CurrentScope()].for_each_argument(ceac);
-		return eh;
-	}
+	SymbolTable::EntryHandler& SymbolTable::for_each_symbol(SymbolTable::EntryHandler& eh) const 
+		{	FOR_EACH_SYMBOL();	}
 
 	
 
 	//-----------------------------------------------------------------
 	// in current scope
-	const SymbolTable::EntryHandler& SymbolTable::for_each_symbol(const SymbolTable::EntryHandler& eh) const {
-		// TODO koutsop tidy up -- add your asserts and stuff
-		table[CurrentScope()].for_each_argument(CallableToEntryHolderAdaptor(eh));
-		return eh;
-	}
+	const SymbolTable::EntryHandler& SymbolTable::for_each_symbol(const SymbolTable::EntryHandler& eh) const 
+		{	FOR_EACH_SYMBOL();	}
 
 }
