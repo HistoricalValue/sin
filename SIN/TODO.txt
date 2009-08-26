@@ -21,7 +21,6 @@
 		}
 
 *[034] Change virtual state to push and restore environment
-*[035] Add Environment class
 *[036] Refactor Symbol Table (koutsop knows how)
 *[037] Add scopes to parsing (koutsop only)
 *[038] Remove symbol table from ASTBlock
@@ -133,3 +132,5 @@
   [ rudolf | done]
 *[038] Remove VirtualState from inside Library class
   [ rudolf | done]
+*[035] Add Environment class
+  [ rudolf@2009-08-25/23:28 | done]
