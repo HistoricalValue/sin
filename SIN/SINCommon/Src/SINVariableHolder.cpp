@@ -12,7 +12,7 @@
 #define SIN_SYMBOLTABLE_LOOKUP(WHERE)												\
 		names_t::iterator result = DATA->WHERE.find(_name);							\
 		SINASSERT(static_cast<MemoryCell*>(DATA->not_found) == 0x00);				\
-		return result != DATA->names.end() ? result->second : DATA->not_found;
+		return result != DATA->WHERE.end() ? result->second : DATA->not_found;
 
 namespace SIN {
 

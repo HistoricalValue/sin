@@ -3,7 +3,7 @@
 #include "SINAssert.h"
 
 
-#define ASSERT_CURRENT_SCOPE()							SINASSERT(currScope < table.size())
+#define ASSERT_CURRENT_SCOPE()							SINASSERT(currScope < table.size()); SINASSERT(currScope >= 0)
 #define ASSERT_GIVEN_SCOPE()							SINASSERT(scope < table.size())
 
 #define ASSERT_SCOPE(SCOPE)								SINASSERT(SCOPE < table.size())
@@ -31,12 +31,13 @@ namespace SIN {
 	SymbolTable::elem_t& SymbolTable::Lookup(const name_t& name) {
 		ASSERT_CURRENT_SCOPE();
 		
-		elem_t& element = static_cast<elem_t>(0x00);
-		for(scope_id scope = currScope; scope >= 0; --scope)
-			if(element = Lookup(scope, name))
-				return element;
-		
-		return element;
+		elem_t* element_p = 0x00;
+		for(scope_id scope = currScope; scope > 0; --scope)
+			if(static_cast<MemoryCell*>(*(element_p = &Lookup(scope, name))) != static_cast<MemoryCell*>(0x00))
+				return *element_p;
+
+		// do once more for scope 0
+		return Lookup(0, name);
 	}
 
 	
