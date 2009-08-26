@@ -8,12 +8,9 @@
 
 #define ASSERT_SCOPE(SCOPE)						SINASSERT(SCOPE < table.size())
 
-#define CALL(SCOPE, FUNCTION_NAME, ARGUMENT)	if(true) {									\
-													ASSERT_SCOPE(SCOPE);					\
-													table[SCOPE].FUNCTION_NAME(ARGUMENT);	\
-												}											\
-												else
-
+#define RETURN_VALUE(SCOPE, FUNCTION_NAME, ARGUMENT)	ASSERT_SCOPE(SCOPE);						\
+														return table[SCOPE].FUNCTION_NAME(ARGUMENT)
+												
 namespace SIN {
 
 
@@ -33,41 +30,33 @@ namespace SIN {
 	// in current and smaller scopes
 	SymbolTable::elem_t& SymbolTable::Lookup(const name_t& name) {
 		SINASSERT(!"not implemented");
-		ASSERT_CURRENT_SCOPE();
-		return table[currScope].LookupArgument(name);
+		RETURN_VALUE(currScope, LookupArgument, name);
 	}
 
 	
 	//-----------------------------------------------------------------
 	// in given scope
-	SymbolTable::elem_t& SymbolTable::Lookup(const scope_id& scope, const name_t& name) {
-		//return CALL(scope, LookupArgument, name);
-		ASSERT_GIVEN_SCOPE();
-		return table[scope].LookupArgument(name);
-	}
+	SymbolTable::elem_t& SymbolTable::Lookup(const scope_id& scope, const name_t& name) 
+		{	RETURN_VALUE(scope, LookupArgument, name);	}
 	
 
 	//-----------------------------------------------------------------
 	// in current scope
-	SymbolTable::elem_t& SymbolTable::LookupOnlyInCurrentScope(const name_t& name) {
-		ASSERT_CURRENT_SCOPE();
-		return table[currScope].LookupArgument(name);
-	}
-	
-	
+	SymbolTable::elem_t& SymbolTable::LookupOnlyInCurrentScope(const name_t& name) 
+		{	RETURN_VALUE(currScope, LookupArgument, name);	}
+
+
 	//-----------------------------------------------------------------
 	// in current scope
-	SymbolTable::elem_t& SymbolTable::LookupByIndex(const unsigned int index) {
-		ASSERT_CURRENT_SCOPE();
-		return table[currScope].Argument(index);
-	}
+	SymbolTable::elem_t& SymbolTable::LookupByIndex(const unsigned int index) 
+		{	RETURN_VALUE(currScope, Argument, index);	}
 	
 	
 	//-----------------------------------------------------------------
 	// in given scope
 	SymbolTable::elem_t& SymbolTable::LookupByIndex(const scope_id&, const unsigned int index) {
 		SINASSERT(!"not implemented");
-		return table[currScope].Argument(index);
+		RETURN_VALUE(currScope, Argument, index);
 	}
 
 
