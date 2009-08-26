@@ -21,13 +21,10 @@ namespace SIN {
 		
 
 		void Insert(Type<name_t>::const_ref, Type<elem_t>::const_ref);
-		void Insert(Type<elem_t>::const_ref _elem);// { AppendArgument(argument_namer++, _elem); }
 
 
 		void IncreaseScope(void);
 		void DecreaseScope(void);
-
-	private:
 	};
 
 }	//namespace SIN
