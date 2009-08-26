@@ -16,9 +16,9 @@ namespace SIN {
 		namespace Functions {
 			// print -----------------------------------------------------------
 			namespace {
-				struct ArgumentPrinter: public SymbolTable::Callable {
-					virtual bool operator ()(SymbolTable::Entry const& _entry) const {
-						vs.Print(_entry.value->ToString());
+				struct ArgumentPrinter: public SymbolTable::EntryHandler {
+					virtual bool operator ()(SymbolTable::name_t const& _name, SymbolTable::elem_t const& _value) const {
+						vs.Print(_value->ToString());
 						return true;
 					}
 					ArgumentPrinter(VM::VirtualState& _vs): vs(_vs) { }
@@ -27,30 +27,30 @@ namespace SIN {
 				};
 			} // namespace
 			SIN_LIBRARYFUNCTIONS_DEFAULTS_AND_LIBFUNC(print) {
-				_vs.CurrentStable().for_each_argument(ArgumentPrinter(_vs));
+				_vs.CurrentStable().for_each_symbol(ArgumentPrinter(_vs));
 				_vs.ReturnValueNil();
 			}
 			// println ---------------------------------------------------------
 			SIN_LIBRARYFUNCTIONS_DEFAULTS_AND_LIBFUNC(println) {
-				_vs.CurrentStable().for_each_argument(ArgumentPrinter(_vs));
+				_vs.CurrentStable().for_each_symbol(ArgumentPrinter(_vs));
 				MemoryCellString newline_inst("\n");
 				InstanceProxy<MemoryCell> newline(&newline_inst);
-				(ArgumentPrinter(_vs))(SymbolTable::Entry("newline", newline));
+				(ArgumentPrinter(_vs))("newline", newline);
 				_vs.ReturnValueNil();
 			}
 			// tostring ---------------------------------------------------------
 			SIN_LIBRARYFUNCTIONS_DEFAULTS_AND_LIBFUNC(tostring) {
 				SymbolTable& st = _vs.CurrentStable();
-				if (st.NumberOfArguments() > 0)
-					_vs.ReturnValueString(st.Argument(0)->ToString());
+				if (st.NumberOfSymbols() > 0)
+					_vs.ReturnValueString(st.LookupByIndex(0)->ToString());
 				else
 					_vs.AppendError("not enough arguments passed to tostring(obj)", "", 0u);
 			}
 			// strtonum ---------------------------------------------------------
 			SIN_LIBRARYFUNCTIONS_DEFAULTS_AND_LIBFUNC(strtonum) {
 				SymbolTable& st = _vs.CurrentStable();
-				if (st.NumberOfArguments() > 0) {
-					double const num = strtod(st.Argument(0)->ToString().c_str(), NULL);
+				if (st.NumberOfSymbols() > 0) {
+					double const num = strtod(st.LookupByIndex(0)->ToString().c_str(), NULL);
 					_vs.ReturnValueNumber(num);
 				}
 				else
@@ -59,9 +59,9 @@ namespace SIN {
 			// strsavetofile ----------------------------------------------------
 			SIN_LIBRARYFUNCTIONS_DEFAULTS_AND_LIBFUNC(strsavetofile) {
 				SymbolTable& st = _vs.CurrentFrame().stable;
-				if (st.NumberOfArguments() > 1) {
-					FileOutputStream fout(st.Argument(0)->ToString());
-					String const str(st.Argument(1)->ToString());
+				if (st.NumberOfSymbols() > 1) {
+					FileOutputStream fout(st.LookupByIndex(0)->ToString());
+					String const str(st.LookupByIndex(1)->ToString());
 					char const* const c_str = str.c_str();
 					size_t const len = strlen(c_str);
 					fout.write(c_str, len);
@@ -73,9 +73,9 @@ namespace SIN {
 			// typeof -----------------------------------------------------------
 			SIN_LIBRARYFUNCTIONS_DEFAULTS_AND_LIBFUNC(typeof) {
 				SymbolTable& stable = _vs.CurrentFrame().stable;
-				if (stable.NumberOfArguments() > 0) {
+				if (stable.NumberOfSymbols() > 0) {
 					char const* type_desc = 0x00;
-					switch (stable.Argument(0)->Type()) {
+					switch (stable.LookupByIndex(0)->Type()) {
 						case MemoryCell::AST_MCT:
 							type_desc = "metacode";
 							break;
@@ -134,9 +134,9 @@ namespace SIN {
 			} // namespace
 			SIN_LIBRARYFUNCTIONS_DEFAULTS_AND_LIBFUNC(fileopen) {
 				SymbolTable& stable = _vs.CurrentStable();
-				if (stable.NumberOfArguments() > 0) {
+				if (stable.NumberOfSymbols() > 0) {
 					Types::Object& obj_inst = *SINEW(Types::Object);
-					MemoryCell* const arg0 = stable.Argument(0);
+					MemoryCell* const arg0 = stable.LookupByIndex(0);
 					obj_inst.SetValue("file", SINEWCLASS(filememcell, (arg0->ToString())));
 					_vs.ReturnValueObject(&obj_inst);
 				}
@@ -152,8 +152,8 @@ namespace SIN {
 			// fileread ---------------------------------------------------------
 			SIN_LIBRARYFUNCTIONS_DEFAULTS_AND_LIBFUNC(fileread) {
 				SymbolTable& stable = _vs.CurrentStable();
-				if (stable.NumberOfArguments() > 0) {
-					MemoryCell* const arg0 = stable.Argument(0);
+				if (stable.NumberOfSymbols() > 0) {
+					MemoryCell* const arg0 = stable.LookupByIndex(0);
 					if (arg0->Type() == MemoryCell::OBJECT_MCT) {
 						Types::Object_t const obj = static_cast<MemoryCellObject*>(arg0)->GetValue();
 						filememcell* const fres = static_cast<filememcell*>(obj->GetValue("file"));
@@ -186,15 +186,15 @@ namespace SIN {
 			}
 			// totalarguments ---------------------------------------------------
 			SIN_LIBRARYFUNCTIONS_DEFAULTS_AND_LIBFUNC(totalarguments) {
-				_vs.ReturnValueNumber(_vs.Down().CurrentStable().NumberOfArguments());
+				_vs.ReturnValueNumber(_vs.Down().CurrentStable().NumberOfSymbols());
 				_vs.Top();
 			}
 			// arguments --------------------------------------------------------
 			namespace {
-				struct ArgumentToTableCopier: public SymbolTable::Callable {
+				struct ArgumentToTableCopier: public SymbolTable::EntryHandler {
 					ArgumentToTableCopier(Types::Object* _obj): obj(_obj) { }
-					virtual bool operator ()(SymbolTable::Entry const& _entry) const {
-						obj->SetValue(_entry.name, _entry.value->Clone());
+					virtual bool operator ()(SymbolTable::name_t const& _name, SymbolTable::elem_t const& _value) const {
+						obj->SetValue(_name, _value->Clone());
 						return true;
 					}
 				private:
@@ -204,7 +204,7 @@ namespace SIN {
 			SIN_LIBRARYFUNCTIONS_DEFAULTS_AND_LIBFUNC(arguments) {
 				if (_vs.InCall()) {
 					Types::Object* obj_inst_p = SINEW(Types::Object);
-					_vs.CurrentStable().for_each_argument(ArgumentToTableCopier(obj_inst_p));
+					_vs.CurrentStable().for_each_symbol(ArgumentToTableCopier(obj_inst_p));
 					_vs.ReturnValueObject(obj_inst_p);
 				}
 				else
@@ -213,8 +213,8 @@ namespace SIN {
 			// objectcopy -------------------------------------------------------
 			SIN_LIBRARYFUNCTIONS_DEFAULTS_AND_LIBFUNC(objectcopy) {
 				SymbolTable& stable = _vs.CurrentStable();
-				if (stable.NumberOfArguments() > 0) {
-					MemoryCell* obj = stable.Argument(0);
+				if (stable.NumberOfSymbols() > 0) {
+					MemoryCell* obj = stable.LookupByIndex(0);
 					if (obj->Type() == MemoryCell::OBJECT_MCT) {
 						_vs.ReturnValueObject(static_cast<MemoryCellObject*>(obj)->GetValue()->Clone());
 					}

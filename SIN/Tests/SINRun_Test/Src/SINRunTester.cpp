@@ -112,15 +112,15 @@ namespace SIN {
 
 				// TODO remove the reference here and watch it burn 
 				SymbolTable *globalSymTable = static_cast<SinCodeASTNode*>(root)->getEnv();
-				globalSymTable->SetLocal("print",			SINEWCLASS(MemoryCellLibFunction, (&print)));
-				globalSymTable->SetLocal("println",			SINEWCLASS(MemoryCellLibFunction, (&println)));
-				globalSymTable->SetLocal("arguments",		SINEWCLASS(MemoryCellLibFunction, (&arguments)));
-				globalSymTable->SetLocal("totalarguments",	SINEWCLASS(MemoryCellLibFunction, (&totalarguments)));
-				globalSymTable->SetLocal("tostring",		SINEWCLASS(MemoryCellLibFunction, (&tostring)));
-				globalSymTable->SetLocal("strtonum",		SINEWCLASS(MemoryCellLibFunction, (&strtonum)));
-				globalSymTable->SetLocal("typeof",			SINEWCLASS(MemoryCellLibFunction, (&typeof)));
-				globalSymTable->SetLocal("fileopen",        SINEWCLASS(MemoryCellLibFunction, (&fileopen)));
-				globalSymTable->SetLocal("fileread",        SINEWCLASS(MemoryCellLibFunction, (&fileread)));
+				globalSymTable->Insert("print",          SINEWCLASS(MemoryCellLibFunction, (&print)));
+				globalSymTable->Insert("println",        SINEWCLASS(MemoryCellLibFunction, (&println)));
+				globalSymTable->Insert("arguments",      SINEWCLASS(MemoryCellLibFunction, (&arguments)));
+				globalSymTable->Insert("totalarguments", SINEWCLASS(MemoryCellLibFunction, (&totalarguments)));
+				globalSymTable->Insert("tostring",       SINEWCLASS(MemoryCellLibFunction, (&tostring)));
+				globalSymTable->Insert("strtonum",       SINEWCLASS(MemoryCellLibFunction, (&strtonum)));
+				globalSymTable->Insert("typeof",         SINEWCLASS(MemoryCellLibFunction, (&typeof)));
+				globalSymTable->Insert("fileopen",       SINEWCLASS(MemoryCellLibFunction, (&fileopen)));
+				globalSymTable->Insert("fileread",       SINEWCLASS(MemoryCellLibFunction, (&fileread)));
 
 				TreeEvaluationVisitor eval(&lib, &vm);
 				root->Accept(&eval);

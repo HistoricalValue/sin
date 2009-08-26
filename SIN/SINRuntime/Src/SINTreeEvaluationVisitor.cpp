@@ -461,6 +461,7 @@ namespace SIN{
 	void TreeEvaluationVisitor::Visit(ActualArgumentsASTNode & _node){
 
 		SymbolTable *symTable = &vm->CurrentStable();
+		Namer argument_namer("arg");
 
 		for(ASTNode::iterator arguments = _node.begin(); arguments != _node.end(); ++arguments){
 			static_cast<ASTNode&>(*arguments).Accept(this);
@@ -471,7 +472,7 @@ namespace SIN{
 			// Assignment is needed for correct handling of objects;
 			MemoryCell* argument = 0x00;
 			MemoryCell::Assign(argument, memory);
-			symTable->AppendArgument( argument  );
+			symTable->Insert(argument_namer++, argument);
 		}
 	}
 
@@ -533,15 +534,15 @@ namespace SIN{
 		String const& id = _node.Name();
 		SymbolTable *localSymTable = _node.LocalEnv();
 		SymbolTable *globalSymTable = _node.GlobalEnv();
-		lookuped = &localSymTable->LookupLocal(id);
+		lookuped = &localSymTable->Lookup(id);
 		if(static_cast<MemoryCell*>(*lookuped) == NULL)
-			lookuped = &globalSymTable->LookupLocal(id);
+			lookuped = &globalSymTable->Lookup(id);
 
 		// DO NOT ASSIGN TO *lookuped if it is NULL
 		if(static_cast<MemoryCell*>(*lookuped) == NULL) {
 			// TODO check about inserting in local or global
-			localSymTable->SetLocal(_node.Name(), 0x00);
-			lookuped = &localSymTable->LookupLocal(id);
+			localSymTable->Insert(_node.Name(), 0x00);
+			lookuped = &localSymTable->Lookup(id);
 		}
 		memory = *lookuped;
 	}
@@ -551,11 +552,11 @@ namespace SIN{
 	void TreeEvaluationVisitor::Visit(LocalIDASTNode & _node){
 	
 		SymbolTable *localSymTable = _node.LocalEnv();
-		lookuped = &localSymTable->LookupLocal(_node.Name());
+		lookuped = &localSymTable->LookupOnlyInCurrentScope(_node.Name());
 
 		if(static_cast<MemoryCell*>(*lookuped) == NULL){
-			localSymTable->SetLocal(_node.Name(), 0x00);
-			lookuped = &localSymTable->LookupLocal(_node.Name());
+			localSymTable->Insert(_node.Name(), 0x00);
+			lookuped = &localSymTable->LookupOnlyInCurrentScope(_node.Name());
 		}
 
 		memory = *lookuped;
@@ -566,11 +567,11 @@ namespace SIN{
 	void TreeEvaluationVisitor::Visit(GlobalIDASTNode & _node){
 	
 		SymbolTable *globalSymTable = _node.GlobalEnv();
-		lookuped = &globalSymTable->LookupLocal(_node.Name());
+		lookuped = &globalSymTable->Lookup(0, _node.Name());
 
 		if(static_cast<MemoryCell*>(*lookuped) == NULL){
-			globalSymTable->SetLocal(_node.Name(), 0x00);
-			lookuped = &globalSymTable->LookupLocal(_node.Name());
+			globalSymTable->Insert(_node.Name(), 0x00);
+			lookuped = &globalSymTable->Lookup(0, _node.Name());
 		}
 
 		memory = *lookuped;
