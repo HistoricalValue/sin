@@ -43,8 +43,8 @@ namespace SIN {
 	private:
 		typedef std::vector<VariableHolder> Table;
 
-		Table			table;
-		Table::iterator currScope;
+		Table		table;
+		scope_id	currScope;
 
 	};
 
