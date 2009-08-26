@@ -20,6 +20,14 @@
 							|	FUNCTION '(' idlist ')' block
 		}
 
+*[034] Change virtual state to push and restore environment
+*[035] Add Environment class
+*[036] Refactor Symbol Table (koutsop knows how)
+*[037] Add scopes to parsing (koutsop only)
+*[038] Remove symbol table from ASTBlock
+*[039] Add scope id to ASTBlock (koutsop knows what)
+
+
 *[025] Implement operator == for ASTNode
 
 *[026] Make the testing framework serious (save results and print them later -- especially TestCollections should be serious)
