@@ -23,7 +23,7 @@
 *[036] Refactor Symbol Table (koutsop knows how)
 
 *[038] Remove symbol table from ASTBlock
-*[040] Check and make a correct the default and ESPECIALLY copy constructor AND destructor for the SymbolTable (koutsop only)
+*[040 2009-08-27/01:47] Check and make a correct the default and ESPECIALLY copy constructor AND destructor for the SymbolTable (koutsop only)
 
 
 *[025] Implement operator == for ASTNode
@@ -51,7 +51,7 @@
   A: By adding code
 
 ==== BIG PLANS ====
-* Refactor Manage funcs to use the correct Tree
+* [DONE} Refactor Manage funcs to use the correct Tree
 
 ==== LOW PRIORITY ====
 * SIN Functors
