@@ -79,8 +79,7 @@ namespace SIN {
 	void SymbolTable::DecreaseScope(void) {
 		SINASSERT(!"not implemented");
 	}
-	
-	
+
 
 	//-----------------------------------------------------------------
 
@@ -106,21 +105,39 @@ namespace SIN {
 
 	
 
+	struct CallableToEntryHolderAdaptor: public VariableHolder::Callable {
+		typedef VariableHolder::Entry entry_t;
+		typedef SymbolTable::EntryHandler handler_t;
 
-	#define FOR_EACH_SYMBOL()	return EntryHandler()
-								/*ASSERT_CURRENT_SCOPE();							\
-								return table[currScope].for_each_argument(eh)*/
+		handler_t& entry_handler;
+		handler_t const& const_entry_handler;
+		CallableToEntryHolderAdaptor(handler_t& eh): entry_handler(eh), const_entry_handler(eh) { }
+		CallableToEntryHolderAdaptor(handler_t const& eh): entry_handler(*static_cast<handler_t*>(0x00)), const_entry_handler(eh) { }
+		virtual ~CallableToEntryHolderAdaptor(void) { }
 
+		virtual bool operator ()(entry_t const& _entry)
+			{ return entry_handler(_entry.name, _entry.value); }
+		virtual bool operator ()(entry_t const& _entry) const
+			{ return const_entry_handler(_entry.name, _entry.value); }
+	}; // struct CallableToEntryHolderAdaptor
 
 	//-----------------------------------------------------------------
 	// in current scope
-	SymbolTable::EntryHandler& SymbolTable::for_each_symbol(SymbolTable::EntryHandler& eh) const 
-		{ FOR_EACH_SYMBOL();	}
+	SymbolTable::EntryHandler& SymbolTable::for_each_symbol(SymbolTable::EntryHandler& eh) const {
+		// TODO koutsop tidy up -- add your asserts and stuff
+		CallableToEntryHolderAdaptor ceac(eh);
+		table[CurrentScope()].for_each_argument(ceac);
+		return eh;
+	}
+
 	
 
 	//-----------------------------------------------------------------
 	// in current scope
-	const SymbolTable::EntryHandler& SymbolTable::for_each_symbol(const SymbolTable::EntryHandler& eh) const
-		{ FOR_EACH_SYMBOL();	}
+	const SymbolTable::EntryHandler& SymbolTable::for_each_symbol(const SymbolTable::EntryHandler& eh) const {
+		// TODO koutsop tidy up -- add your asserts and stuff
+		table[CurrentScope()].for_each_argument(CallableToEntryHolderAdaptor(eh));
+		return eh;
+	}
 
 }
