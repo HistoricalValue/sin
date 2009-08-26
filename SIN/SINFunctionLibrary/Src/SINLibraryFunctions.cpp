@@ -58,7 +58,7 @@ namespace SIN {
 			}
 			// strsavetofile ----------------------------------------------------
 			SIN_LIBRARYFUNCTIONS_DEFAULTS_AND_LIBFUNC(strsavetofile) {
-				SymbolTable& st = _vs.CurrentFrame().stable;
+				SymbolTable& st = _vs.CurrentStable();
 				if (st.NumberOfSymbols() > 1) {
 					FileOutputStream fout(st.LookupByIndex(0)->ToString());
 					String const str(st.LookupByIndex(1)->ToString());
@@ -72,7 +72,7 @@ namespace SIN {
 			}
 			// typeof -----------------------------------------------------------
 			SIN_LIBRARYFUNCTIONS_DEFAULTS_AND_LIBFUNC(typeof) {
-				SymbolTable& stable = _vs.CurrentFrame().stable;
+				SymbolTable& stable = _vs.CurrentStable();
 				if (stable.NumberOfSymbols() > 0) {
 					char const* type_desc = 0x00;
 					switch (stable.LookupByIndex(0)->Type()) {

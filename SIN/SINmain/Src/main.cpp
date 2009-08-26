@@ -58,8 +58,8 @@ void quick_test(void) {
 	//__print_handler("hi");
 
 	SIN::VM::VirtualState vs;
-	vs.PushFrame(0x00);
-	vs.Down().Up().Down().Top().PopFrame();
+	vs.PushState();
+	vs.Down().Up().Down().Top().RestoreState();
 
 	SIN::Library::StandardLibrary stdlib;
 

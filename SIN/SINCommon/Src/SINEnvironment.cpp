@@ -2,8 +2,4 @@
 
 namespace SIN {
 
-	SymbolTable& Environment::SymbolTable(void) {
-		return stable;
-	}
-
 } // namespace SIN

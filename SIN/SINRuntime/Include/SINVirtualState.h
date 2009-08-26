@@ -11,6 +11,7 @@
 #include <list>
 #include <deque>
 #include "SINFunction.h"
+#include "SINEnvironment.h"
 
 
 #define INVAR SINASSERT(curr_frame >= 0u); SINASSERT(curr_frame < stack.size());
@@ -41,10 +42,9 @@ namespace SIN {
 			};
 
 			struct Frame {
-				SymbolTable stable;
-				SymbolTable* previous_environment;
-				Frame(SymbolTable* _previous_environment): previous_environment(_previous_environment) { }
-				Frame(Frame const& _o): stable(_o.stable), previous_environment(_o.previous_environment) { }
+				Environment env;
+				Frame(void): env() { }
+				Frame(Frame const& _o): env(_o.env) { }
 				~Frame(void) { }
 			};
 
@@ -53,12 +53,12 @@ namespace SIN {
 			errors_t const& Errors(void) const { return errors; }
 			bool HasError(void) const { return errors.size() > 0; }
 
-			void PushFrame(SymbolTable* _previous_environment) {INVAR
+			void PushState(void) {INVAR
 				SINASSERT(curr_frame == stack.size() - 1);
-				stack.push_back(Frame(_previous_environment));
+				stack.push_back(Frame());
 				++curr_frame;
 			INVAR}
-			void PopFrame(void) {INVAR
+			void RestoreState(void) {INVAR
 				SINASSERT(curr_frame == stack.size() - 1);
 				stack.pop_back();
 				--curr_frame;
@@ -70,10 +70,11 @@ namespace SIN {
 			bool InCall(void) {INVAR return curr_frame > 0; }
 
 			// Convenience
-			SymbolTable& CurrentStable(void) { return CurrentFrame().stable; }
+			//Environment& CurrentEnvironment(void) {
+			SymbolTable& CurrentStable(void) { return CurrentFrame().env.stable; }
 
 			VirtualState(void): print_handler(0x00), retval(&nil), nil(), str(), num(), obj(), r(),
-				stack(1, Frame(0x00)), curr_frame(0u), errors()
+				stack(1, Frame()), curr_frame(0u), errors()
 			{ }
 			~VirtualState(void) { obj.SetValue(0x00); }
 		private:
@@ -88,7 +89,7 @@ namespace SIN {
 			//typedef std::deque<Frame> stack_t;
 			// Debugging
 			struct stack_t: public std::deque<Frame> {
-				stack_t(size_type _how_many = 0, Frame const& _stuff = Frame(0x00)): std::deque<Frame>(_how_many, _stuff) { }
+				stack_t(size_type _how_many = 0, Frame const& _stuff = Frame()): std::deque<Frame>(_how_many, _stuff) { }
 				~stack_t(void) { }
 			}; // struct stack_t
 			stack_t stack;

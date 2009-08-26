@@ -487,8 +487,7 @@ namespace SIN{
 		static_cast<ASTNode&>(*kid++).Accept(this);
 		MemoryCell *tmpmemcell1 = memory;
 
-		SymbolTable *st = SINEW(SymbolTable);
-		vm->PushFrame(st);
+		vm->PushState();
 
 		static_cast<ASTNode&>(*kid++).Accept(this);
 //		MemoryCell *tmpmemcell2 = memory;
@@ -507,7 +506,7 @@ namespace SIN{
 			MemoryCell::Assign(memory, vm->ReturnValue());
 		}
 		// TODO restore environment
-		vm->PopFrame(); 
+		vm->RestoreState(); 
 	}
 
 	//-----------------------------------------------------------------

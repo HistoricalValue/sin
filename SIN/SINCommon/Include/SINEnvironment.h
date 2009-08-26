@@ -5,9 +5,12 @@
 
 namespace SIN {
 	class Environment {
-		SymbolTable stable;
 	public:
-		SymbolTable& SymbolTable(void);
+		Environment(void): stable() { }
+		Environment(Environment const& _o): stable(_o.stable) { }
+
+		SymbolTable stable;
+		SymbolTable& SymbolTable(void) { return stable; }
 	}; // class Environment
 } // namespace 
 
