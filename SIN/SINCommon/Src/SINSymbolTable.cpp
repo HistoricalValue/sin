@@ -3,10 +3,10 @@
 #include "SINAssert.h"
 
 
-#define ASSERT_CURRENT_SCOPE()					SINASSERT(currScope < table.size())
-#define ASSERT_GIVEN_SCOPE()					SINASSERT(scope < table.size())
+#define ASSERT_CURRENT_SCOPE()							SINASSERT(currScope < table.size())
+#define ASSERT_GIVEN_SCOPE()							SINASSERT(scope < table.size())
 
-#define ASSERT_SCOPE(SCOPE)						SINASSERT(SCOPE < table.size())
+#define ASSERT_SCOPE(SCOPE)								SINASSERT(SCOPE < table.size())
 
 #define RETURN_VALUE(SCOPE, FUNCTION_NAME, ARGUMENT)	ASSERT_SCOPE(SCOPE);						\
 														return table[SCOPE].FUNCTION_NAME(ARGUMENT)
@@ -54,25 +54,23 @@ namespace SIN {
 	
 	//-----------------------------------------------------------------
 	// in given scope
-	SymbolTable::elem_t& SymbolTable::LookupByIndex(const scope_id& , const unsigned int index) {
-		SINASSERT(!"not implemented");
-		RETURN_VALUE(currScope, Argument, index);
-	}
+	SymbolTable::elem_t& SymbolTable::LookupByIndex(const scope_id& scope, const unsigned int index) 
+		{	RETURN_VALUE(scope, Argument, index);	}
 
 
 	//-----------------------------------------------------------------
 	// only in current scope
-	void SymbolTable::Insert(const name_t&, const SymbolTable::elem_t&) {
-		SINASSERT(!"not implemented");
+	void SymbolTable::Insert(const name_t& name, const SymbolTable::elem_t& element) {
 		ASSERT_CURRENT_SCOPE();
+		table[currScope].AppendArgument(name, element);
 	}
 
 
 	//-----------------------------------------------------------------
 
 	void SymbolTable::IncreaseScope(void) {
-		SINASSERT(!"not implemented");
-	
+		table.push_back(VariableHolder());
+		++currScope;
 	}
 	
 	
