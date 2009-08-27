@@ -51,8 +51,6 @@ namespace SIN {
 	public :
 		typedef unsigned long int ID_t;
 
-		//friend class SymbolTable;
-
 		//Constructor and destructor 
 		ASTNode(void);
         ASTNode(String const &name, String const & fileName = "",const int line = 0);

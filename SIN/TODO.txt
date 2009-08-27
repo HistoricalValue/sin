@@ -20,9 +20,7 @@
 							|	FUNCTION '(' idlist ')' block
 		}
 
-*[036] Refactor Symbol Table (koutsop knows how)
 
-*[038] Remove symbol table from ASTBlock
 *[040 2009-08-27/01:47] Check and make a correct the default and ESPECIALLY copy constructor AND destructor for the SymbolTable (koutsop only)
 
 
@@ -139,4 +137,6 @@
   [ rudolf@2009-08-27/00:56 | canceled]
 *[034] Change virtual state to push and restore environment
   [ rudolf@2009-08-27/01:13 | done]
-  
+*[036] Refactor Symbol Table (koutsop knows how)
+  [ koutsop | done]
+*[038] Remove symbol table from ASTBlock
