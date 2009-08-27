@@ -30,11 +30,12 @@ namespace SIN {
 		void SetLocal(Type<name_t>::const_ref, Type<elem_t>::const_ref);
 
 
-		// Return 0x00 if not found
+		// If not found, calling LookupFailed(result_of_this_call) returns true
 		Type<elem_t>::ref LookupLocal(Type<name_t>::const_ref) const;
 		Type<elem_t>::ref LookupArgument(Type<name_t>::const_ref) const;
 		Type<elem_t>::ref Argument(size_t index) const;
 		size_t NumberOfArguments(void) const;
+		bool LookupFailed(Type<elem_t>::ref) const;
 
 
 		struct Callable { // returns false to stop iterating

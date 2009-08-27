@@ -515,7 +515,7 @@ namespace SIN {
 	//-----------------------------------------------------------------
 
 	void ParserManage::Manage_LValue_LocalID (const int lineNo, char *_localID, ASTNode **_retlvalue, LexAndBisonParseArguments *_lbpa){
-		*_retlvalue = SINEWCLASS(LocalIDASTNode, (to_string("local ") << _localID, _lbpa->GetFileName(), lineNo));
+		*_retlvalue = SINEWCLASS(LocalIDASTNode, (to_string( _localID), _lbpa->GetFileName(), lineNo));
 		_lbpa->AppendToNodeList(*_retlvalue);
 
 		SINDELETE(_localID);
@@ -525,7 +525,7 @@ namespace SIN {
 	//-----------------------------------------------------------------
 
 	void ParserManage::Manage_LValue_GlobalID (const int lineNo, char *_globalID, ASTNode **_retlvalue, LexAndBisonParseArguments *_lbpa){
-		*_retlvalue = SINEWCLASS(GlobalIDASTNode, (to_string("global ") << _globalID, _lbpa->GetFileName(), lineNo));
+		*_retlvalue = SINEWCLASS(GlobalIDASTNode, (to_string(_globalID), _lbpa->GetFileName(), lineNo));
 		_lbpa->AppendToNodeList(*_retlvalue);
 
 		SINDELETE(_globalID);

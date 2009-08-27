@@ -3,10 +3,11 @@
 #include "SINAssert.h"
 
 
-#define ASSERT_CURRENT_SCOPE()							SINASSERT(currScope < table.size()); SINASSERT(currScope >= 0)
-#define ASSERT_GIVEN_SCOPE()							SINASSERT(scope < table.size())
+#define ASSERT_SCOPE_VALIDITY(SCOPE)					SINASSERT(SCOPE < table.size()); SINASSERT(SCOPE >= 0)
+#define ASSERT_CURRENT_SCOPE()							ASSERT_SCOPE_VALIDITY(currScope)
+#define ASSERT_GIVEN_SCOPE()							ASSERT_SCOPE_VALIDITY(scope)
 
-#define ASSERT_SCOPE(SCOPE)								SINASSERT(SCOPE < table.size())
+#define ASSERT_SCOPE(SCOPE)								ASSERT_SCOPE_VALIDITY(SCOPE)
 
 #define RETURN_VALUE(SCOPE, FUNCTION_NAME, ARGUMENT)	ASSERT_SCOPE(SCOPE);						\
 														return table[SCOPE].FUNCTION_NAME(ARGUMENT)
@@ -62,12 +63,26 @@ namespace SIN {
 	SymbolTable::elem_t& SymbolTable::LookupByIndex(const scope_id& scope, const unsigned int index) 
 		{	RETURN_VALUE(scope, Argument, index);	}
 
+	//-----------------------------------------------------------------
+	// in current scope
+	bool SymbolTable::LookupFailed(elem_t& _previous_result) const {
+		return table[currScope].LookupFailed(_previous_result);
+	}
 
 	//-----------------------------------------------------------------
 	// only in current scope
 	void SymbolTable::Insert(const name_t& name, const SymbolTable::elem_t& element) {
 		ASSERT_CURRENT_SCOPE();
 		table[currScope].AppendArgument(name, element);
+	}
+
+
+	//-----------------------------------------------------------------
+	// in given scope
+	void SymbolTable::Insert(const name_t& name, const SymbolTable::elem_t& element, SymbolTable::scope_id const _scope) {
+		ASSERT_CURRENT_SCOPE();
+		ASSERT_SCOPE_VALIDITY(_scope);
+		table[_scope].AppendArgument(name, element);
 	}
 
 

@@ -130,6 +130,7 @@ namespace SIN {
 					String const ToString(void) const { return file.path; }
 					id_t ID(void) const { return &id; }
 					static void id(void) { }
+					virtual bool operator ==(MemoryCell const&) const { SINASSERT(!"Not implemented"); return false; }
 				}; // struct filememcell
 			} // namespace
 			SIN_LIBRARYFUNCTIONS_DEFAULTS_AND_LIBFUNC(fileopen) {

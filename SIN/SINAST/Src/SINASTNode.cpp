@@ -23,7 +23,7 @@ namespace SIN {
 
 	//---------------------------------------------------
 
-    ASTNode::ASTNode(String const &_name, String const & fileName, const int line):
+    ASTNode::ASTNode(String const &_name, String const & fileName, const unsigned int line):
 		name(_name),
 		assosciatedFileName(fileName),
 		associatedFileLine(line),
@@ -56,19 +56,6 @@ namespace SIN {
 
 	ASTNode::ID_t const& ASTNode::ID(void) const 
 		{	return id;	}
-
-
-	//---------------------------------------------------
-
-	SymbolTable *ASTNode::GlobalEnv(void) 
-		{	return static_cast<ASTNode*>(GetParent())->GlobalEnv();	}
-
-
-	//---------------------------------------------------
-
-	SymbolTable *ASTNode::LocalEnv(void) 
-		{	return static_cast<ASTNode*>(GetParent())->LocalEnv();	}
-
 
 	//---------------------------------------------------
 

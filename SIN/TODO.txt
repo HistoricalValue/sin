@@ -23,6 +23,9 @@
 
 *[040 2009-08-27/01:47] Check and make a correct the default and ESPECIALLY copy constructor AND destructor for the SymbolTable (koutsop only)
 
+*[041 2009-08-27/18:07] Implement operator== for aaaall the memory cell types.
+*[042 2009-08-27/18:12] Implement all kinds of binary operations among all types of memory cells (yeah, hahah).
+*[044 2009-08-28/02:43] Fix parsing manage for functions to make something correct!
 
 *[025] Implement operator == for ASTNode
 
@@ -53,7 +56,7 @@
 
 ==== LOW PRIORITY ====
 * SIN Functors
-
+* [043 2009-08-28/02:03] Add "SymbolID()" in ID AST Nodes and keep their Name property descriptive (ex "local a")
 
 
 ===== IGNORED =====

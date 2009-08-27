@@ -21,8 +21,9 @@ c = true and (true or false); //Should be true
 println("c = true: ", c);
 d = nil;
 println("d = nil: ", d);
-e = (c == true) or (-a != 10);
-println("e = true: ", e);
+//-No equality comparisons for now
+//	e = (c == true) or (-a != 10);
+//	println("e = true: ", e);
 f = ++a > 10 or a++ >= 10 or --a < 10 or a-- <= 10;
 println("f = true: ", f);
 g = not f;
@@ -30,7 +31,17 @@ println("g = false: ", g);
 println("Type of g: ", typeof(g));
 // --- Objects
 a = [ 12, antzuja: 42 ];
-println(a);
+{
+	a = 12;
+	{
+		a = false;
+		println("a = false: ", a);
+	}
+	println("a = 12: ", a);
+}
+println("a = [...]: ", a);
+
+function () { return [amjuya: 12]; }
 
 //meta_testing = .<x = "a" + "b">.;
 

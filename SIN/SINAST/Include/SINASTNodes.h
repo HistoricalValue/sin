@@ -9,6 +9,12 @@
 
 namespace SIN{
 
+	// Types (for whoever needs to add some)
+#define SINASTNODES_IDASTNODE_TYPE			0x01ul
+#define SINASTNODES_LOCALIDASTNODE_TYPE		0x02ul
+#define SINASTNODES_GLOBALIDASTNODE_TYPE	0x03ul
+
+
 	#define SINASTNODE_NODE_DECL(NAME)					\
 	class NAME##ASTNode : public ASTNode {				\
     public:												\
@@ -18,63 +24,12 @@ namespace SIN{
 						const int line = 0);			\
         ~NAME##ASTNode(void);							\
         virtual void Accept(ASTVisitor *);				\
+		virtual unsigned long  int Type(void) const;	\
 		virtual NAME##ASTNode *Clone(void) const;		\
-		virtual SymbolTable *LocalEnv(void);			\
-		virtual SymbolTable *GlobalEnv(void);			\
     }
 
-
-	///***************	SinCodeASTNode	***************
-
-	class SinCodeASTNode : public ASTNode {
-
-	public:
-
-		SinCodeASTNode(void);
-		SinCodeASTNode(String const &name, String const & fileName = "", const int line = 0);
-		 ~SinCodeASTNode(void);
-
-		void Accept(ASTVisitor *);
-
-		SymbolTable *getEnv(void) { return &symTable; }
-		void setEnv(SymbolTable *_symTable){ symTable = *_symTable; }
-
-		virtual SymbolTable *GlobalEnv (void);
-		virtual SymbolTable *LocalEnv (void);
-
-		SinCodeASTNode *Clone(void) const;
-
-	private:
-		SymbolTable symTable;
-	};
-
-
-
-	///***************	BlockASTNode	***************
-
-	class BlockASTNode : public ASTNode {
-
-	public:
-
-		BlockASTNode(void);
-		BlockASTNode(String const &name, String const & fileName = "", const int line = 0);
-		 ~BlockASTNode(void);
-
-		void Accept(ASTVisitor *);
-
-		SymbolTable *getEnv(void) { return &symTable; }
-		void setEnv(SymbolTable *_symTable){ symTable = *_symTable; }
-
-		virtual SymbolTable *GlobalEnv (void);
-		virtual SymbolTable *LocalEnv (void);
-
-		BlockASTNode *Clone(void) const;
-
-	private:
-		SymbolTable symTable;
-	};
-
-//	SINASTNODE_NODE_DECL(SinCode		);
+	SINASTNODE_NODE_DECL(SinCode		);
+	SINASTNODE_NODE_DECL(Block			);
 	SINASTNODE_NODE_DECL(Assign			);
 	SINASTNODE_NODE_DECL(NormalCall		);
 	SINASTNODE_NODE_DECL(MethodCall		);
@@ -126,8 +81,7 @@ namespace SIN{
         NumberASTNode(Types::Number_t const &_value = 0, String const & fileName = "", const int line = 0);
         virtual void Accept(ASTVisitor *);
 		virtual NumberASTNode *Clone(void) const;
-		virtual SymbolTable *GlobalEnv (void);
-		virtual SymbolTable *LocalEnv (void);
+		virtual unsigned long int Type(void) const;
     }; // class NumberASTNode
 
 
@@ -139,8 +93,7 @@ namespace SIN{
         StringASTNode(Types::String_t const &_value = "", String const & fileName = "", const int line = 0);
         virtual void Accept(ASTVisitor *);
 		virtual StringASTNode *Clone(void) const;
-		virtual SymbolTable *GlobalEnv (void);
-		virtual SymbolTable *LocalEnv (void);
+		virtual unsigned long int Type(void) const;
     }; // class StringASTNode
 
 
@@ -152,8 +105,7 @@ namespace SIN{
         NilASTNode(String const & fileName = "", const int line = 0);
         virtual void Accept(ASTVisitor *);
 		virtual NilASTNode *Clone(void) const;
-		virtual SymbolTable *GlobalEnv (void);
-		virtual SymbolTable *LocalEnv (void);
+		virtual unsigned long int Type(void) const;
     }; // class NilASTNode
 
 
@@ -165,8 +117,7 @@ namespace SIN{
         TrueASTNode(String const & fileName = "", const int line = 0);
         virtual void Accept(ASTVisitor *);
 		virtual TrueASTNode *Clone(void) const;
-		virtual SymbolTable *GlobalEnv (void);
-		virtual SymbolTable *LocalEnv (void);
+		virtual unsigned long int Type(void) const;
     }; // class TrueASTNode
 
 
@@ -178,8 +129,7 @@ namespace SIN{
         FalseASTNode(String const & fileName = "", const int line = 0);
         virtual void Accept(ASTVisitor *);
 		virtual FalseASTNode *Clone(void) const;
-		virtual SymbolTable *GlobalEnv (void);
-		virtual SymbolTable *LocalEnv (void);
+		virtual unsigned long int Type(void) const;
     }; // class FalseASTNode
 
 
@@ -193,8 +143,7 @@ namespace SIN{
         ~NAME##ASTNode(void);												\
         void Accept(ASTVisitor *);											\
 		NAME##ASTNode *Clone(void) const;									\
-		virtual SymbolTable *LocalEnv(void);								\
-		virtual SymbolTable *GlobalEnv(void);								\
+		virtual unsigned long int Type(void) const;							\
     }
 
 
@@ -209,8 +158,7 @@ namespace SIN{
 		virtual ~OpASTNode(void) { }
         virtual void Accept(ASTVisitor *) = 0;
 		virtual OpASTNode *Clone(void) const = 0;
-		virtual SymbolTable *GlobalEnv (void) = 0;
-		virtual SymbolTable *LocalEnv (void) = 0;
+		virtual unsigned long int Type(void) const = 0;
     };
 
 

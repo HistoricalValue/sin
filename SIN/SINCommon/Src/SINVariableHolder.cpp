@@ -93,11 +93,17 @@ namespace SIN {
 		oaciter_t const			args_ordered_end	= args_ordered.end();
 		
 		// copy variables
-		for (nciter_t ite = names.begin(); ite != names_end; ++ite)
-			SetLocal(ite->first, ite->second->Clone());
+		for (nciter_t ite = names.begin(); ite != names_end; ++ite) {
+			MemoryCell* assigned = 0x00;
+			MemoryCell::Assign(assigned, ite->second);
+			SetLocal(ite->first, assigned);
+		}
 		// copy args
-		for (aciter_t ite = args.begin(); ite != args_end; ++ite)
-			AppendArgument(ite->first, ite->second->Clone());
+		for (aciter_t ite = args.begin(); ite != args_end; ++ite) {
+			MemoryCell* assigned = 0x00;
+			MemoryCell::Assign(assigned, ite->second);
+			AppendArgument(ite->first, assigned);
+		}
 	}
 	
 	
@@ -158,7 +164,11 @@ namespace SIN {
 	size_t VariableHolder::NumberOfArguments(void) const 
 		{	return DATA->args_ordered.size();	}
 
+	//-----------------------------------------------------------------
 
+	bool VariableHolder::LookupFailed(InstanceProxy<MemoryCell>& _previous_result) const {
+		return &_previous_result == &DATA->not_found;
+	}
 
 	//-----------------------------------------------------------------
 

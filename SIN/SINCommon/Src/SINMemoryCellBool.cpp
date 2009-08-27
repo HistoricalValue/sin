@@ -35,4 +35,10 @@ namespace SIN {
 	Types::Boolean_t MemoryCellBool::GetValue(void) const
 		{ return value; }
 
+	//-----------------------------------------------------------------
+
+	bool MemoryCellBool::operator ==(MemoryCell const&) const {
+		SINASSERT(!"Not implemented");
+		return false;
+	}
 }

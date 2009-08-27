@@ -32,4 +32,11 @@ namespace SIN {
 	Types::String_t const MemoryCellString::GetValue (void) const
 		{ return value; }
 
+	//-----------------------------------------------------------------
+
+	bool MemoryCellString::operator ==(MemoryCell const&) const {
+		SINASSERT(!"Not implemented");
+		return false;
+	}
+
 }

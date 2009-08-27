@@ -35,6 +35,12 @@ namespace SIN {
 	Types::Number_t MemoryCellNumber::GetValue (void) const
 		{ return value; }
 
+	//-----------------------------------------------------------------
+
+	bool MemoryCellNumber::operator ==(MemoryCell const&) const {
+		SINASSERT(!"Not implemented");
+		return false;
+	}
 
 
 }

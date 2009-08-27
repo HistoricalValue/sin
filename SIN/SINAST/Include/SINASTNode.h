@@ -53,24 +53,25 @@ namespace SIN {
 
 		//Constructor and destructor 
 		ASTNode(void);
-        ASTNode(String const &name, String const & fileName = "",const int line = 0);
+        ASTNode(String const &name, String const & fileName = "",const unsigned int line = 0u);
 		ASTNode(ASTNode const&);
 		virtual ~ASTNode(void);
 
         virtual String const &Name(void) const;
 		ID_t const& ID(void) const;
 
-		virtual SymbolTable *GlobalEnv (void);
-		virtual SymbolTable *LocalEnv (void);
-
 		virtual void Accept(ASTVisitor *) = 0;
 		virtual void Accept(ASTTreeVisualisationVisitor *);
 
 		virtual ASTNode *Clone(void) const;
+
+		// introduced for loose runtime checking.
+		// 0 is the default value, signifying that inheriting classes do not override this method
+		virtual unsigned long Type(void) const = 0;
     private:
-        String const	name;
-		String const	assosciatedFileName;
-		const int		associatedFileLine;
+        String const		name;
+		String const		assosciatedFileName;
+		const unsigned int	associatedFileLine;
 		ID_t id;
 	
 	}; // class ASTNode
@@ -132,11 +133,6 @@ namespace SIN {
 			ValueHolder<_ValueT>(_value) 
 		{ 
 		}
-
-        virtual void Accept(ASTVisitor *) = 0;
-		virtual ConstASTNode *Clone(void) const = 0;
-		virtual SymbolTable *GlobalEnv (void) = 0;
-		virtual SymbolTable *LocalEnv (void) = 0;
 	};
 
 

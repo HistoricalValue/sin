@@ -89,8 +89,20 @@ namespace SIN{
 		Library::Library *		lib;
 		VM::VirtualState *		vs;
 		Types::Object_t			obj_imp; // as in "object-imp", not "object implementation"
+		typedef Environment::argument_list_t argument_list_t;
+		typedef std::stack<argument_list_t> argument_lists_t;
+		argument_lists_t argument_lists;
 		void resetObjectImp(void);
 		void assignObjectImpToMemory(void);
+		// temporaries
+		void insertTemporary(InstanceProxy<MemoryCell> const&);
+		// lookups
+		void lookup(String const&);
+		void lookup(String const&, SymbolTable::scope_id);
+		void lookup_local(String const&);
+		bool lookup_failed(void) const;
+		void insert(String const&, MemoryCell*);
+		void insert(String const&, MemoryCell*, SymbolTable::scope_id);
 
 		// Unusable
 		TreeEvaluationVisitor(const TreeEvaluationVisitor&);

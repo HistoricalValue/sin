@@ -85,8 +85,8 @@ namespace SIN {
 				root->Accept(&mitvis);
 				foutxml.flush();
 
-				VM::VirtualState vm;
-				vm.SetPrintHandler(&__print_handler);
+				VM::VirtualState vs;
+				vs.SetPrintHandler(&__print_handler);
 
 				Library::Library lib;
 
@@ -111,7 +111,7 @@ namespace SIN {
 				lib.InstallFunction(&fileread       );
 
 				// TODO remove the reference here and watch it burn 
-				SymbolTable *globalSymTable = static_cast<SinCodeASTNode*>(root)->getEnv();
+				SymbolTable *globalSymTable = &vs.CurrentStable();
 				globalSymTable->Insert("print",          SINEWCLASS(MemoryCellLibFunction, (&print)));
 				globalSymTable->Insert("println",        SINEWCLASS(MemoryCellLibFunction, (&println)));
 				globalSymTable->Insert("arguments",      SINEWCLASS(MemoryCellLibFunction, (&arguments)));
@@ -122,7 +122,7 @@ namespace SIN {
 				globalSymTable->Insert("fileopen",       SINEWCLASS(MemoryCellLibFunction, (&fileopen)));
 				globalSymTable->Insert("fileread",       SINEWCLASS(MemoryCellLibFunction, (&fileread)));
 
-				TreeEvaluationVisitor eval(&lib, &vm);
+				TreeEvaluationVisitor eval(&lib, &vs);
 				root->Accept(&eval);
 
 				ShiftToMetaEvaluatorASTVisitor shifter;

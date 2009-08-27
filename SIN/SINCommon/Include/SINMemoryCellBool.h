@@ -14,11 +14,13 @@ namespace SIN {
 	public:
 		MemoryCellBool(void) : MemoryCell() {}
 		MemoryCellBool(const Types::Boolean_t & b) : MemoryCell(), value(b) {}
+		MemoryCellBool(const Types::Number_t& n) : MemoryCell(), value(n != 0 ? true : false) {}
 		~MemoryCellBool() {}
 
 		virtual MemoryCell *	Clone(void) const;
 		virtual MemoryCellType	Type(void) const;
 		virtual const String	ToString(void) const;
+		virtual bool operator ==(MemoryCell const&) const;
 
 		void					SetValue (const Types::Boolean_t & b);
 		Types::Boolean_t		GetValue (void) const;
