@@ -384,7 +384,7 @@ namespace SIN {
 		*_retforstmt = SINEWCLASS(ForASTNode, ("for", _lbpa->GetFileName(), lineNo));
 		_lbpa->AppendToNodeList(*_retforstmt);
 
-		ForPreambleASTNode* for_preamble = SINEW(ForPreambleASTNode);
+		ForPreambleASTNode* for_preamble = SINEWCLASS(ForPreambleASTNode, ("ForPreamble", _lbpa->GetFileName(), lineNo));
 //		for(; _elist1; _elist1 = static_cast<ASTNode*>(+(*_elist1)))
 //			(*_retforstmt)->ConnectChild(_elist1);
 		*for_preamble + _elist1; // StrictTree notation: adopt a chain of orphans
@@ -392,7 +392,7 @@ namespace SIN {
 		**_retforstmt << for_preamble;
 		**_retforstmt << _expr; // condition
 
-		ForAddendumASTNode* for_addendum = SINEW(ForAddendumASTNode);
+		ForAddendumASTNode* for_addendum = SINEWCLASS(ForAddendumASTNode, ("ForAddendum", _lbpa->GetFileName(), lineNo));
 //		for(; _elist2; _elist2 = static_cast<ASTNode*>(+(*_elist2)))
 //			(*_retforstmt)->ConnectChild(_elist2);
 		*for_addendum + _elist2; // StrictTree notation: adopt a chain of orphans

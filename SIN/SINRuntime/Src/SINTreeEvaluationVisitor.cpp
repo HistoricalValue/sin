@@ -344,13 +344,25 @@ namespace SIN{
 		memory = SINEWCLASS(MemoryCellBool, (static_cast<MemoryCellBool*>(tmpmemcell1)->GetValue() && static_cast<MemoryCellBool*>(tmpmemcell2)->GetValue()));
 	}
 
+
+	#define ACCEPT_ALL_THE_KIDS()	for(ASTNode::iterator kid = _node.begin(); kid != _node.end(); ++kid)	\
+										static_cast<ASTNode&>(*kid).Accept(this);
+
 	//-----------------------------------------------------------------
 
-	void TreeEvaluationVisitor::Visit(ExpressionListASTNode & _node){
-	
-		for(ASTNode::iterator kid = _node.begin(); kid != _node.end(); ++kid)
-			static_cast<ASTNode&>(*kid).Accept(this);
-	}
+	void TreeEvaluationVisitor::Visit(ExpressionListASTNode & _node)
+		{	ACCEPT_ALL_THE_KIDS();	}
+
+
+
+
+
+
+
+	#define EVAL_LOOP_EXPR()		expr.Accept(this);											\
+									exprMemoryCell = dynamic_cast<MemoryCellBool *>(memory);	\
+									SINASSERT(exprMemoryCell)
+
 
 	//-----------------------------------------------------------------
 
@@ -358,66 +370,51 @@ namespace SIN{
 
 		SINASSERT(_node.NumberOfChildren() == 4);
 
-//		SymbolTable *symTable = _node.LocalEnv();
+		MemoryCellBool * exprMemoryCell	= static_cast<MemoryCellBool *>(0);
+		ASTNode::iterator kids			= _node.begin();
+		
+		ASTNode	& elist1				= static_cast<ASTNode&>(*kids++);
+		ASTNode & expr					= static_cast<ASTNode&>(*kids++);
+		ASTNode & elist2				= static_cast<ASTNode&>(*kids++);
+		ASTNode & stmt					= static_cast<ASTNode&>(*kids++);
 
-		//ASTNode::iterator kid = _node.begin();
-
-		//static_cast<ASTNode&>(*kid++).Accept(this);
-
-		//ASTNode& condition = static_cast<ASTNode&>(*kid++);
-		//condition.Accept(this);
-		//MemoryCellBool *tmpmemcell1 = static_cast<MemoryCellBool*>(memory);
-		//SINASSERT(tmpmemcell1->Type() == MemoryCell::BOOL_MCT);
-
-		//ASTNode& elist = static_cast<ASTNode&>(*kid++);
-
-		//while(tmpmemcell1->GetValue() == true){
-		//	static_cast<ASTNode&>(*kid).Accept(this);
-		//	elist.Accept(this);
-		//	condition.Accept
-		//}
+		elist1.Accept(this);
+		
+		EVAL_LOOP_EXPR();
+		while(exprMemoryCell->GetValue() == true) {
+			stmt.Accept(this);
+			elist2.Accept(this);
+			EVAL_LOOP_EXPR();
+		}
 	}
+
 
 	//-----------------------------------------------------------------
 
-	void TreeEvaluationVisitor::Visit(ForPreambleASTNode & _node) {
-		// TODO implement
-		SINASSERT(!"Not implemented");
-	}
-
+	void TreeEvaluationVisitor::Visit(ForPreambleASTNode & _node) 		
+		{	ACCEPT_ALL_THE_KIDS();	}
+	
+	
 	//-----------------------------------------------------------------
 
-	void TreeEvaluationVisitor::Visit(ForAddendumASTNode & _node) {
-		// TODO implement
-		SINASSERT(!"Not implemented");
-	}
+	void TreeEvaluationVisitor::Visit(ForAddendumASTNode & _node) 		
+		{	ACCEPT_ALL_THE_KIDS();	}
 
 
-
-
-
-
-
-
-
-#define EVAL_WHILE_EXPR()			static_cast<ASTNode&>(*expr).Accept(this);					\
-									exprMemoryCell = dynamic_cast<MemoryCellBool *>(memory);	\
-									SINASSERT(exprMemoryCell)
 	//-----------------------------------------------------------------
 
 	void TreeEvaluationVisitor::Visit(WhileASTNode & _node){
 		SINASSERT(_node.NumberOfChildren() == 2);
 	
 		MemoryCellBool * exprMemoryCell	= static_cast<MemoryCellBool *>(0);
-		ASTNode::iterator expr			= _node.begin();
-		ASTNode::iterator stmt			= _node.rbegin();
+		ASTNode &  expr			= static_cast<ASTNode&>(*_node.begin());
+		ASTNode &  stmt			= static_cast<ASTNode&>(*_node.rbegin());
 
-		EVAL_WHILE_EXPR();
+		EVAL_LOOP_EXPR();
 
 		while(exprMemoryCell->GetValue() == true) {
-			static_cast<ASTNode&>(*stmt).Accept(this);
-
-			EVAL_WHILE_EXPR();
+			stmt.Accept(this);
+			EVAL_LOOP_EXPR();
 		}
 	}
 
