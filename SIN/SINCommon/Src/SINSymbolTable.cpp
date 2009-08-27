@@ -76,7 +76,7 @@ namespace SIN {
 	//-----------------------------------------------------------------
 
 	void SymbolTable::IncreaseScope(void) {
-		table.size() == 0 ? currScope = 0: ++currScope;
+		++currScope;
 		table.push_back(VariableHolder());
 	}
 	
@@ -84,8 +84,10 @@ namespace SIN {
 	//-----------------------------------------------------------------
 
 	void SymbolTable::DecreaseScope(void) {
-		table.pop_back();
-		table.size() == 0 ? currScope = 0 : --currScope;
+		if (currScope > 0) {
+			--currScope;
+			table.pop_back();
+		}
 	}
 
 
