@@ -7,6 +7,7 @@
 #include "SINMemoryCell.h"
 #include "SINLibrary.h"
 #include "SINVirtualState.h"
+#include "SINNamer.h"
 
 namespace SIN{
 
@@ -42,6 +43,8 @@ namespace SIN{
 		SINASTVISITOR_VISIT_SIGNATURE(Or				) ;
 		SINASTVISITOR_VISIT_SIGNATURE(And				) ;
 		SINASTVISITOR_VISIT_SIGNATURE(For				) ;
+		SINASTVISITOR_VISIT_SIGNATURE(ForPreamble		) ;
+		SINASTVISITOR_VISIT_SIGNATURE(ForAddendum		) ;
 		SINASTVISITOR_VISIT_SIGNATURE(While				) ;
 		SINASTVISITOR_VISIT_SIGNATURE(If				) ;
 		SINASTVISITOR_VISIT_SIGNATURE(IfElse			) ;
@@ -92,6 +95,9 @@ namespace SIN{
 		Types::Object_t			obj_imp; // as in "object-imp", not "object implementation"
 		void resetObjectImp(void);
 		void assignObjectImpToMemory(void);
+
+		// Unusable
+		TreeEvaluationVisitor::TreeEvaluationVisitor(const TreeEvaluationVisitor&);
 	};
 
 } // namespace SIN

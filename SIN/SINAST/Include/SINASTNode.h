@@ -65,7 +65,7 @@ namespace SIN {
 		virtual SymbolTable *GlobalEnv (void);
 		virtual SymbolTable *LocalEnv (void);
 
-		virtual void Accept(ASTVisitor *);
+		virtual void Accept(ASTVisitor *) = 0;
 		virtual void Accept(ASTTreeVisualisationVisitor *);
 
 		virtual ASTNode *Clone(void) const;

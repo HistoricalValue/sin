@@ -134,7 +134,7 @@ namespace SIN {
 
 	//---------------------------------------------------
 
-    void ASTNode::Accept(ASTVisitor *_v) { SINASSERT(!"Not accepting the general visitor"); }
+//	void ASTNode::Accept(ASTVisitor *_v) { _v->Visit(*this); }
 	
 	
 	//---------------------------------------------------

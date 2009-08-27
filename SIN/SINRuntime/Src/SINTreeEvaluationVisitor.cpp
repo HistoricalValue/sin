@@ -50,6 +50,12 @@ namespace SIN{
 
 	//-----------------------------------------------------------------
 
+	TreeEvaluationVisitor::TreeEvaluationVisitor(TreeEvaluationVisitor const&):
+		memory(0x00), lookuped(0x00), preserveNode(0x00), lib(0x00), vm(0x00), obj_imp(0x00)
+		{ SINASSERT(!"Not allowed"); }
+
+	//-----------------------------------------------------------------
+
 	TreeEvaluationVisitor::~TreeEvaluationVisitor(void){}
 
 	//-----------------------------------------------------------------
@@ -100,14 +106,14 @@ namespace SIN{
 		ASTNode::iterator kid = _node.begin();
 
 		static_cast<ASTNode&>(*kid++).Accept(this);
-		MemoryCell *tmpmemcell1 = memory;
+		SINASSERT(memory->Type() == MemoryCell::NUMBER_MCT); //TODO Throw evaluation error
+		MemoryCellNumber *tmpmemcell1 = static_cast<MemoryCellNumber*>(memory);
 
 		static_cast<ASTNode&>(*kid++).Accept(this);
-		MemoryCell *tmpmemcell2 = memory;
-
-		SINASSERT(tmpmemcell1->Type() == MemoryCell::NUMBER_MCT && tmpmemcell2->Type() == MemoryCell::NUMBER_MCT); //TODO Throw evaluation error
+		SINASSERT(memory->Type() == MemoryCell::NUMBER_MCT); //TODO Throw evaluation error
+		MemoryCellNumber *tmpmemcell2 = static_cast<MemoryCellNumber*>(memory);
 		
-		memory = SINEWCLASS(MemoryCellNumber, (static_cast<MemoryCellNumber*>(tmpmemcell1)->GetValue()+static_cast<MemoryCellNumber*>(tmpmemcell2)->GetValue()));
+		memory = SINEWCLASS(MemoryCellNumber, (tmpmemcell1->GetValue() + tmpmemcell2->GetValue()));
 	}
 
 	//-----------------------------------------------------------------
@@ -370,6 +376,20 @@ namespace SIN{
 		//	elist.Accept(this);
 		//	condition.Accept
 		//}
+	}
+
+	//-----------------------------------------------------------------
+
+	void TreeEvaluationVisitor::Visit(ForPreambleASTNode & _node) {
+		// TODO implement
+		SINASSERT(!"Not implemented");
+	}
+
+	//-----------------------------------------------------------------
+
+	void TreeEvaluationVisitor::Visit(ForAddendumASTNode & _node) {
+		// TODO implement
+		SINASSERT(!"Not implemented");
 	}
 
 	//-----------------------------------------------------------------

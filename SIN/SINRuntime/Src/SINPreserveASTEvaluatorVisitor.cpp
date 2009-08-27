@@ -138,6 +138,15 @@ namespace SIN{
 	void PreserveASTEvaluatorVisitor::Visit(ForASTNode & _node)
 		{ VISIT_NODE_WITH_MANY_CHILDREN(); }
 
+	//-----------------------------------------------------------------
+
+	void PreserveASTEvaluatorVisitor::Visit(ForPreambleASTNode & _node)
+		{ VISIT_NODE_WITH_MANY_CHILDREN(); }
+
+	//-----------------------------------------------------------------
+
+	void PreserveASTEvaluatorVisitor::Visit(ForAddendumASTNode & _node)
+		{ VISIT_NODE_WITH_MANY_CHILDREN(); }
 
 	//-----------------------------------------------------------------
 
