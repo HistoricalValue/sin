@@ -14,15 +14,8 @@ namespace SIN{
 	class TreeEvaluationVisitor : public ASTVisitor {
 	
 	public:
-		TreeEvaluationVisitor (void);
-		TreeEvaluationVisitor (Library::Library *_lib, VM::VirtualState *_vm);
-		virtual ~TreeEvaluationVisitor (void);
-
-
 		MetaPreserveASTNode * PreserveASTNode() { return preserveNode; };
-		
 
-		//SINASTVISITOR_VISIT_SIGNATURE(					) ;
 		SINASTVISITOR_VISIT_SIGNATURE(Number			) ;
 		SINASTVISITOR_VISIT_SIGNATURE(String			) ;
 		SINASTVISITOR_VISIT_SIGNATURE(Nil				) ;
@@ -86,18 +79,21 @@ namespace SIN{
 		SINASTVISITOR_VISIT_SIGNATURE(MetaParseString	) ;
 		SINASTVISITOR_VISIT_SIGNATURE(SinCode			) ;
 
+		TreeEvaluationVisitor (void);
+		TreeEvaluationVisitor (Library::Library *lib, VM::VirtualState *vs);
+		virtual ~TreeEvaluationVisitor (void);
 	private:
 		MemoryCell *			memory;
 		InstanceProxy<MemoryCell>*	lookuped;
 		MetaPreserveASTNode	*	preserveNode;
 		Library::Library *		lib;
-		VM::VirtualState *		vm;
+		VM::VirtualState *		vs;
 		Types::Object_t			obj_imp; // as in "object-imp", not "object implementation"
 		void resetObjectImp(void);
 		void assignObjectImpToMemory(void);
 
 		// Unusable
-		TreeEvaluationVisitor::TreeEvaluationVisitor(const TreeEvaluationVisitor&);
+		TreeEvaluationVisitor(const TreeEvaluationVisitor&);
 	};
 
 } // namespace SIN

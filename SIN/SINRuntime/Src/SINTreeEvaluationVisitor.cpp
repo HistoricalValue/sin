@@ -42,16 +42,16 @@ namespace SIN{
 
 	//-----------------------------------------------------------------
 
-	TreeEvaluationVisitor::TreeEvaluationVisitor(void) : memory(NULL), lookuped(NULL), preserveNode(NULL), lib(NULL), vm(NULL) { }
+	TreeEvaluationVisitor::TreeEvaluationVisitor(void) : memory(NULL), lookuped(NULL), preserveNode(NULL), lib(NULL), vs(NULL) { }
 
 	//-----------------------------------------------------------------
 
-	TreeEvaluationVisitor::TreeEvaluationVisitor(Library::Library *_lib, VM::VirtualState *_vm) : memory(NULL), lookuped(NULL), preserveNode(NULL), lib(_lib), vm(_vm) { }
+	TreeEvaluationVisitor::TreeEvaluationVisitor(Library::Library *_lib, VM::VirtualState *_vs) : memory(NULL), lookuped(NULL), preserveNode(NULL), lib(_lib), vs(_vs) { }
 
 	//-----------------------------------------------------------------
 
 	TreeEvaluationVisitor::TreeEvaluationVisitor(TreeEvaluationVisitor const&):
-		memory(0x00), lookuped(0x00), preserveNode(0x00), lib(0x00), vm(0x00), obj_imp(0x00)
+		memory(0x00), lookuped(0x00), preserveNode(0x00), lib(0x00), vs(0x00), obj_imp(0x00)
 		{ SINASSERT(!"Not allowed"); }
 
 	//-----------------------------------------------------------------
@@ -480,7 +480,7 @@ namespace SIN{
 
 	void TreeEvaluationVisitor::Visit(ActualArgumentsASTNode & _node){
 
-		SymbolTable *symTable = &vm->CurrentStable();
+		SymbolTable *symTable = &vs->CurrentStable();
 		Namer argument_namer("arg");
 
 		for(ASTNode::iterator arguments = _node.begin(); arguments != _node.end(); ++arguments){
@@ -507,7 +507,7 @@ namespace SIN{
 		static_cast<ASTNode&>(*kid++).Accept(this);
 		MemoryCell *tmpmemcell1 = memory;
 
-		vm->PushState();
+		vs->PushState();
 
 		static_cast<ASTNode&>(*kid++).Accept(this);
 //		MemoryCell *tmpmemcell2 = memory;
@@ -521,12 +521,12 @@ namespace SIN{
 		}else{
 			Library::Function *libfunc = static_cast<MemoryCellLibFunction*>(tmpmemcell1)->GetValue();
 
-			(*libfunc)(*vm, *lib);
+			(*libfunc)(*vs, *lib);
 			memory = 0x00;
-			MemoryCell::Assign(memory, vm->ReturnValue());
+			MemoryCell::Assign(memory, vs->ReturnValue());
 		}
 		// TODO restore environment
-		vm->RestoreState(); 
+		vs->RestoreState(); 
 	}
 
 	//-----------------------------------------------------------------

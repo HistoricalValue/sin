@@ -79,8 +79,7 @@ public:
 	virtual bool RunAll(void);
 }; // class MainTestCollection
 
-
-
+static int waitToByeBye(void);
 int main(int argc, char *argv[]) {
 	// Early testing: LoggerManager taints the memory module.
 	SIN::Tests::Alloc::Status s;
@@ -96,7 +95,7 @@ int main(int argc, char *argv[]) {
 
 	SIN::Alloc::ChunksMap undeallocated_chunks(SIN::Alloc::UndeallocatedChunks());
 	SIN::CleanUp();
-	return 0;
+	return waitToByeBye();
 }
 
 ///// MainTestCollection ////////////////////
@@ -117,4 +116,22 @@ void MainTestCollection::emulateAllocTest(void) const {
 	SIN::Logger& logga(SIN::LoggerManager::SingletonGetInstance()->GetLogger("SIN::Tests::Alloc"));
 	logga.Notice(alloc_test_status.failed ? SIN::to_string("FAIL'D at line ") << alloc_test_status.at_line : "OK");
 	SIN::LoggerManager::SingletonGetInstance()->GetDefaultLoggerFactory()->DestroyLogger(&logga);
+}
+
+
+/// Wait to byebye
+static int waitToByeBye(void) {
+#ifdef _DEBUG
+#ifdef _MSC_VER
+	system("pause");
+#elif defined(_LINUX_)
+	getchar();
+#endif
+#else
+#ifdef _MSC_VER
+#elif defined(_LINUX)
+	getchar();
+#endif
+#endif
+	return 0;
 }
