@@ -70,8 +70,9 @@ namespace SIN {
 			bool InCall(void) {INVAR return curr_frame > 0; }
 
 			// Convenience
-			//Environment& CurrentEnvironment(void) {
+			Environment& CurrentEnvironment(void) { return CurrentFrame().env; }
 			SymbolTable& CurrentStable(void) { return CurrentFrame().env.stable; }
+			Namer& CurrentAvrilNamer(void) { return CurrentFrame().env.avrilNamer; }
 
 			VirtualState(void): print_handler(0x00), retval(&nil), nil(), str(), num(), obj(), r(),
 				stack(1, Frame()), curr_frame(0u), errors()
