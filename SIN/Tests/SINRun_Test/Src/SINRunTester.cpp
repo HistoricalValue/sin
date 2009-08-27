@@ -127,6 +127,8 @@ namespace SIN {
 
 				ShiftToMetaEvaluatorASTVisitor shifter;
 				root->Accept(&shifter);
+
+				test.DeleteAST();
 				//ASTNode* metacode = shifter;
 			}
 

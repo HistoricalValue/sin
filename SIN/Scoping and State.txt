@@ -4,11 +4,20 @@ Se ayto to email tha ithela na po merika pragmata gia ton evaluator tis SIN.
 
 -- Sxetika me to scope ton metavliton, to environment, ktl
 ----====----
-(agnoontas ta functions) Theory basis: ston kodika mas yparxoyn blocks of code, kai sto kathe block antistoixei ena scope, to opoio einai identified apo ena Scope-ID. Ta scope-IDs einai comparable metaksy toys (dld orizetai to less-than). Otan ginetai looked-up ena ID, to lookup prepei na ginetai mesa sto scope sto opoio vrethike to ID -KAI- se ola ta scopes me mikrotero scope-ID apo ayto. Kathe fora poy syntame ena neo block, ayto antistoixizetai se ena kainoyrio scope to opoio pairnei to epomeno scope-ID.
+(agnoontas ta functions) Theory basis: ston kodika mas yparxoyn blocks of code, kai sto kathe block antistoixei ena 
+scope, to opoio einai identified apo ena Scope-ID. Ta scope-IDs einai comparable metaksy toys (dld orizetai to less-than). 
+Otan ginetai looked-up ena ID, to lookup prepei na ginetai mesa sto scope sto opoio vrethike to ID -KAI- se ola ta scopes me 
+mikrotero scope-ID apo ayto. Kathe fora poy syntame ena neo block, ayto antistoixizetai se ena kainoyrio scope to opoio 
+pairnei to epomeno scope-ID.
 
-Gia na ensomatosoyme ta functions se ayto to model, mporoyme na theorisoyme oti sto simeio klisis enos function yparxei to function-body aytoysio.
 
-Ayto allazei ligo ta scoping semantics poy exoyme synithisei gia ta functions. An ayto to efarmosoyme akrivws, simainei oti to parakato paradeigma:
+
+Gia na ensomatosoyme ta functions se ayto to model, mporoyme na theorisoyme oti sto simeio klisis enos function 
+yparxei to function-body aytoysio.
+
+Ayto allazei ligo ta scoping semantics poy exoyme synithisei gia ta functions. An ayto to efarmosoyme akrivws, 
+simainei oti to parakato paradeigma:
+
 
 //  ---------
     x = 12;
@@ -17,21 +26,41 @@ Ayto allazei ligo ta scoping semantics poy exoyme synithisei gia ta functions. A
 
 tha allaksei to x ekso apo tin synartisi.
 
-Ayto einai ena cool trick se mia glossa me kyrio xaraktiristiko to metaprogramming. Einai san na ginontai oles oi functions meta-functions aytomatws, kata kapoion tropo.
+Ayto einai ena cool trick se mia glossa me kyrio xaraktiristiko to metaprogramming. 
+Einai san na ginontai oles oi functions meta-functions aytomatws, kata kapoion tropo.
 
-Ostoso, an den thelete na oristhei i glossa etsi (kai psifizo kai ego na min ginei etsi -- giati ayto to effect mporoyme na to petyxoyme me ta metaprogramming features),
+Ostoso, an den thelete na oristhei i glossa etsi (kai psifizo kai ego na min ginei etsi -- 
+giati ayto to effect mporoyme na to petyxoyme me ta metaprogramming features),
 einai eykolo na ensomatosoyme ta functions sto scoping model poy oristhike parapano:
 
--   kathe function call theoritika einai isodynamo me to na ypirxe to function body aytoysio ekei - BUTT - to look up ginetai sto scope toy function kai sto global scope ONLY.
+
+-   kathe function call theoritika einai isodynamo me to na ypirxe to function body aytoysio ekei - BUTT - 
+to look up ginetai sto scope toy function kai sto global scope ONLY.
 
 ----====----
 -o- Ti kerdisame apo olo ayto to mplampla?
--Apantisi: mporoyme na exoyme 1 kai mono symbol table GIA OLOKLIRO TO EVALUATION. Arkei na ginei ena modification stin SymbolTable class mas oste na mporei na kanei lookup se scopes (kai se range apo scopes) anti na einai gia ena scope only.
-- Drawback: poly mikrotero flexibilty (se sygkrisi me to alternative poy perigrafetai parakato), memory leaks kai Windows-TM effect: oso trexei i glossa, toso megalytero memory troei. Kai ayto symvainei epeidi se kathe function call tha eisagetai ena kainoyrio scope to opoio tha xrisimopoieitai mono gia ekeino to call kai pote ksana. Tha mporoysame isos na elegxoyme oti otan bgoyme apo ena scope, ayto to scope na katastrefetai mesa ston symbol table (requires even further symbol table functionality). Alla ayto kai extra probs einai, kai semantically mpalantzarei anamesa stin orthotita kai stin vlakeia (symbol table poy diagrafei symbols? Dld o allos pige piso ston xrono kai esvise to "x" poy dilose prin?).
-- Conclusion: ayti tin lysi tin skeftika kai tin grafo edo os ena poly poly mpakaliko quick-implementation gia ta symbol tables kai ta environments. Exontas mono enan symbol table, aplopoioyntai diafora stuff ston evaluator. Alla tha exoyme windows-effect kai ligotero flexibility gia trelotites.
+-Apantisi:		mporoyme na exoyme 1 kai mono symbol table GIA OLOKLIRO TO EVALUATION. 
+				Arkei na ginei ena modification stin SymbolTable class mas oste na mporei na kanei lookup se scopes 
+				(kai se range apo scopes) anti na einai gia ena scope only.
+			
+- Drawback:		poly mikrotero flexibilty (se sygkrisi me to alternative poy perigrafetai parakato), 
+				memory leaks kai Windows-TM effect: oso trexei i glossa, toso megalytero memory troei. 
+				Kai ayto symvainei epeidi se kathe function call tha eisagetai ena kainoyrio scope 
+				to opoio tha xrisimopoieitai mono gia ekeino to call kai pote ksana. 
+				Tha mporoysame isos na elegxoyme oti otan bgoyme apo ena scope, 
+				ayto to scope na katastrefetai mesa ston symbol table (requires even further symbol table functionality). 
+				Alla ayto kai extra probs einai, kai semantically mpalantzarei anamesa stin orthotita kai 
+				stin vlakeia (symbol table poy diagrafei symbols? Dld o allos pige piso ston xrono kai 
+				esvise to "x" poy dilose prin?).
+
+- Conclusion:	ayti tin lysi tin skeftika kai tin grafo edo os ena poly poly mpakaliko 
+				quick-implementation gia ta symbol tables kai ta environments. Exontas mono enan symbol table, 
+				aplopoioyntai diafora stuff ston evaluator. Alla tha exoyme windows-effect kai ligotero 
+				flexibility gia trelotites.
 
 ================================ ANOTHER VIEW ================================
-Kathe block-of-code mporei na theorithei apla os ena kommati codika. To environment sto opoio aytos o kodikas tha ektelestei einai dettached kai independent. Code example:
+Kathe block-of-code mporei na theorithei apla os ena kommati codika. 
+To environment sto opoio aytos o kodikas tha ektelestei einai dettached kai independent. Code example:
 
 //  ---------
     x = 12;
@@ -40,22 +69,33 @@ Kathe block-of-code mporei na theorithei apla os ena kommati codika. To environm
     { print(x); } // --> [ a:12 ] (or something)
 //  ---------
 
-To idio akivws block-o-code (sto paradeigma replicated kai oxi reused), me diaforetiko environment exei diaforetiki symperifora. Ayto einai kai to point toy meta-code, vevaia:
+To idio akivws block-o-code (sto paradeigma replicated kai oxi reused), 
+me diaforetiko environment exei diaforetiki symperifora. Ayto einai kai to point toy meta-code, vevaia:
+
 //  ---------
     pr = .< print(x) >.;
     { x = 12;      .!pr; }
     { x = [a: 12]; .!pr; }
 //  ---------
+
 Se ayto to paradeigma exoyme to idio me apo pano alla me code reused (oxi replicated).
 
-An theorisoyme ta blocks mas os portable code (dld ayto poy einai kai ta meta expressions -- dld ASTs), tote mporoyme na ta kanoyme relocate apo environment se environment (!!!) --> poly megalytero flexibility.
+An theorisoyme ta blocks mas os portable code (dld ayto poy einai kai ta meta expressions -- dld ASTs), 
+tote mporoyme na ta kanoyme relocate apo environment se environment (!!!) --> poly megalytero flexibility.
 
 (So far, agnoontas ta functions)
-Ayto simainei oti se kathe block antistixei enas pointer se environment kai oxi ena environment itself. Opos kai prin, o symbol table prepei na mporei na kanei look up se diafora scope IDs.
+Ayto simainei oti se kathe block antistixei enas pointer se environment kai oxi ena environment itself. 
+Opos kai prin, o symbol table prepei na mporei na kanei look up se diafora scope IDs.
 
-Tora, gia na ensomatosoyme ta functions omos, den xreiazetai na ta theorisoyme os inlined code alla **to kathe function call einai evaluation (execution) toy idioy block-o-code (function body) relocated se ena diaforetiko environment**.
+Tora, gia na ensomatosoyme ta functions omos, den xreiazetai na ta theorisoyme os inlined code alla **to 
+kathe function call einai evaluation (execution) toy idioy block-o-code (function body) relocated se ena 
+diaforetiko environment**.
 
-Kai epeidi ena f-block (function body block-o-code) mporei na klithei mesa apo ton eayto toy, xreiazomaste to klassiko stack-model, to opoio einai already provided apo to VirtualState. Akoloythontas to contract oti "o caller saves, o callee restores", to previous environment sozetai se ena stack frame, mazi me o,ti alla info xreiazontai (not documented as not finalised).
+Kai epeidi ena f-block (function body block-o-code) mporei na klithei mesa apo ton eayto toy, xreiazomaste to 
+klassiko stack-model, to opoio einai already provided apo to VirtualState. 
+Akoloythontas to contract oti "o caller saves, o callee restores", 
+to previous environment sozetai se ena stack frame, mazi me o,ti alla info xreiazontai (not documented as not finalised).
+
 
 Aytos o tropos kanei ligo pio complicated tis periptoseis opos:
 //  ---------
@@ -63,15 +103,27 @@ Aytos o tropos kanei ligo pio complicated tis periptoseis opos:
     { x = 42; }
 //  ---------
 
-Epeidi to scoping den to exoyme kanei at parese time, tha prepei na ginei at evaluation time. O tropos poy protino einai o eksis (kai tha ton kano kai paradeigma gia to code sample above):
-- O evaluator exei ena scope-id-manager/generator something. Ayto einai KOMMATI TOY STATE. Dld prepei na sozetai sto kai na ginetai restored apo to stack.
-- O evaluator exei ena scope-id-stack oste na kserei kathe stigmi se poio state vrisketai. KAI AYTO EINAI KOMMATI TOY STATE (dld save kai restore to/from stack).
-- Mono to root block exei allocated ena symbol table. Ta children blocks toy block aytoy kanoyn point ston idio symbol table.
-- Ostoso, se kathe block-enter, o evaluator tha pairnei to epomeno scope-id kai me ayto tha kanei lookup kai insert ston symbol table. To scope-id ayto ginetai pushed stin scope-ID stack.
-- On block-exit ginetai poped to top scope-id apo tin scope-id-stack. 
-- On function enter (state has been saved) update environment for the root block.
-- On block-enter/block-exit (in f-call) do as above.
-- On function exit, restore state, pop frame.
+Epeidi to scoping den to exoyme kanei at parese time, tha prepei na ginei at evaluation time. 
+O tropos poy protino einai o eksis (kai tha ton kano kai paradeigma gia to code sample above):
+-	O evaluator exei ena scope-id-manager/generator something. Ayto einai KOMMATI TOY STATE. 
+	Dld prepei na sozetai sto kai na ginetai restored apo to stack.
+
+-	O evaluator exei ena scope-id-stack oste na kserei kathe stigmi se poio state vrisketai. 
+	KAI AYTO EINAI KOMMATI TOY STATE (dld save kai restore to/from stack).
+
+-	Mono to root block exei allocated ena symbol table. Ta children blocks toy block aytoy 
+	kanoyn point ston idio symbol table.
+
+-	Ostoso, se kathe block-enter, o evaluator tha pairnei to epomeno scope-id kai me ayto 
+	tha kanei lookup kai insert ston symbol table. To scope-id ayto ginetai pushed stin scope-ID stack.
+
+-	On block-exit ginetai poped to top scope-id apo tin scope-id-stack. 
+
+-	On function enter (state has been saved) update environment for the root block.
+
+-	On block-enter/block-exit (in f-call) do as above.
+
+-	On function exit, restore state, pop frame.
 
 ============================ Kai telika ==================================
 - Telika psifizo to #2.
