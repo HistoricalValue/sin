@@ -38,7 +38,8 @@ namespace SIN {
 	//--------------------------------------------------------
 
     int ParserAPI::ParseFile(String const &_filepath) {
-        if (PrepareForFile(_filepath.c_str()) == 0 && yyparse(fabpa) == 0)
+		labpa.SetFileName(_filepath);
+        if (PrepareForFile(_filepath.c_str()) == 0 && yyparse(labpa) == 0)
 			return 0;
 		return -1;
     }
@@ -56,18 +57,18 @@ namespace SIN {
 
 	// If Parse* returned no error, this returns the produced AST
 	ASTNode * ParserAPI::GetAST(void) const {
-		ASTNode * root = fabpa.GetRoot();
+		ASTNode * root = labpa.GetRoot();
 		SINASSERT(root);
-		return fabpa.HasError() ? static_cast<ASTNode *>(0): root;
+		return labpa.HasError() ? static_cast<ASTNode *>(0): root;
 	}
 
 
 	const LexAndBisonParseArguments::Errors & ParserAPI::GetErrors(void) const 
-		{ return fabpa.GetErrors(); }
+		{ return labpa.GetErrors(); }
 
 
 	void ParserAPI::DeleteAST(void) 
-		{ fabpa.CleanNodes(); }
+		{ labpa.CleanNodes(); }
 
     ////////////////////////////////
 } // namespace SIN

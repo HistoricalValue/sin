@@ -5,6 +5,7 @@
 #include <list>
 
 #include <utility>
+#include "SINString.h"
 #include "SINLogger.h"
 #include "SINString.h"
 #include "SINASTNode.h"
@@ -18,7 +19,7 @@ namespace SIN {
 		typedef std::pair<String, unsigned>	ErrorInfo;
 		typedef std::list<ErrorInfo>		Errors;
 
-		LexAndBisonParseArguments(void);
+		LexAndBisonParseArguments(const String & _fileName = "");
 		~LexAndBisonParseArguments();
 
 
@@ -53,8 +54,9 @@ namespace SIN {
 		void	CleanErrosAndNodes (void);
 		
 		
-
-
+		void			SetFileName(const String &);
+		const String	GetFileName(void) const;
+		
 		ASTNode *		GetRoot (void) const;
 		const Errors &	GetErrors (void) const;
 		
@@ -64,6 +66,7 @@ namespace SIN {
 		Errors		errors;
 		ASTNode *	root;
 		NodesList	nodesList;
+		String		fileName;
 		
 		InstanceProxy<Logger> logger_p;
 

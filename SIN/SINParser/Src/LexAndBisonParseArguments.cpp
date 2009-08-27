@@ -46,8 +46,10 @@ namespace SIN {
 
 	//-----------------------------------------------------------------
 
-	LexAndBisonParseArguments::LexAndBisonParseArguments(void) : 
-		hasError(false), root(static_cast<ASTNode *>(0))
+	LexAndBisonParseArguments::LexAndBisonParseArguments(const String & _fileName) : 
+		fileName(_fileName),
+		hasError(false), 
+		root(static_cast<ASTNode *>(0))
 	{
 		Type<LoggerManager>::ref lm(*LoggerManager::SingletonGetInstance());
 		lm.GetDefaultLoggerFactory()->DestroyLogger(lm.MakeStdoutLogger(SIN_BISON_PARSE_ARGUMENTS_LOGGER_NAME));
@@ -90,6 +92,18 @@ namespace SIN {
 	ASTNode * LexAndBisonParseArguments::GetRoot() const 
 		{ return root; }
 
+
+	//-----------------------------------------------------------------
+
+	void LexAndBisonParseArguments::SetFileName(const String & _fileName)
+		{ fileName = _fileName;	}
+
+
+	//-----------------------------------------------------------------
+	
+	const String LexAndBisonParseArguments::GetFileName(void) const
+		{	return fileName;	}
+		
 
 	//-----------------------------------------------------------------
 	
