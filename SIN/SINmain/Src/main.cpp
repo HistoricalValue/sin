@@ -39,8 +39,8 @@ public:
 static InstanceProxy<out_class> g_out;
 
 static void __print_handler(SIN::String const& _msg) {
-	SIN::LoggerManager::StreamLogger oot("STDOUT: ", SIN::Logging::Record::FINEST, SIN::STDOUT, SIN::Logging::RecordPrinter());
-	oot.Notice(_msg);
+//	SIN::LoggerManager::StreamLogger oot("STDOUT: ", SIN::Logging::Record::FINEST, SIN::STDOUT, SIN::Logging::RecordPrinter());
+//	oot.Notice(_msg);
 }
 
 void quick_test(void) {
@@ -55,7 +55,7 @@ void quick_test(void) {
 //		out << *ITER(lis);
 //	out << (SIN::to_string("This is") << " horrible " << (4));
 
-	//__print_handler("hi");
+	__print_handler("hi");
 
 	SIN::VM::VirtualState vs;
 	vs.PushState();
