@@ -19,8 +19,8 @@ namespace SIN {
 	class ASTTreeVisualisationVisitor;
 
 
-	//-----------------------------------------------------------------------
-
+	///***************	ValueHolder	***************
+	
 	template <typename _ValueT>
 	class ValueHolder {
 	public:
@@ -45,7 +45,7 @@ namespace SIN {
 
 
 
-	//-----------------------------------------------------------------------
+	///***************	ASTNode	***************
 
 	class ASTNode : public StrictTreeNode {
 	public :
@@ -55,7 +55,7 @@ namespace SIN {
 
 		//Constructor and destructor 
 		ASTNode(void);
-        ASTNode(String const &name);
+        ASTNode(String const &name, String const & fileName = "",const int line = 0);
 		ASTNode(ASTNode const&);
 		virtual ~ASTNode(void);
 
@@ -70,11 +70,18 @@ namespace SIN {
 
 		virtual ASTNode *Clone(void) const;
     private:
-        String const name;
+        String const	name;
+		String const	assosciatedFileName;
+		const int		associatedFileLine;
 		ID_t id;
+	
 	}; // class ASTNode
-	extern String const to_string(SIN::ASTNode const        &_val);
+	extern String const to_string(SIN::ASTNode const &_val);
 
+
+
+	///***************	ASTNodeFactory	***************
+	
 	class ASTNodeFactory {
 		Namer namer;
 		ASTNode::ID_t next_id;
@@ -100,14 +107,34 @@ namespace SIN {
 		ASTNode::ID_t const iNextID(void);
 	}; // class ASTNodeFactory
 
+
+
+
+
 	//-----------------------------------------------------------------------	
 	
 	template <enum ConstNodeType _ValueType, typename _ValueT>
 	class ConstASTNode : public ASTNode, public ValueHolder<_ValueT> {
 	public :
         typedef typename ValueHolder<_ValueT>::Value Value;
-        ConstASTNode(Value const &_value): ASTNode(to_string(_value)), ValueHolder<_ValueT>(_value) { }
-		ConstASTNode(String const &_name, Value const &_value): ASTNode(_name), ValueHolder<_ValueT>(_value) { }
+        
+		ConstASTNode(	Value const &_value,
+						String const & fileName = "",
+						const int line = 0) : 
+			ASTNode(to_string(_value), fileName, line), 
+			ValueHolder<_ValueT>(_value) 
+		{ 
+		}
+
+		ConstASTNode(	String const &_name, 
+						Value const &_value,
+						String const & fileName = "",
+						const int line = 0) : 
+			ASTNode(_name, fileName, line), 
+			ValueHolder<_ValueT>(_value) 
+		{ 
+		}
+
         virtual void Accept(ASTVisitor *) = 0;
 		virtual ConstASTNode *Clone(void) const = 0;
 		virtual SymbolTable *GlobalEnv (void) = 0;

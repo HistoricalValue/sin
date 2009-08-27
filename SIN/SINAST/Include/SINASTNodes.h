@@ -3,29 +3,35 @@
 
 #include "SINASTNode.h"
 #include "SINSymbolTable.h"
+#include "SINConstants.h"
 #include "SINASTCommon.h"
 #include "SINTypes.h"
 
 namespace SIN{
 
-	#define SINASTNODE_NODE_DECL(NAME)				\
-	class NAME##ASTNode : public ASTNode {			\
-    public:											\
-        NAME##ASTNode(void);						\
-        NAME##ASTNode(String const &name);			\
-        ~NAME##ASTNode(void);						\
-        virtual void Accept(ASTVisitor *);			\
-		virtual NAME##ASTNode *Clone(void) const;	\
-		virtual SymbolTable *LocalEnv(void);		\
-		virtual SymbolTable *GlobalEnv(void);		\
+	#define SINASTNODE_NODE_DECL(NAME)					\
+	class NAME##ASTNode : public ASTNode {				\
+    public:												\
+        NAME##ASTNode(void);							\
+        NAME##ASTNode(	String const & _name,			\
+						String const & fileName = "",	\
+						const int line = 0);			\
+        ~NAME##ASTNode(void);							\
+        virtual void Accept(ASTVisitor *);				\
+		virtual NAME##ASTNode *Clone(void) const;		\
+		virtual SymbolTable *LocalEnv(void);			\
+		virtual SymbolTable *GlobalEnv(void);			\
     }
+
+
+	///***************	SinCodeASTNode	***************
 
 	class SinCodeASTNode : public ASTNode {
 
 	public:
 
 		SinCodeASTNode(void);
-		SinCodeASTNode(String const &name);
+		SinCodeASTNode(String const &name, String const & fileName = "", const int line = 0);
 		 ~SinCodeASTNode(void);
 
 		void Accept(ASTVisitor *);
@@ -42,12 +48,16 @@ namespace SIN{
 		SymbolTable symTable;
 	};
 
+
+
+	///***************	BlockASTNode	***************
+
 	class BlockASTNode : public ASTNode {
 
 	public:
 
 		BlockASTNode(void);
-		BlockASTNode(String const &name);
+		BlockASTNode(String const &name, String const & fileName = "", const int line = 0);
 		 ~BlockASTNode(void);
 
 		void Accept(ASTVisitor *);
@@ -109,11 +119,11 @@ namespace SIN{
 
 
 	// Constants, Operators, Terminals
-		//-----------------------------------------------------------------------
+	///***************	NumberASTNode	***************
 
     class NumberASTNode : public ConstASTNode<CONST_NUMBER, Types::Number_t> {
     public:
-        NumberASTNode(Types::Number_t const &_value = 0);
+        NumberASTNode(Types::Number_t const &_value = 0, String const & fileName = "", const int line = 0);
         virtual void Accept(ASTVisitor *);
 		virtual NumberASTNode *Clone(void) const;
 		virtual SymbolTable *GlobalEnv (void);
@@ -122,11 +132,11 @@ namespace SIN{
 
 
 
-	//-----------------------------------------------------------------------
+	///***************	StringASTNode	***************
 
 	class StringASTNode : public ConstASTNode<CONST_STRING, Types::String_t> {
     public:
-        StringASTNode(Types::String_t const &_value = "");
+        StringASTNode(Types::String_t const &_value = "", String const & fileName = "", const int line = 0);
         virtual void Accept(ASTVisitor *);
 		virtual StringASTNode *Clone(void) const;
 		virtual SymbolTable *GlobalEnv (void);
@@ -135,11 +145,11 @@ namespace SIN{
 
 
 
-	//-----------------------------------------------------------------------
+	///***************	NilASTNode	***************
 
 	class NilASTNode : public ConstASTNode<CONST_NIL, Types::Nil_t> {
     public:
-        NilASTNode(void);
+        NilASTNode(String const & fileName = "", const int line = 0);
         virtual void Accept(ASTVisitor *);
 		virtual NilASTNode *Clone(void) const;
 		virtual SymbolTable *GlobalEnv (void);
@@ -148,11 +158,11 @@ namespace SIN{
 
 
 
-	//-----------------------------------------------------------------------
+	///***************	TrueASTNode	***************
 
     class TrueASTNode : public ConstASTNode<CONST_TRUE, Types::Boolean_t> {
     public:
-        TrueASTNode(void);
+        TrueASTNode(String const & fileName = "", const int line = 0);
         virtual void Accept(ASTVisitor *);
 		virtual TrueASTNode *Clone(void) const;
 		virtual SymbolTable *GlobalEnv (void);
@@ -161,11 +171,11 @@ namespace SIN{
 
 
 
-	//-----------------------------------------------------------------------
+	///***************	FalseASTNode	***************
 
     class FalseASTNode : public ConstASTNode<CONST_FALSE, Types::Boolean_t> {
     public:
-        FalseASTNode(void);
+        FalseASTNode(String const & fileName = "", const int line = 0);
         virtual void Accept(ASTVisitor *);
 		virtual FalseASTNode *Clone(void) const;
 		virtual SymbolTable *GlobalEnv (void);
@@ -176,42 +186,48 @@ namespace SIN{
 
 	//-----------------------------------------------------------------------
 
-	#define SINASTNODE_OPNODE_DECL(NAME, OPNAME)            \
-    class NAME##ASTNode : public OpASTNode<OP_##OPNAME> {   \
-    public:                                                 \
-        NAME##ASTNode(void);                                \
-        ~NAME##ASTNode(void);                               \
-        void Accept(ASTVisitor *);                          \
-		NAME##ASTNode *Clone(void) const;					\
-		virtual SymbolTable *LocalEnv(void);				\
-		virtual SymbolTable *GlobalEnv(void);				\
+	#define SINASTNODE_OPNODE_DECL(NAME, OPNAME)							\
+    class NAME##ASTNode : public OpASTNode<OP_##OPNAME> {					\
+    public:																	\
+		NAME##ASTNode(String const & fileName = "", const int line = 0);	\
+        ~NAME##ASTNode(void);												\
+        void Accept(ASTVisitor *);											\
+		NAME##ASTNode *Clone(void) const;									\
+		virtual SymbolTable *LocalEnv(void);								\
+		virtual SymbolTable *GlobalEnv(void);								\
     }
+
+
+	///***************	OpASTNode	***************
 
 	template <enum SIN::OpValueType>
     class OpASTNode : public ASTNode {
     public:
-        OpASTNode(String const &_name): ASTNode(_name) { }
-        virtual ~OpASTNode(void) { }
+        OpASTNode(String const &_name, String const & fileName = "", const int line = 0) : 
+			ASTNode(_name, fileName, line) { }
+        
+		virtual ~OpASTNode(void) { }
         virtual void Accept(ASTVisitor *) = 0;
 		virtual OpASTNode *Clone(void) const = 0;
 		virtual SymbolTable *GlobalEnv (void) = 0;
 		virtual SymbolTable *LocalEnv (void) = 0;
     };
 
-	SINASTNODE_OPNODE_DECL(Add,ADD);
-    SINASTNODE_OPNODE_DECL(Sub,SUB);
-    SINASTNODE_OPNODE_DECL(Mul,MUL);
-    SINASTNODE_OPNODE_DECL(Div,DIV);
-    SINASTNODE_OPNODE_DECL(Mod,MOD);
-    SINASTNODE_OPNODE_DECL(Lt ,LT );
-    SINASTNODE_OPNODE_DECL(Gt ,GT );
-    SINASTNODE_OPNODE_DECL(Le ,LE );
-    SINASTNODE_OPNODE_DECL(Ge ,GE );
-    SINASTNODE_OPNODE_DECL(Eq ,EQ );
-    SINASTNODE_OPNODE_DECL(Ne ,NE );
-    SINASTNODE_OPNODE_DECL(Or ,OR );
-    SINASTNODE_OPNODE_DECL(And,AND);
-    SINASTNODE_OPNODE_DECL(Not,NOT);
+
+	SINASTNODE_OPNODE_DECL(Add, ADD);
+    SINASTNODE_OPNODE_DECL(Sub, SUB);
+    SINASTNODE_OPNODE_DECL(Mul, MUL);
+    SINASTNODE_OPNODE_DECL(Div, DIV);
+    SINASTNODE_OPNODE_DECL(Mod, MOD);
+    SINASTNODE_OPNODE_DECL(Lt , LT );
+    SINASTNODE_OPNODE_DECL(Gt , GT );
+    SINASTNODE_OPNODE_DECL(Le , LE );
+    SINASTNODE_OPNODE_DECL(Ge , GE );
+    SINASTNODE_OPNODE_DECL(Eq , EQ );
+    SINASTNODE_OPNODE_DECL(Ne , NE );
+    SINASTNODE_OPNODE_DECL(Or , OR );
+    SINASTNODE_OPNODE_DECL(And, AND);
+    SINASTNODE_OPNODE_DECL(Not, NOT);
 
 } // namespace SIN
 

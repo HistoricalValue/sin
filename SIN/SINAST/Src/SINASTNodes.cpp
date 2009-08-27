@@ -1,3 +1,4 @@
+
 #include "SINASTNodes.h"
 #include "SINASTVisitor.h"
 #include "SINAssert.h"
@@ -7,7 +8,10 @@
 
 #define SINASTNODE_DEFAULT_NODE_DEFS(NAME)									\
     NAME##ASTNode::NAME##ASTNode(void):	ASTNode() {}						\
-	NAME##ASTNode::NAME##ASTNode(String const &_name): ASTNode(_name) {}	\
+	NAME##ASTNode::NAME##ASTNode(	String const &_name,					\
+									String const & fileName,				\
+									const int line)							\
+									: ASTNode(_name, fileName, line) {}		\
 	NAME##ASTNode::~NAME##ASTNode(void) {}									\
 	void NAME##ASTNode::Accept(ASTVisitor *_v) {							\
         SINASSERT(_v);														\
@@ -23,6 +27,79 @@
 		return static_cast<ASTNode*>(GetParent())->GlobalEnv();				\
 	}
 
+
+//-------------------------------------------------------------------------------------------------
+
+#define SINASTNODE_DEFAULT_CONSTNODE_DEFS(NAME, TYPE, VALTYPE)                              \
+    NAME##ASTNode::NAME##ASTNode(	VALTYPE const &_val,									\
+									String const & fileName,								\
+									const int line):										\
+		ConstASTNode<TYPE, VALTYPE>(_val, fileName, line)									\
+	{																						\
+	}																						\
+    void NAME##ASTNode::Accept(ASTVisitor *_visitor_p) {                                    \
+		assert(_visitor_p);																	\
+        _visitor_p->Visit(*this);															\
+    }																						\
+    NAME##ASTNode *NAME##ASTNode::Clone(void) const {	                                    \
+		return SINEWCLASS(NAME##ASTNode, (*this));											\
+	}																						\
+	SymbolTable *NAME##ASTNode::LocalEnv(void) {											\
+		return static_cast<ASTNode*>(GetParent())->LocalEnv();								\
+	}																						\
+	SymbolTable *NAME##ASTNode::GlobalEnv(void) {											\
+		return static_cast<ASTNode*>(GetParent())->GlobalEnv();								\
+	}
+
+//-------------------------------------------------------------------------------------------------	
+
+#define SINASTNODE_DEFAULT_VALUELESS_CONSTNODE_DEFS(NAME, TYPE, VALTYPE, VALUE)             \
+	NAME##ASTNode::NAME##ASTNode(String const & fileName, const int line)	:				\
+			ConstASTNode<TYPE, VALTYPE>(#VALUE, VALUE, fileName, line) {					\
+    }                                                                                       \
+    void NAME##ASTNode::Accept(ASTVisitor *_visitor_p) {                                    \
+		assert (_visitor_p);																\
+        _visitor_p->Visit(*this);															\
+    }																						\
+    NAME##ASTNode *NAME##ASTNode::Clone(void) const {	                                    \
+		return SINEWCLASS(NAME##ASTNode, (*this));											\
+	}																						\
+	SymbolTable *NAME##ASTNode::LocalEnv(void) {											\
+		return static_cast<ASTNode*>(GetParent())->LocalEnv();								\
+	}																						\
+	SymbolTable *NAME##ASTNode::GlobalEnv(void) {											\
+		return static_cast<ASTNode*>(GetParent())->GlobalEnv();								\
+	}
+
+
+
+//-------------------------------------------------------------------------------------------------
+
+#define SINASTNODE_DEFAULT_OPNODE_DEFS(OPNAME, OPTYPE)          	\
+	OPNAME##ASTNode::OPNAME##ASTNode(	String const & fileName,	\
+										const int line):			\
+		OpASTNode<OPTYPE>(#OPNAME, fileName, line)					\
+	{																\
+	}																\
+																	\
+	OPNAME##ASTNode::~OPNAME##ASTNode(void) {                   	\
+    }                                                           	\
+    void OPNAME##ASTNode::Accept(ASTVisitor *_visitor_p) {      	\
+		assert (_visitor_p);										\
+        _visitor_p->Visit(*this);									\
+    }																\
+    OPNAME##ASTNode *OPNAME##ASTNode::Clone(void) const {	    	\
+		return SINEWCLASS(OPNAME##ASTNode, (*this));				\
+	}																\
+	SymbolTable *OPNAME##ASTNode::LocalEnv(void) {					\
+		return static_cast<ASTNode*>(GetParent())->LocalEnv();		\
+	}																\
+	SymbolTable *OPNAME##ASTNode::GlobalEnv(void) {					\
+		return static_cast<ASTNode*>(GetParent())->GlobalEnv();		\
+	}
+
+
+
 namespace SIN{
 
 	//------ SinCodeASTNode ------------------------------
@@ -33,7 +110,10 @@ namespace SIN{
 
 	//-----------------------------------------------------------------
 
-	SinCodeASTNode::SinCodeASTNode(String const &_name) : ASTNode(_name) {}
+	SinCodeASTNode::SinCodeASTNode(	String const &_name, 
+									String const & fileName,
+									const int line) : 
+		ASTNode(_name, fileName, line) {}
 
 
 	//-----------------------------------------------------------------
@@ -51,22 +131,20 @@ namespace SIN{
 
 	//-----------------------------------------------------------------
 
-	SinCodeASTNode *SinCodeASTNode::Clone(void) const {						
-		return SINEWCLASS(SinCodeASTNode, (*this));
-	}
+	SinCodeASTNode *SinCodeASTNode::Clone(void) const 
+		{	return SINEWCLASS(SinCodeASTNode, (*this));	}
 
 
 	//-----------------------------------------------------------------
 
-	SymbolTable *SinCodeASTNode::GlobalEnv(void) {
-		return &symTable;
-	}
+	SymbolTable *SinCodeASTNode::GlobalEnv(void) 
+		{	return &symTable;	}
+
 
 	//-----------------------------------------------------------------
 
-	SymbolTable *SinCodeASTNode::LocalEnv(void) {
-		return &symTable;
-	}
+	SymbolTable *SinCodeASTNode::LocalEnv(void) 
+		{	return &symTable;	}
 
 
 	//------ BlockASTNode ------------------------------
@@ -77,7 +155,12 @@ namespace SIN{
 
 	//-----------------------------------------------------------------
 
-	BlockASTNode::BlockASTNode(String const &_name) : ASTNode(_name) {}
+	BlockASTNode::BlockASTNode(	String const &_name, 
+								String const & fileName, 
+								const int line) : 
+		ASTNode(_name, fileName, line) 
+	{
+	}
 
 
 	//-----------------------------------------------------------------
@@ -95,21 +178,18 @@ namespace SIN{
 
 	//-----------------------------------------------------------------
 
-	BlockASTNode *BlockASTNode::Clone(void) const {						
-		return SINEWCLASS(BlockASTNode, (*this));
-	}
+	BlockASTNode *BlockASTNode::Clone(void) const 
+		{	return SINEWCLASS(BlockASTNode, (*this));	}
 
 	//-----------------------------------------------------------------
 
-	SymbolTable *BlockASTNode::GlobalEnv(void) {						
-		return static_cast<ASTNode*>(GetParent())->GlobalEnv();
-	}
+	SymbolTable *BlockASTNode::GlobalEnv(void) 
+		{	return static_cast<ASTNode*>(GetParent())->GlobalEnv();	}
 
 	//-----------------------------------------------------------------
 
-	SymbolTable *BlockASTNode::LocalEnv(void) {						
-		return &symTable;
-	}
+	SymbolTable *BlockASTNode::LocalEnv(void) 
+		{	return &symTable;	}
 
 
 //	SINASTNODE_DEFAULT_NODE_DEFS(SinCode		)
@@ -155,5 +235,34 @@ namespace SIN{
 	SINASTNODE_DEFAULT_NODE_DEFS(MetaEvaluate	)
 	SINASTNODE_DEFAULT_NODE_DEFS(MetaUnparse	)
 	SINASTNODE_DEFAULT_NODE_DEFS(MetaParseString)
+
+
+
+
+
+	///--------- ConstNodes ---------
+    SINASTNODE_DEFAULT_CONSTNODE_DEFS(           Number, CONST_NUMBER, Types::Number_t			)
+    SINASTNODE_DEFAULT_CONSTNODE_DEFS(           String, CONST_STRING, Types::String_t			)
+    SINASTNODE_DEFAULT_VALUELESS_CONSTNODE_DEFS( Nil   , CONST_NIL   , Types::Nil_t    , NIL	)
+    SINASTNODE_DEFAULT_VALUELESS_CONSTNODE_DEFS( True  , CONST_TRUE  , Types::Boolean_t, TRUE	)
+    SINASTNODE_DEFAULT_VALUELESS_CONSTNODE_DEFS( False , CONST_FALSE , Types::Boolean_t, FALSE	)
+
+
+
+    ///--------- OpNodes -----------
+    SINASTNODE_DEFAULT_OPNODE_DEFS(Add, OP_ADD)
+    SINASTNODE_DEFAULT_OPNODE_DEFS(Sub, OP_SUB)
+    SINASTNODE_DEFAULT_OPNODE_DEFS(Mul, OP_MUL)
+    SINASTNODE_DEFAULT_OPNODE_DEFS(Div, OP_DIV)
+    SINASTNODE_DEFAULT_OPNODE_DEFS(Mod, OP_MOD)
+    SINASTNODE_DEFAULT_OPNODE_DEFS(Lt , OP_LT )
+    SINASTNODE_DEFAULT_OPNODE_DEFS(Gt , OP_GT )
+    SINASTNODE_DEFAULT_OPNODE_DEFS(Le , OP_LE )
+    SINASTNODE_DEFAULT_OPNODE_DEFS(Ge , OP_GE )
+    SINASTNODE_DEFAULT_OPNODE_DEFS(Eq , OP_EQ )
+    SINASTNODE_DEFAULT_OPNODE_DEFS(Ne , OP_NE )
+    SINASTNODE_DEFAULT_OPNODE_DEFS(Or , OP_OR )
+    SINASTNODE_DEFAULT_OPNODE_DEFS(And, OP_AND)
+	SINASTNODE_DEFAULT_OPNODE_DEFS(Not, OP_NOT)
 
 } // namespace SIN
