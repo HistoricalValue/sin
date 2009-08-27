@@ -1,3 +1,9 @@
+println("Testing while begin: Must print: 1,2,3,4 befor the message end");
+i = 0;
+while(i < 4) 
+	println(++i);
+println("Testing while end");
+
 a = 5 + (2*3) - (4/2) + 3%2; // a = 10
 println("a = 10: ", a);
 b = "str";

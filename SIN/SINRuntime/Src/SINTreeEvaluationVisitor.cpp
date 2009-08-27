@@ -392,12 +392,33 @@ namespace SIN{
 		SINASSERT(!"Not implemented");
 	}
 
+
+
+
+
+
+
+
+
+#define EVAL_WHILE_EXPR()			static_cast<ASTNode&>(*expr).Accept(this);					\
+									exprMemoryCell = dynamic_cast<MemoryCellBool *>(memory);	\
+									SINASSERT(exprMemoryCell)
 	//-----------------------------------------------------------------
 
 	void TreeEvaluationVisitor::Visit(WhileASTNode & _node){
-	
 		SINASSERT(_node.NumberOfChildren() == 2);
+	
+		MemoryCellBool * exprMemoryCell	= static_cast<MemoryCellBool *>(0);
+		ASTNode::iterator expr			= _node.begin();
+		ASTNode::iterator stmt			= _node.rbegin();
 
+		EVAL_WHILE_EXPR();
+
+		while(exprMemoryCell->GetValue() == true) {
+			static_cast<ASTNode&>(*stmt).Accept(this);
+
+			EVAL_WHILE_EXPR();
+		}
 	}
 
 	//-----------------------------------------------------------------
