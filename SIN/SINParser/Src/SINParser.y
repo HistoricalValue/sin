@@ -1,9 +1,3 @@
-
-/*
- * University of Crete, Greece
- * HY - 340: Languages and Compilers
- */
-
 %{
 	#include <stdio.h>
 	#include <utility>
