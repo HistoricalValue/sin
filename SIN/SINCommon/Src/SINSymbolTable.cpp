@@ -16,10 +16,8 @@ namespace SIN {
 
 	//-----------------------------------------------------------------
 
-	SymbolTable::SymbolTable(void) {
-		table.reserve(20);	
-		table.push_back(VariableHolder());
-		currScope = 0;
+	SymbolTable::SymbolTable(void): table(1), currScope(0) {
+		table.reserve(20);
 	}
 
 
@@ -76,18 +74,21 @@ namespace SIN {
 	//-----------------------------------------------------------------
 
 	void SymbolTable::IncreaseScope(void) {
+		SINASSERT(table.size() > 0);
 		++currScope;
 		table.push_back(VariableHolder());
+		SINASSERT(currScope > 0);
 	}
 	
 	
 	//-----------------------------------------------------------------
 
 	void SymbolTable::DecreaseScope(void) {
-		if (currScope > 0) {
-			--currScope;
-			table.pop_back();
-		}
+		SINASSERT(currScope > 0);
+		--currScope;
+		SINASSERT(table.size() > 1);
+		table.pop_back();
+		SINASSERT(table.size() > 0);
 	}
 
 
@@ -127,8 +128,8 @@ namespace SIN {
 
 		handler_t& entry_handler;
 		handler_t const& const_entry_handler;
-		CallableToEntryHolderAdaptor(handler_t& eh): entry_handler(eh), const_entry_handler(eh) { }
-		CallableToEntryHolderAdaptor(handler_t const& eh): entry_handler(*static_cast<handler_t*>(0x00)), const_entry_handler(eh) { }
+		explicit CallableToEntryHolderAdaptor(handler_t& eh): entry_handler(eh), const_entry_handler(*static_cast<handler_t*>(0x00)) { }
+		explicit CallableToEntryHolderAdaptor(handler_t const& eh): entry_handler(*static_cast<handler_t*>(0x00)), const_entry_handler(eh) { }
 		virtual ~CallableToEntryHolderAdaptor(void) { }
 
 		virtual bool operator ()(entry_t const& _entry)
@@ -147,14 +148,21 @@ namespace SIN {
 
 	//-----------------------------------------------------------------
 	// in current scope
-	SymbolTable::EntryHandler& SymbolTable::for_each_symbol(SymbolTable::EntryHandler& eh) const 
-		{	FOR_EACH_SYMBOL();	}
+	SymbolTable::EntryHandler& SymbolTable::for_each_symbol(SymbolTable::EntryHandler& eh) const {
+		ASSERT_CURRENT_SCOPE();
+		CallableToEntryHolderAdaptor cteha(eh);
+		table[currScope].for_each_argument(cteha);
+		return eh;
+	}
 
 	
 
 	//-----------------------------------------------------------------
 	// in current scope
-	const SymbolTable::EntryHandler& SymbolTable::for_each_symbol(const SymbolTable::EntryHandler& eh) const 
-		{	FOR_EACH_SYMBOL();	}
+	const SymbolTable::EntryHandler& SymbolTable::for_each_symbol(const SymbolTable::EntryHandler& eh) const {
+		ASSERT_CURRENT_SCOPE();
+		table[currScope].for_each_argument(CallableToEntryHolderAdaptor(eh));
+		return eh;
+	}
 
 }
