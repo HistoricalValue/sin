@@ -76,15 +76,16 @@ namespace SIN {
 	//-----------------------------------------------------------------
 
 	void SymbolTable::IncreaseScope(void) {
+		table.size() == 0 ? currScope = 0: ++currScope;
 		table.push_back(VariableHolder());
-		++currScope;
 	}
 	
 	
 	//-----------------------------------------------------------------
 
 	void SymbolTable::DecreaseScope(void) {
-		SINASSERT(!"not implemented");
+		table.pop_back();
+		table.size() == 0 ? currScope = 0 : --currScope;
 	}
 
 
