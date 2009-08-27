@@ -72,6 +72,7 @@
           <itemPath>../SINCommon/Include/SINString.h</itemPath>
           <itemPath>../SINCommon/Include/SINSymbolTable.h</itemPath>
           <itemPath>../SINCommon/Include/SINTypes.h</itemPath>
+          <itemPath>../SINCommon/Include/SINVariableHolder.h</itemPath>
         </logicalFolder>
         <logicalFolder name="Src" displayName="Src" projectFiles="true">
           <itemPath>../SINCommon/Src/SIN.cpp</itemPath>
@@ -96,6 +97,7 @@
           <itemPath>../SINCommon/Src/SINStream.cpp</itemPath>
           <itemPath>../SINCommon/Src/SINString.cpp</itemPath>
           <itemPath>../SINCommon/Src/SINSymbolTable.cpp</itemPath>
+          <itemPath>../SINCommon/Src/SINVariableHolder.cpp</itemPath>
         </logicalFolder>
       </logicalFolder>
       <logicalFolder name="SINFunctionLibrary"

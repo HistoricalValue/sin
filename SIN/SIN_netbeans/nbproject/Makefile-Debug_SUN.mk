@@ -60,6 +60,7 @@ OBJECTFILES= \
 	${OBJECTDIR}/_ext/_DOTDOT/SINCommon/Src/SINMemoryCellObject.o \
 	${OBJECTDIR}/_ext/_DOTDOT/SINParser/Src/SINParserAPI.o \
 	${OBJECTDIR}/_ext/_DOTDOT/SINCommon/Src/SINMemoryCellNumber.o \
+	${OBJECTDIR}/_ext/_DOTDOT/SINCommon/Src/SINVariableHolder.o \
 	${OBJECTDIR}/_ext/_DOTDOT/SINAlloc/Src/SINAlloc.o \
 	${OBJECTDIR}/_ext/_DOTDOT/Tests/SINAST_Test/Src/SINAST_StrictTreeNode_Tester.o \
 	${OBJECTDIR}/_ext/_DOTDOT/Common/Src/Common.o \
@@ -262,6 +263,11 @@ ${OBJECTDIR}/_ext/_DOTDOT/SINCommon/Src/SINMemoryCellNumber.o: nbproject/Makefil
 	${MKDIR} -p ${OBJECTDIR}/_ext/_DOTDOT/SINCommon/Src
 	${RM} $@.d
 	$(COMPILE.cc) -g -w -I../Common/Include -I../SINAlloc/Include -I../SINAST/Include -I../SINCommon/Include -I../SINLogging/Include -I../SINmain/Include -I../SINParser/Include -I../SINRuntime/Include -I../Tests/SINAlloc_Test/Include -I../Tests/SINAST_Test/Include -I../Tests/SINCommon_Test/Include -I../Tests/SINLogging_Test/Include -I../Tests/SINParser_Test/Include -I../Tests/SINRun_Test/Include -I../Tests/SINSymbolTable_Test/Include -I../Tests/SINTest/Include -MMD -MP -MF $@.d -o ${OBJECTDIR}/_ext/_DOTDOT/SINCommon/Src/SINMemoryCellNumber.o ../SINCommon/Src/SINMemoryCellNumber.cpp
+
+${OBJECTDIR}/_ext/_DOTDOT/SINCommon/Src/SINVariableHolder.o: nbproject/Makefile-${CND_CONF}.mk ../SINCommon/Src/SINVariableHolder.cpp 
+	${MKDIR} -p ${OBJECTDIR}/_ext/_DOTDOT/SINCommon/Src
+	${RM} $@.d
+	$(COMPILE.cc) -g -w -I../Common/Include -I../SINAlloc/Include -I../SINAST/Include -I../SINCommon/Include -I../SINLogging/Include -I../SINmain/Include -I../SINParser/Include -I../SINRuntime/Include -I../Tests/SINAlloc_Test/Include -I../Tests/SINAST_Test/Include -I../Tests/SINCommon_Test/Include -I../Tests/SINLogging_Test/Include -I../Tests/SINParser_Test/Include -I../Tests/SINRun_Test/Include -I../Tests/SINSymbolTable_Test/Include -I../Tests/SINTest/Include -MMD -MP -MF $@.d -o ${OBJECTDIR}/_ext/_DOTDOT/SINCommon/Src/SINVariableHolder.o ../SINCommon/Src/SINVariableHolder.cpp
 
 ${OBJECTDIR}/_ext/_DOTDOT/SINAlloc/Src/SINAlloc.o: nbproject/Makefile-${CND_CONF}.mk ../SINAlloc/Src/SINAlloc.cpp 
 	${MKDIR} -p ${OBJECTDIR}/_ext/_DOTDOT/SINAlloc/Src
