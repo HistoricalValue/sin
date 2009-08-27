@@ -14,7 +14,7 @@ namespace SIN {
 	
 	//-----------------------------------------------------------------
 
-	void ParserManage::Manage_AssignExpression (ASTNode *_lvalue, ASTNode *_expr, ASTNode **_retassignexpr, LexAndBisonParseArguments *_lbpa) {
+	void ParserManage::Manage_AssignExpression (const int lineNo, ASTNode *_lvalue, ASTNode *_expr, ASTNode **_retassignexpr, LexAndBisonParseArguments *_lbpa) {
 		SIN::Logger &logger = SIN::LoggerManager::SingletonGetInstance()->GetLogger("SIN::Tests::Parser::Manage");
 		logger.Notice("Entered lvalue = expr Rule");
 		*_retassignexpr = SINEWCLASS(AssignASTNode, ("="));
@@ -29,7 +29,7 @@ namespace SIN {
 
 	//-----------------------------------------------------------------
 
-	void ParserManage::Manage_MetaExpression_ShiftToMetaExpression (ASTNode *_expr, ASTNode **_retmetaexpr, LexAndBisonParseArguments *_lbpa){
+	void ParserManage::Manage_MetaExpression_ShiftToMetaExpression (const int lineNo, ASTNode *_expr, ASTNode **_retmetaexpr, LexAndBisonParseArguments *_lbpa){
 		*_retmetaexpr = SINEWCLASS(MetaParseASTNode, (".<>."));
 		_lbpa->AppendToNodeList(*_retmetaexpr);
 
@@ -38,7 +38,7 @@ namespace SIN {
 
 	//-----------------------------------------------------------------
 
-	void ParserManage::Manage_MetaExpression_PreserveAST_ID (char *_id, ASTNode **_retmetaexpr, LexAndBisonParseArguments *_lbpa){
+	void ParserManage::Manage_MetaExpression_PreserveAST_ID (const int lineNo, char *_id, ASTNode **_retmetaexpr, LexAndBisonParseArguments *_lbpa){
 		*_retmetaexpr = SINEWCLASS(MetaPreserveASTNode, (".~"));
 		IDASTNode *id = SINEWCLASS(IDASTNode, (_id));
 		_lbpa->AppendToNodeList(*_retmetaexpr);
@@ -51,7 +51,7 @@ namespace SIN {
 
 	//-----------------------------------------------------------------
 
-	void ParserManage::Manage_MetaExpression_CompileMetaExpression (ASTNode *_metaexpr, ASTNode **_retmetaexpr, LexAndBisonParseArguments *_lbpa){
+	void ParserManage::Manage_MetaExpression_CompileMetaExpression (const int lineNo, ASTNode *_metaexpr, ASTNode **_retmetaexpr, LexAndBisonParseArguments *_lbpa){
 		*_retmetaexpr = SINEWCLASS(MetaEvaluateASTNode, (".!"));
 		_lbpa->AppendToNodeList(*_retmetaexpr);
 
@@ -60,7 +60,7 @@ namespace SIN {
 
 	//-----------------------------------------------------------------
 
-	void ParserManage::Manage_Expression_UnparseMetaExpression (ASTNode *_expr, ASTNode **_retmetaexpr, LexAndBisonParseArguments *_lbpa){
+	void ParserManage::Manage_Expression_UnparseMetaExpression (const int lineNo, ASTNode *_expr, ASTNode **_retmetaexpr, LexAndBisonParseArguments *_lbpa){
 		*_retmetaexpr = SINEWCLASS(MetaEvaluateASTNode, (".#"));
 		_lbpa->AppendToNodeList(*_retmetaexpr);
 
@@ -69,7 +69,7 @@ namespace SIN {
 
 	//-----------------------------------------------------------------
 
-	void ParserManage::Manage_MetaExpression_ParseString (char *_expr, ASTNode **_retmetaexpr, LexAndBisonParseArguments *_lbpa){
+	void ParserManage::Manage_MetaExpression_ParseString (const int lineNo, char *_expr, ASTNode **_retmetaexpr, LexAndBisonParseArguments *_lbpa){
 		*_retmetaexpr = SINEWCLASS(MetaEvaluateASTNode, (".@"));
 		StringASTNode *expr = SINEWCLASS(StringASTNode, (_expr));
 		_lbpa->AppendToNodeList(*_retmetaexpr);
@@ -86,7 +86,7 @@ namespace SIN {
 
 	//-----------------------------------------------------------------
 
-	void ParserManage::Manage_Block	(ASTNode *_stmtd, ASTNode **_retblock, LexAndBisonParseArguments *_lbpa) {
+	void ParserManage::Manage_Block	(const int lineNo, ASTNode *_stmtd, ASTNode **_retblock, LexAndBisonParseArguments *_lbpa) {
 		*_retblock = SINEWCLASS(BlockASTNode, ("Block"));
 		_lbpa->AppendToNodeList(*_retblock);
 
@@ -100,7 +100,7 @@ namespace SIN {
 	
 	//-----------------------------------------------------------------
 
-	void ParserManage::Manage_Call_CallCallSuffix (ASTNode *_call, ASTNode *_callsuffix, ASTNode **_retcall, LexAndBisonParseArguments *_lbpa) {	
+	void ParserManage::Manage_Call_CallCallSuffix (const int lineNo, ASTNode *_call, ASTNode *_callsuffix, ASTNode **_retcall, LexAndBisonParseArguments *_lbpa) {	
 		*_retcall = _callsuffix;
 		*SINPTR(_call) >> **_retcall;
 	}
@@ -108,7 +108,7 @@ namespace SIN {
 
 	//-----------------------------------------------------------------
 
-	void ParserManage::Manage_Call_LValueCallSuffix (ASTNode *_lvalue, ASTNode *_callsuffix, ASTNode **_retcall, LexAndBisonParseArguments *_lbpa) {	
+	void ParserManage::Manage_Call_LValueCallSuffix (const int lineNo, ASTNode *_lvalue, ASTNode *_callsuffix, ASTNode **_retcall, LexAndBisonParseArguments *_lbpa) {	
 		*_retcall = _callsuffix;
 		*SINPTR(_lvalue) >> **_retcall;
 	}
@@ -116,7 +116,7 @@ namespace SIN {
 
 	//-----------------------------------------------------------------
 
-	void ParserManage::Manage_Call_FunctionDefinitionExpressionList	(ASTNode *_funcdef, ASTNode *_elist, ASTNode **_retcall, LexAndBisonParseArguments *_lbpa) {
+	void ParserManage::Manage_Call_FunctionDefinitionExpressionList	(const int lineNo, ASTNode *_funcdef, ASTNode *_elist, ASTNode **_retcall, LexAndBisonParseArguments *_lbpa) {
 		*_retcall = SINEWCLASS(FuncdefCallASTNode, ("funcdef call"));
 		_lbpa->AppendToNodeList(*_retcall);
 
@@ -135,13 +135,13 @@ namespace SIN {
 
 	//-----------------------------------------------------------------
 	
-	void ParserManage::Manage_CallSuffix_NormalCall (ASTNode *_normalcall, ASTNode **_retcallsuffix, LexAndBisonParseArguments *_lbpa) 
+	void ParserManage::Manage_CallSuffix_NormalCall (const int lineNo, ASTNode *_normalcall, ASTNode **_retcallsuffix, LexAndBisonParseArguments *_lbpa) 
 		{ *_retcallsuffix = _normalcall; }
 
 
 	//-----------------------------------------------------------------
 
-	void ParserManage::Manage_CallSuffix_MethodCall (ASTNode *_methodcall, ASTNode **_retcallsuffix, LexAndBisonParseArguments *_lbpa) 
+	void ParserManage::Manage_CallSuffix_MethodCall (const int lineNo, ASTNode *_methodcall, ASTNode **_retcallsuffix, LexAndBisonParseArguments *_lbpa) 
 		{ *_retcallsuffix = _methodcall; }
 
 
@@ -150,7 +150,7 @@ namespace SIN {
 	
 	//-----------------------------------------------------------------
 	
-	void ParserManage::Manage_Constant_Number (double _number, ASTNode **_retconst, LexAndBisonParseArguments *_lbpa) {
+	void ParserManage::Manage_Constant_Number (const int lineNo, double _number, ASTNode **_retconst, LexAndBisonParseArguments *_lbpa) {
 		SIN::Logger &logger = SIN::LoggerManager::SingletonGetInstance()->GetLogger("SIN::Tests::Parser::Manage");
 		logger.Notice(SIN::String("Entered const : Number Rule. Number ") + SIN::to_string(_number));
 
@@ -161,7 +161,7 @@ namespace SIN {
 
 	//-----------------------------------------------------------------
 	
-	void ParserManage::Manage_Constant_String (char *_string, ASTNode **_retconst, LexAndBisonParseArguments *_lbpa) {
+	void ParserManage::Manage_Constant_String (const int lineNo, char *_string, ASTNode **_retconst, LexAndBisonParseArguments *_lbpa) {
 		SIN::Logger &logger = SIN::LoggerManager::SingletonGetInstance()->GetLogger("SIN::Tests::Parser::Manage");
 		logger.Notice(SIN::String("Entered const : string Rule. String ") + SIN::String(_string));
 
@@ -176,7 +176,7 @@ namespace SIN {
 
 	//-----------------------------------------------------------------
 	
-	void ParserManage::Manage_Constant_Nil (ASTNode **_retconst, LexAndBisonParseArguments *_lbpa){
+	void ParserManage::Manage_Constant_Nil (const int lineNo, ASTNode **_retconst, LexAndBisonParseArguments *_lbpa){
 		*_retconst = SINEWCLASS(NilASTNode, ());
 		_lbpa->AppendToNodeList(*_retconst);
 	}
@@ -184,7 +184,7 @@ namespace SIN {
 
 	//-----------------------------------------------------------------
 	
-	void ParserManage::Manage_Constant_True (ASTNode **_retconst, LexAndBisonParseArguments *_lbpa){
+	void ParserManage::Manage_Constant_True (const int lineNo, ASTNode **_retconst, LexAndBisonParseArguments *_lbpa){
 		*_retconst = SINEWCLASS(TrueASTNode, ());
 		_lbpa->AppendToNodeList(*_retconst);
 	}
@@ -192,7 +192,7 @@ namespace SIN {
 
 	//-----------------------------------------------------------------
 	
-	void ParserManage::Manage_Constant_False	(ASTNode **_retconst, LexAndBisonParseArguments *_lbpa){
+	void ParserManage::Manage_Constant_False	(const int lineNo, ASTNode **_retconst, LexAndBisonParseArguments *_lbpa){
 		*_retconst = SINEWCLASS(FalseASTNode, ());
 		_lbpa->AppendToNodeList(*_retconst);
 	}
@@ -204,14 +204,14 @@ namespace SIN {
 	
 	//---------------------------------------------------------------------
 
-	void ParserManage::Manage_Expression_AssignExpression (ASTNode *_assignexpr, ASTNode **_retexpr, LexAndBisonParseArguments *_lbpa){
+	void ParserManage::Manage_Expression_AssignExpression (const int lineNo, ASTNode *_assignexpr, ASTNode **_retexpr, LexAndBisonParseArguments *_lbpa){
 
 		*_retexpr = _assignexpr;
 	}
 
 	//---------------------------------------------------------------------
 
-	void ParserManage::Manage_Expression_ExpressionADDExpression (ASTNode *_expr1, ASTNode *_expr2, ASTNode **_retexpr, LexAndBisonParseArguments *_lbpa){
+	void ParserManage::Manage_Expression_ExpressionADDExpression (const int lineNo, ASTNode *_expr1, ASTNode *_expr2, ASTNode **_retexpr, LexAndBisonParseArguments *_lbpa){
 
 		*_retexpr = SINEWCLASS(AddASTNode, ());
 		_lbpa->AppendToNodeList(*_retexpr);
@@ -221,7 +221,7 @@ namespace SIN {
 
 	//---------------------------------------------------------------------
 
-	void ParserManage::Manage_Expression_ExpressionMINExpression (ASTNode *_expr1, ASTNode *_expr2, ASTNode **_retexpr, LexAndBisonParseArguments *_lbpa){
+	void ParserManage::Manage_Expression_ExpressionMINExpression (const int lineNo, ASTNode *_expr1, ASTNode *_expr2, ASTNode **_retexpr, LexAndBisonParseArguments *_lbpa){
 
 		*_retexpr = SINEWCLASS(SubASTNode, ());
 		_lbpa->AppendToNodeList(*_retexpr);
@@ -231,7 +231,7 @@ namespace SIN {
 
 	//---------------------------------------------------------------------
 
-	void ParserManage::Manage_Expression_ExpressionMULExpression (ASTNode *_expr1, ASTNode *_expr2, ASTNode **_retexpr, LexAndBisonParseArguments *_lbpa){
+	void ParserManage::Manage_Expression_ExpressionMULExpression (const int lineNo, ASTNode *_expr1, ASTNode *_expr2, ASTNode **_retexpr, LexAndBisonParseArguments *_lbpa){
 
 		*_retexpr = SINEWCLASS(MulASTNode, ());
 		_lbpa->AppendToNodeList(*_retexpr);
@@ -241,7 +241,7 @@ namespace SIN {
 
 	//---------------------------------------------------------------------
 
-	void ParserManage::Manage_Expression_ExpressionDIVExpression (ASTNode *_expr1, ASTNode *_expr2, ASTNode **_retexpr, LexAndBisonParseArguments *_lbpa){
+	void ParserManage::Manage_Expression_ExpressionDIVExpression (const int lineNo, ASTNode *_expr1, ASTNode *_expr2, ASTNode **_retexpr, LexAndBisonParseArguments *_lbpa){
 
 		*_retexpr = SINEWCLASS(DivASTNode, ());
 		_lbpa->AppendToNodeList(*_retexpr);
@@ -251,7 +251,7 @@ namespace SIN {
 
 	//---------------------------------------------------------------------
 	
-	void ParserManage::Manage_Expression_ExpressionMODExpression (ASTNode *_expr1, ASTNode *_expr2, ASTNode **_retexpr, LexAndBisonParseArguments *_lbpa){
+	void ParserManage::Manage_Expression_ExpressionMODExpression (const int lineNo, ASTNode *_expr1, ASTNode *_expr2, ASTNode **_retexpr, LexAndBisonParseArguments *_lbpa){
 
 		*_retexpr = SINEWCLASS(ModASTNode, ());
 		_lbpa->AppendToNodeList(*_retexpr);
@@ -261,7 +261,7 @@ namespace SIN {
 
 	//---------------------------------------------------------------------
 
-	void ParserManage::Manage_Expression_ExpressionGTExpression (ASTNode *_expr1, ASTNode *_expr2, ASTNode **_retexpr, LexAndBisonParseArguments *_lbpa){
+	void ParserManage::Manage_Expression_ExpressionGTExpression (const int lineNo, ASTNode *_expr1, ASTNode *_expr2, ASTNode **_retexpr, LexAndBisonParseArguments *_lbpa){
 
 		*_retexpr = SINEWCLASS(GtASTNode, ());
 		_lbpa->AppendToNodeList(*_retexpr);
@@ -271,7 +271,7 @@ namespace SIN {
 
 	//---------------------------------------------------------------------
 
-	void ParserManage::Manage_Expression_ExpressionGEExpression (ASTNode *_expr1, ASTNode *_expr2, ASTNode **_retexpr, LexAndBisonParseArguments *_lbpa){
+	void ParserManage::Manage_Expression_ExpressionGEExpression (const int lineNo, ASTNode *_expr1, ASTNode *_expr2, ASTNode **_retexpr, LexAndBisonParseArguments *_lbpa){
 
 		*_retexpr = SINEWCLASS(GeASTNode, ());
 		_lbpa->AppendToNodeList(*_retexpr);
@@ -281,7 +281,7 @@ namespace SIN {
 
 	//---------------------------------------------------------------------
 
-	void ParserManage::Manage_Expression_ExpressionLTExpression (ASTNode *_expr1, ASTNode *_expr2, ASTNode **_retexpr, LexAndBisonParseArguments *_lbpa){
+	void ParserManage::Manage_Expression_ExpressionLTExpression (const int lineNo, ASTNode *_expr1, ASTNode *_expr2, ASTNode **_retexpr, LexAndBisonParseArguments *_lbpa){
 
 		*_retexpr = SINEWCLASS(LtASTNode, ());
 		_lbpa->AppendToNodeList(*_retexpr);
@@ -291,7 +291,7 @@ namespace SIN {
 
 	//---------------------------------------------------------------------
 
-	void ParserManage::Manage_Expression_ExpressionLEExpression (ASTNode *_expr1, ASTNode *_expr2, ASTNode **_retexpr, LexAndBisonParseArguments *_lbpa){
+	void ParserManage::Manage_Expression_ExpressionLEExpression (const int lineNo, ASTNode *_expr1, ASTNode *_expr2, ASTNode **_retexpr, LexAndBisonParseArguments *_lbpa){
 
 		*_retexpr = SINEWCLASS(LeASTNode, ());
 		_lbpa->AppendToNodeList(*_retexpr);
@@ -301,7 +301,7 @@ namespace SIN {
 
 	//---------------------------------------------------------------------
 
-	void ParserManage::Manage_Expression_ExpressionEQExpression (ASTNode *_expr1, ASTNode *_expr2, ASTNode **_retexpr, LexAndBisonParseArguments *_lbpa){
+	void ParserManage::Manage_Expression_ExpressionEQExpression (const int lineNo, ASTNode *_expr1, ASTNode *_expr2, ASTNode **_retexpr, LexAndBisonParseArguments *_lbpa){
 
 		*_retexpr = SINEWCLASS(EqASTNode, ());
 		_lbpa->AppendToNodeList(*_retexpr);
@@ -311,7 +311,7 @@ namespace SIN {
 
 	//---------------------------------------------------------------------
 
-	void ParserManage::Manage_Expression_ExpressionNOTEQExpression (ASTNode *_expr1, ASTNode *_expr2, ASTNode **_retexpr, LexAndBisonParseArguments *_lbpa){
+	void ParserManage::Manage_Expression_ExpressionNOTEQExpression (const int lineNo, ASTNode *_expr1, ASTNode *_expr2, ASTNode **_retexpr, LexAndBisonParseArguments *_lbpa){
 
 		*_retexpr = SINEWCLASS(NeASTNode, ());
 		_lbpa->AppendToNodeList(*_retexpr);
@@ -321,7 +321,7 @@ namespace SIN {
 
 	//---------------------------------------------------------------------
 
-	void ParserManage::Manage_Expression_ExpressionANDExpression (ASTNode *_expr1, ASTNode *_expr2, ASTNode **_retexpr, LexAndBisonParseArguments *_lbpa){
+	void ParserManage::Manage_Expression_ExpressionANDExpression (const int lineNo, ASTNode *_expr1, ASTNode *_expr2, ASTNode **_retexpr, LexAndBisonParseArguments *_lbpa){
 
 		*_retexpr = SINEWCLASS(AndASTNode, ());
 		_lbpa->AppendToNodeList(*_retexpr);
@@ -331,7 +331,7 @@ namespace SIN {
 
 	//---------------------------------------------------------------------
 
-	void ParserManage::Manage_Expression_ExpressionORExpression (ASTNode *_expr1, ASTNode *_expr2, ASTNode **_retexpr, LexAndBisonParseArguments *_lbpa){
+	void ParserManage::Manage_Expression_ExpressionORExpression (const int lineNo, ASTNode *_expr1, ASTNode *_expr2, ASTNode **_retexpr, LexAndBisonParseArguments *_lbpa){
 
 		*_retexpr = SINEWCLASS(OrASTNode, ());
 		_lbpa->AppendToNodeList(*_retexpr);
@@ -341,14 +341,14 @@ namespace SIN {
 
 	//---------------------------------------------------------------------
 
-	void ParserManage::Manage_Expression_MetaExpression (ASTNode *_metaexpr, ASTNode **_retexpr, LexAndBisonParseArguments *_lbpa){
+	void ParserManage::Manage_Expression_MetaExpression (const int lineNo, ASTNode *_metaexpr, ASTNode **_retexpr, LexAndBisonParseArguments *_lbpa){
 
 		*_retexpr = _metaexpr;
 	}
 
 	//---------------------------------------------------------------------
 
-	void ParserManage::Manage_Expression_Term (ASTNode *_term, ASTNode **_retexpr, LexAndBisonParseArguments *_lbpa){
+	void ParserManage::Manage_Expression_Term (const int lineNo, ASTNode *_term, ASTNode **_retexpr, LexAndBisonParseArguments *_lbpa){
 
 		SIN::Logger &logger = SIN::LoggerManager::SingletonGetInstance()->GetLogger("SIN::Tests::Parser::Manage");
 		logger.Notice("Entered expr : term Rule");
@@ -359,7 +359,7 @@ namespace SIN {
 
 	//////////////////////////////////////////////////////////
 	// Manage  expression list
-	void ParserManage::Manage_ExpressionList (ASTNode *_expr, ASTNode *_elists, ASTNode **_retelist, LexAndBisonParseArguments *_lbpa) {
+	void ParserManage::Manage_ExpressionList (const int lineNo, ASTNode *_expr, ASTNode *_elists, ASTNode **_retelist, LexAndBisonParseArguments *_lbpa) {
 		*_retelist = _expr;
 
 		if(_elists != NULL)
@@ -370,7 +370,7 @@ namespace SIN {
 	
 	//-----------------------------------------------------------------
 
-	void ParserManage::Manage_ExpressionList_Empty (ASTNode **_retelist, LexAndBisonParseArguments *_lbpa)
+	void ParserManage::Manage_ExpressionList_Empty (const int lineNo, ASTNode **_retelist, LexAndBisonParseArguments *_lbpa)
 		{ *_retelist = NULL; }
 
 
@@ -380,7 +380,7 @@ namespace SIN {
 	
 	//-----------------------------------------------------------------
 
-	void ParserManage::Manage_ForStatement (ASTNode *_elist1, ASTNode *_expr, ASTNode *_elist2, ASTNode *_stmt, ASTNode **_retforstmt, LexAndBisonParseArguments *_lbpa) {
+	void ParserManage::Manage_ForStatement (const int lineNo, ASTNode *_elist1, ASTNode *_expr, ASTNode *_elist2, ASTNode *_stmt, ASTNode **_retforstmt, LexAndBisonParseArguments *_lbpa) {
 		*_retforstmt = SINEWCLASS(ForASTNode, ("for"));
 		_lbpa->AppendToNodeList(*_retforstmt);
 
@@ -406,7 +406,7 @@ namespace SIN {
 
 	//-----------------------------------------------------------------
 	
-	void ParserManage::Manage_WhileStatement (ASTNode *_expr, ASTNode *_stmt, ASTNode **_retwhilestmt, LexAndBisonParseArguments *_lbpa) {
+	void ParserManage::Manage_WhileStatement (const int lineNo, ASTNode *_expr, ASTNode *_stmt, ASTNode **_retwhilestmt, LexAndBisonParseArguments *_lbpa) {
 		*_retwhilestmt = SINEWCLASS(WhileASTNode, ("while"));
 		_lbpa->AppendToNodeList(*_retwhilestmt);
 
@@ -419,7 +419,7 @@ namespace SIN {
 
 	//-----------------------------------------------------------------
 	
-	void ParserManage::Manage_FunctionDefinition_Function (char *_id, ASTNode *_idlist, ASTNode *_block, ASTNode **_retfuncdef, LexAndBisonParseArguments *_lbpa) {
+	void ParserManage::Manage_FunctionDefinition_Function (const int lineNo, char *_id, ASTNode *_idlist, ASTNode *_block, ASTNode **_retfuncdef, LexAndBisonParseArguments *_lbpa) {
 		*_retfuncdef = SINEWCLASS(FunctionASTNode, (_id));
 		_lbpa->AppendToNodeList(*_retfuncdef);
 
@@ -438,7 +438,7 @@ namespace SIN {
 	
 	//-----------------------------------------------------------------
 	
-	void ParserManage::Manage_FunctionDefinition_LamdaFunction (ASTNode *_idlist, ASTNode *_block, ASTNode **_retfuncdef, LexAndBisonParseArguments *_lbpa) {
+	void ParserManage::Manage_FunctionDefinition_LamdaFunction (const int lineNo, ASTNode *_idlist, ASTNode *_block, ASTNode **_retfuncdef, LexAndBisonParseArguments *_lbpa) {
 		*_retfuncdef = SINEWCLASS(LamdaFunctionASTNode, ());
 		_lbpa->AppendToNodeList(*_retfuncdef);
 
@@ -458,7 +458,7 @@ namespace SIN {
 
 	//-----------------------------------------------------------------
 	
-	void ParserManage::Manage_IDList (char *_id, ASTNode *_idlists, ASTNode **_retidlist, LexAndBisonParseArguments *_lbpa) {
+	void ParserManage::Manage_IDList (const int lineNo, char *_id, ASTNode *_idlists, ASTNode **_retidlist, LexAndBisonParseArguments *_lbpa) {
 		*_retidlist = SINEWCLASS(StringASTNode, (_id));
 		_lbpa->AppendToNodeList(*_retidlist);
 
@@ -471,7 +471,7 @@ namespace SIN {
 	
 	//-----------------------------------------------------------------
 
-	void ParserManage::Manage_IDList_Empty (ASTNode **_retidlist, LexAndBisonParseArguments *_lbpa)
+	void ParserManage::Manage_IDList_Empty (const int lineNo, ASTNode **_retidlist, LexAndBisonParseArguments *_lbpa)
 		{ *_retidlist = NULL; }
 
 
@@ -480,7 +480,7 @@ namespace SIN {
 	
 	//-----------------------------------------------------------------
 
-	void ParserManage::Manage_IfStatement_If	(ASTNode *_expr, ASTNode *_stmt, ASTNode **_retifstmt, LexAndBisonParseArguments *_lbpa) {
+	void ParserManage::Manage_IfStatement_If	(const int lineNo, ASTNode *_expr, ASTNode *_stmt, ASTNode **_retifstmt, LexAndBisonParseArguments *_lbpa) {
 		*_retifstmt = SINEWCLASS(IfASTNode, ("if"));
 		_lbpa->AppendToNodeList(*_retifstmt);
 
@@ -490,7 +490,7 @@ namespace SIN {
 	
 	//-----------------------------------------------------------------
 
-	void ParserManage::Manage_IfStatement_IfElse	(ASTNode *_expr, ASTNode *_stmt1, ASTNode *_stmt2, ASTNode **_retifstmt, LexAndBisonParseArguments *_lbpa) {
+	void ParserManage::Manage_IfStatement_IfElse	(const int lineNo, ASTNode *_expr, ASTNode *_stmt1, ASTNode *_stmt2, ASTNode **_retifstmt, LexAndBisonParseArguments *_lbpa) {
 		*_retifstmt = SINEWCLASS(IfElseASTNode, ("if else"));
 		_lbpa->AppendToNodeList(*_retifstmt);
 
@@ -503,7 +503,7 @@ namespace SIN {
 
 	//-----------------------------------------------------------------
 	
-	void ParserManage::Manage_LValue_ID (char *_id, ASTNode **_retlvalue, LexAndBisonParseArguments *_lbpa) {
+	void ParserManage::Manage_LValue_ID (const int lineNo, char *_id, ASTNode **_retlvalue, LexAndBisonParseArguments *_lbpa) {
 		SIN::Logger &logger = SIN::LoggerManager::SingletonGetInstance()->GetLogger("SIN::Tests::Parser::Manage");
 		logger.Notice(SIN::String("Entered lvalue : id Rule. ID = ") + SIN::String(_id));
 
@@ -516,7 +516,7 @@ namespace SIN {
 	
 	//-----------------------------------------------------------------
 
-	void ParserManage::Manage_LValue_LocalID (char *_localID, ASTNode **_retlvalue, LexAndBisonParseArguments *_lbpa){
+	void ParserManage::Manage_LValue_LocalID (const int lineNo, char *_localID, ASTNode **_retlvalue, LexAndBisonParseArguments *_lbpa){
 		*_retlvalue = SINEWCLASS(LocalIDASTNode, (to_string("local ") << _localID));
 		_lbpa->AppendToNodeList(*_retlvalue);
 
@@ -526,7 +526,7 @@ namespace SIN {
 	
 	//-----------------------------------------------------------------
 
-	void ParserManage::Manage_LValue_GlobalID (char *_globalID, ASTNode **_retlvalue, LexAndBisonParseArguments *_lbpa){
+	void ParserManage::Manage_LValue_GlobalID (const int lineNo, char *_globalID, ASTNode **_retlvalue, LexAndBisonParseArguments *_lbpa){
 		*_retlvalue = SINEWCLASS(GlobalIDASTNode, (to_string("global ") << _globalID));
 		_lbpa->AppendToNodeList(*_retlvalue);
 
@@ -536,7 +536,7 @@ namespace SIN {
 	
 	//-----------------------------------------------------------------
 
-	void ParserManage::Manage_LValue_Member	(ASTNode *_member, ASTNode **_retlvalue, LexAndBisonParseArguments *_lbpa)
+	void ParserManage::Manage_LValue_Member	(const int lineNo, ASTNode *_member, ASTNode **_retlvalue, LexAndBisonParseArguments *_lbpa)
 		{ *_retlvalue = _member; }
 
 
@@ -545,7 +545,7 @@ namespace SIN {
 	
 	//-----------------------------------------------------------------
 
-	void ParserManage::Manage_Member_LValueID (ASTNode *_lvalue, char *_id, ASTNode **_retmember, LexAndBisonParseArguments *_lbpa) {
+	void ParserManage::Manage_Member_LValueID (const int lineNo, ASTNode *_lvalue, char *_id, ASTNode **_retmember, LexAndBisonParseArguments *_lbpa) {
 		*_retmember = SINEWCLASS(ObjectMemberASTNode, ("lv.id"));
 		IDASTNode *id = SINEWCLASS(IDASTNode, (_id));
 		_lbpa->AppendToNodeList(*_retmember);
@@ -559,7 +559,7 @@ namespace SIN {
 	
 	//-----------------------------------------------------------------
 
-	void ParserManage::Manage_Member_LValueExpression (ASTNode *_lvalue, ASTNode *_expr, ASTNode **_retmember, LexAndBisonParseArguments *_lbpa) {
+	void ParserManage::Manage_Member_LValueExpression (const int lineNo, ASTNode *_lvalue, ASTNode *_expr, ASTNode **_retmember, LexAndBisonParseArguments *_lbpa) {
 		*_retmember = SINEWCLASS(ObjectIndexASTNode, ("lv[expr]"));
 		_lbpa->AppendToNodeList(*_retmember);
 
@@ -569,7 +569,7 @@ namespace SIN {
 	
 	//-----------------------------------------------------------------
 
-	void ParserManage::Manage_Member_CallID (ASTNode *_call, char *_id, ASTNode **_retmember, LexAndBisonParseArguments *_lbpa) {
+	void ParserManage::Manage_Member_CallID (const int lineNo, ASTNode *_call, char *_id, ASTNode **_retmember, LexAndBisonParseArguments *_lbpa) {
 		*_retmember = SINEWCLASS(CallMemberASTNode, ("call.id"));
 		IDASTNode *id = SINEWCLASS(IDASTNode, (_id));
 		_lbpa->AppendToNodeList(*_retmember);
@@ -583,7 +583,7 @@ namespace SIN {
 	
 	//-----------------------------------------------------------------
 
-	void ParserManage::Manage_Member_CallExpression (ASTNode *_call, ASTNode *_expr, ASTNode **_retmember, LexAndBisonParseArguments *_lbpa) {
+	void ParserManage::Manage_Member_CallExpression (const int lineNo, ASTNode *_call, ASTNode *_expr, ASTNode **_retmember, LexAndBisonParseArguments *_lbpa) {
 		*_retmember = SINEWCLASS(CallIndexASTNode, ("call[expr]"));
 		_lbpa->AppendToNodeList(*_retmember);
 
@@ -596,7 +596,7 @@ namespace SIN {
 	
 	//-----------------------------------------------------------------
 
-	void ParserManage::Manage_MethodCall (char *_id, ASTNode *_elist, ASTNode **_retmethodcall, LexAndBisonParseArguments *_lbpa) {
+	void ParserManage::Manage_MethodCall (const int lineNo, char *_id, ASTNode *_elist, ASTNode **_retmethodcall, LexAndBisonParseArguments *_lbpa) {
 		*_retmethodcall = SINEWCLASS(MethodCallASTNode, ("Method call"));
 		IDASTNode *id = SINEWCLASS(IDASTNode, (_id));
 		_lbpa->AppendToNodeList(*_retmethodcall);
@@ -619,7 +619,7 @@ namespace SIN {
 	
 	//-----------------------------------------------------------------
 
-	void ParserManage::Manage_NormalCall (ASTNode *_elist, ASTNode **_retnormalcall, LexAndBisonParseArguments *_lbpa) {
+	void ParserManage::Manage_NormalCall (const int lineNo, ASTNode *_elist, ASTNode **_retnormalcall, LexAndBisonParseArguments *_lbpa) {
 		*_retnormalcall = SINEWCLASS(NormalCallASTNode, ("Normal Call"));
 		_lbpa->AppendToNodeList(*_retnormalcall);
 
@@ -637,7 +637,7 @@ namespace SIN {
 	
 	//-----------------------------------------------------------------
 
-	void ParserManage::Manage_ObjectDefinition_EmptyObject (ASTNode **_retobjectdef, LexAndBisonParseArguments *_lbpa){
+	void ParserManage::Manage_ObjectDefinition_EmptyObject (const int lineNo, ASTNode **_retobjectdef, LexAndBisonParseArguments *_lbpa){
 		*_retobjectdef = SINEWCLASS(EmptyObjectASTNode, ("Empty object"));
 		_lbpa->AppendToNodeList(*_retobjectdef);
 	}
@@ -645,7 +645,7 @@ namespace SIN {
 	
 	//-----------------------------------------------------------------
 
-	void ParserManage::Manage_ObjectDefinition_ObjectList (ASTNode *_objectlist, ASTNode **_retobjectdef, LexAndBisonParseArguments *_lbpa) {
+	void ParserManage::Manage_ObjectDefinition_ObjectList (const int lineNo, ASTNode *_objectlist, ASTNode **_retobjectdef, LexAndBisonParseArguments *_lbpa) {
 		SIN::Logger &logger = SIN::LoggerManager::SingletonGetInstance()->GetLogger("SIN::Tests::Parser::Manage");
 		logger.Notice("Entered objectdef : [ objectlist ] Rule");
 
@@ -662,7 +662,7 @@ namespace SIN {
 	
 	//-----------------------------------------------------------------
 
-	void ParserManage::Manage_ObjectList_ExpressionObjectLists (ASTNode *_expr, ASTNode *_objectlists, ASTNode **_retobjectlists, LexAndBisonParseArguments *_lbpa) {
+	void ParserManage::Manage_ObjectList_ExpressionObjectLists (const int lineNo, ASTNode *_expr, ASTNode *_objectlists, ASTNode **_retobjectlists, LexAndBisonParseArguments *_lbpa) {
 		*_retobjectlists = SINEWCLASS(UnindexedMemberASTNode, ("Unindexed Object"));
 		_lbpa->AppendToNodeList(*_retobjectlists);
 
@@ -675,7 +675,7 @@ namespace SIN {
 	
 	//-----------------------------------------------------------------
 
-	void ParserManage::Manage_ObjectList_ExpressionExpressionObjectLists (ASTNode *_expr1, ASTNode *_expr2, ASTNode *_objectlists, ASTNode **_retobjectlists, LexAndBisonParseArguments *_lbpa) {
+	void ParserManage::Manage_ObjectList_ExpressionExpressionObjectLists (const int lineNo, ASTNode *_expr1, ASTNode *_expr2, ASTNode *_objectlists, ASTNode **_retobjectlists, LexAndBisonParseArguments *_lbpa) {
 		*_retobjectlists = SINEWCLASS(IndexedMemberASTNode, ("Indexed Object"));
 		_lbpa->AppendToNodeList(*_retobjectlists);
 
@@ -687,7 +687,7 @@ namespace SIN {
 	
 	//-----------------------------------------------------------------
 
-	void ParserManage::Manage_ObjectList_Empty (ASTNode **_retobjectlists, LexAndBisonParseArguments *_lbpa) 
+	void ParserManage::Manage_ObjectList_Empty (const int lineNo, ASTNode **_retobjectlists, LexAndBisonParseArguments *_lbpa) 
 		{ *_retobjectlists = NULL; }
 
 
@@ -696,31 +696,31 @@ namespace SIN {
 	
 	//-----------------------------------------------------------------
 
-	void ParserManage::Manage_Primary_LValue	(ASTNode *_lvalue, ASTNode **_retprimary, LexAndBisonParseArguments *_lbpa) 
+	void ParserManage::Manage_Primary_LValue	(const int lineNo, ASTNode *_lvalue, ASTNode **_retprimary, LexAndBisonParseArguments *_lbpa) 
 		{ *_retprimary = _lvalue; }
 	
 	
 	//-----------------------------------------------------------------
 
-	void ParserManage::Manage_Primary_Call (ASTNode *_call, ASTNode **_retprimary, LexAndBisonParseArguments *_lbpa) 
+	void ParserManage::Manage_Primary_Call (const int lineNo, ASTNode *_call, ASTNode **_retprimary, LexAndBisonParseArguments *_lbpa) 
 		{ *_retprimary = _call; }
 	
 	
 	//-----------------------------------------------------------------
 
-	void ParserManage::Manage_Primary_ObjectDefinition (ASTNode *_objectdef, ASTNode **_retprimary, LexAndBisonParseArguments *_lbpa) 
+	void ParserManage::Manage_Primary_ObjectDefinition (const int lineNo, ASTNode *_objectdef, ASTNode **_retprimary, LexAndBisonParseArguments *_lbpa) 
 		{ *_retprimary = _objectdef; }
 	
 	
 	//-----------------------------------------------------------------
 
-	void ParserManage::Manage_Primary_FunctionDefinitionParentheses (ASTNode *_funcdef, ASTNode **_retprimary, LexAndBisonParseArguments *_lbpa) 
+	void ParserManage::Manage_Primary_FunctionDefinitionParentheses (const int lineNo, ASTNode *_funcdef, ASTNode **_retprimary, LexAndBisonParseArguments *_lbpa) 
 		{ *_retprimary = _funcdef; }
 	
 	
 	//-----------------------------------------------------------------
 
-	void ParserManage::Manage_Primary_Constant (ASTNode *_const, ASTNode **_retprimary, LexAndBisonParseArguments *_lbpa) {
+	void ParserManage::Manage_Primary_Constant (const int lineNo, ASTNode *_const, ASTNode **_retprimary, LexAndBisonParseArguments *_lbpa) {
 		SIN::Logger &logger = SIN::LoggerManager::SingletonGetInstance()->GetLogger("SIN::Tests::Parser::Manage");
 		logger.Notice("Entered primary : constant Rule");
 
@@ -733,7 +733,7 @@ namespace SIN {
 	
 	//-----------------------------------------------------------------
 
-	void ParserManage::Manage_ReturnStatement_Return (ASTNode **_retreturnstmt, LexAndBisonParseArguments *_lbpa){
+	void ParserManage::Manage_ReturnStatement_Return (const int lineNo, ASTNode **_retreturnstmt, LexAndBisonParseArguments *_lbpa){
 		*_retreturnstmt = SINEWCLASS(ReturnASTNode, ("return"));
 		_lbpa->AppendToNodeList(*_retreturnstmt);
 	}
@@ -741,7 +741,7 @@ namespace SIN {
 	
 	//-----------------------------------------------------------------
 
-	void ParserManage::Manage_ReturnStatement_ReturnExpression (ASTNode *_expr, ASTNode **_retreturnstmt, LexAndBisonParseArguments *_lbpa) {
+	void ParserManage::Manage_ReturnStatement_ReturnExpression (const int lineNo, ASTNode *_expr, ASTNode **_retreturnstmt, LexAndBisonParseArguments *_lbpa) {
 		*_retreturnstmt = SINEWCLASS(ReturnASTNode, ("return expr"));
 		_lbpa->AppendToNodeList(*_retreturnstmt);
 
@@ -754,7 +754,7 @@ namespace SIN {
 	
 	//-----------------------------------------------------------------
 
-	void ParserManage::Manage_SinCode (ASTNode *_stmts, ASTNode **_retsincode, LexAndBisonParseArguments *_lbpa) {
+	void ParserManage::Manage_SinCode (const int lineNo, ASTNode *_stmts, ASTNode **_retsincode, LexAndBisonParseArguments *_lbpa) {
 		*_retsincode = SINEWCLASS(SinCodeASTNode, ("AST"));
 		_lbpa->AppendToNodeList(*_retsincode);
 
@@ -776,39 +776,44 @@ namespace SIN {
 	
 	//-----------------------------------------------------------------
 
-	void ParserManage::Manage_Statement_Expression (ASTNode *_expr, ASTNode **_retstmt, LexAndBisonParseArguments *_lbpa) 
+	void ParserManage::Manage_Statement_Expression (const int lineNo, ASTNode *_expr, ASTNode **_retstmt, LexAndBisonParseArguments *_lbpa) 
 		{ *_retstmt = _expr; }
 	
 	
 	//-----------------------------------------------------------------
 
-	void ParserManage::Manage_Statement_IfStatement (ASTNode *_ifstmt, ASTNode **_retstmt, LexAndBisonParseArguments *_lbpa) 
+	void ParserManage::Manage_Statement_IfStatement (const int lineNo, ASTNode *_ifstmt, ASTNode **_retstmt, LexAndBisonParseArguments *_lbpa) 
 		{ *_retstmt = _ifstmt; }
 	
 	
 	//-----------------------------------------------------------------
 
-	void ParserManage::Manage_Statement_WhileStatement (ASTNode *_whilestmt, ASTNode **_retstmt, LexAndBisonParseArguments *_lbpa)
+	void ParserManage::Manage_Statement_WhileStatement (const int lineNo, ASTNode *_whilestmt, ASTNode **_retstmt, LexAndBisonParseArguments *_lbpa)
 		{ *_retstmt = _whilestmt; }
 	
 	
 	//-----------------------------------------------------------------
 
-	void ParserManage::Manage_Statement_ForStatement (ASTNode *_forstmt, ASTNode **_retstmt, LexAndBisonParseArguments *_lbpa)
+	void ParserManage::Manage_Statement_ForStatement (const int lineNo, ASTNode *_forstmt, ASTNode **_retstmt, LexAndBisonParseArguments *_lbpa)
 		{ *_retstmt = _forstmt; }
 	
 	
 	//-----------------------------------------------------------------
 
-	void ParserManage::Manage_Statement_ReturnStatement (ASTNode *_returnstmt, ASTNode **_retstmt, LexAndBisonParseArguments *_lbpa)
+	void ParserManage::Manage_Statement_ReturnStatement (const int lineNo, ASTNode *_returnstmt, ASTNode **_retstmt, LexAndBisonParseArguments *_lbpa)
 		{ *_retstmt = _returnstmt; }
 	
+
+
 	
 	//-----------------------------------------------------------------
 
-	void ParserManage::Manage_Statement_Break (ASTNode **_retstmt, LexAndBisonParseArguments *_lbpa) {
+	void ParserManage::Manage_Statement_Break (const int lineNo, ASTNode **_retstmt, LexAndBisonParseArguments *_lbpa) {
 		SIN::Logger &logger = SIN::LoggerManager::SingletonGetInstance()->GetLogger("SIN::Tests::Parser::Manage");
 		logger.Notice("Entered stmt : break Rule");
+
+		if (_lbpa->parsingCounters.loops == 0)
+			_lbpa->SetError(LexAndBisonParseArguments::ErrorInfo("Use of 'break' while not in a loop!", lineNo));
 
 		*_retstmt = SINEWCLASS(BreakASTNode, ("Break"));	
 		_lbpa->AppendToNodeList(*_retstmt);
@@ -816,27 +821,32 @@ namespace SIN {
 
 	//-----------------------------------------------------------------
 
-	void ParserManage::Manage_Statement_Continue (ASTNode **_retstmt, LexAndBisonParseArguments *_lbpa){
+	void ParserManage::Manage_Statement_Continue (const int lineNo, ASTNode **_retstmt, LexAndBisonParseArguments *_lbpa){
+		if (_lbpa->parsingCounters.loops == 0)
+			_lbpa->SetError(LexAndBisonParseArguments::ErrorInfo("Use of 'continue' while not in a loop!", lineNo));
+		
+		
 		*_retstmt = SINEWCLASS(ContinueASTNode, ("Continue"));
 		_lbpa->AppendToNodeList(*_retstmt);
 	}
 	
 	
+
 	//-----------------------------------------------------------------
 
-	void ParserManage::Manage_Statement_Block (ASTNode *_block, ASTNode **_retstmt, LexAndBisonParseArguments *_lbpa)
+	void ParserManage::Manage_Statement_Block (const int lineNo, ASTNode *_block, ASTNode **_retstmt, LexAndBisonParseArguments *_lbpa)
 		{ *_retstmt = _block; }
 	
 	
 	//-----------------------------------------------------------------
 
-	void ParserManage::Manage_Statement_FunctionDefinition (ASTNode *_funcdef, ASTNode **_retstmt, LexAndBisonParseArguments *_lbpa)
+	void ParserManage::Manage_Statement_FunctionDefinition (const int lineNo, ASTNode *_funcdef, ASTNode **_retstmt, LexAndBisonParseArguments *_lbpa)
 		{ *_retstmt = _funcdef; }
 	
 	
 	//-----------------------------------------------------------------
 
-	void ParserManage::Manage_Statement_Semicolon (ASTNode **_retstmt, LexAndBisonParseArguments *_lbpa){
+	void ParserManage::Manage_Statement_Semicolon (const int lineNo, ASTNode **_retstmt, LexAndBisonParseArguments *_lbpa){
 		*_retstmt = SINEWCLASS(SemicolonASTNode, (";"));
 		_lbpa->AppendToNodeList(*_retstmt);
 	}
@@ -844,7 +854,7 @@ namespace SIN {
 
 	//-----------------------------------------------------------------
 
-	void ParserManage::Manage_Statement_Error (ASTNode **_error, LexAndBisonParseArguments *_lbpa)
+	void ParserManage::Manage_Statement_Error (const int lineNo, ASTNode **_error, LexAndBisonParseArguments *_lbpa)
 		{ *_error = NULL; }
 
 
@@ -853,7 +863,7 @@ namespace SIN {
 	
 	//-----------------------------------------------------------------
 
-	void ParserManage::Manage_Statements (ASTNode *_stmt, ASTNode *_stmts, ASTNode **_retstmts, LexAndBisonParseArguments *_lbpa) {
+	void ParserManage::Manage_Statements (const int lineNo, ASTNode *_stmt, ASTNode *_stmts, ASTNode **_retstmts, LexAndBisonParseArguments *_lbpa) {
 
 		if(_stmt != NULL){
 			*_retstmts = _stmt;
@@ -866,7 +876,7 @@ namespace SIN {
 	
 	//-----------------------.------------------------------------------
 
-	void ParserManage::Manage_Statements_Empty (ASTNode **_retstmts, LexAndBisonParseArguments *_lbpa)
+	void ParserManage::Manage_Statements_Empty (const int lineNo, ASTNode **_retstmts, LexAndBisonParseArguments *_lbpa)
 		{ *_retstmts = NULL; }
 
 
@@ -875,13 +885,13 @@ namespace SIN {
 	
 	//-----------------------------------------------------------------
 
-	void ParserManage::Manage_Term_ExpressionParentheses (ASTNode *_expr, ASTNode **_retterm, LexAndBisonParseArguments *_lbpa)
+	void ParserManage::Manage_Term_ExpressionParentheses (const int lineNo, ASTNode *_expr, ASTNode **_retterm, LexAndBisonParseArguments *_lbpa)
 		{ *_retterm = _expr; }
 	
 	
 	//-----------------------------------------------------------------
 
-	void ParserManage::Manage_Term_MINExpression (ASTNode *_expr, ASTNode **_retterm, LexAndBisonParseArguments *_lbpa) {
+	void ParserManage::Manage_Term_MINExpression (const int lineNo, ASTNode *_expr, ASTNode **_retterm, LexAndBisonParseArguments *_lbpa) {
 		*_retterm = SINEWCLASS(UnaryMinASTNode, ("-expr"));
 		_lbpa->AppendToNodeList(*_retterm);
 
@@ -891,7 +901,7 @@ namespace SIN {
 
 	//-----------------------------------------------------------------
 	
-	void ParserManage::Manage_Term_NOTExpression (ASTNode *_expr, ASTNode **_retterm, LexAndBisonParseArguments *_lbpa) {
+	void ParserManage::Manage_Term_NOTExpression (const int lineNo, ASTNode *_expr, ASTNode **_retterm, LexAndBisonParseArguments *_lbpa) {
 		*_retterm = SINEWCLASS(UnaryNotASTNode, ("not expr"));
 		**_retterm << _expr;
 	}
@@ -899,7 +909,7 @@ namespace SIN {
 	
 	//-----------------------------------------------------------------
 
-	void ParserManage::Manage_Term_INCRLValue (ASTNode *_lvalue, ASTNode **_retterm, LexAndBisonParseArguments *_lbpa) {
+	void ParserManage::Manage_Term_INCRLValue (const int lineNo, ASTNode *_lvalue, ASTNode **_retterm, LexAndBisonParseArguments *_lbpa) {
 		*_retterm = SINEWCLASS(PreIncrASTNode, ("++lvalue"));
 		_lbpa->AppendToNodeList(*_retterm);
 
@@ -909,7 +919,7 @@ namespace SIN {
 	
 	//-----------------------------------------------------------------
 
-	void ParserManage::Manage_Term_LValueINCR (ASTNode *_lvalue, ASTNode **_retterm, LexAndBisonParseArguments *_lbpa) {
+	void ParserManage::Manage_Term_LValueINCR (const int lineNo, ASTNode *_lvalue, ASTNode **_retterm, LexAndBisonParseArguments *_lbpa) {
 		*_retterm = SINEWCLASS(PostIncrASTNode, ("lvalue++"));
 		_lbpa->AppendToNodeList(*_retterm);
 
@@ -919,7 +929,7 @@ namespace SIN {
 	
 	//-----------------------------------------------------------------
 
-	void ParserManage::Manage_Term_DECRLValue (ASTNode *_lvalue, ASTNode **_retterm, LexAndBisonParseArguments *_lbpa) {
+	void ParserManage::Manage_Term_DECRLValue (const int lineNo, ASTNode *_lvalue, ASTNode **_retterm, LexAndBisonParseArguments *_lbpa) {
 		*_retterm = SINEWCLASS(PreDecrASTNode, ("--lvalue"));
 		_lbpa->AppendToNodeList(*_retterm);
 
@@ -929,7 +939,7 @@ namespace SIN {
 	
 	//-----------------------------------------------------------------
 
-	void ParserManage::Manage_Term_LValueDECR (ASTNode *_lvalue, ASTNode **_retterm, LexAndBisonParseArguments *_lbpa) {
+	void ParserManage::Manage_Term_LValueDECR (const int lineNo, ASTNode *_lvalue, ASTNode **_retterm, LexAndBisonParseArguments *_lbpa) {
 		*_retterm = SINEWCLASS(PostDecrASTNode, ("lvalue--"));
 		_lbpa->AppendToNodeList(*_retterm);
 
@@ -939,7 +949,7 @@ namespace SIN {
 	
 	//-----------------------------------------------------------------
 
-	void ParserManage::Manage_Term_Primary (ASTNode *_primary, ASTNode **_retterm, LexAndBisonParseArguments *_lbpa) {
+	void ParserManage::Manage_Term_Primary (const int lineNo, ASTNode *_primary, ASTNode **_retterm, LexAndBisonParseArguments *_lbpa) {
 		SIN::Logger &logger = SIN::LoggerManager::SingletonGetInstance()->GetLogger("SIN::Tests::Parser::Manage");
 		logger.Notice("Entered term : primary Rule");
 
