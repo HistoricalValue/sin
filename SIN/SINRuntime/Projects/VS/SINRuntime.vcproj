@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="windows-1253"?>
 <VisualStudioProject
 	ProjectType="Visual C++"
-	Version="9,00"
+	Version="9.00"
 	Name="SINRuntime"
 	ProjectGUID="{6EF1473D-B277-4446-8E29-5E5D028730E0}"
 	RootNamespace="SINRuntime"
@@ -170,6 +170,22 @@
 				RelativePath="..\..\Src\SINVirtualState.cpp"
 				>
 			</File>
+			<Filter
+				Name="operatos"
+				>
+				<File
+					RelativePath="..\..\Src\SINAdditionOperator.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\..\Src\SINEqualityOperator.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\..\Src\SINOperator.cpp"
+					>
+				</File>
+			</Filter>
 		</Filter>
 		<Filter
 			Name="Header Files"
@@ -192,6 +208,26 @@
 				RelativePath="..\..\Include\SINVirtualState.h"
 				>
 			</File>
+			<Filter
+				Name="operators"
+				>
+				<File
+					RelativePath="..\..\Include\SINAdditionOperator.h"
+					>
+				</File>
+				<File
+					RelativePath="..\..\Include\SINEqualityOperator.h"
+					>
+				</File>
+				<File
+					RelativePath="..\..\Include\SINOperator.h"
+					>
+				</File>
+				<File
+					RelativePath="..\..\Include\SINOrOperator.h"
+					>
+				</File>
+			</Filter>
 		</Filter>
 		<Filter
 			Name="Resource Files"
