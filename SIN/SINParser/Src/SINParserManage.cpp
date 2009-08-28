@@ -399,6 +399,7 @@ namespace SIN {
 
 		**_retforstmt << for_addendum;
 		**_retforstmt << _stmt;
+		--_lbpa->parsingCounters.loops;
 	}
 	
 
@@ -409,6 +410,7 @@ namespace SIN {
 		_lbpa->AppendToNodeList(*_retwhilestmt);
 
 		**_retwhilestmt << _expr << _stmt;
+		--_lbpa->parsingCounters.loops;
 	}
 
 
