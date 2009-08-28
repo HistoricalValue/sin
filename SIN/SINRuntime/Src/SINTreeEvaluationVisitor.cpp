@@ -17,6 +17,7 @@
 		for(ASTNode::iterator kid = _node.begin(); kid != end; ++kid)	\
 			static_cast<ASTNode&>(*kid).Accept(this)					\
 
+#define ERROR(MSG, FILE, LINE) vs->AppendError(MSG, FILE, LINE)
 
 namespace SIN{
 	//-----------------------------------------------------------------
@@ -127,11 +128,18 @@ namespace SIN{
 	inline void TreeEvaluationVisitor::lookup(String const& _id) {
 		SymbolTable& stable = vs->CurrentStable();
 		lookuped = &stable.Lookup(_id);
+		if (lookup_failed())
+			lookuped = &vs->BaseStable().Lookup(_id);
 	}
 
 	inline void TreeEvaluationVisitor::lookup(String const& _id, SymbolTable::scope_id const _scope) {
 		SymbolTable& stable = vs->CurrentStable();
 		lookuped = &stable.Lookup(_scope, _id);
+	}
+
+	inline void TreeEvaluationVisitor::lookup_global(String const& _id) {
+		SymbolTable& stable = vs->BaseStable();
+		lookuped = &stable.Lookup(_id);
 	}
 
 	inline void TreeEvaluationVisitor::lookup_local(String const& _id) {
@@ -149,6 +157,21 @@ namespace SIN{
 
 	inline void TreeEvaluationVisitor::insert(String const& _id, MemoryCell* const _val, SymbolTable::scope_id const _scope) {
 		vs->CurrentStable().Insert(_id, _val, _scope);
+	}
+
+	inline void TreeEvaluationVisitor::insert_global(String const& _id, MemoryCell* const _val) {
+		vs->BaseStable().Insert(_id, _val, 0);
+	}
+
+	inline void TreeEvaluationVisitor::triggerReturn(MemoryCell* _returnValue) {
+		// Copy return value
+		MemoryCell::UnobtrusiveAssign(*vs->CurrentEnvironment().returnValue_p, _returnValue);
+		// Notify block iteration to stop
+		vs->CurrentEnvironment().returnTriggered = true;
+	}
+
+	inline bool TreeEvaluationVisitor::returnTriggered(void) const {
+		return vs->CurrentEnvironment().returnTriggered;
 	}
 
 	//-----------------------------------------------------------------
@@ -423,9 +446,12 @@ namespace SIN{
 
 	//-----------------------------------------------------------------
 
-	void TreeEvaluationVisitor::Visit(ReturnASTNode & _node){
-		// TODO implement
-		SINASSERT(!"Not implemented");}
+	void TreeEvaluationVisitor::Visit(ReturnASTNode & _node) {
+		// Evaluate only child
+		static_cast<ASTNode&>(*_node.begin()).Accept(this);
+		// and
+		triggerReturn(memory);
+	}
 
 	//-----------------------------------------------------------------
 
@@ -453,7 +479,7 @@ namespace SIN{
 		ASTNode::iterator const end = _node.end();						
 		for(ASTNode::iterator kid = _node.begin(); kid != end; ++kid) {	
 			static_cast<ASTNode&>(*kid).Accept(this);			
-			if (triggeredBreak || triggeredContinue)
+			if (triggeredBreak || triggeredContinue || returnTriggered())
 				break;
 		}
 
@@ -549,8 +575,11 @@ namespace SIN{
 		ASTNode::iterator kid = _node.begin();
 
 		// Lookup the function
-		static_cast<ASTNode&>(*kid++).Accept(this);
+		ASTNode& func_id = static_cast<ASTNode&>(*kid++);
+		func_id.Accept(this);
 		MemoryCell *tmpmemcell1 = memory;
+		if (tmpmemcell1 == 0x00)
+			ERROR((to_string("Calling undefined function: ") << func_id.Name()).c_str(), _node.AssociatedFileName().c_str(), _node.AssociatedFileLine());
 		SINASSERT(tmpmemcell1->Type() == MemoryCell::FUNCTION_MCT || tmpmemcell1->Type() == MemoryCell::LIB_FUNCTION_MCT);	//TODO Throw runtime error here
 		
 		// Evaluate actual arguments
@@ -564,11 +593,31 @@ namespace SIN{
 		// Set the argument list in the current environment
 		vs->CurrentEnvironment().argument_list_p = &argument_lists.top();
 
+		// Set the return value destination
+		InstanceProxy<MemoryCell> returnValue;
+		vs->CurrentEnvironment().returnValue_p = &returnValue;
+
 		// Evaluate function code
 		if(tmpmemcell1->Type() == MemoryCell::FUNCTION_MCT) {
-			ASTNode::iterator kids = _node.begin();
-			static_cast<ASTNode&>(*++kids).Accept(this);
-		} else {
+			MemoryCellFunction* func = static_cast<MemoryCellFunction*>(tmpmemcell1);
+			Types::Function_t function(func->GetValue());
+			ASTNode* func_node_ast = func->GetValue().GetASTNode();
+			SINASSERT(func_node_ast->Type() == SINASTNODES_FUNCTIONASTNODE_TYPE);
+			// We must not revisit the function node itself because it evaluates to inserting
+			// the function value in the environment (under its name).
+			// Instead, we must evaluate its formal args and then its body.
+			ASTNode::iterator kite = func_node_ast->begin();
+			ASTNode& formal_args_ast_node = static_cast<ASTNode&>(*kite++);
+			SINASSERT(formal_args_ast_node.Type() == SINASTNODES_FORMALARGUMENTSASTNODE_TYPE);
+			formal_args_ast_node.Accept(this); // insert arguments as formals in env
+			ASTNode& body_block_ast_node = static_cast<ASTNode&>(*kite++);
+			SINASSERT(body_block_ast_node.Type() == SINASTNODES_BLOCKASTNODE_TYPE);
+			body_block_ast_node.Accept(this); // evaluate the body in the new env
+			if (returnValue == 0x00)
+				memory = SINEW(MemoryCellNil);
+			else
+				memory = returnValue;
+		} else { // LibFunc
 			// add actual arguments to the new environment's symbol table
 			Namer arg_namer("_arg_avril_");
 			SymbolTable& stable = vs->CurrentStable();
@@ -586,6 +635,9 @@ namespace SIN{
 
 		// Restore environment
 		vs->RestoreState(); 
+
+		// Add return result as a temporary
+		insertTemporary(memory);
 
 		// Pop actual arguments' list
 		argument_lists.pop();
@@ -608,9 +660,25 @@ namespace SIN{
 	//-----------------------------------------------------------------
 
 	void TreeEvaluationVisitor::Visit(FunctionASTNode & _node) {
-		// Add this function as a symbol
-		// TODO implement
-		SINASSERT(!"Not implemented");
+		// Generally, the function must be added as a value to the current
+		// scope.
+
+		// Get the function ID
+		String const& func_id = _node.Name();
+		// Create the function object and the resulting memcell
+		MemoryCellFunction* result = SINEWCLASS(MemoryCellFunction, (Types::Function_t(&_node)));;
+		// Lookup and insert the function memcell
+		lookup_local(func_id);
+		if (lookup_failed())
+			// ok here
+			insert(func_id, result);
+		else
+			// lookup succeeded. Fail.
+			vs->AppendError(to_string("definition of function with name \"") << func_id << 
+				"\" is not possible because there is a variable defined with that name in the same scope",
+				_node.AssociatedFileName().c_str(), _node.AssociatedFileLine());
+
+		memory = result;
 	}
 
 	//-----------------------------------------------------------------
@@ -626,7 +694,7 @@ namespace SIN{
 		String const& id = _node.Name();
 		lookup(id);
 
-		if(lookup_failed()) {
+		if (lookup_failed()) {
 			insert(id, 0x00);
 			lookup_local(id);
 			SINASSERT(!lookup_failed());
@@ -654,11 +722,11 @@ namespace SIN{
 
 	void TreeEvaluationVisitor::Visit(GlobalIDASTNode & _node){
 		String const& id = _node.Name();
-		lookup(id, 0);
+		lookup_global(id);
 
 		if(lookup_failed()) {
-			insert(id, 0x00, 0);
-			lookup(id, 0);
+			insert_global(id, 0x00);
+			lookup_global(id);
 			SINASSERT(!lookup_failed());
 			SINASSERT(static_cast<MemoryCell*>(*lookuped) == 0x00);
 		}

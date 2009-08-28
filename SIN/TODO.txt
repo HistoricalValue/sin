@@ -28,6 +28,7 @@
 
 *[043 2009-08-28/11:22] SINAlloc should call destructors on array members on delete[]
 
+*[044 2009-08-28/14:37] Make libfuncs use the environment return value pointer and remove the return value stuff from the virtual state.
 
 *[025] Implement operator == for ASTNode
 

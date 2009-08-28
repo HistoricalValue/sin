@@ -57,8 +57,11 @@ namespace SIN {
 		ASTNode(ASTNode const&);
 		virtual ~ASTNode(void);
 
-        virtual String const &Name(void) const;
 		ID_t const& ID(void) const;
+		String const& AssociatedFileName(void) const { return associatedFileName; }
+		unsigned int const AssociatedFileLine(void) const { return associatedFileLine; }
+
+        virtual String const &Name(void) const;
 
 		virtual void Accept(ASTVisitor *) = 0;
 		virtual void Accept(ASTTreeVisualisationVisitor *);
@@ -70,7 +73,7 @@ namespace SIN {
 		virtual unsigned long Type(void) const = 0;
     private:
         String const		name;
-		String const		assosciatedFileName;
+		String const		associatedFileName;
 		const unsigned int	associatedFileLine;
 		ID_t id;
 	

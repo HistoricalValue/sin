@@ -89,12 +89,8 @@ namespace SIN{
 		Library::Library *		lib;
 		VM::VirtualState *		vs;
 		Types::Object_t			obj_imp; // as in "object-imp", not "object implementation"
-
-		
-		bool triggeredBreak;
-		bool triggeredContinue;
-		
-
+		bool					triggeredBreak;
+		bool					triggeredContinue;
 
 		typedef Environment::argument_list_t argument_list_t;
 		typedef std::stack<argument_list_t> argument_lists_t;
@@ -107,9 +103,14 @@ namespace SIN{
 		void lookup(String const&);
 		void lookup(String const&, SymbolTable::scope_id);
 		void lookup_local(String const&);
+		void lookup_global(String const&);
 		bool lookup_failed(void) const;
 		void insert(String const&, MemoryCell*);
 		void insert(String const&, MemoryCell*, SymbolTable::scope_id);
+		void insert_global(String const&, MemoryCell*);
+		// function return
+		void triggerReturn(MemoryCell* returnValue);
+		bool returnTriggered(void) const;
 
 		// Unusable
 		TreeEvaluationVisitor(const TreeEvaluationVisitor&);

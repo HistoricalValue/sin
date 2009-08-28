@@ -167,7 +167,7 @@ namespace SIN {
 	//-----------------------------------------------------------------
 
 	bool VariableHolder::LookupFailed(InstanceProxy<MemoryCell>& _previous_result) const {
-		return &_previous_result == &DATA->not_found;
+		return &_previous_result == &data->not_found;
 	}
 
 	//-----------------------------------------------------------------

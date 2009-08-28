@@ -13,8 +13,11 @@
 #include "SINFunction.h"
 #include "SINEnvironment.h"
 
-
+#ifdef _DEBUG
 #define INVAR SINASSERT(curr_frame >= 0u); SINASSERT(curr_frame < stack.size());
+#else
+#define INVAR
+#endif // _DEBUG
 
 namespace SIN {
 	namespace VM {
@@ -69,14 +72,21 @@ namespace SIN {
 			VirtualState& Top(void) {INVAR curr_frame = stack.size() - 1; INVAR return *this; }
 			bool InCall(void) {INVAR return curr_frame > 0; }
 
+			Frame& BaseFrame(void) {INVAR return *base_frame; }
+
 			// Convenience
 			Environment& CurrentEnvironment(void) { return CurrentFrame().env; }
 			SymbolTable& CurrentStable(void) { return CurrentFrame().env.stable; }
 			Namer& CurrentAvrilNamer(void) { return CurrentFrame().env.avrilNamer; }
+			Environment& BaseEnvironment(void) { return BaseFrame().env; }
+			SymbolTable& BaseStable(void) { return BaseFrame().env.stable; }
+			Namer& BaseAvrilNamer(void) { return BaseFrame().env.avrilNamer; }
 
 			VirtualState(void): print_handler(0x00), retval(&nil), nil(), str(), num(), obj(), r(),
-				stack(1, Frame()), curr_frame(0u), errors()
-			{ }
+				stack(1, Frame()), curr_frame(0u), errors(), base_frame(0x00)
+			{
+				base_frame = &stack.front();
+			}
 			~VirtualState(void) { obj.SetValue(0x00); }
 		private:
 			print_handler_t print_handler;
@@ -96,6 +106,7 @@ namespace SIN {
 			stack_t stack;
 			stack_t::size_type curr_frame;
 			errors_t errors;
+			Frame* base_frame;
 
 			// Unusable
 			VirtualState(VirtualState const&);

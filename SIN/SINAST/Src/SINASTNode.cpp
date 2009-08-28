@@ -15,7 +15,7 @@ namespace SIN {
 	
 	ASTNode::ASTNode(void):
 		name(ASTNodeFactory::NextName()),
-		assosciatedFileName(""),
+		associatedFileName(""),
 		associatedFileLine(0),
 		id(ASTNodeFactory::NextID())
 	{}
@@ -25,7 +25,7 @@ namespace SIN {
 
     ASTNode::ASTNode(String const &_name, String const & fileName, const unsigned int line):
 		name(_name),
-		assosciatedFileName(fileName),
+		associatedFileName(fileName),
 		associatedFileLine(line),
 		id(ASTNodeFactory::NextID())
 	{}
@@ -35,7 +35,7 @@ namespace SIN {
 
 	ASTNode::ASTNode(ASTNode const&_other):
 		name(_other.name),
-		assosciatedFileName(_other.assosciatedFileName),
+		associatedFileName(_other.associatedFileName),
 		associatedFileLine(_other.associatedFileLine),
 		id(_other.id)
 	{}

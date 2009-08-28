@@ -31,9 +31,11 @@ namespace SIN {
 		ASSERT_CURRENT_SCOPE();
 		
 		elem_t* element_p = 0x00;
-		for(scope_id scope = currScope; scope > 0; --scope)
-			if(static_cast<MemoryCell*>(*(element_p = &Lookup(scope, name))) != static_cast<MemoryCell*>(0x00))
+		for(scope_id scope = currScope; scope > 0; --scope) {
+			element_p = &Lookup(scope, name);
+			if(!table[scope].LookupFailed(*element_p))
 				return *element_p;
+		}
 
 		// do once more for scope 0
 		return Lookup(0, name);
@@ -66,7 +68,12 @@ namespace SIN {
 	//-----------------------------------------------------------------
 	// in current scope
 	bool SymbolTable::LookupFailed(elem_t& _previous_result) const {
-		return table[currScope].LookupFailed(_previous_result);
+		ASSERT_CURRENT_SCOPE();
+		// often this will be the case, so checking it earlier than last is faster
+		bool lookup_failed = table[0].LookupFailed(_previous_result);
+		for (scope_id scope = currScope; !lookup_failed && scope > 0; --scope)
+			lookup_failed = table[scope].LookupFailed(_previous_result);
+		return lookup_failed;
 	}
 
 	//-----------------------------------------------------------------

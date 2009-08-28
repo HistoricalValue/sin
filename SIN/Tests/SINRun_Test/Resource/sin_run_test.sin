@@ -1,3 +1,16 @@
+function add(a, b) { return a + b; }
+println("8: ", add(3,5));
+op = add;
+println("9: ", op(4,5));
+function sub(a,b) { return a - b; }
+{
+	function add(a,b) { return sub(a,b); }
+	local op = add;
+	println("4: ", op(9,5));
+}
+println("15: ", op(8,7));
+
+/*
 i = 0;
 while (i++ < 4) {
 	println("continue, i == ", i);
@@ -11,10 +24,6 @@ while (i < 4) {
 	break; 
 }
 
-
-
-
-/*
 println("Testing while begin: Must print: 1, 2, 3, 4 befor the message end");
 i = 0;
 while(i < 4) 
