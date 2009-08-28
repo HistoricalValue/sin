@@ -1,6 +1,8 @@
 #ifndef __SIN_ALLOCATOR_H__
 #define __SIN_ALLOCATOR_H__
 
+// We only exist in _DEBUG
+#ifdef _DEBUG
 #include "SINMemoryAllocator.h"
 
 namespace SIN {
@@ -71,4 +73,5 @@ namespace SIN {
 	} // namespace Alloc
 } // namespace SIN
 
+#endif // _DEBUG
 #endif // __SIN_ALLOCATOR_H__

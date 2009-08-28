@@ -1,15 +1,16 @@
 i = 0;
-while(i++ < 4){
+while (i++ < 4) {
 	println("continue, i == ", i);
 	continue; 
 	i = 10;
 }
 
 i = 0;
-while(i < 4){
+while (i < 4) {
 	println("break, i == ", i);
 	break; 
 }
+
 
 
 

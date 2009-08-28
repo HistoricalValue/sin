@@ -3,8 +3,10 @@
 
 #include "SINAssert.h"
 
+#ifdef _DEBUG
 #define SIN_STRICTTREE_ASSERTS
 #define SIN_STRICTTREE_ASSERTS_INVARIANTS
+#endif
 
 namespace SIN {
 
@@ -152,7 +154,7 @@ namespace SIN {
 			return true;
 		}
 		#ifdef SIN_STRICTTREE_ASSERTS_INVARIANTS
-		#define SIN_STRICTTREEE_ASSERT_INVARIANTS													\
+		#define SIN_STRICTTREEE_ASSERT_INVARIANTS											\
 			STRICT_TREE_ASSERT(first_child != 0x00 ? first_child->prev_bro == 0x00 : true);	\
 			STRICT_TREE_ASSERT(last_child != 0x00 ? last_child->next_bro == 0x00 : true);	\
 			STRICT_TREE_ASSERT(prev_bro != 0x00 ? prev_bro->next_bro == this : true);		\

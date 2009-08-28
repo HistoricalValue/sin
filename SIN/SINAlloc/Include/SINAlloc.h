@@ -14,14 +14,16 @@
 #endif // _MSC_VER
 
 namespace SIN { namespace Alloc {
-	typedef std::basic_string<char, std::char_traits<char>, Allocator<char> > String;
-
 	extern bool Initialise(void);
 	inline bool Init(void) { return Initialise(); }
 	extern void CleanUp(void);
 	inline void Cleanup(void) { CleanUp(); }
 	extern bool IsInitialised(void);
-	
+
+// We only exist in _DEBUG
+#ifdef _DEBUG
+	typedef std::basic_string<char, std::char_traits<char>, Allocator<char> > String;
+
 	extern size_t TotallyAllocated(void);
 	extern size_t TotallyFreed(void);
 	extern size_t MemoryLeaking(void);
@@ -84,8 +86,14 @@ namespace SIN { namespace Alloc {
 
 	extern void SetNextDeleteFileLineInfo(char const*, unsigned int);
 	extern void ResetNextDeleteFileLineInfo(void);
+#else
+	inline void* memcpy(void* const _to, void const* const _from, size_t const _len) {
+		return std::memcpy(_to, _from, _len);
+	}
+#endif // _DEBUG
 } } // namespace Alloc / namespace SIN
 
+#ifdef _DEBUG
 // New/delete operators to be used
 struct SINAllocationIndicator {};
 extern void* operator new     (size_t size, SINAllocationIndicator const&, char const* file, unsigned int line) throw();
@@ -95,17 +103,30 @@ extern void  operator delete[](void* ptr, SINAllocationIndicator const&, char co
 #define SINEW(TYPE) SIN::Alloc::ValidateAndUse(new(SINAllocationIndicator(), __FILE__, __LINE__) TYPE)
 #define SINEWCLASS(TYPE, ARGS) SIN::Alloc::ValidateAndUse(new(SINAllocationIndicator(), __FILE__, __LINE__) TYPE ARGS)
 #define SINEWARRAY(TYPE, LENGTH) SIN::Alloc::ValidateAndUse(new(SINAllocationIndicator(), __FILE__, __LINE__) TYPE[LENGTH])
-#define SINDELETE(PTR) do { \
+#define SINDELETE(PTR) do {													\
 	SIN::Alloc::SetNextDeleteFileLineInfo(__FILE__, __LINE__);				\
-	SIN::Alloc::IsArrayAllocated(PTR) ? delete[]((PTR)) : delete((PTR));	\
+	SINASSERT(!SIN::Alloc::IsArrayAllocated(PTR));							\
+	delete((PTR));															\
+	SIN::Alloc::ResetNextDeleteFileLineInfo();								\
+	} while(false)
+#define SINDELETEARRAY(PTR) do {											\
+	SIN::Alloc::SetNextDeleteFileLineInfo(__FILE__, __LINE__);				\
+	SINASSERT(SIN::Alloc::IsArrayAllocated(PTR));							\
+	delete[]((PTR));														\
 	SIN::Alloc::ResetNextDeleteFileLineInfo();								\
 	} while(false)
 #define SINPTR(PTR) SIN::Alloc::ValidateAndUse((PTR))
-#define SINMEMCPY(TO, FROM) if (sizeof((FROM)) <= SIN::Alloc::ChunkInformation(TO).Size())
+#else // No _DEBUG
+#define SINEW(TYPE) new TYPE
+#define SINEWCLASS(TYPE, ARGS) new TYPE ARGS
+#define SINEWARRAY(TYPE, LENGTH) new TYPE [LENGTH]
+#define SINDELETE(PTR) delete ((PTR))
+#define SINDELETEARRAY(PTR) delete[] ((PTR))
+#define SINPTR(PTR) ((PTR))
+#endif
 
 
-
-
+#ifdef _DEBUG
 // replacing new/delete -- not to be used
 //scalar, throwing new and it matching delete
 extern void* operator new (std::size_t const size) throw (std::bad_alloc);
@@ -119,6 +140,6 @@ extern void operator delete[](void* ptr) throw();
 //array, nothrow new and matching delete[]
 extern void* operator new [](std::size_t size, const std::nothrow_t&) throw(); // array nothrow new
 extern void operator delete[](void* ptr, const std::nothrow_t&) throw(); // matching delete[]
-
+#endif _DEBUG
 
 #endif // __SIN_ALLOC_H__

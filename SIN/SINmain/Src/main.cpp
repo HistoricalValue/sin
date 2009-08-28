@@ -63,9 +63,11 @@ void quick_test(void) {
 
 	SIN::Library::StandardLibrary stdlib;
 
+#ifdef _DEBUG
 	SIN::LoggerManager::SingletonGetInstance()->GetDefaultLoggerFactory()->DestroyLogger(g_out->logger());
 	SIN::LoggerManager::StreamLogger loolis("Memory reporter", SIN::Logging::Record::FINEST, SIN::STDOUT, SIN::Logging::RecordPrinter());
 	out_class(loolis) << (SIN::String() << "Memory leak: " << SIN::Alloc::MemoryLeaking() << " bytes");
+#endif // _DEBUG
 }
 ////////
 
@@ -93,7 +95,9 @@ int main(int argc, char *argv[]) {
 	else
 		SINASSERT(!"Initialisation failed");
 
+#ifdef _DEBUG
 	SIN::Alloc::ChunksMap undeallocated_chunks(SIN::Alloc::UndeallocatedChunks());
+#endif
 	SIN::CleanUp();
 	return waitToByeBye();
 }
@@ -123,9 +127,9 @@ void MainTestCollection::emulateAllocTest(void) const {
 static int waitToByeBye(void) {
 #ifdef _DEBUG
 #ifdef _MSC_VER
-	system("pause");
+	//system("pause");
 #elif defined(_LINUX_)
-	getchar();
+	//getchar();
 #endif
 #else
 #ifdef _MSC_VER

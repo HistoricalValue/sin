@@ -26,6 +26,9 @@
 *[041 2009-08-27/18:07] Implement operator== for aaaall the memory cell types.
 *[042 2009-08-27/18:12] Implement all kinds of binary operations among all types of memory cells (yeah, hahah).
 
+*[043 2009-08-28/11:22] SINAlloc should call destructors on array members on delete[]
+
+
 *[025] Implement operator == for ASTNode
 
 *[026] Make the testing framework serious (save results and print them later -- especially TestCollections should be serious)

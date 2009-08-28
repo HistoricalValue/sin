@@ -1,4 +1,7 @@
 #include "SINAlloc.h"
+
+// We only exist in _DEBUG
+#ifdef _DEBUG
 #include <cstdlib>
 #include <map>
 #include "SINAssert.h"
@@ -365,3 +368,18 @@ void* operator new [](std::size_t const _size, const std::nothrow_t&) throw() { 
 void operator delete[](void* const _ptr, const std::nothrow_t&) throw() { // matching delete[]
 	__SINAlloc_delete(_ptr, SINALLOC_ALLOCATION_TYPE_ARRAY);
 }
+
+#else
+
+namespace SIN {
+	namespace Alloc {
+		namespace {
+			static bool P_initialised = false;
+		} // namespace
+		bool Initialise(void) { SINASSERT(!P_initialised); return P_initialised = true; }
+		void CleanUp(void) { SINASSERT(P_initialised); P_initialised = false; }
+		bool IsInitialised(void) { return P_initialised; }
+	} // namespace Alloc
+} // namespace SIN
+
+#endif // _DEBUG

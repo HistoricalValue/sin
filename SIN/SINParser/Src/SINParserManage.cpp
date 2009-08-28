@@ -46,7 +46,7 @@ namespace SIN {
 
 		**_retmetaexpr << id;
 
-		SINDELETE(_id);
+		SINDELETEARRAY(_id);
 	}
 
 	//-----------------------------------------------------------------
@@ -170,7 +170,7 @@ namespace SIN {
 
 		logger.Notice((*_retconst)->Name());
 
-		SINDELETE(_string);
+		SINDELETEARRAY(_string);
 	}
 
 
@@ -432,7 +432,7 @@ namespace SIN {
 
 		**_retfuncdef << arguments << _block;
 
-		SINDELETE(_id);
+		SINDELETEARRAY(_id);
 	}
 
 	
@@ -465,7 +465,7 @@ namespace SIN {
 		if(_idlists != NULL)
 			(*_retidlist)->SetRightSibling(_idlists);
 
-		SINDELETE(_id);
+		SINDELETEARRAY(_id);
 	}
 
 	
@@ -510,7 +510,7 @@ namespace SIN {
 		*_retlvalue = SINEWCLASS(IDASTNode, (_id, _lbpa->GetFileName(), lineNo));
 		_lbpa->AppendToNodeList(*_retlvalue);
 
-		SINDELETE(_id);
+		SINDELETEARRAY(_id);
 	}
 
 	
@@ -520,7 +520,7 @@ namespace SIN {
 		*_retlvalue = SINEWCLASS(LocalIDASTNode, (to_string( _localID), _lbpa->GetFileName(), lineNo));
 		_lbpa->AppendToNodeList(*_retlvalue);
 
-		SINDELETE(_localID);
+		SINDELETEARRAY(_localID);
 	}
 	
 	
@@ -530,7 +530,7 @@ namespace SIN {
 		*_retlvalue = SINEWCLASS(GlobalIDASTNode, (to_string(_globalID), _lbpa->GetFileName(), lineNo));
 		_lbpa->AppendToNodeList(*_retlvalue);
 
-		SINDELETE(_globalID);
+		SINDELETEARRAY(_globalID);
 	}
 	
 	
@@ -553,7 +553,7 @@ namespace SIN {
 
 		**_retmember << _lvalue << id;
 
-		SINDELETE(_id);
+		SINDELETEARRAY(_id);
 	}
 
 	
@@ -577,7 +577,7 @@ namespace SIN {
 
 		**_retmember << _call << id;
 
-		SINDELETE(_id);
+		SINDELETEARRAY(_id);
 	}
 
 	
@@ -613,7 +613,7 @@ namespace SIN {
 
 		**_retmethodcall << arguments;
 
-		SINDELETE(_id);
+		SINDELETEARRAY(_id);
 	}
 
 	

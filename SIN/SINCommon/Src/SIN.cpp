@@ -54,8 +54,10 @@ namespace SIN {
 	/////////////////////////////////////////////////////////////////
 	static bool init_Allocation(void) {
 		return
+			#ifdef _DEBUG
 			SIN::Alloc::Initialise()	&&
 			SIN::Alloc::IsInitialised()	&&
+			#endif
 			true;
 	}
 	

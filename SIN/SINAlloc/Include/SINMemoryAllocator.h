@@ -1,6 +1,8 @@
 #ifndef __SIN_MEMORY_ALLOCATOR_H__
 #define __SIN_MEMORY_ALLOCATOR_H__
 
+// We only exist in _DEBUG
+#ifdef _DEBUG
 #include <cstdlib>
 
 namespace SIN {
@@ -21,4 +23,5 @@ namespace SIN {
 	} // namespace Alloc
 } // namespace SIN
 
+#endif // _DEBUG
 #endif // __SIN_MEMORY_ALLOCATOR_H__

@@ -435,24 +435,21 @@ namespace SIN{
 
 	//-----------------------------------------------------------------
 
-	void TreeEvaluationVisitor::Visit(BreakASTNode & _node){
-		// TODO implement
+	void TreeEvaluationVisitor::Visit(BreakASTNode & _node) {
 		triggeredBreak = true;
-		//SINASSERT(!"Not implemented");
 	}
 
 	//-----------------------------------------------------------------
 
-	void TreeEvaluationVisitor::Visit(ContinueASTNode & _node){
-		// TODO implement
+	void TreeEvaluationVisitor::Visit(ContinueASTNode & _node) {
 		triggeredContinue = true;
-		//SINASSERT(!"Not implemented");
 	}
 
 	//-----------------------------------------------------------------
 
-	void TreeEvaluationVisitor::Visit(BlockASTNode & _node){
+	void TreeEvaluationVisitor::Visit(BlockASTNode & _node) {
 		vs->CurrentStable().IncreaseScope();
+
 		ASTNode::iterator const end = _node.end();						
 		for(ASTNode::iterator kid = _node.begin(); kid != end; ++kid) {	
 			static_cast<ASTNode&>(*kid).Accept(this);			
@@ -460,13 +457,12 @@ namespace SIN{
 				break;
 		}
 
-		//VISIT_KIDS_SERIALLY;
 		vs->CurrentStable().DecreaseScope();
 	}
 
 	//-----------------------------------------------------------------
 
-	void TreeEvaluationVisitor::Visit(AssignASTNode & _node){
+	void TreeEvaluationVisitor::Visit(AssignASTNode & _node) {
 	
 		SINASSERT(_node.NumberOfChildren() == 2);
 
