@@ -1,3 +1,10 @@
+function Point_new(x_, y_) { return [x: x_, y: y]; }
+
+p1 = Point_new(0, 1); p2 = Point_new(2, 5);
+
+println(p1, p2);
+
+
 function add(a, b) { return a + b; }
 println("8: ", add(3,5));
 op = add;

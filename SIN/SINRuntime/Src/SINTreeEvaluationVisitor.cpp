@@ -118,6 +118,7 @@ namespace SIN{
 	}
 
 	inline void TreeEvaluationVisitor::assignObjectImpToMemory(void) {
+		memory = 0x00;
 		MemoryCell::SimpleAssign(memory, SINEWCLASS(MemoryCellObject, (obj_imp)));
 	}
 
@@ -857,6 +858,8 @@ namespace SIN{
 		IDASTNode const& id = static_cast<IDASTNode const&>(*kite++);
 		// Get indexed element's value (to set)
 		static_cast<ASTNode&>(*kite++).Accept(this);
+		if (memory == 0x00)
+			insertTemporary(memory = SINEW(MemoryCellNil));
 		MemoryCell* assigned = 0x00;
 		MemoryCell::Assign(assigned, memory);
 		obj_imp->SetValue(id.Name(), assigned);
