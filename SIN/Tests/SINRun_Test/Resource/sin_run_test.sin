@@ -1,3 +1,19 @@
+i = 0;
+while(i++ < 4){
+	println("continue, i == ", i);
+	continue; 
+	i = 10;
+}
+
+i = 0;
+while(i < 4){
+	println("break, i == ", i);
+	break; 
+}
+
+
+
+/*
 println("Testing while begin: Must print: 1, 2, 3, 4 befor the message end");
 i = 0;
 while(i < 4) 
@@ -8,6 +24,7 @@ println("Testing while end\n\n\n");
 println("Testing for begin: Must print: i == 0, j == 0, i == 1, j == 1, i == 2, j == 2, i == 3, j == 3 befor the message end");
 for(i = 0, j = 0; i < 4; ++i, ++j) {
 	println("i == ", i);
+	continue;
 	println("j == ", j);
 }
 println("Testing for end\n\n\n");
@@ -60,3 +77,4 @@ function () { return [amjuya: 12]; }
 //	println("Contents: ", fileread(a));
 // -------------
 
+*/

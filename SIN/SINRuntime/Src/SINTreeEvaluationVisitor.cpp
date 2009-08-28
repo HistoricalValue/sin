@@ -174,12 +174,28 @@ namespace SIN{
 
 	//-----------------------------------------------------------------
 
-	TreeEvaluationVisitor::TreeEvaluationVisitor(Library::Library *_lib, VM::VirtualState *_vs) : memory(NULL), lookuped(NULL), preserveNode(NULL), lib(_lib), vs(_vs), argument_lists() { }
+	TreeEvaluationVisitor::TreeEvaluationVisitor(Library::Library *_lib, VM::VirtualState *_vs) : 
+		memory(NULL), 
+		lookuped(NULL), 
+		preserveNode(NULL), 
+		lib(_lib), 
+		vs(_vs), 
+		argument_lists(),
+		triggeredBreak(false),
+		triggeredContinue(false)
+		{ }
 
 	//-----------------------------------------------------------------
 
 	TreeEvaluationVisitor::TreeEvaluationVisitor(TreeEvaluationVisitor const&):
-		memory(0x00), lookuped(0x00), preserveNode(0x00), lib(0x00), vs(0x00), obj_imp(0x00)
+		memory(0x00), 
+		lookuped(0x00), 
+		preserveNode(0x00), 
+		lib(0x00), 
+		vs(0x00), 
+		obj_imp(0x00),
+		triggeredBreak(false),
+		triggeredContinue(false)
 		{ SINASSERT(!"Not allowed"); }
 
 	//-----------------------------------------------------------------
@@ -351,9 +367,13 @@ namespace SIN{
 		EVAL_LOOP_EXPR();
 		while(exprMemoryCell->GetValue() == true) {
 			stmt.Accept(this);
+			if (triggeredBreak)
+				break;
 			elist2.Accept(this);
 			EVAL_LOOP_EXPR();
 		}
+		triggeredBreak		= false;
+		triggeredContinue	= false;
 	}
 
 
@@ -380,8 +400,12 @@ namespace SIN{
 
 		while(exprMemoryCell->GetValue() == true) {
 			stmt.Accept(this);
+			if (triggeredBreak)
+				break;
 			EVAL_LOOP_EXPR();
 		}
+		triggeredBreak		= false;
+		triggeredContinue	= false;
 	}
 
 	//-----------------------------------------------------------------
@@ -413,19 +437,30 @@ namespace SIN{
 
 	void TreeEvaluationVisitor::Visit(BreakASTNode & _node){
 		// TODO implement
-		SINASSERT(!"Not implemented");}
+		triggeredBreak = true;
+		//SINASSERT(!"Not implemented");
+	}
 
 	//-----------------------------------------------------------------
 
 	void TreeEvaluationVisitor::Visit(ContinueASTNode & _node){
 		// TODO implement
-		SINASSERT(!"Not implemented");}
+		triggeredContinue = true;
+		//SINASSERT(!"Not implemented");
+	}
 
 	//-----------------------------------------------------------------
 
 	void TreeEvaluationVisitor::Visit(BlockASTNode & _node){
 		vs->CurrentStable().IncreaseScope();
-		VISIT_KIDS_SERIALLY;
+		ASTNode::iterator const end = _node.end();						
+		for(ASTNode::iterator kid = _node.begin(); kid != end; ++kid) {	
+			static_cast<ASTNode&>(*kid).Accept(this);			
+			if (triggeredBreak || triggeredContinue)
+				break;
+		}
+
+		//VISIT_KIDS_SERIALLY;
 		vs->CurrentStable().DecreaseScope();
 	}
 

@@ -89,6 +89,13 @@ namespace SIN{
 		Library::Library *		lib;
 		VM::VirtualState *		vs;
 		Types::Object_t			obj_imp; // as in "object-imp", not "object implementation"
+
+		
+		bool triggeredBreak;
+		bool triggeredContinue;
+		
+
+
 		typedef Environment::argument_list_t argument_list_t;
 		typedef std::stack<argument_list_t> argument_lists_t;
 		argument_lists_t argument_lists;
