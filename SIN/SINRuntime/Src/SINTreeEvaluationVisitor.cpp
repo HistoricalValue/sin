@@ -593,11 +593,17 @@ namespace SIN{
 
 	//-----------------------------------------------------------------
 
-	void TreeEvaluationVisitor::Visit(MethodCallASTNode & _node){}
+	void TreeEvaluationVisitor::Visit(MethodCallASTNode & _node) {
+		// TODO implement
+		SINASSERT(!"Not implemented");
+	}
 
 	//-----------------------------------------------------------------
 
-	void TreeEvaluationVisitor::Visit(FuncdefCallASTNode & _node){}
+	void TreeEvaluationVisitor::Visit(FuncdefCallASTNode & _node) {
+		// TODO implement
+		SINASSERT(!"Not implemented");
+	}
 
 	//-----------------------------------------------------------------
 
