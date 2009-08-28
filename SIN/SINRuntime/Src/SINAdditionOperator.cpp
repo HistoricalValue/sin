@@ -19,10 +19,8 @@ namespace SIN {
 	AdditionOperator::~AdditionOperator() {}
 
 
-	//------------------------------------------------------
-
-	MemoryCell * AdditionOperator::Addition(const MemoryCell & mc1, const MemoryCell & mc2) 
-		{	return Action(mc1, mc2);	}
+	//*******************************
+	//	protected methods
 
 
 	//------------------------------------------------------

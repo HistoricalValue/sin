@@ -21,6 +21,7 @@ namespace SIN {
 		Operator(void);
 		virtual ~Operator();
 
+		virtual MemoryCell * operator() (const MemoryCell &, const MemoryCell &);
 		
 		virtual bool	HasError(void) const;
 		virtual String	ErrorMessage(void) const;
@@ -29,8 +30,7 @@ namespace SIN {
 		virtual String		 CreateErrorMessage(const char *, const MemoryCell &);
 		virtual String		 CreateErrorMessage(const String &, const MemoryCell &);
 		virtual MemoryCell * ReturnError(const String &);
-		virtual MemoryCell * Action(const MemoryCell &, const MemoryCell &);
-		
+
 
 		virtual MemoryCell * ManageNil				(const MemoryCellNil &, const MemoryCell &) = 0;
 		virtual MemoryCell * ManageBool				(const MemoryCellBool &, const MemoryCell &) = 0;

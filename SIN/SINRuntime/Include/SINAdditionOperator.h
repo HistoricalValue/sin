@@ -12,12 +12,10 @@ namespace SIN {
 	public: 
 		AdditionOperator(void);
 		~AdditionOperator();
-
-		MemoryCell * Addition (const MemoryCell &, const MemoryCell &);
 		
 	private:
-		MemoryCell * ManageString			(const MemoryCellString &, const MemoryCell &);
-		MemoryCell * ManageNumber			(const MemoryCellNumber &, const MemoryCell &);
+		MemoryCell * ManageString(const MemoryCellString &, const MemoryCell &);
+		MemoryCell * ManageNumber(const MemoryCellNumber &, const MemoryCell &);
 	};
 
 }	//namespace SIN
