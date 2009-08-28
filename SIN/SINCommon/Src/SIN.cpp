@@ -5,7 +5,8 @@
 #include "SINASTNode.h"
 #include "SINLoggerManager.h"
 
-
+// TODO remove
+#include "SINConstants.h"
 
 namespace SIN {
     bool init_LoggerManager(void) {
@@ -73,15 +74,20 @@ namespace SIN {
     }
 
     void CleanUp(void) {
-		SINASSERT(LoggerManager::SingletonCreated());
-		LoggerManager::SingletonDestroy();
+		SINASSERT(Types::ObjectFactory::SingletonCreated());
+		Types::ObjectFactory::SingletonDestroy();
 		
 		SINASSERT(ASTNodeFactory::SingletonCreated());
 		ASTNodeFactory::SingletonDestroy();
 
-		SINASSERT(Types::ObjectFactory::SingletonCreated());
-		Types::ObjectFactory::SingletonDestroy();
+		SINASSERT(LoggerManager::SingletonCreated());
+		LoggerManager::SingletonDestroy();
 
+		#ifdef _DEBUG
+		SIN::Alloc::ChunksMap undeallocated_chunks(SIN::Alloc::UndeallocatedChunks());
+		SIN::String memlik = (SIN::String() << "Memory leak: " << SIN::Alloc::MemoryLeaking() << " bytes");
+		static_cast<SIN::OutputStream&>(SIN::STDOUT) << memlik << SIN::ENDL; // TODO remove
+		#endif
 		SINASSERT(SIN::Alloc::IsInitialised());
 		SIN::Alloc::CleanUp();
     }

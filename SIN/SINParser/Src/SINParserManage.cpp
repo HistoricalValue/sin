@@ -424,6 +424,7 @@ namespace SIN {
 		_lbpa->AppendToNodeList(*_retfuncdef);
 
 		ASTNode *arguments = SINEWCLASS(FormalArgumentsASTNode, ("Formal Arguments", _lbpa->GetFileName(), lineNo));
+		_lbpa->AppendToNodeList(arguments);
 
 //		for(; _idlist; _idlist = static_cast<ASTNode*>(+(*_idlist)))
 //			arguments->ConnectChild(_idlist);
@@ -624,6 +625,7 @@ namespace SIN {
 		_lbpa->AppendToNodeList(*_retnormalcall);
 
 		ASTNode *arguments = SINEWCLASS(ActualArgumentsASTNode, ("Actual Arguments", _lbpa->GetFileName(), lineNo));
+		_lbpa->AppendToNodeList(arguments);
 
 //		for(; _elist; _elist = static_cast<ASTNode*>(+(*_elist)))
 			arguments->ConnectChild(_elist);

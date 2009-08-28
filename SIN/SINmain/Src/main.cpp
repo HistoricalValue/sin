@@ -62,12 +62,6 @@ void quick_test(void) {
 	vs.Down().Up().Down().Top().RestoreState();
 
 	SIN::Library::StandardLibrary stdlib;
-
-#ifdef _DEBUG
-	SIN::LoggerManager::SingletonGetInstance()->GetDefaultLoggerFactory()->DestroyLogger(g_out->logger());
-	SIN::LoggerManager::StreamLogger loolis("Memory reporter", SIN::Logging::Record::FINEST, SIN::STDOUT, SIN::Logging::RecordPrinter());
-	out_class(loolis) << (SIN::String() << "Memory leak: " << SIN::Alloc::MemoryLeaking() << " bytes");
-#endif // _DEBUG
 }
 ////////
 
@@ -95,9 +89,6 @@ int main(int argc, char *argv[]) {
 	else
 		SINASSERT(!"Initialisation failed");
 
-#ifdef _DEBUG
-	SIN::Alloc::ChunksMap undeallocated_chunks(SIN::Alloc::UndeallocatedChunks());
-#endif
 	SIN::CleanUp();
 	return waitToByeBye();
 }
