@@ -1,15 +1,8 @@
 #include "SINAdditionOperator.h"
 #include "SINAssert.h"
 #include "SINAlloc.h"
-#include "SINString.h"
 
 
-#define CREATE_ERRROR_MESSAGE(STR, MC)	String(STR)							+	\
-										GetTypeAsStringFromMemoryCell(mc2)	+	\
-										String(" Instruction not allowed")
-
-#define RETURN_ERROR(ERROR_MSG)			SetErrorMessage(ERROR_MSG);				\
-										return static_cast<SIN::MemoryCell *>(0)
 
 
 
@@ -17,7 +10,8 @@ namespace SIN {
 
 	//------------------------------------------------------
 
-	AdditionOperator::AdditionOperator(void) {}
+	AdditionOperator::AdditionOperator(void) 
+		{	arithmeticOperator = String("+");	}
 	
 
 	//------------------------------------------------------
@@ -31,48 +25,6 @@ namespace SIN {
 		{	return Action(mc1, mc2);	}
 
 
-	//------------------------------------------------------
-
-	MemoryCell * AdditionOperator::ManageNil(const MemoryCellNil & mc1, const MemoryCell & mc2)
-		{	return ReturnError(CreateErrorMessage("Arithmetic Nil + ", mc2));	}
-
-
-	//------------------------------------------------------
-
-	MemoryCell * AdditionOperator::ManageBool(const MemoryCellBool & mc1, const MemoryCell & mc2)
-		{	return ReturnError(CreateErrorMessage("Arithmetic Bool + ", mc2));	}
-
-
-	//------------------------------------------------------
-
-	MemoryCell * AdditionOperator::ManageAst(const MemoryCellAST & mc1, const MemoryCell & mc2)
-		{	return ReturnError(CreateErrorMessage("Arithmetic AST + ", mc2));	}
-
-
-	//------------------------------------------------------
-
-	MemoryCell * AdditionOperator::ManageObject(const MemoryCellObject & mc1, const MemoryCell & mc2)
-		{	return ReturnError(CreateErrorMessage("Arithmetic Object + ", mc2));	}
-
-
-	//------------------------------------------------------
-	
-	MemoryCell * AdditionOperator::ManageFunction(const MemoryCellFunction & mc1, const MemoryCell & mc2)
-		{	return ReturnError(CreateErrorMessage("Arithmetic User Function + ", mc2));	}
-
-
-	//------------------------------------------------------
-
-	MemoryCell * AdditionOperator::ManageLibFunction(const MemoryCellLibFunction & mc1, const MemoryCell & mc2)
-		{	return ReturnError(CreateErrorMessage("Arithmetic Lib Function + ", mc2));	}
-
-
-	//------------------------------------------------------
-
-	MemoryCell * AdditionOperator::ManageNativeResource(const MemoryCellNativeResource & mc1, const MemoryCell & mc2)
-		{	return ReturnError(CreateErrorMessage("Arithmetic native resource + ", mc2));	}
-
-	
 	//------------------------------------------------------
 	
 	MemoryCell * AdditionOperator::ManageString(const MemoryCellString & mc1, const MemoryCell & mc2) {
@@ -96,4 +48,4 @@ namespace SIN {
 
 
 
-}	//namespace SI
+}	//namespace SIN

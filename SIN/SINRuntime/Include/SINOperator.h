@@ -27,6 +27,7 @@ namespace SIN {
 
 	protected:
 		virtual String		 CreateErrorMessage(const char *, const MemoryCell &);
+		virtual String		 CreateErrorMessage(const String &, const MemoryCell &);
 		virtual MemoryCell * ReturnError(const String &);
 		virtual MemoryCell * Action(const MemoryCell &, const MemoryCell &);
 		

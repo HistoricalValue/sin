@@ -35,8 +35,13 @@ namespace SIN {
 	//---------------------------------------------
 
 	String Operator::CreateErrorMessage(const char * str, const MemoryCell & mc)
-		{	return String(str) + GetTypeAsStringFromMemoryCell(mc) + String(" Instruction not allowed"); }
+		{	return CreateErrorMessage(String(str), mc); }
 
+
+	//---------------------------------------------
+	
+	String Operator::CreateErrorMessage(const String & str, const MemoryCell & mc)
+		{	return str + GetTypeAsStringFromMemoryCell(mc) + String(" Instruction not allowed"); }
 
 
 	//---------------------------------------------
