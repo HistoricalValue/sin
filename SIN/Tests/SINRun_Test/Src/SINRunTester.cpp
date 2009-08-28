@@ -13,6 +13,7 @@
 #include "SINBufferedOutputStream.h"
 #include "SINTreeEvaluationVisitor.h"
 #include "SINPreserveASTEvaluatorVisitor.h"
+#include "SINASTTreeVisualisationVisitor.h"
 #include "SINASTMITTreeVisualizerXMLProducerVisitor.h"
 #include "SINLibrary.h"
 #include "SINLibraryFunction.h"
@@ -80,10 +81,15 @@ namespace SIN {
 				ASSERT(root != 0x00);
 				
 				FileOutputStream _foutxml("RunTreeVisualisation.xml", FileOutputStream::Mode::Truncate());
+				FileOutputStream _fouttxt("RunTreeVisualisation.txt", FileOutputStream::Mode::Truncate());
 				BufferedOutputStream foutxml(_foutxml);
-				ASTMITTreeVisualizerXMLProducerVisitor mitvis(foutxml);
+				BufferedOutputStream fouttxt(_fouttxt);
+				ASTTreeVisualisationVisitor				visitor(fouttxt);
+				ASTMITTreeVisualizerXMLProducerVisitor	mitvis(foutxml);
+				root->Accept(&visitor);
 				root->Accept(&mitvis);
 				foutxml.flush();
+				fouttxt.flush();
 
 				VM::VirtualState vs;
 				vs.SetPrintHandler(&__print_handler);
