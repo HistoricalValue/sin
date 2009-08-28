@@ -609,7 +609,10 @@ namespace SIN{
 
 	//-----------------------------------------------------------------
 
-	void TreeEvaluationVisitor::Visit(LamdaFunctionASTNode & _node){}
+	void TreeEvaluationVisitor::Visit(LamdaFunctionASTNode & _node) {
+		// TODO implement
+		SINASSERT(!"Not implemented");
+	}
 
 	//-----------------------------------------------------------------
 
@@ -790,57 +793,75 @@ namespace SIN{
 	//-----------------------------------------------------------------
 
 	void TreeEvaluationVisitor::Visit(ObjectMemberASTNode & _node) {
+		// TODO implement
+		SINASSERT(!"Not implemented");
 	}
 
 	//-----------------------------------------------------------------
 
 	void TreeEvaluationVisitor::Visit(ObjectIndexASTNode & _node) {
+		// TODO implement
+		SINASSERT(!"Not implemented");
 	}
 
 	//-----------------------------------------------------------------
 
-	void TreeEvaluationVisitor::Visit(CallMemberASTNode & _node){}
+	void TreeEvaluationVisitor::Visit(CallMemberASTNode & _node) {
+		// TODO implement
+		SINASSERT(!"Not implemented");
+	}
 
 	//-----------------------------------------------------------------
 
-	void TreeEvaluationVisitor::Visit(CallIndexASTNode & _node){}
+	void TreeEvaluationVisitor::Visit(CallIndexASTNode & _node) {
+		// TODO implement
+		SINASSERT(!"Not implemented");
+	}
 
 	//-----------------------------------------------------------------
 	void TreeEvaluationVisitor::Visit(MetaParseASTNode & _node){
-		PreserveASTEvaluatorVisitor * preservVisitor = SINEWCLASS(PreserveASTEvaluatorVisitor, (*this));
-		preservVisitor->Visit(_node);
-//		MemoryCellAST * a = preservVisitor->GetMemoryCellAST();
-		SINDELETE(preservVisitor);
+		// TODO implement
+		SINASSERT(!"Not implemented");
 	}
 
 	//-----------------------------------------------------------------
 
 	void TreeEvaluationVisitor::Visit(MetaPreserveASTNode & _node){
-		preserveNode = &_node;
-		
+		// TODO implement
+		SINASSERT(!"Not implemented");
 	}
 
 	//-----------------------------------------------------------------
 
-	void TreeEvaluationVisitor::Visit(MetaEvaluateASTNode & _node){}
-
-	//-----------------------------------------------------------------
-
-	void TreeEvaluationVisitor::Visit(MetaUnparseASTNode & _node){}
-
-	//-----------------------------------------------------------------
-
-	void TreeEvaluationVisitor::Visit(MetaParseStringASTNode & _node){}
-
-	//-----------------------------------------------------------------
-
-	void TreeEvaluationVisitor::Visit(SinCodeASTNode & _node){
-
-		for(ASTNode::iterator kid = _node.begin(); kid != _node.end(); ++kid)
-			static_cast<ASTNode&>(*kid).Accept(this);
+	void TreeEvaluationVisitor::Visit(MetaEvaluateASTNode & _node) {
+		// TODO implement
+		SINASSERT(!"Not implemented");
 	}
 
 	//-----------------------------------------------------------------
 
-	void TreeEvaluationVisitor::Visit(NotASTNode & _node){}
+	void TreeEvaluationVisitor::Visit(MetaUnparseASTNode & _node) {
+		// TODO implement
+		SINASSERT(!"Not implemented");
+	}
+
+	//-----------------------------------------------------------------
+
+	void TreeEvaluationVisitor::Visit(MetaParseStringASTNode & _node) {
+		// TODO implement
+		SINASSERT(!"Not implemented");
+	}
+
+	//-----------------------------------------------------------------
+
+	void TreeEvaluationVisitor::Visit(SinCodeASTNode & _node)
+		VISIT_KIDS_SERIALLY;
+	}
+
+	//-----------------------------------------------------------------
+
+	void TreeEvaluationVisitor::Visit(NotASTNode & _node) {
+		// TODO implement
+		SINASSERT(!"Not implemented");
+	}
 } // namespace SIN
