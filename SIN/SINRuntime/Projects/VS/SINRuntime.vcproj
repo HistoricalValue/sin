@@ -189,6 +189,10 @@
 					RelativePath="..\..\Src\SINOperator.cpp"
 					>
 				</File>
+				<File
+					RelativePath="..\..\Src\SINSubtractionOperator.cpp"
+					>
+				</File>
 			</Filter>
 		</Filter>
 		<Filter
@@ -233,6 +237,10 @@
 				</File>
 				<File
 					RelativePath="..\..\Include\SINOrOperator.h"
+					>
+				</File>
+				<File
+					RelativePath="..\..\Include\SINSubtractionOperator.h"
 					>
 				</File>
 			</Filter>
