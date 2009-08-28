@@ -17,14 +17,18 @@ namespace SIN {
 		~AdditionOperator();
 
 		MemoryCell * Addition (const MemoryCell &, const MemoryCell &);
-
-		//friend MemoryCell * operator + (const MemoryCell &, const MemoryCell &);
 		
 	private:
-		MemoryCell * ManageNumber(const MemoryCellNumber &, const MemoryCell &);
-		MemoryCell * ManageString(const MemoryCellString &, const MemoryCell &);
+		MemoryCell * ManageNil				(const MemoryCellNil &, const MemoryCell &);
+		MemoryCell * ManageBool				(const MemoryCellBool &, const MemoryCell &);
+		MemoryCell * ManageString			(const MemoryCellString &, const MemoryCell &);
+		MemoryCell * ManageNumber			(const MemoryCellNumber &, const MemoryCell &);
+		MemoryCell * ManageAst				(const MemoryCellAST &, const MemoryCell &);
+		MemoryCell * ManageObject			(const MemoryCellObject &, const MemoryCell &);
+		MemoryCell * ManageFunction			(const MemoryCellFunction &, const MemoryCell &);
+		MemoryCell * ManageLibFunction		(const MemoryCellLibFunction &, const MemoryCell &);
+		MemoryCell * ManageNativeResource	(const MemoryCellNativeResource &, const MemoryCell &);
 	};
-	//extern MemoryCell * operator + (const MemoryCell &, const MemoryCell &);
 
 }	//namespace SIN
 
