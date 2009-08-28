@@ -13,7 +13,6 @@ namespace SIN {
 			if (_to != 0x00) {
 				SINASSERT(_to->Type() != MemoryCell::FUNCTION_MCT);
 				SINASSERT(_to->Type() != MemoryCell::LIB_FUNCTION_MCT);
-				SINASSERT(_to->Type() != MemoryCell::NIL_MCT);
 				if (_w_del)
 					SINDELETE(_to);
 			}

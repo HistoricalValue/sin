@@ -149,7 +149,7 @@ namespace SIN{
 	}
 
 	inline bool TreeEvaluationVisitor::lookup_failed(void) const {
-		return vs->CurrentStable().LookupFailed(*lookuped);
+		return vs->CurrentStable().LookupFailed(*lookuped) || vs->BaseStable().LookupFailed(*lookuped);
 	}
 
 	inline void TreeEvaluationVisitor::insert(String const& _id, MemoryCell* const _val) {
@@ -696,10 +696,11 @@ namespace SIN{
 		lookup(id);
 
 		if (lookup_failed()) {
-			insert(id, 0x00);
+			insert(id, SINEW(MemoryCellNil));
 			lookup_local(id);
 			SINASSERT(!lookup_failed());
-			SINASSERT(static_cast<MemoryCell*>(*lookuped) == 0x00);
+			SINASSERT(static_cast<MemoryCell*>(*lookuped) != 0x00);
+			SINASSERT((*lookuped)->Type() == MemoryCell::NIL_MCT);
 		}
 		memory = *lookuped;
 	}
@@ -711,10 +712,11 @@ namespace SIN{
 		lookup_local(id);
 
 		if(lookup_failed()) {
-			insert(id, 0x00);
+			insert(id, SINEW(MemoryCellNil));
 			lookup_local(id);
 			SINASSERT(!lookup_failed());
-			SINASSERT(static_cast<MemoryCell*>(*lookuped) == 0x00);
+			SINASSERT(static_cast<MemoryCell*>(*lookuped) != 0x00);
+			SINASSERT((*lookuped)->Type() == MemoryCell::NIL_MCT);
 		}
 		memory = *lookuped;
 	}
@@ -726,10 +728,11 @@ namespace SIN{
 		lookup_global(id);
 
 		if(lookup_failed()) {
-			insert_global(id, 0x00);
+			insert_global(id, SINEW(MemoryCellNil));
 			lookup_global(id);
 			SINASSERT(!lookup_failed());
-			SINASSERT(static_cast<MemoryCell*>(*lookuped) == 0x00);
+			SINASSERT(static_cast<MemoryCell*>(*lookuped) != 0x00);
+			SINASSERT((*lookuped)->Type() == MemoryCell::NIL_MCT);
 		}
 		memory = *lookuped;
 	}
@@ -858,8 +861,7 @@ namespace SIN{
 		IDASTNode const& id = static_cast<IDASTNode const&>(*kite++);
 		// Get indexed element's value (to set)
 		static_cast<ASTNode&>(*kite++).Accept(this);
-		if (memory == 0x00)
-			insertTemporary(memory = SINEW(MemoryCellNil));
+		SINASSERT(memory != 0x00);
 		MemoryCell* assigned = 0x00;
 		MemoryCell::Assign(assigned, memory);
 		obj_imp->SetValue(id.Name(), assigned);

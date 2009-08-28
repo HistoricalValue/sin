@@ -10,9 +10,9 @@
 #include <algorithm>
 
 #define SIN_SYMBOLTABLE_LOOKUP(WHERE)												\
-		names_t::iterator result = DATA->WHERE.find(_name);							\
-		SINASSERT(static_cast<MemoryCell*>(DATA->not_found) == 0x00);				\
-		return result != DATA->WHERE.end() ? result->second : DATA->not_found;
+		names_t::iterator result = data->WHERE.find(_name);							\
+		SINASSERT(static_cast<MemoryCell*>(data->not_found) == 0x00);				\
+		return result != data->WHERE.end() ? result->second : data->not_found;
 
 namespace SIN {
 
