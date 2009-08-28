@@ -47,9 +47,9 @@ namespace SIN {
 	//-----------------------------------------------------------------
 
 	LexAndBisonParseArguments::LexAndBisonParseArguments(const String & _fileName) : 
-		fileName(_fileName),
 		hasError(false), 
-		root(static_cast<ASTNode *>(0))
+		root(static_cast<ASTNode *>(0)),
+		fileName(_fileName)
 	{
 		Type<LoggerManager>::ref lm(*LoggerManager::SingletonGetInstance());
 		lm.GetDefaultLoggerFactory()->DestroyLogger(lm.MakeStdoutLogger(SIN_BISON_PARSE_ARGUMENTS_LOGGER_NAME));

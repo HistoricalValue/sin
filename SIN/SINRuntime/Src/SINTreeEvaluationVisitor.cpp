@@ -328,8 +328,8 @@ namespace SIN{
 
 
 	#define EVAL_LOOP_EXPR()		expr.Accept(this);											\
-									exprMemoryCell = dynamic_cast<MemoryCellBool *>(memory);	\
-									SINASSERT(exprMemoryCell)
+									SINASSERT(memory != 0x00);									\
+									exprMemoryCell = static_cast<MemoryCellBool *>(memory)
 
 
 	//-----------------------------------------------------------------

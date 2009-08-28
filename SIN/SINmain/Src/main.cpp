@@ -129,7 +129,7 @@ static int waitToByeBye(void) {
 #endif
 #else
 #ifdef _MSC_VER
-#elif defined(_LINUX)
+#elif defined(_LINUX_)
 	getchar();
 #endif
 #endif

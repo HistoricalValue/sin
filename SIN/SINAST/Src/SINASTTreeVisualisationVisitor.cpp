@@ -37,10 +37,6 @@ namespace SIN {
 
 	//-----------------------------------------------------------------
 	
-	//void ASTTreeVisualisationVisitor::Visit (IdASTNode const & node) 
-	//	{ Visit(dynamic_cast<ASTNode const &>(node)); }
-	
-
 	SINASTTREEVISUALISATION_DEFAULT_VISIT_DEFINITION(Number	)
 	SINASTTREEVISUALISATION_DEFAULT_VISIT_DEFINITION(String	)
 	SINASTTREEVISUALISATION_DEFAULT_VISIT_DEFINITION(Nil	)

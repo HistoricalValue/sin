@@ -25,7 +25,6 @@
 
 *[041 2009-08-27/18:07] Implement operator== for aaaall the memory cell types.
 *[042 2009-08-27/18:12] Implement all kinds of binary operations among all types of memory cells (yeah, hahah).
-*[044 2009-08-28/02:43] Fix parsing manage for functions to make something correct!
 
 *[025] Implement operator == for ASTNode
 
@@ -143,3 +142,6 @@
 *[036] Refactor Symbol Table (koutsop knows how)
   [ koutsop | done]
 *[038] Remove symbol table from ASTBlock
+  [ rudolf | done]
+*[044 2009-08-28/02:43] Fix parsing manage for functions to make something correct!
+  [ rudolf | canceled]
