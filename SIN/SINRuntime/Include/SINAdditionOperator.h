@@ -4,7 +4,8 @@
 
 #include "SINOperator.h"
 #include "SINMemoryCell.h"
-
+#include "SINMemoryCellNumber.h"
+#include "SINMemoryCellString.h"
 
 
 
@@ -18,7 +19,10 @@ namespace SIN {
 		MemoryCell * Addition (const MemoryCell &, const MemoryCell &);
 
 		//friend MemoryCell * operator + (const MemoryCell &, const MemoryCell &);
-	
+		
+	private:
+		MemoryCell * ManageNumber(const MemoryCellNumber &, const MemoryCell &);
+		MemoryCell * ManageString(const MemoryCellString &, const MemoryCell &);
 	};
 	//extern MemoryCell * operator + (const MemoryCell &, const MemoryCell &);
 

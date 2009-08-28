@@ -860,7 +860,7 @@ namespace SIN{
 
 	//-----------------------------------------------------------------
 
-	void TreeEvaluationVisitor::Visit(SinCodeASTNode & _node)
+	void TreeEvaluationVisitor::Visit(SinCodeASTNode & _node) {
 		VISIT_KIDS_SERIALLY;
 	}
 
