@@ -905,6 +905,7 @@ namespace SIN {
 	
 	void ParserManage::Manage_Term_NOTExpression (const int lineNo, ASTNode *_expr, ASTNode **_retterm, LexAndBisonParseArguments *_lbpa) {
 		*_retterm = SINEWCLASS(UnaryNotASTNode, ("not expr", _lbpa->GetFileName(), lineNo));
+		_lbpa->AppendToNodeList(*_retterm);
 		**_retterm << _expr;
 	}
 
