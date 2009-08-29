@@ -174,37 +174,49 @@
 				Name="operatos"
 				>
 				<File
-					RelativePath="..\..\Src\SINAdditionOperator.cpp"
-					>
-				</File>
-				<File
 					RelativePath="..\..\Src\SINBinaryOperator.cpp"
-					>
-				</File>
-				<File
-					RelativePath="..\..\Src\SINDivisionOperator.cpp"
-					>
-				</File>
-				<File
-					RelativePath="..\..\Src\SINEqualityOperator.cpp"
-					>
-				</File>
-				<File
-					RelativePath="..\..\Src\SINModulusOperator.cpp"
-					>
-				</File>
-				<File
-					RelativePath="..\..\Src\SINMultiplicationOperator.cpp"
 					>
 				</File>
 				<File
 					RelativePath="..\..\Src\SINOperator.cpp"
 					>
 				</File>
-				<File
-					RelativePath="..\..\Src\SINSubtractionOperator.cpp"
+				<Filter
+					Name="Arithmetic"
 					>
-				</File>
+					<File
+						RelativePath="..\..\Src\SINAdditionOperator.cpp"
+						>
+					</File>
+					<File
+						RelativePath="..\..\Src\SINDivisionOperator.cpp"
+						>
+					</File>
+					<File
+						RelativePath="..\..\Src\SINModulusOperator.cpp"
+						>
+					</File>
+					<File
+						RelativePath="..\..\Src\SINMultiplicationOperator.cpp"
+						>
+					</File>
+					<File
+						RelativePath="..\..\Src\SINSubtractionOperator.cpp"
+						>
+					</File>
+				</Filter>
+				<Filter
+					Name="Relational"
+					>
+					<File
+						RelativePath="..\..\Src\SINEqualityOperator.cpp"
+						>
+					</File>
+				</Filter>
+				<Filter
+					Name="Logical"
+					>
+				</Filter>
 			</Filter>
 		</Filter>
 		<Filter
@@ -232,41 +244,53 @@
 				Name="operators"
 				>
 				<File
-					RelativePath="..\..\Include\SINAdditionOperator.h"
-					>
-				</File>
-				<File
 					RelativePath="..\..\Include\SINBinaryOperator.h"
-					>
-				</File>
-				<File
-					RelativePath="..\..\Include\SINDivisionOperator.h"
-					>
-				</File>
-				<File
-					RelativePath="..\..\Include\SINEqualityOperator.h"
-					>
-				</File>
-				<File
-					RelativePath="..\..\Include\SINModulusOperator.h"
-					>
-				</File>
-				<File
-					RelativePath="..\..\Include\SINMultiplicationOperator.h"
 					>
 				</File>
 				<File
 					RelativePath="..\..\Include\SINOperator.h"
 					>
 				</File>
-				<File
-					RelativePath="..\..\Include\SINOrOperator.h"
+				<Filter
+					Name="Arithmetic"
 					>
-				</File>
-				<File
-					RelativePath="..\..\Include\SINSubtractionOperator.h"
+					<File
+						RelativePath="..\..\Include\SINAdditionOperator.h"
+						>
+					</File>
+					<File
+						RelativePath="..\..\Include\SINDivisionOperator.h"
+						>
+					</File>
+					<File
+						RelativePath="..\..\Include\SINModulusOperator.h"
+						>
+					</File>
+					<File
+						RelativePath="..\..\Include\SINMultiplicationOperator.h"
+						>
+					</File>
+					<File
+						RelativePath="..\..\Include\SINSubtractionOperator.h"
+						>
+					</File>
+				</Filter>
+				<Filter
+					Name="Relational"
 					>
-				</File>
+					<File
+						RelativePath="..\..\Include\SINEqualityOperator.h"
+						>
+					</File>
+				</Filter>
+				<Filter
+					Name="Logical"
+					>
+					<File
+						RelativePath="..\..\Include\SINOrOperator.h"
+						>
+					</File>
+				</Filter>
 			</Filter>
 		</Filter>
 		<Filter
