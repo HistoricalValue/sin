@@ -217,6 +217,10 @@
 						>
 					</File>
 					<File
+						RelativePath="..\..\Src\SINGreaterThanOrEqualToSINGreaterThanOrEqualToOperator.cpp"
+						>
+					</File>
+					<File
 						RelativePath="..\..\Src\SINLessThanOperator.cpp"
 						>
 					</File>
@@ -292,6 +296,10 @@
 					</File>
 					<File
 						RelativePath="..\..\Include\SINGreaterThanOperator.h"
+						>
+					</File>
+					<File
+						RelativePath="..\..\Include\SINGreaterThanOrEqualToOperator.h"
 						>
 					</File>
 					<File
