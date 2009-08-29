@@ -42,7 +42,7 @@ namespace SIN {
 	//------------------------------------------------------
 
 	MemoryCell * EqualityOperator::ManageAst(const MemoryCellAST & mc1, const MemoryCell & mc2) 
-		{	SINASSERT(!"First implement the operator == in AST node"); return Equality<MemoryCell::AST_MCT, MemoryCellAST>(mc1, mc2);	}
+		{	return Equality<MemoryCell::AST_MCT, MemoryCellAST>(mc1, mc2);	}
 
 	//------------------------------------------------------
 

@@ -221,6 +221,10 @@
 						>
 					</File>
 					<File
+						RelativePath="..\..\Src\SINInequalityOperator.cpp"
+						>
+					</File>
+					<File
 						RelativePath="..\..\Src\SINLessThanOperator.cpp"
 						>
 					</File>
@@ -304,6 +308,10 @@
 					</File>
 					<File
 						RelativePath="..\..\Include\SINGreaterThanOrEqualToOperator.h"
+						>
+					</File>
+					<File
+						RelativePath="..\..\Include\SINInequalityOperator.h"
 						>
 					</File>
 					<File
