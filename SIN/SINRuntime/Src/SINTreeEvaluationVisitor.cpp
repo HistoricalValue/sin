@@ -479,7 +479,8 @@ namespace SIN{
 
 	void TreeEvaluationVisitor::Visit(SemicolonASTNode & _node){
 		// TODO implement
-		SINASSERT(!"Not implemented");}
+		//SINASSERT(!"Not implemented");	Do nothing actually
+	}
 
 	//-----------------------------------------------------------------
 
