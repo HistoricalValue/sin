@@ -3,8 +3,14 @@
 
 #include "SINArithmeticOperator.h"
 
-namespace SIN }
+namespace SIN {
 	class SubtractionOperator : public ArithmeticOperator {
+	public:
+		SubtractionOperator(void);
+		~SubtractionOperator();
+	private:
+		MemoryCell * ManageNumber(const MemoryCellNumber &, const MemoryCell &);
+
 	};
 
 }	//namespace SIN
