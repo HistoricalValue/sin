@@ -17,4 +17,4 @@ namespace SIN {
 }	//namespace SIN
 
 
-#endif //__SIN_MULTIPLICATION_OPERATOR_H__
+#endif //__SIN_DIVISION_OPERATOR_H__
