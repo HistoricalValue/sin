@@ -216,6 +216,10 @@
 						RelativePath="..\..\Src\SINGreaterThanOperator.cpp"
 						>
 					</File>
+					<File
+						RelativePath="..\..\Src\SINLessThanOperator.cpp"
+						>
+					</File>
 				</Filter>
 				<Filter
 					Name="Logical"
@@ -288,6 +292,10 @@
 					</File>
 					<File
 						RelativePath="..\..\Include\SINGreaterThanOperator.h"
+						>
+					</File>
+					<File
+						RelativePath="..\..\Include\SINLessThanOperator.h"
 						>
 					</File>
 				</Filter>
