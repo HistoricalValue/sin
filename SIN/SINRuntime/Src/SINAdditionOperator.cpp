@@ -10,8 +10,10 @@ namespace SIN {
 
 	//------------------------------------------------------
 
-	AdditionOperator::AdditionOperator(void) 
-		{	arithmeticOperator = String("+");	}
+	AdditionOperator::AdditionOperator(void) {	
+		binaryOperator		= String("+");
+		binaryOperatorType	= String("Arithmetic");
+	}
 	
 
 	//------------------------------------------------------

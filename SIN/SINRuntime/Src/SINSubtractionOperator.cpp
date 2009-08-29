@@ -5,8 +5,10 @@
 namespace SIN {
 	//------------------------------------------------------
 
-	SubtractionOperator::SubtractionOperator(void) 
-		{	arithmeticOperator = String("-");	}
+	SubtractionOperator::SubtractionOperator(void) {
+		binaryOperator		= String("-");
+		binaryOperatorType	= String("Arithmetic");
+	}
 	
 
 	//------------------------------------------------------

@@ -178,7 +178,7 @@
 					>
 				</File>
 				<File
-					RelativePath="..\..\Src\SINArithmeticOperator.cpp"
+					RelativePath="..\..\Src\SINBinaryOperator.cpp"
 					>
 				</File>
 				<File
@@ -236,7 +236,7 @@
 					>
 				</File>
 				<File
-					RelativePath="..\..\Include\SINArithmeticOperator.h"
+					RelativePath="..\..\Include\SINBinaryOperator.h"
 					>
 				</File>
 				<File

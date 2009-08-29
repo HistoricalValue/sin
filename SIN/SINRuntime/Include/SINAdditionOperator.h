@@ -2,13 +2,13 @@
 #define __SIN_ADDITION_OPERATOR_H__
 
 
-#include "SINArithmeticOperator.h"
+#include "SINBinaryOperator.h"
 
 
 
 
 namespace SIN {
-	class AdditionOperator : public ArithmeticOperator {
+	class AdditionOperator : public BinaryOperator {
 	public: 
 		AdditionOperator(void);
 		~AdditionOperator();

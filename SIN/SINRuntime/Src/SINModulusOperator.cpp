@@ -9,8 +9,10 @@ namespace SIN {
 
 	//------------------------------------------------------
 
-	ModulusOperator::ModulusOperator(void) 
-		{	arithmeticOperator = String("%");	}
+	ModulusOperator::ModulusOperator(void) {	
+		binaryOperator		= String("%");
+		binaryOperatorType	= String("Arithmetic");
+	}
 	
 
 	//------------------------------------------------------

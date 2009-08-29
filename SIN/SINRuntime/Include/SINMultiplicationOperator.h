@@ -1,10 +1,10 @@
 #ifndef __SIN_MULTIPLICATION_OPERATOR_H__
 #define __SIN_MULTIPLICATION_OPERATOR_H__
 
-#include "SINArithmeticOperator.h"
+#include "SINBinaryOperator.h"
 
 namespace SIN {
-	class MultiplicationOperator : public ArithmeticOperator {
+	class MultiplicationOperator : public BinaryOperator {
 	public:
 		MultiplicationOperator(void);
 		~MultiplicationOperator();

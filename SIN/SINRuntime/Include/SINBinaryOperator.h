@@ -6,13 +6,14 @@
 
 namespace SIN {
 	
-	class ArithmeticOperator : public Operator {
+	class BinaryOperator : public Operator {
 	public:
-		ArithmeticOperator(void);
-		~ArithmeticOperator();
+		BinaryOperator(void);
+		~BinaryOperator();
 
 	protected:
-		String arithmeticOperator;
+		String binaryOperator;
+		String binaryOperatorType;
 		
 		virtual MemoryCell * ManageNil				(const MemoryCellNil &, const MemoryCell &);
 		virtual MemoryCell * ManageBool				(const MemoryCellBool &, const MemoryCell &);

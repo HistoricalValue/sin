@@ -1,10 +1,10 @@
 #ifndef __SIN_DIVISION_OPERATOR_H__
 #define __SIN_DIVISION_OPERATOR_H__
 
-#include "SINArithmeticOperator.h"
+#include "SINBinaryOperator.h"
 
 namespace SIN {
-	class DivisionOperator : public ArithmeticOperator {
+	class DivisionOperator : public BinaryOperator {
 	public:
 		DivisionOperator(void);
 		~DivisionOperator();

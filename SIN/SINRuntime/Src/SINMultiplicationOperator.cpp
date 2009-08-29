@@ -6,8 +6,10 @@ namespace SIN {
 
 	//------------------------------------------------------
 
-	MultiplicationOperator::MultiplicationOperator(void) 
-		{	arithmeticOperator = String("*");	}
+	MultiplicationOperator::MultiplicationOperator(void) {	
+		binaryOperator		= String("*");
+		binaryOperatorType	= String("Arithmetic");
+	}
 	
 
 	//------------------------------------------------------

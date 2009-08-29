@@ -9,8 +9,10 @@ namespace SIN {
 
 	//------------------------------------------------------
 
-	DivisionOperator::DivisionOperator(void) 
-		{	arithmeticOperator = String("/");	}
+	DivisionOperator::DivisionOperator(void) {	
+		binaryOperator		= String("/");
+		binaryOperatorType	= String("Arithmetic");
+	}
 	
 
 	//------------------------------------------------------

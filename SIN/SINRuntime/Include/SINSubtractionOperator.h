@@ -1,10 +1,10 @@
 #ifndef __SIN_SUBTRACTION_OPERATOR_H__
 #define __SIN_SUBTRACTION_OPERATOR_H__
 
-#include "SINArithmeticOperator.h"
+#include "SINBinaryOperator.h"
 
 namespace SIN {
-	class SubtractionOperator : public ArithmeticOperator {
+	class SubtractionOperator : public BinaryOperator {
 	public:
 		SubtractionOperator(void);
 		~SubtractionOperator();
