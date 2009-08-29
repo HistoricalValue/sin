@@ -77,7 +77,7 @@ namespace SIN {
 
 		**_retmetaexpr << expr;
 
-		SINDELETE(_expr);
+		SINDELETEARRAY(_expr);
 	}
 
 		
