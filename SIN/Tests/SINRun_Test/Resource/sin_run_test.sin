@@ -17,6 +17,16 @@ function sub(a,b) { return a - b; }
 }
 println("15: ", op(8,7));
 
+a = true;
+
+if(a)
+	println("If works");
+	
+if(not a)
+	println("Should not be here");
+else
+	println("If else works");
+
 /*
 i = 0;
 while (i++ < 4) {

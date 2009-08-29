@@ -367,7 +367,7 @@ namespace SIN{
 
 
 
-	#define EVAL_LOOP_EXPR()		expr.Accept(this);											\
+	#define EVAL_EXPR()				expr.Accept(this);											\
 									SINASSERT(memory != 0x00);									\
 									exprMemoryCell = static_cast<MemoryCellBool *>(memory)
 
@@ -384,17 +384,17 @@ namespace SIN{
 		ASTNode	& elist1				= static_cast<ASTNode&>(*kids++);
 		ASTNode & expr					= static_cast<ASTNode&>(*kids++);
 		ASTNode & elist2				= static_cast<ASTNode&>(*kids++);
-		ASTNode & stmt					= static_cast<ASTNode&>(*kids++);
+		ASTNode & stmt					= static_cast<ASTNode&>(*kids);
 
 		elist1.Accept(this);
 		
-		EVAL_LOOP_EXPR();
+		EVAL_EXPR();
 		while(exprMemoryCell->GetValue() == true) {
 			stmt.Accept(this);
 			if (triggeredBreak)
 				break;
 			elist2.Accept(this);
-			EVAL_LOOP_EXPR();
+			EVAL_EXPR();
 		}
 		triggeredBreak		= false;
 		triggeredContinue	= false;
@@ -420,13 +420,13 @@ namespace SIN{
 		ASTNode &  expr			= static_cast<ASTNode&>(*_node.begin());
 		ASTNode &  stmt			= static_cast<ASTNode&>(*_node.rbegin());
 
-		EVAL_LOOP_EXPR();
+		EVAL_EXPR();
 
 		while(exprMemoryCell->GetValue() == true) {
 			stmt.Accept(this);
 			if (triggeredBreak)
 				break;
-			EVAL_LOOP_EXPR();
+			EVAL_EXPR();
 		}
 		triggeredBreak		= false;
 		triggeredContinue	= false;
@@ -435,15 +435,34 @@ namespace SIN{
 	//-----------------------------------------------------------------
 
 	void TreeEvaluationVisitor::Visit(IfASTNode & _node){
-		// TODO implement
-		SINASSERT(!"Not implemented");
+		MemoryCellBool * exprMemoryCell	= static_cast<MemoryCellBool *>(0);
+		ASTNode &  expr			= static_cast<ASTNode&>(*_node.begin());
+		ASTNode &  stmt			= static_cast<ASTNode&>(*_node.rbegin());
+
+		EVAL_EXPR();
+
+		if(exprMemoryCell->GetValue() == true)
+			stmt.Accept(this);
 	}
 
 	//-----------------------------------------------------------------
 
 	void TreeEvaluationVisitor::Visit(IfElseASTNode & _node){
-		// TODO implement
-		SINASSERT(!"Not implemented");}
+		MemoryCellBool * exprMemoryCell	= static_cast<MemoryCellBool *>(0);
+
+		ASTNode::iterator kids			= _node.begin();
+		
+		ASTNode & expr					= static_cast<ASTNode&>(*kids++);
+		ASTNode & stmt1					= static_cast<ASTNode&>(*kids++);
+		ASTNode & stmt2					= static_cast<ASTNode&>(*kids);
+
+		EVAL_EXPR();
+
+		if(exprMemoryCell->GetValue() == true)
+			stmt1.Accept(this);
+		else
+			stmt2.Accept(this);
+	}
 
 	//-----------------------------------------------------------------
 
@@ -508,6 +527,9 @@ namespace SIN{
 		static_cast<ASTNode&>(*kid++).Accept(this);
 		MemoryCell *tmpmemcell2 = memory;
 		SINASSERT(tmpmemcell2 != NULL);
+
+		if(tmpmemcell1 != 0x00 && tmpmemcell1->Type() == MemoryCell::OBJECT_MCT && tmpmemcell2->Type() == MemoryCell::NIL_MCT)
+			static_cast<MemoryCellObject*>(tmpmemcell1)->GetValue()->DecrementReferenceCounter();
 
 		MemoryCell::Assign(*lookedup_l, tmpmemcell2);
 		SINASSERT(*lookedup_l != NULL);
@@ -837,6 +859,14 @@ namespace SIN{
 		assignObjectImpToMemory();
 	}
 
+	//	object = SINEW(Types::Object);
+
+	//	for(ASTNode::iterator kid = _node.begin(); kid != _node.end(); ++kid)
+	//		static_cast<ASTNode&>(*kid).Accept(this);
+
+	//	memory = SINEWCLASS(MemoryCellObject, (object));
+	//}
+
 	//-----------------------------------------------------------------
 
 	void TreeEvaluationVisitor::Visit(EmptyObjectASTNode & _node){
@@ -853,6 +883,11 @@ namespace SIN{
 		obj_imp->SetValue(assigned);
 	}
 
+	//	SINASSERT(_node.NumberOfChildren() == 1);
+	//	static_cast<ASTNode&>(*(_node.begin())).Accept(this);
+	//	object->SetValue(memory);
+	//}
+
 	//-----------------------------------------------------------------
 
 	void TreeEvaluationVisitor::Visit(IndexedMemberASTNode & _node) {
@@ -868,6 +903,17 @@ namespace SIN{
 		// assert there were only two kids
 		SINASSERT(kite == _node.end());
 	}
+
+	//	ASTNode::iterator kid = _node.begin();
+
+	//	static_cast<ASTNode&>(*kid++).Accept(this);
+	//	MemoryCell *tmpmemcell1 = memory;
+
+	//	static_cast<ASTNode&>(*kid++).Accept(this);
+	//	MemoryCell *tmpmemcell2 = memory;
+
+	//	object->SetValue(tmpmemcell1->ToString(), tmpmemcell2);
+	//}
 
 	//-----------------------------------------------------------------
 
