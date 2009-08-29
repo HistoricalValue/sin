@@ -859,14 +859,6 @@ namespace SIN{
 		assignObjectImpToMemory();
 	}
 
-	//	object = SINEW(Types::Object);
-
-	//	for(ASTNode::iterator kid = _node.begin(); kid != _node.end(); ++kid)
-	//		static_cast<ASTNode&>(*kid).Accept(this);
-
-	//	memory = SINEWCLASS(MemoryCellObject, (object));
-	//}
-
 	//-----------------------------------------------------------------
 
 	void TreeEvaluationVisitor::Visit(EmptyObjectASTNode & _node){
@@ -883,11 +875,6 @@ namespace SIN{
 		obj_imp->SetValue(assigned);
 	}
 
-	//	SINASSERT(_node.NumberOfChildren() == 1);
-	//	static_cast<ASTNode&>(*(_node.begin())).Accept(this);
-	//	object->SetValue(memory);
-	//}
-
 	//-----------------------------------------------------------------
 
 	void TreeEvaluationVisitor::Visit(IndexedMemberASTNode & _node) {
@@ -903,17 +890,6 @@ namespace SIN{
 		// assert there were only two kids
 		SINASSERT(kite == _node.end());
 	}
-
-	//	ASTNode::iterator kid = _node.begin();
-
-	//	static_cast<ASTNode&>(*kid++).Accept(this);
-	//	MemoryCell *tmpmemcell1 = memory;
-
-	//	static_cast<ASTNode&>(*kid++).Accept(this);
-	//	MemoryCell *tmpmemcell2 = memory;
-
-	//	object->SetValue(tmpmemcell1->ToString(), tmpmemcell2);
-	//}
 
 	//-----------------------------------------------------------------
 
