@@ -182,6 +182,10 @@
 					>
 				</File>
 				<File
+					RelativePath="..\..\Src\SINDivisionOperator.cpp"
+					>
+				</File>
+				<File
 					RelativePath="..\..\Src\SINEqualityOperator.cpp"
 					>
 				</File>
@@ -229,6 +233,10 @@
 				</File>
 				<File
 					RelativePath="..\..\Include\SINArithmeticOperator.h"
+					>
+				</File>
+				<File
+					RelativePath="..\..\Include\SINDivisionOperator.h"
 					>
 				</File>
 				<File

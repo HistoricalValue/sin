@@ -1,18 +1,21 @@
-#include "SINMultiplicationOperator.h"
+#include "SINDivisionOperator.h"
 #include "SINAlloc.h"
+
+
+
 
 
 namespace SIN {
 
 	//------------------------------------------------------
 
-	MultiplicationOperator::MultiplicationOperator(void) 
+	DivisionOperator::DivisionOperator(void) 
 		{	arithmeticOperator = String("*");	}
 	
 
 	//------------------------------------------------------
 
-	MultiplicationOperator::~MultiplicationOperator() {}
+	DivisionOperator::~DivisionOperator() {}
 
 
 	//*******************************
@@ -20,7 +23,7 @@ namespace SIN {
 
 	//------------------------------------------------------
 	
-	MemoryCell * MultiplicationOperator::ManageNumber(const MemoryCellNumber & mc1, const MemoryCell & mc2) {
+	MemoryCell * DivisionOperator::ManageNumber(const MemoryCellNumber & mc1, const MemoryCell & mc2) {
 		if (mc2.Type() == MemoryCell::NUMBER_MCT) 
 			return SINEWCLASS(MemoryCellNumber, (mc1.GetValue() * static_cast<const MemoryCellNumber &>(mc2).GetValue()));
 		
