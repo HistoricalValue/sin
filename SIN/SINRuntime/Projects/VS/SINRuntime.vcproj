@@ -190,6 +190,10 @@
 					>
 				</File>
 				<File
+					RelativePath="..\..\Src\SINModulusOperator.cpp"
+					>
+				</File>
+				<File
 					RelativePath="..\..\Src\SINMultiplicationOperator.cpp"
 					>
 				</File>
@@ -241,6 +245,10 @@
 				</File>
 				<File
 					RelativePath="..\..\Include\SINEqualityOperator.h"
+					>
+				</File>
+				<File
+					RelativePath="..\..\Include\SINModulusOperator.h"
 					>
 				</File>
 				<File
