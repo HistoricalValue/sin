@@ -18,7 +18,7 @@ namespace SIN {
 			}
 
 			_to = _w_clone? _from->Clone() : _from;
-			if (_from->Type() == MemoryCell::OBJECT_MCT && _w_clone)
+			if (_from->Type() == MemoryCell::OBJECT_MCT)
 				static_cast<MemoryCellObject*>(_from)->GetValue()->IncrementReferenceCounter();
 		}
 

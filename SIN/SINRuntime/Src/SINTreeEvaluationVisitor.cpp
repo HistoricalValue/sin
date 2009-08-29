@@ -120,6 +120,7 @@ namespace SIN{
 	inline void TreeEvaluationVisitor::assignObjectImpToMemory(void) {
 		memory = 0x00;
 		MemoryCell::SimpleAssign(memory, SINEWCLASS(MemoryCellObject, (obj_imp)));
+		insertTemporary(memory);
 	}
 
 	inline void TreeEvaluationVisitor::insertTemporary(InstanceProxy<MemoryCell> const& _tmp) {
@@ -369,6 +370,7 @@ namespace SIN{
 
 	#define EVAL_EXPR()				expr.Accept(this);											\
 									SINASSERT(memory != 0x00);									\
+									SINASSERT(memory->Type() == MemoryCell::BOOL_MCT);			\
 									exprMemoryCell = static_cast<MemoryCellBool *>(memory)
 
 
@@ -518,18 +520,17 @@ namespace SIN{
 		SINASSERT(kid0.Type() == SINASTNODES_IDASTNODE_TYPE || kid0.Type() == SINASTNODES_LOCALIDASTNODE_TYPE || kid0.Type() == SINASTNODES_GLOBALIDASTNODE_TYPE);
 
 		kid0.Accept(this);
+		SINASSERT(memory != 0x00);
+		SINASSERT(lookuped != 0x00);
+		SINASSERT(memory == *lookuped);
+		SINASSERT(memory->Type() != MemoryCell::FUNCTION_MCT); //TODO Throw run-time error
+		SINASSERT(memory->Type() != MemoryCell::LIB_FUNCTION_MCT); //TODO Throw run-time error
 		MemoryCell *tmpmemcell1 = memory;
 		InstanceProxy<MemoryCell>* lookedup_l = lookuped; // looked-up and memory must be saved after each eval of a kid
-
-		SINASSERT(tmpmemcell1 == 0x00 || tmpmemcell1->Type() != MemoryCell::FUNCTION_MCT); //TODO Throw run-time error
-		SINASSERT(tmpmemcell1 == 0x00 || tmpmemcell1->Type() != MemoryCell::LIB_FUNCTION_MCT); //TODO Throw run-time error
 
 		static_cast<ASTNode&>(*kid++).Accept(this);
 		MemoryCell *tmpmemcell2 = memory;
 		SINASSERT(tmpmemcell2 != NULL);
-
-		if(tmpmemcell1 != 0x00 && tmpmemcell1->Type() == MemoryCell::OBJECT_MCT && tmpmemcell2->Type() == MemoryCell::NIL_MCT)
-			static_cast<MemoryCellObject*>(tmpmemcell1)->GetValue()->DecrementReferenceCounter();
 
 		MemoryCell::Assign(*lookedup_l, tmpmemcell2);
 		SINASSERT(*lookedup_l != NULL);
