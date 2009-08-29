@@ -10,7 +10,7 @@ namespace SIN {
 	//------------------------------------------------------
 
 	DivisionOperator::DivisionOperator(void) 
-		{	arithmeticOperator = String("*");	}
+		{	arithmeticOperator = String("/");	}
 	
 
 	//------------------------------------------------------
@@ -27,7 +27,7 @@ namespace SIN {
 		if (mc2.Type() == MemoryCell::NUMBER_MCT) 
 			return SINEWCLASS(MemoryCellNumber, (mc1.GetValue() * static_cast<const MemoryCellNumber &>(mc2).GetValue()));
 		
-		return ReturnError(CreateErrorMessage("Arithmetic Number * ", mc2));
+		return ReturnError(CreateErrorMessage("Arithmetic Number / ", mc2));
 	}
 
 
