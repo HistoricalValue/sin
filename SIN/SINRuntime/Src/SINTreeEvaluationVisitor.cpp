@@ -103,10 +103,11 @@ namespace SIN{
 	evaluateBinaryOperation(this, memory, &TreeEvaluationVisitor::insertTemporary, _node, OP_NAME<MemoryCell>())	\
 
 
-#define EVALUATE_BASIC_COMPARISON_OPERATION(OPERATOR)																		\
-	EVALUATE_BASIC_MATHEMATIC_OPERATION(OPERATOR);																			\
-	SINASSERT(memory->Type() == MemoryCell::NUMBER_MCT);																	\
-	MemoryCell::UnobtrusiveAssign(memory, SINEWCLASS(MemoryCellBool, (static_cast<MemoryCellNumber*>(memory)->GetValue())));	\
+#define EVALUATE_BASIC_COMPARISON_OPERATION(OPERATOR)																			\
+	EVALUATE_BASIC_MATHEMATIC_OPERATION(OPERATOR);																				\
+	SINASSERT(memory->Type() == MemoryCell::NUMBER_MCT);																		\
+	MemoryCell::SimpleAssign(memory, SINEWCLASS(MemoryCellBool, (static_cast<MemoryCellNumber*>(memory)->GetValue())));			\
+	insertTemporary(memory);																									\
 	// the old memory value will be delete at temporary variables clean up time
 
 
@@ -603,7 +604,7 @@ namespace SIN{
 		ASTNode& func_id = static_cast<ASTNode&>(*kid++);
 		func_id.Accept(this);
 		MemoryCell *tmpmemcell1 = memory;
-		if (tmpmemcell1 == 0x00)
+		if (tmpmemcell1->Type() == MemoryCell::NIL_MCT)
 			ERROR((to_string("Calling undefined function: ") << func_id.Name()).c_str(), _node.AssociatedFileName().c_str(), _node.AssociatedFileLine());
 		SINASSERT(tmpmemcell1->Type() == MemoryCell::FUNCTION_MCT || tmpmemcell1->Type() == MemoryCell::LIB_FUNCTION_MCT);	//TODO Throw runtime error here
 		
