@@ -18,6 +18,8 @@ namespace SIN {
 		public:
 			bool operator ==(Nil const &) const;
 			bool operator ==(long const &) const;
+
+			bool operator !=(Nil const &) const;
 		};
 
 		/** SIN internal constant values' representation types */

@@ -21,6 +21,9 @@ namespace SIN {
 
 			String const& Name(void) const { return name; }
 
+			bool operator== (const SIN::Library::Function & libFunck) const { return name == libFunck.Name(); }
+			bool operator!= (const SIN::Library::Function & libFunck) const { return name != libFunck.Name();  }
+
 			// Invoke
 			virtual return_type operator ()(SIN_FUNCTIONLIBRARY_FUNC_ARGS) const = 0;
 		protected:

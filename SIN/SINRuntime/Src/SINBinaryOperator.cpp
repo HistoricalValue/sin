@@ -1,9 +1,8 @@
 #include "SINBinaryOperator.h"
 
+#include "SINAssert.h"
 
 namespace SIN {
-	
-
 
 	//------------------------------------------------------
 

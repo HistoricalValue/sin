@@ -68,6 +68,9 @@ namespace SIN {
 
 		virtual ASTNode *Clone(void) const;
 
+		virtual bool operator== (const ASTNode & node) const { return id == node.id; }
+		virtual bool operator!= (const ASTNode & node) const { return id != node.id; }
+
 		// introduced for loose runtime checking.
 		// 0 is the default value, signifying that inheriting classes do not override this method
 		virtual unsigned long Type(void) const = 0;

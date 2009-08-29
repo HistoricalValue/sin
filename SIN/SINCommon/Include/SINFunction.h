@@ -19,6 +19,9 @@ namespace SIN {
 			ASTNode *		GetASTNode(void) const;
 			const String &  Name(void) const;
 			void			SetASTNode(ASTNode *);
+
+			bool operator== (const Function &) const;
+			bool operator!= (const Function &) const;
 		private:
 			ASTNode	*	node;
 			

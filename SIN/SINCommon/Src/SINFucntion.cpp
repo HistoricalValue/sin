@@ -19,6 +19,18 @@ namespace SIN {
 		
 		void Function::SetASTNode(ASTNode * _node)
 			{ node = _node; }
+
+
+		//-----------------------------------------------------------------
+
+		bool Function::operator== (const Function & f) const 
+			{	return node->Name() == f.Name();	}
+		
+
+		//-----------------------------------------------------------------
+
+		bool Function::operator!= (const Function &f) const
+			{	return node->Name() != f.Name();	}
 	
 	}	//namespace Types
 

@@ -31,7 +31,7 @@ namespace SIN {
 		virtual String		 CreateErrorMessage(const String &, const MemoryCell &);
 		virtual MemoryCell * ReturnError(const String &);
 
-
+		virtual bool		 BooleanFormOfMemoryCell(const MemoryCell &);
 		virtual MemoryCell * ManageNil				(const MemoryCellNil &, const MemoryCell &) = 0;
 		virtual MemoryCell * ManageBool				(const MemoryCellBool &, const MemoryCell &) = 0;
 		virtual MemoryCell * ManageString			(const MemoryCellString &, const MemoryCell &) = 0;

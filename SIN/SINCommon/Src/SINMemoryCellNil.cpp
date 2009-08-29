@@ -24,6 +24,17 @@ namespace SIN {
 
 	//-----------------------------------------------------------------
 
+
+	void MemoryCellNil::SetValue(const Types::Nil_t & num) 
+		{}
+
+	//-----------------------------------------------------------------
+
+	Types::Nil_t MemoryCellNil::GetValue(void) const
+		{	return Types::Nil_t();	}
+
+	//-----------------------------------------------------------------
+
 	bool MemoryCellNil::operator ==(MemoryCell const&) const {
 		SINASSERT(!"Not implemented");
 		return false;
