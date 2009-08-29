@@ -11,10 +11,8 @@ namespace SIN {
 		EqualityOperator(void);
 		~EqualityOperator();
 
-		friend MemoryCell * operator == (const MemoryCell &, const MemoryCell &);
 	};
 	
-	extern MemoryCell * operator == (const MemoryCell &, const MemoryCell &);
 
 }	//namspace SIN
 
