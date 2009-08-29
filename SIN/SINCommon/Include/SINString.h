@@ -20,8 +20,13 @@ namespace SIN {
         String const operator +=(String const &o)
             { return *this = *this + o; }
 
-        bool operator ==(String const &) const;
-        bool operator  <(String const &) const;
+        bool operator==	(String const &) const;
+        bool operator!=	(String const &) const;
+        bool operator< 	(String const &) const;
+		bool operator> 	(String const &) const;
+		bool operator>=	(String const &) const;
+		bool operator<=	(String const &) const;
+
 
 		size_t Length(void) const;
 		String& Erase(size_t pos, size_t n);	// returns this

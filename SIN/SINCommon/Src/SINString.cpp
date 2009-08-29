@@ -46,6 +46,18 @@ namespace SIN {
         return core < _other.core;
     }
 
+	bool String::operator!=	(String const &_other) const
+		{	return core != _other.core;	}
+
+	bool String::operator> 	(String const &_other) const
+		{	return core > _other.core;	}
+
+	bool String::operator>=	(String const &_other) const
+		{	return core >= _other.core;	}
+
+	bool String::operator<=	(String const &_other) const
+		{	return core <= _other.core;	}
+
 	size_t String::Length(void) const {
 		return core.length();
 	}
