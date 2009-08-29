@@ -301,6 +301,8 @@ namespace SIN{
 	namespace {template <typename _Ignored> struct sinnumber_t_modulus_op {
 		typedef Types::Number_t num;
 		num const operator ()(const num& a, const num& b) const {
+			if(b == 0)
+				SINASSERT(!"Modulo with zero");
 			return static_cast<signed long int>(a) % static_cast<signed long int>(b);
 		}
 	}; // struct sinnumber_t_modulus_op
