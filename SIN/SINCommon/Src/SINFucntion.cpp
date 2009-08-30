@@ -24,13 +24,13 @@ namespace SIN {
 		//-----------------------------------------------------------------
 
 		bool Function::operator== (const Function & f) const 
-			{	return node->Name() == f.Name();	}
+			{ return *node == *f.node; }
 		
 
 		//-----------------------------------------------------------------
 
 		bool Function::operator!= (const Function &f) const
-			{	return node->Name() != f.Name();	}
+			{ return *node != *f.node; }
 	
 	}	//namespace Types
 

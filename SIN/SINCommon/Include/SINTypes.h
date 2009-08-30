@@ -17,8 +17,6 @@ namespace SIN {
 		class Nil {
 		public:
 			bool operator ==(Nil const &) const;
-			bool operator ==(long const &) const;
-
 			bool operator !=(Nil const &) const;
 		};
 

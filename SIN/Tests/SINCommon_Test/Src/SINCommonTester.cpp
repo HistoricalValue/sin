@@ -46,7 +46,8 @@ namespace SIN {
 				ASSERT(jon.Erase(8,17) == "We live and then we die");
 				ASSERT(jon.DropLast(7) + "..." == "We live and then...");
 
-                ASSERT(nil == 0x00);
+				ASSERT(nil == Types::Nil_t());
+				ASSERT(!(Types::Nil_t() != Types::Nil_t()));
 
                 bln = TRUE;
                 ASSERT(bln == TRUE); ASSERT(!(bln == FALSE)); ASSERT(bln != FALSE); ASSERT(!bln == FALSE);

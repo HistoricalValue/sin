@@ -56,10 +56,6 @@ namespace SIN {
 
 	ASTNode::ID_t const& ASTNode::ID(void) const 
 		{	return id;	}
-
-	//---------------------------------------------------
-
-//	void ASTNode::Accept(ASTVisitor *_v) { _v->Visit(*this); }
 	
 	
 	//---------------------------------------------------
@@ -84,6 +80,21 @@ namespace SIN {
 
 	String const to_string(ASTNode const &_node) 
 		{	return to_string(_node.Name());	}
+
+	//---------------------------------------------------
+
+	bool ASTNode::operator ==(const ASTNode & _other) const {
+		return id == _other.id;
+	}
+
+	//---------------------------------------------------
+
+	bool ASTNode::operator !=(const ASTNode & _other) const {
+		return id != _other.id;
+	}
+
+	//---------------------------------------------------
+
 
 	///--------- AST Node Factory ----------
 	ASTNodeFactory::ASTNodeFactory(void): namer("ASTNode-"), next_id(0x00ul) {}

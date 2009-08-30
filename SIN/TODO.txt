@@ -3,7 +3,7 @@
 
 ==== Do once ====
 
-*[034] Refactor returnValue()s in VirtualState to use assign.
+
 
 *[032] Make following lib funcs.
 		tostrin, strtonum, strsavetofile, typeof, input, print, println, openfile, closefile, writefile,
@@ -23,14 +23,14 @@
 
 *[040 2009-08-27/01:47] Check and make a correct the default and ESPECIALLY copy constructor AND destructor for the SymbolTable (koutsop only)
 
-*[041 2009-08-27/18:07] Implement operator== for aaaall the memory cell types.
+
 *[042 2009-08-27/18:12] Implement all kinds of binary operations among all types of memory cells (yeah, hahah).
 
 *[043 2009-08-28/11:22] SINAlloc should call destructors on array members on delete[]
 
 *[044 2009-08-28/14:37] Make libfuncs use the environment return value pointer and remove the return value stuff from the virtual state.
 
-*[025] Implement operator == for ASTNode
+
 
 *[026] Make the testing framework serious (save results and print them later -- especially TestCollections should be serious)
 *[027] Default ctor of LamdaFunctionASTNode should name automatically the node with $lamdaxxx
@@ -116,7 +116,7 @@
 *[031] MemoryCell* MemoryCellClone()
   [ koutsop | done]
 * string_cast -> to_string
-  [ koutsop | done]=======
+  [ koutsop | done]
 *[019] Fill up Symbol Table's tester
   [ koutsop | done it]
 * Refactor SINTree: make it appropriate for bottom-up parsing (linking of nodes
@@ -148,5 +148,11 @@
   [ rudolf | done]
 *[044 2009-08-28/02:43] Fix parsing manage for functions to make something correct!
   [ rudolf | canceled]
+*[041 2009-08-27/18:07] Implement operator== for aaaall the memory cell types.
+  [ rudolf | canceled]
+*[034] Refactor returnValue()s in VirtualState to use assign.
+  [ rudolf | canceled]
+*[025] Implement operator == for ASTNode
+  [ koutsop | done]
 *[028] Check for out of place "return" and "break" and "continue" (with counters in fabla).
   [ koutsop | done]
