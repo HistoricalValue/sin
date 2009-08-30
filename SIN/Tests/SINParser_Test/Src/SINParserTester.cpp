@@ -85,7 +85,8 @@ namespace SIN {
 
 			//------------------------------------------------------------------
 
-			void test(InstanceProxy<TestFactory> const &tf) { 
+			void test(InstanceProxy<TestFactory> const &tf) {
+				LoggerManager::SingletonGetInstance()->MakeVoidLogger("SIN::Tests::Parser");
 				logger = LoggerManager::SingletonGetInstance()->GetLogger("SIN::Tests::Parser");
 				test_factory = tf;
 				SIN_TESTS_PARSER_TESTRUN(ParserFileTest);

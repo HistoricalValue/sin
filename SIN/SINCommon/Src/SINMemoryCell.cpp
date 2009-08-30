@@ -9,17 +9,22 @@ namespace SIN {
 
 		//-----------------------------------------------------------------
 
-		void assign(MemoryCell*& _to, MemoryCell* _from, bool _w_del, bool _w_clone) {
-			if (_to != 0x00) {
-				SINASSERT(_to->Type() != MemoryCell::FUNCTION_MCT);
-				SINASSERT(_to->Type() != MemoryCell::LIB_FUNCTION_MCT);
-				if (_w_del)
-					SINDELETE(_to);
-			}
+		void assign(MemoryCell*& _to, MemoryCell* const _from, bool _w_del, bool _w_clone) {
+			typedef MemoryCell* const memcell_const;
+			if (memcell_const(_to) == _from)
+				; // do nothing
+			else {
+				if (_to != 0x00) {
+					SINASSERT(_to->Type() != MemoryCell::FUNCTION_MCT);
+					SINASSERT(_to->Type() != MemoryCell::LIB_FUNCTION_MCT);
+					if (_w_del)
+						SINDELETE(_to);
+				}
 
-			_to = _w_clone? _from->Clone() : _from;
-			if (_from->Type() == MemoryCell::OBJECT_MCT)
-				static_cast<MemoryCellObject*>(_from)->GetValue()->IncrementReferenceCounter();
+				_to = _w_clone? _from->Clone() : _from;
+				if (_from->Type() == MemoryCell::OBJECT_MCT)
+					static_cast<MemoryCellObject*>(_from)->GetValue()->IncrementReferenceCounter();
+			}
 		}
 
 	} // namespace

@@ -67,6 +67,7 @@ namespace SIN {
 #define EVALUATE_BASIC_LOGICAL_OPERATION(OPERATOR)     EVALUATE_BINARY_OPERATION(OPERATOR)
 #define EVALUATE_BASIC_COMPARISON_OPERATION(OPERATOR)  EVALUATE_BINARY_OPERATION(OPERATOR)
 
+#define EVALUATE_AND_ADVANCE(KITE) static_cast<ASTNode&>(*KITE++).Accept(this)
 
 	//-----------------------------------------------------------------
 	// Privates (hihihi)
@@ -469,7 +470,7 @@ namespace SIN {
 		ASTNode::iterator kid = _node.begin();
 
 		ASTNode& kid0 = static_cast<IDASTNode&>(*kid++);
-		SINASSERT(kid0.Type() == SINASTNODES_IDASTNODE_TYPE || kid0.Type() == SINASTNODES_LOCALIDASTNODE_TYPE || kid0.Type() == SINASTNODES_GLOBALIDASTNODE_TYPE);
+		SINASSERT(kid0.Type() == SINASTNODES_IDASTNODE_TYPE || kid0.Type() == SINASTNODES_LOCALIDASTNODE_TYPE || kid0.Type() == SINASTNODES_GLOBALIDASTNODE_TYPE || kid0.Type() == SINASTNODES_OBJECTMEMBER_TYPE);
 
 		kid0.Accept(this);
 		SINASSERT(memory != 0x00);
@@ -944,8 +945,27 @@ namespace SIN {
 	//-----------------------------------------------------------------
 
 	void TreeEvaluationVisitor::Visit(ObjectMemberASTNode & _node) {
-		// TODO implement
-		SINASSERT(!"Not implemented");
+		ASTNode::iterator kite(_node.begin());
+		// Evaluate first kid, should return an object
+		EVALUATE_AND_ADVANCE(kite);
+		if (memory->Type() != MemoryCell::OBJECT_MCT)
+			vs->AppendError(to_string("Accessing member \"") << static_cast<ASTNode&>(*kite).Name()
+			<< "\" on non-object type " << Operator::GetTypeAsStringFromMemoryCell(*memory),
+			_node.AssociatedFileName().c_str(), _node.AssociatedFileLine());
+		MemoryCellObject* const obj_ref = static_cast<MemoryCellObject*>(memory);
+		Types::Object_t obj_p  = obj_ref->GetValue();
+		// Look-up in object
+		SINASSERT(static_cast<ASTNode&>(*kite).Type() == SINASTNODES_IDASTNODE_TYPE);
+		// TODO add a field for the id node and don't use its Name()
+		String const& member_id = static_cast<ASTNode&>(*kite).Name();
+		lookuped = &obj_p->GetValue(member_id);
+		if (static_cast<MemoryCell*>(*lookuped) == 0x00) {
+			// not found, insert Nil
+			obj_p->SetValue(member_id, SINEW(MemoryCellNil));
+			lookuped = &obj_p->GetValue(member_id);
+			SINASSERT(static_cast<MemoryCell const* const>(*static_cast<InstanceProxy<MemoryCell> const* const>(lookuped)) != 0x00);
+		}
+		memory = *static_cast<InstanceProxy<MemoryCell> const*>(lookuped);
 	}
 
 	//-----------------------------------------------------------------

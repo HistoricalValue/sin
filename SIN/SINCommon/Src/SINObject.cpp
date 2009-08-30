@@ -44,7 +44,7 @@ struct ClearTableFunctor : public std::unary_function <const SIN::Types::Object:
 	void operator() (const SIN::Types::Object::ObjectTableValue & otv) {
 		if (otv.second != static_cast<SIN::MemoryCell *>(0)) {
 			if(otv.second->Type() == SIN::MemoryCell::OBJECT_MCT){
-				SIN::MemoryCellObject* obj = static_cast<SIN::MemoryCellObject *>(otv.second);
+				SIN::MemoryCellObject* obj = &static_cast<SIN::MemoryCellObject &>(*otv.second);
 
 				//An to exoume 3anadei simenei oti eixame kuklo kai to exoume idi kanei delete
 				if ( !obj->GetValue()->IsMarckedForDeletion() ) {
@@ -209,9 +209,14 @@ namespace SIN {
 
 		//-----------------------------------------------------------------
 
-		MemoryCell * Object::GetValue (const String & key) const {
-			ObjectTable::const_iterator result = table.find(key);
-			return result != table.end() ? result->second : static_cast<MemoryCell *>(0);
+		namespace {
+			MemoryCell* const P_not_found_value = 0x00;
+			static InstanceProxy<MemoryCell> P_not_found(P_not_found_value);
+		}
+		InstanceProxy<MemoryCell>& Object::GetValue (const String & key) {
+			SINASSERT(static_cast<MemoryCell*>(P_not_found) == P_not_found_value);
+			ObjectTable::iterator result = table.find(key);
+			return result != table.end() ? result->second : P_not_found;
 		}
 
 

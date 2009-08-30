@@ -157,7 +157,7 @@ namespace SIN {
 					MemoryCell* const arg0 = stable.LookupByIndex(0);
 					if (arg0->Type() == MemoryCell::OBJECT_MCT) {
 						Types::Object_t const obj = static_cast<MemoryCellObject*>(arg0)->GetValue();
-						filememcell* const fres = static_cast<filememcell*>(obj->GetValue("file"));
+						filememcell* const fres = &static_cast<filememcell&>(*obj->GetValue("file"));
 						if (fres != 0x00) {
 							std::ifstream fin(fres->file.path.c_str());
 							if (fin) {

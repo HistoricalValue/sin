@@ -17,9 +17,10 @@ namespace SIN {
 
 		class Object {
 		public:
-			typedef std::list<String>				ObjectKeysList;
-			typedef std::map<String, MemoryCell *>	ObjectTable;
-			typedef std::pair<String, MemoryCell *> ObjectTableValue;
+			typedef std::list<String> ObjectKeysList;
+			typedef InstanceProxy<MemoryCell> memcell_t;
+			typedef std::map<String, memcell_t> ObjectTable;
+			typedef std::pair<String, memcell_t> ObjectTableValue;
 
 			//Constructor
 			Object(void);
@@ -38,7 +39,7 @@ namespace SIN {
 			void			SetValue(MemoryCell *);
 			void			SetValue(const ObjectTableValue &);
 			void			SetValue(const String &, MemoryCell *);		
-			MemoryCell*		GetValue(const String &) const;
+			memcell_t&		GetValue(const String &);
 			
 			void			MarkForDeletion(void);
 			bool			IsMarckedForDeletion(void) const;
