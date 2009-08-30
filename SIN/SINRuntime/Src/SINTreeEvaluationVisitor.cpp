@@ -674,7 +674,104 @@ namespace SIN{
 	//-----------------------------------------------------------------
 
 	void TreeEvaluationVisitor::Visit(MethodCallASTNode & _node) {
-		// TODO implement
+		//---------------- koutsop start here	-----------------------------		
+		SINASSERT(_node.NumberOfChildren() == 3);
+		//---------------- koutsop end here		-----------------------------
+
+
+		ASTNode::iterator kid = _node.begin();
+
+
+		//---------------- koutsop start here	-----------------------------		
+		// Lookup the object
+		ASTNode& object_id = static_cast<ASTNode&>(*kid++);
+		object_id.Accept(this);
+		MemoryCell *tmpmemcell0 = memory;
+		if (tmpmemcell0->Type() == MemoryCell::NIL_MCT)
+			ERROR(String("Undefined object"), _node.AssociatedFileName().c_str(), _node.AssociatedFileLine());
+		SINASSERT(tmpmemcell0->Type() == MemoryCell::OBJECT_MCT);	//TODO Throw runtime error here
+		//---------------- koutsop end here		-----------------------------
+
+
+		// Lookup the function
+		ASTNode& func_id = static_cast<ASTNode&>(*kid++);
+		func_id.Accept(this);
+		MemoryCell *tmpmemcell1 = memory;
+		if (tmpmemcell1->Type() == MemoryCell::NIL_MCT)
+			ERROR((to_string("Calling undefined function: ") << func_id.Name()).c_str(), _node.AssociatedFileName().c_str(), _node.AssociatedFileLine());
+		SINASSERT(tmpmemcell1->Type() == MemoryCell::FUNCTION_MCT || tmpmemcell1->Type() == MemoryCell::LIB_FUNCTION_MCT);	//TODO Throw runtime error here
+		
+		// Evaluate actual arguments
+		
+		argument_lists.push(argument_list_t(0u));
+		argument_lists.top().reserve(20u);
+
+		//---------------- koutsop start here	-----------------------------
+		//push object as the first argument of the Actual arguments
+		//MemoryCell* selfArgument = 0x00;
+		//MemoryCell::Assign(selfArgument, tmpmemcell0);
+		argument_lists.top().push_back(tmpmemcell0);
+		//---------------- koutsop end here		-----------------------------
+		
+		static_cast<ASTNode&>(*kid++).Accept(this); // argument list gets filled here
+		
+		// New stack frame (new env)
+		vs->PushState();
+
+		// Set the argument list in the current environment
+		vs->CurrentEnvironment().argument_list_p = &argument_lists.top();
+
+		// Set the return value destination
+		InstanceProxy<MemoryCell> returnValue;
+		vs->CurrentEnvironment().returnValue_p = &returnValue;
+
+		// Evaluate function code
+		if(tmpmemcell1->Type() == MemoryCell::FUNCTION_MCT) {
+			MemoryCellFunction* func = static_cast<MemoryCellFunction*>(tmpmemcell1);
+			Types::Function_t function(func->GetValue());
+			ASTNode* func_node_ast = func->GetValue().GetASTNode();
+			SINASSERT(func_node_ast->Type() == SINASTNODES_FUNCTIONASTNODE_TYPE);
+			// We must not revisit the function node itself because it evaluates to inserting
+			// the function value in the environment (under its name).
+			// Instead, we must evaluate its formal args and then its body.
+			ASTNode::iterator kite = func_node_ast->begin();
+			ASTNode& formal_args_ast_node = static_cast<ASTNode&>(*kite++);
+			SINASSERT(formal_args_ast_node.Type() == SINASTNODES_FORMALARGUMENTSASTNODE_TYPE);
+			formal_args_ast_node.Accept(this); // insert arguments as formals in env
+			ASTNode& body_block_ast_node = static_cast<ASTNode&>(*kite++);
+			SINASSERT(body_block_ast_node.Type() == SINASTNODES_BLOCKASTNODE_TYPE);
+			body_block_ast_node.Accept(this); // evaluate the body in the new env
+			if (returnValue == 0x00)
+				memory = SINEW(MemoryCellNil);
+			else
+				memory = returnValue;
+		} else { // LibFunc
+			// add actual arguments to the new environment's symbol table
+			Namer arg_namer("_arg_avril_");
+			SymbolTable& stable = vs->CurrentStable();
+			argument_list_t const& al = argument_lists.top();
+			argument_list_t::const_iterator const end = al.end();
+			for (argument_list_t::const_iterator ite = al.begin(); ite != end; ++ite)
+				stable.Insert(arg_namer++, *ite);
+
+			Library::Function *libfunc = static_cast<MemoryCellLibFunction*>(tmpmemcell1)->GetValue();
+
+			(*libfunc)(*vs, *lib);
+			memory = 0x00;
+			MemoryCell::Assign(memory, vs->ReturnValue());
+		}
+
+		// Restore environment
+		vs->RestoreState(); 
+
+		// Add return result as a temporary
+		insertTemporary(memory);
+
+		// Pop actual arguments' list
+		argument_lists.pop();
+
+
+
 		SINASSERT(!"Not implemented");
 	}
 
