@@ -2,6 +2,15 @@
 #define __SIN_ARITHMETIC_OPERATOR_H__
 
 #include "SINOperator.h"
+#include "SINMemoryCellAST.h"
+#include "SINMemoryCellBool.h"
+#include "SINMemoryCellFunction.h"
+#include "SINMemoryCellLibFunction.h"
+#include "SINMemoryCellNativeResource.h"
+#include "SINMemoryCellNil.h"
+#include "SINMemoryCellNumber.h"
+#include "SINMemoryCellObject.h"
+#include "SINMemoryCellString.h"
 
 
 namespace SIN {
@@ -11,10 +20,16 @@ namespace SIN {
 		BinaryOperator(void);
 		~BinaryOperator();
 
+		virtual MemoryCell * operator() (const MemoryCell &, const MemoryCell &);
+		virtual MemoryCell * operator() (const MemoryCell &);
+
 	protected:
 		String binaryOperator;
 		String binaryOperatorType;
-		
+
+		virtual String		 CreateErrorMessage(const char *, const MemoryCell &);
+		virtual String		 CreateErrorMessage(const String &, const MemoryCell &);
+
 		virtual MemoryCell * ManageNil				(const MemoryCellNil &, const MemoryCell &);
 		virtual MemoryCell * ManageBool				(const MemoryCellBool &, const MemoryCell &);
 		virtual MemoryCell * ManageString			(const MemoryCellString &, const MemoryCell &);
@@ -24,6 +39,11 @@ namespace SIN {
 		virtual MemoryCell * ManageFunction			(const MemoryCellFunction &, const MemoryCell &);
 		virtual MemoryCell * ManageLibFunction		(const MemoryCellLibFunction &, const MemoryCell &);
 		virtual MemoryCell * ManageNativeResource	(const MemoryCellNativeResource &, const MemoryCell &);
+
+	private:
+		void	SetErrorMessage(const String &);
+		String	GetTypeAsStringFromMemoryCell(const MemoryCell &);
+
 	};
 
 }	//namsepace SIN
