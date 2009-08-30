@@ -43,9 +43,4 @@ namespace SIN {
 
 	//-----------------------------------------------------------------
 
-	bool MemoryCellLibFunction::operator ==(MemoryCell const&) const {
-		SINASSERT(!"Not implemented");
-		return false;
-	}
-
 }

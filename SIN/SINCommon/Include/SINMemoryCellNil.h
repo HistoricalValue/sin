@@ -25,8 +25,6 @@ namespace SIN {
 		
 		void					SetValue (const Types::Nil_t & num);
 		Types::Nil_t			GetValue (void) const;
-		
-		virtual bool operator ==(MemoryCell const&) const;
 	};
 }
 

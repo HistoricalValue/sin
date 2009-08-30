@@ -26,10 +26,10 @@ Next number: 47                                 ||
 		}
 
 
-*[040 2009-08-27/01:47] Check and make a correct the default and ESPECIALLY copy constructor AND destructor for the SymbolTable (koutsop only)
+*[040 2009-08-27/01:47] Check and make correct the default and ESPECIALLY copy constructor AND destructor for the SymbolTable (koutsop only)
 
 
-*[042 2009-08-27/18:12] Implement all kinds of binary operations among all types of memory cells (yeah, hahah).
+
 
 *[043 2009-08-28/11:22] SINAlloc should call destructors on array members on delete[]
 
@@ -162,3 +162,5 @@ Next number: 47                                 ||
   [ koutsop | done]
 *[028] Check for out of place "return" and "break" and "continue" (with counters in fabla).
   [ koutsop | done]
+*[042 2009-08-27/18:12] Implement all kinds of binary operations among all types of memory cells (yeah, hahah).
+  [ koutsop 2009-08-30/21:40 | done]

@@ -31,7 +31,7 @@ namespace SIN {
 
 	MemoryCell * MultiplicationOperator::ManageString(const MemoryCellString & mc1, const MemoryCell & mc2) {
 		if (mc2.Type() == MemoryCell::NUMBER_MCT) 
-			return SINEWCLASS(MemoryCellString, (mc1.GetValue() * static_cast<const MemoryCellNumber &>(mc2).GetValue()));
+			return SINEWCLASS(MemoryCellString, (mc1.GetValue() * static_cast<unsigned int>(static_cast<const MemoryCellNumber &>(mc2).GetValue())));
 		
 		return ReturnError(CreateErrorMessage("Arithmetic String * ", mc2));
 	}

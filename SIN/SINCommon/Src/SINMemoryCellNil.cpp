@@ -34,10 +34,5 @@ namespace SIN {
 		{	return Types::Nil_t();	}
 
 	//-----------------------------------------------------------------
-
-	bool MemoryCellNil::operator ==(MemoryCell const&) const {
-		SINASSERT(!"Not implemented");
-		return false;
-	}
 	
 }

@@ -47,18 +47,4 @@ namespace SIN {
 				to_string(" )");
 	}
 
-
-	//-----------------------------------------------------------------
-
-	String const to_string(Types::Function const * val)  { 
-		return	to_string("Program function ( name: ")				+ 
-				val->Name()											+
-				to_string(" , file: ")								+
-				val->GetASTNode()->AssociatedFileName()				+
-				to_string(" , line: ")								+
-				to_string(val->GetASTNode()->AssociatedFileLine())	+
-				to_string(" )");
-	}
-	
-
 }	//namespace SIN

@@ -16,7 +16,6 @@ namespace SIN {
 		virtual MemoryCell *		Clone(void) const;
 		virtual MemoryCellType		Type (void) const;
 		virtual const String		ToString(void) const;
-		virtual bool operator ==(MemoryCell const&) const;
 
 		void						SetValue (const Types::LibraryFunction_t& function);
 		Types::LibraryFunction_t	GetValue (void) const;
