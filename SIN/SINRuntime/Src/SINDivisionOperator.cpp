@@ -32,7 +32,7 @@ namespace SIN {
 			if(num2 != 0)
 				return SINEWCLASS(MemoryCellNumber, (num1/num2));
 			else
-				return ReturnError(CreateErrorMessage("Division with zero", mc2));
+				return ReturnError("Division with zero");
 		}
 		
 		return ReturnError(CreateErrorMessage("Arithmetic Number / ", mc2));
