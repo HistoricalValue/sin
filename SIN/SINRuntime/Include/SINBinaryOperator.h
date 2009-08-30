@@ -42,7 +42,6 @@ namespace SIN {
 
 	private:
 		void	SetErrorMessage(const String &);
-		String	GetTypeAsStringFromMemoryCell(const MemoryCell &);
 
 	};
 

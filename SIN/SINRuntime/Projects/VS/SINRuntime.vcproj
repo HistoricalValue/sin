@@ -184,6 +184,30 @@
 						RelativePath="..\..\Src\SINUnaryOperator.cpp"
 						>
 					</File>
+					<Filter
+						Name="Arithmetic"
+						>
+						<File
+							RelativePath="..\..\Src\SINDecrementOperator.cpp"
+							>
+						</File>
+						<File
+							RelativePath="..\..\Src\SINIncrementOperator.cpp"
+							>
+						</File>
+						<File
+							RelativePath="..\..\Src\SINUnaryNegationOperator.cpp"
+							>
+						</File>
+					</Filter>
+					<Filter
+						Name="Logical"
+						>
+						<File
+							RelativePath="..\..\Src\SINLogicalNotOperator.cpp"
+							>
+						</File>
+					</Filter>
 				</Filter>
 				<Filter
 					Name="Binary"
@@ -294,6 +318,30 @@
 						RelativePath="..\..\Include\SINUnaryOperator.h"
 						>
 					</File>
+					<Filter
+						Name="Arithmetic"
+						>
+						<File
+							RelativePath="..\..\Include\SINDecrementOperator.h"
+							>
+						</File>
+						<File
+							RelativePath="..\..\Include\SINIncrementOperator.h"
+							>
+						</File>
+						<File
+							RelativePath="..\..\Include\SINUnaryNegationOperator.h"
+							>
+						</File>
+					</Filter>
+					<Filter
+						Name="Logical"
+						>
+						<File
+							RelativePath="..\..\Include\SINLogicalNotOperator.h"
+							>
+						</File>
+					</Filter>
 				</Filter>
 				<Filter
 					Name="Binary"

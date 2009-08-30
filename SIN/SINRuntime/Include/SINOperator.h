@@ -21,6 +21,7 @@ namespace SIN {
 	protected:		
 		virtual MemoryCell * ReturnError(const String &);
 		virtual bool		 BooleanFormOfMemoryCell(const MemoryCell &);
+		virtual String		 GetTypeAsStringFromMemoryCell(const MemoryCell &);
 		
 	private:
 		bool	hasError;

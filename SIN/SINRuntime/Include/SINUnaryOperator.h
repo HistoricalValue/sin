@@ -17,11 +17,11 @@ namespace SIN {
 	
 	class UnaryOperator : public Operator {
 	public:
-		BinaryOperator(void);
-		~BinaryOperator();
+		UnaryOperator(void);
+		~UnaryOperator();
 
 		virtual MemoryCell * operator() (const MemoryCell &, const MemoryCell &);
-		virtual MemoryCell * operator() (const MemoryCell &);
+		virtual MemoryCell * operator() (const MemoryCell &) = 0;
 
 	protected:
 
