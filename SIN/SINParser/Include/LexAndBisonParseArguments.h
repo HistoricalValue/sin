@@ -25,17 +25,15 @@ namespace SIN {
 
 
 		struct ParsingFalgs {
-			bool	onFunctionDef;
-
-			ParsingFalgs() : onFunctionDef (false) {}
 		} parsingFlags;
 
 
 
 		struct ParsingCounters {
 			int loops;
+			int functions;
 
-			ParsingCounters() : loops (0) {}
+			ParsingCounters() : loops(0), functions(0) {}
 		} parsingCounters;
 
 

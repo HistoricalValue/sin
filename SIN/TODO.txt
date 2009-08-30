@@ -42,7 +42,6 @@
 
 
 ----- Parser -----
-*[028] Check for out of place "return" and "break" and "continue" (with counters in fabla).
 
 
 
@@ -149,3 +148,5 @@
   [ rudolf | done]
 *[044 2009-08-28/02:43] Fix parsing manage for functions to make something correct!
   [ rudolf | canceled]
+*[028] Check for out of place "return" and "break" and "continue" (with counters in fabla).
+  [ koutsop | done]

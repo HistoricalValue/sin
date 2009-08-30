@@ -434,6 +434,8 @@ namespace SIN {
 		**_retfuncdef << arguments << _block;
 
 		SINDELETEARRAY(_id);
+
+		--_lbpa->parsingCounters.functions;
 	}
 
 	
@@ -451,6 +453,8 @@ namespace SIN {
 			*arguments + _idlist;
 
 		**_retfuncdef << arguments << _block;
+
+		--_lbpa->parsingCounters.functions;
 	}
 
 
@@ -736,6 +740,9 @@ namespace SIN {
 	//-----------------------------------------------------------------
 
 	void ParserManage::Manage_ReturnStatement_Return (const int lineNo, ASTNode **_retreturnstmt, LexAndBisonParseArguments *_lbpa){
+		if (_lbpa->parsingCounters.functions == 0)
+			_lbpa->SetError(LexAndBisonParseArguments::ErrorInfo("Use of 'return' while not in a function!", lineNo));
+	
 		*_retreturnstmt = SINEWCLASS(ReturnASTNode, ("return", _lbpa->GetFileName(), lineNo));
 		_lbpa->AppendToNodeList(*_retreturnstmt);
 	}
@@ -744,6 +751,9 @@ namespace SIN {
 	//-----------------------------------------------------------------
 
 	void ParserManage::Manage_ReturnStatement_ReturnExpression (const int lineNo, ASTNode *_expr, ASTNode **_retreturnstmt, LexAndBisonParseArguments *_lbpa) {
+		if (_lbpa->parsingCounters.functions == 0)
+			_lbpa->SetError(LexAndBisonParseArguments::ErrorInfo("Use of 'return' while not in a function!", lineNo));
+		
 		*_retreturnstmt = SINEWCLASS(ReturnASTNode, ("return expr", _lbpa->GetFileName(), lineNo));
 		_lbpa->AppendToNodeList(*_retreturnstmt);
 

@@ -300,35 +300,39 @@ block:			'{' {} stmtd '}'					{	SIN::ParserManage::Manage_Block(yylineno, $3, &(
 
 
 stmtd:			stmt stmtd							{	SIN::ParserManage::Manage_Statements(yylineno, $1, $2, &($$), &fabpa);	}
-				|									{	SIN::ParserManage::Manage_Statements_Empty(yylineno, &($$), &fabpa);		}
+				|									{	SIN::ParserManage::Manage_Statements_Empty(yylineno, &($$), &fabpa);	}
 				;
 				
-objectfuncdef:	FUNCTION ID	'(' idlist ')' block	{	SIN::ParserManage::Manage_FunctionDefinition_Function(yylineno, $2, $4, $6, &($$), &fabpa);	}
-				|	FUNCTION '(' idlist ')' block	{	SIN::ParserManage::Manage_FunctionDefinition_LamdaFunction(yylineno, $3, $5, &($$), &fabpa);	}
+objectfuncdef:	FUNCTION							{	++fabpa.parsingCounters.functions;																}
+				ID	'(' idlist ')' block			{	SIN::ParserManage::Manage_FunctionDefinition_Function(yylineno, $3, $5, $7, &($$), &fabpa);		}
+				|	FUNCTION						{	++fabpa.parsingCounters.functions;																}
+					'(' idlist ')' block			{	SIN::ParserManage::Manage_FunctionDefinition_LamdaFunction(yylineno, $4, $6, &($$), &fabpa);	}
 				;
 
 				
-funcdef:		FUNCTION ID	'(' idlist ')' block	{	SIN::ParserManage::Manage_FunctionDefinition_Function(yylineno, $2, $4, $6, &($$), &fabpa);	}
-				|	FUNCTION '(' idlist ')' block	{	SIN::ParserManage::Manage_FunctionDefinition_LamdaFunction(yylineno, $3, $5, &($$), &fabpa);	}
+funcdef:		FUNCTION							{	++fabpa.parsingCounters.functions;																}
+				ID	'(' idlist ')' block			{	SIN::ParserManage::Manage_FunctionDefinition_Function(yylineno, $3, $5, $7, &($$), &fabpa);		}
+				|	FUNCTION						{	++fabpa.parsingCounters.functions;																}
+					'(' idlist ')' block			{	SIN::ParserManage::Manage_FunctionDefinition_LamdaFunction(yylineno, $4, $6, &($$), &fabpa);	}
 				;
 
 
 const:			NUMBER 				{	SIN::ParserManage::Manage_Constant_Number(yylineno, atof(yytext), &($$), &fabpa);	}
-				|	STRING 			{	SIN::ParserManage::Manage_Constant_String(yylineno, $1, &($$), &fabpa);			}
+				|	STRING 			{	SIN::ParserManage::Manage_Constant_String(yylineno, $1, &($$), &fabpa);				}
 				|	NIL 			{	SIN::ParserManage::Manage_Constant_Nil(yylineno, &($$), &fabpa);					}
 				|	TRUE 			{	SIN::ParserManage::Manage_Constant_True(yylineno, &($$), &fabpa);					}
-				|	FALSE			{	SIN::ParserManage::Manage_Constant_False(yylineno, &($$), &fabpa);				}
+				|	FALSE			{	SIN::ParserManage::Manage_Constant_False(yylineno, &($$), &fabpa);					}
 				;
 
 
 idlist:			ID idlists			{	SIN::ParserManage::Manage_IDList(yylineno, $1, $2, &($$), &fabpa);	}
-				|	/*empty*/		{	SIN::ParserManage::Manage_IDList_Empty(yylineno, &($$), &fabpa);		}
+				|	/*empty*/		{	SIN::ParserManage::Manage_IDList_Empty(yylineno, &($$), &fabpa);	}
 				;
 
 
 
 idlists:		',' ID idlists	    {	SIN::ParserManage::Manage_IDList(yylineno, $2, $3, &($$), &fabpa);	}
-				|				    {	SIN::ParserManage::Manage_IDList_Empty(yylineno, &($$), &fabpa);		}
+				|				    {	SIN::ParserManage::Manage_IDList_Empty(yylineno, &($$), &fabpa);	}
 				;
 
 
@@ -337,15 +341,15 @@ ifstmt:			IF '(' expr	')' stmt						{	SIN::ParserManage::Manage_IfStatement_If(y
 				|	IF '(' expr ')' stmt ELSE stmt			{	SIN::ParserManage::Manage_IfStatement_IfElse(yylineno, $3, $5, $7, &($$), &fabpa);	}
 				;
 
-whilestmt:		WHILE										{	++fabpa.parsingCounters.loops;										}
+whilestmt:		WHILE										{	++fabpa.parsingCounters.loops;												}
 				'(' expr ')' stmt							{	SIN::ParserManage::Manage_WhileStatement(yylineno, $4, $6, &($$), &fabpa);	}
 				;
 
-forstmt:		FOR											{	++fabpa.parsingCounters.loops;											}
+forstmt:		FOR											{	++fabpa.parsingCounters.loops;														}
 				'(' elist ';' expr ';' elist ')' stmt		{	SIN::ParserManage::Manage_ForStatement(yylineno, $4, $6, $8, $10, &($$), &fabpa);	}
 				;
 
-returnstmt:		RETURN ';'			{	SIN::ParserManage::Manage_ReturnStatement_Return(yylineno, &($$), &fabpa);				}
+returnstmt:		RETURN ';'			{	SIN::ParserManage::Manage_ReturnStatement_Return(yylineno, &($$), &fabpa);					}
 				|	RETURN expr ';' {	SIN::ParserManage::Manage_ReturnStatement_ReturnExpression(yylineno, $2, &($$), &fabpa);	}
 				;
 
