@@ -11,7 +11,7 @@ namespace SIN {
 
 	private:
 		MemoryCell * ManageNumber(const MemoryCellNumber &, const MemoryCell &);
-
+		MemoryCell * ManageString(const MemoryCellString &, const MemoryCell &);
 
 	};
 }	//namespace SIN

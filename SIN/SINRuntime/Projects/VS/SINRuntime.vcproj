@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="windows-1253"?>
 <VisualStudioProject
 	ProjectType="Visual C++"
-	Version="9.00"
+	Version="9,00"
 	Name="SINRuntime"
 	ProjectGUID="{6EF1473D-B277-4446-8E29-5E5D028730E0}"
 	RootNamespace="SINRuntime"

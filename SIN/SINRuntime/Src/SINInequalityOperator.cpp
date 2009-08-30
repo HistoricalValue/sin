@@ -3,6 +3,21 @@
 
 namespace SIN {
 
+	namespace {
+		template<typename C>
+		inline  MemoryCell * Inequality(const C & mc1, const MemoryCell & mc2){
+			MemoryCellBool * boolmc = SINEWCLASS(MemoryCellBool, (false));
+
+			if (mc2.Type() == mc1.Type())
+				boolmc->SetValue(mc1.GetValue() != static_cast<const C &>(mc2).GetValue());
+			
+			else if (mc2.Type() == MemoryCell::BOOL_MCT) 
+				boolmc->SetValue(Operator::BooleanFormOfMemoryCell(mc1) != static_cast<const MemoryCellBool &>(mc2).GetValue());
+
+			return boolmc;
+		}
+	}
+
 	//------------------------------------------------------
 
 	InequalityOperator::InequalityOperator(void) {	
@@ -22,42 +37,42 @@ namespace SIN {
 	//------------------------------------------------------
 
 	MemoryCell * InequalityOperator::ManageNil(const MemoryCellNil & mc1, const MemoryCell & mc2)
-		{	return Inequality<MemoryCell::NIL_MCT, MemoryCellNil>(mc1, mc2);	}
+		{	return Inequality(mc1, mc2);	}
 
 	//------------------------------------------------------
 
 	MemoryCell * InequalityOperator::ManageBool(const MemoryCellBool & mc1, const MemoryCell & mc2)
-		{	return Inequality<MemoryCell::BOOL_MCT, MemoryCellBool>(mc1, mc2);	}
+		{	return Inequality(mc1, mc2);	}
 
 	//------------------------------------------------------
 
 	MemoryCell * InequalityOperator::ManageString(const MemoryCellString & mc1, const MemoryCell & mc2)
-		{	return Inequality<MemoryCell::STRING_MCT, MemoryCellString>(mc1, mc2);	}
+		{	return Inequality(mc1, mc2);	}
 
 	//------------------------------------------------------
 
 	MemoryCell * InequalityOperator::ManageNumber(const MemoryCellNumber & mc1, const MemoryCell &mc2) 
-		{	return Inequality<MemoryCell::NUMBER_MCT, MemoryCellNumber>(mc1, mc2);	}
+		{	return Inequality(mc1, mc2);	}
 
 	//------------------------------------------------------
 
 	MemoryCell * InequalityOperator::ManageAst(const MemoryCellAST & mc1, const MemoryCell & mc2) 
-		{	return Inequality<MemoryCell::AST_MCT, MemoryCellAST>(mc1, mc2);	}
+		{	return Inequality(mc1, mc2);	}
 
 	//------------------------------------------------------
 
 	MemoryCell * InequalityOperator::ManageObject(const MemoryCellObject & mc1, const MemoryCell & mc2) 
-		{	return Inequality<MemoryCell::OBJECT_MCT, MemoryCellObject>(mc1, mc2);	}
+		{	return Inequality(mc1, mc2);	}
 
 	//------------------------------------------------------
 
 	MemoryCell * InequalityOperator::ManageFunction(const MemoryCellFunction & mc1, const MemoryCell & mc2) 
-		{	return Inequality<MemoryCell::FUNCTION_MCT, MemoryCellFunction>(mc1, mc2);	}
+		{	return Inequality(mc1, mc2);	}
 
 	//------------------------------------------------------
 
 	MemoryCell * InequalityOperator::ManageLibFunction(const MemoryCellLibFunction & mc1, const MemoryCell & mc2) 
-		{	return Inequality<MemoryCell::LIB_FUNCTION_MCT, MemoryCellLibFunction>(mc1, mc2);	}
+		{	return Inequality(mc1, mc2);	}
 
 	//------------------------------------------------------
 

@@ -19,6 +19,7 @@ namespace SIN {
         String const operator  =(String const &);
         String const operator +=(String const &o)
             { return *this = *this + o; }
+		String const operator  *(unsigned int) const;
 
         bool operator==	(String const &) const;
         bool operator!=	(String const &) const;

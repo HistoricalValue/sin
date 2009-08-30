@@ -11,6 +11,22 @@
 #include "SINMemoryCellLibFunction.h"
 #include "SINLibraryFunction.h"
 #include "SINPreserveASTEvaluatorVisitor.h"
+#include "SINAdditionOperator.h"
+#include "SINDivisionOperator.h"
+#include "SINModulusOperator.h"
+#include "SINMultiplicationOperator.h"
+#include "SINSubtractionOperator.h"
+#include "SINLogicalAndOperator.h"
+#include "SINLogicalOrOperator.h"
+#include "SINEqualityOperator.h"
+#include "SINGreaterThanOperator.h"
+#include "SINGreaterThanOrEqualToOperator.h"
+#include "SINInequalityOperator.h"
+#include "SINLessThanOperator.h"
+#include "SINLessThanOrEqualToOperator.h"
+#include "SINUnaryNegationOperator.h"
+#include "SINLogicalNotOperator.h"
+
 
 #define VISIT_KIDS_SERIALLY												\
 		ASTNode::iterator const end = _node.end();						\
@@ -19,96 +35,37 @@
 
 #define ERROR(MSG, FILE, LINE) vs->AppendError(MSG, FILE, LINE)
 
-namespace SIN{
+namespace SIN {
 	//-----------------------------------------------------------------
 	// Privates (hihihi) -- not in class -- utils
 	//-----------------------------------------------------------------
-	template <typename _MathOpT>
-	inline static void evaluateBasicMathematics(
-		TreeEvaluationVisitor* const _evaluator_p,
-		MemoryCell*& _result,
-		void (TreeEvaluationVisitor::*_insertTemporary)(InstanceProxy<MemoryCell> const&),
-		ASTNode& _node,
-		_MathOpT const& _math_op
-	) {
-		SINASSERT(_node.NumberOfChildren() == 2);
-
-		ASTNode::iterator kid = _node.begin();
-
-		static_cast<ASTNode&>(*kid++).Accept(_evaluator_p);
-		SINASSERT(_result->Type() == MemoryCell::NUMBER_MCT); //TODO Throw evaluation error
-		MemoryCellNumber *tmpmemcell1 = static_cast<MemoryCellNumber*>(_result);
-
-		static_cast<ASTNode&>(*kid++).Accept(_evaluator_p);
-		SINASSERT(_result->Type() == MemoryCell::NUMBER_MCT); //TODO Throw evaluation error
-		MemoryCellNumber *tmpmemcell2 = static_cast<MemoryCellNumber*>(_result);
-		
-		(_evaluator_p->*_insertTemporary)(
-			_result = SINEWCLASS(MemoryCellNumber, (_math_op(tmpmemcell1->GetValue(), tmpmemcell2->GetValue())))
-		);
-	}
-#define EVALUATE_BASIC_MATHEMATIC_OPERATION(OP_NAME) \
-		evaluateBasicMathematics(this, memory, &TreeEvaluationVisitor::insertTemporary, _node, OP_NAME<Types::Number_t>());
-
-	template <typename _LogOpT>
-	inline static void evaluateBasicLogicalOperation(
-		TreeEvaluationVisitor* const _evaluator_p,
-		MemoryCell*& _result,
-		void (TreeEvaluationVisitor::*_insertTemporary)(InstanceProxy<MemoryCell> const&),
-		ASTNode& _node,
-		_LogOpT const& _log_op
-	) {
-		SINASSERT(_node.NumberOfChildren() == 2);
-
-		ASTNode::iterator kid = _node.begin();
-
-		static_cast<ASTNode&>(*kid++).Accept(_evaluator_p);
-		SINASSERT(_result->Type() == MemoryCell::BOOL_MCT); //TODO Throw evaluation error
-		MemoryCellBool *tmpmemcell1 = static_cast<MemoryCellBool*>(_result);
-
-		static_cast<ASTNode&>(*kid++).Accept(_evaluator_p);
-		SINASSERT(_result->Type() == MemoryCell::BOOL_MCT); //TODO Throw evaluation error
-		MemoryCellBool *tmpmemcell2 = static_cast<MemoryCellBool*>(_result);
-		
-		(_evaluator_p->*_insertTemporary)(
-			_result = SINEWCLASS(MemoryCellBool, (_log_op(tmpmemcell1->GetValue(), tmpmemcell2->GetValue())))
-		);
-	}
-#define EVALUATE_BASIC_LOGICAL_OPERATION(OP_NAME) \
-		evaluateBasicLogicalOperation(this, memory, &TreeEvaluationVisitor::insertTemporary, _node, OP_NAME<Types::Boolean_t>());
-
-	template <typename _OpT>
-	inline static void evaluateBinaryOperation(
-		TreeEvaluationVisitor* const _evaluator_p,
-		MemoryCell*& _result,
-		void (TreeEvaluationVisitor::*_insertTemporary)(InstanceProxy<MemoryCell> const&),
-		ASTNode& _node,
-		_OpT const& _op
-	) {
-		SINASSERT(_node.NumberOfChildren() == 2);
-
-		ASTNode::iterator kid = _node.begin();
-
-		static_cast<ASTNode&>(*kid++).Accept(_evaluator_p);
-		MemoryCell *tmpmemcell1 = _result;
-
-		static_cast<ASTNode&>(*kid++).Accept(_evaluator_p);
-		MemoryCell *tmpmemcell2 = _result;
-		
-		(_evaluator_p->*_insertTemporary)(
-			_result = SINEWCLASS(MemoryCellBool, (_op(*tmpmemcell1, *tmpmemcell2)))
-		);
-	}
-#define EVALUATE_BASIC_BINARY_OPERATION(OP_NAME)																	\
-	evaluateBinaryOperation(this, memory, &TreeEvaluationVisitor::insertTemporary, _node, OP_NAME<MemoryCell>())	\
+	namespace {
+		template <typename _OperatorT>
+		static void evaluateBinaryOperation(
+			TreeEvaluationVisitor& _evaluator,
+			void (TreeEvaluationVisitor::* _insertTemporary_p)(InstanceProxy<MemoryCell> const&),
+			ASTNode& _node,
+			MemoryCell*& _result
+		) {
+			ASTNode::iterator kite(_node.begin());
+			// get operand 1
+			static_cast<ASTNode&>(*kite++).Accept(&_evaluator);
+			SINASSERT(_result != 0x00);
+			MemoryCell* const operand0 = _result;
+			// get operand 2
+			static_cast<ASTNode&>(*kite++).Accept(&_evaluator);
+			SINASSERT(_result != 0x00);
+			MemoryCell* const operand1 = _result;
+			// get result and store
+			(_evaluator.*_insertTemporary_p)(_result = _OperatorT()(*operand0, *operand1));
+		}
+	} // namespace
+#define EVALUATE_BINARY_OPERATION(OPERATOR)	evaluateBinaryOperation<OPERATOR>(*this, &TreeEvaluationVisitor::insertTemporary, _node, memory);
 
 
-#define EVALUATE_BASIC_COMPARISON_OPERATION(OPERATOR)																			\
-	EVALUATE_BASIC_MATHEMATIC_OPERATION(OPERATOR);																				\
-	SINASSERT(memory->Type() == MemoryCell::NUMBER_MCT);																		\
-	MemoryCell::SimpleAssign(memory, SINEWCLASS(MemoryCellBool, (static_cast<MemoryCellNumber*>(memory)->GetValue())));			\
-	insertTemporary(memory);																									\
-	// the old memory value will be delete at temporary variables clean up time
+#define EVALUATE_BASIC_MATHEMATIC_OPERATION(OPERATOR)  EVALUATE_BINARY_OPERATION(OPERATOR)
+#define EVALUATE_BASIC_LOGICAL_OPERATION(OPERATOR)     EVALUATE_BINARY_OPERATION(OPERATOR)
+#define EVALUATE_BASIC_COMPARISON_OPERATION(OPERATOR)  EVALUATE_BINARY_OPERATION(OPERATOR)
 
 
 	//-----------------------------------------------------------------
@@ -275,88 +232,79 @@ namespace SIN{
 	//-----------------------------------------------------------------
 
 	void TreeEvaluationVisitor::Visit(AddASTNode & _node) {	
-		EVALUATE_BASIC_MATHEMATIC_OPERATION(std::plus);
+		EVALUATE_BASIC_MATHEMATIC_OPERATION(AdditionOperator);
 	}
 
 	//-----------------------------------------------------------------
 
 	void TreeEvaluationVisitor::Visit(SubASTNode & _node) {
-		EVALUATE_BASIC_MATHEMATIC_OPERATION(std::minus);
+		EVALUATE_BASIC_MATHEMATIC_OPERATION(SubtractionOperator);
 	}
 
 	//-----------------------------------------------------------------
 
 	void TreeEvaluationVisitor::Visit(MulASTNode & _node) {
-		EVALUATE_BASIC_MATHEMATIC_OPERATION(std::multiplies);
+		EVALUATE_BASIC_MATHEMATIC_OPERATION(MultiplicationOperator);
 	}
 
 	//-----------------------------------------------------------------
 
-	void TreeEvaluationVisitor::Visit(DivASTNode & _node){
-		EVALUATE_BASIC_MATHEMATIC_OPERATION(std::divides);
+	void TreeEvaluationVisitor::Visit(DivASTNode & _node) {
+		EVALUATE_BASIC_MATHEMATIC_OPERATION(DivisionOperator);
 	}
 
 	//-----------------------------------------------------------------
 
-	namespace {template <typename _Ignored> struct sinnumber_t_modulus_op {
-		typedef Types::Number_t num;
-		num const operator ()(const num& a, const num& b) const {
-			if(b == 0)
-				SINASSERT(!"Modulo with zero");
-			return static_cast<signed long int>(a) % static_cast<signed long int>(b);
-		}
-	}; // struct sinnumber_t_modulus_op
-	} // namespace
-	void TreeEvaluationVisitor::Visit(ModASTNode & _node){
-		EVALUATE_BASIC_MATHEMATIC_OPERATION(sinnumber_t_modulus_op);
+	void TreeEvaluationVisitor::Visit(ModASTNode & _node) {
+		EVALUATE_BASIC_MATHEMATIC_OPERATION(ModulusOperator);
 	}
 
 	//-----------------------------------------------------------------
 
-	void TreeEvaluationVisitor::Visit(LtASTNode & _node){
-		EVALUATE_BASIC_COMPARISON_OPERATION(std::less);
+	void TreeEvaluationVisitor::Visit(LtASTNode & _node) {
+		EVALUATE_BASIC_COMPARISON_OPERATION(LessThanOperator);
 	}
 
 	//-----------------------------------------------------------------
 
-	void TreeEvaluationVisitor::Visit(GtASTNode & _node){
-		EVALUATE_BASIC_COMPARISON_OPERATION(std::greater);
+	void TreeEvaluationVisitor::Visit(GtASTNode & _node) {
+		EVALUATE_BASIC_COMPARISON_OPERATION(GreaterThanOperator);
 	}
 
 	//-----------------------------------------------------------------
 
-	void TreeEvaluationVisitor::Visit(LeASTNode & _node){
-		EVALUATE_BASIC_COMPARISON_OPERATION(std::less_equal);
+	void TreeEvaluationVisitor::Visit(LeASTNode & _node) {
+		EVALUATE_BASIC_COMPARISON_OPERATION(LessThanOrEqualToOperator);
 	}
 
 	//-----------------------------------------------------------------
 
-	void TreeEvaluationVisitor::Visit(GeASTNode & _node){
-		EVALUATE_BASIC_COMPARISON_OPERATION(std::greater_equal);
+	void TreeEvaluationVisitor::Visit(GeASTNode & _node) {
+		EVALUATE_BASIC_COMPARISON_OPERATION(GreaterThanOrEqualToOperator);
 	}
 
 	//-----------------------------------------------------------------
 
-	void TreeEvaluationVisitor::Visit(EqASTNode & _node){
-		EVALUATE_BASIC_COMPARISON_OPERATION(std::equal_to);
+	void TreeEvaluationVisitor::Visit(EqASTNode & _node) {
+		EVALUATE_BASIC_COMPARISON_OPERATION(EqualityOperator);
 	}
 
 	//-----------------------------------------------------------------
 
-	void TreeEvaluationVisitor::Visit(NeASTNode & _node){
-		EVALUATE_BASIC_COMPARISON_OPERATION(std::not_equal_to);
+	void TreeEvaluationVisitor::Visit(NeASTNode & _node) {
+		EVALUATE_BASIC_COMPARISON_OPERATION(InequalityOperator);
 	}
 
 	//-----------------------------------------------------------------
 
-	void TreeEvaluationVisitor::Visit(OrASTNode & _node){
-		EVALUATE_BASIC_LOGICAL_OPERATION(std::logical_or);
+	void TreeEvaluationVisitor::Visit(OrASTNode & _node) {
+		EVALUATE_BASIC_LOGICAL_OPERATION(LogicalOrOperator);
 	}
 
 	//-----------------------------------------------------------------
 
-	void TreeEvaluationVisitor::Visit(AndASTNode & _node){
-		EVALUATE_BASIC_LOGICAL_OPERATION(std::logical_and);
+	void TreeEvaluationVisitor::Visit(AndASTNode & _node) {
+		EVALUATE_BASIC_LOGICAL_OPERATION(LogicalAndOperator);
 	}
 
 
@@ -379,7 +327,7 @@ namespace SIN{
 
 	//-----------------------------------------------------------------
 
-	void TreeEvaluationVisitor::Visit(ForASTNode & _node){
+	void TreeEvaluationVisitor::Visit(ForASTNode & _node) {
 
 		SINASSERT(_node.NumberOfChildren() == 4);
 
@@ -420,7 +368,7 @@ namespace SIN{
 
 	//-----------------------------------------------------------------
 
-	void TreeEvaluationVisitor::Visit(WhileASTNode & _node){
+	void TreeEvaluationVisitor::Visit(WhileASTNode & _node) {
 		MemoryCellBool * exprMemoryCell	= static_cast<MemoryCellBool *>(0);
 		ASTNode &  expr			= static_cast<ASTNode&>(*_node.begin());
 		ASTNode &  stmt			= static_cast<ASTNode&>(*_node.rbegin());
@@ -439,7 +387,7 @@ namespace SIN{
 
 	//-----------------------------------------------------------------
 
-	void TreeEvaluationVisitor::Visit(IfASTNode & _node){
+	void TreeEvaluationVisitor::Visit(IfASTNode & _node) {
 		MemoryCellBool * exprMemoryCell	= static_cast<MemoryCellBool *>(0);
 		ASTNode &  expr			= static_cast<ASTNode&>(*_node.begin());
 		ASTNode &  stmt			= static_cast<ASTNode&>(*_node.rbegin());
@@ -452,7 +400,7 @@ namespace SIN{
 
 	//-----------------------------------------------------------------
 
-	void TreeEvaluationVisitor::Visit(IfElseASTNode & _node){
+	void TreeEvaluationVisitor::Visit(IfElseASTNode & _node) {
 		MemoryCellBool * exprMemoryCell	= static_cast<MemoryCellBool *>(0);
 
 		ASTNode::iterator kids			= _node.begin();
@@ -480,7 +428,7 @@ namespace SIN{
 
 	//-----------------------------------------------------------------
 
-	void TreeEvaluationVisitor::Visit(SemicolonASTNode & _node){
+	void TreeEvaluationVisitor::Visit(SemicolonASTNode & _node) {
 		// TODO implement
 		//SINASSERT(!"Not implemented");	Do nothing actually
 	}
@@ -596,7 +544,7 @@ namespace SIN{
 
 	//-----------------------------------------------------------------
 
-	void TreeEvaluationVisitor::Visit(NormalCallASTNode & _node){
+	void TreeEvaluationVisitor::Visit(NormalCallASTNode & _node) {
 
 		SINASSERT(_node.NumberOfChildren() == 2);
 
@@ -815,7 +763,7 @@ namespace SIN{
 
 	//-----------------------------------------------------------------
 
-	void TreeEvaluationVisitor::Visit(IDASTNode & _node){
+	void TreeEvaluationVisitor::Visit(IDASTNode & _node) {
 		String const& id = _node.Name();
 		lookup(id);
 
@@ -831,7 +779,7 @@ namespace SIN{
 
 	//-----------------------------------------------------------------
 
-	void TreeEvaluationVisitor::Visit(LocalIDASTNode & _node){
+	void TreeEvaluationVisitor::Visit(LocalIDASTNode & _node) {
 		String const& id = _node.Name();
 		lookup_local(id);
 
@@ -847,7 +795,7 @@ namespace SIN{
 
 	//-----------------------------------------------------------------
 
-	void TreeEvaluationVisitor::Visit(GlobalIDASTNode & _node){
+	void TreeEvaluationVisitor::Visit(GlobalIDASTNode & _node) {
 		String const& id = _node.Name();
 		lookup_global(id);
 
@@ -863,7 +811,7 @@ namespace SIN{
 
 	//-----------------------------------------------------------------
 
-	void TreeEvaluationVisitor::Visit(PreIncrASTNode & _node){
+	void TreeEvaluationVisitor::Visit(PreIncrASTNode & _node) {
 		SINASSERT(_node.NumberOfChildren() == 1);
 
 		ASTNode::iterator kid = _node.begin();
@@ -879,7 +827,7 @@ namespace SIN{
 
 	//-----------------------------------------------------------------
 
-	void TreeEvaluationVisitor::Visit(PostIncrASTNode & _node){
+	void TreeEvaluationVisitor::Visit(PostIncrASTNode & _node)  {
 		SINASSERT(_node.NumberOfChildren() == 1);
 
 		ASTNode::iterator kid = _node.begin();
@@ -910,7 +858,7 @@ namespace SIN{
 
 	//-----------------------------------------------------------------
 
-	void TreeEvaluationVisitor::Visit(PostDecrASTNode & _node){
+	void TreeEvaluationVisitor::Visit(PostDecrASTNode & _node) {
 		SINASSERT(_node.NumberOfChildren() == 1);
 
 		ASTNode::iterator kid = _node.begin();
@@ -925,7 +873,7 @@ namespace SIN{
 
 	//-----------------------------------------------------------------
 
-	void TreeEvaluationVisitor::Visit(UnaryNotASTNode & _node){
+	void TreeEvaluationVisitor::Visit(UnaryNotASTNode & _node) {
 		SINASSERT(_node.NumberOfChildren() == 1);
 
 		ASTNode::iterator kid = _node.begin();
@@ -940,7 +888,7 @@ namespace SIN{
 
 	//-----------------------------------------------------------------
 
-	void TreeEvaluationVisitor::Visit(UnaryMinASTNode & _node){
+	void TreeEvaluationVisitor::Visit(UnaryMinASTNode & _node) {
 		SINASSERT(_node.NumberOfChildren() == 1);
 
 		ASTNode::iterator kid = _node.begin();
@@ -963,7 +911,7 @@ namespace SIN{
 
 	//-----------------------------------------------------------------
 
-	void TreeEvaluationVisitor::Visit(EmptyObjectASTNode & _node){
+	void TreeEvaluationVisitor::Visit(EmptyObjectASTNode & _node) {
 		resetObjectImp();
 		assignObjectImpToMemory();
 	}
@@ -1022,14 +970,14 @@ namespace SIN{
 	}
 
 	//-----------------------------------------------------------------
-	void TreeEvaluationVisitor::Visit(MetaParseASTNode & _node){
+	void TreeEvaluationVisitor::Visit(MetaParseASTNode & _node) {
 		// TODO implement
 		SINASSERT(!"Not implemented");
 	}
 
 	//-----------------------------------------------------------------
 
-	void TreeEvaluationVisitor::Visit(MetaPreserveASTNode & _node){
+	void TreeEvaluationVisitor::Visit(MetaPreserveASTNode & _node) {
 		// TODO implement
 		SINASSERT(!"Not implemented");
 	}

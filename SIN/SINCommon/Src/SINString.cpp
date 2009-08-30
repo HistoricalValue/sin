@@ -34,6 +34,14 @@ namespace SIN {
         return String(core + _other.core);
     }
 
+	String const String::operator *(unsigned int _times) const { 
+		std::string result_core;
+		result_core.reserve(core.size() * _times);
+		while (_times > 0)
+			result_core += core;
+		return result_core;
+	}
+
     String const String::operator =(String const &_other) {
         return *new (this) String(_other);
     }

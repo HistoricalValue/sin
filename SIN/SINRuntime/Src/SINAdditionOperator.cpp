@@ -28,12 +28,7 @@ namespace SIN {
 	//------------------------------------------------------
 	
 	MemoryCell * AdditionOperator::ManageString(const MemoryCellString & mc1, const MemoryCell & mc2) {
-		if (mc2.Type() == MemoryCell::STRING_MCT)
-			return SINEWCLASS(MemoryCellString, (mc1.GetValue() + static_cast<const MemoryCellString &>(mc2).GetValue()));
-		else if (mc2.Type() == MemoryCell::NUMBER_MCT)
-			return SINEWCLASS(MemoryCellString, (mc1.GetValue() + to_string(static_cast<const MemoryCellNumber &>(mc2).GetValue())));
-		
-		return ReturnError(CreateErrorMessage("Arithmetic String + ", mc2));
+		return SINEWCLASS(MemoryCellString, (mc1.GetValue() + mc2.ToString()));
 	}
 
 

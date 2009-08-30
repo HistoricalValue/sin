@@ -12,7 +12,6 @@
 #include "SINMemoryCellObject.h"
 #include "SINMemoryCellString.h"
 
-
 namespace SIN {
 	
 	class BinaryOperator : public Operator {

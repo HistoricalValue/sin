@@ -1,3 +1,8 @@
+NEXT TODO TICKET                                ||
+(please take a number and wait in the line...)  ||
+Next number: 47                                 ||
++-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-//
+
 ==== Always in mind ====
 * check dynamic_castss
 
@@ -28,8 +33,9 @@
 
 *[043 2009-08-28/11:22] SINAlloc should call destructors on array members on delete[]
 
-*[044 2009-08-28/14:37] Make libfuncs use the environment return value pointer and remove the return value stuff from the virtual state.
+*[045 2009-08-28/14:37] Make libfuncs use the environment return value pointer and remove the return value stuff from the virtual state.
 
+*[046 2009-08-30/21:13] Make use of deprecated functions be logged
 
 
 *[026] Make the testing framework serious (save results and print them later -- especially TestCollections should be serious)

@@ -18,10 +18,11 @@ namespace SIN {
 		virtual bool	HasError(void) const;
 		virtual String	ErrorMessage(void) const;
 
+		// Utilities
+		static bool		 BooleanFormOfMemoryCell(const MemoryCell &);
+		static String	 GetTypeAsStringFromMemoryCell(const MemoryCell &);
 	protected:		
 		virtual MemoryCell * ReturnError(const String &);
-		virtual bool		 BooleanFormOfMemoryCell(const MemoryCell &);
-		virtual String		 GetTypeAsStringFromMemoryCell(const MemoryCell &);
 		
 	private:
 		bool	hasError;

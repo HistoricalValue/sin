@@ -3,6 +3,21 @@
 
 namespace SIN {
 
+	namespace {
+		template<typename C>
+		inline  MemoryCell * Equality(const C & mc1, const MemoryCell & mc2){
+			MemoryCellBool * boolmc = SINEWCLASS(MemoryCellBool, (false));
+
+			if (mc2.Type() == mc1.Type())
+				boolmc->SetValue(mc1.GetValue() == static_cast<const C &>(mc2).GetValue());
+			
+			else if (mc2.Type() == MemoryCell::BOOL_MCT) 
+				boolmc->SetValue(Operator::BooleanFormOfMemoryCell(mc1) == static_cast<const MemoryCellBool &>(mc2).GetValue());
+
+			return boolmc;
+		}
+	}
+
 	//------------------------------------------------------
 
 	EqualityOperator::EqualityOperator(void) {	
@@ -22,42 +37,42 @@ namespace SIN {
 	//------------------------------------------------------
 
 	MemoryCell * EqualityOperator::ManageNil(const MemoryCellNil & mc1, const MemoryCell & mc2)
-		{	return Equality<MemoryCell::NIL_MCT, MemoryCellNil>(mc1, mc2);	}
+		{	return Equality(mc1, mc2);	}
 
 	//------------------------------------------------------
 
 	MemoryCell * EqualityOperator::ManageBool(const MemoryCellBool & mc1, const MemoryCell & mc2)
-		{	return Equality<MemoryCell::BOOL_MCT, MemoryCellBool>(mc1, mc2);	}
+		{	return Equality(mc1, mc2);	}
 
 	//------------------------------------------------------
 
 	MemoryCell * EqualityOperator::ManageString(const MemoryCellString & mc1, const MemoryCell & mc2)
-		{	return Equality<MemoryCell::STRING_MCT, MemoryCellString>(mc1, mc2);	}
+		{	return Equality(mc1, mc2);	}
 
 	//------------------------------------------------------
 
 	MemoryCell * EqualityOperator::ManageNumber(const MemoryCellNumber & mc1, const MemoryCell &mc2) 
-		{	return Equality<MemoryCell::NUMBER_MCT, MemoryCellNumber>(mc1, mc2);	}
+		{	return Equality(mc1, mc2);	}
 
 	//------------------------------------------------------
 
 	MemoryCell * EqualityOperator::ManageAst(const MemoryCellAST & mc1, const MemoryCell & mc2) 
-		{	return Equality<MemoryCell::AST_MCT, MemoryCellAST>(mc1, mc2);	}
+		{	return Equality(mc1, mc2);	}
 
 	//------------------------------------------------------
 
 	MemoryCell * EqualityOperator::ManageObject(const MemoryCellObject & mc1, const MemoryCell & mc2) 
-		{	return Equality<MemoryCell::OBJECT_MCT, MemoryCellObject>(mc1, mc2);	}
+		{	return Equality(mc1, mc2);	}
 
 	//------------------------------------------------------
 
 	MemoryCell * EqualityOperator::ManageFunction(const MemoryCellFunction & mc1, const MemoryCell & mc2) 
-		{	return Equality<MemoryCell::FUNCTION_MCT, MemoryCellFunction>(mc1, mc2);	}
+		{	return Equality(mc1, mc2);	}
 
 	//------------------------------------------------------
 
 	MemoryCell * EqualityOperator::ManageLibFunction(const MemoryCellLibFunction & mc1, const MemoryCell & mc2) 
-		{	return Equality<MemoryCell::LIB_FUNCTION_MCT, MemoryCellLibFunction>(mc1, mc2);	}
+		{	return Equality(mc1, mc2);	}
 
 	//------------------------------------------------------
 

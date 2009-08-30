@@ -1,5 +1,4 @@
-
-
+/*
 point = [
 	"x" : 0,
 	"y" : 0,
@@ -11,10 +10,10 @@ point = [
 ];
 
 println(point..Add10());
+*/
 
 
-
-/*function Point_new(x_, y_) { return [x: x_, y: y]; }
+function Point_new(x_, y_) { return [x: x_, y: y]; }
 
 
 p1 = Point_new(0, 1); p2 = Point_new(2, 5);
@@ -43,8 +42,7 @@ if(not a)
 	println("Should not be here");
 else
 	println("If else works");
-*/
-/*
+
 i = 0;
 while (i++ < 4) {
 	println("continue, i == ", i);
@@ -82,9 +80,8 @@ c = true and (true or false); //Should be true
 println("c = true: ", c);
 d = nil;
 println("d = nil: ", d);
-//-No equality comparisons for now
-//	e = (c == true) or (-a != 10);
-//	println("e = true: ", e);
+e = (c == true) or (-a != 10);
+println("e = true: ", e);
 f = ++a > 10 or a++ >= 10 or --a < 10 or a-- <= 10;
 println("f = true: ", f);
 g = not f;
@@ -102,7 +99,7 @@ a = [ 12, antzuja: 42 ];
 }
 println("a = [...]: ", a);
 
-function () { return [amjuya: 12]; }
+// function () { return [amjuya: 12]; }
 
 //meta_testing = .<x = "a" + "b">.;
 
@@ -120,5 +117,3 @@ function () { return [amjuya: 12]; }
 // -------------
 //	println("Contents: ", fileread(a));
 // -------------
-
-*/
