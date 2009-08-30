@@ -1,5 +1,5 @@
-#ifndef __SIN_ARITHMETIC_OPERATOR_H__
-#define __SIN_ARITHMETIC_OPERATOR_H__
+#ifndef __SIN_BINARY_OPERATOR_H__
+#define __SIN_BINARY_OPERATOR_H__
 
 #include "SINOperator.h"
 #include "SINMemoryCellAST.h"
@@ -49,4 +49,4 @@ namespace SIN {
 }	//namsepace SIN
 
 
-#endif __SIN_ARITHMETIC_OPERATOR_H__
+#endif //__SIN_BINARY_OPERATOR_H__

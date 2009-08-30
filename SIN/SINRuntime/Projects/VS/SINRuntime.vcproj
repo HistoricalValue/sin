@@ -180,6 +180,10 @@
 				<Filter
 					Name="Unary"
 					>
+					<File
+						RelativePath="..\..\Src\SINUnaryOperator.cpp"
+						>
+					</File>
 				</Filter>
 				<Filter
 					Name="Binary"
@@ -236,7 +240,7 @@
 							>
 						</File>
 						<File
-							RelativePath="..\..\Src\SINGreaterThanOrEqualToSINGreaterThanOrEqualToOperator.cpp"
+							RelativePath="..\..\Src\SINGreaterThanOrEqualTo.cpp"
 							>
 						</File>
 						<File
@@ -286,6 +290,10 @@
 				<Filter
 					Name="Unary"
 					>
+					<File
+						RelativePath="..\..\Include\SINUnaryOperator.h"
+						>
+					</File>
 				</Filter>
 				<Filter
 					Name="Binary"
