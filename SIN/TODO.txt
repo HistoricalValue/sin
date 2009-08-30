@@ -1,6 +1,6 @@
 NEXT TODO TICKET                                ||
 (please take a number and wait in the line...)  ||
-Next number: 47                                 ||
+Next number: 48                                 ||
 +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-//
 
 ==== Always in mind ====
@@ -28,7 +28,7 @@ Next number: 47                                 ||
 
 *[040 2009-08-27/01:47] Check and make correct the default and ESPECIALLY copy constructor AND destructor for the SymbolTable (koutsop only)
 
-
+*[047 2009-08-30/23:26] Make unary pre- and post- increment/decrement operators.
 
 
 *[043 2009-08-28/11:22] SINAlloc should call destructors on array members on delete[]
