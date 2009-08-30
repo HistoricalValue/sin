@@ -237,6 +237,10 @@
 					Name="Logical"
 					>
 					<File
+						RelativePath="..\..\Src\SINLogicalAndOperator.cpp"
+						>
+					</File>
+					<File
 						RelativePath="..\..\Src\SINLogicalOrOperator.cpp"
 						>
 					</File>
@@ -330,6 +334,10 @@
 				<Filter
 					Name="Logical"
 					>
+					<File
+						RelativePath="..\..\Include\SINLogicalAndOperator.h"
+						>
+					</File>
 					<File
 						RelativePath="..\..\Include\SINLogicalOrOperator.h"
 						>
