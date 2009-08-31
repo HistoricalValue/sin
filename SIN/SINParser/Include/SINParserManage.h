@@ -188,6 +188,8 @@ namespace SIN {
 		static void Manage_Term_Primary					(const int lineNo, ASTNode *_primary, ASTNode **_retterm, LexAndBisonParseArguments *_lbpa);
 
 
+	private:
+		static bool methodCall;
 	};
 
 } //namespace SIN

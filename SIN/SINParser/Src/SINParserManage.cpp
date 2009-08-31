@@ -7,7 +7,8 @@
 #include "SINAlloc.h"
 
 namespace SIN {
-
+	
+	bool ParserManage::methodCall = false;
 
 	//////////////////////////////////////////////////////////
 	// Manage Assign expression
@@ -109,8 +110,25 @@ namespace SIN {
 	//-----------------------------------------------------------------
 
 	void ParserManage::Manage_Call_LValueCallSuffix (const int lineNo, ASTNode *_lvalue, ASTNode *_callsuffix, ASTNode **_retcall, LexAndBisonParseArguments *_lbpa) {	
+/*
+//old		Manage_Call_LValueCallSuffix
 		*_retcall = _callsuffix;
 		*SINPTR(_lvalue) >> **_retcall;
+*/
+		*_retcall = _callsuffix;
+
+		if (methodCall) {
+			*SINPTR(_lvalue) >> (*(*_retcall)->begin());
+
+			IDASTNode *id = SINEWCLASS(IDASTNode, (_lvalue->Name(), _lbpa->GetFileName(), lineNo));
+			_lbpa->AppendToNodeList(id);
+			
+			*SINPTR(id) >> (*(*_retcall)->rbegin());
+
+			methodCall = false;
+		}
+		else 
+			*SINPTR(_lvalue) >> **_retcall;
 	}
 	
 
@@ -443,7 +461,7 @@ namespace SIN {
 	//-----------------------------------------------------------------
 	
 	void ParserManage::Manage_FunctionDefinition_LamdaFunction (const int lineNo, ASTNode *_idlist, ASTNode *_block, ASTNode **_retfuncdef, LexAndBisonParseArguments *_lbpa) {
-		*_retfuncdef = SINEWCLASS(	LamdaFunctionASTNode, 
+		*_retfuncdef = SINEWCLASS(	FunctionASTNode, 
 									(	String("$lamda") + to_string(_lbpa->parsingCounters.nextLamdaFunctionId++), 
 										_lbpa->GetFileName(), 
 										lineNo
@@ -581,7 +599,7 @@ namespace SIN {
 
 	void ParserManage::Manage_Member_CallID (const int lineNo, ASTNode *_call, char *_id, ASTNode **_retmember, LexAndBisonParseArguments *_lbpa) {
 		*_retmember = SINEWCLASS(CallMemberASTNode, ("call.id", _lbpa->GetFileName(), lineNo));
-		IDASTNode *id = SINEWCLASS(IDASTNode, (_id));
+		IDASTNode *id = SINEWCLASS(IDASTNode, (_id, _lbpa->GetFileName(), lineNo));
 		_lbpa->AppendToNodeList(*_retmember);
 		_lbpa->AppendToNodeList(id);
 
@@ -607,22 +625,30 @@ namespace SIN {
 	//-----------------------------------------------------------------
 
 	void ParserManage::Manage_MethodCall (const int lineNo, char *_id, ASTNode *_elist, ASTNode **_retmethodcall, LexAndBisonParseArguments *_lbpa) {
-		*_retmethodcall = SINEWCLASS(MethodCallASTNode, ("Method call", _lbpa->GetFileName(), lineNo));
-		IDASTNode *id = SINEWCLASS(IDASTNode, (_id));
+		methodCall = true;
+
+		*_retmethodcall = SINEWCLASS(NormalCallASTNode, ("Normal call", _lbpa->GetFileName(), lineNo));
 		_lbpa->AppendToNodeList(*_retmethodcall);
+		
+		
+		IDASTNode *id = SINEWCLASS(IDASTNode, (_id, _lbpa->GetFileName(), lineNo));
 		_lbpa->AppendToNodeList(id);
 
-		**_retmethodcall << id;
+
+		ObjectMemberASTNode * lvalue = SINEWCLASS(ObjectMemberASTNode, ("lv.id", _lbpa->GetFileName(), lineNo));
+		_lbpa->AppendToNodeList(lvalue);
+		
+		*lvalue << id;
+
+		**_retmethodcall << lvalue;
 
 		ASTNode *arguments = SINEWCLASS(ActualArgumentsASTNode, ("Actual Arguments", _lbpa->GetFileName(), lineNo));
+		_lbpa->AppendToNodeList(arguments);
 
-//		for(; _elist; _elist = static_cast<ASTNode*>(+(*_elist)))
-//			arguments->ConnectChild(_elist);
 		if (_elist != 0x00)
 			*arguments + _elist;
 
 		**_retmethodcall << arguments;
-
 		SINDELETEARRAY(_id);
 	}
 
@@ -636,8 +662,7 @@ namespace SIN {
 		ASTNode *arguments = SINEWCLASS(ActualArgumentsASTNode, ("Actual Arguments", _lbpa->GetFileName(), lineNo));
 		_lbpa->AppendToNodeList(arguments);
 
-//		for(; _elist; _elist = static_cast<ASTNode*>(+(*_elist)))
-			arguments->ConnectChild(_elist);
+		arguments->ConnectChild(_elist);
 
 		**_retnormalcall << arguments;
 	}
