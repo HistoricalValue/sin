@@ -27,7 +27,7 @@ println((function(){return 2;})());
 function dodeka(kioytena) { return kioytena + "tilefonima"; }
 println(dodeka("kioytena "));
 
-Me = [pnigei: (function (to_parapono) { return "me pnigei " + to_parapono; })];
+Me = ["pnigei": (function (to_parapono) { return "me pnigei " + to_parapono; })];
 println( Me.pnigei("to paraponooo") );
 
 
@@ -40,6 +40,9 @@ println(p1, p2, pe);
 
 
 function add(a, b) { return a + b; }
+
+
+
 println("8: ", add(3,5));
 op = add;
 println("9: ", op(4,5));
