@@ -39,6 +39,9 @@ struct TableKeyFunctor : public std::unary_function<const SIN::Types::Object::Ob
 };
 
 
+//-----------------------------------------------------------------
+
+
 struct ClearTableFunctor : public std::unary_function <const SIN::Types::Object::ObjectTableValue &, void> {
 
 	void operator() (const SIN::Types::Object::ObjectTableValue & otv) {
@@ -58,6 +61,8 @@ struct ClearTableFunctor : public std::unary_function <const SIN::Types::Object:
 	}
 };
 
+
+//-----------------------------------------------------------------
 
 struct CopyTableFunctor : public std::unary_function <const SIN::Types::Object::ObjectTableValue &, void> {
 	SIN::Types::Object::ObjectTable & table;
@@ -94,7 +99,7 @@ namespace SIN {
 		const String Object::ToString(std::set<unsigned> & parentsId) const {
 			
 			String str;
-			str << "Object(" << id << "){";
+			str << "Object(" << id << ")[";
 			parentsId.insert(id);
 			
 			for (ObjectTable::const_iterator i = table.begin(); i != table.end(); ++i) {
@@ -103,7 +108,7 @@ namespace SIN {
 				if (element->Type() == MemoryCell::OBJECT_MCT) {
 					Object* obj = static_cast<MemoryCellObject*>(element)->GetValue();
 					unsigned int id = obj->ID();
-					if (parentsId.find(id) != parentsId.end()) {
+					if (parentsId.find(id) == parentsId.end()) {
 						str << obj->ToString(parentsId);
 						parentsId.insert(id);
 					}
@@ -115,7 +120,7 @@ namespace SIN {
 				str << ", ";
 			}
 			
-			str << '}';
+			str << ']';
 			return str;
 		}
 
@@ -221,7 +226,7 @@ namespace SIN {
 
 
 		//-----------------------------------------------------------------
-		Object *	 Object::ObjectKeys(void) const 
+		Object * Object::ObjectKeys(void) const 
 			{ return std::for_each(table.begin(), table.end(), TableKeyFunctor(SINEW(Object))).keys; }
 
 
