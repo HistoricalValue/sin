@@ -34,12 +34,28 @@
 			static_cast<ASTNode&>(*kid).Accept(this)					\
 
 #define ERROR(MSG, FILE, LINE) vs->AppendError(MSG, FILE, LINE)
+#define ERRO(MSG) ERROR(MSG, _node.AssociatedFileName().c_str(), _node.AssociatedFileLine());
 
 namespace SIN {
 	//-----------------------------------------------------------------
 	// Privates (hihihi) -- not in class -- utils
 	//-----------------------------------------------------------------
 	namespace {
+		class AcceptanceForwardationOperator {
+		public:
+			typedef TreeEvaluationVisitor* acceptable_t;
+			typedef StrictTreeNode& acceptor1_t;
+			typedef ASTNode& acceptor2_t;
+			AcceptanceForwardationOperator(acceptable_t const& _acceptable): acceptable(_acceptable) { }
+			bool operator ()(acceptor1_t _acceptor) const {
+				static_cast<acceptor2_t>(_acceptor).Accept(acceptable);
+				return true;
+			}
+		private:
+			acceptable_t const& acceptable;
+		}; // class Acceptor
+
+	//-----------------------------------------------------------------
 		template <typename _OperatorT>
 		static void evaluateBinaryOperation(
 			TreeEvaluationVisitor& _evaluator,
@@ -135,22 +151,77 @@ namespace SIN {
 		return vs->CurrentEnvironment().returnTriggered;
 	}
 
-	//-----------------------------------------------------------------
-	namespace {
-		class AcceptanceForwardationOperator {
-		public:
-			typedef TreeEvaluationVisitor* acceptable_t;
-			typedef StrictTreeNode& acceptor1_t;
-			typedef ASTNode& acceptor2_t;
-			AcceptanceForwardationOperator(acceptable_t const& _acceptable): acceptable(_acceptable) { }
-			bool operator ()(acceptor1_t _acceptor) const {
-				static_cast<acceptor2_t>(_acceptor).Accept(acceptable);
-				return true;
-			}
-		private:
-			acceptable_t const& acceptable;
-		}; // class Acceptor
-	} // namespace
+	inline void TreeEvaluationVisitor::performCall(
+		MemoryCell* const _funcmemcell,
+		String const& _func_desc,
+		String const& _file_name,
+		unsigned int const _file_line,
+		ASTNode& _actual_args_astnode
+	) {
+		if (_funcmemcell->Type() != MemoryCell::FUNCTION_MCT && _funcmemcell->Type() != MemoryCell::LIB_FUNCTION_MCT)
+			ERROR(to_string("Calling non-callable: ") << _func_desc.c_str(), _file_name.c_str(), _file_line);
+		
+		// Evaluate actual arguments
+		argument_lists.push(argument_list_t(0u));
+		argument_lists.top().reserve(20u);
+		_actual_args_astnode.Accept(this); // argument list gets filled here
+		
+		// New stack frame (new env)
+		vs->PushState();
+
+		// Set the argument list in the current environment
+		vs->CurrentEnvironment().argument_list_p = &argument_lists.top();
+
+		// Set the return value destination
+		InstanceProxy<MemoryCell> returnValue;
+		vs->CurrentEnvironment().returnValue_p = &returnValue;
+
+		// Evaluate function code
+		if(_funcmemcell->Type() == MemoryCell::FUNCTION_MCT) {
+			MemoryCellFunction* func = static_cast<MemoryCellFunction*>(_funcmemcell);
+			Types::Function_t function(func->GetValue());
+			ASTNode* func_node_ast = func->GetValue().GetASTNode();
+			SINASSERT(func_node_ast->Type() == SINASTNODES_FUNCTION_TYPE);
+			// We must not revisit the function node itself because it evaluates to inserting
+			// the function value in the environment (under its name) (or doing something else
+			// if it a nameless/value function).
+			// Instead, we must evaluate its formal args and then its body.
+			ASTNode::iterator kite = func_node_ast->begin();
+			ASTNode& formal_args_ast_node = static_cast<ASTNode&>(*kite++);
+			SINASSERT(formal_args_ast_node.Type() == SINASTNODES_FORMALARGUMENTS_TYPE);
+			formal_args_ast_node.Accept(this); // insert arguments as formals in env
+			ASTNode& body_block_ast_node = static_cast<ASTNode&>(*kite++);
+			SINASSERT(body_block_ast_node.Type() == SINASTNODES_BLOCK_TYPE);
+			body_block_ast_node.Accept(this); // evaluate the body in the new env
+			if (returnValue == 0x00)
+				memory = SINEW(MemoryCellNil);
+			else
+				memory = returnValue;
+		} else { // LibFunc
+			// add actual arguments to the new environment's symbol table
+			Namer arg_namer("$arg_avril_");
+			SymbolTable& stable = vs->CurrentStable();
+			argument_list_t const& al = argument_lists.top();
+			argument_list_t::const_iterator const end = al.end();
+			for (argument_list_t::const_iterator ite = al.begin(); ite != end; ++ite)
+				stable.Insert(arg_namer++, *ite);
+
+			Library::Function *libfunc = static_cast<MemoryCellLibFunction*>(_funcmemcell)->GetValue();
+
+			(*libfunc)(*vs, *lib);
+			memory = 0x00;
+			MemoryCell::Assign(memory, vs->ReturnValue());
+		}
+
+		// Restore environment
+		vs->RestoreState(); 
+
+		// Add return result as a temporary
+		insertTemporary(memory);
+
+		// Pop actual arguments' list
+		argument_lists.pop();
+	} // performCall()
 
 	//-----------------------------------------------------------------
 
@@ -469,15 +540,19 @@ namespace SIN {
 
 		ASTNode::iterator kid = _node.begin();
 
-		ASTNode& kid0 = static_cast<IDASTNode&>(*kid++);
-		SINASSERT(kid0.Type() == SINASTNODES_IDASTNODE_TYPE || kid0.Type() == SINASTNODES_LOCALIDASTNODE_TYPE || kid0.Type() == SINASTNODES_GLOBALIDASTNODE_TYPE || kid0.Type() == SINASTNODES_OBJECTMEMBER_TYPE);
+		ASTNode& kid0 = static_cast<ASTNode&>(*kid++);
+		SINASSERT(kid0.Type() == SINASTNODES_ID_TYPE || kid0.Type() == SINASTNODES_LOCALID_TYPE || kid0.Type() == SINASTNODES_GLOBALID_TYPE || kid0.Type() == SINASTNODES_OBJECTMEMBER_TYPE);
 
 		kid0.Accept(this);
 		SINASSERT(memory != 0x00);
 		SINASSERT(lookuped != 0x00);
 		SINASSERT(memory == *lookuped);
-		SINASSERT(memory->Type() != MemoryCell::FUNCTION_MCT); //TODO Throw run-time error
-		SINASSERT(memory->Type() != MemoryCell::LIB_FUNCTION_MCT); //TODO Throw run-time error
+		if (memory->Type() == MemoryCell::FUNCTION_MCT || memory->Type() == MemoryCell::LIB_FUNCTION_MCT)
+			// TODO this check is wrong because:
+			//     a = println;
+			//     a = 3;
+			// fails. Fix this.
+			ERRO("Assigning to a function");
 		MemoryCell *tmpmemcell1 = memory;
 		InstanceProxy<MemoryCell>* lookedup_l = lookuped; // looked-up and memory must be saved after each eval of a kid
 
@@ -546,7 +621,6 @@ namespace SIN {
 	//-----------------------------------------------------------------
 
 	void TreeEvaluationVisitor::Visit(NormalCallASTNode & _node) {
-
 		SINASSERT(_node.NumberOfChildren() == 2);
 
 		ASTNode::iterator kid = _node.begin();
@@ -554,70 +628,8 @@ namespace SIN {
 		// Lookup the function
 		ASTNode& func_id = static_cast<ASTNode&>(*kid++);
 		func_id.Accept(this);
-		MemoryCell *tmpmemcell1 = memory;
-		if (tmpmemcell1->Type() == MemoryCell::NIL_MCT)
-			ERROR((to_string("Calling undefined function: ") << func_id.Name()).c_str(), _node.AssociatedFileName().c_str(), _node.AssociatedFileLine());
-		SINASSERT(tmpmemcell1->Type() == MemoryCell::FUNCTION_MCT || tmpmemcell1->Type() == MemoryCell::LIB_FUNCTION_MCT);	//TODO Throw runtime error here
-		
-		// Evaluate actual arguments
-		argument_lists.push(argument_list_t(0u));
-		argument_lists.top().reserve(20u);
-		static_cast<ASTNode&>(*kid++).Accept(this); // argument list gets filled here
-		
-		// New stack frame (new env)
-		vs->PushState();
-
-		// Set the argument list in the current environment
-		vs->CurrentEnvironment().argument_list_p = &argument_lists.top();
-
-		// Set the return value destination
-		InstanceProxy<MemoryCell> returnValue;
-		vs->CurrentEnvironment().returnValue_p = &returnValue;
-
-		// Evaluate function code
-		if(tmpmemcell1->Type() == MemoryCell::FUNCTION_MCT) {
-			MemoryCellFunction* func = static_cast<MemoryCellFunction*>(tmpmemcell1);
-			Types::Function_t function(func->GetValue());
-			ASTNode* func_node_ast = func->GetValue().GetASTNode();
-			SINASSERT(func_node_ast->Type() == SINASTNODES_FUNCTIONASTNODE_TYPE);
-			// We must not revisit the function node itself because it evaluates to inserting
-			// the function value in the environment (under its name).
-			// Instead, we must evaluate its formal args and then its body.
-			ASTNode::iterator kite = func_node_ast->begin();
-			ASTNode& formal_args_ast_node = static_cast<ASTNode&>(*kite++);
-			SINASSERT(formal_args_ast_node.Type() == SINASTNODES_FORMALARGUMENTSASTNODE_TYPE);
-			formal_args_ast_node.Accept(this); // insert arguments as formals in env
-			ASTNode& body_block_ast_node = static_cast<ASTNode&>(*kite++);
-			SINASSERT(body_block_ast_node.Type() == SINASTNODES_BLOCKASTNODE_TYPE);
-			body_block_ast_node.Accept(this); // evaluate the body in the new env
-			if (returnValue == 0x00)
-				memory = SINEW(MemoryCellNil);
-			else
-				memory = returnValue;
-		} else { // LibFunc
-			// add actual arguments to the new environment's symbol table
-			Namer arg_namer("_arg_avril_");
-			SymbolTable& stable = vs->CurrentStable();
-			argument_list_t const& al = argument_lists.top();
-			argument_list_t::const_iterator const end = al.end();
-			for (argument_list_t::const_iterator ite = al.begin(); ite != end; ++ite)
-				stable.Insert(arg_namer++, *ite);
-
-			Library::Function *libfunc = static_cast<MemoryCellLibFunction*>(tmpmemcell1)->GetValue();
-
-			(*libfunc)(*vs, *lib);
-			memory = 0x00;
-			MemoryCell::Assign(memory, vs->ReturnValue());
-		}
-
-		// Restore environment
-		vs->RestoreState(); 
-
-		// Add return result as a temporary
-		insertTemporary(memory);
-
-		// Pop actual arguments' list
-		argument_lists.pop();
+		ASTNode& actual_args_astnode = static_cast<ASTNode&>(*kid++);
+		performCall(memory, func_id.Name(), _node.AssociatedFileName(), _node.AssociatedFileLine(), actual_args_astnode);
 	}
 
 	//-----------------------------------------------------------------
@@ -679,16 +691,16 @@ namespace SIN {
 			MemoryCellFunction* func = static_cast<MemoryCellFunction*>(tmpmemcell1);
 			Types::Function_t function(func->GetValue());
 			ASTNode* func_node_ast = func->GetValue().GetASTNode();
-			SINASSERT(func_node_ast->Type() == SINASTNODES_FUNCTIONASTNODE_TYPE);
+			SINASSERT(func_node_ast->Type() == SINASTNODES_FUNCTION_TYPE);
 			// We must not revisit the function node itself because it evaluates to inserting
 			// the function value in the environment (under its name).
 			// Instead, we must evaluate its formal args and then its body.
 			ASTNode::iterator kite = func_node_ast->begin();
 			ASTNode& formal_args_ast_node = static_cast<ASTNode&>(*kite++);
-			SINASSERT(formal_args_ast_node.Type() == SINASTNODES_FORMALARGUMENTSASTNODE_TYPE);
+			SINASSERT(formal_args_ast_node.Type() == SINASTNODES_FORMALARGUMENTS_TYPE);
 			formal_args_ast_node.Accept(this); // insert arguments as formals in env
 			ASTNode& body_block_ast_node = static_cast<ASTNode&>(*kite++);
-			SINASSERT(body_block_ast_node.Type() == SINASTNODES_BLOCKASTNODE_TYPE);
+			SINASSERT(body_block_ast_node.Type() == SINASTNODES_BLOCK_TYPE);
 			body_block_ast_node.Accept(this); // evaluate the body in the new env
 			if (returnValue == 0x00)
 				memory = SINEW(MemoryCellNil);
@@ -727,8 +739,16 @@ namespace SIN {
 	//-----------------------------------------------------------------
 
 	void TreeEvaluationVisitor::Visit(FuncdefCallASTNode & _node) {
-		// TODO implement
-		SINASSERT(!"Not implemented");
+		ASTNode::iterator kite(_node.begin());
+		ASTNode& lambda_astnode = static_cast<ASTNode&>(*kite++);
+		SINASSERT(lambda_astnode.Type() == SINASTNODES_FUNCTION_TYPE);
+		lambda_astnode.Accept(this);
+		SINASSERT(memory->Type() == MemoryCell::FUNCTION_MCT);
+		ASTNode& actual_args_astnode = static_cast<ASTNode&>(*kite++);
+		// TODO insert a new field in LambdaASTNode and don't use Name() as
+		// a description
+		performCall(memory, lambda_astnode.Name(), _node.AssociatedFileName(), _node.AssociatedFileLine(),
+				actual_args_astnode);		
 	}
 
 	//-----------------------------------------------------------------
@@ -758,24 +778,8 @@ namespace SIN {
 	//-----------------------------------------------------------------
 
 	void TreeEvaluationVisitor::Visit(LamdaFunctionASTNode & _node) {
-		// Get the function ID
-		String const& func_id = _node.Name();
-
 		// Create the function object and the resulting memcell
-		MemoryCellFunction* result = SINEWCLASS(MemoryCellFunction, (Types::Function_t(&_node)));;
-
-		// Lookup and insert the function memcell
-		lookup_local(func_id);
-
-		if (lookup_failed())
-			insert(func_id, result);	// ok here
-
-		else							// lookup succeeded. Fail.
-			vs->AppendError(to_string("definition of function with name \"") << func_id << 
-				"\" is not possible because there is a variable defined with that name in the same scope",
-				_node.AssociatedFileName().c_str(), _node.AssociatedFileLine());
-		
-		memory = result;
+		insertTemporary(memory = SINEWCLASS(MemoryCellFunction, (Types::Function_t(&_node))));
 	}
 
 	//-----------------------------------------------------------------
@@ -922,7 +926,7 @@ namespace SIN {
 
 	void TreeEvaluationVisitor::Visit(ObjectASTNode & _node) {
 		resetObjectImp();
-		_node.for_each(AcceptanceForwardationOperator(this));
+		VISIT_KIDS_SERIALLY;
 		assignObjectImpToMemory();
 	}
 
@@ -971,7 +975,7 @@ namespace SIN {
 		MemoryCellObject* const obj_ref = static_cast<MemoryCellObject*>(memory);
 		Types::Object_t obj_p  = obj_ref->GetValue();
 		// Look-up in object
-		SINASSERT(static_cast<ASTNode&>(*kite).Type() == SINASTNODES_IDASTNODE_TYPE);
+		SINASSERT(static_cast<ASTNode&>(*kite).Type() == SINASTNODES_ID_TYPE);
 		// TODO add a field for the id node and don't use its Name()
 		String const& member_id = static_cast<ASTNode&>(*kite).Name();
 		lookuped = &obj_p->GetValue(member_id);

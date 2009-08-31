@@ -21,6 +21,14 @@ println(a.x.y);
 println(a.x);
 println(a);
 
+anna = (function(){ return "Hello looli"; });
+println(anna());
+println((function(){return 2;})());
+function dodeka(kioytena) { return kioytena + "tilefonima"; }
+println(dodeka("kioytena "));
+
+Me = [pnigei: (function (to_parapono) { return "me pnigei " + to_parapono; })];
+println( Me.pnigei("to paraponooo") );
 
 
 function Point_new(x_, y_) { return [x: x_, y: y]; }

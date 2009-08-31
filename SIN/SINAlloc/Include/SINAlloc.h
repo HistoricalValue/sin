@@ -140,6 +140,6 @@ extern void operator delete[](void* ptr) throw();
 //array, nothrow new and matching delete[]
 extern void* operator new [](std::size_t size, const std::nothrow_t&) throw(); // array nothrow new
 extern void operator delete[](void* ptr, const std::nothrow_t&) throw(); // matching delete[]
-#endif _DEBUG
+#endif // _DEBUG
 
 #endif // __SIN_ALLOC_H__

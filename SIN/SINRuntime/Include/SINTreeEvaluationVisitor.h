@@ -108,10 +108,11 @@ namespace SIN{
 		void insert(String const&, MemoryCell*);
 		void insert(String const&, MemoryCell*, SymbolTable::scope_id);
 		void insert_global(String const&, MemoryCell*);
-		// function return
+		// function stuff
+		void performCall(MemoryCell* funcmemcell, String const& func_desc, String const& file_name, unsigned int file_line, ASTNode& actual_args_astnode);
 		void triggerReturn(MemoryCell* returnValue);
 		bool returnTriggered(void) const;
-
+		
 		// Unusable
 		TreeEvaluationVisitor(const TreeEvaluationVisitor&);
 	};

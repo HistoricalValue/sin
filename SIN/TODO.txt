@@ -1,6 +1,6 @@
 NEXT TODO TICKET                                ||
 (please take a number and wait in the line...)  ||
-Next number: 49                                 ||
+Next number: 50                                 ||
 +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-//
 
 ==== Always in mind ====
@@ -29,7 +29,7 @@ Next number: 49                                 ||
 
 *[047 2009-08-30/23:26] Make unary pre- and post- increment/decrement operators.
 *[048 2009-08-31/00:21] Use the koutsop unary ops
-
+*[049 2009-08-31/12:44] Make [function l(){}] produce an AST *exactly identical* to [l: (function(){})] (koutsop or ilapost)
 *[043 2009-08-28/11:22] SINAlloc should call destructors on array members on delete[]
 
 *[045 2009-08-28/14:37] Make libfuncs use the environment return value pointer and remove the return value stuff from the virtual state.

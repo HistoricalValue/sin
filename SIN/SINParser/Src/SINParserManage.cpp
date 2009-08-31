@@ -122,9 +122,11 @@ namespace SIN {
 
 		**_retcall << _funcdef;
 		ASTNode *arguments = SINEWCLASS(ActualArgumentsASTNode, ("Actual Arguments", _lbpa->GetFileName(), lineNo));
-
-//		for(; _elist; _elist = static_cast<ASTNode*>(+(*_elist)))
-			arguments->ConnectChild(_elist);
+		_lbpa->AppendToNodeList(arguments);
+		if (_elist != 0x00)
+			*arguments + _elist;
+		else
+			; // TODO ELSE WHAT?!?!?
 
 		**_retcall << arguments;
 	}
@@ -449,9 +451,8 @@ namespace SIN {
 		_lbpa->AppendToNodeList(*_retfuncdef);
 
 		ASTNode *arguments = SINEWCLASS(FormalArgumentsASTNode, ("Formal Arguments", _lbpa->GetFileName(), lineNo));
+		_lbpa->AppendToNodeList(arguments);
 
-//		for(; _idlist; _idlist = static_cast<ASTNode*>(+(*_idlist)))
-//			arguments->ConnectChild(_idlist);
 		if (_idlist != 0x00)
 			*arguments + _idlist;
 
