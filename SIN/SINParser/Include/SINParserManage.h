@@ -130,6 +130,7 @@ namespace SIN {
 		//////////////////////////////////////////////////////////
 		// Manage object list
 		static void Manage_ObjectList_ExpressionObjectLists				(const int lineNo, ASTNode *_expr, ASTNode *_objectlists, ASTNode **_retobjectlists, LexAndBisonParseArguments *_lbpa);
+		static void Manage_ObjectList_ExpressionFunckdefObjectLists		(const int lineNo, ASTNode *_expr, ASTNode *_objectlists, ASTNode **_retobjectlists, LexAndBisonParseArguments *_lbpa);
 		static void Manage_ObjectList_ExpressionExpressionObjectLists	(const int lineNo, ASTNode *_expr1, ASTNode *_expr2, ASTNode *_objectlists, ASTNode **_retobjectlists, LexAndBisonParseArguments *_lbpa);
 		static void Manage_ObjectList_Empty								(const int lineNo, ASTNode **_retobjectlists, LexAndBisonParseArguments *_lbpa);
 

@@ -417,10 +417,11 @@ namespace SIN {
 	//////////////////////////////////////////////////////////
 	// Manage function definition
 
+
 	//-----------------------------------------------------------------
 	
 	void ParserManage::Manage_FunctionDefinition_Function (const int lineNo, char *_id, ASTNode *_idlist, ASTNode *_block, ASTNode **_retfuncdef, LexAndBisonParseArguments *_lbpa) {
-		*_retfuncdef = SINEWCLASS(FunctionASTNode, (_id));
+		*_retfuncdef = SINEWCLASS(FunctionASTNode, (_id, _lbpa->GetFileName(), lineNo));
 		_lbpa->AppendToNodeList(*_retfuncdef);
 
 		ASTNode *arguments = SINEWCLASS(FormalArgumentsASTNode, ("Formal Arguments", _lbpa->GetFileName(), lineNo));
@@ -682,7 +683,22 @@ namespace SIN {
 	
 	}
 
+
+	//-----------------------------------------------------------------
 	
+	void ParserManage::Manage_ObjectList_ExpressionFunckdefObjectLists (const int lineNo, ASTNode *_expr, ASTNode *_objectlists, ASTNode **_retobjectlists, LexAndBisonParseArguments *_lbpa) {
+		*_retobjectlists = SINEWCLASS(IndexedMemberASTNode, ("Indexed Object", _lbpa->GetFileName(), lineNo));
+		_lbpa->AppendToNodeList(*_retobjectlists);
+
+		ASTNode * functionName = SINEWCLASS(StringASTNode, (_expr->Name(), _lbpa->GetFileName(), lineNo));
+		_lbpa->AppendToNodeList(functionName);
+
+		**_retobjectlists << functionName << _expr;
+		if(_objectlists != NULL)
+			(*_retobjectlists)->SetRightSibling(_objectlists);
+	}
+
+
 	//-----------------------------------------------------------------
 
 	void ParserManage::Manage_ObjectList_ExpressionExpressionObjectLists (const int lineNo, ASTNode *_expr1, ASTNode *_expr2, ASTNode *_objectlists, ASTNode **_retobjectlists, LexAndBisonParseArguments *_lbpa) {

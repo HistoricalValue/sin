@@ -635,6 +635,7 @@ namespace SIN {
 	//-----------------------------------------------------------------
 
 	void TreeEvaluationVisitor::Visit(MethodCallASTNode & _node) {
+		SINASSERT(false);
 		//---------------- koutsop start here	-----------------------------		
 		SINASSERT(_node.NumberOfChildren() == 3);
 		//---------------- koutsop end here		-----------------------------
@@ -669,8 +670,8 @@ namespace SIN {
 
 		//---------------- koutsop start here	-----------------------------
 		//push object as the first argument of the Actual arguments
-		//MemoryCell* selfArgument = 0x00;
-		//MemoryCell::Assign(selfArgument, tmpmemcell0);
+		MemoryCell* selfArgument = 0x00;
+		MemoryCell::Assign(selfArgument, tmpmemcell0);
 		argument_lists.top().push_back(tmpmemcell0);
 		//---------------- koutsop end here		-----------------------------
 		
@@ -733,7 +734,7 @@ namespace SIN {
 
 
 
-		SINASSERT(!"Not implemented");
+		//SINASSERT(!"Not implemented");
 	}
 
 	//-----------------------------------------------------------------

@@ -2170,7 +2170,7 @@ yyreduce:
 
   case 81:
 
-    {	SIN::ParserManage::Manage_ObjectList_ExpressionObjectLists(yylineno, (yyvsp[(2) - (3)].AST), (yyvsp[(3) - (3)].AST), &((yyval.AST)), &fabpa);					}
+    {	SIN::ParserManage::Manage_ObjectList_ExpressionFunckdefObjectLists(yylineno, (yyvsp[(2) - (3)].AST), (yyvsp[(3) - (3)].AST), &((yyval.AST)), &fabpa);					}
     break;
 
   case 82:
