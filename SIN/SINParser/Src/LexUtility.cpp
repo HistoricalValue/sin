@@ -59,9 +59,6 @@ namespace LEX {
 					 else
 						unput(c);
 					break;
-
-				case '\n': ++*line; break;
-				
 				default:	break;
 			}	/*end of switch*/
 			
