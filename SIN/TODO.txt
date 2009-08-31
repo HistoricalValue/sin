@@ -38,7 +38,6 @@ Next number: 49                                 ||
 
 
 *[026] Make the testing framework serious (save results and print them later -- especially TestCollections should be serious)
-*[027] Default ctor of LamdaFunctionASTNode should name automatically the node with $lamdaxxx
 
 ---logging---
 *[010] LoggerFactory base should internally keep a list of produced loggers
@@ -165,3 +164,5 @@ Next number: 49                                 ||
   [ koutsop 2009-08-30/21:40 | done]
 *[040 2009-08-27/01:47] Check and make correct the default and ESPECIALLY copy constructor AND destructor for the SymbolTable (koutsop only)
   [ koutsop 2009-08-31/10:18 | done]
+*[027] Default ctor of LamdaFunctionASTNode should name automatically the node with $lamdaxxx
+  [ koutsop 2009-08-31/11:24 | done]

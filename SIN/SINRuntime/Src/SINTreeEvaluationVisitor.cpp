@@ -758,8 +758,24 @@ namespace SIN {
 	//-----------------------------------------------------------------
 
 	void TreeEvaluationVisitor::Visit(LamdaFunctionASTNode & _node) {
-		// TODO implement
-		SINASSERT(!"Not implemented");
+		// Get the function ID
+		String const& func_id = _node.Name();
+
+		// Create the function object and the resulting memcell
+		MemoryCellFunction* result = SINEWCLASS(MemoryCellFunction, (Types::Function_t(&_node)));;
+
+		// Lookup and insert the function memcell
+		lookup_local(func_id);
+
+		if (lookup_failed())
+			insert(func_id, result);	// ok here
+
+		else							// lookup succeeded. Fail.
+			vs->AppendError(to_string("definition of function with name \"") << func_id << 
+				"\" is not possible because there is a variable defined with that name in the same scope",
+				_node.AssociatedFileName().c_str(), _node.AssociatedFileLine());
+		
+		memory = result;
 	}
 
 	//-----------------------------------------------------------------
