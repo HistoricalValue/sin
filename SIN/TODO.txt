@@ -1,7 +1,14 @@
 NEXT TODO TICKET                                ||
 (please take a number and wait in the line...)  ||
-Next number: 50                                 ||
+Next number: 52                                 ||
 +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-//
+
+
+============== HONOUR TODO ======================
+*[050 2009-08-31/21:24] ELIMINATE CYCLES
+*[051 2009-08-31/21:24] OPERATOR OVERLOADNIG
+
+
 
 ==== Always in mind ====
 * check dynamic_castss
