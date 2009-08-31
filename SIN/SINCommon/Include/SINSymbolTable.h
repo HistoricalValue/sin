@@ -41,6 +41,7 @@ namespace SIN {
 
 
 		SymbolTable(void);
+		SymbolTable(const SymbolTable &);
 		~SymbolTable();
 	private:
 		typedef std::vector<VariableHolder> Table;

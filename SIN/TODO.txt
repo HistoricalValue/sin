@@ -26,7 +26,6 @@ Next number: 49                                 ||
 		}
 
 
-*[040 2009-08-27/01:47] Check and make correct the default and ESPECIALLY copy constructor AND destructor for the SymbolTable (koutsop only)
 
 *[047 2009-08-30/23:26] Make unary pre- and post- increment/decrement operators.
 *[048 2009-08-31/00:21] Use the koutsop unary ops
@@ -164,3 +163,5 @@ Next number: 49                                 ||
   [ koutsop | done]
 *[042 2009-08-27/18:12] Implement all kinds of binary operations among all types of memory cells (yeah, hahah).
   [ koutsop 2009-08-30/21:40 | done]
+*[040 2009-08-27/01:47] Check and make correct the default and ESPECIALLY copy constructor AND destructor for the SymbolTable (koutsop only)
+  [ koutsop 2009-08-31/10:18 | done]

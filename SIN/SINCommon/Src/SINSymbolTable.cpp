@@ -17,10 +17,19 @@ namespace SIN {
 
 	//-----------------------------------------------------------------
 
-	SymbolTable::SymbolTable(void): table(1), currScope(0) {
-		table.reserve(20);
-	}
+	SymbolTable::SymbolTable(void) : 
+			table(1), 
+			currScope(0) 
+		{	table.reserve(20);	}
 
+	//-----------------------------------------------------------------
+
+	SymbolTable::SymbolTable(const SymbolTable & copy) : 
+			table(copy.table),
+			currScope(copy.currScope) 
+	{}
+
+	//-----------------------------------------------------------------
 
 	SymbolTable::~SymbolTable() {}
 
