@@ -288,7 +288,7 @@ objectlist:	 	expr objectlists					{	SIN::ParserManage::Manage_ObjectList_Expres
 
 objectlists:	',' expr objectlists				{	SIN::ParserManage::Manage_ObjectList_ExpressionObjectLists(yylineno, $2, $3, &($$), &fabpa);					}
 				|	',' expr ':' expr objectlists	{	SIN::ParserManage::Manage_ObjectList_ExpressionExpressionObjectLists(yylineno, $2, $4, $5, &($$), &fabpa);	}
-				|	',' objectfuncdef objectlists	{	SIN::ParserManage::Manage_ObjectList_ExpressionObjectLists(yylineno, $2, $3, &($$), &fabpa);					}
+				|	',' objectfuncdef objectlists	{	SIN::ParserManage::Manage_ObjectList_ExpressionFunckdefObjectLists(yylineno, $2, $3, &($$), &fabpa);					}
 				|									{	SIN::ParserManage::Manage_ObjectList_Empty(yylineno, &($$), &fabpa);											}
 				;
 
