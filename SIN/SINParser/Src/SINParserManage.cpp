@@ -440,7 +440,12 @@ namespace SIN {
 	//-----------------------------------------------------------------
 	
 	void ParserManage::Manage_FunctionDefinition_LamdaFunction (const int lineNo, ASTNode *_idlist, ASTNode *_block, ASTNode **_retfuncdef, LexAndBisonParseArguments *_lbpa) {
-		*_retfuncdef = SINEWCLASS(LamdaFunctionASTNode, ());
+		*_retfuncdef = SINEWCLASS(	LamdaFunctionASTNode, 
+									(	String("$lamda") + to_string(_lbpa->parsingCounters.nextLamdaFunctionId++), 
+										_lbpa->GetFileName(), 
+										lineNo
+									)
+								);
 		_lbpa->AppendToNodeList(*_retfuncdef);
 
 		ASTNode *arguments = SINEWCLASS(FormalArgumentsASTNode, ("Formal Arguments", _lbpa->GetFileName(), lineNo));

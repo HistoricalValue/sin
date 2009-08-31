@@ -32,8 +32,9 @@ namespace SIN {
 		struct ParsingCounters {
 			int loops;
 			int functions;
+			int nextLamdaFunctionId;
 
-			ParsingCounters() : loops(0), functions(0) {}
+			ParsingCounters() : loops(0), functions(0), nextLamdaFunctionId(0) {}
 		} parsingCounters;
 
 
