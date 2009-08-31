@@ -857,7 +857,14 @@ namespace SIN {
 		SINASSERT(memory != 0x00);
 		MemoryCell* assigned = 0x00;
 		MemoryCell::Assign(assigned, memory);
+		InstanceProxy<MemoryCell>& previous_member = obj_imp->GetValue(member_name);
+		if (previous_member == 0x00)
+			;// set a new member -- no prob
+		else
+			// overwriting a previous member -- old member must be deleted now
+			SINDELETE(previous_member);
 		obj_imp->SetValue(member_name, assigned);
+
 		// assert there were only two kids
 		SINASSERT(kite == _node.end());
 	}
