@@ -21,6 +21,8 @@
 #include "SINMemoryCellLibFunction.h"
 #include "SINAlloc.h"
 #include "SINShiftToMetaEvaluatorASTVisitor.h"
+#include "SINShiftToMetaEvaluatorASTVisitor.h"
+
 
 #define SIN_TESTS_RUN_RUN(NAME)               SINTESTS_RUNTEST(NAME)
 #define SIN_TESTS_RUN_TESTDEF(NAME,TESTCODE)  SINTESTS_TESTDEF(NAME,TESTCODE)
@@ -82,14 +84,28 @@ namespace SIN {
 				
 				FileOutputStream _foutxml("RunTreeVisualisation.xml", FileOutputStream::Mode::Truncate());
 				FileOutputStream _fouttxt("RunTreeVisualisation.txt", FileOutputStream::Mode::Truncate());
+				FileOutputStream _metatxt("ShiftToMetaEvaluatorASTVisitor.txt", FileOutputStream::Mode::Truncate());
+
 				BufferedOutputStream foutxml(_foutxml);
 				BufferedOutputStream fouttxt(_fouttxt);
+				BufferedOutputStream metatxt(_metatxt); 
+
+
 				ASTTreeVisualisationVisitor				visitor(fouttxt);
+				ASTTreeVisualisationVisitor				metaVisualVisitor(metatxt);
 				ASTMITTreeVisualizerXMLProducerVisitor	mitvis(foutxml);
+			
+				
+				ShiftToMetaEvaluatorASTVisitor metaVisitor;
+				root->Accept(&metaVisitor);
+				metaVisitor.Root()->Accept(&metaVisualVisitor);
+				metaVisitor.DeleteAST();
+
 				root->Accept(&visitor);
 				root->Accept(&mitvis);
 				foutxml.flush();
 				fouttxt.flush();
+				metatxt.flush();
 
 				VM::VirtualState vs;
 				vs.SetPrintHandler(&__print_handler);
@@ -128,11 +144,14 @@ namespace SIN {
 				globalSymTable->Insert("fileopen",       SINEWCLASS(MemoryCellLibFunction, (&fileopen)));
 				globalSymTable->Insert("fileread",       SINEWCLASS(MemoryCellLibFunction, (&fileread)));
 
+				
+
 				TreeEvaluationVisitor eval(&lib, &vs);
 				root->Accept(&eval);
 
 				ShiftToMetaEvaluatorASTVisitor shifter;
 				root->Accept(&shifter);
+				shifter.DeleteAST();
 
 				test.DeleteAST();
 				//ASTNode* metacode = shifter;

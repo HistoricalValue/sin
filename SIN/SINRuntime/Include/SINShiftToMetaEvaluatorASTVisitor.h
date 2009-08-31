@@ -1,12 +1,13 @@
 #ifndef __SIN_SHIFT_TO_META_EVALUATOR_AST_VISITOR_H__
 #define __SIN_SHIFT_TO_META_EVALUATOR_AST_VISITOR_H__
 
+#include <list>
+
 #include "SINASTVisitor.h"
 #include "SINASTNodes.h"
 
 namespace SIN {
 	class ShiftToMetaEvaluatorASTVisitor: public ASTVisitor {
-		ASTNode* meta;
 	public:
 		ShiftToMetaEvaluatorASTVisitor(void);
 		ShiftToMetaEvaluatorASTVisitor(ShiftToMetaEvaluatorASTVisitor const&);
@@ -75,7 +76,23 @@ namespace SIN {
 		SINASTVISITOR_VISIT_SIGNATURE(While				);
 		SINASTVISITOR_VISIT_SIGNATURE(Block				);
 		SINASTVISITOR_VISIT_SIGNATURE(Not				);
+
+		ASTNode *	Root(void);// { return parent; }
+		void		DeleteAST(void);
+	private:
+		typedef std::list<ASTNode *> NodesList;
+		
+		NodesList nodesList;
+
+		ASTNode* meta;
+		ASTNode* parent;
+
+
 	}; // class ShiftToMetaEvaluatorASTVisitor
+
+	
+
+
 } // namespace SIN
 
 #endif // __SIN_SHIFT_TO_META_EVALUATOR_AST_VISITOR_H__

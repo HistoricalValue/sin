@@ -53,7 +53,7 @@ namespace SIN {
 
 		//Constructor and destructor 
 		ASTNode(void);
-        ASTNode(String const &name, String const & fileName = "",const unsigned int line = 0u);
+        ASTNode(String const &name, String const & fileName = "", const unsigned int line = 0u);
 		ASTNode(ASTNode const&);
 		virtual ~ASTNode(void);
 

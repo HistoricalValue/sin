@@ -1,74 +1,247 @@
 #include "SINShiftToMetaEvaluatorASTVisitor.h"
 
-#define SIN_SHIFTTOMETAEVALUATORASTVISITOR_DEFAULT_VISIT_DEFINITION_FOR_NODE(NODE_TYPE)	\
-	void ShiftToMetaEvaluatorASTVisitor::Visit(NODE_TYPE##ASTNode&) { }
+
+#include <algorithm>
+#include <functional>
+
+#include "SINAlloc.h"
+#include "SINAssert.h"
+
+
+
+
+
+//----------------------------------------------------------------------------------------------------------
+
+
+#define VISIT_NODE_WITH_MANY_CHILDREN()				for(ASTNode::iterator kid = _node.begin();		\
+														kid != _node.end();							\
+														++kid)										\
+													{												\
+														parent = newNode;							\
+														static_cast<ASTNode&>(*kid).Accept(this);	\
+													}
+
+
+//----------------------------------------------------------------------------------------------------------
+
+
+#define CONECT_NODE_WITH_ZERO_CHILD(NODE_TYPE)		SINASSERT(_node.NumberOfChildren() == 0);									\
+													NODE_TYPE##ASTNode * newNode = SINEWCLASS(NODE_TYPE##ASTNode, (_node));		\
+													nodesList.push_back(newNode);												\
+													*parent << newNode
+
+
+//----------------------------------------------------------------------------------------------------------
+
+
+#define CONECT_NODE_WITH_ONE_CHILD(NODE_TYPE)		SINASSERT(_node.NumberOfChildren() == 1);									\
+													NODE_TYPE##ASTNode * newNode = SINEWCLASS(NODE_TYPE##ASTNode, (_node));		\
+													nodesList.push_back(newNode);												\
+													*parent << newNode;															\
+													parent = newNode;															\
+													static_cast<ASTNode&>(*(_node.begin())).Accept(this)
+
+
+//----------------------------------------------------------------------------------------------------------
+
+
+#define CONECT_NODE_WITH_TWO_CHILDREN(NODE_TYPE)	SINASSERT(_node.NumberOfChildren() == 2);									\
+													NODE_TYPE##ASTNode * newNode = SINEWCLASS(NODE_TYPE##ASTNode, (_node));		\
+													nodesList.push_back(newNode);												\
+													*parent << newNode;															\
+													parent = newNode;															\
+													ASTNode::iterator kid = _node.begin();										\
+													static_cast<ASTNode&>(*kid++).Accept(this);									\
+													parent = newNode;															\
+													static_cast<ASTNode&>(*kid++).Accept(this)
+
+
+//----------------------------------------------------------------------------------------------------------
+
+
+#define CONECT_NODE_WITH_MANY_CHILDREN(NODE_TYPE)	NODE_TYPE##ASTNode * newNode = SINEWCLASS(NODE_TYPE##ASTNode, (_node));		\
+													nodesList.push_back(newNode);												\
+													*parent << newNode;															\
+													VISIT_NODE_WITH_MANY_CHILDREN()
+
+
+//----------------------------------------------------------------------------------------------------------
+
+#define SIN_VISIT_DEFINITION_FOR_NODE_WITH_ZERO_CHILD(NODE_TYPE)				\
+		void ShiftToMetaEvaluatorASTVisitor::Visit(NODE_TYPE##ASTNode& _node)	\
+			{	CONECT_NODE_WITH_ZERO_CHILD(NODE_TYPE);	}
+
+//----------------------------------------------------------------------------------------------------------
+
+#define SIN_VISIT_DEFINITION_FOR_NODE_WITH_ONE_CHILD(NODE_TYPE)					\
+		void ShiftToMetaEvaluatorASTVisitor::Visit(NODE_TYPE##ASTNode& _node)	\
+			{	CONECT_NODE_WITH_ONE_CHILD(NODE_TYPE);	}
+
+//----------------------------------------------------------------------------------------------------------
+
+#define SIN_VISIT_DEFINITION_FOR_NODE_WITH_TWO_CHILDREN(NODE_TYPE)				\
+		void ShiftToMetaEvaluatorASTVisitor::Visit(NODE_TYPE##ASTNode& _node)	\
+			{	CONECT_NODE_WITH_TWO_CHILDREN(NODE_TYPE);	}
+
+//----------------------------------------------------------------------------------------------------------
+
+#define SIN_VISIT_DEFINITION_FOR_NODE_WITH_MENY_CHILDREN(NODE_TYPE)				\
+		void ShiftToMetaEvaluatorASTVisitor::Visit(NODE_TYPE##ASTNode& _node)	\
+			{	CONECT_NODE_WITH_MANY_CHILDREN(NODE_TYPE)	}
+
+
+
 
 namespace SIN {
-	ShiftToMetaEvaluatorASTVisitor::ShiftToMetaEvaluatorASTVisitor(void): meta(0x00) { }
-	ShiftToMetaEvaluatorASTVisitor::ShiftToMetaEvaluatorASTVisitor(ShiftToMetaEvaluatorASTVisitor const& _o): meta(_o.meta) { }
-	ShiftToMetaEvaluatorASTVisitor::~ShiftToMetaEvaluatorASTVisitor(void) { }
 
-//	SIN_SHIFTTOMETAEVALUATORASTVISITOR_DEFAULT_VISIT_DEFINITION_FOR_NODE(					)
-	SIN_SHIFTTOMETAEVALUATORASTVISITOR_DEFAULT_VISIT_DEFINITION_FOR_NODE(Number				)
-	SIN_SHIFTTOMETAEVALUATORASTVISITOR_DEFAULT_VISIT_DEFINITION_FOR_NODE(String				)
-	SIN_SHIFTTOMETAEVALUATORASTVISITOR_DEFAULT_VISIT_DEFINITION_FOR_NODE(Nil				)
-	SIN_SHIFTTOMETAEVALUATORASTVISITOR_DEFAULT_VISIT_DEFINITION_FOR_NODE(True				)
-	SIN_SHIFTTOMETAEVALUATORASTVISITOR_DEFAULT_VISIT_DEFINITION_FOR_NODE(False				)
-	SIN_SHIFTTOMETAEVALUATORASTVISITOR_DEFAULT_VISIT_DEFINITION_FOR_NODE(Add				)
-	SIN_SHIFTTOMETAEVALUATORASTVISITOR_DEFAULT_VISIT_DEFINITION_FOR_NODE(Sub				)
-	SIN_SHIFTTOMETAEVALUATORASTVISITOR_DEFAULT_VISIT_DEFINITION_FOR_NODE(Mul				)
-	SIN_SHIFTTOMETAEVALUATORASTVISITOR_DEFAULT_VISIT_DEFINITION_FOR_NODE(Div				)
-	SIN_SHIFTTOMETAEVALUATORASTVISITOR_DEFAULT_VISIT_DEFINITION_FOR_NODE(Mod				)
-	SIN_SHIFTTOMETAEVALUATORASTVISITOR_DEFAULT_VISIT_DEFINITION_FOR_NODE(Lt					)
-	SIN_SHIFTTOMETAEVALUATORASTVISITOR_DEFAULT_VISIT_DEFINITION_FOR_NODE(Gt					)
-	SIN_SHIFTTOMETAEVALUATORASTVISITOR_DEFAULT_VISIT_DEFINITION_FOR_NODE(Le					)
-	SIN_SHIFTTOMETAEVALUATORASTVISITOR_DEFAULT_VISIT_DEFINITION_FOR_NODE(Ge					)
-	SIN_SHIFTTOMETAEVALUATORASTVISITOR_DEFAULT_VISIT_DEFINITION_FOR_NODE(Eq					)
-	SIN_SHIFTTOMETAEVALUATORASTVISITOR_DEFAULT_VISIT_DEFINITION_FOR_NODE(Ne					)
-	SIN_SHIFTTOMETAEVALUATORASTVISITOR_DEFAULT_VISIT_DEFINITION_FOR_NODE(Or					)
-	SIN_SHIFTTOMETAEVALUATORASTVISITOR_DEFAULT_VISIT_DEFINITION_FOR_NODE(And				)
-	SIN_SHIFTTOMETAEVALUATORASTVISITOR_DEFAULT_VISIT_DEFINITION_FOR_NODE(Assign				)
-	SIN_SHIFTTOMETAEVALUATORASTVISITOR_DEFAULT_VISIT_DEFINITION_FOR_NODE(NormalCall			)
-	SIN_SHIFTTOMETAEVALUATORASTVISITOR_DEFAULT_VISIT_DEFINITION_FOR_NODE(MethodCall			)
-	SIN_SHIFTTOMETAEVALUATORASTVISITOR_DEFAULT_VISIT_DEFINITION_FOR_NODE(FuncdefCall		)
-	SIN_SHIFTTOMETAEVALUATORASTVISITOR_DEFAULT_VISIT_DEFINITION_FOR_NODE(ActualArguments	)
-	SIN_SHIFTTOMETAEVALUATORASTVISITOR_DEFAULT_VISIT_DEFINITION_FOR_NODE(ExpressionList		)
-	SIN_SHIFTTOMETAEVALUATORASTVISITOR_DEFAULT_VISIT_DEFINITION_FOR_NODE(Function			)
-	SIN_SHIFTTOMETAEVALUATORASTVISITOR_DEFAULT_VISIT_DEFINITION_FOR_NODE(LamdaFunction		)
-	SIN_SHIFTTOMETAEVALUATORASTVISITOR_DEFAULT_VISIT_DEFINITION_FOR_NODE(FormalArguments	)
-	SIN_SHIFTTOMETAEVALUATORASTVISITOR_DEFAULT_VISIT_DEFINITION_FOR_NODE(ID					)
-	SIN_SHIFTTOMETAEVALUATORASTVISITOR_DEFAULT_VISIT_DEFINITION_FOR_NODE(LocalID			)
-	SIN_SHIFTTOMETAEVALUATORASTVISITOR_DEFAULT_VISIT_DEFINITION_FOR_NODE(GlobalID			)
-	SIN_SHIFTTOMETAEVALUATORASTVISITOR_DEFAULT_VISIT_DEFINITION_FOR_NODE(If					)
-	SIN_SHIFTTOMETAEVALUATORASTVISITOR_DEFAULT_VISIT_DEFINITION_FOR_NODE(IfElse				)
-	SIN_SHIFTTOMETAEVALUATORASTVISITOR_DEFAULT_VISIT_DEFINITION_FOR_NODE(For				)
-	SIN_SHIFTTOMETAEVALUATORASTVISITOR_DEFAULT_VISIT_DEFINITION_FOR_NODE(ForPreamble		)
-	SIN_SHIFTTOMETAEVALUATORASTVISITOR_DEFAULT_VISIT_DEFINITION_FOR_NODE(ForAddendum		)
-	SIN_SHIFTTOMETAEVALUATORASTVISITOR_DEFAULT_VISIT_DEFINITION_FOR_NODE(PreIncr			)
-	SIN_SHIFTTOMETAEVALUATORASTVISITOR_DEFAULT_VISIT_DEFINITION_FOR_NODE(PostIncr			)
-	SIN_SHIFTTOMETAEVALUATORASTVISITOR_DEFAULT_VISIT_DEFINITION_FOR_NODE(PreDecr			)
-	SIN_SHIFTTOMETAEVALUATORASTVISITOR_DEFAULT_VISIT_DEFINITION_FOR_NODE(PostDecr			)
-	SIN_SHIFTTOMETAEVALUATORASTVISITOR_DEFAULT_VISIT_DEFINITION_FOR_NODE(UnaryNot			)
-	SIN_SHIFTTOMETAEVALUATORASTVISITOR_DEFAULT_VISIT_DEFINITION_FOR_NODE(UnaryMin			)
-	SIN_SHIFTTOMETAEVALUATORASTVISITOR_DEFAULT_VISIT_DEFINITION_FOR_NODE(Continue			)
-	SIN_SHIFTTOMETAEVALUATORASTVISITOR_DEFAULT_VISIT_DEFINITION_FOR_NODE(Break				)
-	SIN_SHIFTTOMETAEVALUATORASTVISITOR_DEFAULT_VISIT_DEFINITION_FOR_NODE(Object				)
-	SIN_SHIFTTOMETAEVALUATORASTVISITOR_DEFAULT_VISIT_DEFINITION_FOR_NODE(EmptyObject		)
-	SIN_SHIFTTOMETAEVALUATORASTVISITOR_DEFAULT_VISIT_DEFINITION_FOR_NODE(UnindexedMember	)
-	SIN_SHIFTTOMETAEVALUATORASTVISITOR_DEFAULT_VISIT_DEFINITION_FOR_NODE(ObjectMember		)
-	SIN_SHIFTTOMETAEVALUATORASTVISITOR_DEFAULT_VISIT_DEFINITION_FOR_NODE(ObjectIndex		)
-	SIN_SHIFTTOMETAEVALUATORASTVISITOR_DEFAULT_VISIT_DEFINITION_FOR_NODE(CallMember			)
-	SIN_SHIFTTOMETAEVALUATORASTVISITOR_DEFAULT_VISIT_DEFINITION_FOR_NODE(CallIndex			)
-	SIN_SHIFTTOMETAEVALUATORASTVISITOR_DEFAULT_VISIT_DEFINITION_FOR_NODE(Return				)
-	SIN_SHIFTTOMETAEVALUATORASTVISITOR_DEFAULT_VISIT_DEFINITION_FOR_NODE(Semicolon			)
-	SIN_SHIFTTOMETAEVALUATORASTVISITOR_DEFAULT_VISIT_DEFINITION_FOR_NODE(MetaParse			)
-	SIN_SHIFTTOMETAEVALUATORASTVISITOR_DEFAULT_VISIT_DEFINITION_FOR_NODE(MetaPreserve		)
-	SIN_SHIFTTOMETAEVALUATORASTVISITOR_DEFAULT_VISIT_DEFINITION_FOR_NODE(MetaEvaluate		)
-	SIN_SHIFTTOMETAEVALUATORASTVISITOR_DEFAULT_VISIT_DEFINITION_FOR_NODE(MetaUnparse		)
-	SIN_SHIFTTOMETAEVALUATORASTVISITOR_DEFAULT_VISIT_DEFINITION_FOR_NODE(MetaParseString	)
-	SIN_SHIFTTOMETAEVALUATORASTVISITOR_DEFAULT_VISIT_DEFINITION_FOR_NODE(SinCode			)
-	SIN_SHIFTTOMETAEVALUATORASTVISITOR_DEFAULT_VISIT_DEFINITION_FOR_NODE(While				)
-	SIN_SHIFTTOMETAEVALUATORASTVISITOR_DEFAULT_VISIT_DEFINITION_FOR_NODE(Block				)
-	SIN_SHIFTTOMETAEVALUATORASTVISITOR_DEFAULT_VISIT_DEFINITION_FOR_NODE(Not				)
-	SIN_SHIFTTOMETAEVALUATORASTVISITOR_DEFAULT_VISIT_DEFINITION_FOR_NODE(IndexedMember		)
+	namespace {
+		template<class C>
+		struct CleanListFunctor : public std::unary_function<C *&, void> {
+			void operator() (C *& node) { 
+				if (node != static_cast<C *>(0)) {
+					SINDELETE(node); 
+					node = static_cast<C *>(0);
+				}
+			}
+		};
+	}
+
+
+	//-----------------------------------------------------------------
+
+	ShiftToMetaEvaluatorASTVisitor::ShiftToMetaEvaluatorASTVisitor(void): meta(0x00), parent(0x00) { }
+
+	//-----------------------------------------------------------------
+
+	ShiftToMetaEvaluatorASTVisitor::ShiftToMetaEvaluatorASTVisitor(ShiftToMetaEvaluatorASTVisitor const& _o): meta(_o.meta), parent(_o.parent) { }
+
+	//-----------------------------------------------------------------
+
+	ShiftToMetaEvaluatorASTVisitor::~ShiftToMetaEvaluatorASTVisitor(void) { 
+		if (nodesList.size() > 0)
+			DeleteAST();
+	}
+
+
+	//-----------------------------------------------------------------
+
+	ASTNode * ShiftToMetaEvaluatorASTVisitor::Root(void)
+		{	return parent;	}
+
+
+	//-----------------------------------------------------------------
+
+	void ShiftToMetaEvaluatorASTVisitor::DeleteAST(void){ 
+		std::for_each(nodesList.begin(), nodesList.end(), CleanListFunctor<ASTNode>()); 
+		nodesList.clear();
+	}
+
+
+	//-----------------------------------------------------------------
+
+	void ShiftToMetaEvaluatorASTVisitor::Visit(SinCodeASTNode& _node)	{ 
+		SinCodeASTNode * newNode = SINEWCLASS(SinCodeASTNode, (_node));
+		nodesList.push_back(newNode);		
+		
+		VISIT_NODE_WITH_MANY_CHILDREN()
+		parent	= newNode;
+	}
+	
+	
+	//-----------------------------------------------------------------
+
+	void ShiftToMetaEvaluatorASTVisitor::Visit(ReturnASTNode& _node)	{
+		SINASSERT(_node.NumberOfChildren() == 1 || _node.NumberOfChildren() == 0);									
+		ReturnASTNode * newNode = SINEWCLASS(ReturnASTNode, (_node));		
+		nodesList.push_back(newNode);												
+		*parent << newNode;													
+		if (_node.NumberOfChildren() == 1) {
+			parent = newNode;															
+			static_cast<ASTNode&>(*(_node.begin())).Accept(this);
+		}
+	}
+
+
+	//-----------------------------------------------------------------
+	
+	void ShiftToMetaEvaluatorASTVisitor::Visit(MetaParseASTNode& _node)	{
+		SINASSERT(false);
+	}
+	
+	
+	//-----------------------------------------------------------------
+
+	void ShiftToMetaEvaluatorASTVisitor::Visit(MetaPreserveASTNode& _node)	{ 
+		SINASSERT(false);
+	}
+
+
+	SIN_VISIT_DEFINITION_FOR_NODE_WITH_ZERO_CHILD(Number				)
+	SIN_VISIT_DEFINITION_FOR_NODE_WITH_ZERO_CHILD(String				)
+	SIN_VISIT_DEFINITION_FOR_NODE_WITH_ZERO_CHILD(Nil					)
+	SIN_VISIT_DEFINITION_FOR_NODE_WITH_ZERO_CHILD(True					)
+	SIN_VISIT_DEFINITION_FOR_NODE_WITH_ZERO_CHILD(False					)
+	SIN_VISIT_DEFINITION_FOR_NODE_WITH_ZERO_CHILD(ID					)
+	SIN_VISIT_DEFINITION_FOR_NODE_WITH_ZERO_CHILD(Break					)
+	SIN_VISIT_DEFINITION_FOR_NODE_WITH_ZERO_CHILD(Continue				)
+	SIN_VISIT_DEFINITION_FOR_NODE_WITH_ZERO_CHILD(Semicolon				)
+	SIN_VISIT_DEFINITION_FOR_NODE_WITH_ZERO_CHILD(EmptyObject			)
+	SIN_VISIT_DEFINITION_FOR_NODE_WITH_ZERO_CHILD(LocalID				)
+	SIN_VISIT_DEFINITION_FOR_NODE_WITH_ZERO_CHILD(GlobalID				)
+	
+
+	//SIN_VISIT_DEFINITION_FOR_NODE_WITH_ONE_CHILD(Return					)
+	SIN_VISIT_DEFINITION_FOR_NODE_WITH_ONE_CHILD(PreIncr				)
+	SIN_VISIT_DEFINITION_FOR_NODE_WITH_ONE_CHILD(PostIncr				)
+	SIN_VISIT_DEFINITION_FOR_NODE_WITH_ONE_CHILD(PreDecr				)
+	SIN_VISIT_DEFINITION_FOR_NODE_WITH_ONE_CHILD(PostDecr				)
+	SIN_VISIT_DEFINITION_FOR_NODE_WITH_ONE_CHILD(UnaryMin				)
+	//SIN_VISIT_DEFINITION_FOR_NODE_WITH_ONE_CHILD(MetaParse				)
+	//SIN_VISIT_DEFINITION_FOR_NODE_WITH_ONE_CHILD(MetaPreserve			)
+	SIN_VISIT_DEFINITION_FOR_NODE_WITH_ONE_CHILD(MetaEvaluate			)
+	SIN_VISIT_DEFINITION_FOR_NODE_WITH_ONE_CHILD(MetaUnparse			)
+	SIN_VISIT_DEFINITION_FOR_NODE_WITH_ONE_CHILD(MetaParseString		)
+
+
+	SIN_VISIT_DEFINITION_FOR_NODE_WITH_TWO_CHILDREN(If					)
+	SIN_VISIT_DEFINITION_FOR_NODE_WITH_TWO_CHILDREN(Add					)
+	SIN_VISIT_DEFINITION_FOR_NODE_WITH_TWO_CHILDREN(Sub					)
+	SIN_VISIT_DEFINITION_FOR_NODE_WITH_TWO_CHILDREN(Mul					)
+	SIN_VISIT_DEFINITION_FOR_NODE_WITH_TWO_CHILDREN(Div					)
+	SIN_VISIT_DEFINITION_FOR_NODE_WITH_TWO_CHILDREN(Mod					)
+	SIN_VISIT_DEFINITION_FOR_NODE_WITH_TWO_CHILDREN(Lt					)
+	SIN_VISIT_DEFINITION_FOR_NODE_WITH_TWO_CHILDREN(Gt					)
+	SIN_VISIT_DEFINITION_FOR_NODE_WITH_TWO_CHILDREN(Le					)
+	SIN_VISIT_DEFINITION_FOR_NODE_WITH_TWO_CHILDREN(Ge					)
+	SIN_VISIT_DEFINITION_FOR_NODE_WITH_TWO_CHILDREN(Eq					)
+	SIN_VISIT_DEFINITION_FOR_NODE_WITH_TWO_CHILDREN(Ne					)
+	SIN_VISIT_DEFINITION_FOR_NODE_WITH_TWO_CHILDREN(Or					)
+	SIN_VISIT_DEFINITION_FOR_NODE_WITH_TWO_CHILDREN(And					)
+	SIN_VISIT_DEFINITION_FOR_NODE_WITH_TWO_CHILDREN(Assign				)
+	SIN_VISIT_DEFINITION_FOR_NODE_WITH_TWO_CHILDREN(While				)
+	SIN_VISIT_DEFINITION_FOR_NODE_WITH_TWO_CHILDREN(FuncdefCall			)
+	SIN_VISIT_DEFINITION_FOR_NODE_WITH_TWO_CHILDREN(Function			)
+	SIN_VISIT_DEFINITION_FOR_NODE_WITH_TWO_CHILDREN(LamdaFunction		)
+	SIN_VISIT_DEFINITION_FOR_NODE_WITH_TWO_CHILDREN(IndexedMember		)
+	SIN_VISIT_DEFINITION_FOR_NODE_WITH_TWO_CHILDREN(ObjectIndex			)
+	SIN_VISIT_DEFINITION_FOR_NODE_WITH_TWO_CHILDREN(CallMember			)
+	SIN_VISIT_DEFINITION_FOR_NODE_WITH_TWO_CHILDREN(CallIndex			)
+
+
+	SIN_VISIT_DEFINITION_FOR_NODE_WITH_MENY_CHILDREN(ObjectMember		)
+	SIN_VISIT_DEFINITION_FOR_NODE_WITH_MENY_CHILDREN(NormalCall			)
+	SIN_VISIT_DEFINITION_FOR_NODE_WITH_MENY_CHILDREN(UnaryNot			)
+	SIN_VISIT_DEFINITION_FOR_NODE_WITH_MENY_CHILDREN(Not				)
+	SIN_VISIT_DEFINITION_FOR_NODE_WITH_MENY_CHILDREN(UnindexedMember	)
+	SIN_VISIT_DEFINITION_FOR_NODE_WITH_MENY_CHILDREN(MethodCall			)
+	SIN_VISIT_DEFINITION_FOR_NODE_WITH_MENY_CHILDREN(ActualArguments	)
+	SIN_VISIT_DEFINITION_FOR_NODE_WITH_MENY_CHILDREN(ExpressionList		)
+	SIN_VISIT_DEFINITION_FOR_NODE_WITH_MENY_CHILDREN(FormalArguments	)
+	SIN_VISIT_DEFINITION_FOR_NODE_WITH_MENY_CHILDREN(IfElse				)
+	SIN_VISIT_DEFINITION_FOR_NODE_WITH_MENY_CHILDREN(Object				)
+	SIN_VISIT_DEFINITION_FOR_NODE_WITH_MENY_CHILDREN(For				)	
+	SIN_VISIT_DEFINITION_FOR_NODE_WITH_MENY_CHILDREN(ForPreamble		)
+	SIN_VISIT_DEFINITION_FOR_NODE_WITH_MENY_CHILDREN(ForAddendum		)
+	SIN_VISIT_DEFINITION_FOR_NODE_WITH_MENY_CHILDREN(Block				)
 } // namespace SIN
