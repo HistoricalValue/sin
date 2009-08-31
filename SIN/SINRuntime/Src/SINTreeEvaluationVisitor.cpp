@@ -951,13 +951,14 @@ namespace SIN {
 	void TreeEvaluationVisitor::Visit(IndexedMemberASTNode & _node) {
 		ASTNode::iterator kite(_node.begin());
 		// Get indexed element's key-name
-		IDASTNode const& id = static_cast<IDASTNode const&>(*kite++);
+		EVALUATE_AND_ADVANCE(kite);
+		String const member_name = memory->ToString();
 		// Get indexed element's value (to set)
-		static_cast<ASTNode&>(*kite++).Accept(this);
+		EVALUATE_AND_ADVANCE(kite);
 		SINASSERT(memory != 0x00);
 		MemoryCell* assigned = 0x00;
 		MemoryCell::Assign(assigned, memory);
-		obj_imp->SetValue(id.Name(), assigned);
+		obj_imp->SetValue(member_name, assigned);
 		// assert there were only two kids
 		SINASSERT(kite == _node.end());
 	}
