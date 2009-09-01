@@ -2030,7 +2030,7 @@ yyreduce:
 
   case 53:
 
-    {	SIN::ParserManage::Manage_LValue_ID(yylineno, (yyvsp[(1) - (1)].stringV), &((yyval.AST)), &fabpa);			}
+    {	SIN::ParserManage::Manage_LValue_ID(yylineno, (yyvsp[(1) - (1)].stringV), &((yyval.AST)), &fabpa);		}
     break;
 
   case 54:
@@ -2045,7 +2045,7 @@ yyreduce:
 
   case 56:
 
-    {	SIN::ParserManage::Manage_LValue_Member(yylineno, (yyvsp[(1) - (1)].AST), &((yyval.AST)), &fabpa);		}
+    {	SIN::ParserManage::Manage_LValue_Member(yylineno, (yyvsp[(1) - (1)].AST), &((yyval.AST)), &fabpa);	}
     break;
 
   case 57:
@@ -2070,12 +2070,12 @@ yyreduce:
 
   case 61:
 
-    {	SIN::ParserManage::Manage_Member_CallID(yylineno, (yyvsp[(1) - (3)].AST), (yyvsp[(3) - (3)].stringV), &((yyval.AST)), &fabpa);				}
+    {	SIN::ParserManage::Manage_Member_CallID(yylineno, (yyvsp[(1) - (3)].AST), (yyvsp[(3) - (3)].stringV), &((yyval.AST)), &fabpa);			}
     break;
 
   case 62:
 
-    {	SIN::ParserManage::Manage_Member_CallExpression(yylineno, (yyvsp[(1) - (4)].AST), (yyvsp[(3) - (4)].AST), &((yyval.AST)), &fabpa);		}
+    {	SIN::ParserManage::Manage_Member_CallExpression(yylineno, (yyvsp[(1) - (4)].AST), (yyvsp[(3) - (4)].AST), &((yyval.AST)), &fabpa);	}
     break;
 
   case 63:
