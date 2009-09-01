@@ -898,22 +898,87 @@ namespace SIN {
 	//-----------------------------------------------------------------
 
 	void TreeEvaluationVisitor::Visit(ObjectIndexASTNode & _node) {
-		// TODO implement
-		SINASSERT(!"Not implemented");
+
+		ASTNode::iterator kite(_node.begin());
+		EVALUATE_AND_ADVANCE(kite);
+
+		if (memory->Type() != MemoryCell::OBJECT_MCT)
+			vs->AppendError(to_string("Accessing member \"") << static_cast<ASTNode&>(*kite).Name()
+			<< "\" on non-object type " << Operator::GetTypeAsStringFromMemoryCell(*memory),
+			_node.AssociatedFileName().c_str(), _node.AssociatedFileLine());
+
+		MemoryCellObject* const obj_ref = static_cast<MemoryCellObject*>(memory);
+		Types::Object_t obj_p  = obj_ref->GetValue();
+
+		EVALUATE_AND_ADVANCE(kite);
+		String const& index = memory->ToString();
+		lookuped = &obj_p->GetValue(index);
+
+		if (static_cast<MemoryCell*>(*lookuped) == 0x00) {
+			// not found, insert Nil
+			obj_p->SetValue(index, SINEW(MemoryCellNil));
+			lookuped = &obj_p->GetValue(index);
+			SINASSERT(static_cast<MemoryCell const* const>(*static_cast<InstanceProxy<MemoryCell> const* const>(lookuped)) != 0x00);
+		}
+
+		memory = *static_cast<InstanceProxy<MemoryCell> const*>(lookuped);
 	}
 
 	//-----------------------------------------------------------------
 
 	void TreeEvaluationVisitor::Visit(CallMemberASTNode & _node) {
-		// TODO implement
-		SINASSERT(!"Not implemented");
+
+		ASTNode::iterator kite(_node.begin());
+		EVALUATE_AND_ADVANCE(kite);
+
+		if (memory->Type() != MemoryCell::OBJECT_MCT)
+			vs->AppendError(to_string("Accessing member \"") << static_cast<ASTNode&>(*kite).Name()
+			<< "\" on non-object type " << Operator::GetTypeAsStringFromMemoryCell(*memory),
+			_node.AssociatedFileName().c_str(), _node.AssociatedFileLine());
+
+		MemoryCellObject* const obj_ref = static_cast<MemoryCellObject*>(memory);
+		Types::Object_t obj_p  = obj_ref->GetValue();
+		SINASSERT(static_cast<ASTNode&>(*kite).Type() == SINASTNODES_ID_TYPE);
+		String const& member_id = static_cast<ASTNode&>(*kite).Name();
+		lookuped = &obj_p->GetValue(member_id);
+
+		if (static_cast<MemoryCell*>(*lookuped) == 0x00) {
+			// not found, insert Nil
+			obj_p->SetValue(member_id, SINEW(MemoryCellNil));
+			lookuped = &obj_p->GetValue(member_id);
+			SINASSERT(static_cast<MemoryCell const* const>(*static_cast<InstanceProxy<MemoryCell> const* const>(lookuped)) != 0x00);
+		}
+
+		memory = *static_cast<InstanceProxy<MemoryCell> const*>(lookuped);
 	}
 
 	//-----------------------------------------------------------------
 
 	void TreeEvaluationVisitor::Visit(CallIndexASTNode & _node) {
-		// TODO implement
-		SINASSERT(!"Not implemented");
+
+		ASTNode::iterator kite(_node.begin());
+		EVALUATE_AND_ADVANCE(kite);
+
+		if (memory->Type() != MemoryCell::OBJECT_MCT)
+			vs->AppendError(to_string("Accessing member \"") << static_cast<ASTNode&>(*kite).Name()
+			<< "\" on non-object type " << Operator::GetTypeAsStringFromMemoryCell(*memory),
+			_node.AssociatedFileName().c_str(), _node.AssociatedFileLine());
+
+		MemoryCellObject* const obj_ref = static_cast<MemoryCellObject*>(memory);
+		Types::Object_t obj_p  = obj_ref->GetValue();
+
+		EVALUATE_AND_ADVANCE(kite);
+		String const& index = memory->ToString();
+		lookuped = &obj_p->GetValue(index);
+
+		if (static_cast<MemoryCell*>(*lookuped) == 0x00) {
+			// not found, insert Nil
+			obj_p->SetValue(index, SINEW(MemoryCellNil));
+			lookuped = &obj_p->GetValue(index);
+			SINASSERT(static_cast<MemoryCell const* const>(*static_cast<InstanceProxy<MemoryCell> const* const>(lookuped)) != 0x00);
+		}
+
+		memory = *static_cast<InstanceProxy<MemoryCell> const*>(lookuped);
 	}
 
 	//-----------------------------------------------------------------

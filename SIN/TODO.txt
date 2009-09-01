@@ -1,6 +1,6 @@
 NEXT TODO TICKET                                ||
 (please take a number and wait in the line...)  ||
-Next number: 52                                 ||
+Next number: 53                                 ||
 +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-//
 
 
@@ -39,7 +39,7 @@ Next number: 52                                 ||
 *[047 2009-08-30/23:26] Make unary pre- and post- increment/decrement operators.
 *[048 2009-08-31/00:21] Use the koutsop unary ops
 
-
+*[052 2009-09-01/01:25] Delete an object immidiately after it has no actual references
 
 
 ---logging---

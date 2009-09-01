@@ -219,10 +219,10 @@ primary:		lvalue							{	SIN::ParserManage::Manage_Primary_LValue(yylineno, $1, 
 
 
 
-lvalue:			ID 								{	SIN::ParserManage::Manage_LValue_ID(yylineno, $1, &($$), &fabpa);			}
+lvalue:			ID 								{	SIN::ParserManage::Manage_LValue_ID(yylineno, $1, &($$), &fabpa);		}
 				|	LOCAL ID					{	SIN::ParserManage::Manage_LValue_LocalID(yylineno, $2, &($$), &fabpa);	}
 				|	GLOBAL ID					{	SIN::ParserManage::Manage_LValue_GlobalID(yylineno, $2, &($$), &fabpa);	}
-				|	member						{	SIN::ParserManage::Manage_LValue_Member(yylineno, $1, &($$), &fabpa);		}
+				|	member						{	SIN::ParserManage::Manage_LValue_Member(yylineno, $1, &($$), &fabpa);	}
 				;
 
 
@@ -231,8 +231,8 @@ member:			lvalue DOT ID					{	SIN::ParserManage::Manage_Member_LValueID(yylineno
 				|	lvalue DOT KEYS_MEMBER		{	}
 				|	lvalue DOT SIZE_MEMBER		{	}
 				|	lvalue	'[' expr ']'		{	SIN::ParserManage::Manage_Member_LValueExpression(yylineno, $1, $3, &($$), &fabpa);	}
-				|	call	DOT ID				{	SIN::ParserManage::Manage_Member_CallID(yylineno, $1, $3, &($$), &fabpa);				}
-				|	call	'[' expr ']'		{	SIN::ParserManage::Manage_Member_CallExpression(yylineno, $1, $3, &($$), &fabpa);		}
+				|	call	DOT ID				{	SIN::ParserManage::Manage_Member_CallID(yylineno, $1, $3, &($$), &fabpa);			}
+				|	call	'[' expr ']'		{	SIN::ParserManage::Manage_Member_CallExpression(yylineno, $1, $3, &($$), &fabpa);	}
 				;
 
 
