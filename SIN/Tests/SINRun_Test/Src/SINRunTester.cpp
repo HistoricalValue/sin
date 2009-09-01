@@ -20,7 +20,7 @@
 #include "SINLibraryFunctions.h"
 #include "SINMemoryCellLibFunction.h"
 #include "SINAlloc.h"
-#include "SINShiftToMetaEvaluatorASTVisitor.h"
+#include "SINASTTreeCtrlVisitor.h"
 #include "SINShiftToMetaEvaluatorASTVisitor.h"
 
 
@@ -82,30 +82,30 @@ namespace SIN {
 				ASTNode* root = test.GetAST();
 				ASSERT(root != 0x00);
 				
+				
 				FileOutputStream _foutxml("RunTreeVisualisation.xml", FileOutputStream::Mode::Truncate());
 				FileOutputStream _fouttxt("RunTreeVisualisation.txt", FileOutputStream::Mode::Truncate());
+				FileOutputStream _ctrltxt("RunTreeCtrlVisualisation.txt", FileOutputStream::Mode::Truncate());
 				FileOutputStream _metatxt("ShiftToMetaEvaluatorASTVisitor.txt", FileOutputStream::Mode::Truncate());
 
 				BufferedOutputStream foutxml(_foutxml);
 				BufferedOutputStream fouttxt(_fouttxt);
+				BufferedOutputStream ctrltxt(_ctrltxt); 
 				BufferedOutputStream metatxt(_metatxt); 
+				
 
-
+				ASTTreeCtrlVisitor						ctrlvis(ctrltxt);
 				ASTTreeVisualisationVisitor				visitor(fouttxt);
 				ASTTreeVisualisationVisitor				metaVisualVisitor(metatxt);
 				ASTMITTreeVisualizerXMLProducerVisitor	mitvis(foutxml);
 			
 				
-				ShiftToMetaEvaluatorASTVisitor metaVisitor;
-				root->Accept(&metaVisitor);
-				metaVisitor.Root()->Accept(&metaVisualVisitor);
-				metaVisitor.DeleteAST();
-
 				root->Accept(&visitor);
+				root->Accept(&ctrlvis);
 				root->Accept(&mitvis);
 				foutxml.flush();
 				fouttxt.flush();
-				metatxt.flush();
+				ctrltxt.flush();
 
 				VM::VirtualState vs;
 				vs.SetPrintHandler(&__print_handler);
@@ -149,8 +149,12 @@ namespace SIN {
 				TreeEvaluationVisitor eval(&lib, &vs);
 				root->Accept(&eval);
 
-				ShiftToMetaEvaluatorASTVisitor shifter;
+				ShiftToMetaEvaluatorASTVisitor shifter(eval);
 				root->Accept(&shifter);
+				shifter.Root()->Accept(&metaVisualVisitor);
+				
+				metatxt.flush();
+
 				shifter.DeleteAST();
 
 				test.DeleteAST();
