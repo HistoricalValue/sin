@@ -240,7 +240,7 @@ YY_BUFFER_STATE yy_scan_string YY_PROTO(( yyconst char *yy_str ));
 YY_BUFFER_STATE yy_scan_bytes YY_PROTO(( yyconst char *bytes, int len ));
 
 static void *yy_flex_alloc YY_PROTO(( yy_size_t ));
-static void *yy_flex_realloc YY_PROTO(( void *, yy_size_t ));
+/*static void *yy_flex_realloc YY_PROTO(( void *, yy_size_t ));*/
 static void yy_flex_free YY_PROTO(( void * ));
 
 #define yy_new_buffer yy_create_buffer
@@ -709,7 +709,7 @@ yy_match:
 yy_find_action:
 		yy_current_state = *--yy_state_ptr;
 		yy_lp = yy_accept[yy_current_state];
-find_rule: /* we branch to this label when backing up */
+/*find_rule:*/ /* we branch to this label when backing up */
 		for ( ; ; ) /* until we find what rule we matched */
 			{
 			if ( yy_lp && yy_lp < yy_accept[yy_current_state + 1] )
@@ -1829,6 +1829,7 @@ yy_size_t size;
 	return (void *) malloc( size );
 	}
 
+#if 0
 #ifdef YY_USE_PROTOS
 static void *yy_flex_realloc( void *ptr, yy_size_t size )
 #else
@@ -1846,6 +1847,7 @@ yy_size_t size;
 	 */
 	return (void *) realloc( (char *) ptr, size );
 	}
+#endif // 0 - commenting out
 
 #ifdef YY_USE_PROTOS
 static void yy_flex_free( void *ptr )

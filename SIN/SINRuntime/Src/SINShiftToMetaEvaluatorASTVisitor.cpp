@@ -114,19 +114,19 @@ namespace SIN {
 
 	//-----------------------------------------------------------------
 
-	ShiftToMetaEvaluatorASTVisitor::ShiftToMetaEvaluatorASTVisitor(TreeEvaluationVisitor & visitor): 
+	ShiftToMetaEvaluatorASTVisitor::ShiftToMetaEvaluatorASTVisitor(TreeEvaluationVisitor & visitor):
+		metaParseCounter(0),
 		meta(0x00), 
 		parent(0x00),
-		metaParseCounter(0),
 		treeEvalVisitor(visitor)
 	{ }
 
 	//-----------------------------------------------------------------
 
-	ShiftToMetaEvaluatorASTVisitor::ShiftToMetaEvaluatorASTVisitor(ShiftToMetaEvaluatorASTVisitor const& _o): 
+	ShiftToMetaEvaluatorASTVisitor::ShiftToMetaEvaluatorASTVisitor(ShiftToMetaEvaluatorASTVisitor const& _o):
+		metaParseCounter(_o.metaParseCounter),
 		meta(_o.meta), 
 		parent(_o.parent),
-		metaParseCounter(_o.metaParseCounter),
 		treeEvalVisitor(_o.treeEvalVisitor)	
 	{ }
 

@@ -235,10 +235,10 @@ namespace SIN {
 		lookuped(NULL), 
 		preserveNode(NULL), 
 		lib(_lib), 
-		vs(_vs), 
-		argument_lists(),
+		vs(_vs),
 		triggeredBreak(false),
-		triggeredContinue(false)
+		triggeredContinue(false),
+		argument_lists()
 		{ }
 
 	//-----------------------------------------------------------------
@@ -251,7 +251,8 @@ namespace SIN {
 		vs(0x00), 
 		obj_imp(0x00),
 		triggeredBreak(false),
-		triggeredContinue(false)
+		triggeredContinue(false),
+		argument_lists()
 		{ SINASSERT(!"Not allowed"); }
 
 	//-----------------------------------------------------------------
@@ -552,7 +553,6 @@ namespace SIN {
 			//     a = 3;
 			// fails. Fix this.
 			ERRO("Assigning to a function");
-		MemoryCell *tmpmemcell1 = memory;
 		InstanceProxy<MemoryCell>* lookedup_l = lookuped; // looked-up and memory must be saved after each eval of a kid
 
 		static_cast<ASTNode&>(*kid++).Accept(this);
