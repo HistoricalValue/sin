@@ -22,6 +22,7 @@
 #include "SINAlloc.h"
 #include "SINASTTreeCtrlVisitor.h"
 #include "SINShiftToMetaEvaluatorASTVisitor.h"
+#include "SINASTUnparseTreeVisitor.h"
 
 
 #define SIN_TESTS_RUN_RUN(NAME)               SINTESTS_RUNTEST(NAME)
@@ -98,11 +99,15 @@ namespace SIN {
 				ASTTreeVisualisationVisitor				visitor(fouttxt);
 				ASTTreeVisualisationVisitor				metaVisualVisitor(metatxt);
 				ASTMITTreeVisualizerXMLProducerVisitor	mitvis(foutxml);
-			
+				ASTUnparseTreeVisitor uparseVisitor;
 				
 				root->Accept(&visitor);
 				root->Accept(&ctrlvis);
 				root->Accept(&mitvis);
+				root->Accept(&uparseVisitor);
+				
+				static_cast<OutputStream&>(STDOUT) << "\n\n" << uparseVisitor.UnparseString() << "\n\n\n";
+
 				foutxml.flush();
 				fouttxt.flush();
 				ctrltxt.flush();

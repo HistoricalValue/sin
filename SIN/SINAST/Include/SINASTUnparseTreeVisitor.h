@@ -116,7 +116,7 @@ namespace SIN {
 		SIN_UNPARSE_TREE_VISITOR_VISIT_SIGNATURE(MetaParseString	);
 		SIN_UNPARSE_TREE_VISITOR_VISIT_SIGNATURE(SinCode			);
 		
-		String UnparseString(void) const;
+		String UnparseString(void) const { return unparseString; }
 	
 	private:
 		String unparseString;

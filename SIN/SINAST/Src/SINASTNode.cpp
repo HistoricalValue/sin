@@ -58,17 +58,6 @@ namespace SIN {
 	ASTNode::ID_t const& ASTNode::ID(void) const 
 		{	return id;	}
 	
-	
-	//---------------------------------------------------
-
-	void ASTNode::Accept(ASTUnparseTreeVisitor *_v) {
-		SINASSERT(_v);
-		_v->Visit(*this);
-		iterator const end_ = end();
-		for (iterator ite = begin(); ite != end_; ++ite)
-			static_cast<ASTNode&>(*ite).Accept(_v);
-	}
-
 
 	//---------------------------------------------------
 
