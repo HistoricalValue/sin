@@ -176,6 +176,10 @@
 				>
 			</File>
 			<File
+				RelativePath="..\..\Src\SINASTUnparseTreeVisitor.cpp"
+				>
+			</File>
+			<File
 				RelativePath="..\..\Src\SINTreeNode.cpp"
 				>
 			</File>
@@ -207,6 +211,10 @@
 			</File>
 			<File
 				RelativePath="..\..\Include\SINASTTreeVisualisationVisitor.h"
+				>
+			</File>
+			<File
+				RelativePath="..\..\Include\SINASTUnparseTreeVisitor.h"
 				>
 			</File>
 			<File

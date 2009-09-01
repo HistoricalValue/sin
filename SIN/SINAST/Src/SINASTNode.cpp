@@ -2,6 +2,7 @@
 #include "SINConstants.h"
 #include "SINASTNode.h"
 #include "SINASTVisitor.h"
+#include "SINASTUnparseTreeVisitor.h"
 #include "SINASTTreeVisualisationVisitor.h"
 #include "SINAssert.h"
 #include "SINAlloc.h"
@@ -58,6 +59,17 @@ namespace SIN {
 		{	return id;	}
 	
 	
+	//---------------------------------------------------
+
+	void ASTNode::Accept(ASTUnparseTreeVisitor *_v) {
+		SINASSERT(_v);
+		_v->Visit(*this);
+		iterator const end_ = end();
+		for (iterator ite = begin(); ite != end_; ++ite)
+			static_cast<ASTNode&>(*ite).Accept(_v);
+	}
+
+
 	//---------------------------------------------------
 
 	void ASTNode::Accept(ASTTreeVisualisationVisitor *_v) {

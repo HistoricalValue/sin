@@ -17,6 +17,7 @@ namespace SIN {
 	// Visitors' forward declarations
     class ASTVisitor;
 	class ASTTreeVisualisationVisitor;
+	class ASTUnparseTreeVisitor;
 
 
 	///***************	ValueHolder	***************
@@ -64,7 +65,9 @@ namespace SIN {
         virtual String const &Name(void) const;
 
 		virtual void Accept(ASTVisitor *) = 0;
+		virtual void Accept(ASTUnparseTreeVisitor *);
 		virtual void Accept(ASTTreeVisualisationVisitor *);
+		
 
 		virtual ASTNode *Clone(void) const;
 
