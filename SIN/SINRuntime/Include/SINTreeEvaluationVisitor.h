@@ -79,6 +79,8 @@ namespace SIN{
 		SINASTVISITOR_VISIT_SIGNATURE(MetaParseString	) ;
 		SINASTVISITOR_VISIT_SIGNATURE(SinCode			) ;
 
+		MemoryCell * Memory(void) const { return memory; }
+
 		TreeEvaluationVisitor (void);
 		TreeEvaluationVisitor (Library::Library *lib, VM::VirtualState *vs);
 		virtual ~TreeEvaluationVisitor (void);

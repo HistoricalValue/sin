@@ -4,7 +4,7 @@
 #include "SINOutputStream.h"
 #include "Common.h"
 
-#define SIN_BUFFERED_OUTPUT_STREAM_BUFFER_LENGTH ((1 << 10) << 8) // 256KiB
+#define SIN_BUFFERED_OUTPUT_STREAM_BUFFER_LENGTH ((1 << 10) << 7) // 256KiB
 
 namespace SIN {
 

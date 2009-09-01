@@ -26,6 +26,7 @@
 #include "SINLessThanOrEqualToOperator.h"
 #include "SINUnaryNegationOperator.h"
 #include "SINLogicalNotOperator.h"
+#include "SINShiftToMetaEvaluatorASTVisitor.h"
 
 
 #define VISIT_KIDS_SERIALLY												\
@@ -983,15 +984,17 @@ namespace SIN {
 
 	//-----------------------------------------------------------------
 	void TreeEvaluationVisitor::Visit(MetaParseASTNode & _node) {
-		// TODO implement
-		SINASSERT(!"Not implemented");
+		SINASSERT(_node.NumberOfChildren() == 1);
+		ShiftToMetaEvaluatorASTVisitor stmev(*this);
+		static_cast<ASTNode&>(*_node.begin()).Accept(&stmev);
+		
 	}
 
 	//-----------------------------------------------------------------
 
 	void TreeEvaluationVisitor::Visit(MetaPreserveASTNode & _node) {
 		// TODO implement
-		SINASSERT(!"Not implemented");
+		//SINASSERT(!"Not implemented");
 	}
 
 	//-----------------------------------------------------------------

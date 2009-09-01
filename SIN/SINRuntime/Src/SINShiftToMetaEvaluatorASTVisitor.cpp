@@ -6,7 +6,7 @@
 
 #include "SINAlloc.h"
 #include "SINAssert.h"
-
+#include "SINMemoryCellAST.h"
 
 
 
@@ -29,6 +29,7 @@
 #define CONECT_NODE_WITH_ZERO_CHILD(NODE_TYPE)		SINASSERT(_node.NumberOfChildren() == 0);									\
 													NODE_TYPE##ASTNode * newNode = SINEWCLASS(NODE_TYPE##ASTNode, (_node));		\
 													nodesList.push_back(newNode);												\
+													if (parent)																	\
 													*parent << newNode
 
 
@@ -38,7 +39,8 @@
 #define CONECT_NODE_WITH_ONE_CHILD(NODE_TYPE)		SINASSERT(_node.NumberOfChildren() == 1);									\
 													NODE_TYPE##ASTNode * newNode = SINEWCLASS(NODE_TYPE##ASTNode, (_node));		\
 													nodesList.push_back(newNode);												\
-													*parent << newNode;															\
+													if (parent)																	\
+														*parent << newNode;														\
 													parent = newNode;															\
 													static_cast<ASTNode&>(*(_node.begin())).Accept(this)
 
@@ -49,7 +51,8 @@
 #define CONECT_NODE_WITH_TWO_CHILDREN(NODE_TYPE)	SINASSERT(_node.NumberOfChildren() == 2);									\
 													NODE_TYPE##ASTNode * newNode = SINEWCLASS(NODE_TYPE##ASTNode, (_node));		\
 													nodesList.push_back(newNode);												\
-													*parent << newNode;															\
+													if (parent)																	\
+														*parent << newNode;														\
 													parent = newNode;															\
 													ASTNode::iterator kid = _node.begin();										\
 													static_cast<ASTNode&>(*kid++).Accept(this);									\
@@ -62,7 +65,8 @@
 
 #define CONECT_NODE_WITH_MANY_CHILDREN(NODE_TYPE)	NODE_TYPE##ASTNode * newNode = SINEWCLASS(NODE_TYPE##ASTNode, (_node));		\
 													nodesList.push_back(newNode);												\
-													*parent << newNode;															\
+													if (parent)																	\
+														*parent << newNode;														\
 													VISIT_NODE_WITH_MANY_CHILDREN()
 
 
@@ -110,17 +114,29 @@ namespace SIN {
 
 	//-----------------------------------------------------------------
 
-	ShiftToMetaEvaluatorASTVisitor::ShiftToMetaEvaluatorASTVisitor(void): meta(0x00), parent(0x00) { }
+	ShiftToMetaEvaluatorASTVisitor::ShiftToMetaEvaluatorASTVisitor(TreeEvaluationVisitor & visitor): 
+		meta(0x00), 
+		parent(0x00),
+		metaParseCounter(0),
+		treeEvalVisitor(visitor)
+	{ }
 
 	//-----------------------------------------------------------------
 
-	ShiftToMetaEvaluatorASTVisitor::ShiftToMetaEvaluatorASTVisitor(ShiftToMetaEvaluatorASTVisitor const& _o): meta(_o.meta), parent(_o.parent) { }
+	ShiftToMetaEvaluatorASTVisitor::ShiftToMetaEvaluatorASTVisitor(ShiftToMetaEvaluatorASTVisitor const& _o): 
+		meta(_o.meta), 
+		parent(_o.parent),
+		metaParseCounter(_o.metaParseCounter),
+		treeEvalVisitor(_o.treeEvalVisitor)	
+	{ }
 
 	//-----------------------------------------------------------------
 
 	ShiftToMetaEvaluatorASTVisitor::~ShiftToMetaEvaluatorASTVisitor(void) { 
+		/*
 		if (nodesList.size() > 0)
 			DeleteAST();
+		*/
 	}
 
 
@@ -153,9 +169,11 @@ namespace SIN {
 
 	void ShiftToMetaEvaluatorASTVisitor::Visit(ReturnASTNode& _node)	{
 		SINASSERT(_node.NumberOfChildren() == 1 || _node.NumberOfChildren() == 0);									
+		
 		ReturnASTNode * newNode = SINEWCLASS(ReturnASTNode, (_node));		
 		nodesList.push_back(newNode);												
 		*parent << newNode;													
+		
 		if (_node.NumberOfChildren() == 1) {
 			parent = newNode;															
 			static_cast<ASTNode&>(*(_node.begin())).Accept(this);
@@ -165,15 +183,30 @@ namespace SIN {
 
 	//-----------------------------------------------------------------
 	
-	void ShiftToMetaEvaluatorASTVisitor::Visit(MetaParseASTNode& _node)	{
-		SINASSERT(false);
+	void ShiftToMetaEvaluatorASTVisitor::Visit(MetaParseASTNode& _node) {
+		SINASSERT( _node.NumberOfChildren() == 1);
+		++metaParseCounter;
+		static_cast<ASTNode&>(*(_node.begin())).Accept(this);
+		--metaParseCounter;
 	}
 	
 	
 	//-----------------------------------------------------------------
 
 	void ShiftToMetaEvaluatorASTVisitor::Visit(MetaPreserveASTNode& _node)	{ 
-		SINASSERT(false);
+
+		if ( metaParseCounter != 0){
+			CONECT_NODE_WITH_MANY_CHILDREN(MetaPreserve)
+		}
+
+		else {
+			static_cast<ASTNode&>(*_node.begin()).Accept(&treeEvalVisitor);
+
+			MemoryCell * astmc = treeEvalVisitor.Memory();
+			SINASSERT(astmc && astmc->Type() == MemoryCell::AST_MCT);
+
+			*parent << static_cast<MemoryCellAST *>(astmc)->GetValue();
+		}
 	}
 
 
@@ -191,13 +224,13 @@ namespace SIN {
 	SIN_VISIT_DEFINITION_FOR_NODE_WITH_ZERO_CHILD(GlobalID				)
 	
 
-	//SIN_VISIT_DEFINITION_FOR_NODE_WITH_ONE_CHILD(Return					)
+	//SIN_VISIT_DEFINITION_FOR_NODE_WITH_ONE_CHILD(Return				)
 	SIN_VISIT_DEFINITION_FOR_NODE_WITH_ONE_CHILD(PreIncr				)
 	SIN_VISIT_DEFINITION_FOR_NODE_WITH_ONE_CHILD(PostIncr				)
 	SIN_VISIT_DEFINITION_FOR_NODE_WITH_ONE_CHILD(PreDecr				)
 	SIN_VISIT_DEFINITION_FOR_NODE_WITH_ONE_CHILD(PostDecr				)
 	SIN_VISIT_DEFINITION_FOR_NODE_WITH_ONE_CHILD(UnaryMin				)
-	//SIN_VISIT_DEFINITION_FOR_NODE_WITH_ONE_CHILD(MetaParse				)
+	//SIN_VISIT_DEFINITION_FOR_NODE_WITH_ONE_CHILD(MetaParse			)
 	//SIN_VISIT_DEFINITION_FOR_NODE_WITH_ONE_CHILD(MetaPreserve			)
 	SIN_VISIT_DEFINITION_FOR_NODE_WITH_ONE_CHILD(MetaEvaluate			)
 	SIN_VISIT_DEFINITION_FOR_NODE_WITH_ONE_CHILD(MetaUnparse			)

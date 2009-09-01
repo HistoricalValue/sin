@@ -5,15 +5,19 @@
 
 #include "SINASTVisitor.h"
 #include "SINASTNodes.h"
+#include "SINTreeEvaluationVisitor.h"
+
+
 
 namespace SIN {
+	
 	class ShiftToMetaEvaluatorASTVisitor: public ASTVisitor {
 	public:
-		ShiftToMetaEvaluatorASTVisitor(void);
+
+		ShiftToMetaEvaluatorASTVisitor(TreeEvaluationVisitor & visitor);
 		ShiftToMetaEvaluatorASTVisitor(ShiftToMetaEvaluatorASTVisitor const&);
 		~ShiftToMetaEvaluatorASTVisitor(void);
 
-		//SINASTVISITOR_VISIT_SIGNATURE(					);
 		SINASTVISITOR_VISIT_SIGNATURE(Number			);
 		SINASTVISITOR_VISIT_SIGNATURE(String			);
 		SINASTVISITOR_VISIT_SIGNATURE(Nil				);
@@ -77,15 +81,17 @@ namespace SIN {
 		SINASTVISITOR_VISIT_SIGNATURE(Block				);
 		SINASTVISITOR_VISIT_SIGNATURE(Not				);
 
-		ASTNode *	Root(void);// { return parent; }
+		ASTNode *	Root(void);
 		void		DeleteAST(void);
 	private:
 		typedef std::list<ASTNode *> NodesList;
 		
-		NodesList nodesList;
+		unsigned	metaParseCounter;
+		NodesList	nodesList;
 
-		ASTNode* meta;
-		ASTNode* parent;
+		ASTNode *				meta;
+		ASTNode *				parent;
+		TreeEvaluationVisitor & treeEvalVisitor;
 
 
 	}; // class ShiftToMetaEvaluatorASTVisitor
