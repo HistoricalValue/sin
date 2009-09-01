@@ -1,6 +1,6 @@
 NEXT TODO TICKET                                ||
 (please take a number and wait in the line...)  ||
-Next number: 55                                 ||
+Next number: 56                                 ||
 +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-//
 
 
@@ -42,6 +42,7 @@ Next number: 55                                 ||
 *[052 2009-09-01/01:25] Delete an object immidiately after it has no actual references
 *[053 2009-09-01/12:59] Implement const variables.
 *[054 2009-09-01/13:02] Make correct checks for assigning to a const variable
+*[055 2009-09-01/13:04] Refactor all member access evaluation to reuse the common code
 
 ---logging---
 *[010] LoggerFactory base should internally keep a list of produced loggers
