@@ -127,4 +127,4 @@ namespace SIN {
 }	//namespace SIN
 
 
-#endif __SIN_AST_UNPARSE_TREE_VISITOR_H__
+#endif // __SIN_AST_UNPARSE_TREE_VISITOR_H__

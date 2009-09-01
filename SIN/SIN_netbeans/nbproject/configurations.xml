@@ -32,7 +32,9 @@
           <itemPath>../SINAST/Include/SINASTMITTreeVisualizerXMLProducerVisitor.h</itemPath>
           <itemPath>../SINAST/Include/SINASTNode.h</itemPath>
           <itemPath>../SINAST/Include/SINASTNodes.h</itemPath>
+          <itemPath>../SINAST/Include/SINASTTreeCtrlVisitor.h</itemPath>
           <itemPath>../SINAST/Include/SINASTTreeVisualisationVisitor.h</itemPath>
+          <itemPath>../SINAST/Include/SINASTUnparseTreeVisitor.h</itemPath>
           <itemPath>../SINAST/Include/SINASTVisitor.h</itemPath>
           <itemPath>../SINAST/Include/SINStrictTreeNode.h</itemPath>
           <itemPath>../SINAST/Include/SINTreeNode.h</itemPath>
@@ -42,57 +44,67 @@
           <itemPath>../SINAST/Src/SINASTMITTreeVisualizerXMLProducerVisitor.cpp</itemPath>
           <itemPath>../SINAST/Src/SINASTNode.cpp</itemPath>
           <itemPath>../SINAST/Src/SINASTNodes.cpp</itemPath>
+          <itemPath>../SINAST/Src/SINASTTreeCtrlVisitor.cpp</itemPath>
           <itemPath>../SINAST/Src/SINASTTreeVisualisationVisitor.cpp</itemPath>
+          <itemPath>../SINAST/Src/SINASTUnparseTreeVisitor.cpp</itemPath>
           <itemPath>../SINAST/Src/SINTreeNode.cpp</itemPath>
         </logicalFolder>
       </logicalFolder>
       <logicalFolder name="SINCommon" displayName="SINCommon" projectFiles="true">
         <logicalFolder name="Include" displayName="Include" projectFiles="true">
+          <logicalFolder name="f1" displayName="MemoryCell" projectFiles="true">
+            <itemPath>../SINCommon/Include/SINMemoryCell.h</itemPath>
+            <itemPath>../SINCommon/Include/SINMemoryCellAST.h</itemPath>
+            <itemPath>../SINCommon/Include/SINMemoryCellBool.h</itemPath>
+            <itemPath>../SINCommon/Include/SINMemoryCellFunction.h</itemPath>
+            <itemPath>../SINCommon/Include/SINMemoryCellLibFunction.h</itemPath>
+            <itemPath>../SINCommon/Include/SINMemoryCellNativeResource.h</itemPath>
+            <itemPath>../SINCommon/Include/SINMemoryCellNil.h</itemPath>
+            <itemPath>../SINCommon/Include/SINMemoryCellNumber.h</itemPath>
+            <itemPath>../SINCommon/Include/SINMemoryCellObject.h</itemPath>
+            <itemPath>../SINCommon/Include/SINMemoryCellString.h</itemPath>
+          </logicalFolder>
+          <logicalFolder name="f2" displayName="SIN_Types" projectFiles="true">
+            <itemPath>../SINCommon/Include/SINFunction.h</itemPath>
+            <itemPath>../SINCommon/Include/SINObject.h</itemPath>
+            <itemPath>../SINCommon/Include/SINTypes.h</itemPath>
+          </logicalFolder>
           <itemPath>../SINCommon/Include/SIN.h</itemPath>
           <itemPath>../SINCommon/Include/SINAssert.h</itemPath>
           <itemPath>../SINCommon/Include/SINBufferedOutputStream.h</itemPath>
           <itemPath>../SINCommon/Include/SINConstants.h</itemPath>
           <itemPath>../SINCommon/Include/SINFileOutputStream.h</itemPath>
-          <itemPath>../SINCommon/Include/SINFunction.h</itemPath>
           <itemPath>../SINCommon/Include/SINInputStream.h</itemPath>
-          <itemPath>../SINCommon/Include/SINMemoryCell.h</itemPath>
-          <itemPath>../SINCommon/Include/SINMemoryCellAST.h</itemPath>
-          <itemPath>../SINCommon/Include/SINMemoryCellBool.h</itemPath>
-          <itemPath>../SINCommon/Include/SINMemoryCellFunction.h</itemPath>
-          <itemPath>../SINCommon/Include/SINMemoryCellLibFunction.h</itemPath>
-          <itemPath>../SINCommon/Include/SINMemoryCellNativeResource.h</itemPath>
-          <itemPath>../SINCommon/Include/SINMemoryCellNil.h</itemPath>
-          <itemPath>../SINCommon/Include/SINMemoryCellNumber.h</itemPath>
-          <itemPath>../SINCommon/Include/SINMemoryCellObject.h</itemPath>
-          <itemPath>../SINCommon/Include/SINMemoryCellString.h</itemPath>
           <itemPath>../SINCommon/Include/SINNamer.h</itemPath>
-          <itemPath>../SINCommon/Include/SINObject.h</itemPath>
           <itemPath>../SINCommon/Include/SINOutputStream.h</itemPath>
           <itemPath>../SINCommon/Include/SINStream.h</itemPath>
           <itemPath>../SINCommon/Include/SINString.h</itemPath>
           <itemPath>../SINCommon/Include/SINSymbolTable.h</itemPath>
-          <itemPath>../SINCommon/Include/SINTypes.h</itemPath>
           <itemPath>../SINCommon/Include/SINVariableHolder.h</itemPath>
         </logicalFolder>
         <logicalFolder name="Src" displayName="Src" projectFiles="true">
+          <logicalFolder name="f1" displayName="MemoryCell" projectFiles="true">
+            <itemPath>../SINCommon/Src/SINMemoryCell.cpp</itemPath>
+            <itemPath>../SINCommon/Src/SINMemoryCellAST.cpp</itemPath>
+            <itemPath>../SINCommon/Src/SINMemoryCellBool.cpp</itemPath>
+            <itemPath>../SINCommon/Src/SINMemoryCellFunction.cpp</itemPath>
+            <itemPath>../SINCommon/Src/SINMemoryCellLibFunction.cpp</itemPath>
+            <itemPath>../SINCommon/Src/SINMemoryCellNativeResource.cpp</itemPath>
+            <itemPath>../SINCommon/Src/SINMemoryCellNil.cpp</itemPath>
+            <itemPath>../SINCommon/Src/SINMemoryCellNumber.cpp</itemPath>
+            <itemPath>../SINCommon/Src/SINMemoryCellObject.cpp</itemPath>
+            <itemPath>../SINCommon/Src/SINMemoryCellString.cpp</itemPath>
+          </logicalFolder>
+          <logicalFolder name="f2" displayName="SIN_Types" projectFiles="true">
+            <itemPath>../SINCommon/Src/SINFucntion.cpp</itemPath>
+            <itemPath>../SINCommon/Src/SINObject.cpp</itemPath>
+          </logicalFolder>
           <itemPath>../SINCommon/Src/SIN.cpp</itemPath>
           <itemPath>../SINCommon/Src/SINBufferedOutputStream.cpp</itemPath>
           <itemPath>../SINCommon/Src/SINCommon.cpp</itemPath>
           <itemPath>../SINCommon/Src/SINFileOutputStream.cpp</itemPath>
-          <itemPath>../SINCommon/Src/SINFucntion.cpp</itemPath>
           <itemPath>../SINCommon/Src/SINInputStream.cpp</itemPath>
-          <itemPath>../SINCommon/Src/SINMemoryCell.cpp</itemPath>
-          <itemPath>../SINCommon/Src/SINMemoryCellAST.cpp</itemPath>
-          <itemPath>../SINCommon/Src/SINMemoryCellBool.cpp</itemPath>
-          <itemPath>../SINCommon/Src/SINMemoryCellFunction.cpp</itemPath>
-          <itemPath>../SINCommon/Src/SINMemoryCellLibFunction.cpp</itemPath>
-          <itemPath>../SINCommon/Src/SINMemoryCellNativeResource.cpp</itemPath>
-          <itemPath>../SINCommon/Src/SINMemoryCellNil.cpp</itemPath>
-          <itemPath>../SINCommon/Src/SINMemoryCellNumber.cpp</itemPath>
-          <itemPath>../SINCommon/Src/SINMemoryCellObject.cpp</itemPath>
-          <itemPath>../SINCommon/Src/SINMemoryCellString.cpp</itemPath>
           <itemPath>../SINCommon/Src/SINNamer.cpp</itemPath>
-          <itemPath>../SINCommon/Src/SINObject.cpp</itemPath>
           <itemPath>../SINCommon/Src/SINOutputStream.cpp</itemPath>
           <itemPath>../SINCommon/Src/SINStream.cpp</itemPath>
           <itemPath>../SINCommon/Src/SINString.cpp</itemPath>
@@ -132,37 +144,124 @@
       <logicalFolder name="SINmain" displayName="SINmain" projectFiles="true">
         <logicalFolder name="Src" displayName="Src" projectFiles="true">
           <itemPath>../SINmain/Src/main.cpp</itemPath>
+          <itemPath>../SINmain/Src/sin.cpp</itemPath>
         </logicalFolder>
       </logicalFolder>
       <logicalFolder name="SINParser" displayName="SINParser" projectFiles="true">
         <logicalFolder name="Include" displayName="Include" projectFiles="true">
-          <itemPath>../SINParser/Include/LexAndBisonParseArguments.h</itemPath>
-          <itemPath>../SINParser/Include/LexUtility.h</itemPath>
-          <itemPath>../SINParser/Include/SINParser.h</itemPath>
-          <itemPath>../SINParser/Include/SINParserAPI.h</itemPath>
-          <itemPath>../SINParser/Include/SINParserBison.h</itemPath>
-          <itemPath>../SINParser/Include/SINParserManage.h</itemPath>
-          <itemPath>../SINParser/Include/unistd.h</itemPath>
+          <logicalFolder name="f1" displayName="API" projectFiles="true">
+            <itemPath>../SINParser/Include/LexAndBisonParseArguments.h</itemPath>
+            <itemPath>../SINParser/Include/SINParser.h</itemPath>
+            <itemPath>../SINParser/Include/SINParserAPI.h</itemPath>
+            <itemPath>../SINParser/Include/SINParserBison.h</itemPath>
+            <itemPath>../SINParser/Include/unistd.h</itemPath>
+          </logicalFolder>
+          <logicalFolder name="f2" displayName="ManageFunctions" projectFiles="true">
+            <itemPath>../SINParser/Include/SINParserManage.h</itemPath>
+          </logicalFolder>
+          <logicalFolder name="f3" displayName="Scanner" projectFiles="true">
+            <itemPath>../SINParser/Include/LexUtility.h</itemPath>
+          </logicalFolder>
         </logicalFolder>
         <logicalFolder name="Src" displayName="Src" projectFiles="true">
-          <itemPath>../SINParser/Src/LexAndBisonParseArguments.cpp</itemPath>
-          <itemPath>../SINParser/Src/LexUtility.cpp</itemPath>
-          <itemPath>../SINParser/Src/SINLexAnalyzer.cpp</itemPath>
-          <itemPath>../SINParser/Src/SINLexAnalyzer.l</itemPath>
-          <itemPath>../SINParser/Src/SINParser.y</itemPath>
-          <itemPath>../SINParser/Src/SINParserAPI.cpp</itemPath>
-          <itemPath>../SINParser/Src/SINParserBison.cpp</itemPath>
-          <itemPath>../SINParser/Src/SINParserManage.cpp</itemPath>
+          <logicalFolder name="f1" displayName="API" projectFiles="true">
+            <itemPath>../SINParser/Src/LexAndBisonParseArguments.cpp</itemPath>
+            <itemPath>../SINParser/Src/SINParserAPI.cpp</itemPath>
+          </logicalFolder>
+          <logicalFolder name="f2" displayName="ManageFunctions" projectFiles="true">
+            <itemPath>../SINParser/Src/SINParserManage.cpp</itemPath>
+          </logicalFolder>
+          <logicalFolder name="f3" displayName="Parser" projectFiles="true">
+            <itemPath>../SINParser/Src/SINParser.y</itemPath>
+            <itemPath>../SINParser/Src/SINParserBison.cpp</itemPath>
+          </logicalFolder>
+          <logicalFolder name="f4" displayName="Scanner" projectFiles="true">
+            <itemPath>../SINParser/Src/LexUtility.cpp</itemPath>
+            <itemPath>../SINParser/Src/SINLexAnalyzer.cpp</itemPath>
+            <itemPath>../SINParser/Src/SINLexAnalyzer.l</itemPath>
+          </logicalFolder>
         </logicalFolder>
       </logicalFolder>
       <logicalFolder name="SINRuntime" displayName="SINRuntime" projectFiles="true">
         <logicalFolder name="Include" displayName="Include" projectFiles="true">
+          <logicalFolder name="f1" displayName="Operators" projectFiles="true">
+            <logicalFolder name="f1" displayName="Binary" projectFiles="true">
+              <logicalFolder name="f1" displayName="Arithmetic" projectFiles="true">
+                <itemPath>../SINRuntime/Include/SINAdditionOperator.h</itemPath>
+                <itemPath>../SINRuntime/Include/SINDivisionOperator.h</itemPath>
+                <itemPath>../SINRuntime/Include/SINModulusOperator.h</itemPath>
+                <itemPath>../SINRuntime/Include/SINMultiplicationOperator.h</itemPath>
+                <itemPath>../SINRuntime/Include/SINSubtractionOperator.h</itemPath>
+              </logicalFolder>
+              <logicalFolder name="f2" displayName="Logical" projectFiles="true">
+                <itemPath>../SINRuntime/Include/SINLogicalAndOperator.h</itemPath>
+                <itemPath>../SINRuntime/Include/SINLogicalOrOperator.h</itemPath>
+              </logicalFolder>
+              <logicalFolder name="f3" displayName="Relational" projectFiles="true">
+                <itemPath>../SINRuntime/Include/SINEqualityOperator.h</itemPath>
+                <itemPath>../SINRuntime/Include/SINGreaterThanOperator.h</itemPath>
+                <itemPath>../SINRuntime/Include/SINGreaterThanOrEqualToOperator.h</itemPath>
+                <itemPath>../SINRuntime/Include/SINInequalityOperator.h</itemPath>
+                <itemPath>../SINRuntime/Include/SINLessThanOperator.h</itemPath>
+                <itemPath>../SINRuntime/Include/SINLessThanOrEqualToOperator.h</itemPath>
+              </logicalFolder>
+              <itemPath>../SINRuntime/Include/SINBinaryOperator.h</itemPath>
+            </logicalFolder>
+            <logicalFolder name="f2" displayName="Unary" projectFiles="true">
+              <logicalFolder name="f1" displayName="Arithmetic" projectFiles="true">
+                <itemPath>../SINRuntime/Include/SINDecrementOperator.h</itemPath>
+                <itemPath>../SINRuntime/Include/SINIncrementOperator.h</itemPath>
+                <itemPath>../SINRuntime/Include/SINUnaryNegationOperator.h</itemPath>
+              </logicalFolder>
+              <logicalFolder name="f2" displayName="Logical" projectFiles="true">
+                <itemPath>../SINRuntime/Include/SINLogicalNotOperator.h</itemPath>
+              </logicalFolder>
+              <itemPath>../SINRuntime/Include/SINUnaryOperator.h</itemPath>
+            </logicalFolder>
+            <itemPath>../SINRuntime/Include/SINOperator.h</itemPath>
+          </logicalFolder>
           <itemPath>../SINRuntime/Include/SINPreserveASTEvaluatorVisitor.h</itemPath>
           <itemPath>../SINRuntime/Include/SINShiftToMetaEvaluatorASTVisitor.h</itemPath>
           <itemPath>../SINRuntime/Include/SINTreeEvaluationVisitor.h</itemPath>
           <itemPath>../SINRuntime/Include/SINVirtualState.h</itemPath>
         </logicalFolder>
         <logicalFolder name="Src" displayName="Src" projectFiles="true">
+          <logicalFolder name="f1" displayName="Operators" projectFiles="true">
+            <logicalFolder name="f1" displayName="Binary" projectFiles="true">
+              <logicalFolder name="f1" displayName="Arithmetic" projectFiles="true">
+                <itemPath>../SINRuntime/Src/SINAdditionOperator.cpp</itemPath>
+                <itemPath>../SINRuntime/Src/SINDivisionOperator.cpp</itemPath>
+                <itemPath>../SINRuntime/Src/SINModulusOperator.cpp</itemPath>
+                <itemPath>../SINRuntime/Src/SINMultiplicationOperator.cpp</itemPath>
+                <itemPath>../SINRuntime/Src/SINSubtractionOperator.cpp</itemPath>
+              </logicalFolder>
+              <logicalFolder name="f2" displayName="Logical" projectFiles="true">
+                <itemPath>../SINRuntime/Src/SINLogicalAndOperator.cpp</itemPath>
+                <itemPath>../SINRuntime/Src/SINLogicalOrOperator.cpp</itemPath>
+              </logicalFolder>
+              <logicalFolder name="f3" displayName="Relational" projectFiles="true">
+                <itemPath>../SINRuntime/Src/SINEqualityOperator.cpp</itemPath>
+                <itemPath>../SINRuntime/Src/SINGreaterThanOperator.cpp</itemPath>
+                <itemPath>../SINRuntime/Src/SINGreaterThanOrEqualTo.cpp</itemPath>
+                <itemPath>../SINRuntime/Src/SINInequalityOperator.cpp</itemPath>
+                <itemPath>../SINRuntime/Src/SINLessThanOperator.cpp</itemPath>
+                <itemPath>../SINRuntime/Src/SINLessThanOrEqualToOperator.cpp</itemPath>
+              </logicalFolder>
+              <itemPath>../SINRuntime/Src/SINBinaryOperator.cpp</itemPath>
+            </logicalFolder>
+            <logicalFolder name="f2" displayName="Unary" projectFiles="true">
+              <logicalFolder name="f1" displayName="Arithmetic" projectFiles="true">
+                <itemPath>../SINRuntime/Src/SINDecrementOperator.cpp</itemPath>
+                <itemPath>../SINRuntime/Src/SINIncrementOperator.cpp</itemPath>
+                <itemPath>../SINRuntime/Src/SINUnaryNegationOperator.cpp</itemPath>
+              </logicalFolder>
+              <logicalFolder name="f2" displayName="Logical" projectFiles="true">
+                <itemPath>../SINRuntime/Src/SINLogicalNotOperator.cpp</itemPath>
+              </logicalFolder>
+              <itemPath>../SINRuntime/Src/SINUnaryOperator.cpp</itemPath>
+            </logicalFolder>
+            <itemPath>../SINRuntime/Src/SINOperator.cpp</itemPath>
+          </logicalFolder>
           <itemPath>../SINRuntime/Src/SINPreserveASTEvaluatorVisitor.cpp</itemPath>
           <itemPath>../SINRuntime/Src/SINShiftToMetaEvaluatorASTVisitor.cpp</itemPath>
           <itemPath>../SINRuntime/Src/SINTreeEvaluationVisitor.cpp</itemPath>
@@ -308,6 +407,8 @@
       <itemPath>../MemoryModel.txt</itemPath>
       <itemPath>../Metaprogramming.txt</itemPath>
       <itemPath>../NotesForDevelopers.txt</itemPath>
+      <itemPath>../SINmain/Pears.txt</itemPath>
+      <itemPath>../Scoping and State.txt</itemPath>
       <itemPath>../TODO.txt</itemPath>
       <itemPath>../compile_all.bash</itemPath>
     </logicalFolder>
@@ -321,7 +422,7 @@
       <toolsSet>
         <developmentServer>localhost</developmentServer>
         <compilerSet>GNU|GNU</compilerSet>
-        <platform>3</platform>
+        <platform>2</platform>
       </toolsSet>
       <compileType>
         <ccTool>
