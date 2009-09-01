@@ -54,17 +54,37 @@ namespace SIN {
         return core < _other.core;
     }
 
+	//-----------------------------------------------------------------
+
+	const char& String::operator[] ( size_t pos ) const
+		{	return core[pos];	}
+
+	//-----------------------------------------------------------------
+
+	char& String::operator[] ( size_t pos )
+		{	return core[pos];	}
+
+	//-----------------------------------------------------------------
+
 	bool String::operator!=	(String const &_other) const
 		{	return core != _other.core;	}
+
+	//-----------------------------------------------------------------
 
 	bool String::operator> 	(String const &_other) const
 		{	return core > _other.core;	}
 
+	//-----------------------------------------------------------------
+
 	bool String::operator>=	(String const &_other) const
 		{	return core >= _other.core;	}
 
+	//-----------------------------------------------------------------
+
 	bool String::operator<=	(String const &_other) const
 		{	return core <= _other.core;	}
+
+	//-----------------------------------------------------------------
 
 	size_t String::Length(void) const {
 		return core.length();

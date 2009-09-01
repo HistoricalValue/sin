@@ -29,6 +29,9 @@ namespace SIN {
 		bool operator<=	(String const &) const;
 
 
+		const char& operator[] ( size_t pos ) const;
+		char&		operator[] ( size_t pos );
+		
 		size_t Length(void) const;
 		String& Erase(size_t pos, size_t n);	// returns this
 		String& DropLast(size_t n);				// returns this
