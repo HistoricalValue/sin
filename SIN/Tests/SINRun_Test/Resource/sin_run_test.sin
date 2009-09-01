@@ -160,3 +160,89 @@ println("a = [...]: ", a);
 // -------------
 //	println("Contents: ", fileread(a));
 // -------------
+
+/*
+//Koutsop unparse tests
+
+point = [
+	"x" : 0,
+	"y" : 0,
+	function New(self) {
+		return self;
+	},
+
+	"Add10"	: (function (self){ 
+				self.x = self.x + 10;
+				self.y = self.y + 10;
+			})
+];
+
+
+
+
+
+/*
+{
+
+a = 1;
+a = ++a;
+a = a++;
+a = --a;
+a = a--;
+
+//a = 1	
+//a = not a;			//assert
+a = not (a and b and d and c and c and e);
+
+a = -a;
+a = -(a);
+a = -(a+a);
+//a = not a and b;		//assert
+
+/*
+//assert
+a = ["x" : 1];
+b = ++a.x;
+c = a[x]++;
+d = --a[x];
+e = a.x--;
+*/
+
+point = [
+	"x" : 0,
+	"y" : 0,
+	function New(self) {
+		return self;
+	},
+	
+	"Add10"	: (function (self){ 
+				self.x = self.x + 10;
+				self.y = self.y + 10;
+			})
+];
+
+
+
+function A (a,b,b,b) {
+}
+
+//A(1,1);
+
+a.x.y;
+a[x[y]];
+a.x.y;
+a[x[y.y[w.e.r.t.y[a[d]]]]];
+
+/*
+a = ["x" : 1];
+b = ++a.x;
+c = a[x]++;
+d = --a[x];
+e = a.x--;
+*/
+}
+
+
+
+*/
+*/
