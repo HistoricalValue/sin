@@ -156,10 +156,6 @@
 				Name="Parser"
 				>
 				<File
-					RelativePath="..\..\Include\LexUtility.h"
-					>
-				</File>
-				<File
 					RelativePath="..\..\Src\SINParser.y"
 					>
 				</File>
@@ -239,6 +235,14 @@
 				</File>
 				<File
 					RelativePath="..\..\Include\unistd.h"
+					>
+				</File>
+			</Filter>
+			<Filter
+				Name="Scanner"
+				>
+				<File
+					RelativePath="..\..\Include\LexUtility.h"
 					>
 				</File>
 			</Filter>
