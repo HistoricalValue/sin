@@ -16,6 +16,7 @@ Next number: 52                                 ||
 ==== Do once ====
 
 
+*[026] Make the testing framework serious (save results and print them later -- especially TestCollections should be serious)
 
 *[032] Make following lib funcs.
 		tostrin, strtonum, strsavetofile, typeof, input, print, println, openfile, closefile, writefile,
@@ -31,20 +32,15 @@ Next number: 52                                 ||
 			objectfuncdef:	FUNCTION ID	'(' idlist ')' block
 							|	FUNCTION '(' idlist ')' block
 		}
-
-
-
+		
+*[043 2009-08-28/11:22] SINAlloc should call destructors on array members on delete[]
+*[045 2009-08-28/14:37] Make libfuncs use the environment return value pointer and remove the return value stuff from the virtual state.
+*[046 2009-08-30/21:13] Make use of deprecated functions be logged
 *[047 2009-08-30/23:26] Make unary pre- and post- increment/decrement operators.
 *[048 2009-08-31/00:21] Use the koutsop unary ops
-*[049 2009-08-31/12:44] Make [function l(){}] produce an AST *exactly identical* to [l: (function(){})] (koutsop or ilapost)
-*[043 2009-08-28/11:22] SINAlloc should call destructors on array members on delete[]
-
-*[045 2009-08-28/14:37] Make libfuncs use the environment return value pointer and remove the return value stuff from the virtual state.
-
-*[046 2009-08-30/21:13] Make use of deprecated functions be logged
 
 
-*[026] Make the testing framework serious (save results and print them later -- especially TestCollections should be serious)
+
 
 ---logging---
 *[010] LoggerFactory base should internally keep a list of produced loggers
@@ -173,3 +169,5 @@ Next number: 52                                 ||
   [ koutsop 2009-08-31/10:18 | done]
 *[027] Default ctor of LamdaFunctionASTNode should name automatically the node with $lamdaxxx
   [ koutsop 2009-08-31/11:24 | done]
+*[049 2009-08-31/12:44] Make [function l(){}] produce an AST *exactly identical* to [l: (function(){})]
+  [ koutsop 2009-08-31 | done]
