@@ -115,12 +115,12 @@ namespace SIN {
 		SINASTTREEVISUALIZATIONVISITOR_VISIT_SIGNATURE(SinCode			);
 
 		// "Indentation" levels
-		void			IncreaseIndentationLevel(void);
-		void			DecreaseIndentationLevel(void);
-		unsigned int	IndentationLevel(void) const;
+		virtual void			IncreaseIndentationLevel(void);
+		virtual void			DecreaseIndentationLevel(void);
+		virtual unsigned int	IndentationLevel(void) const;
 
 
-	private:
+	protected:
 		String tabs;
 		OutputStream &out;
 		InstanceProxy<Logger> logger_p;

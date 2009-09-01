@@ -11,7 +11,6 @@
 #include "SINLoggerManager.h"
 
 #define SIN_ASTTreeVisualisationVisitor_LoggerName "SIN::ASTTreeVisualisationVisitor"
-															//"|---" "    "
 #define SIN_ASTTreeVisualisationVisitor_IdentationSequence "|---"
 
 #define SINASTTREEVISUALISATION_DEFAULT_VISIT_DEFINITION(NODENAME)				\
@@ -32,25 +31,8 @@ namespace SIN {
 	ASTTreeVisualisationVisitor::~ASTTreeVisualisationVisitor(void) {
 	}
 
-	void ASTTreeVisualisationVisitor::Visit(ASTNode &node) {
-		out << tabs + "\"" + node.Name() + "\"";
-		
-		if (node.Name() == "AST")
-			out			<< 
-			"\t\t"		<< 
-			"(RootId:"	<< 
-			node.ID();
-		
-		else
-			out				<< 
-			"\t\t"			<< 
-			"(id:"			<< 
-			node.ID()		<< 
-			", parentId: "	<<  
-			static_cast<ASTNode *>(node.GetParent())->ID();
-
-		out << ", line: " << node.AssociatedFileLine() << ")" << SIN::ENDL;
-	}
+	void ASTTreeVisualisationVisitor::Visit(ASTNode &node) 
+		{	out << tabs + "+" + node.Name() << SIN::ENDL;	}
 
 	//-----------------------------------------------------------------
 	
