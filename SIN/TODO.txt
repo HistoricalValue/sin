@@ -22,16 +22,6 @@ Next number: 57                                 ||
 		tostrin, strtonum, strsavetofile, typeof, input, print, println, openfile, closefile, writefile,
 		readfile, totalarguments, arguments, objectcopy
 		
-*[033] Make manage functions for the fllowing rules:
-		1) DOT '~'	'(' expr ')'
-		2) DOT '~' call
-		3) lvalue DOT KEYS_MEMBER
-		4) lvalue DOT SIZE_MEMBER
-		5) ',' objectfuncdef objectlists
-		6) {
-			objectfuncdef:	FUNCTION ID	'(' idlist ')' block
-							|	FUNCTION '(' idlist ')' block
-		}
 		
 *[043 2009-08-28/11:22] SINAlloc should call destructors on array members on delete[]
 *[045 2009-08-28/14:37] Make libfuncs use the environment return value pointer and remove the return value stuff from the virtual state.
@@ -174,3 +164,14 @@ Next number: 57                                 ||
   [ koutsop 2009-08-31/11:24 | done]
 *[049 2009-08-31/12:44] Make [function l(){}] produce an AST *exactly identical* to [l: (function(){})]
   [ koutsop 2009-08-31 | done]
+*[033] Make manage functions for the fllowing rules:
+		1) DOT '~'	'(' expr ')'
+		2) DOT '~' call
+		3) lvalue DOT KEYS_MEMBER
+		4) lvalue DOT SIZE_MEMBER
+		5) ',' objectfuncdef objectlists
+		6) {
+			objectfuncdef:	FUNCTION ID	'(' idlist ')' block
+							|	FUNCTION '(' idlist ')' block
+		}
+  [ koutsop, ilapost 2009-09-02 | done]
