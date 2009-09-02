@@ -1935,7 +1935,7 @@ yyreduce:
 
   case 34:
 
-    {}
+    {	SIN::ParserManage::Manage_MetaExpression_PreserveAST_Expression(yylineno, (yyvsp[(3) - (4)].AST), &((yyval.AST)), &fabpa);	}
     break;
 
   case 35:
@@ -1945,7 +1945,7 @@ yyreduce:
 
   case 36:
 
-    {}
+    {	SIN::ParserManage::Manage_MetaExpression_PreserveAST_CALL(yylineno, (yyvsp[(2) - (2)].AST), &((yyval.AST)), &fabpa);			}
     break;
 
   case 37:
@@ -1955,7 +1955,7 @@ yyreduce:
 
   case 38:
 
-    {	SIN::ParserManage::Manage_MetaExpression_ParseString(yylineno, (yyvsp[(2) - (2)].stringV), &((yyval.AST)), &fabpa);			}
+    {	SIN::ParserManage::Manage_MetaExpression_ParseString(yylineno, (yyvsp[(2) - (2)].stringV), &((yyval.AST)), &fabpa);				}
     break;
 
   case 39:
