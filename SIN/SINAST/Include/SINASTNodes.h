@@ -21,6 +21,7 @@ namespace SIN{
 #define SINASTNODES_WHILE_TYPE					0x09ul
 #define SINASTNODES_IF_TYPE						0x0Aul
 #define SINASTNODES_IFELSE_TYPE					0x0Bul
+#define SINASTNODES_SEMICOLON_TYPE				0x0Cul
 
 
 
