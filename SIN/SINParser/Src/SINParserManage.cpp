@@ -129,11 +129,6 @@ namespace SIN {
 	//-----------------------------------------------------------------
 
 	void ParserManage::Manage_Call_LValueCallSuffix (const int lineNo, ASTNode *_lvalue, ASTNode *_callsuffix, ASTNode **_retcall, LexAndBisonParseArguments *_lbpa) {	
-/*
-//old		Manage_Call_LValueCallSuffix
-		*_retcall = _callsuffix;
-		*SINPTR(_lvalue) >> **_retcall;
-*/
 		*_retcall = _callsuffix;
 
 		if (methodCall) {

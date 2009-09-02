@@ -331,6 +331,7 @@ namespace SIN {
 	SIN_UNPARSE_TREE_VISITOR_TWO_CHILDREN_VISIT_DEFINITION(NormalCall, "", "", ""		)
 	SIN_UNPARSE_TREE_VISITOR_TWO_CHILDREN_VISIT_DEFINITION(CallMember, "", ".", ""		)
 	SIN_UNPARSE_TREE_VISITOR_TWO_CHILDREN_VISIT_DEFINITION(CallIndex, "", "[", "]"		)
+	SIN_UNPARSE_TREE_VISITOR_TWO_CHILDREN_VISIT_DEFINITION(FuncdefCall, "", "", ""		)
 
 
 	SIN_UNPARSE_TREE_VISITOR_OBJECT_ACCESS_VISIT_DEFINITION(ObjectMember, ".", "")
@@ -339,7 +340,7 @@ namespace SIN {
 
 
 
-	SIN_UNPARSE_TREE_VISITOR_DEFAULT_VISIT_DEFINITION(FuncdefCall	)
+	//SIN_UNPARSE_TREE_VISITOR_DEFAULT_VISIT_DEFINITION(FuncdefCall	)
 	
 
 	//Auta pote den 8a kalestoun. Ite epidei einai syndactic sugar, ite epidei den brika kanenan kanona :D
