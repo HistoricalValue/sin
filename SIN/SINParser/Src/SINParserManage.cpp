@@ -501,7 +501,7 @@ namespace SIN {
 	//-----------------------------------------------------------------
 	
 	void ParserManage::Manage_IDList (const int lineNo, char *_id, ASTNode *_idlists, ASTNode **_retidlist, LexAndBisonParseArguments *_lbpa) {
-		*_retidlist = SINEWCLASS(StringASTNode, (_id, _lbpa->GetFileName(), lineNo));
+		*_retidlist = SINEWCLASS(IDASTNode, (_id, _lbpa->GetFileName(), lineNo));
 		_lbpa->AppendToNodeList(*_retidlist);
 
 		if(_idlists != NULL)
