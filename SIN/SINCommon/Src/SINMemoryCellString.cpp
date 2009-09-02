@@ -34,4 +34,7 @@ namespace SIN {
 
 	//-----------------------------------------------------------------
 
+	bool MemoryCellString::ToBoolean(void) const
+		{ return value == "" ? false : true; }
+
 }

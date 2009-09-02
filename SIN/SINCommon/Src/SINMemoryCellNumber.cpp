@@ -36,5 +36,7 @@ namespace SIN {
 		{ return value; }
 
 	//-----------------------------------------------------------------
-
+	
+	bool MemoryCellNumber::ToBoolean(void) const
+		{ return value == 0 ? false : true; }
 }

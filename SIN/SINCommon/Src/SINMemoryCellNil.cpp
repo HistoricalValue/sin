@@ -34,5 +34,7 @@ namespace SIN {
 		{	return Types::Nil_t();	}
 
 	//-----------------------------------------------------------------
-	
+
+	bool MemoryCellNil::ToBoolean(void) const
+		{ return false; }
 }

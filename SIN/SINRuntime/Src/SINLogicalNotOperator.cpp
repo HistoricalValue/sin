@@ -16,7 +16,7 @@ namespace SIN {
 	//---------------------------------------------
 
 	MemoryCell * LogicalNotOperator::operator() (const MemoryCell & mc) 
-		{	return SINEWCLASS(MemoryCellBool, (!BooleanFormOfMemoryCell(mc)));	}
+		{	return SINEWCLASS(MemoryCellBool, (!mc.ToBoolean()));	}
 
 
 }

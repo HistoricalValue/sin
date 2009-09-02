@@ -1,7 +1,7 @@
 #include "SINLogicalOrOperator.h"
 #include "SINAlloc.h"
 
-#define MEMORY_CELL_OR		BooleanFormOfMemoryCell(mc1) || BooleanFormOfMemoryCell(mc2)	
+#define MEMORY_CELL_OR		mc1.ToBoolean() || mc2.ToBoolean()	
 
 namespace SIN {
 
@@ -24,12 +24,12 @@ namespace SIN {
 	//------------------------------------------------------
 
 	MemoryCell * LogicalOrOperator::ManageNil(const MemoryCellNil & mc1, const MemoryCell & mc2)
-		{	return SINEWCLASS(MemoryCellBool, (BooleanFormOfMemoryCell(mc2)));	}
+		{	return SINEWCLASS(MemoryCellBool, (mc2.ToBoolean()));	}
 
 	//------------------------------------------------------
 
 	MemoryCell * LogicalOrOperator::ManageBool(const MemoryCellBool & mc1, const MemoryCell & mc2)
-		{	return SINEWCLASS(MemoryCellBool, (mc1.GetValue() || BooleanFormOfMemoryCell(mc2)));	}
+		{	return SINEWCLASS(MemoryCellBool, (MEMORY_CELL_OR));	}
 
 	//------------------------------------------------------
 

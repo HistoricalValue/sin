@@ -35,6 +35,10 @@ namespace SIN {
 	Types::Boolean_t MemoryCellBool::GetValue(void) const
 		{ return value; }
 
+	
 	//-----------------------------------------------------------------
+
+	bool MemoryCellBool::ToBoolean(void) const
+		{ return value; }
 
 }

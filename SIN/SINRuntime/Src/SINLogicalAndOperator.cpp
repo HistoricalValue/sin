@@ -1,7 +1,7 @@
 #include "SINLogicalAndOperator.h"
 #include "SINAlloc.h"
 
-#define MEMORY_CELL_AND		BooleanFormOfMemoryCell(mc1) && BooleanFormOfMemoryCell(mc2)	
+#define MEMORY_CELL_AND		mc1.ToBoolean() && mc2.ToBoolean()
 
 namespace SIN {
 
@@ -29,7 +29,7 @@ namespace SIN {
 	//------------------------------------------------------
 
 	MemoryCell * LogicalAndOperator::ManageBool(const MemoryCellBool & mc1, const MemoryCell & mc2)
-		{	return SINEWCLASS(MemoryCellBool, (mc1.GetValue() && BooleanFormOfMemoryCell(mc2)));	}
+		{	return SINEWCLASS(MemoryCellBool, (MEMORY_CELL_AND));	}
 
 	//------------------------------------------------------
 

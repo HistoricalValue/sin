@@ -51,4 +51,8 @@ namespace SIN {
 		return value; 
 	}
 
+	//-----------------------------------------------------------------	
+
+	bool MemoryCellObject::ToBoolean(void) const
+		{ return true; }
 }

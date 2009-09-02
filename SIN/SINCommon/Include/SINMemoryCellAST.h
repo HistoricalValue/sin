@@ -16,6 +16,7 @@ namespace SIN {
 
 		virtual MemoryCell *		Clone(void) const;
 		virtual enum MemoryCellType Type (void) const;
+		virtual bool				ToBoolean(void) const;
 		virtual const String		ToString(void) const;
 		
 		void						SetValue (Types::Metacode_t const&);

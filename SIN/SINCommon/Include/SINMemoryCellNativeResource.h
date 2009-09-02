@@ -6,9 +6,10 @@
 namespace SIN {
 	class MemoryCellNativeResource: public MemoryCell {
 	public:
-		virtual MemoryCell* Clone(void) const = 0;
-		virtual MemoryCellType Type(void) const;
-		virtual String const ToString(void) const = 0;
+		virtual MemoryCell*		Clone(void) const = 0;
+		virtual MemoryCellType	Type(void) const;
+		virtual bool			ToBoolean(void) const;
+		virtual String const	ToString(void) const = 0;
 
 		MemoryCellNativeResource(void);
 		virtual ~MemoryCellNativeResource(void);

@@ -19,7 +19,6 @@ namespace SIN {
 		virtual String	ErrorMessage(void) const;
 
 		// Utilities
-		static bool		 BooleanFormOfMemoryCell(const MemoryCell &);
 		static String	 GetTypeAsStringFromMemoryCell(const MemoryCell &);
 	protected:		
 		virtual MemoryCell * ReturnError(const String &);

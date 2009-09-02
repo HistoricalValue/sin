@@ -42,5 +42,7 @@ namespace SIN {
 	}
 
 	//-----------------------------------------------------------------
-
+	
+	bool MemoryCellFunction::ToBoolean(void) const
+		{ return true; }
 }

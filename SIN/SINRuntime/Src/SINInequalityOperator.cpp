@@ -12,7 +12,7 @@ namespace SIN {
 				boolmc->SetValue(mc1.GetValue() != static_cast<const C &>(mc2).GetValue());
 			
 			else if (mc2.Type() == MemoryCell::BOOL_MCT) 
-				boolmc->SetValue(Operator::BooleanFormOfMemoryCell(mc1) != static_cast<const MemoryCellBool &>(mc2).GetValue());
+				boolmc->SetValue(mc1.ToBoolean() != mc2.ToBoolean());
 
 			return boolmc;
 		}
@@ -84,7 +84,7 @@ namespace SIN {
 			boolmc->SetValue(false);
 		
 		else if (mc2.Type() == MemoryCell::BOOL_MCT) 
-			boolmc->SetValue(BooleanFormOfMemoryCell(mc1) != BooleanFormOfMemoryCell(mc2));
+			boolmc->SetValue(mc1.ToBoolean() != mc2.ToBoolean());
 
 		return boolmc;		
 	}

@@ -26,6 +26,7 @@ namespace SIN {
 
 		virtual MemoryCell *	Clone(void) const = 0;
 		virtual MemoryCellType	Type (void) const = 0;
+		virtual bool			ToBoolean(void) const = 0;
 		virtual const String	ToString(void) const = 0;
 		
 		MemoryCell(void) {}

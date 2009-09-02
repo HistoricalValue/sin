@@ -70,7 +70,7 @@ namespace SIN {
 
 	//---------------------------------------------
 
-	bool Operator::BooleanFormOfMemoryCell (const MemoryCell & mc) {
+	/*bool Operator::BooleanFormOfMemoryCell (const MemoryCell & mc) {
 		switch(mc.Type()) {
 			case MemoryCell::NIL_MCT:				return false;
 			case MemoryCell::BOOL_MCT:				return static_cast<const MemoryCellBool &>(mc).GetValue();
@@ -84,7 +84,7 @@ namespace SIN {
 			default:								SINASSERT(0);
 		}
 		return false;
-	}
+	}*/
 
 
 
