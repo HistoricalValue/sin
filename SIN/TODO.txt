@@ -1,6 +1,6 @@
 NEXT TODO TICKET                                ||
 (please take a number and wait in the line...)  ||
-Next number: 56                                 ||
+Next number: 57                                 ||
 +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-//
 
 
@@ -43,6 +43,7 @@ Next number: 56                                 ||
 *[053 2009-09-01/12:59] Implement const variables.
 *[054 2009-09-01/13:02] Make correct checks for assigning to a const variable
 *[055 2009-09-01/13:04] Refactor all member access evaluation to reuse the common code
+*[056 2009-09-01/13:04] Change in grammar the rule parse string. Convert STRING to Expression
 
 ---logging---
 *[010] LoggerFactory base should internally keep a list of produced loggers
