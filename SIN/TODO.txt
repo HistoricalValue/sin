@@ -1,6 +1,6 @@
 NEXT TODO TICKET                                ||
 (please take a number and wait in the line...)  ||
-Next number: 57                                 ||
+Next number: 58                                 ||
 +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-//
 
 
@@ -42,7 +42,7 @@ Next number: 57                                 ||
 
 
 ----- Parser -----
-
+*[057] Replace lvalue.ID, lvalue[expr], call.ID, call[expr] with expr.ID, expr[expr] (and get rid of all the reduce/reduce conflicts obviously)
 
 
 ==== QUESTIONS =====
