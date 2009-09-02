@@ -5,6 +5,7 @@
 	#include "LexUtility.h"
 	#include "SINParser.h" /**/
 	#include "SINString.h"
+	#include "SINParserAPI.h"
 	#include "LexAndBisonParseArguments.h"
 	
 	#define YY_NEVER_INTERACTIVE 1
@@ -13,6 +14,16 @@
 
 	static char InputWrapper (void);
 	static void UnputWrapper (char c);
+	
+
+	//--------------------------------------------------------
+	
+	int SIN::ParserAPI::ParseText(char const *_input) {
+        yy_scan_string(_input);
+		if ( !ParserString())
+			return 0;
+        return -1;
+    }	
 
 %}
 

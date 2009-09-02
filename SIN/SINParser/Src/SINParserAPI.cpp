@@ -33,8 +33,6 @@ namespace SIN {
     ParserAPI::~ParserAPI(void) {
     }
     
-
-	
 	//--------------------------------------------------------
 
     int ParserAPI::ParseFile(String const &_filepath) {
@@ -44,17 +42,7 @@ namespace SIN {
 		return -1;
     }
     
-	
-	
 	//--------------------------------------------------------
-    
-	int ParserAPI::ParseText(char const *_input) {
-        assert(!"Not implemented yet");
-        throw String("Not implemented yet");
-        return 1;
-    }
-
-
 	// If Parse* returned no error, this returns the produced AST
 	ASTNode * ParserAPI::GetAST(void) const {
 		ASTNode * root = labpa.GetRoot();
@@ -62,13 +50,20 @@ namespace SIN {
 		return labpa.HasError() ? static_cast<ASTNode *>(0): root;
 	}
 
+	//--------------------------------------------------------
 
 	const LexAndBisonParseArguments::Errors & ParserAPI::GetErrors(void) const 
 		{ return labpa.GetErrors(); }
 
+	//--------------------------------------------------------
 
 	void ParserAPI::DeleteAST(void) 
 		{ labpa.CleanNodes(); }
+
+	//--------------------------------------------------------
+
+	int ParserAPI::ParserString(void) 
+		{	return yyparse(labpa);	}
 
     ////////////////////////////////
 } // namespace SIN

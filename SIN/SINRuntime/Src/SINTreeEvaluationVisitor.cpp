@@ -27,6 +27,7 @@
 #include "SINUnaryNegationOperator.h"
 #include "SINLogicalNotOperator.h"
 #include "SINShiftToMetaEvaluatorASTVisitor.h"
+#include "SINParserAPI.h"
 
 
 #define VISIT_KIDS_SERIALLY												\
@@ -1049,8 +1050,10 @@ namespace SIN {
 	//-----------------------------------------------------------------
 
 	void TreeEvaluationVisitor::Visit(MetaParseStringASTNode & _node) {
-		// TODO implement
-		SINASSERT(!"Not implemented");
+		ParserAPI test;
+		//TODO get the code for parsing
+		test.ParseText("a = 1;");
+		ASTNode* root = test.GetAST();
 	}
 
 	//-----------------------------------------------------------------

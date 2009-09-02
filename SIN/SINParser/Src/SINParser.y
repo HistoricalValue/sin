@@ -376,8 +376,3 @@ int PrepareForFile(const char * filePath) {
 	}
 	return 0;
 }
-
-int PrepareForString(const char * str) {
-//	//yy_scan_string(const char * str);
-	return 0;
-}

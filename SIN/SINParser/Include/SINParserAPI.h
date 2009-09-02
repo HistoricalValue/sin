@@ -31,6 +31,8 @@ namespace SIN {
 	private:
 		LexAndBisonParseArguments labpa;
 
+		int ParserString(void);
+
 		
 	}; // class ParserAPI
 
