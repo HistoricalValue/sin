@@ -119,7 +119,9 @@ namespace SIN {
 		String UnparseString(void) const { return unparseString; }
 	
 	private:
-		String unparseString;
+		String	unparseString;
+		int		indexedObjectFunctionCounter;
+
 	}; // class ASTUnparseTreeVisitor
 
 
