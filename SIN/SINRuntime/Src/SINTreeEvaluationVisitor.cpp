@@ -394,9 +394,7 @@ namespace SIN {
 
 
 	#define EVAL_EXPR()				expr.Accept(this);											\
-									SINASSERT(memory != 0x00);									\
-									SINASSERT(memory->Type() == MemoryCell::BOOL_MCT);			\
-									exprMemoryCell = static_cast<MemoryCellBool *>(memory)
+									SINASSERT(memory != 0x00)
 
 
 	//-----------------------------------------------------------------
@@ -416,7 +414,7 @@ namespace SIN {
 		elist1.Accept(this);
 		
 		EVAL_EXPR();
-		while(exprMemoryCell->GetValue() == true) {
+		while(memory->ToBoolean()) {
 			stmt.Accept(this);
 			if (triggeredBreak)
 				break;
@@ -447,9 +445,10 @@ namespace SIN {
 		ASTNode &  expr			= static_cast<ASTNode&>(*_node.begin());
 		ASTNode &  stmt			= static_cast<ASTNode&>(*_node.rbegin());
 
-		EVAL_EXPR();
+		expr.Accept(this);
+		SINASSERT(memory != 0x00);
 
-		while(exprMemoryCell->GetValue() == true) {
+		while(memory->ToBoolean()) {
 			stmt.Accept(this);
 			if (triggeredBreak)
 				break;
@@ -468,7 +467,7 @@ namespace SIN {
 
 		EVAL_EXPR();
 
-		if(exprMemoryCell->GetValue() == true)
+		if(memory->ToBoolean())
 			stmt.Accept(this);
 	}
 
@@ -485,7 +484,7 @@ namespace SIN {
 
 		EVAL_EXPR();
 
-		if(exprMemoryCell->GetValue() == true)
+		if(memory->ToBoolean())
 			stmt1.Accept(this);
 		else
 			stmt2.Accept(this);
