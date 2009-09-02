@@ -113,3 +113,6 @@ SIN/Tests/SINRun_Test/Projects/VS/SINRun_Test.vcproj.TURBO-X-PC.TURBO_X.user
 SIN/Tests/SINSymbolTable_Test/Projects/VS/SINSymbolTable_Test.vcproj.TURBO-X-PC.TURBO_X.user
 SIN/Tests/SINTest/Projects/VS/SINTest.vcproj.TURBO-X-PC.TURBO_X.user
 SIN/SINmain/Projects/VS/sin_run_test.sin
+SIN/SINmain/Projects/Linux_GNU/RunTreeCtrlVisualisation.txt
+SIN/SINmain/Projects/Linux_GNU/RunTreeVisualisation.txt
+SIN/SINmain/Projects/Linux_GNU/ShiftToMetaEvaluatorASTVisitor.txt
