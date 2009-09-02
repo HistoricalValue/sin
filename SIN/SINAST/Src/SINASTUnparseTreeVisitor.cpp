@@ -232,11 +232,35 @@ namespace SIN {
 		}
 	}
 
+	//-----------------------------------------------------------------
+	
+	void ASTUnparseTreeVisitor::Visit(ForASTNode & _node) {	
+		unparseString +=  to_string("for (");
+		ASTNode::iterator kid =  _node.begin();
 
-/*
+		static_cast<ASTNode &>(*kid++).Accept(this);	//first child
+		unparseString +=  to_string("; ");
 
-*/
+		static_cast<ASTNode &>(*kid++).Accept(this);	//second child
+		unparseString +=  to_string("; ");
 
+		static_cast<ASTNode &>(*kid++).Accept(this);	//third child
+		unparseString +=  to_string(") ");
+
+		static_cast<ASTNode &>(*kid).Accept(this);		//forth child
+		ADD_SEMICOLONO_IF_YOU_CAN();
+	}
+
+	//-----------------------------------------------------------------
+	
+	void ASTUnparseTreeVisitor::Visit(ReturnASTNode & _node) {	
+		size_t numberOfChildren = _node.NumberOfChildren();
+		SINASSERT(numberOfChildren == 0 || numberOfChildren == 1);
+		unparseString +=  to_string("return ");
+
+		if (numberOfChildren == 1)
+			static_cast<ASTNode &>(*_node.begin()).Accept(this);
+	}
 
 /*
 	void ASTUnparseTreeVisitor::Visit(UnaryNotASTNode & _node) {	
@@ -270,7 +294,10 @@ namespace SIN {
 	SIN_UNPARSE_TREE_VISITOR_ARGUMENTS_AND_OBJECT_VISIT_DEFINITION(ActualArguments	, "(", ")"	)
 	SIN_UNPARSE_TREE_VISITOR_ARGUMENTS_AND_OBJECT_VISIT_DEFINITION(Object			, "[", "]"	)
 	SIN_UNPARSE_TREE_VISITOR_ARGUMENTS_AND_OBJECT_VISIT_DEFINITION(EmptyObject		, "[", "]"	)
+	SIN_UNPARSE_TREE_VISITOR_ARGUMENTS_AND_OBJECT_VISIT_DEFINITION(ForPreamble		, "" , ""	)
+	SIN_UNPARSE_TREE_VISITOR_ARGUMENTS_AND_OBJECT_VISIT_DEFINITION(ForAddendum		, "" , ""	)
 	
+
 	SIN_UNPARSE_TREE_VISITOR_WITH_ONE_CHILD_VISIT_DEFINITION(PreIncr	, "++"		, ""		)
 	SIN_UNPARSE_TREE_VISITOR_WITH_ONE_CHILD_VISIT_DEFINITION(PostIncr	, ""		, "++"		)
 	SIN_UNPARSE_TREE_VISITOR_WITH_ONE_CHILD_VISIT_DEFINITION(PreDecr	, "--"		, ""		)
@@ -302,6 +329,8 @@ namespace SIN {
 	SIN_UNPARSE_TREE_VISITOR_TWO_CHILDREN_VISIT_DEFINITION(And		, "", " and ", ""	)
 	SIN_UNPARSE_TREE_VISITOR_TWO_CHILDREN_VISIT_DEFINITION(Or		, "", " or ", ""	)
 	SIN_UNPARSE_TREE_VISITOR_TWO_CHILDREN_VISIT_DEFINITION(NormalCall, "", "", ""		)
+	SIN_UNPARSE_TREE_VISITOR_TWO_CHILDREN_VISIT_DEFINITION(CallMember, "", ".", ""		)
+	SIN_UNPARSE_TREE_VISITOR_TWO_CHILDREN_VISIT_DEFINITION(CallIndex, "", "[", "]"		)
 
 
 	SIN_UNPARSE_TREE_VISITOR_OBJECT_ACCESS_VISIT_DEFINITION(ObjectMember, ".", "")
@@ -310,20 +339,14 @@ namespace SIN {
 
 
 
-	SIN_UNPARSE_TREE_VISITOR_DEFAULT_VISIT_DEFINITION(For		)
-	SIN_UNPARSE_TREE_VISITOR_DEFAULT_VISIT_DEFINITION(ForPreamble)
-	SIN_UNPARSE_TREE_VISITOR_DEFAULT_VISIT_DEFINITION(ForAddendum)
-	SIN_UNPARSE_TREE_VISITOR_DEFAULT_VISIT_DEFINITION(Return		)
 	SIN_UNPARSE_TREE_VISITOR_DEFAULT_VISIT_DEFINITION(FuncdefCall	)
-	SIN_UNPARSE_TREE_VISITOR_DEFAULT_VISIT_DEFINITION(ExpressionList	)
-	SIN_UNPARSE_TREE_VISITOR_DEFAULT_VISIT_DEFINITION(CallMember		)
-	SIN_UNPARSE_TREE_VISITOR_DEFAULT_VISIT_DEFINITION(CallIndex		)
 	
 
-	//Auta pote den 8a ginoun. Ite epidei einai syndactic sugar, ite epidei den brika kanenan kanona :D
+	//Auta pote den 8a kalestoun. Ite epidei einai syndactic sugar, ite epidei den brika kanenan kanona :D
 	SIN_UNPARSE_TREE_VISITOR_DEFAULT_VISIT_DEFINITION(Not			)
-	SIN_UNPARSE_TREE_VISITOR_DEFAULT_VISIT_DEFINITION(MethodCall	)
+	SIN_UNPARSE_TREE_VISITOR_DEFAULT_VISIT_DEFINITION(MethodCall	)	
 	SIN_UNPARSE_TREE_VISITOR_DEFAULT_VISIT_DEFINITION(LamdaFunction	)
+	SIN_UNPARSE_TREE_VISITOR_DEFAULT_VISIT_DEFINITION(ExpressionList)
 
 
 } // namespace SIN
