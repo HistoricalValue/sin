@@ -95,16 +95,39 @@ namespace SIN{
 		Types::Object_t			obj_imp; // as in "object-imp", not "object implementation"
 		bool					triggeredBreak;
 		bool					triggeredContinue;
-
 		typedef Environment::argument_list_t argument_list_t;
 		typedef std::stack<argument_list_t> argument_lists_t;
 		argument_lists_t argument_lists;
-		void resetObjectImp(void);
-		void assignObjectImpToMemory(void);
+		struct AssignmentDestinationSetter {
+			virtual void SetValue(MemoryCell*) const = 0;
+			AssignmentDestinationSetter(void) { }
+			virtual ~AssignmentDestinationSetter(void) { }
+		}* assignment_destination_setter_p;
+		struct ObjectValueSetter: AssignmentDestinationSetter {
+			bool ObjectHasMember(void) const;
+			virtual void SetValue(MemoryCell* _value) const;
+			void SetValue(Types::Object_t const&, String const&, MemoryCell*);
+			Types::Object_t obj_p;
+			String index;
+			bool autoIndex;
+			ObjectValueSetter(void);
+			ObjectValueSetter(ObjectValueSetter const&);
+			virtual ~ObjectValueSetter(void);
+		} object_value_setter; // struct ObjectValueSetter
+		struct SymbolTableValueSetter: AssignmentDestinationSetter {
+			virtual void SetValue(MemoryCell*) const;
+			bool LookupFails(void) const;
+			SymbolTable* stable_p;
+			String id;
+			SymbolTableValueSetter(void);
+			SymbolTableValueSetter(SymbolTableValueSetter const&);
+			virtual ~SymbolTableValueSetter(void);
+		} symbol_table_value_setter; // struct SymbolTableValueSetter 
+
 		// temporaries
-		void insertTemporary(InstanceProxy<MemoryCell> const&);
+		InstanceProxy<MemoryCell> const& insertTemporary(InstanceProxy<MemoryCell> const&);
 		// lookups
-		void lookup(String const&);
+		void lookup(String const&, bool const local = false, bool const global = false);
 		void lookup(String const&, SymbolTable::scope_id);
 		void lookup_local(String const&);
 		void lookup_global(String const&);
@@ -112,11 +135,20 @@ namespace SIN{
 		void insert(String const&, MemoryCell*);
 		void insert(String const&, MemoryCell*, SymbolTable::scope_id);
 		void insert_global(String const&, MemoryCell*);
+		// assignments
+		void assignFromTemporary(AssignASTNode const& _assignment_node, MemoryCell* temporary);
+		void assignToObjectMemberFromTemporary(Types::Object_t const&, MemoryCell* temporary, String const& = *static_cast<String const* const>(0x00));
 		// function stuff
 		void performCall(MemoryCell* funcmemcell, String const& func_desc, String const& file_name, unsigned int file_line, ASTNode& actual_args_astnode);
 		void triggerReturn(MemoryCell* returnValue);
 		bool returnTriggered(void) const;
-		
+		void evalFunctionNode(ASTNode&);
+		// object stuff
+		void resetObjectImp(void);
+		void assignObjectImpToMemory(void);
+		void objectLookup(ASTNode& parent_node, String const& member_id); // eval(parent_node.first_child)-> Object
+		void evalObjectMemberAccess(ASTNode& parent_node); //eval(first_child)->Obj, second_child.NAME()-> ID
+		void evalObjectIndexAccess(ASTNode& parent_node); //eval(first_child)->Obj, eval(second_child).ToString->ID
 		// Unusable
 		TreeEvaluationVisitor(const TreeEvaluationVisitor&);
 	};

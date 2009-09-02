@@ -38,6 +38,22 @@
 #define ERROR(MSG, FILE, LINE) vs->AppendError(MSG, FILE, LINE)
 #define ERRO(MSG) ERROR(MSG, _node.AssociatedFileName().c_str(), _node.AssociatedFileLine());
 
+#define EVALUATE_BINARY_OPERATION(OPERATOR)	evaluateBinaryOperation<OPERATOR>(*this, &TreeEvaluationVisitor::insertTemporary, _node, memory);
+#define EVALUATE_BASIC_MATHEMATIC_OPERATION(OPERATOR)  EVALUATE_BINARY_OPERATION(OPERATOR)
+#define EVALUATE_BASIC_LOGICAL_OPERATION(OPERATOR)     EVALUATE_BINARY_OPERATION(OPERATOR)
+#define EVALUATE_BASIC_COMPARISON_OPERATION(OPERATOR)  EVALUATE_BINARY_OPERATION(OPERATOR)
+#define EVALUATE_AND_ADVANCE(KITE) static_cast<ASTNode&>(*KITE++).Accept(this)
+
+#define ACCEPT_ALL_THE_KIDS()	for(ASTNode::iterator kid = _node.begin(); kid != _node.end(); ++kid)	\
+									static_cast<ASTNode&>(*kid).Accept(this);
+
+#define EVAL_EXPR()				expr.Accept(this);											\
+								SINASSERT(memory != 0x00);									\
+								SINASSERT(memory->Type() == MemoryCell::BOOL_MCT);			\
+								exprMemoryCell = static_cast<MemoryCellBool *>(memory)
+
+#define NULLSTR static_cast<::SIN::String const* const>(0x00)
+
 namespace SIN {
 	//-----------------------------------------------------------------
 	// Privates (hihihi) -- not in class -- utils
@@ -57,11 +73,11 @@ namespace SIN {
 			acceptable_t const& acceptable;
 		}; // class Acceptor
 
-	//-----------------------------------------------------------------
+		//-----------------------------------------------------------------
 		template <typename _OperatorT>
 		static void evaluateBinaryOperation(
 			TreeEvaluationVisitor& _evaluator,
-			void (TreeEvaluationVisitor::* _insertTemporary_p)(InstanceProxy<MemoryCell> const&),
+			InstanceProxy<MemoryCell> const& (TreeEvaluationVisitor::* _insertTemporary_p)(InstanceProxy<MemoryCell> const&),
 			ASTNode& _node,
 			MemoryCell*& _result
 		) {
@@ -77,15 +93,16 @@ namespace SIN {
 			// get result and store
 			(_evaluator.*_insertTemporary_p)(_result = _OperatorT()(*operand0, *operand1));
 		}
+
+		static inline bool isValidObjectIndexName(String const& _name) {
+			// TODO implement
+			return true;
+		}
+		static inline bool isValidID(String const& _id) {
+			// TODO implement
+			return true;
+		}
 	} // namespace
-#define EVALUATE_BINARY_OPERATION(OPERATOR)	evaluateBinaryOperation<OPERATOR>(*this, &TreeEvaluationVisitor::insertTemporary, _node, memory);
-
-
-#define EVALUATE_BASIC_MATHEMATIC_OPERATION(OPERATOR)  EVALUATE_BINARY_OPERATION(OPERATOR)
-#define EVALUATE_BASIC_LOGICAL_OPERATION(OPERATOR)     EVALUATE_BINARY_OPERATION(OPERATOR)
-#define EVALUATE_BASIC_COMPARISON_OPERATION(OPERATOR)  EVALUATE_BINARY_OPERATION(OPERATOR)
-
-#define EVALUATE_AND_ADVANCE(KITE) static_cast<ASTNode&>(*KITE++).Accept(this)
 
 	//-----------------------------------------------------------------
 	// Privates (hihihi)
@@ -100,34 +117,47 @@ namespace SIN {
 		insertTemporary(memory);
 	}
 
-	inline void TreeEvaluationVisitor::insertTemporary(InstanceProxy<MemoryCell> const& _tmp) {
+	inline InstanceProxy<MemoryCell> const& TreeEvaluationVisitor::insertTemporary(InstanceProxy<MemoryCell> const& _tmp) {
 		vs->CurrentStable().Insert(vs->CurrentAvrilNamer()++, _tmp);
+		return _tmp;
 	}
 
-	inline void TreeEvaluationVisitor::lookup(String const& _id) {
-		SymbolTable& stable = vs->CurrentStable();
-		lookuped = &stable.Lookup(_id);
-		if (lookup_failed())
+	/**/inline void TreeEvaluationVisitor::lookup(String const& _id, bool const _local, bool const _global) {
+		SINASSERT(!(_local && _global));
+		if (!_global) {
+			SymbolTable& stable = vs->CurrentStable();
+			lookuped = _local ? &stable.LookupOnlyInCurrentScope(_id) : &stable.Lookup(_id);
+		}
+		if (_global || (!_local && lookup_failed()))
 			lookuped = &vs->BaseStable().Lookup(_id);
+		if (lookup_failed()) {
+			lookuped = 0x00;
+			memory = 0x00;
+		}
+		else
+			memory = *lookuped;
 	}
 
 	inline void TreeEvaluationVisitor::lookup(String const& _id, SymbolTable::scope_id const _scope) {
 		SymbolTable& stable = vs->CurrentStable();
 		lookuped = &stable.Lookup(_scope, _id);
+		if (lookup_failed())
+			lookuped = 0x00;
 	}
 
-	inline void TreeEvaluationVisitor::lookup_global(String const& _id) {
-		SymbolTable& stable = vs->BaseStable();
-		lookuped = &stable.Lookup(_id);
+	/**/inline void TreeEvaluationVisitor::lookup_global(String const& _id) {
+		lookup(_id, false, true);
 	}
 
-	inline void TreeEvaluationVisitor::lookup_local(String const& _id) {
-		SymbolTable& stable = vs->CurrentStable();
-		lookuped = &stable.LookupOnlyInCurrentScope(_id);
+	/**/inline void TreeEvaluationVisitor::lookup_local(String const& _id) {
+		lookup(_id, true);
 	}
 
 	inline bool TreeEvaluationVisitor::lookup_failed(void) const {
-		return vs->CurrentStable().LookupFailed(*lookuped) || vs->BaseStable().LookupFailed(*lookuped);
+		return
+			lookuped == 0x00 ||
+			vs->CurrentStable().LookupFailed(*lookuped) ||
+			vs->BaseStable().LookupFailed(*lookuped);
 	}
 
 	inline void TreeEvaluationVisitor::insert(String const& _id, MemoryCell* const _val) {
@@ -225,6 +255,149 @@ namespace SIN {
 		argument_lists.pop();
 	} // performCall()
 
+	inline void TreeEvaluationVisitor::evalFunctionNode(ASTNode& _node) {
+		SINASSERT(_node.Type() == SINASTNODES_FUNCTION_TYPE);
+		insertTemporary(memory = SINEWCLASS(MemoryCellFunction, (Types::Function_t(&_node))));
+	}
+
+	inline void TreeEvaluationVisitor::assignFromTemporary(AssignASTNode const& _assignment_node, MemoryCell* const _temporary) {
+		AssignASTNode const& _node = _assignment_node;
+		SINASSERT(_temporary != NULL);
+		if (lookuped != 0x00) { // destination exists, reuse memory in lookuped
+			SINASSERT(memory == *lookuped);
+			SINASSERT(memory != 0x00);
+			if (memory->Type() == MemoryCell::FUNCTION_MCT || memory->Type() == MemoryCell::LIB_FUNCTION_MCT)
+				// TODO this check is wrong because:
+				//     a = println;
+				//     a = 3;
+				// fails. Fix this.
+				ERRO("Assigning to a function");
+			MemoryCell::Assign(*lookuped, _temporary);
+		}
+		else { // general destination does not exist. Setter must be called.
+			MemoryCell* value = 0x00;
+			MemoryCell::Assign(value, _temporary);
+			assignment_destination_setter_p->SetValue(value);
+		}	
+	}
+
+	// ----- ObjectValueSetter ------
+	inline TreeEvaluationVisitor::ObjectValueSetter::ObjectValueSetter(void):
+		 obj_p(0x00)
+		,index("$")
+		,autoIndex(false)
+	{ }
+	inline TreeEvaluationVisitor::ObjectValueSetter::ObjectValueSetter(ObjectValueSetter const& _o):
+		 obj_p(_o.obj_p)
+		,index(_o.index)
+		,autoIndex(_o.autoIndex)
+	{ }
+	inline TreeEvaluationVisitor::ObjectValueSetter::~ObjectValueSetter(void)
+	{ }
+	inline bool TreeEvaluationVisitor::ObjectValueSetter::ObjectHasMember(void) const {
+		return obj_p->HasMember(index);
+	}
+	inline void TreeEvaluationVisitor::ObjectValueSetter::SetValue(MemoryCell* const _value) const  {
+		SINASSERT(isValidObjectIndexName(index));
+		SINASSERT(!ObjectHasMember());
+		if (autoIndex)
+			obj_p->SetValue(_value);
+		else
+			obj_p->SetValue(index, _value);
+	}
+	inline void TreeEvaluationVisitor::ObjectValueSetter::SetValue(Types::Object_t const& _obj_p, String const& _index, MemoryCell* const _value) {
+		obj_p = _obj_p;
+		if (&_index != 0x00)
+			index = _index;
+		SetValue(_value);
+	}
+	// ------------------------------
+	// --- SymbolTableValueSetter ---
+	inline void TreeEvaluationVisitor::SymbolTableValueSetter::SetValue(MemoryCell* const _value) const {
+		SINASSERT(isValidID(id));
+		stable_p->Insert(id, _value);
+	}
+	inline bool TreeEvaluationVisitor::SymbolTableValueSetter::LookupFails(void) const {
+		return stable_p->LookupFailed(stable_p->Lookup(id));
+	}
+	inline TreeEvaluationVisitor::SymbolTableValueSetter::SymbolTableValueSetter(void):
+		 stable_p(0x00)
+		,id("$")
+	{ }
+	inline TreeEvaluationVisitor::SymbolTableValueSetter::SymbolTableValueSetter(SymbolTableValueSetter const& _o):
+		 stable_p(_o.stable_p)
+		,id(_o.id)
+	{ }
+	inline TreeEvaluationVisitor::SymbolTableValueSetter::~SymbolTableValueSetter(void)
+	{ }
+	// ------------------------------
+
+	inline void TreeEvaluationVisitor::assignToObjectMemberFromTemporary(Types::Object_t const& _obj_p, MemoryCell* _temporary, String const& _index) {
+		if (_temporary != 0x00) {
+			object_value_setter.autoIndex = (&_index == 0x00) || (&_index != 0x00 && _index.Length() == 0u);
+			InstanceProxy<MemoryCell>* obj_memb_p = 0x00;
+			if (!object_value_setter.autoIndex)
+				obj_memb_p = &SINPTR(_obj_p)->GetValue(_index);
+			if (object_value_setter.autoIndex || _obj_p->LookupFailed(*obj_memb_p)) {
+				MemoryCell* value = 0x00;
+				MemoryCell::Assign(value, SINPTR(_temporary));
+				object_value_setter.SetValue(_obj_p, _index, SINPTR(value)); // _index ignored if autoIndex 
+			}
+			else
+				MemoryCell::Assign(*obj_memb_p, SINPTR(_temporary));
+		}
+	}
+
+	inline void TreeEvaluationVisitor::objectLookup(ASTNode& _node, String const& _member_id) {
+		ASTNode::iterator kite(_node.begin());
+		// Evaluate first kid, should return an object
+		EVALUATE_AND_ADVANCE(kite);
+		if (memory->Type() != MemoryCell::OBJECT_MCT)
+			vs->AppendError(to_string("Accessing member \"") << static_cast<ASTNode&>(*kite).Name()
+			<< "\" on non-object type " << Operator::GetTypeAsStringFromMemoryCell(*memory),
+			_node.AssociatedFileName().c_str(), _node.AssociatedFileLine());
+		MemoryCellObject* const obj_ref = static_cast<MemoryCellObject*>(memory);
+		Types::Object_t obj_p  = obj_ref->GetValue();
+		// Look-up in object
+		lookuped = &obj_p->GetValue(_member_id);
+		if (obj_p->LookupFailed(*lookuped)) {
+			// not found
+			lookuped = 0x00;
+			memory = 0x00;
+			object_value_setter.obj_p = obj_p;
+			object_value_setter.index = _member_id;
+			object_value_setter.autoIndex = false;
+			assignment_destination_setter_p = &object_value_setter;
+		}
+		else
+			memory = *lookuped;
+	}
+
+	inline void TreeEvaluationVisitor::evalObjectMemberAccess(ASTNode& _node) {
+		ASTNode::iterator kite(_node.begin());
+		// Child 1 is the object, ignore
+		++kite;
+		// Child 2 is the ID
+		SINASSERT(static_cast<ASTNode&>(*kite).Type() == SINASTNODES_ID_TYPE);
+		// TODO add a field for the id node and don't use its Name()
+		String const& member_id = static_cast<ASTNode&>(*kite++).Name();
+		SINASSERT(kite == _node.end());	
+		objectLookup(_node, member_id); // memory and lookuped set in here
+	}
+
+	inline void TreeEvaluationVisitor::evalObjectIndexAccess(SIN::ASTNode& _node) {
+		ASTNode::iterator kite(_node.begin());
+		// Child 1 is the object, ignore
+		++kite;
+		// Child 2 is the index
+		EVALUATE_AND_ADVANCE(kite);
+		// TODO add a field for the id node and don't use its Name()
+		String const member_id = SINPTR(memory)->ToString();
+		SINASSERT(kite == _node.end());
+		objectLookup(_node, member_id); // memory and lookuped set in here
+	}
+	// ---- Privates end ----- //
+
 	//-----------------------------------------------------------------
 
 	TreeEvaluationVisitor::TreeEvaluationVisitor(void) : memory(NULL), lookuped(NULL), preserveNode(NULL), lib(NULL), vs(NULL), argument_lists() { }
@@ -239,7 +412,8 @@ namespace SIN {
 		vs(_vs),
 		triggeredBreak(false),
 		triggeredContinue(false),
-		argument_lists()
+		argument_lists(),
+		assignment_destination_setter_p(0x00)
 		{ }
 
 	//-----------------------------------------------------------------
@@ -253,7 +427,8 @@ namespace SIN {
 		obj_imp(0x00),
 		triggeredBreak(false),
 		triggeredContinue(false),
-		argument_lists()
+		argument_lists(),
+		assignment_destination_setter_p(0x00)
 		{ SINASSERT(!"Not allowed"); }
 
 	//-----------------------------------------------------------------
@@ -383,20 +558,11 @@ namespace SIN {
 	}
 
 
-	#define ACCEPT_ALL_THE_KIDS()	for(ASTNode::iterator kid = _node.begin(); kid != _node.end(); ++kid)	\
-										static_cast<ASTNode&>(*kid).Accept(this);
 
 	//-----------------------------------------------------------------
 
 	void TreeEvaluationVisitor::Visit(ExpressionListASTNode & _node)
 		{	ACCEPT_ALL_THE_KIDS();	}
-
-
-
-
-	#define EVAL_EXPR()				expr.Accept(this);											\
-									SINASSERT(memory != 0x00)
-
 
 	//-----------------------------------------------------------------
 
@@ -431,7 +597,6 @@ namespace SIN {
 
 	void TreeEvaluationVisitor::Visit(ForPreambleASTNode & _node) 		
 		{	ACCEPT_ALL_THE_KIDS();	}
-	
 	
 	//-----------------------------------------------------------------
 
@@ -532,33 +697,22 @@ namespace SIN {
 	//-----------------------------------------------------------------
 
 	void TreeEvaluationVisitor::Visit(AssignASTNode & _node) {
-	
-		SINASSERT(_node.NumberOfChildren() == 2);
-
 		ASTNode::iterator kid = _node.begin();
-
 		ASTNode& kid0 = static_cast<ASTNode&>(*kid++);
+		ASTNode& kid1 = static_cast<ASTNode&>(*kid++);
+		SINASSERT(kid == _node.end());
 		SINASSERT(kid0.Type() == SINASTNODES_ID_TYPE || kid0.Type() == SINASTNODES_LOCALID_TYPE || kid0.Type() == SINASTNODES_GLOBALID_TYPE || kid0.Type() == SINASTNODES_OBJECTMEMBER_TYPE);
 
-		kid0.Accept(this);
+		kid1.Accept(this);
 		SINASSERT(memory != 0x00);
-		SINASSERT(lookuped != 0x00);
-		SINASSERT(memory == *lookuped);
-		if (memory->Type() == MemoryCell::FUNCTION_MCT || memory->Type() == MemoryCell::LIB_FUNCTION_MCT)
-			// TODO this check is wrong because:
-			//     a = println;
-			//     a = 3;
-			// fails. Fix this.
-			ERRO("Assigning to a function");
-		InstanceProxy<MemoryCell>* lookedup_l = lookuped; // looked-up and memory must be saved after each eval of a kid
+		MemoryCell* const value_temporary = memory;
 
-		static_cast<ASTNode&>(*kid++).Accept(this);
-		MemoryCell *tmpmemcell2 = memory;
-		SINASSERT(tmpmemcell2 != NULL);
+		// Lookup and prepare env about where to assign
+		kid0.Accept(this);
+		assignFromTemporary(_node, value_temporary);
 
-		MemoryCell::Assign(*lookedup_l, tmpmemcell2);
-		SINASSERT(*lookedup_l != NULL);
-		memory = tmpmemcell2;
+		// Expression evaluation result
+		memory = value_temporary;
 	}
 
 	//-----------------------------------------------------------------
@@ -602,15 +756,18 @@ namespace SIN {
 
 		for(ASTNode::iterator arguments = _node.begin(); arguments != _node.end(); ++arguments){
 			static_cast<ASTNode&>(*arguments).Accept(this);
-			SINASSERT(memory != 0x00);
 			// NOTICE: symbol Tables hold COPIES OF VALUES! Every assignment is a copy of
 			// a value!
 			// Conceptually, actual arguments are *assignments* of some variables to the
 			// argument-variables of a function.
 			// Assignment is needed for correct handling of objects;
-			MemoryCell* argument = 0x00;
-			MemoryCell::Assign(argument, memory);
-			argument_list.push_back(argument);
+			if (memory != 0x00) {
+				MemoryCell* argument = 0x00;
+				MemoryCell::Assign(argument, memory);
+				argument_list.push_back(argument);
+			}
+			else
+				argument_list.push_back(SINEW(MemoryCellNil));
 		}
 	}
 
@@ -657,12 +814,16 @@ namespace SIN {
 		// Get the function ID
 		String const& func_id = _node.Name();
 		// Create the function object and the resulting memcell
-		MemoryCellFunction* result = SINEWCLASS(MemoryCellFunction, (Types::Function_t(&_node)));;
+		evalFunctionNode(_node);
+		SINASSERT(memory->Type() == MemoryCell::FUNCTION_MCT);
+		MemoryCell* result = 0x00;
+		MemoryCell::Assign(result, memory);
 		// Lookup and insert the function memcell
 		lookup_local(func_id);
 		if (lookup_failed())
 			// ok here
 			insert(func_id, result);
+			// TODO insert as const
 		else
 			// lookup succeeded. Fail.
 			vs->AppendError(to_string("definition of function with name \"") << func_id << 
@@ -676,7 +837,7 @@ namespace SIN {
 
 	void TreeEvaluationVisitor::Visit(LamdaFunctionASTNode & _node) {
 		// Create the function object and the resulting memcell
-		insertTemporary(memory = SINEWCLASS(MemoryCellFunction, (Types::Function_t(&_node))));
+		evalFunctionNode(_node);
 	}
 
 	//-----------------------------------------------------------------
@@ -684,15 +845,10 @@ namespace SIN {
 	void TreeEvaluationVisitor::Visit(IDASTNode & _node) {
 		String const& id = _node.Name();
 		lookup(id);
-
-		if (lookup_failed()) {
-			insert(id, SINEW(MemoryCellNil));
-			lookup_local(id);
-			SINASSERT(!lookup_failed());
-			SINASSERT(static_cast<MemoryCell*>(*lookuped) != 0x00);
-			SINASSERT((*lookuped)->Type() == MemoryCell::NIL_MCT);
-		}
-		memory = *lookuped;
+		symbol_table_value_setter.stable_p = &vs->CurrentStable();
+		symbol_table_value_setter.id = id;
+		assignment_destination_setter_p = &symbol_table_value_setter;
+		// memory and lookuped set by lookup()
 	}
 
 	//-----------------------------------------------------------------
@@ -700,15 +856,10 @@ namespace SIN {
 	void TreeEvaluationVisitor::Visit(LocalIDASTNode & _node) {
 		String const& id = _node.Name();
 		lookup_local(id);
-
-		if(lookup_failed()) {
-			insert(id, SINEW(MemoryCellNil));
-			lookup_local(id);
-			SINASSERT(!lookup_failed());
-			SINASSERT(static_cast<MemoryCell*>(*lookuped) != 0x00);
-			SINASSERT((*lookuped)->Type() == MemoryCell::NIL_MCT);
-		}
-		memory = *lookuped;
+		symbol_table_value_setter.stable_p = &vs->CurrentStable();
+		symbol_table_value_setter.id = id;
+		assignment_destination_setter_p = &symbol_table_value_setter;
+		// memory and lookuped set by lookup()
 	}
 
 	//-----------------------------------------------------------------
@@ -716,15 +867,10 @@ namespace SIN {
 	void TreeEvaluationVisitor::Visit(GlobalIDASTNode & _node) {
 		String const& id = _node.Name();
 		lookup_global(id);
-
-		if(lookup_failed()) {
-			insert_global(id, SINEW(MemoryCellNil));
-			lookup_global(id);
-			SINASSERT(!lookup_failed());
-			SINASSERT(static_cast<MemoryCell*>(*lookuped) != 0x00);
-			SINASSERT((*lookuped)->Type() == MemoryCell::NIL_MCT);
-		}
-		memory = *lookuped;
+		symbol_table_value_setter.stable_p = &vs->CurrentStable();
+		symbol_table_value_setter.id = id;
+		assignment_destination_setter_p = &symbol_table_value_setter;
+		// memory and lookuped set by lookup()
 	}
 
 	//-----------------------------------------------------------------
@@ -838,9 +984,7 @@ namespace SIN {
 
 	void TreeEvaluationVisitor::Visit(UnindexedMemberASTNode & _node) {
 		static_cast<ASTNode&>(*_node.begin()).Accept(this);
-		MemoryCell* assigned = 0x00;
-		MemoryCell::Assign(assigned, memory);
-		obj_imp->SetValue(assigned);
+		assignToObjectMemberFromTemporary(obj_imp, memory, *NULLSTR);
 	}
 
 	//-----------------------------------------------------------------
@@ -849,77 +993,29 @@ namespace SIN {
 		ASTNode::iterator kite(_node.begin());
 		// Get indexed element's key-name
 		EVALUATE_AND_ADVANCE(kite);
-		String const member_name = memory->ToString();
+		String const member_name = memory == 0x00 ? "Nil" : SINPTR(memory)->ToString();
+		// TODO check for const assignment
 		// Get indexed element's value (to set)
 		EVALUATE_AND_ADVANCE(kite);
-		SINASSERT(memory != 0x00);
-		MemoryCell* assigned = 0x00;
-		MemoryCell::Assign(assigned, memory);
-		InstanceProxy<MemoryCell>& previous_member = obj_imp->GetValue(member_name);
-		if (previous_member == 0x00)
-			;// set a new member -- no prob
-		else
-			// overwriting a previous member -- old member must be deleted now
-			SINDELETE(previous_member);
-		obj_imp->SetValue(member_name, assigned);
+		assignToObjectMemberFromTemporary(obj_imp, memory, member_name);
 
 		// assert there were only two kids
 		SINASSERT(kite == _node.end());
+
+		memory = 0x00;
+		lookuped = 0x00;
 	}
 
 	//-----------------------------------------------------------------
 
 	void TreeEvaluationVisitor::Visit(ObjectMemberASTNode & _node) {
-		ASTNode::iterator kite(_node.begin());
-		// Evaluate first kid, should return an object
-		EVALUATE_AND_ADVANCE(kite);
-		if (memory->Type() != MemoryCell::OBJECT_MCT)
-			vs->AppendError(to_string("Accessing member \"") << static_cast<ASTNode&>(*kite).Name()
-			<< "\" on non-object type " << Operator::GetTypeAsStringFromMemoryCell(*memory),
-			_node.AssociatedFileName().c_str(), _node.AssociatedFileLine());
-		MemoryCellObject* const obj_ref = static_cast<MemoryCellObject*>(memory);
-		Types::Object_t obj_p  = obj_ref->GetValue();
-		// Look-up in object
-		SINASSERT(static_cast<ASTNode&>(*kite).Type() == SINASTNODES_ID_TYPE);
-		// TODO add a field for the id node and don't use its Name()
-		String const& member_id = static_cast<ASTNode&>(*kite).Name();
-		lookuped = &obj_p->GetValue(member_id);
-		if (static_cast<MemoryCell*>(*lookuped) == 0x00) {
-			// not found, insert Nil
-			obj_p->SetValue(member_id, SINEW(MemoryCellNil));
-			lookuped = &obj_p->GetValue(member_id);
-			SINASSERT(static_cast<MemoryCell const* const>(*static_cast<InstanceProxy<MemoryCell> const* const>(lookuped)) != 0x00);
-		}
-		memory = *static_cast<InstanceProxy<MemoryCell> const*>(lookuped);
+		evalObjectMemberAccess(_node);
 	}
 
 	//-----------------------------------------------------------------
 
 	void TreeEvaluationVisitor::Visit(ObjectIndexASTNode & _node) {
-
-		ASTNode::iterator kite(_node.begin());
-		EVALUATE_AND_ADVANCE(kite);
-
-		if (memory->Type() != MemoryCell::OBJECT_MCT)
-			vs->AppendError(to_string("Accessing member \"") << static_cast<ASTNode&>(*kite).Name()
-			<< "\" on non-object type " << Operator::GetTypeAsStringFromMemoryCell(*memory),
-			_node.AssociatedFileName().c_str(), _node.AssociatedFileLine());
-
-		MemoryCellObject* const obj_ref = static_cast<MemoryCellObject*>(memory);
-		Types::Object_t obj_p  = obj_ref->GetValue();
-
-		EVALUATE_AND_ADVANCE(kite);
-		String const& index = memory->ToString();
-		lookuped = &obj_p->GetValue(index);
-
-		if (static_cast<MemoryCell*>(*lookuped) == 0x00) {
-			// not found, insert Nil
-			obj_p->SetValue(index, SINEW(MemoryCellNil));
-			lookuped = &obj_p->GetValue(index);
-			SINASSERT(static_cast<MemoryCell const* const>(*static_cast<InstanceProxy<MemoryCell> const* const>(lookuped)) != 0x00);
-		}
-
-		memory = *static_cast<InstanceProxy<MemoryCell> const*>(lookuped);
+		evalObjectIndexAccess(_node);
 	}
 
 	//-----------------------------------------------------------------
@@ -964,58 +1060,13 @@ namespace SIN {
 	//-----------------------------------------------------------------
 
 	void TreeEvaluationVisitor::Visit(CallMemberASTNode & _node) {
-
-		ASTNode::iterator kite(_node.begin());
-		EVALUATE_AND_ADVANCE(kite);
-
-		if (memory->Type() != MemoryCell::OBJECT_MCT)
-			vs->AppendError(to_string("Accessing member \"") << static_cast<ASTNode&>(*kite).Name()
-			<< "\" on non-object type " << Operator::GetTypeAsStringFromMemoryCell(*memory),
-			_node.AssociatedFileName().c_str(), _node.AssociatedFileLine());
-
-		MemoryCellObject* const obj_ref = static_cast<MemoryCellObject*>(memory);
-		Types::Object_t obj_p  = obj_ref->GetValue();
-		SINASSERT(static_cast<ASTNode&>(*kite).Type() == SINASTNODES_ID_TYPE);
-		String const& member_id = static_cast<ASTNode&>(*kite).Name();
-		lookuped = &obj_p->GetValue(member_id);
-
-		if (static_cast<MemoryCell*>(*lookuped) == 0x00) {
-			// not found, insert Nil
-			obj_p->SetValue(member_id, SINEW(MemoryCellNil));
-			lookuped = &obj_p->GetValue(member_id);
-			SINASSERT(static_cast<MemoryCell const* const>(*static_cast<InstanceProxy<MemoryCell> const* const>(lookuped)) != 0x00);
-		}
-
-		memory = *static_cast<InstanceProxy<MemoryCell> const*>(lookuped);
+		evalObjectMemberAccess(_node);
 	}
 
 	//-----------------------------------------------------------------
 
 	void TreeEvaluationVisitor::Visit(CallIndexASTNode & _node) {
-
-		ASTNode::iterator kite(_node.begin());
-		EVALUATE_AND_ADVANCE(kite);
-
-		if (memory->Type() != MemoryCell::OBJECT_MCT)
-			vs->AppendError(to_string("Accessing member \"") << static_cast<ASTNode&>(*kite).Name()
-			<< "\" on non-object type " << Operator::GetTypeAsStringFromMemoryCell(*memory),
-			_node.AssociatedFileName().c_str(), _node.AssociatedFileLine());
-
-		MemoryCellObject* const obj_ref = static_cast<MemoryCellObject*>(memory);
-		Types::Object_t obj_p  = obj_ref->GetValue();
-
-		EVALUATE_AND_ADVANCE(kite);
-		String const& index = memory->ToString();
-		lookuped = &obj_p->GetValue(index);
-
-		if (static_cast<MemoryCell*>(*lookuped) == 0x00) {
-			// not found, insert Nil
-			obj_p->SetValue(index, SINEW(MemoryCellNil));
-			lookuped = &obj_p->GetValue(index);
-			SINASSERT(static_cast<MemoryCell const* const>(*static_cast<InstanceProxy<MemoryCell> const* const>(lookuped)) != 0x00);
-		}
-
-		memory = *static_cast<InstanceProxy<MemoryCell> const*>(lookuped);
+		evalObjectIndexAccess(_node);
 	}
 
 	//-----------------------------------------------------------------

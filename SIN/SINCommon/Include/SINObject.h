@@ -40,6 +40,8 @@ namespace SIN {
 			void			SetValue(const ObjectTableValue &);
 			void			SetValue(const String &, MemoryCell *);		
 			memcell_t&		GetValue(const String &);
+			bool			HasMember(const String &) const;
+			bool			LookupFailed(memcell_t const& previous_result) const;
 			
 			void			MarkForDeletion(void);
 			bool			IsMarckedForDeletion(void) const;

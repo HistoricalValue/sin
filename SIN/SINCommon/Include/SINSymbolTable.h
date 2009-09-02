@@ -19,7 +19,7 @@ namespace SIN {
 		elem_t& 		LookupOnlyInCurrentScope(const name_t&); // in current scope
 		elem_t& 		LookupByIndex(const unsigned int index); // in current scope
 		elem_t& 		LookupByIndex(const scope_id&, const unsigned int index); // in given scope
-		bool			LookupFailed(elem_t& previous_result) const; // previous lookup in current scope
+		bool			LookupFailed(elem_t& previous_result) const; // previous lookup in any scope
 
 		void			Insert(const name_t&, const elem_t&); // only in current scope
 		void			Insert(const name_t&, const elem_t&, scope_id); // in given scope
