@@ -607,7 +607,7 @@ namespace SIN {
 	//-----------------------------------------------------------------
 
 	void ParserManage::Manage_Member_LValueKEYS(const int lineNo, ASTNode *_lvalue, ASTNode **_retmember, LexAndBisonParseArguments *_lbpa) {
-		*_retmember = SINEWCLASS(ObjectKeysASTNode, ("KEYS", _lbpa->GetFileName(), lineNo));
+		*_retmember = SINEWCLASS(ObjectKeysASTNode, (".$keys", _lbpa->GetFileName(), lineNo));
 		_lbpa->AppendToNodeList(*_retmember);
 
 		**_retmember << _lvalue;
@@ -617,7 +617,7 @@ namespace SIN {
 	//-----------------------------------------------------------------
 
 	void ParserManage::Manage_Member_LValueSIZE(const int lineNo, ASTNode *_lvalue, ASTNode **_retmember, LexAndBisonParseArguments *_lbpa) {
-		*_retmember = SINEWCLASS(ObjectSizeASTNode, ("SIZE", _lbpa->GetFileName(), lineNo));
+		*_retmember = SINEWCLASS(ObjectSizeASTNode, (".$size", _lbpa->GetFileName(), lineNo));
 		_lbpa->AppendToNodeList(*_retmember);
 
 		**_retmember << _lvalue;
