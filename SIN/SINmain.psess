@@ -6,7 +6,7 @@
     <AllocationMethod>None</AllocationMethod>
     <LaunchRuntimeControl>true</LaunchRuntimeControl>
     <AddReport>true</AddReport>
-    <UniqueReport>Timestamp</UniqueReport>
+    <UniqueReport>Overwrite</UniqueReport>
     <SamplingMethod>Cycles</SamplingMethod>
     <CycleCount>10000000</CycleCount>
     <PageFaultCount>10</PageFaultCount>
@@ -34,13 +34,13 @@
   </PostinstrumentEvent>
   <Binaries>
     <ProjBinary>
-      <Path>d:\CSD\CS-540\Project\sin\trunk\SIN\Debug\SINmain.exe</Path>
+      <Path>d:\CSD\CS-540\Project\sin\trunk\SIN\Release\SINmain.exe</Path>
       <ArgumentTimestamp>01/01/0001 00:00:00</ArgumentTimestamp>
       <Instrument>true</Instrument>
       <Sample>true</Sample>
       <LaunchProject>true</LaunchProject>
       <LaunchMethod>Executable</LaunchMethod>
-      <ExecutablePath>d:\CSD\CS-540\Project\sin\trunk\SIN\Debug\SINmain.exe</ExecutablePath>
+      <ExecutablePath>d:\CSD\CS-540\Project\sin\trunk\SIN\Release\SINmain.exe</ExecutablePath>
       <StartupDirectory>d:\CSD\CS-540\Project\sin\trunk\SIN\SINmain\Projects\VS\</StartupDirectory>
       <NetAppHost>IIS</NetAppHost>
       <NetBrowser>InternetExplorer</NetBrowser>

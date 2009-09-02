@@ -1995,7 +1995,7 @@ yyreduce:
 
   case 46:
 
-    {	SIN::ParserManage::Manage_Term_Primary(yylineno, (yyvsp[(1) - (1)].AST), &((yyval.AST)), &fabpa);					}
+    {	SIN::ParserManage::Manage_Term_Primary(yylineno, (yyvsp[(1) - (1)].AST), &((yyval.AST)), &fabpa);				}
     break;
 
   case 47:
@@ -2005,7 +2005,7 @@ yyreduce:
 
   case 48:
 
-    {	SIN::ParserManage::Manage_Primary_LValue(yylineno, (yyvsp[(1) - (1)].AST), &((yyval.AST)), &fabpa);						}
+    {	SIN::ParserManage::Manage_Primary_LValue(yylineno, (yyvsp[(1) - (1)].AST), &((yyval.AST)), &fabpa);							}
     break;
 
   case 49:
@@ -2055,12 +2055,12 @@ yyreduce:
 
   case 58:
 
-    {	}
+    {	SIN::ParserManage::Manage_Member_LValueKEYS(yylineno, (yyvsp[(1) - (3)].AST), &((yyval.AST)), &fabpa);			}
     break;
 
   case 59:
 
-    {	}
+    {	SIN::ParserManage::Manage_Member_LValueSIZE(yylineno, (yyvsp[(1) - (3)].AST), &((yyval.AST)), &fabpa);			}
     break;
 
   case 60:
@@ -2080,7 +2080,7 @@ yyreduce:
 
   case 63:
 
-    {	SIN::ParserManage::Manage_Call_CallCallSuffix(yylineno, (yyvsp[(1) - (2)].AST), (yyvsp[(2) - (2)].AST), &((yyval.AST)), &fabpa);					}
+    {	SIN::ParserManage::Manage_Call_CallCallSuffix(yylineno, (yyvsp[(1) - (2)].AST), (yyvsp[(2) - (2)].AST), &((yyval.AST)), &fabpa);						}
     break;
 
   case 64:
@@ -2120,7 +2120,7 @@ yyreduce:
 
   case 71:
 
-    {	SIN::ParserManage::Manage_ExpressionList_Empty(yylineno, &((yyval.AST)), &fabpa);		}
+    {	SIN::ParserManage::Manage_ExpressionList_Empty(yylineno, &((yyval.AST)), &fabpa);	}
     break;
 
   case 72:
@@ -2130,12 +2130,12 @@ yyreduce:
 
   case 73:
 
-    {	SIN::ParserManage::Manage_ExpressionList_Empty(yylineno, &((yyval.AST)), &fabpa);		}
+    {	SIN::ParserManage::Manage_ExpressionList_Empty(yylineno, &((yyval.AST)), &fabpa);	}
     break;
 
   case 74:
 
-    {	SIN::ParserManage::Manage_ObjectDefinition_EmptyObject(yylineno, &((yyval.AST)), &fabpa);		}
+    {	SIN::ParserManage::Manage_ObjectDefinition_EmptyObject(yylineno, &((yyval.AST)), &fabpa);	}
     break;
 
   case 75:
@@ -2145,7 +2145,7 @@ yyreduce:
 
   case 76:
 
-    {	SIN::ParserManage::Manage_ObjectList_ExpressionObjectLists(yylineno, (yyvsp[(1) - (2)].AST), (yyvsp[(2) - (2)].AST), &((yyval.AST)), &fabpa);					}
+    {	SIN::ParserManage::Manage_ObjectList_ExpressionObjectLists(yylineno, (yyvsp[(1) - (2)].AST), (yyvsp[(2) - (2)].AST), &((yyval.AST)), &fabpa);				}
     break;
 
   case 77:
@@ -2155,7 +2155,7 @@ yyreduce:
 
   case 78:
 
-    {	SIN::ParserManage::Manage_ObjectList_ExpressionObjectLists(yylineno, (yyvsp[(1) - (2)].AST), (yyvsp[(2) - (2)].AST), &((yyval.AST)), &fabpa);					}
+    {	SIN::ParserManage::Manage_ObjectList_ExpressionObjectLists(yylineno, (yyvsp[(1) - (2)].AST), (yyvsp[(2) - (2)].AST), &((yyval.AST)), &fabpa);				}
     break;
 
   case 79:

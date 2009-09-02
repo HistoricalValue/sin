@@ -583,8 +583,28 @@ namespace SIN {
 
 		SINDELETEARRAY(_id);
 	}
-
 	
+	
+	//-----------------------------------------------------------------
+
+	void ParserManage::Manage_Member_LValueKEYS(const int lineNo, ASTNode *_lvalue, ASTNode **_retmember, LexAndBisonParseArguments *_lbpa) {
+		*_retmember = SINEWCLASS(ObjectKeysASTNode, ("KEYS", _lbpa->GetFileName(), lineNo));
+		_lbpa->AppendToNodeList(*_retmember);
+
+		**_retmember << _lvalue;
+	}
+	
+	
+	//-----------------------------------------------------------------
+
+	void ParserManage::Manage_Member_LValueSIZE(const int lineNo, ASTNode *_lvalue, ASTNode **_retmember, LexAndBisonParseArguments *_lbpa) {
+		*_retmember = SINEWCLASS(ObjectSizeASTNode, ("SIZE", _lbpa->GetFileName(), lineNo));
+		_lbpa->AppendToNodeList(*_retmember);
+
+		**_retmember << _lvalue;
+	}
+
+
 	//-----------------------------------------------------------------
 
 	void ParserManage::Manage_Member_LValueExpression (const int lineNo, ASTNode *_lvalue, ASTNode *_expr, ASTNode **_retmember, LexAndBisonParseArguments *_lbpa) {

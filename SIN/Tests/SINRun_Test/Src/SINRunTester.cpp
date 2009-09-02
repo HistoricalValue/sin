@@ -104,7 +104,7 @@ namespace SIN {
 				root->Accept(&visitor);
 				root->Accept(&ctrlvis);
 				root->Accept(&mitvis);
-				root->Accept(&uparseVisitor);
+				//root->Accept(&uparseVisitor);
 				
 				static_cast<OutputStream&>(STDOUT) << "\n\n" << uparseVisitor.UnparseString() << "\n\n\n";
 

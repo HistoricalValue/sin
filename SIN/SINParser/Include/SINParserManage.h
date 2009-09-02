@@ -110,6 +110,8 @@ namespace SIN {
 		//////////////////////////////////////////////////////////
 		// Manage member
 		static void Manage_Member_LValueID			(const int lineNo, ASTNode *_lvalue, char *_id, ASTNode **_retmember, LexAndBisonParseArguments *_lbpa);
+		static void Manage_Member_LValueKEYS		(const int lineNo, ASTNode *_lvalue, ASTNode **_retmember, LexAndBisonParseArguments *_lbpa);
+		static void Manage_Member_LValueSIZE		(const int lineNo, ASTNode *_lvalue, ASTNode **_retmember, LexAndBisonParseArguments *_lbpa);
 		static void Manage_Member_LValueExpression	(const int lineNo, ASTNode *_lvalue, ASTNode *_expr, ASTNode **_retmember, LexAndBisonParseArguments *_lbpa);
 		static void Manage_Member_CallID			(const int lineNo, ASTNode *_call, char *_id, ASTNode **_retmember, LexAndBisonParseArguments *_lbpa);
 		static void Manage_Member_CallExpression	(const int lineNo, ASTNode *_call, ASTNode *_expr, ASTNode **_retmember, LexAndBisonParseArguments *_lbpa);

@@ -200,7 +200,7 @@ term:			'(' expr ')'					{	SIN::ParserManage::Manage_Term_ExpressionParentheses(
 				|	lvalue	INCR				{	SIN::ParserManage::Manage_Term_LValueINCR(yylineno, $1, &($$), &fabpa);				}
 				|	DECR	lvalue				{	SIN::ParserManage::Manage_Term_DECRLValue(yylineno, $2, &($$), &fabpa);				}
 				|	lvalue	DECR				{	SIN::ParserManage::Manage_Term_LValueDECR(yylineno, $1, &($$), &fabpa);				}
-				|	primary						{	SIN::ParserManage::Manage_Term_Primary(yylineno, $1, &($$), &fabpa);					}
+				|	primary						{	SIN::ParserManage::Manage_Term_Primary(yylineno, $1, &($$), &fabpa);				}
 				;
 				
 
@@ -210,7 +210,7 @@ assignexpr:		lvalue ASSIGN expr				{	SIN::ParserManage::Manage_AssignExpression(
 
 
 
-primary:		lvalue							{	SIN::ParserManage::Manage_Primary_LValue(yylineno, $1, &($$), &fabpa);						}
+primary:		lvalue							{	SIN::ParserManage::Manage_Primary_LValue(yylineno, $1, &($$), &fabpa);							}
 				|	call						{	SIN::ParserManage::Manage_Primary_Call(yylineno, $1, &($$), &fabpa);							}
 				|	objectdef					{	SIN::ParserManage::Manage_Primary_ObjectDefinition(yylineno, $1, &($$), &fabpa);				}
 				|	'(' funcdef ')'				{	SIN::ParserManage::Manage_Primary_FunctionDefinitionParentheses(yylineno, $2, &($$), &fabpa);	}
@@ -228,8 +228,8 @@ lvalue:			ID 								{	SIN::ParserManage::Manage_LValue_ID(yylineno, $1, &($$), 
 
     
 member:			lvalue DOT ID					{	SIN::ParserManage::Manage_Member_LValueID(yylineno, $1, $3, &($$), &fabpa);			}
-				|	lvalue DOT KEYS_MEMBER		{	}
-				|	lvalue DOT SIZE_MEMBER		{	}
+				|	lvalue DOT KEYS_MEMBER		{	SIN::ParserManage::Manage_Member_LValueKEYS(yylineno, $1, &($$), &fabpa);			}
+				|	lvalue DOT SIZE_MEMBER		{	SIN::ParserManage::Manage_Member_LValueSIZE(yylineno, $1, &($$), &fabpa);			}
 				|	lvalue	'[' expr ']'		{	SIN::ParserManage::Manage_Member_LValueExpression(yylineno, $1, $3, &($$), &fabpa);	}
 				|	call	DOT ID				{	SIN::ParserManage::Manage_Member_CallID(yylineno, $1, $3, &($$), &fabpa);			}
 				|	call	'[' expr ']'		{	SIN::ParserManage::Manage_Member_CallExpression(yylineno, $1, $3, &($$), &fabpa);	}
@@ -238,7 +238,7 @@ member:			lvalue DOT ID					{	SIN::ParserManage::Manage_Member_LValueID(yylineno
 
 
 	
-call:			call callsuffix						{	SIN::ParserManage::Manage_Call_CallCallSuffix(yylineno, $1, $2, &($$), &fabpa);					}
+call:			call callsuffix						{	SIN::ParserManage::Manage_Call_CallCallSuffix(yylineno, $1, $2, &($$), &fabpa);						}
 				|	lvalue callsuffix				{	SIN::ParserManage::Manage_Call_LValueCallSuffix(yylineno, $1, $2, &($$), &fabpa);					}
 				|	'(' funcdef ')' '(' elist ')'	{	SIN::ParserManage::Manage_Call_FunctionDefinitionExpressionList(yylineno, $2, $5, &($$), &fabpa);	}
 				;
@@ -262,26 +262,26 @@ methodcall:		DOUBLEDOT ID '(' elist ')'			{	SIN::ParserManage::Manage_MethodCall
 
 
 elist:			expr elists							{	SIN::ParserManage::Manage_ExpressionList(yylineno, $1, $2, &($$), &fabpa);	}
-				| 									{	SIN::ParserManage::Manage_ExpressionList_Empty(yylineno, &($$), &fabpa);		}
+				| 									{	SIN::ParserManage::Manage_ExpressionList_Empty(yylineno, &($$), &fabpa);	}
 				;
 
 
 
 elists:			',' expr elists						{	SIN::ParserManage::Manage_ExpressionList(yylineno, $2, $3, &($$), &fabpa);	}
-				|									{	SIN::ParserManage::Manage_ExpressionList_Empty(yylineno, &($$), &fabpa);		}
+				|									{	SIN::ParserManage::Manage_ExpressionList_Empty(yylineno, &($$), &fabpa);	}
 				;
 
 
 
-objectdef:		'[' ']'								{	SIN::ParserManage::Manage_ObjectDefinition_EmptyObject(yylineno, &($$), &fabpa);		}
+objectdef:		'[' ']'								{	SIN::ParserManage::Manage_ObjectDefinition_EmptyObject(yylineno, &($$), &fabpa);	}
 				|	'[' objectlist ']'				{	SIN::ParserManage::Manage_ObjectDefinition_ObjectList(yylineno, $2, &($$), &fabpa);	}
 				;
 			
 			
 			
-objectlist:	 	expr objectlists					{	SIN::ParserManage::Manage_ObjectList_ExpressionObjectLists(yylineno, $1, $2, &($$), &fabpa);					}
+objectlist:	 	expr objectlists					{	SIN::ParserManage::Manage_ObjectList_ExpressionObjectLists(yylineno, $1, $2, &($$), &fabpa);				}
 				|	expr ':' expr objectlists		{	SIN::ParserManage::Manage_ObjectList_ExpressionExpressionObjectLists(yylineno, $1, $3, $4, &($$), &fabpa);	}
-				|	funcdef objectlists				{	SIN::ParserManage::Manage_ObjectList_ExpressionObjectLists(yylineno, $1, $2, &($$), &fabpa);					}
+				|	funcdef objectlists				{	SIN::ParserManage::Manage_ObjectList_ExpressionObjectLists(yylineno, $1, $2, &($$), &fabpa);				}
 				;
 
 

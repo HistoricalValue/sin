@@ -501,10 +501,7 @@ namespace SIN {
 
 	//-----------------------------------------------------------------
 
-	void TreeEvaluationVisitor::Visit(SemicolonASTNode & _node) {
-		// TODO implement
-		//SINASSERT(!"Not implemented");	Do nothing actually
-	}
+	void TreeEvaluationVisitor::Visit(SemicolonASTNode & _node) {}
 
 	//-----------------------------------------------------------------
 
@@ -922,6 +919,45 @@ namespace SIN {
 		}
 
 		memory = *static_cast<InstanceProxy<MemoryCell> const*>(lookuped);
+	}
+
+	//-----------------------------------------------------------------
+
+	void TreeEvaluationVisitor::Visit(ObjectKeysASTNode & _node) {
+		ASTNode::iterator kite(_node.begin());
+		EVALUATE_AND_ADVANCE(kite);
+
+		if (memory->Type() != MemoryCell::OBJECT_MCT)
+			vs->AppendError(to_string("Accessing member \"") << static_cast<ASTNode&>(*kite).Name()
+			<< "\" on non-object type " << Operator::GetTypeAsStringFromMemoryCell(*memory),
+			_node.AssociatedFileName().c_str(), _node.AssociatedFileLine());
+
+		MemoryCellObject* const obj_ref = static_cast<MemoryCellObject*>(memory);
+		Types::Object_t obj_p  = obj_ref->GetValue();
+
+		memory = 0x00;
+		MemoryCell::SimpleAssign(memory, SINEWCLASS(MemoryCellObject, (obj_p->ObjectKeys())));
+		insertTemporary(memory);
+	}
+
+	//-----------------------------------------------------------------
+
+	void TreeEvaluationVisitor::Visit(ObjectSizeASTNode & _node) {
+
+		ASTNode::iterator kite(_node.begin());
+		EVALUATE_AND_ADVANCE(kite);
+
+		if (memory->Type() != MemoryCell::OBJECT_MCT)
+			vs->AppendError(to_string("Accessing member \"") << static_cast<ASTNode&>(*kite).Name()
+			<< "\" on non-object type " << Operator::GetTypeAsStringFromMemoryCell(*memory),
+			_node.AssociatedFileName().c_str(), _node.AssociatedFileLine());
+
+		MemoryCellObject* const obj_ref = static_cast<MemoryCellObject*>(memory);
+		Types::Object_t obj_p  = obj_ref->GetValue();
+
+		insertTemporary(
+			memory = SINEWCLASS(MemoryCellNumber, (obj_p->NumberOfElements()))
+		);
 	}
 
 	//-----------------------------------------------------------------
