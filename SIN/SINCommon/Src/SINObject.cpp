@@ -208,6 +208,14 @@ namespace SIN {
 			ObjectTable::iterator result = table.find(key);
 			return result != table.end() ? result->second : P_not_found;
 		}
+		bool Object::HasMember(const String& _key) const {
+			SINASSERT(static_cast<MemoryCell*>(P_not_found) == P_not_found_value);
+			return table.find(_key) != table.end();
+		}
+		bool Object::LookupFailed(memcell_t const& _previous_result) const {
+			SINASSERT(static_cast<MemoryCell*>(P_not_found) == P_not_found_value);
+			return &_previous_result == &P_not_found;
+		}
 
 
 		//-----------------------------------------------------------------
