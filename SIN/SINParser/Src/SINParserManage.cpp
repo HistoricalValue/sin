@@ -62,7 +62,7 @@ namespace SIN {
 	//-----------------------------------------------------------------
 
 	void ParserManage::Manage_Expression_UnparseMetaExpression (const int lineNo, ASTNode *_expr, ASTNode **_retmetaexpr, LexAndBisonParseArguments *_lbpa){
-		*_retmetaexpr = SINEWCLASS(MetaEvaluateASTNode, (".#", _lbpa->GetFileName(), lineNo));
+		*_retmetaexpr = SINEWCLASS(MetaUnparseASTNode, (".#", _lbpa->GetFileName(), lineNo));
 		_lbpa->AppendToNodeList(*_retmetaexpr);
 
 		**_retmetaexpr << _expr;
@@ -71,7 +71,7 @@ namespace SIN {
 	//-----------------------------------------------------------------
 
 	void ParserManage::Manage_MetaExpression_ParseString (const int lineNo, char *_expr, ASTNode **_retmetaexpr, LexAndBisonParseArguments *_lbpa){
-		*_retmetaexpr = SINEWCLASS(MetaEvaluateASTNode, (".@", _lbpa->GetFileName(), lineNo));
+		*_retmetaexpr = SINEWCLASS(MetaParseStringASTNode, (".@", _lbpa->GetFileName(), lineNo));
 		StringASTNode *expr = SINEWCLASS(StringASTNode, (_expr, _lbpa->GetFileName(), lineNo));
 		_lbpa->AppendToNodeList(*_retmetaexpr);
 		_lbpa->AppendToNodeList(expr);
