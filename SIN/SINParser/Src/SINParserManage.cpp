@@ -89,15 +89,11 @@ namespace SIN {
 
 	//-----------------------------------------------------------------
 
-	void ParserManage::Manage_MetaExpression_ParseString (const int lineNo, char *_expr, ASTNode **_retmetaexpr, LexAndBisonParseArguments *_lbpa){
+	void ParserManage::Manage_MetaExpression_ParseString (const int lineNo, ASTNode *_lvalue, ASTNode **_retmetaexpr, LexAndBisonParseArguments *_lbpa){
 		*_retmetaexpr = SINEWCLASS(MetaParseStringASTNode, (".@", _lbpa->GetFileName(), lineNo));
-		StringASTNode *expr = SINEWCLASS(StringASTNode, (_expr, _lbpa->GetFileName(), lineNo));
 		_lbpa->AppendToNodeList(*_retmetaexpr);
-		_lbpa->AppendToNodeList(expr);
 
-		**_retmetaexpr << expr;
-
-		SINDELETEARRAY(_expr);
+		**_retmetaexpr << _lvalue;
 	}
 
 		

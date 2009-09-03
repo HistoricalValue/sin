@@ -21,7 +21,7 @@ namespace SIN {
 		static void Manage_MetaExpression_PreserveAST_Expression	(const int lineNo, ASTNode *_expr, ASTNode **_retmetaexpr, LexAndBisonParseArguments *_lbpa);
 		static void Manage_MetaExpression_PreserveAST_CALL			(const int lineNo, ASTNode *_call, ASTNode **_retmetaexpr, LexAndBisonParseArguments *_lbpa);
 		static void Manage_MetaExpression_CompileMetaExpression		(const int lineNo, ASTNode *_metaexpr, ASTNode **_retmetaexpr, LexAndBisonParseArguments *_lbpa);
-		static void Manage_MetaExpression_ParseString				(const int lineNo, char *_expr, ASTNode **_retmetaexpr, LexAndBisonParseArguments *_lbpa);
+		static void Manage_MetaExpression_ParseString				(const int lineNo, ASTNode *_lvalue, ASTNode **_retmetaexpr, LexAndBisonParseArguments *_lbpa);
 
 		//////////////////////////////////////////////////////////
 		// Manage Block
