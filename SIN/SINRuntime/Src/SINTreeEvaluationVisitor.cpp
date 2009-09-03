@@ -28,29 +28,54 @@
 #include "SINLogicalNotOperator.h"
 #include "SINShiftToMetaEvaluatorASTVisitor.h"
 #include "SINParserAPI.h"
+#include "SINASTUnparseTreeVisitor.h"
 
+//---------------------------------------------------------------------------------------------------
 
 #define VISIT_KIDS_SERIALLY												\
 		ASTNode::iterator const end = _node.end();						\
 		for(ASTNode::iterator kid = _node.begin(); kid != end; ++kid)	\
 			static_cast<ASTNode&>(*kid).Accept(this)					\
 
+//---------------------------------------------------------------------------------------------------
+
 #define ERROR(MSG, FILE, LINE) vs->AppendError(MSG, FILE, LINE)
+
+//---------------------------------------------------------------------------------------------------
+
 #define ERRO(MSG) ERROR(MSG, _node.AssociatedFileName().c_str(), _node.AssociatedFileLine());
 
+//---------------------------------------------------------------------------------------------------
+
 #define EVALUATE_BINARY_OPERATION(OPERATOR)	evaluateBinaryOperation<OPERATOR>(*this, &TreeEvaluationVisitor::insertTemporary, _node, memory);
+
+//---------------------------------------------------------------------------------------------------
+
 #define EVALUATE_BASIC_MATHEMATIC_OPERATION(OPERATOR)  EVALUATE_BINARY_OPERATION(OPERATOR)
+
+//---------------------------------------------------------------------------------------------------
+
 #define EVALUATE_BASIC_LOGICAL_OPERATION(OPERATOR)     EVALUATE_BINARY_OPERATION(OPERATOR)
+
+//---------------------------------------------------------------------------------------------------
+
 #define EVALUATE_BASIC_COMPARISON_OPERATION(OPERATOR)  EVALUATE_BINARY_OPERATION(OPERATOR)
+
+//---------------------------------------------------------------------------------------------------
+
 #define EVALUATE_AND_ADVANCE(KITE) static_cast<ASTNode&>(*KITE++).Accept(this)
+
+//---------------------------------------------------------------------------------------------------
 
 #define ACCEPT_ALL_THE_KIDS()	for(ASTNode::iterator kid = _node.begin(); kid != _node.end(); ++kid)	\
 									static_cast<ASTNode&>(*kid).Accept(this);
 
-#define EVAL_EXPR()				expr.Accept(this);											\
-								SINASSERT(memory != 0x00);									\
-								SINASSERT(memory->Type() == MemoryCell::BOOL_MCT);			\
-								exprMemoryCell = static_cast<MemoryCellBool *>(memory)
+//---------------------------------------------------------------------------------------------------
+
+#define EVAL_EXPR(EXPR)			EXPR.Accept(this);											\
+								SINASSERT(memory != 0x00);									
+
+//---------------------------------------------------------------------------------------------------
 
 #define NULLSTR static_cast<::SIN::String const* const>(0x00)
 
@@ -59,6 +84,9 @@ namespace SIN {
 	// Privates (hihihi) -- not in class -- utils
 	//-----------------------------------------------------------------
 	namespace {
+
+		//-----------------------------------------------------------------
+
 		class AcceptanceForwardationOperator {
 		public:
 			typedef TreeEvaluationVisitor* acceptable_t;
@@ -73,7 +101,9 @@ namespace SIN {
 			acceptable_t const& acceptable;
 		}; // class Acceptor
 
+
 		//-----------------------------------------------------------------
+
 		template <typename _OperatorT>
 		static void evaluateBinaryOperation(
 			TreeEvaluationVisitor& _evaluator,
@@ -104,6 +134,8 @@ namespace SIN {
 		}
 	} // namespace
 
+
+
 	//-----------------------------------------------------------------
 	// Privates (hihihi)
 	//-----------------------------------------------------------------
@@ -111,18 +143,30 @@ namespace SIN {
 		obj_imp = SINEW(Types::Object);
 	}
 
+
+
+	//-----------------------------------------------------------------
+
 	inline void TreeEvaluationVisitor::assignObjectImpToMemory(void) {
 		memory = 0x00;
 		MemoryCell::SimpleAssign(memory, SINEWCLASS(MemoryCellObject, (obj_imp)));
 		insertTemporary(memory);
 	}
 
+
+
+	//-----------------------------------------------------------------
+
 	inline InstanceProxy<MemoryCell> const& TreeEvaluationVisitor::insertTemporary(InstanceProxy<MemoryCell> const& _tmp) {
 		vs->CurrentStable().Insert(vs->CurrentAvrilNamer()++, _tmp);
 		return _tmp;
 	}
 
-	/**/inline void TreeEvaluationVisitor::lookup(String const& _id, bool const _local, bool const _global) {
+
+
+	//-----------------------------------------------------------------
+
+	inline void TreeEvaluationVisitor::lookup(String const& _id, bool const _local, bool const _global) {
 		SINASSERT(!(_local && _global));
 		if (!_global) {
 			SymbolTable& stable = vs->CurrentStable();
@@ -138,6 +182,10 @@ namespace SIN {
 			memory = *lookuped;
 	}
 
+
+
+	//-----------------------------------------------------------------
+
 	inline void TreeEvaluationVisitor::lookup(String const& _id, SymbolTable::scope_id const _scope) {
 		SymbolTable& stable = vs->CurrentStable();
 		lookuped = &stable.Lookup(_scope, _id);
@@ -145,13 +193,25 @@ namespace SIN {
 			lookuped = 0x00;
 	}
 
+
+
+	//-----------------------------------------------------------------
+
 	/**/inline void TreeEvaluationVisitor::lookup_global(String const& _id) {
 		lookup(_id, false, true);
 	}
 
+
+
+	//-----------------------------------------------------------------
+
 	/**/inline void TreeEvaluationVisitor::lookup_local(String const& _id) {
 		lookup(_id, true);
 	}
+
+
+
+	//-----------------------------------------------------------------
 
 	inline bool TreeEvaluationVisitor::lookup_failed(void) const {
 		return
@@ -160,17 +220,33 @@ namespace SIN {
 			vs->BaseStable().LookupFailed(*lookuped);
 	}
 
+
+
+	//-----------------------------------------------------------------
+
 	inline void TreeEvaluationVisitor::insert(String const& _id, MemoryCell* const _val) {
 		vs->CurrentStable().Insert(_id, _val);
 	}
+
+
+
+	//-----------------------------------------------------------------
 
 	inline void TreeEvaluationVisitor::insert(String const& _id, MemoryCell* const _val, SymbolTable::scope_id const _scope) {
 		vs->CurrentStable().Insert(_id, _val, _scope);
 	}
 
+
+
+	//-----------------------------------------------------------------
+
 	inline void TreeEvaluationVisitor::insert_global(String const& _id, MemoryCell* const _val) {
 		vs->BaseStable().Insert(_id, _val, 0);
 	}
+
+
+
+	//-----------------------------------------------------------------
 
 	inline void TreeEvaluationVisitor::triggerReturn(MemoryCell* _returnValue) {
 		// Copy return value
@@ -179,9 +255,17 @@ namespace SIN {
 		vs->CurrentEnvironment().returnTriggered = true;
 	}
 
+
+
+	//-----------------------------------------------------------------
+
 	inline bool TreeEvaluationVisitor::returnTriggered(void) const {
 		return vs->CurrentEnvironment().returnTriggered;
 	}
+
+
+
+	//-----------------------------------------------------------------
 
 	inline void TreeEvaluationVisitor::performCall(
 		MemoryCell* const _funcmemcell,
@@ -255,10 +339,18 @@ namespace SIN {
 		argument_lists.pop();
 	} // performCall()
 
+
+
+	//-----------------------------------------------------------------
+
 	inline void TreeEvaluationVisitor::evalFunctionNode(ASTNode& _node) {
 		SINASSERT(_node.Type() == SINASTNODES_FUNCTION_TYPE);
 		insertTemporary(memory = SINEWCLASS(MemoryCellFunction, (Types::Function_t(&_node))));
 	}
+
+
+
+	//-----------------------------------------------------------------
 
 	inline void TreeEvaluationVisitor::assignFromTemporary(AssignASTNode const& _assignment_node, MemoryCell* const _temporary) {
 		AssignASTNode const& _node = _assignment_node;
@@ -282,21 +374,43 @@ namespace SIN {
 	}
 
 	// ----- ObjectValueSetter ------
+
+	//-----------------------------------------------------------------
+
 	inline TreeEvaluationVisitor::ObjectValueSetter::ObjectValueSetter(void):
 		 obj_p(0x00)
 		,index("$")
 		,autoIndex(false)
 	{ }
+
+
+
+	//-----------------------------------------------------------------
+
 	inline TreeEvaluationVisitor::ObjectValueSetter::ObjectValueSetter(ObjectValueSetter const& _o):
 		 obj_p(_o.obj_p)
 		,index(_o.index)
 		,autoIndex(_o.autoIndex)
 	{ }
+	
+
+
+	//-----------------------------------------------------------------
+
 	inline TreeEvaluationVisitor::ObjectValueSetter::~ObjectValueSetter(void)
 	{ }
-	inline bool TreeEvaluationVisitor::ObjectValueSetter::ObjectHasMember(void) const {
-		return obj_p->HasMember(index);
-	}
+
+
+
+	//-----------------------------------------------------------------
+
+	inline bool TreeEvaluationVisitor::ObjectValueSetter::ObjectHasMember(void) const 
+		{	return obj_p->HasMember(index);	}
+
+
+
+	//-----------------------------------------------------------------
+
 	inline void TreeEvaluationVisitor::ObjectValueSetter::SetValue(MemoryCell* const _value) const  {
 		SINASSERT(isValidObjectIndexName(index));
 		SINASSERT(!ObjectHasMember());
@@ -305,32 +419,67 @@ namespace SIN {
 		else
 			obj_p->SetValue(index, _value);
 	}
+
+
+
+	//-----------------------------------------------------------------
+
 	inline void TreeEvaluationVisitor::ObjectValueSetter::SetValue(Types::Object_t const& _obj_p, String const& _index, MemoryCell* const _value) {
 		obj_p = _obj_p;
 		if (&_index != 0x00)
 			index = _index;
 		SetValue(_value);
 	}
+	
+	
+	
 	// ------------------------------
 	// --- SymbolTableValueSetter ---
+	
+
+	//-----------------------------------------------------------------	
+	
 	inline void TreeEvaluationVisitor::SymbolTableValueSetter::SetValue(MemoryCell* const _value) const {
 		SINASSERT(isValidID(id));
 		stable_p->Insert(id, _value);
 	}
+
+
+
+	//-----------------------------------------------------------------
+
 	inline bool TreeEvaluationVisitor::SymbolTableValueSetter::LookupFails(void) const {
 		return stable_p->LookupFailed(stable_p->Lookup(id));
 	}
+
+
+
+	//-----------------------------------------------------------------
+
 	inline TreeEvaluationVisitor::SymbolTableValueSetter::SymbolTableValueSetter(void):
 		 stable_p(0x00)
 		,id("$")
 	{ }
+
+
+
+	//-----------------------------------------------------------------
+
 	inline TreeEvaluationVisitor::SymbolTableValueSetter::SymbolTableValueSetter(SymbolTableValueSetter const& _o):
 		 stable_p(_o.stable_p)
 		,id(_o.id)
 	{ }
+	
+
+
+	//-----------------------------------------------------------------
+
 	inline TreeEvaluationVisitor::SymbolTableValueSetter::~SymbolTableValueSetter(void)
 	{ }
-	// ------------------------------
+	
+	
+	
+	//-----------------------------------------------------------------
 
 	inline void TreeEvaluationVisitor::assignToObjectMemberFromTemporary(Types::Object_t const& _obj_p, MemoryCell* _temporary, String const& _index) {
 		if (_temporary != 0x00) {
@@ -347,6 +496,10 @@ namespace SIN {
 				MemoryCell::Assign(*obj_memb_p, SINPTR(_temporary));
 		}
 	}
+
+
+
+	//-----------------------------------------------------------------
 
 	inline void TreeEvaluationVisitor::objectLookup(ASTNode& _node, String const& _member_id) {
 		ASTNode::iterator kite(_node.begin());
@@ -373,6 +526,10 @@ namespace SIN {
 			memory = *lookuped;
 	}
 
+
+
+	//-----------------------------------------------------------------
+
 	inline void TreeEvaluationVisitor::evalObjectMemberAccess(ASTNode& _node) {
 		ASTNode::iterator kite(_node.begin());
 		// Child 1 is the object, ignore
@@ -384,6 +541,10 @@ namespace SIN {
 		SINASSERT(kite == _node.end());	
 		objectLookup(_node, member_id); // memory and lookuped set in here
 	}
+
+	
+
+	//-----------------------------------------------------------------
 
 	inline void TreeEvaluationVisitor::evalObjectIndexAccess(SIN::ASTNode& _node) {
 		ASTNode::iterator kite(_node.begin());
@@ -580,13 +741,13 @@ namespace SIN {
 
 		elist1.Accept(this);
 		
-		EVAL_EXPR();
+		EVAL_EXPR(expr);
 		while(memory->ToBoolean()) {
 			stmt.Accept(this);
 			if (triggeredBreak)
 				break;
 			elist2.Accept(this);
-			EVAL_EXPR();
+			EVAL_EXPR(expr);
 		}
 		triggeredBreak		= false;
 		triggeredContinue	= false;
@@ -618,7 +779,7 @@ namespace SIN {
 			stmt.Accept(this);
 			if (triggeredBreak)
 				break;
-			EVAL_EXPR();
+			EVAL_EXPR(expr);
 		}
 		triggeredBreak		= false;
 		triggeredContinue	= false;
@@ -631,7 +792,7 @@ namespace SIN {
 		ASTNode &  expr			= static_cast<ASTNode&>(*_node.begin());
 		ASTNode &  stmt			= static_cast<ASTNode&>(*_node.rbegin());
 
-		EVAL_EXPR();
+		EVAL_EXPR(expr);
 
 		if(memory->ToBoolean())
 			stmt.Accept(this);
@@ -648,7 +809,7 @@ namespace SIN {
 		ASTNode & stmt1					= static_cast<ASTNode&>(*kids++);
 		ASTNode & stmt2					= static_cast<ASTNode&>(*kids);
 
-		EVAL_EXPR();
+		EVAL_EXPR(expr);
 
 		if(memory->ToBoolean())
 			stmt1.Accept(this);
@@ -727,10 +888,11 @@ namespace SIN {
 		typedef argument_list_t::const_iterator actuals_iter_t;
 		typedef ASTNode::iterator formals_iter_t;
 		
-		actuals_iter_t const actuals_end = actuals.end();
-		actuals_iter_t actuals_ite = actuals.begin(); 
-		formals_iter_t const formals_end = _node.end();
-		formals_iter_t formals_ite = _node.begin();
+		actuals_iter_t const actuals_end	= actuals.end();
+		actuals_iter_t actuals_ite			= actuals.begin(); 
+		formals_iter_t const formals_end	= _node.end();
+		formals_iter_t formals_ite			= _node.begin();
+		
 		for(; actuals_ite != actuals_end && formals_ite != formals_end; ++actuals_ite, ++formals_ite)
 			stable.Insert(static_cast<ASTNode&>(*formals_ite).Name(), *actuals_ite);
 
@@ -1081,12 +1243,13 @@ namespace SIN {
 
 	void TreeEvaluationVisitor::Visit(MetaPreserveASTNode & _node) {
 		// TODO implement
-		//SINASSERT(!"Not implemented");
+		SINASSERT(!"Not implemented");
 	}
 
 	//-----------------------------------------------------------------
 
 	void TreeEvaluationVisitor::Visit(MetaEvaluateASTNode & _node) {
+		//compile a meta expression. When say 
 		// TODO implement
 		SINASSERT(!"Not implemented");
 	}
@@ -1094,17 +1257,35 @@ namespace SIN {
 	//-----------------------------------------------------------------
 
 	void TreeEvaluationVisitor::Visit(MetaUnparseASTNode & _node) {
-		// TODO implement
-		SINASSERT(!"Not implemented");
+		SINASSERT(_node.NumberOfChildren() == 1);
+		
+		ASTNode & kid = static_cast<ASTNode &>(*_node.begin());
+		EVAL_EXPR(kid);
+		SINASSERT(memory->Type() == MemoryCell::AST_MCT);
+
+		ASTUnparseTreeVisitor unparser;
+		kid.Accept(&unparser);
+		
+		String unparsedString(unparser.UnparsedString());
+		
+		SINASSERT(false);	//TODO edw na sunexisoume. Den 3erw ti 8a kanoume malon 8elei new memory call
 	}
 
 	//-----------------------------------------------------------------
 
 	void TreeEvaluationVisitor::Visit(MetaParseStringASTNode & _node) {
-		ParserAPI test;
-		//TODO get the code for parsing
-		test.ParseText("a = 1;");
+		SINASSERT(_node.NumberOfChildren() == 1);
+//---------->  WARNING	<--------------//
+		ParserAPI test;		//Wen this object die, it will destroy the AST.
+//---------->  WARNING	<--------------//
+
+		EVAL_EXPR(static_cast<ASTNode &>(*_node.begin()));
+		SINASSERT(memory->Type() == MemoryCell::STRING_MCT);
+
+		test.ParseText(static_cast<MemoryCellString *>(memory)->GetValue().c_str());
 		ASTNode* root = test.GetAST();
+
+		SINASSERT(false);	//TODO edw na sunexisoume. Den 3erw ti 8a kanoume malon 8elei new memory call
 	}
 
 	//-----------------------------------------------------------------
