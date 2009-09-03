@@ -117,8 +117,7 @@ namespace SIN {
 				
 				SINASSERT(unpasedString1 == unpasedString2);
 
-				cloneVisitor.DeleteAST();
-				//ASTCloneVisitor::NodesList *list = 
+				cloneVisitor.DeleteListAndAST();
 
 				static_cast<OutputStream&>(STDOUT) << "\n\n" << unpasedString2 << "\n\n\n";
 

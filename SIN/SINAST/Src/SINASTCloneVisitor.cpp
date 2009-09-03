@@ -26,7 +26,8 @@
 //----------------------------------------------------------------------------------------------------------
 
 
-#define CONECT_NODE_WITH_ZERO_CHILD(NODE_TYPE)		SINASSERT(_node.NumberOfChildren() == 0);									\
+#define CONECT_NODE_WITH_ZERO_CHILD(NODE_TYPE)		SINASSERT(nodesList != 0x00);												\
+													SINASSERT(_node.NumberOfChildren() == 0);									\
 													NODE_TYPE##ASTNode * newNode = SINEWCLASS(NODE_TYPE##ASTNode, (_node));		\
 													nodesList->push_back(newNode);												\
 													if (parent)																	\
@@ -36,7 +37,8 @@
 //----------------------------------------------------------------------------------------------------------
 
 
-#define CONECT_NODE_WITH_ONE_CHILD(NODE_TYPE)		SINASSERT(_node.NumberOfChildren() == 1);									\
+#define CONECT_NODE_WITH_ONE_CHILD(NODE_TYPE)		SINASSERT(nodesList != 0x00);												\
+													SINASSERT(_node.NumberOfChildren() == 1);									\
 													NODE_TYPE##ASTNode * newNode = SINEWCLASS(NODE_TYPE##ASTNode, (_node));		\
 													nodesList->push_back(newNode);												\
 													if (parent)																	\
@@ -48,7 +50,8 @@
 //----------------------------------------------------------------------------------------------------------
 
 
-#define CONECT_NODE_WITH_TWO_CHILDREN(NODE_TYPE)	SINASSERT(_node.NumberOfChildren() == 2);									\
+#define CONECT_NODE_WITH_TWO_CHILDREN(NODE_TYPE)	SINASSERT(nodesList != 0x00);												\
+													SINASSERT(_node.NumberOfChildren() == 2);									\
 													NODE_TYPE##ASTNode * newNode = SINEWCLASS(NODE_TYPE##ASTNode, (_node));		\
 													nodesList->push_back(newNode);												\
 													if (parent)																	\
@@ -73,25 +76,25 @@
 //----------------------------------------------------------------------------------------------------------
 
 #define SIN_VISIT_DEFINITION_FOR_NODE_WITH_ZERO_CHILD(NODE_TYPE)				\
-		void ASTCloneVisitor::Visit(NODE_TYPE##ASTNode& _node)	\
+		void ASTCloneVisitor::Visit(NODE_TYPE##ASTNode& _node)					\
 			{	CONECT_NODE_WITH_ZERO_CHILD(NODE_TYPE);	}
 
 //----------------------------------------------------------------------------------------------------------
 
 #define SIN_VISIT_DEFINITION_FOR_NODE_WITH_ONE_CHILD(NODE_TYPE)					\
-		void ASTCloneVisitor::Visit(NODE_TYPE##ASTNode& _node)	\
+		void ASTCloneVisitor::Visit(NODE_TYPE##ASTNode& _node)					\
 			{	CONECT_NODE_WITH_ONE_CHILD(NODE_TYPE);	}
 
 //----------------------------------------------------------------------------------------------------------
 
 #define SIN_VISIT_DEFINITION_FOR_NODE_WITH_TWO_CHILDREN(NODE_TYPE)				\
-		void ASTCloneVisitor::Visit(NODE_TYPE##ASTNode& _node)	\
+		void ASTCloneVisitor::Visit(NODE_TYPE##ASTNode& _node)					\
 			{	CONECT_NODE_WITH_TWO_CHILDREN(NODE_TYPE);	}
 
 //----------------------------------------------------------------------------------------------------------
 
 #define SIN_VISIT_DEFINITION_FOR_NODE_WITH_MENY_CHILDREN(NODE_TYPE)				\
-		void ASTCloneVisitor::Visit(NODE_TYPE##ASTNode& _node)	\
+		void ASTCloneVisitor::Visit(NODE_TYPE##ASTNode& _node)					\
 			{	CONECT_NODE_WITH_MANY_CHILDREN(NODE_TYPE)	}
 
 
@@ -140,9 +143,18 @@ namespace SIN {
 	//-----------------------------------------------------------------
 
 	void ASTCloneVisitor::DeleteAST(void){ 
+		SINASSERT(nodesList != 0x00);
 		std::for_each(nodesList->begin(), nodesList->end(), CleanListFunctor<ASTNode>()); 
+		nodesList->clear();
+	}
+
+
+	//-----------------------------------------------------------------
+	
+	void ASTCloneVisitor::DeleteListAndAST(void) {
+		SINASSERT(nodesList != 0x00);
+		DeleteAST();
 		SINDELETE(nodesList);
-		//nodesList->clear();
 	}
 
 
@@ -169,7 +181,8 @@ namespace SIN {
 	void ASTCloneVisitor::Visit(ReturnASTNode& _node)	{
 		size_t numberOfChildren = _node.NumberOfChildren();
 		SINASSERT(numberOfChildren == 0 || numberOfChildren == 1);
-		
+		SINASSERT(nodesList != 0x00);
+
 		ReturnASTNode * newNode = SINEWCLASS(ReturnASTNode, (_node));		
 		nodesList->push_back(newNode);												
 		*parent << newNode;													

@@ -86,6 +86,7 @@ namespace SIN {
 
 		ASTNode *	Root(void) const ;
 		void		DeleteAST(void);
+		void		DeleteListAndAST(void);
 
 		//------------->  WARNING	<----------------//
 		//YOU MUST TAKE THIS LIST AND DELETE ALL THE ELEMENTS AND AFTER THAT YOU MUST DELETE AND THE LIST.
