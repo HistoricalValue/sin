@@ -182,7 +182,11 @@ namespace SIN {
 
 		void Object::SetValue (const ObjectTableValue & otv) 
 			{ SetValue(otv.first, otv.second); }
-		
+
+		//-----------------------------------------------------------------
+
+		void Object::UnsetValue (const String & key) 
+			{ table.erase(key); }
 		
 		//-----------------------------------------------------------------
 		

@@ -42,6 +42,7 @@ namespace SIN {
 			memcell_t&		GetValue(const String &);
 			bool			HasMember(const String &) const;
 			bool			LookupFailed(memcell_t const& previous_result) const;
+			void			UnsetValue(const String &);
 			
 			void			MarkForDeletion(void);
 			bool			IsMarckedForDeletion(void) const;

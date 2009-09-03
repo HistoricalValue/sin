@@ -132,6 +132,10 @@ namespace SIN {
 			// TODO implement
 			return true;
 		}
+
+		static inline bool notNil(MemoryCell const* const _memcell) {
+			return _memcell->Type() != MemoryCell::NIL_MCT;
+		}
 	} // namespace
 
 
@@ -176,23 +180,12 @@ namespace SIN {
 			lookuped = &vs->BaseStable().Lookup(_id);
 		if (lookup_failed()) {
 			lookuped = 0x00;
-			memory = 0x00;
+			// memory still need a Nil value for a failed lookup
+			insertTemporary(memory = SINEW(MemoryCellNil));
 		}
 		else
 			memory = *lookuped;
 	}
-
-
-
-	//-----------------------------------------------------------------
-
-	inline void TreeEvaluationVisitor::lookup(String const& _id, SymbolTable::scope_id const _scope) {
-		SymbolTable& stable = vs->CurrentStable();
-		lookuped = &stable.Lookup(_scope, _id);
-		if (lookup_failed())
-			lookuped = 0x00;
-	}
-
 
 
 	//-----------------------------------------------------------------
@@ -310,9 +303,9 @@ namespace SIN {
 			SINASSERT(body_block_ast_node.Type() == SINASTNODES_BLOCK_TYPE);
 			body_block_ast_node.Accept(this); // evaluate the body in the new env
 			if (returnValue == 0x00)
-				memory = SINEW(MemoryCellNil);
+				memory = SINEW(MemoryCellNil); // insert temporary happens later
 			else
-				memory = returnValue;
+				memory = returnValue; // insert temporary happens later
 		} else { // LibFunc
 			// add actual arguments to the new environment's symbol table
 			Namer arg_namer("$arg_avril_");
@@ -326,7 +319,7 @@ namespace SIN {
 
 			(*libfunc)(*vs, *lib);
 			memory = 0x00;
-			MemoryCell::Assign(memory, vs->ReturnValue());
+			MemoryCell::Assign(memory, vs->ReturnValue()); // insert temporary happens later
 		}
 
 		// Restore environment
@@ -358,12 +351,6 @@ namespace SIN {
 		if (lookuped != 0x00) { // destination exists, reuse memory in lookuped
 			SINASSERT(memory == *lookuped);
 			SINASSERT(memory != 0x00);
-			if (memory->Type() == MemoryCell::FUNCTION_MCT || memory->Type() == MemoryCell::LIB_FUNCTION_MCT)
-				// TODO this check is wrong because:
-				//     a = println;
-				//     a = 3;
-				// fails. Fix this.
-				ERRO("Assigning to a function");
 			MemoryCell::Assign(*lookuped, _temporary);
 		}
 		else { // general destination does not exist. Setter must be called.
@@ -482,19 +469,28 @@ namespace SIN {
 	//-----------------------------------------------------------------
 
 	inline void TreeEvaluationVisitor::assignToObjectMemberFromTemporary(Types::Object_t const& _obj_p, MemoryCell* _temporary, String const& _index) {
-		if (_temporary != 0x00) {
-			object_value_setter.autoIndex = (&_index == 0x00) || (&_index != 0x00 && _index.Length() == 0u);
-			InstanceProxy<MemoryCell>* obj_memb_p = 0x00;
-			if (!object_value_setter.autoIndex)
-				obj_memb_p = &SINPTR(_obj_p)->GetValue(_index);
-			if (object_value_setter.autoIndex || _obj_p->LookupFailed(*obj_memb_p)) {
-				MemoryCell* value = 0x00;
-				MemoryCell::Assign(value, SINPTR(_temporary));
-				object_value_setter.SetValue(_obj_p, _index, SINPTR(value)); // _index ignored if autoIndex 
-			}
-			else
-				MemoryCell::Assign(*obj_memb_p, SINPTR(_temporary));
+		SINASSERT(_temporary != 0x00);
+		object_value_setter.autoIndex = (&_index == 0x00) || (&_index != 0x00 && _index.Length() == 0u);
+		InstanceProxy<MemoryCell>* obj_memb_p = 0x00;
+		const bool tmp_not_nil = notNil(_temporary);
+		bool new_member = false;
+		if (!(new_member = object_value_setter.autoIndex)) {
+			obj_memb_p = &SINPTR(_obj_p)->GetValue(_index);
+			new_member = _obj_p->LookupFailed(*obj_memb_p);
 		}
+
+		if (new_member && tmp_not_nil) {
+			MemoryCell* value = 0x00;
+			MemoryCell::Assign(value, SINPTR(_temporary));
+			object_value_setter.SetValue(_obj_p, _index, SINPTR(value)); // _index ignored if autoIndex 
+		}
+		else // not new member OR tmp nil
+			if (tmp_not_nil) // ==> not new member
+				MemoryCell::Assign(*obj_memb_p, SINPTR(_temporary));
+			else if (!new_member) // ==> tmp is nil
+				_obj_p->UnsetValue(_index);
+			else // not new member AND tmp nil
+				; // do nothing
 	}
 
 
@@ -516,7 +512,7 @@ namespace SIN {
 		if (obj_p->LookupFailed(*lookuped)) {
 			// not found
 			lookuped = 0x00;
-			memory = 0x00;
+			insertTemporary(memory = SINEW(MemoryCellNil)); // memory still needs a value
 			object_value_setter.obj_p = obj_p;
 			object_value_setter.index = _member_id;
 			object_value_setter.autoIndex = false;
@@ -561,10 +557,6 @@ namespace SIN {
 
 	//-----------------------------------------------------------------
 
-	TreeEvaluationVisitor::TreeEvaluationVisitor(void) : memory(NULL), lookuped(NULL), preserveNode(NULL), lib(NULL), vs(NULL), argument_lists() { }
-
-	//-----------------------------------------------------------------
-
 	TreeEvaluationVisitor::TreeEvaluationVisitor(Library::Library *_lib, VM::VirtualState *_vs) : 
 		memory(NULL), 
 		lookuped(NULL), 
@@ -595,10 +587,6 @@ namespace SIN {
 	//-----------------------------------------------------------------
 
 	TreeEvaluationVisitor::~TreeEvaluationVisitor(void){}
-
-	//-----------------------------------------------------------------
-
-//	void TreeEvaluationVisitor::Visit(ASTNode & _node) { SINASSERT(!"Cannot be here any more"); }
 
 	//-----------------------------------------------------------------
 
@@ -870,6 +858,7 @@ namespace SIN {
 
 		// Lookup and prepare env about where to assign
 		kid0.Accept(this);
+		SINASSERT(memory != 0x00);
 		assignFromTemporary(_node, value_temporary);
 
 		// Expression evaluation result
@@ -923,28 +912,24 @@ namespace SIN {
 			// Conceptually, actual arguments are *assignments* of some variables to the
 			// argument-variables of a function.
 			// Assignment is needed for correct handling of objects;
-			if (memory != 0x00) {
-				MemoryCell* argument = 0x00;
-				MemoryCell::Assign(argument, memory);
-				argument_list.push_back(argument);
-			}
-			else
-				argument_list.push_back(SINEW(MemoryCellNil));
+			SINASSERT(memory != 0x00);
+			MemoryCell* argument = 0x00;
+			MemoryCell::Assign(argument, memory);
+			argument_list.push_back(argument);
 		}
 	}
 
 	//-----------------------------------------------------------------
 
 	void TreeEvaluationVisitor::Visit(NormalCallASTNode & _node) {
-		SINASSERT(_node.NumberOfChildren() == 2);
-
 		ASTNode::iterator kid = _node.begin();
 
 		// Lookup the function
 		ASTNode& func_id = static_cast<ASTNode&>(*kid++);
 		func_id.Accept(this);
 		ASTNode& actual_args_astnode = static_cast<ASTNode&>(*kid++);
-		performCall(memory, func_id.Name(), _node.AssociatedFileName(), _node.AssociatedFileLine(), actual_args_astnode);
+		SINASSERT(kid == _node.end());
+		performCall(memory, func_id.Name(), _node.AssociatedFileName(), _node.AssociatedFileLine(), actual_args_astnode); // memory is set in here (a temporary of the return value)
 	}
 
 	//-----------------------------------------------------------------
@@ -964,7 +949,7 @@ namespace SIN {
 		// TODO insert a new field in LambdaASTNode and don't use Name() as
 		// a description
 		performCall(memory, lambda_astnode.Name(), _node.AssociatedFileName(), _node.AssociatedFileLine(),
-				actual_args_astnode);		
+				actual_args_astnode); // memory is set in here (a temporary of the return value)
 	}
 
 	//-----------------------------------------------------------------
@@ -1105,11 +1090,8 @@ namespace SIN {
 		ASTNode::iterator kid = _node.begin();
 
 		static_cast<ASTNode&>(*kid).Accept(this);
-		SINASSERT(memory->Type() == MemoryCell::BOOL_MCT);
-		MemoryCellBool* boolean = static_cast<MemoryCellBool*>(memory = memory->Clone());
-		insertTemporary(memory);
-
-		boolean->SetValue(!boolean->GetValue());
+		SINASSERT(memory != 0x00);
+		insertTemporary(memory = SINEWCLASS(MemoryCellBool, (! memory->ToBoolean())));
 	}
 
 	//-----------------------------------------------------------------
@@ -1147,6 +1129,8 @@ namespace SIN {
 	void TreeEvaluationVisitor::Visit(UnindexedMemberASTNode & _node) {
 		static_cast<ASTNode&>(*_node.begin()).Accept(this);
 		assignToObjectMemberFromTemporary(obj_imp, memory, *NULLSTR);
+		memory = 0x00;
+		lookuped = 0x00;
 	}
 
 	//-----------------------------------------------------------------
@@ -1236,7 +1220,8 @@ namespace SIN {
 		SINASSERT(_node.NumberOfChildren() == 1);
 		ShiftToMetaEvaluatorASTVisitor stmev(*this);
 		static_cast<ASTNode&>(*_node.begin()).Accept(&stmev);
-		
+		// TODO deal with result
+		SINASSERT(!"Not implemented (fully)");
 	}
 
 	//-----------------------------------------------------------------

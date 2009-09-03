@@ -1,3 +1,16 @@
+if (not a)
+	println("hello");
+	
+a = b;
+c = [];
+if (c.x)
+	;
+else if (d)
+	;
+else
+	println("wow");
+	
+
 function point2(){
 	return [
 		"x" : 0,

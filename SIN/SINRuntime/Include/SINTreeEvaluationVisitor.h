@@ -83,7 +83,6 @@ namespace SIN{
 
 		MemoryCell * Memory(void) const { return memory; }
 
-		TreeEvaluationVisitor (void);
 		TreeEvaluationVisitor (Library::Library *lib, VM::VirtualState *vs);
 		virtual ~TreeEvaluationVisitor (void);
 	private:
@@ -128,7 +127,6 @@ namespace SIN{
 		InstanceProxy<MemoryCell> const& insertTemporary(InstanceProxy<MemoryCell> const&);
 		// lookups
 		void lookup(String const&, bool const local = false, bool const global = false);
-		void lookup(String const&, SymbolTable::scope_id);
 		void lookup_local(String const&);
 		void lookup_global(String const&);
 		bool lookup_failed(void) const;

@@ -85,8 +85,12 @@ namespace SIN {
 		SIN::Alloc::MemoryAllocator mallocator;
 		SIN::Alloc::Allocator<char> allocator(&mallocator);
 
-		SIN::Alloc::String memlik((to_string("Memory leak: ") << SIN::Alloc::MemoryLeaking() << " bytes").c_str(),
-				allocator);
+		SIN::Alloc::String memlik((to_string(SIN::ENDL) <<
+			"Memory leak:     " << SIN::Alloc::MemoryLeaking() << " bytes" << SIN::ENDL <<
+			"Max allocated:   " << SIN::Alloc::MaximumAllocated() << " bytes" << SIN::ENDL <<
+			"Total allocated: " << SIN::Alloc::TotallyAllocated() << " bytes" << SIN::ENDL <<
+			"Total freed:     " << SIN::Alloc::TotallyFreed() << " bytes").c_str(),
+			allocator);
 		SIN::Alloc::ChunksMap undeallocated_chunks(SIN::Alloc::UndeallocatedChunks());
 		static_cast<SIN::OutputStream&>(SIN::STDOUT) << memlik.c_str() << SIN::ENDL; // TODO remove
 		#endif
