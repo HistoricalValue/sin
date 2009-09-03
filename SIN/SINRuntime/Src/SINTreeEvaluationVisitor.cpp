@@ -1222,6 +1222,8 @@ namespace SIN {
 		static_cast<ASTNode&>(*_node.begin()).Accept(&stmev);
 		// TODO deal with result
 		SINASSERT(!"Not implemented (fully)");
+		SINASSERT(false);	//TODO edw na sunexisoume. 8ewritika prepei na paroume to new dendro apo ton
+		//ShiftMeta kai na to kolisoume se auto pou exoume twra
 	}
 
 	//-----------------------------------------------------------------

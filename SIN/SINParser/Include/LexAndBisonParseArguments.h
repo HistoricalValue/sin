@@ -51,6 +51,7 @@ namespace SIN {
 		void	CleanNodes (void);
 		void	CleanErrors (void);
 		void	CleanErrosAndNodes (void);
+		void	DeleteNodesListAndNodes(void);
 		
 		
 		void			SetFileName(const String &);
@@ -63,8 +64,9 @@ namespace SIN {
 		//YOU MUST TAKE THIS LIST AND DELETE ALL THE ELEMENTS AND AFTER THAT YOU MUST DELETE AND THE LIST.
 		//LexAndBisonParseArguments DOES NOT DO THIS AUTOMATCILALLY.
 		//IF YOU DO NOT DO THAT, YOU ARE GOING TO HAVE MEMORY LEAKS
-		NodesList *		TakeNodesList();
-
+		NodesList *		TakeNodesList(void);
+		
+		
 	private:
 		bool		hasError;
 		Errors		errors;

@@ -2,6 +2,7 @@
 #include <cassert>
 
 #include "Common.h"
+#include "SINAlloc.h"
 #include "SINLogger.h"
 #include "SINAssert.h"
 #include "SINASTNode.h"
@@ -64,6 +65,10 @@ namespace SIN {
 
 	void ParserAPI::DeleteAST(void) 
 		{ labpa.CleanNodes(); }
+
+	void ParserAPI::DeleteListAndAST(void) {
+		labpa.DeleteNodesListAndNodes();
+	}
 
 	//--------------------------------------------------------
 

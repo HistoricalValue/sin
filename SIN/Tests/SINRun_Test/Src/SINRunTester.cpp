@@ -174,11 +174,8 @@ namespace SIN {
 				
 
 				metatxt.flush();
-				shifter.DeleteAST();
-
-				test.DeleteAST();
-				SINDELETE(test.TakeNodesList());
-				//ASTNode* metacode = shifter;
+				test.DeleteListAndAST();
+				shifter.DeleteListAndAST();
 			}
 
 

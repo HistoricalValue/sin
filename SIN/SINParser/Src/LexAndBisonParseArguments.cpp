@@ -154,6 +154,15 @@ namespace SIN {
 
 	//-----------------------------------------------------------------
 
-	LexAndBisonParseArguments::NodesList * LexAndBisonParseArguments::TakeNodesList() 
+	LexAndBisonParseArguments::NodesList * LexAndBisonParseArguments::TakeNodesList(void) 
 		{	return nodesList;	}
+
+
+	void LexAndBisonParseArguments::DeleteNodesListAndNodes(void) {
+		SINASSERT(nodesList != 0x00);
+
+		CleanNodes();
+		SINDELETE(nodesList);
+		nodesList = 0x00;
+	}
 }	//namespace SIN

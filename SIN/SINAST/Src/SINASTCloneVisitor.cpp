@@ -14,13 +14,16 @@
 //----------------------------------------------------------------------------------------------------------
 
 
-#define VISIT_NODE_WITH_MANY_CHILDREN()				for(ASTNode::iterator kid = _node.begin();		\
-														kid != _node.end();							\
-														++kid)										\
-													{												\
-														parent = newNode;							\
-														static_cast<ASTNode&>(*kid).Accept(this);	\
-													}
+#define VISIT_NODE_WITH_MANY_CHILDREN()				if (true) {																	\
+														for(ASTNode::iterator kid = _node.begin();								\
+															kid != _node.end();													\
+															++kid)																\
+														{																		\
+															parent = newNode;													\
+															static_cast<ASTNode&>(*kid).Accept(this);							\
+														}																		\
+													}																			\
+													else
 
 
 //----------------------------------------------------------------------------------------------------------
@@ -95,7 +98,7 @@
 
 #define SIN_VISIT_DEFINITION_FOR_NODE_WITH_MENY_CHILDREN(NODE_TYPE)				\
 		void ASTCloneVisitor::Visit(NODE_TYPE##ASTNode& _node)					\
-			{	CONECT_NODE_WITH_MANY_CHILDREN(NODE_TYPE)	}
+			{	CONECT_NODE_WITH_MANY_CHILDREN(NODE_TYPE);	}
 
 
 
@@ -150,11 +153,19 @@ namespace SIN {
 
 
 	//-----------------------------------------------------------------
+
+	void ASTCloneVisitor::DeleteList(void) {
+		SINASSERT(nodesList != 0x00);
+		SINDELETE(nodesList);
+		nodesList = 0x00;
+	}
+
+
+	//-----------------------------------------------------------------
 	
 	void ASTCloneVisitor::DeleteListAndAST(void) {
-		SINASSERT(nodesList != 0x00);
 		DeleteAST();
-		SINDELETE(nodesList);
+		DeleteList();
 	}
 
 
@@ -171,7 +182,7 @@ namespace SIN {
 		SinCodeASTNode * newNode = SINEWCLASS(SinCodeASTNode, (_node));
 		nodesList->push_back(newNode);		
 		
-		VISIT_NODE_WITH_MANY_CHILDREN()
+		VISIT_NODE_WITH_MANY_CHILDREN();
 		parent	= newNode;
 	}
 	

@@ -85,15 +85,16 @@ namespace SIN {
 		SINASTVISITOR_VISIT_SIGNATURE(Not				);
 
 		ASTNode *	Root(void) const ;
-		void		DeleteAST(void);
-		void		DeleteListAndAST(void);
+		void		DeleteAST(void);		
+		void		DeleteList(void);		//Delete the list but not the contents of the list.
+		void		DeleteListAndAST(void);	//Delete the list and the contents of the list.
 
 		//------------->  WARNING	<----------------//
 		//YOU MUST TAKE THIS LIST AND DELETE ALL THE ELEMENTS AND AFTER THAT YOU MUST DELETE AND THE LIST.
 		//LexAndBisonParseArguments DOES NOT DO THIS AUTOMATCILALLY.
 		//IF YOU DO NOT DO THAT, YOU ARE GOING TO HAVE MEMORY LEAKS
 		ASTCloneVisitor::NodesList * TakeNodesList(void);
-	private:
+	protected:
 		ASTNode	*	parent;
 		NodesList * nodesList;
 

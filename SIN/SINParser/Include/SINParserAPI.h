@@ -21,6 +21,7 @@ namespace SIN {
         int		ParseText(const char *_input);
 		bool	HasError(void) const { return labpa.HasError(); }
 		void	DeleteAST(void); //delete the fucking AST
+		void	DeleteListAndAST(void); //delete the fucking AST and the nodes list
 		
 		// If Parse* returned no error, this returns the produced AST
 		ASTNode *GetAST(void) const;
