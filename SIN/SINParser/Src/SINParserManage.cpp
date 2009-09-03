@@ -39,7 +39,19 @@ namespace SIN {
 
 	//-----------------------------------------------------------------
 
+#define MANAGE_META_EXPRESSION(KID)																\
+	*_retmetaexpr = SINEWCLASS(MetaPreserveASTNode, (".~", _lbpa->GetFileName(), lineNo));		\
+	_lbpa->AppendToNodeList(*_retmetaexpr);														\
+	**_retmetaexpr << KID
+
 	void ParserManage::Manage_MetaExpression_PreserveAST_ID (const int lineNo, char *_id, ASTNode **_retmetaexpr, LexAndBisonParseArguments *_lbpa){
+		IDASTNode *id = SINEWCLASS(IDASTNode, (_id));
+		_lbpa->AppendToNodeList(id);
+
+		MANAGE_META_EXPRESSION(id);
+		
+		SINDELETEARRAY(_id);
+		/*
 		*_retmetaexpr = SINEWCLASS(MetaPreserveASTNode, (".~", _lbpa->GetFileName(), lineNo));
 		IDASTNode *id = SINEWCLASS(IDASTNode, (_id));
 		_lbpa->AppendToNodeList(*_retmetaexpr);
@@ -48,24 +60,39 @@ namespace SIN {
 		**_retmetaexpr << id;
 
 		SINDELETEARRAY(_id);
+		*/
 	}
 
 	//-----------------------------------------------------------------
 
-	void ParserManage::Manage_MetaExpression_PreserveAST_Expression	(const int lineNo, ASTNode *_expr, ASTNode **_retmetaexpr, LexAndBisonParseArguments *_lbpa) {
-		*_retmetaexpr = SINEWCLASS(MetaPreserveASTNode, (".~", _lbpa->GetFileName(), lineNo));
+	void ParserManage::Manage_MetaExpression_PreserveAST_Lvalue (const int lineNo, ASTNode *_lvalue, ASTNode **_retmetaexpr, LexAndBisonParseArguments *_lbpa) {
+		MANAGE_META_EXPRESSION(_lvalue);
+		/**_retmetaexpr = SINEWCLASS(MetaPreserveASTNode, (".~", _lbpa->GetFileName(), lineNo));
 		_lbpa->AppendToNodeList(*_retmetaexpr);
 
-		**_retmetaexpr << _expr;
+		**_retmetaexpr << _lvalue;*/
+	}
+
+
+	//-----------------------------------------------------------------
+
+	void ParserManage::Manage_MetaExpression_PreserveAST_Expression	(const int lineNo, ASTNode *_expr, ASTNode **_retmetaexpr, LexAndBisonParseArguments *_lbpa) {
+		MANAGE_META_EXPRESSION(_expr);
+
+		/**_retmetaexpr = SINEWCLASS(MetaPreserveASTNode, (".~", _lbpa->GetFileName(), lineNo));
+		_lbpa->AppendToNodeList(*_retmetaexpr);
+
+		**_retmetaexpr << _expr;*/
 	}
 
 	//-----------------------------------------------------------------
 
 	void ParserManage::Manage_MetaExpression_PreserveAST_CALL (const int lineNo, ASTNode *_call, ASTNode **_retmetaexpr, LexAndBisonParseArguments *_lbpa) {
-		*_retmetaexpr = SINEWCLASS(MetaPreserveASTNode, (".~", _lbpa->GetFileName(), lineNo));
+		MANAGE_META_EXPRESSION(_call);
+		/**_retmetaexpr = SINEWCLASS(MetaPreserveASTNode, (".~", _lbpa->GetFileName(), lineNo));
 		_lbpa->AppendToNodeList(*_retmetaexpr);
 
-		**_retmetaexpr << _call;
+		**_retmetaexpr << _call;*/
 	}
 
 

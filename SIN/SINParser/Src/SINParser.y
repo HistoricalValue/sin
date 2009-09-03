@@ -184,8 +184,7 @@ expr:			assignexpr 					{	SIN::ParserManage::Manage_Expression_AssignExpression(
 				
 				
 metaexpr:		DOT_LT	expr  GT_DOT			{	SIN::ParserManage::Manage_MetaExpression_ShiftToMetaExpression(yylineno, $2, &($$), &fabpa);	}
-				|	DOT_TILDE	'(' expr ')'	{	SIN::ParserManage::Manage_MetaExpression_PreserveAST_Expression(yylineno, $3, &($$), &fabpa);	}
-				|	DOT_TILDE ID				{	SIN::ParserManage::Manage_MetaExpression_PreserveAST_ID(yylineno, $2, &($$), &fabpa);			}
+				|	DOT_TILDE lvalue			{	SIN::ParserManage::Manage_MetaExpression_PreserveAST_Lvalue(yylineno, $2, &($$), &fabpa);			}
 				|	DOT_TILDE call				{	SIN::ParserManage::Manage_MetaExpression_PreserveAST_CALL(yylineno, $2, &($$), &fabpa);			}
 				|	DOT_EXCl_MARK	metaexpr	{	SIN::ParserManage::Manage_MetaExpression_CompileMetaExpression(yylineno, $2, &($$), &fabpa);	}
 				|	DOT_AT	lvalue				{	SIN::ParserManage::Manage_MetaExpression_ParseString(yylineno, $2, &($$), &fabpa);				}
