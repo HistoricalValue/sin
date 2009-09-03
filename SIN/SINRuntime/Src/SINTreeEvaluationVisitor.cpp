@@ -1249,9 +1249,12 @@ namespace SIN {
 	//-----------------------------------------------------------------
 
 	void TreeEvaluationVisitor::Visit(MetaEvaluateASTNode & _node) {
-		//compile a meta expression. When say 
-		// TODO implement
-		SINASSERT(!"Not implemented");
+		SINASSERT(_node.NumberOfChildren() == 1);
+
+		EVAL_EXPR(static_cast<ASTNode &>(*_node.begin()));
+		SINASSERT(memory->Type() == MemoryCell::AST_MCT);		//TODO run time Error
+
+		SINASSERT(false);	//TODO edw na sunexisoume. Den 3erw ti 8a kanoume malon 8elei new memory call
 	}
 
 	//-----------------------------------------------------------------
