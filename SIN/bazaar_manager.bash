@@ -12,7 +12,8 @@ branches=(
     'sftp://TURBO_X@shadowx/cygdrive/f/repos/sin/trunk'
 )
 
-bzr pull 'https://139.91.186.143:8443/svn/CS-540/trunk'
+#bzr pull 'https://139.91.186.143:8443/svn/CS-540/trunk'
+bzr up
 
 for branch in "${branches[@]}"
 do  bazaar_push "$branch" &
