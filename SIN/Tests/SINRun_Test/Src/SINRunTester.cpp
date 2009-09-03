@@ -106,7 +106,7 @@ namespace SIN {
 				root->Accept(&mitvis);
 				root->Accept(&uparseVisitor);
 				
-				static_cast<OutputStream&>(STDOUT) << "\n\n" << uparseVisitor.UnparseString() << "\n\n\n";
+				static_cast<OutputStream&>(STDOUT) << "\n\n" << uparseVisitor.UnparsedString() << "\n\n\n";
 
 				foutxml.flush();
 				fouttxt.flush();
