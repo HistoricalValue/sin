@@ -23,6 +23,7 @@
 #include "SINASTTreeCtrlVisitor.h"
 #include "SINShiftToMetaEvaluatorASTVisitor.h"
 #include "SINASTUnparseTreeVisitor.h"
+#include "SINASTCloneVisitor.h"
 
 
 #define SIN_TESTS_RUN_RUN(NAME)               SINTESTS_RUNTEST(NAME)
@@ -99,14 +100,27 @@ namespace SIN {
 				ASTTreeVisualisationVisitor				visitor(fouttxt);
 				ASTTreeVisualisationVisitor				metaVisualVisitor(metatxt);
 				ASTMITTreeVisualizerXMLProducerVisitor	mitvis(foutxml);
-				ASTUnparseTreeVisitor uparseVisitor;
+				ASTCloneVisitor							cloneVisitor(root);
+				ASTUnparseTreeVisitor					uparseVisitor;
 				
 				root->Accept(&visitor);
 				root->Accept(&ctrlvis);
 				root->Accept(&mitvis);
 				root->Accept(&uparseVisitor);
+				root->Accept(&cloneVisitor);
+
+				String unpasedString1 = uparseVisitor.UnparsedString();
+				uparseVisitor.CleanUnparsedString();
+
+				cloneVisitor.Root()->Accept(&uparseVisitor);
+				String unpasedString2 = uparseVisitor.UnparsedString();
 				
-				static_cast<OutputStream&>(STDOUT) << "\n\n" << uparseVisitor.UnparsedString() << "\n\n\n";
+				SINASSERT(unpasedString1 == unpasedString2);
+
+				cloneVisitor.DeleteAST();
+				//ASTCloneVisitor::NodesList *list = 
+
+				static_cast<OutputStream&>(STDOUT) << "\n\n" << unpasedString2 << "\n\n\n";
 
 				foutxml.flush();
 				fouttxt.flush();
@@ -158,8 +172,9 @@ namespace SIN {
 				root->Accept(&shifter);
 				shifter.Root()->Accept(&metaVisualVisitor);
 				
-				metatxt.flush();
+				
 
+				metatxt.flush();
 				shifter.DeleteAST();
 
 				test.DeleteAST();
