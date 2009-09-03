@@ -163,6 +163,7 @@ namespace SIN {
 				shifter.DeleteAST();
 
 				test.DeleteAST();
+				SINDELETE(test.TakeNodesList());
 				//ASTNode* metacode = shifter;
 			}
 

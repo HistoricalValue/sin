@@ -59,12 +59,17 @@ namespace SIN {
 		ASTNode *		GetRoot (void) const;
 		const Errors &	GetErrors (void) const;
 		
+		//------------->  WARNING	<----------------//
+		//YOU MUST TAKE THIS LIST AND DELETE ALL THE ELEMENTS AND AFTER THAT YOU MUST DELETE AND THE LIST.
+		//LexAndBisonParseArguments DOES NOT DO THIS AUTOMATCILALLY.
+		//IF YOU DO NOT DO THAT, YOU ARE GOING TO HAVE MEMORY LEAKS
+		NodesList *		TakeNodesList();
 
 	private:
 		bool		hasError;
 		Errors		errors;
 		ASTNode *	root;
-		NodesList	nodesList;
+		NodesList *	nodesList;
 		String		fileName;
 		
 		InstanceProxy<Logger> logger_p;

@@ -57,6 +57,11 @@ namespace SIN {
 
 	//--------------------------------------------------------
 
+	LexAndBisonParseArguments::NodesList * ParserAPI::TakeNodesList(void)
+		{ return labpa.TakeNodesList(); }
+
+	//--------------------------------------------------------
+
 	void ParserAPI::DeleteAST(void) 
 		{ labpa.CleanNodes(); }
 
