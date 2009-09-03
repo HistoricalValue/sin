@@ -86,6 +86,11 @@ namespace SIN {
 
 	//-----------------------------------------------------------------
 
+	void String::Clear(void) 
+		{ core.clear(); }
+
+	//-----------------------------------------------------------------
+
 	size_t String::Length(void) const {
 		return core.length();
 	}

@@ -32,7 +32,8 @@ namespace SIN {
 		const char& operator[] ( size_t pos ) const;
 		char&		operator[] ( size_t pos );
 		
-		size_t Length(void) const;
+		void	Clear(void);
+		size_t	Length(void) const;
 		String& Erase(size_t pos, size_t n);	// returns this
 		String& DropLast(size_t n);				// returns this
 
