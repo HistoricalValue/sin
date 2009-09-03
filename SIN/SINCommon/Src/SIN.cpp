@@ -55,10 +55,8 @@ namespace SIN {
 	/////////////////////////////////////////////////////////////////
 	static bool init_Allocation(void) {
 		return
-			#ifdef _DEBUG
 			SIN::Alloc::Initialise()	&&
 			SIN::Alloc::IsInitialised()	&&
-			#endif
 			true;
 	}
 	
@@ -84,9 +82,13 @@ namespace SIN {
 		LoggerManager::SingletonDestroy();
 
 		#ifdef _DEBUG
+		SIN::Alloc::MemoryAllocator mallocator;
+		SIN::Alloc::Allocator<char> allocator(&mallocator);
+
+		SIN::Alloc::String memlik((to_string("Memory leak: ") << SIN::Alloc::MemoryLeaking() << " bytes").c_str(),
+				allocator);
 		SIN::Alloc::ChunksMap undeallocated_chunks(SIN::Alloc::UndeallocatedChunks());
-		SIN::String memlik = (SIN::String() << "Memory leak: " << SIN::Alloc::MemoryLeaking() << " bytes");
-		static_cast<SIN::OutputStream&>(SIN::STDOUT) << memlik << SIN::ENDL; // TODO remove
+		static_cast<SIN::OutputStream&>(SIN::STDOUT) << memlik.c_str() << SIN::ENDL; // TODO remove
 		#endif
 		SINASSERT(SIN::Alloc::IsInitialised());
 		SIN::Alloc::CleanUp();
