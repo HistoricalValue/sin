@@ -400,11 +400,12 @@ namespace SIN {
 
 	inline void TreeEvaluationVisitor::ObjectValueSetter::SetValue(MemoryCell* const _value) const  {
 		SINASSERT(isValidObjectIndexName(index));
-		SINASSERT(!ObjectHasMember());
 		if (autoIndex)
 			obj_p->SetValue(_value);
-		else
+		else {
+			SINASSERT(!ObjectHasMember());
 			obj_p->SetValue(index, _value);
+		}
 	}
 
 
@@ -487,8 +488,11 @@ namespace SIN {
 		else // not new member OR tmp nil
 			if (tmp_not_nil) // ==> not new member
 				MemoryCell::Assign(*obj_memb_p, SINPTR(_temporary));
-			else if (!new_member) // ==> tmp is nil
+			else if (!new_member) { // ==> tmp is nil
+				SINASSERT(obj_memb_p != 0x00);
+				SINDELETE(&**obj_memb_p);
 				_obj_p->UnsetValue(_index);
+			}
 			else // not new member AND tmp nil
 				; // do nothing
 	}
@@ -850,7 +854,7 @@ namespace SIN {
 		ASTNode& kid0 = static_cast<ASTNode&>(*kid++);
 		ASTNode& kid1 = static_cast<ASTNode&>(*kid++);
 		SINASSERT(kid == _node.end());
-		SINASSERT(kid0.Type() == SINASTNODES_ID_TYPE || kid0.Type() == SINASTNODES_LOCALID_TYPE || kid0.Type() == SINASTNODES_GLOBALID_TYPE || kid0.Type() == SINASTNODES_OBJECTMEMBER_TYPE);
+		SINASSERT(kid0.Type() == SINASTNODES_ID_TYPE || kid0.Type() == SINASTNODES_LOCALID_TYPE || kid0.Type() == SINASTNODES_GLOBALID_TYPE || kid0.Type() == SINASTNODES_OBJECTMEMBER_TYPE || kid0.Type() == SINASTNODES_OBJECTINDEXEDMEMBER_TYPE);
 
 		kid1.Accept(this);
 		SINASSERT(memory != 0x00);
