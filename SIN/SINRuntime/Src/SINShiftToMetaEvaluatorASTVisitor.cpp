@@ -38,8 +38,8 @@ namespace SIN {
 	void ShiftToMetaEvaluatorASTVisitor::Visit(MetaPreserveASTNode& _node)	{ 
 		SINASSERT(_node.NumberOfChildren() == 1);
 
-		//Evaluate the node children.
-		static_cast<ASTNode &>(*_node.begin()).Accept(&treeEvalVisitor);
+		//Evaluate the node.
+		_node.Accept(&treeEvalVisitor);
 		
 		//Check if the return value of the evaluator is AST.
 		MemoryCell * astmc = treeEvalVisitor.Memory();
@@ -55,8 +55,6 @@ namespace SIN {
 		//Conect the Clone visitor root to my tree.
 		if (parent)
 			*parent << cloneRoot;
-		//parent = root;	//look the assert for more info
-		SINASSERT(!"Edw mipos prepi na brw pou einai h oura nou root ? ");
 
 		//splice my list with the list that contains the new nodes. 
 		//We do this because we do not want to have memory leaks

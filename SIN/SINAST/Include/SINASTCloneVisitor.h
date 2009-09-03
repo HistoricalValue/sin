@@ -85,6 +85,7 @@ namespace SIN {
 		SINASTVISITOR_VISIT_SIGNATURE(Not				);
 
 		ASTNode *	Root(void) const ;
+		void		Resset(void);
 		void		DeleteAST(void);		
 		void		DeleteList(void);		//Delete the list but not the contents of the list.
 		void		DeleteListAndAST(void);	//Delete the list and the contents of the list.

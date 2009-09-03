@@ -152,6 +152,15 @@ namespace SIN {
 
 
 	//-----------------------------------------------------------------
+	
+	void ASTCloneVisitor::Resset(void) {
+		root	= 0x00;
+		parent	= 0x00;
+		DeleteAST();
+	}
+
+
+	//-----------------------------------------------------------------
 
 	void ASTCloneVisitor::DeleteAST(void){ 
 		SINASSERT(nodesList != 0x00);
@@ -215,6 +224,41 @@ namespace SIN {
 			static_cast<ASTNode&>(*(_node.begin())).Accept(this);
 		}
 	}
+
+
+
+
+
+
+
+
+
+
+
+
+
+	//-----------------------------------------------------------------
+/*
+	void ASTCloneVisitor::Visit(AssignASTNode& _node)	{
+		SINASSERT(nodesList != 0x00);												
+		SINASSERT(_node.NumberOfChildren() == 2);									
+		
+		AssignASTNode * newNode = SINEWCLASS(AssignASTNode, (_node));		
+		nodesList->push_back(newNode);												
+		
+		if (parent)				
+			*parent << newNode;	
+		if (!root)				
+			root = newNode;
+
+		parent = newNode;															
+		ASTNode::iterator kid = _node.begin();	
+
+		static_cast<ASTNode&>(*kid++).Accept(this);									
+		parent = newNode;															
+		static_cast<ASTNode&>(*kid++).Accept(this);
+	}
+*/
 
 
 

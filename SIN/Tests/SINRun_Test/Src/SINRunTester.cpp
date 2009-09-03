@@ -117,13 +117,24 @@ namespace SIN {
 				
 				SINASSERT(unpasedString1 == unpasedString2);
 
-				cloneVisitor.DeleteListAndAST();
+				
 
 				static_cast<OutputStream&>(STDOUT) << "\n\n" << unpasedString2 << "\n\n\n";
 
 				foutxml.flush();
 				fouttxt.flush();
 				ctrltxt.flush();
+
+
+				ASTNode & lastKid = static_cast<ASTNode &>(*root->rbegin());
+				cloneVisitor.Resset();
+				lastKid.Accept(&cloneVisitor);
+				uparseVisitor.CleanUnparsedString();
+				ASTNode * cloneRoot = cloneVisitor.Root();
+				cloneRoot->Accept(&uparseVisitor);
+				static_cast<OutputStream&>(STDOUT) << "\n\n" << uparseVisitor.UnparsedString() << "\n\n\n";
+				cloneVisitor.DeleteListAndAST();
+
 
 				VM::VirtualState vs;
 				vs.SetPrintHandler(&__print_handler);
