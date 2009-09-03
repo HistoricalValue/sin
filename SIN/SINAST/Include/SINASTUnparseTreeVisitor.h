@@ -116,10 +116,10 @@ namespace SIN {
 		SIN_UNPARSE_TREE_VISITOR_VISIT_SIGNATURE(MetaParseString	);
 		SIN_UNPARSE_TREE_VISITOR_VISIT_SIGNATURE(SinCode			);
 		
-		String UnparseString(void) const { return unparseString; }
+		String UnparsedString(void) const { return unparsedString; } // TODO -> UnparsedString
 	
 	private:
-		String	unparseString;
+		String	unparsedString;
 		int		indexedObjectFunctionCounter;
 
 	}; // class ASTUnparseTreeVisitor

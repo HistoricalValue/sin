@@ -20,7 +20,7 @@
 
 #define SIN_UNPARSE_TREE_VISITOR_WITH_NO_CHILDREN_VISIT_DEFINITION(NODENAME, START_S, SUMBOL_E)	\
 	void ASTUnparseTreeVisitor::Visit(NODENAME##ASTNode & _node) {								\
-		unparseString +=  to_string(START_S) + _node.Name() + to_string(SUMBOL_E);				\
+		unparsedString +=  to_string(START_S) + _node.Name() + to_string(SUMBOL_E);				\
 	}
 
 //-------------------------------------------------------------------------------------------------
@@ -28,9 +28,9 @@
 #define SIN_UNPARSE_TREE_VISITOR_WITH_ONE_CHILD_VISIT_DEFINITION(NODENAME, START_S, SUMBOL_E)	\
 	void ASTUnparseTreeVisitor::Visit(NODENAME##ASTNode & _node) {								\
 		SINASSERT(_node.NumberOfChildren() == 1);												\
-		unparseString += to_string(START_S);													\
+		unparsedString += to_string(START_S);													\
 		static_cast<ASTNode &>(*_node.begin()).Accept(this);									\
-		unparseString += to_string(SUMBOL_E);													\
+		unparsedString += to_string(SUMBOL_E);													\
 	}
 
 //-------------------------------------------------------------------------------------------------
@@ -39,11 +39,11 @@
 	void ASTUnparseTreeVisitor::Visit(NODENAME##ASTNode & _node) {										\
 		SINASSERT(_node.NumberOfChildren() == 2);														\
 		ASTNode::iterator kid = _node.begin();															\
-		unparseString +=  to_string(SYMBOL_S);															\
+		unparsedString +=  to_string(SYMBOL_S);															\
 		static_cast<ASTNode &>(*kid++).Accept(this);													\
-		unparseString +=  to_string(SYMBOL_M);															\
+		unparsedString +=  to_string(SYMBOL_M);															\
 		static_cast<ASTNode &>(*kid++).Accept(this);													\
-		unparseString +=  to_string(SYMBOL_E);															\
+		unparsedString +=  to_string(SYMBOL_E);															\
 	}
 
 //-------------------------------------------------------------------------------------------------
@@ -58,7 +58,7 @@
 												type != SINASTNODES_IF_TYPE			&&					\
 												type != SINASTNODES_IFELSE_TYPE							\
 												)														\
-												unparseString +=  to_string(";\n");						\
+												unparsedString +=  to_string(";\n");						\
 										}																\
 										else
 
@@ -80,37 +80,37 @@
 	void ASTUnparseTreeVisitor::Visit(NODENAME##ASTNode & _node) {								\
 		ASTNode::iterator kid = _node.begin();													\
 		static_cast<ASTNode &>(*kid++).Accept(this);											\
-		unparseString += to_string(START_S);													\
+		unparsedString += to_string(START_S);													\
 		while(kid != _node.end()) {																\
 			static_cast<ASTNode &>(*kid).Accept(this);											\
 			++kid;																				\
 			if (kid != _node.end())																\
-				unparseString +=  to_string(".");												\
+				unparsedString +=  to_string(".");												\
 		}																						\
-		unparseString +=  to_string(SUMBOL_E);													\
+		unparsedString +=  to_string(SUMBOL_E);													\
 	}
 
 //-------------------------------------------------------------------------------------------------
 
 #define SIN_UNPARSE_TREE_VISITOR_ARGUMENTS_AND_OBJECT_VISIT_DEFINITION(NODENAME, START_S, SUMBOL_E)		\
 	void ASTUnparseTreeVisitor::Visit(NODENAME##ASTNode & _node) {										\
-		unparseString +=  to_string(START_S);															\
+		unparsedString +=  to_string(START_S);															\
 		ASTNode::iterator kid = _node.begin();															\
 		while(kid != _node.end()) {																		\
 			static_cast<ASTNode &>(*kid).Accept(this);													\
 			++kid;																						\
 			if (kid != _node.end())																		\
-				unparseString +=  to_string(", ");														\
+				unparsedString +=  to_string(", ");														\
 		}																								\
-		unparseString +=  to_string(SUMBOL_E);															\
+		unparsedString +=  to_string(SUMBOL_E);															\
 	}
 
 //-------------------------------------------------------------------------------------------------
 
-#define UNPARSE_STMT(START_SYMBOL, END_SYMBOL)		unparseString +=  to_string(START_SYMBOL);			\
+#define UNPARSE_STMT(START_SYMBOL, END_SYMBOL)		unparsedString +=  to_string(START_SYMBOL);			\
 													ASTNode::iterator kid = _node.begin();				\
 													static_cast<ASTNode &>(*kid++).Accept(this);		\
-													unparseString +=  to_string(END_SYMBOL);			\
+													unparsedString +=  to_string(END_SYMBOL);			\
 													static_cast<ASTNode &>(*kid).Accept(this);			\
 													ADD_SEMICOLONO_IF_YOU_CAN()
 
@@ -132,7 +132,7 @@ namespace SIN {
 
 	//-----------------------------------------------------------------
 
-	ASTUnparseTreeVisitor::ASTUnparseTreeVisitor(void) : unparseString(""), indexedObjectFunctionCounter(0) {}
+	ASTUnparseTreeVisitor::ASTUnparseTreeVisitor(void) : unparsedString(""), indexedObjectFunctionCounter(0) {}
 
 	//-----------------------------------------------------------------
 
@@ -153,9 +153,9 @@ namespace SIN {
 	//-----------------------------------------------------------------
 	
 	void ASTUnparseTreeVisitor::Visit(BlockASTNode & _node) {
-		unparseString +=  to_string("{\n");
+		unparsedString +=  to_string("{\n");
 		VISTI_SIN_CODE_OR_BLOCK();
-		unparseString += to_string("}\n");
+		unparsedString += to_string("}\n");
 	}
 
 	//-----------------------------------------------------------------
@@ -165,16 +165,16 @@ namespace SIN {
 		
 		bool lamda = _node.Name()[0] == '$' || indexedObjectFunctionCounter;
 		if (lamda)		//we have a lamda id
-			unparseString += to_string("(function ");
+			unparsedString += to_string("(function ");
 		else
-			unparseString += to_string("function ") + _node.Name();
+			unparsedString += to_string("function ") + _node.Name();
 
 		ASTNode::iterator kid = _node.begin();				
 		static_cast<ASTNode &>(*kid++).Accept(this);		
 		static_cast<ASTNode &>(*kid++).Accept(this);		
 
 		if (lamda)
-			unparseString += to_string(" )");
+			unparsedString += to_string(" )");
 	}
 
 	//-----------------------------------------------------------------
@@ -196,7 +196,7 @@ namespace SIN {
 	void ASTUnparseTreeVisitor::Visit(IfElseASTNode & _node) {	
 		SINASSERT(_node.NumberOfChildren() == 3);
 		UNPARSE_STMT("if (", ")");
-		unparseString +=  to_string("else\n");
+		unparsedString +=  to_string("else\n");
 		static_cast<ASTNode &>(*(++kid)).Accept(this);
 	}
 
@@ -208,7 +208,7 @@ namespace SIN {
 		ASTNode::iterator kid = _node.begin();			
 		
 		static_cast<ASTNode &>(*kid++).Accept(this);	
-		unparseString += to_string(" : ");
+		unparsedString += to_string(" : ");
 
 		//Edw 8eloume na doume an to idex dixnei se function.
 		//An einai kanonikh function (einai syndactic sugar gia indexed lamda function)
@@ -235,17 +235,17 @@ namespace SIN {
 	//-----------------------------------------------------------------
 	
 	void ASTUnparseTreeVisitor::Visit(ForASTNode & _node) {	
-		unparseString +=  to_string("for (");
+		unparsedString +=  to_string("for (");
 		ASTNode::iterator kid =  _node.begin();
 
 		static_cast<ASTNode &>(*kid++).Accept(this);	//first child
-		unparseString +=  to_string("; ");
+		unparsedString +=  to_string("; ");
 
 		static_cast<ASTNode &>(*kid++).Accept(this);	//second child
-		unparseString +=  to_string("; ");
+		unparsedString +=  to_string("; ");
 
 		static_cast<ASTNode &>(*kid++).Accept(this);	//third child
-		unparseString +=  to_string(") ");
+		unparsedString +=  to_string(") ");
 
 		static_cast<ASTNode &>(*kid).Accept(this);		//forth child
 		ADD_SEMICOLONO_IF_YOU_CAN();
@@ -256,7 +256,7 @@ namespace SIN {
 	void ASTUnparseTreeVisitor::Visit(ReturnASTNode & _node) {	
 		size_t numberOfChildren = _node.NumberOfChildren();
 		SINASSERT(numberOfChildren == 0 || numberOfChildren == 1);
-		unparseString +=  to_string("return ");
+		unparsedString +=  to_string("return ");
 
 		if (numberOfChildren == 1)
 			static_cast<ASTNode &>(*_node.begin()).Accept(this);
@@ -264,15 +264,15 @@ namespace SIN {
 
 /*
 	void ASTUnparseTreeVisitor::Visit(UnaryNotASTNode & _node) {	
-		unparseString +=  to_string("not") + to_string(" (");
+		unparsedString +=  to_string("not") + to_string(" (");
 		static_cast<ASTNode &>(*_node.begin()).Accept(this);
-		unparseString +=  to_string(")");
+		unparsedString +=  to_string(")");
 	}
 	
 	void ASTUnparseTreeVisitor::Visit(UnaryMinASTNode & _node) {	
-		unparseString +=  to_string("not") + to_string(" -");
+		unparsedString +=  to_string("not") + to_string(" -");
 		static_cast<ASTNode &>(*_node.begin()).Accept(this);
-		unparseString +=  to_string(")");
+		unparsedString +=  to_string(")");
 	}
 */
 
