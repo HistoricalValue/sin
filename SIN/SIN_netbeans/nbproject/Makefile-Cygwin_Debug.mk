@@ -6,7 +6,7 @@
 # Clean Targets
 .clean-conf:
 	${RM} -r build/Cygwin_Debug
-	${RM} dist/Cygwin_Debug//sin_netbeans.exe
+	${RM} dist/Cygwin_Debug//sin_netbeans
 
 # Subprojects
 .clean-subprojects:

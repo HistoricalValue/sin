@@ -15,21 +15,21 @@ CND_PACKAGE_DIR_Debug=dist/Debug/GNU-Linux-x86/package
 CND_PACKAGE_NAME_Debug=sinnetbeans.tar
 CND_PACKAGE_PATH_Debug=dist/Debug/GNU-Linux-x86/package/sinnetbeans.tar
 # Release configuration
-CND_PLATFORM_Release=GNU-Windows
-CND_ARTIFACT_DIR_Release=dist/Release/GNU-Windows
+CND_PLATFORM_Release=GNU-Linux-x86
+CND_ARTIFACT_DIR_Release=dist/Release/GNU-Linux-x86
 CND_ARTIFACT_NAME_Release=sin_netbeans
-CND_ARTIFACT_PATH_Release=dist/Release/GNU-Windows/sin_netbeans
-CND_PACKAGE_DIR_Release=dist/Release/GNU-Windows/package
+CND_ARTIFACT_PATH_Release=dist/Release/GNU-Linux-x86/sin_netbeans
+CND_PACKAGE_DIR_Release=dist/Release/GNU-Linux-x86/package
 CND_PACKAGE_NAME_Release=sinnetbeans.tar
-CND_PACKAGE_PATH_Release=dist/Release/GNU-Windows/package/sinnetbeans.tar
+CND_PACKAGE_PATH_Release=dist/Release/GNU-Linux-x86/package/sinnetbeans.tar
 # Debug_SUN configuration
-CND_PLATFORM_Debug_SUN=SunStudio_12.1-Windows
-CND_ARTIFACT_DIR_Debug_SUN=dist/Debug_SUN/SunStudio_12.1-Windows
+CND_PLATFORM_Debug_SUN=SunStudio_12.1-Linux-x86
+CND_ARTIFACT_DIR_Debug_SUN=dist/Debug_SUN/SunStudio_12.1-Linux-x86
 CND_ARTIFACT_NAME_Debug_SUN=sin_netbeans
-CND_ARTIFACT_PATH_Debug_SUN=dist/Debug_SUN/SunStudio_12.1-Windows/sin_netbeans
-CND_PACKAGE_DIR_Debug_SUN=dist/Debug_SUN/SunStudio_12.1-Windows/package
+CND_ARTIFACT_PATH_Debug_SUN=dist/Debug_SUN/SunStudio_12.1-Linux-x86/sin_netbeans
+CND_PACKAGE_DIR_Debug_SUN=dist/Debug_SUN/SunStudio_12.1-Linux-x86/package
 CND_PACKAGE_NAME_Debug_SUN=sinnetbeans.tar
-CND_PACKAGE_PATH_Debug_SUN=dist/Debug_SUN/SunStudio_12.1-Windows/package/sinnetbeans.tar
+CND_PACKAGE_PATH_Debug_SUN=dist/Debug_SUN/SunStudio_12.1-Linux-x86/package/sinnetbeans.tar
 # remote_rudolf_debug configuration
 CND_PLATFORM_remote_rudolf_debug=
 CND_ARTIFACT_DIR_remote_rudolf_debug=dist/remote_rudolf_debug/

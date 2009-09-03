@@ -449,6 +449,15 @@
             <pElem>../Tests/SINTest/Include</pElem>
           </incDir>
           <commandLine>-pedantic -ansi -Wall -O0 -g -fno-rtti</commandLine>
+          <preprocessorList>
+            <Elem>_DEBUG</Elem>
+            <Elem>_UNIX_</Elem>
+            <Elem>_LINUX_</Elem>
+            <Elem>_GNU_</Elem>
+            <Elem>_GCC_</Elem>
+            <Elem>DEBUG</Elem>
+            <Elem>_SIN_</Elem>
+          </preprocessorList>
           <warningLevel>2</warningLevel>
         </ccTool>
         <linkerTool>
@@ -461,7 +470,7 @@
       <toolsSet>
         <developmentServer>localhost</developmentServer>
         <compilerSet>GNU|GNU</compilerSet>
-        <platform>3</platform>
+        <platform>2</platform>
       </toolsSet>
       <compileType>
         <cTool>
@@ -490,6 +499,15 @@
             <pElem>../Tests/SINSymbolTable_Test/Include</pElem>
             <pElem>../Tests/SINTest/Include</pElem>
           </incDir>
+          <preprocessorList>
+            <Elem>_RELEASE</Elem>
+            <Elem>RELEASE</Elem>
+            <Elem>_GCC_</Elem>
+            <Elem>_LINUX_</Elem>
+            <Elem>_GNU_</Elem>
+            <Elem>_UNIX_</Elem>
+            <Elem>_SIN_</Elem>
+          </preprocessorList>
         </ccTool>
         <fortranCompilerTool>
           <developmentMode>5</developmentMode>
@@ -504,7 +522,7 @@
       <toolsSet>
         <developmentServer>localhost</developmentServer>
         <compilerSet>SunStudio_12.1|SunStudio_12.1</compilerSet>
-        <platform>3</platform>
+        <platform>2</platform>
       </toolsSet>
       <compileType>
         <ccTool>
@@ -528,6 +546,11 @@
           </incDir>
           <standardsEvolution>0</standardsEvolution>
           <languageExtension>0</languageExtension>
+          <preprocessorList>
+            <Elem>_DEBUG</Elem>
+            <Elem>DEBUG</Elem>
+            <Elem>_SIN_</Elem>
+          </preprocessorList>
           <warningLevel>0</warningLevel>
         </ccTool>
         <linkerTool>
@@ -540,6 +563,54 @@
       <toolsSet>
         <developmentServer>rudolf@192.168.56.102:22</developmentServer>
         <compilerSet>GNU|GNU</compilerSet>
+        <platform>6</platform>
+      </toolsSet>
+      <compileType>
+        <ccTool>
+          <commandlineTool>g++</commandlineTool>
+          <incDir>
+            <pElem>../Common/Include</pElem>
+            <pElem>../SINAlloc/Include</pElem>
+            <pElem>../SINAST/Include</pElem>
+            <pElem>../SINCommon/Include</pElem>
+            <pElem>../SINFunctionLibrary/Include</pElem>
+            <pElem>../SINLogging/Include</pElem>
+            <pElem>../SINmain/Include</pElem>
+            <pElem>../SINParser/Include</pElem>
+            <pElem>../SINRuntime/Include</pElem>
+            <pElem>../Tests/SINAlloc_Test/Include</pElem>
+            <pElem>../Tests/SINAST_Test/Include</pElem>
+            <pElem>../Tests/SINCommon_Test/Include</pElem>
+            <pElem>../Tests/SINFunctionLibrary_Test/Include</pElem>
+            <pElem>../Tests/SINLogging_Test/Include</pElem>
+            <pElem>../Tests/SINObject_Test/Include</pElem>
+            <pElem>../Tests/SINParser_Test/Include</pElem>
+            <pElem>../Tests/SINRun_Test/Include</pElem>
+            <pElem>../Tests/SINSymbolTable_Test/Include</pElem>
+            <pElem>../Tests/SINTest/Include</pElem>
+          </incDir>
+          <commandLine>-pedantic -ansi -Wall -O0 -g -fno-rtti</commandLine>
+          <preprocessorList>
+            <Elem>_DEBUG</Elem>
+            <Elem>DEBUG</Elem>
+            <Elem>_GCC_</Elem>
+            <Elem>_GNU_</Elem>
+            <Elem>_LINUX_</Elem>
+            <Elem>_UNIX_</Elem>
+            <Elem>_SIN_</Elem>
+          </preprocessorList>
+          <warningLevel>2</warningLevel>
+        </ccTool>
+        <linkerTool>
+          <linkerLibItems>
+          </linkerLibItems>
+        </linkerTool>
+      </compileType>
+    </conf>
+    <conf name="Cygwin_Debug" type="1">
+      <toolsSet>
+        <developmentServer>localhost</developmentServer>
+        <compilerSet>Cygwin|Cygwin</compilerSet>
         <platform>2</platform>
       </toolsSet>
       <compileType>
@@ -567,45 +638,15 @@
             <pElem>../Tests/SINTest/Include</pElem>
           </incDir>
           <commandLine>-pedantic -ansi -Wall -O0 -g -fno-rtti</commandLine>
-          <warningLevel>2</warningLevel>
-        </ccTool>
-        <linkerTool>
-          <linkerLibItems>
-          </linkerLibItems>
-        </linkerTool>
-      </compileType>
-    </conf>
-    <conf name="Cygwin_Debug" type="1">
-      <toolsSet>
-        <developmentServer>localhost</developmentServer>
-        <compilerSet>Cygwin|Cygwin</compilerSet>
-        <platform>3</platform>
-      </toolsSet>
-      <compileType>
-        <ccTool>
-          <commandlineTool>g++</commandlineTool>
-          <incDir>
-            <pElem>../Common/Include</pElem>
-            <pElem>../SINAlloc/Include</pElem>
-            <pElem>../SINAST/Include</pElem>
-            <pElem>../SINCommon/Include</pElem>
-            <pElem>../SINFunctionLibrary/Include</pElem>
-            <pElem>../SINLogging/Include</pElem>
-            <pElem>../SINmain/Include</pElem>
-            <pElem>../SINParser/Include</pElem>
-            <pElem>../SINRuntime/Include</pElem>
-            <pElem>../Tests/SINAlloc_Test/Include</pElem>
-            <pElem>../Tests/SINAST_Test/Include</pElem>
-            <pElem>../Tests/SINCommon_Test/Include</pElem>
-            <pElem>../Tests/SINFunctionLibrary_Test/Include</pElem>
-            <pElem>../Tests/SINLogging_Test/Include</pElem>
-            <pElem>../Tests/SINObject_Test/Include</pElem>
-            <pElem>../Tests/SINParser_Test/Include</pElem>
-            <pElem>../Tests/SINRun_Test/Include</pElem>
-            <pElem>../Tests/SINSymbolTable_Test/Include</pElem>
-            <pElem>../Tests/SINTest/Include</pElem>
-          </incDir>
-          <commandLine>-pedantic -ansi -Wall -O0 -g -fno-rtti</commandLine>
+          <preprocessorList>
+            <Elem>_DEBUG</Elem>
+            <Elem>DEBUG</Elem>
+            <Elem>_SIN_</Elem>
+            <Elem>_UNIX_</Elem>
+            <Elem>_GNU_</Elem>
+            <Elem>_GCC_</Elem>
+            <Elem>_CYGWIN_</Elem>
+          </preprocessorList>
           <warningLevel>2</warningLevel>
         </ccTool>
         <linkerTool>
