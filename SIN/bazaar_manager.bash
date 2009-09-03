@@ -7,22 +7,37 @@ function bazaar_push {
     bzr push "$branch"
 }
 
+function bazaar_pull {
+    local branch="$1"
+    bzr pull --local "$branch"
+}
+
 branches=(
     'sftp://TURBO_X@shadowx/tmp/CS540/'
     'sftp://TURBO_X@shadowx/cygdrive/f/repos/sin/trunk'
+    'sftp://TURBO_X@shadowx/cygdrive/c/Temp/CS540_bzr/'
 )
 
-#bzr pull 'https://139.91.186.143:8443/svn/CS-540/trunk'
-bzr up
+if [ "$1" = 'pls' ] # pull-shadowx
+then    bazaar_pull "${branches[2]}"
 
-for branch in "${branches[@]}"
-do  bazaar_push "$branch" &
-done
+else
 
-if [ "$1" = 'all' ]
-then bazaar_push "$pseudosystems_branch" 
+    #bzr pull 'https://139.91.186.143:8443/svn/CS-540/trunk'
+    bzr up
+
+    for branch in "${branches[@]}"
+    do  bazaar_push "$branch" &
+    done
+
+    if [ "$1" = 'all' ]
+    then bazaar_push "$pseudosystems_branch" 
+    fi
+
 fi
 
+
 wait
+
 
 
