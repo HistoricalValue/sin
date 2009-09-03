@@ -77,7 +77,7 @@
 
 //---------------------------------------------------------------------------------------------------
 
-#define NULLSTR static_cast<::SIN::String const* const>(0x00)
+#define NULLSTR static_cast< ::SIN::String const* const>(0x00)
 
 namespace SIN {
 	//-----------------------------------------------------------------

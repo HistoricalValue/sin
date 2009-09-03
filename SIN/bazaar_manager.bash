@@ -15,7 +15,7 @@ branches=(
 bzr pull 'https://139.91.186.143:8443/svn/CS-540/trunk'
 
 for branch in "${branches[@]}"
-do  bazaar_push "$branch"
+do  bazaar_push "$branch" &
 done
 
 if [ "$1" = 'all' ]
