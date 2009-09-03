@@ -197,6 +197,7 @@ namespace SIN {
 
 	void ASTCloneVisitor::Visit(SinCodeASTNode& _node)	{ 
 		SinCodeASTNode * newNode = SINEWCLASS(SinCodeASTNode, (_node));
+		ASTNode * localParent	 = parent;
 		nodesList->push_back(newNode);		
 
 		if (!root)
@@ -204,6 +205,9 @@ namespace SIN {
 		
 		VISIT_NODE_WITH_MANY_CHILDREN();
 		parent	= newNode;
+		
+		if( localParent != 0x00 && *localParent != *newNode )
+			*localParent << newNode;
 	}
 	
 	
