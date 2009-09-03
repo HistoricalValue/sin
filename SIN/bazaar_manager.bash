@@ -19,7 +19,7 @@ do  bazaar_push "$branch" &
 done
 
 if [ "$1" = 'all' ]
-then bazaar_push "$pseudosystems_branch"  &
+then bazaar_push "$pseudosystems_branch" 
 fi
 
 wait
