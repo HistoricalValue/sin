@@ -114,10 +114,10 @@ namespace SIN {
 
 	//-----------------------------------------------------------------
 
-	ASTCloneVisitor::ASTCloneVisitor(ASTNode * tree):
-		parent(tree),
+	ASTCloneVisitor::ASTCloneVisitor(void):
+		parent(0x00),
 		nodesList(SINEW( NodesList))
-	{ SINASSERT(tree != 0x00); }
+	{ }
 
 	//-----------------------------------------------------------------
 

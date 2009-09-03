@@ -15,7 +15,7 @@ namespace SIN {
 	public:
 		typedef std::list<ASTNode *> NodesList;
 
-		ASTCloneVisitor(ASTNode * tree);
+		ASTCloneVisitor(void);
 		ASTCloneVisitor(ASTCloneVisitor const&);
 		~ASTCloneVisitor(void);
 

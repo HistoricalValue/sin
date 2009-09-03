@@ -100,7 +100,7 @@ namespace SIN {
 				ASTTreeVisualisationVisitor				visitor(fouttxt);
 				ASTTreeVisualisationVisitor				metaVisualVisitor(metatxt);
 				ASTMITTreeVisualizerXMLProducerVisitor	mitvis(foutxml);
-				ASTCloneVisitor							cloneVisitor(root);
+				ASTCloneVisitor							cloneVisitor;
 				ASTUnparseTreeVisitor					uparseVisitor;
 				
 				root->Accept(&visitor);
