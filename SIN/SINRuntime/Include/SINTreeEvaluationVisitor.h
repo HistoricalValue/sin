@@ -99,12 +99,14 @@ namespace SIN{
 		argument_lists_t argument_lists;
 		struct AssignmentDestinationSetter {
 			virtual void SetValue(MemoryCell*) const = 0;
+			virtual void UnsetValue(void) const = 0;
 			AssignmentDestinationSetter(void) { }
 			virtual ~AssignmentDestinationSetter(void) { }
 		}* assignment_destination_setter_p;
 		struct ObjectValueSetter: AssignmentDestinationSetter {
 			bool ObjectHasMember(void) const;
 			virtual void SetValue(MemoryCell* _value) const;
+			virtual void UnsetValue(void) const;
 			void SetValue(Types::Object_t const&, String const&, MemoryCell*);
 			Types::Object_t obj_p;
 			String index;
@@ -115,6 +117,7 @@ namespace SIN{
 		} object_value_setter; // struct ObjectValueSetter
 		struct SymbolTableValueSetter: AssignmentDestinationSetter {
 			virtual void SetValue(MemoryCell*) const;
+			virtual void UnsetValue(void) const;
 			bool LookupFails(void) const;
 			SymbolTable* stable_p;
 			String id;

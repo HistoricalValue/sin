@@ -101,6 +101,33 @@ namespace SIN {
 		table[_scope].AppendArgument(name, element);
 	}
 
+	//-----------------------------------------------------------------
+	// in current and smaller scopes
+	void SymbolTable::Remove(const name_t& name) {
+		ASSERT_CURRENT_SCOPE();
+		
+		elem_t* element_p = 0x00;
+		for(scope_id scope = currScope; scope > 0; --scope) {
+			element_p = &Lookup(scope, name);
+			if(!table[scope].LookupFailed(*element_p)) {
+				table[scope].RemoveArgument(name);
+				break;
+			}
+		}
+
+		// do once more for scope 0
+		element_p = &Lookup(0, name);
+		if (!table[0].LookupFailed(*element_p))
+			Remove(0, name);
+	}
+
+	//-----------------------------------------------------------------
+	// in given scope
+	void SymbolTable::Remove(const scope_id& scope, const name_t& name) {
+		ASSERT_CURRENT_SCOPE();
+		ASSERT_SCOPE_VALIDITY(scope);
+		table[scope].RemoveArgument(name);
+	}
 
 	//-----------------------------------------------------------------
 

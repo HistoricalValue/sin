@@ -24,6 +24,9 @@ namespace SIN {
 		void			Insert(const name_t&, const elem_t&); // only in current scope
 		void			Insert(const name_t&, const elem_t&, scope_id); // in given scope
 
+		void			Remove(const name_t&); // searching from current to smaller, first found. DOES NOT DELETE IT
+		void			Remove(const scope_id&, const name_t&); // only in given scope. DOES NOT DELETE IT
+
 		void 			IncreaseScope(void);
 		void 			DecreaseScope(void);
 		const scope_id	CurrentScope(void) const;

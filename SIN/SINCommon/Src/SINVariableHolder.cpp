@@ -132,6 +132,18 @@ namespace SIN {
 		DATA->args_ordered.push_back(Entry(ins_r.first->first, ins_r.first->second));
 	}
 
+	//-----------------------------------------------------------------
+
+	void VariableHolder::RemoveArgument(Type<name_t>::const_ref _name) {
+		InstanceProxy<MemoryCell> nothing;
+		args_ordered_t::iterator const argite =
+				std::find_if(data->args_ordered.begin(), data->args_ordered.end(),
+						std::bind1st(std::equal_to<Entry>(), Entry(_name, nothing)));
+		SINASSERT(argite != data->args_ordered.end());
+		data->args_ordered.erase(argite);
+		size_t num_of_erased = data->args.erase(_name);
+		SINASSERT(num_of_erased == 1);
+	}
 
 	//-----------------------------------------------------------------
 
