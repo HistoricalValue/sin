@@ -95,6 +95,7 @@ namespace SIN {
 		//IF YOU DO NOT DO THAT, YOU ARE GOING TO HAVE MEMORY LEAKS
 		ASTCloneVisitor::NodesList * TakeNodesList(void);
 	protected:
+		ASTNode *	root;
 		ASTNode	*	parent;
 		NodesList * nodesList;
 

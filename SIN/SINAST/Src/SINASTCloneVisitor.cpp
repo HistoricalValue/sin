@@ -26,15 +26,24 @@
 													else
 
 
+
+
 //----------------------------------------------------------------------------------------------------------
 
+#define CONNECT_NEW_NODE_TO_TREE()					if (parent)																	\
+														*parent << newNode;														\
+													if (!root)																	\
+														root = newNode
+			
 
+//----------------------------------------------------------------------------------------------------------
+
+//Edw o pateras prepei na minei os exein
 #define CONECT_NODE_WITH_ZERO_CHILD(NODE_TYPE)		SINASSERT(nodesList != 0x00);												\
 													SINASSERT(_node.NumberOfChildren() == 0);									\
 													NODE_TYPE##ASTNode * newNode = SINEWCLASS(NODE_TYPE##ASTNode, (_node));		\
 													nodesList->push_back(newNode);												\
-													if (parent)																	\
-													*parent << newNode
+													CONNECT_NEW_NODE_TO_TREE()
 
 
 //----------------------------------------------------------------------------------------------------------
@@ -44,8 +53,7 @@
 													SINASSERT(_node.NumberOfChildren() == 1);									\
 													NODE_TYPE##ASTNode * newNode = SINEWCLASS(NODE_TYPE##ASTNode, (_node));		\
 													nodesList->push_back(newNode);												\
-													if (parent)																	\
-														*parent << newNode;														\
+													CONNECT_NEW_NODE_TO_TREE();													\
 													parent = newNode;															\
 													static_cast<ASTNode&>(*(_node.begin())).Accept(this)
 
@@ -57,8 +65,7 @@
 													SINASSERT(_node.NumberOfChildren() == 2);									\
 													NODE_TYPE##ASTNode * newNode = SINEWCLASS(NODE_TYPE##ASTNode, (_node));		\
 													nodesList->push_back(newNode);												\
-													if (parent)																	\
-														*parent << newNode;														\
+													CONNECT_NEW_NODE_TO_TREE();													\
 													parent = newNode;															\
 													ASTNode::iterator kid = _node.begin();										\
 													static_cast<ASTNode&>(*kid++).Accept(this);									\
@@ -71,8 +78,7 @@
 
 #define CONECT_NODE_WITH_MANY_CHILDREN(NODE_TYPE)	NODE_TYPE##ASTNode * newNode = SINEWCLASS(NODE_TYPE##ASTNode, (_node));		\
 													nodesList->push_back(newNode);												\
-													if (parent)																	\
-														*parent << newNode;														\
+													CONNECT_NEW_NODE_TO_TREE();													\
 													VISIT_NODE_WITH_MANY_CHILDREN()
 
 
@@ -121,6 +127,7 @@ namespace SIN {
 	//-----------------------------------------------------------------
 
 	ASTCloneVisitor::ASTCloneVisitor(void):
+		root(0x00),
 		parent(0x00),
 		nodesList(SINEW( NodesList))
 	{ }
@@ -128,6 +135,7 @@ namespace SIN {
 	//-----------------------------------------------------------------
 
 	ASTCloneVisitor::ASTCloneVisitor(ASTCloneVisitor const& _o) :
+		root(_o.root),
 		parent(_o.parent),
 		nodesList(_o.nodesList)	
 	{ }
@@ -140,7 +148,7 @@ namespace SIN {
 	//-----------------------------------------------------------------
 
 	ASTNode * ASTCloneVisitor::Root(void) const
-		{	return parent;	}
+		{	return root;	}
 
 
 	//-----------------------------------------------------------------
@@ -181,6 +189,9 @@ namespace SIN {
 	void ASTCloneVisitor::Visit(SinCodeASTNode& _node)	{ 
 		SinCodeASTNode * newNode = SINEWCLASS(SinCodeASTNode, (_node));
 		nodesList->push_back(newNode);		
+
+		if (!root)
+			root = newNode;
 		
 		VISIT_NODE_WITH_MANY_CHILDREN();
 		parent	= newNode;
@@ -195,9 +206,10 @@ namespace SIN {
 		SINASSERT(nodesList != 0x00);
 
 		ReturnASTNode * newNode = SINEWCLASS(ReturnASTNode, (_node));		
-		nodesList->push_back(newNode);												
-		*parent << newNode;													
-		
+		nodesList->push_back(newNode);
+
+		CONNECT_NEW_NODE_TO_TREE();
+
 		if (numberOfChildren == 1) {
 			parent = newNode;															
 			static_cast<ASTNode&>(*(_node.begin())).Accept(this);
