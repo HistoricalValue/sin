@@ -172,19 +172,28 @@ namespace SIN {
 
 	inline void TreeEvaluationVisitor::lookup(String const& _id, bool const _local, bool const _global) {
 		SINASSERT(!(_local && _global));
+		SymbolTable& current_stable = vs->CurrentStable();
+		SymbolTable& base_stable = vs->BaseStable();
+		symbol_table_value_setter.id = _id;
 		if (!_global) {
-			SymbolTable& stable = vs->CurrentStable();
-			lookuped = _local ? &stable.LookupOnlyInCurrentScope(_id) : &stable.Lookup(_id);
+			symbol_table_value_setter.stable_p = &current_stable; // setting this for UnsetValue()
+			lookuped = _local ? &current_stable.LookupOnlyInCurrentScope(_id) : &current_stable.Lookup(_id);
 		}
-		if (_global || (!_local && lookup_failed()))
-			lookuped = &vs->BaseStable().Lookup(_id);
+		if (_global || (!_local && lookup_failed())) {
+			symbol_table_value_setter.stable_p = &base_stable; // setting this for UnsetValue()
+			lookuped = &base_stable.Lookup(_id);
+		}
 		if (lookup_failed()) {
-			lookuped = 0x00;
+			symbol_table_value_setter.stable_p = &current_stable; // setting this for SetValue()
+			lookuped = 0x00; // indicate TEH FAIL
 			// memory still need a Nil value for a failed lookup
 			insertTemporary(memory = SINEW(MemoryCellNil));
 		}
 		else
+			// symbol_table_value_setter.stable_p untouched. It was found wherever it was found.
 			memory = *lookuped;
+
+		assignment_destination_setter_p = &symbol_table_value_setter;
 	}
 
 
@@ -347,11 +356,16 @@ namespace SIN {
 
 	inline void TreeEvaluationVisitor::assignFromTemporary(AssignASTNode const& _assignment_node, MemoryCell* const _temporary) {
 		AssignASTNode const& _node = _assignment_node;
-		SINASSERT(_temporary != NULL);
-		if (lookuped != 0x00) { // destination exists, reuse memory in lookuped
+		SINASSERT(_temporary != 0x00);
+		if (lookuped != 0x00) { // destination exists
 			SINASSERT(memory == *lookuped);
 			SINASSERT(memory != 0x00);
-			MemoryCell::Assign(*lookuped, _temporary);
+			if (_temporary->Type() == MemoryCell::NIL_MCT) { // unset value
+				SINDELETE(memory);
+				assignment_destination_setter_p->UnsetValue();
+			}
+			else // reuse memory in lookuped
+				MemoryCell::Assign(*lookuped, _temporary);
 		}
 		else { // general destination does not exist. Setter must be called.
 			MemoryCell* value = 0x00;
@@ -408,8 +422,6 @@ namespace SIN {
 		}
 	}
 
-
-
 	//-----------------------------------------------------------------
 
 	inline void TreeEvaluationVisitor::ObjectValueSetter::SetValue(Types::Object_t const& _obj_p, String const& _index, MemoryCell* const _value) {
@@ -419,7 +431,13 @@ namespace SIN {
 		SetValue(_value);
 	}
 	
-	
+	//-----------------------------------------------------------------
+
+	inline void TreeEvaluationVisitor::ObjectValueSetter::UnsetValue(void) const {
+		SINASSERT(isValidObjectIndexName(index));
+		SINASSERT(!autoIndex);
+		obj_p->UnsetValue(index);
+	}
 	
 	// ------------------------------
 	// --- SymbolTableValueSetter ---
@@ -430,6 +448,15 @@ namespace SIN {
 	inline void TreeEvaluationVisitor::SymbolTableValueSetter::SetValue(MemoryCell* const _value) const {
 		SINASSERT(isValidID(id));
 		stable_p->Insert(id, _value);
+	}
+
+
+
+	//-----------------------------------------------------------------	
+	
+	inline void TreeEvaluationVisitor::SymbolTableValueSetter::UnsetValue(void) const {
+		SINASSERT(isValidID(id));
+		stable_p->Remove(id);
 	}
 
 
@@ -513,17 +540,20 @@ namespace SIN {
 		Types::Object_t obj_p  = obj_ref->GetValue();
 		// Look-up in object
 		lookuped = &obj_p->GetValue(_member_id);
-		if (obj_p->LookupFailed(*lookuped)) {
+		bool new_member = obj_p->LookupFailed(*lookuped);
+		if (new_member) {
 			// not found
 			lookuped = 0x00;
 			insertTemporary(memory = SINEW(MemoryCellNil)); // memory still needs a value
-			object_value_setter.obj_p = obj_p;
-			object_value_setter.index = _member_id;
-			object_value_setter.autoIndex = false;
-			assignment_destination_setter_p = &object_value_setter;
 		}
 		else
 			memory = *lookuped;
+
+		// setting the value setter either way because it might be used for unsetting
+		object_value_setter.obj_p = obj_p;
+		object_value_setter.index = _member_id;
+		object_value_setter.autoIndex = false;
+		assignment_destination_setter_p = &object_value_setter;
 	}
 
 
@@ -996,9 +1026,6 @@ namespace SIN {
 	void TreeEvaluationVisitor::Visit(IDASTNode & _node) {
 		String const& id = _node.Name();
 		lookup(id);
-		symbol_table_value_setter.stable_p = &vs->CurrentStable();
-		symbol_table_value_setter.id = id;
-		assignment_destination_setter_p = &symbol_table_value_setter;
 		// memory and lookuped set by lookup()
 	}
 
@@ -1007,9 +1034,6 @@ namespace SIN {
 	void TreeEvaluationVisitor::Visit(LocalIDASTNode & _node) {
 		String const& id = _node.Name();
 		lookup_local(id);
-		symbol_table_value_setter.stable_p = &vs->CurrentStable();
-		symbol_table_value_setter.id = id;
-		assignment_destination_setter_p = &symbol_table_value_setter;
 		// memory and lookuped set by lookup()
 	}
 
@@ -1018,9 +1042,6 @@ namespace SIN {
 	void TreeEvaluationVisitor::Visit(GlobalIDASTNode & _node) {
 		String const& id = _node.Name();
 		lookup_global(id);
-		symbol_table_value_setter.stable_p = &vs->CurrentStable();
-		symbol_table_value_setter.id = id;
-		assignment_destination_setter_p = &symbol_table_value_setter;
 		// memory and lookuped set by lookup()
 	}
 

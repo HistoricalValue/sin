@@ -1,7 +1,10 @@
 a=[666];
 a[4] = 5;
-println("[666, 4]: ", a);
+println("[666, 5]: ", a);
 a[0] = nil;
-println("[4]: ", a);
+println("[5]: ", a);
 a["4"] = nil;
 println("[]: ", a);
+
+println(a);
+

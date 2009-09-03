@@ -18,6 +18,7 @@ namespace SIN {
 			Entry(Entry const& _o): name(_o.name), value(_o.value) { }
 			~Entry(void) { }
 			void operator =(Entry const& _o) { new(this) Entry(_o); }
+			bool operator ==(Entry const& _o) const { return name == _o.name; }
 		};
 
 		VariableHolder(void);
@@ -27,6 +28,7 @@ namespace SIN {
 
 		void AppendArgument(Type<name_t>::const_ref, Type<elem_t>::const_ref);
 		void AppendArgument(Type<elem_t>::const_ref _elem) { AppendArgument(argument_namer++, _elem); }
+		void RemoveArgument(Type<name_t>::const_ref);
 		void SetLocal(Type<name_t>::const_ref, Type<elem_t>::const_ref);
 
 
