@@ -116,8 +116,8 @@ namespace SIN {
 		SIN_UNPARSE_TREE_VISITOR_VISIT_SIGNATURE(MetaParseString	);
 		SIN_UNPARSE_TREE_VISITOR_VISIT_SIGNATURE(SinCode			);
 		
-		void	CleanUnparsedString(void)	{ unparsedString.Clear(); }
-		String	UnparsedString(void) const	{ return unparsedString; } // TODO -> UnparsedString
+		void			CleanUnparsedString(void)	{ unparsedString.Clear(); }
+		String const&	UnparsedString(void) const	{ return unparsedString; }
 	
 		void	EnableNewLine(void)		{ newLine = to_string("\n"); }
 		void	DisableNewLine(void)	{ newLine = to_string("\n"); }

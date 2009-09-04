@@ -1,28 +1,4 @@
-a = b = c = d = e = 2;
-a = (((a and b) or (c or d)) and e);
-
-function prependIf(condition, code) {
-	return .<  if (.~condition) { .~code ; } >.;
-}
-
-code = prependIf( .< true ; >. , .< println("OMG MIN MOY PEIS OTI THA EKTYPOTHEIS!!!"); >. );
-
-println("Executing: ", .#.~code);
-.!.~ code;
-
-
-
-(function (code) { println(.!.~code); })
-( .< 3; >. );
-
-// This should work once the .< .< .~a ; >. ; >. ; issue is fixed
-.!.<
-
-(function (code) { println(.!.<.~code;>.); })
-( .< 3; >. );
-
->.;
-
-
-
+a = [0,5,6,8];
+print(a.$keys, "\n");
+print(a.$size, "\n");
 
