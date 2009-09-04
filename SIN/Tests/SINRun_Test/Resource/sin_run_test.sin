@@ -1,3 +1,33 @@
+a = b = c = d = e = 2;
+a = (((a and b) or (c or d)) and e);
+
+function prependIf(condition, code) {
+	return .<  if (.~condition) { .~code ; } >.;
+}
+
+code = prependIf( .< true >. , .< println("OMG MIN MOY PEIS OTI THA EKTYPOTHEIS!!!"); >. );
+
+println("Executing: ", .#.~code);
+.!.~ code;
+
+
+
+(function (code) { println(.!.~code); })
+( .< 3 >. );
+
+
+.!.<
+
+(function (code) { println(.!.<.~code>.); })
+( .< 3 >. );
+
+>.;
+
+
+///////////////////////////////////////////////
+///////////////////////////////////////////////
+///////////////////////////////////////////////
+///////////////////////////////////////////////
 
 
 

@@ -91,6 +91,7 @@ static inline void __visit_kids_serially(SIN::ASTNode&_node, SIN::TreeEvaluation
 								 ASSERT_AFTER_EXPRESSION_EVALUATION_CONDITIONS;}
 #define EVAL_BLOCK(BLOCK)		{BLOCK.Accept(this);											\
 								 ASSERT_AFTER_BLOCK_EVALUATION_CONDITIONS;}
+#define EVAL(CODE)				 CODE.Accept(this)
 
 //---------------------------------------------------------------------------------------------------
 
@@ -792,7 +793,7 @@ namespace SIN {
 
 		EVAL_EXPR(condition);
 		while(memory->ToBoolean()) {
-			EVAL_BLOCK(body);
+			EVAL(body);
 			if (triggeredBreak)
 				break;
 			EVAL_BLOCK(addendum);
@@ -831,7 +832,7 @@ namespace SIN {
 		EVAL_EXPR(condition);
 
 		while(memory->ToBoolean()) {
-			EVAL_BLOCK(body);
+			EVAL(body);
 			if (triggeredBreak)
 				break;
 			EVAL_EXPR(condition);
@@ -853,7 +854,7 @@ namespace SIN {
 		EVAL_EXPR(condition);
 
 		if(memory->ToBoolean())
-			EVAL_BLOCK(body);
+			EVAL(body);
 
 		BLOCK_EVALUATION;
 	}
@@ -870,10 +871,10 @@ namespace SIN {
 		EVAL_EXPR(condition);
 
 		if(memory->ToBoolean()) {
-			EVAL_BLOCK(if_body);
+			EVAL(if_body);
 		}
 		else {
-			EVAL_BLOCK(else_body);
+			EVAL(else_body);
 		}
 
 		BLOCK_EVALUATION;
@@ -919,7 +920,7 @@ namespace SIN {
 
 		ASTNode::iterator const end = _node.end();						
 		for(ASTNode::iterator kid = _node.begin(); kid != end; ++kid) {	
-			EVAL_BLOCK(AST(kid));
+			EVAL(AST(kid));
 			if (triggeredBreak || triggeredContinue || returnTriggered())
 				break;
 		}
@@ -1004,6 +1005,7 @@ namespace SIN {
 
 			BLOCK_EVALUATION;
 		}
+		BLOCK_EVALUATION;
 	}
 
 	//-----------------------------------------------------------------
@@ -1018,7 +1020,7 @@ namespace SIN {
 
 		EVAL_EXPR(func_id);
 		performCall(memory, func_id.Name(), _node.AssociatedFileName(), _node.AssociatedFileLine(), actual_args_astnode); // memory is set in here (a temporary of the return value)
-		BLOCK_EVALUATION;
+		lookuped = 0x00;
 	}
 
 	//-----------------------------------------------------------------
@@ -1033,15 +1035,14 @@ namespace SIN {
 		ASTNode& lambda_astnode = ASTPP(kite);
 		SINASSERT(lambda_astnode.Type() == SINASTNODES_FUNCTION_TYPE);
 		ASTNode& actual_args_astnode = ASTPP(kite);
-		SINASSERT(memory->Type() == MemoryCell::FUNCTION_MCT);
 		ASTEND(kite);
 
 		EVAL_EXPR(lambda_astnode);
+		SINASSERT(memory->Type() == MemoryCell::FUNCTION_MCT);
 		// TODO insert a new field in LambdaASTNode and don't use Name() as
 		// a description
 		performCall(memory, lambda_astnode.Name(), _node.AssociatedFileName(), _node.AssociatedFileLine(),
 				actual_args_astnode); // memory is set in here (a temporary of the return value)
-		BLOCK_EVALUATION;
 	}
 
 	//-----------------------------------------------------------------
