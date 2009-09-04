@@ -1,6 +1,6 @@
 NEXT TODO TICKET                                ||
 (please take a number and wait in the line...)  ||
-Next number: 63                                 ||
+Next number: 64                                 ||
 +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-//
 
 
@@ -35,6 +35,8 @@ Next number: 63                                 ||
 *[060 2009-09-04/13:34] Remove all unused and duplicated ASTNodes (NotASTNode, ... )
 *[061 2009-09-04/22:12] We need run time errors
 *[062 2009-09-04/22:13] Merikh apotimish 
+*[063 2009-09-04/22:30]	Correct lib function totalarguments
+
 
 
 ---logging---
