@@ -18,7 +18,6 @@ namespace SIN {
     class ASTVisitor;
 	class ASTTreeVisualisationVisitor;
 
-
 	///***************	ValueHolder	***************
 	
 	template <typename _ValueT>
@@ -83,8 +82,8 @@ namespace SIN {
 	
 	}; // class ASTNode
 	extern String const to_string(SIN::ASTNode const &_val);
-
-
+	void DeleteAST(ASTNode* root);
+	ASTNode* CopyAST(ASTNode* root);
 
 	///***************	ASTNodeFactory	***************
 	

@@ -178,15 +178,15 @@ namespace SIN {
 				TreeEvaluationVisitor eval(&lib, &vs);
 				root->Accept(&eval);
 
-				ShiftToMetaEvaluatorASTVisitor shifter(eval);
-				root->Accept(&shifter);
-				shifter.Root()->Accept(&metaVisualVisitor);
+				//ShiftToMetaEvaluatorASTVisitor shifter(eval);
+				//root->Accept(&shifter);
+				//shifter.Root()->Accept(&metaVisualVisitor);
 				
 				
 
 				metatxt.flush();
 				test.DeleteListAndAST();
-				shifter.DeleteListAndAST();
+//				shifter.DeleteListAndAST();
 			}
 
 

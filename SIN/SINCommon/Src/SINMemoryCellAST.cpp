@@ -2,15 +2,33 @@
 
 #include "SINAlloc.h"
 #include "SINAssert.h"
-
+#include "SINASTNode.h"
 
 
 namespace SIN {
 
+	MemoryCellAST::MemoryCellAST(Types::Metacode_t const& node):
+		MemoryCell(),
+		value(node)
+	{ }
+
+	//-----------------------------------------------------------------
+
+	MemoryCellAST::~MemoryCellAST(void) {
+		DeleteAST(value);
+	}
+
+	//-----------------------------------------------------------------
+
+	MemoryCellAST::MemoryCellAST(const MemoryCellAST & other):
+		MemoryCell(),
+		value(CopyAST(other.value))
+	{ }
+
 	//-----------------------------------------------------------------
 
 	MemoryCell * MemoryCellAST::Clone(void) const
-		{ return SINEW(MemoryCellAST); }
+		{ return SINEWCLASS(MemoryCellAST, (*this)); }
 	
 
 	//-----------------------------------------------------------------
@@ -22,7 +40,8 @@ namespace SIN {
 	//-----------------------------------------------------------------
 
 	const String MemoryCellAST::ToString(void) const
-		{ return to_string(value); }
+		{ return to_string(value); // TODO fix this, add a real AST to string
+		}
 		
 
 
