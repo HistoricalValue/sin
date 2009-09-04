@@ -96,44 +96,44 @@ namespace SIN {
 				BufferedOutputStream metatxt(_metatxt); 
 				
 
-				ASTTreeCtrlVisitor						ctrlvis(ctrltxt);
-				ASTTreeVisualisationVisitor				visitor(fouttxt);
-				ASTTreeVisualisationVisitor				metaVisualVisitor(metatxt);
-				ASTMITTreeVisualizerXMLProducerVisitor	mitvis(foutxml);
-				ASTCloneVisitor							cloneVisitor;
-				ASTUnparseTreeVisitor					uparseVisitor;
-				
-				root->Accept(&visitor);
-				root->Accept(&ctrlvis);
-				root->Accept(&mitvis);
-				root->Accept(&uparseVisitor);
-				root->Accept(&cloneVisitor);
+				///*ASTTreeCtrlVisitor						ctrlvis(ctrltxt);
+				//ASTTreeVisualisationVisitor				visitor(fouttxt);
+				//ASTTreeVisualisationVisitor				metaVisualVisitor(metatxt);
+				//ASTMITTreeVisualizerXMLProducerVisitor	mitvis(foutxml);
+				//ASTCloneVisitor							cloneVisitor;
+				//ASTUnparseTreeVisitor					uparseVisitor;
+				//
+				//root->Accept(&visitor);
+				//root->Accept(&ctrlvis);
+				//root->Accept(&mitvis);
+				//root->Accept(&uparseVisitor);
+				//root->Accept(&cloneVisitor);
 
-				String unpasedString1 = uparseVisitor.UnparsedString();
-				uparseVisitor.CleanUnparsedString();
+				//String unpasedString1 = uparseVisitor.UnparsedString();
+				//uparseVisitor.CleanUnparsedString();
 
-				cloneVisitor.Root()->Accept(&uparseVisitor);
-				String unpasedString2 = uparseVisitor.UnparsedString();
-				
-				SINASSERT(unpasedString1 == unpasedString2);
+				//cloneVisitor.Root()->Accept(&uparseVisitor);
+				//String unpasedString2 = uparseVisitor.UnparsedString();
+				//
+				//SINASSERT(unpasedString1 == unpasedString2);
 
-				
+				//
 
-				static_cast<OutputStream&>(STDOUT) << "\n\n" << unpasedString2 << "\n\n\n";
+				//static_cast<OutputStream&>(STDOUT) << "\n\n" << unpasedString2 << "\n\n\n";*/
 
 				foutxml.flush();
 				fouttxt.flush();
 				ctrltxt.flush();
 
 
-				ASTNode & lastKid = static_cast<ASTNode &>(*root->rbegin());
-				cloneVisitor.Resset();
-				lastKid.Accept(&cloneVisitor);
-				uparseVisitor.CleanUnparsedString();
-				ASTNode * cloneRoot = cloneVisitor.Root();
-				cloneRoot->Accept(&uparseVisitor);
-				static_cast<OutputStream&>(STDOUT) << "\n\n" << uparseVisitor.UnparsedString() << "\n\n\n";
-				cloneVisitor.DeleteListAndAST();
+				//ASTNode & lastKid = static_cast<ASTNode &>(*root->rbegin());
+				//cloneVisitor.Resset();
+				//lastKid.Accept(&cloneVisitor);
+				//uparseVisitor.CleanUnparsedString();
+				//ASTNode * cloneRoot = cloneVisitor.Root();
+				//cloneRoot->Accept(&uparseVisitor);
+				//static_cast<OutputStream&>(STDOUT) << "\n\n" << uparseVisitor.UnparsedString() << "\n\n\n";
+				//cloneVisitor.DeleteListAndAST();
 
 
 				VM::VirtualState vs;
