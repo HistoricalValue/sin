@@ -118,7 +118,7 @@ void MainTestCollection::emulateAllocTest(void) const {
 static int waitToByeBye(void) {
 #ifdef _DEBUG
 #ifdef _MSC_VER
-	system("pause");
+	//system("pause");
 #elif defined(_LINUX_)
 	//getchar();
 #endif

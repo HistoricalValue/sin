@@ -15,14 +15,13 @@ println("Executing: ", .#.~code);
 (function (code) { println(.!.~code); })
 ( .< 3; >. );
 
-
 // This should work once the .< .< .~a ; >. ; >. ; issue is fixed
-/* .!.<
+.!.<
 
 (function (code) { println(.!.<.~code;>.); })
 ( .< 3; >. );
 
->.; */
+>.;
 
 
 
