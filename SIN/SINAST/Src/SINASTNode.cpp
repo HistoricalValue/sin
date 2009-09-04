@@ -15,6 +15,8 @@ namespace SIN {
 	//---------------------------------------------------
 	
 	ASTNode::ASTNode(void):
+		leftParenthesis(false),
+		rightParenthesis(false),
 		name(ASTNodeFactory::NextName()),
 		associatedFileName(""),
 		associatedFileLine(0),
@@ -25,6 +27,8 @@ namespace SIN {
 	//---------------------------------------------------
 
     ASTNode::ASTNode(String const &_name, String const & fileName, const unsigned int line):
+		leftParenthesis(false),
+		rightParenthesis(false),
 		name(_name),
 		associatedFileName(fileName),
 		associatedFileLine(line),
@@ -35,6 +39,8 @@ namespace SIN {
 	//---------------------------------------------------
 
 	ASTNode::ASTNode(ASTNode const&_other):
+		leftParenthesis(_other.leftParenthesis),
+		rightParenthesis(_other.rightParenthesis),
 		name(_other.name),
 		associatedFileName(_other.associatedFileName),
 		associatedFileLine(_other.associatedFileLine),
@@ -115,6 +121,33 @@ namespace SIN {
 
 	//---------------------------------------------------
 
+	bool ASTNode::HasLeftParenthesis(void) const
+		{	return leftParenthesis;	}
+	
+	//---------------------------------------------------	
+	
+	bool ASTNode::HasRightParenthesis(void)const
+		{	return rightParenthesis;	}
+
+	//---------------------------------------------------	
+
+	void ASTNode::AddLeftParenthesis(void)
+		{	leftParenthesis = true;	}
+
+	//---------------------------------------------------	
+
+	void ASTNode::AddRightParenthesis(void)
+		{	rightParenthesis = true;	}
+
+	//---------------------------------------------------	
+
+	void ASTNode::RemoveLeftParenthesis(void)
+		{	leftParenthesis = false;	}
+
+	//---------------------------------------------------	
+
+	void ASTNode::RemoveRightParenthesis(void)
+		{	rightParenthesis = false;	}
 
 	///--------- AST Node Factory ----------
 	ASTNodeFactory::ASTNodeFactory(void): namer("ASTNode-"), next_id(0x00ul) {}

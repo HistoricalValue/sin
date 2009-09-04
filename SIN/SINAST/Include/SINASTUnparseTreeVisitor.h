@@ -119,7 +119,10 @@ namespace SIN {
 		void	CleanUnparsedString(void)	{ unparsedString.Clear(); }
 		String	UnparsedString(void) const	{ return unparsedString; } // TODO -> UnparsedString
 	
+		void	EnableNewLine(void)		{ newLine = to_string("\n"); }
+		void	DisableNewLine(void)	{ newLine = to_string("\n"); }
 	private:
+		String	newLine;
 		String	unparsedString;
 		int		indexedObjectFunctionCounter;
 

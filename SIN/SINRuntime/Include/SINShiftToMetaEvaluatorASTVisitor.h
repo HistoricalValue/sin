@@ -18,7 +18,8 @@ namespace SIN {
 		ShiftToMetaEvaluatorASTVisitor(ShiftToMetaEvaluatorASTVisitor const&);
 		~ShiftToMetaEvaluatorASTVisitor(void);
 
-		SINASTVISITOR_VISIT_SIGNATURE(MetaPreserve		);
+		SINASTVISITOR_VISIT_SIGNATURE(MetaParse		);
+		SINASTVISITOR_VISIT_SIGNATURE(MetaPreserve	);
 	
 	private:
 		TreeEvaluationVisitor & treeEvalVisitor;

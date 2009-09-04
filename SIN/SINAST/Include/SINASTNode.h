@@ -71,10 +71,22 @@ namespace SIN {
 		bool operator== (const ASTNode & node) const;
 		bool operator!= (const ASTNode & node) const;
 
+		
+		virtual bool HasLeftParenthesis(void) const;
+		virtual bool HasRightParenthesis(void)const;
+
+		virtual void AddLeftParenthesis(void);
+		virtual void AddRightParenthesis(void);
+
+		virtual void RemoveLeftParenthesis(void);
+		virtual void RemoveRightParenthesis(void);
+
 		// introduced for loose runtime checking.
 		// 0 is the default value, signifying that inheriting classes do not override this method
 		virtual unsigned long Type(void) const = 0;
     private:
+		bool				leftParenthesis;
+		bool				rightParenthesis;
         String const		name;
 		String const		associatedFileName;
 		const unsigned int	associatedFileLine;

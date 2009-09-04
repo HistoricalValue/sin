@@ -2,6 +2,7 @@
 
 #include "SINAlloc.h"
 #include "SINAssert.h"
+#include "SINASTUnparseTreeVisitor.h"
 #include "SINASTNode.h"
 
 
@@ -39,9 +40,13 @@ namespace SIN {
 
 	//-----------------------------------------------------------------
 
-	const String MemoryCellAST::ToString(void) const
-		{ return to_string(value); // TODO fix this, add a real AST to string
-		}
+	const String MemoryCellAST::ToString(void) const {
+		ASTUnparseTreeVisitor unparser;
+		unparser.DisableNewLine();
+		
+		value->Accept(&unparser);
+		return unparser.UnparsedString(); 
+	}
 		
 
 

@@ -999,8 +999,13 @@ namespace SIN {
 	
 	//-----------------------------------------------------------------
 
-	void ParserManage::Manage_Term_ExpressionParentheses (const int lineNo, ASTNode *_expr, ASTNode **_retterm, LexAndBisonParseArguments *_lbpa)
-		{ *_retterm = _expr; }
+	void ParserManage::Manage_Term_ExpressionParentheses (const int lineNo, ASTNode *_expr, ASTNode **_retterm, LexAndBisonParseArguments *_lbpa) { 
+		if (_expr->NumberOfChildren()) {
+			static_cast<ASTNode &>(*_expr->begin()).AddLeftParenthesis();
+			static_cast<ASTNode &>(*_expr->rbegin()).AddRightParenthesis();
+		}
+		*_retterm = _expr; 
+	}
 	
 	
 	//-----------------------------------------------------------------
