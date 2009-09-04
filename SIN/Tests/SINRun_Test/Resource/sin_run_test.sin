@@ -5,6 +5,7 @@ function prependIf(condition, code) {
 
 code = prependIf( .< true ; >. , .< println("OMG MIN MOY PEIS OTI THA EKTYPOTHEIS!!!"); >. );
 
+println("Executing: ", .#.~code);
 .!.~ code;
 
 

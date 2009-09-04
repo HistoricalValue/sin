@@ -47,7 +47,7 @@
 
 //---------------------------------------------------------------------------------------------------
 
-#define EVALUATE_BINARY_OPERATION(OPERATOR)	evaluateBinaryOperation<OPERATOR>(*this, &TreeEvaluationVisitor::insertTemporary, _node, memory);
+#define EVALUATE_BINARY_OPERATION(OPERATOR)	evaluateBinaryOperation<OPERATOR>(*this, &TreeEvaluationVisitor::insertTemporary, _node, memory); lookuped = 0x00
 
 //---------------------------------------------------------------------------------------------------
 
@@ -67,8 +67,9 @@
 
 //---------------------------------------------------------------------------------------------------
 
-#define ACCEPT_ALL_THE_KIDS()	for(ASTNode::iterator kid = _node.begin(); kid != _node.end(); ++kid)	\
-									static_cast<ASTNode&>(*kid).Accept(this);
+#define ACCEPT_ALL_THE_KIDS()	for(ASTNode::iterator kid = _node.begin(); kid != _node.end(); ++kid) {	\
+									static_cast<ASTNode&>(*kid).Accept(this);							\
+									memory = 0x00; lookuped = 0x00; }
 
 //---------------------------------------------------------------------------------------------------
 
@@ -628,6 +629,7 @@ namespace SIN {
 		insertTemporary(
 			memory = SINEWCLASS(MemoryCellNumber, (_node.GetValue()))
 		);
+		lookuped = 0x00;
 	}
 
 	//-----------------------------------------------------------------
@@ -636,6 +638,7 @@ namespace SIN {
 		insertTemporary(
 			memory = SINEWCLASS(MemoryCellString, (_node.GetValue()))
 		);
+		lookuped = 0x00;
 	}
 
 	//-----------------------------------------------------------------
@@ -644,6 +647,7 @@ namespace SIN {
 		insertTemporary(
 			memory = SINEW(MemoryCellNil)
 		);
+		lookuped = 0x00;
 	}
 
 	//-----------------------------------------------------------------
@@ -652,6 +656,7 @@ namespace SIN {
 		insertTemporary(
 			memory = SINEWCLASS(MemoryCellBool, (_node.GetValue()))
 		);
+		lookuped = 0x00;
 	}
 
 	//-----------------------------------------------------------------
@@ -660,6 +665,7 @@ namespace SIN {
 		insertTemporary(
 			memory = SINEWCLASS(MemoryCellBool, (_node.GetValue()))
 		);
+		lookuped = 0x00;
 	}
 
 	//-----------------------------------------------------------------
@@ -1284,18 +1290,20 @@ namespace SIN {
 	//-----------------------------------------------------------------
 
 	void TreeEvaluationVisitor::Visit(MetaUnparseASTNode & _node) {
-		SINASSERT(_node.NumberOfChildren() == 1);
-		
-		ASTNode & kid = static_cast<ASTNode &>(*_node.begin());
+		ASTNode::iterator kite(_node.begin());
+
+		ASTNode & kid = static_cast<ASTNode &>(*kite++);
+		SINASSERT(kite == _node.end()); // only 1 child
 		EVAL_EXPR(kid);
+		SINASSERT(memory != 0x00);
 		SINASSERT(memory->Type() == MemoryCell::AST_MCT);
 
 		ASTUnparseTreeVisitor unparser;
-		kid.Accept(&unparser);
+		static_cast<MemoryCellAST*>(memory)->GetValue()->Accept(&unparser);
 		
-		String unparsedString(unparser.UnparsedString());
+		const String unparsedString(unparser.UnparsedString());
 		
-		SINASSERT(false);	//TODO edw na sunexisoume. Den 3erw ti 8a kanoume malon 8elei new memory call
+		insertTemporary(memory = SINEWCLASS(MemoryCellString, (unparsedString)));
 	}
 
 	//-----------------------------------------------------------------
