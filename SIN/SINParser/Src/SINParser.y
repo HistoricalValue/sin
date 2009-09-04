@@ -77,10 +77,10 @@
 ////////////////////////////////////////////////////////////////////////
 // Untyped tokens
 // 
-%token '[' ']' '{' '}' '(' ')' ';' ':' ',' '~' '!' '@' '#' DOT DOUBLEDOT
+%token '[' ']' '{' '}' '(' ')' ';' ':' ',' DOT DOUBLEDOT
 %token IF ELSE WHILE FOR FUNCTION RETURN BREAK CONTINUE LOCAL GLOBAL TRUE FALSE NIL
 %token ASSIGN ADD MIN MUL DIV MOD EQ NOTEQ INCR DECR GT LT GE LE AND OR NOT 
-%token DOT_LT GT_DOT DOT_TILDE DOT_EXCl_MARK DOT_AT DOT_HASH DOT_KEYS_MEMBER DOT_SIZE_MEMBER
+%token DOT_LT GT_DOT DOT_TILDE DOT_EXCl_MARK DOT_AT DOT_HASH 
 %token KEYS_MEMBER SIZE_MEMBER
 
 
@@ -124,7 +124,6 @@ stmt:			expr ';'			{	SIN::ParserManage::Manage_Statement_Expression(yylineno, $1
 				|	block			{	SIN::ParserManage::Manage_Statement_Block(yylineno, $1, &($$), &fabpa);				}
 				|	funcdef			{	SIN::ParserManage::Manage_Statement_FunctionDefinition(yylineno, $1, &($$), &fabpa);	}
 				|	';'				{	SIN::ParserManage::Manage_Statement_Semicolon(yylineno, &($$), &fabpa);				}
-				|	error  ';'		{	SIN::ParserManage::Manage_Statement_Error(yylineno, &($$), &fabpa);		yyclearin;	}
 				;
 
 

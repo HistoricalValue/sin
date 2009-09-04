@@ -546,25 +546,20 @@ namespace SIN {
 	//-----------------------------------------------------------------
 
 	void ParserManage::Manage_IfStatement_If	(const int lineNo, ASTNode *_expr, ASTNode *_stmt, ASTNode **_retifstmt, LexAndBisonParseArguments *_lbpa) {
-		if (!_lbpa->parsingFlags.stmtError){
-	
-			*_retifstmt = SINEWCLASS(IfASTNode, ("if", _lbpa->GetFileName(), lineNo));
-			_lbpa->AppendToNodeList(*_retifstmt);
+		*_retifstmt = SINEWCLASS(IfASTNode, ("if", _lbpa->GetFileName(), lineNo));
+		_lbpa->AppendToNodeList(*_retifstmt);
 
-			**_retifstmt << _expr << _stmt;
-		}
+		**_retifstmt << _expr << _stmt;
 	}
 
 	
 	//-----------------------------------------------------------------
 
 	void ParserManage::Manage_IfStatement_IfElse	(const int lineNo, ASTNode *_expr, ASTNode *_stmt1, ASTNode *_stmt2, ASTNode **_retifstmt, LexAndBisonParseArguments *_lbpa) {
-		if (!_lbpa->parsingFlags.stmtError){
-			*_retifstmt = SINEWCLASS(IfElseASTNode, ("if else", _lbpa->GetFileName(), lineNo));
-			_lbpa->AppendToNodeList(*_retifstmt);
+		*_retifstmt = SINEWCLASS(IfElseASTNode, ("if else", _lbpa->GetFileName(), lineNo));
+		_lbpa->AppendToNodeList(*_retifstmt);
 
-			**_retifstmt << _expr << _stmt1 << _stmt2;
-		}
+		**_retifstmt << _expr << _stmt1 << _stmt2;
 	}
 
 
@@ -974,10 +969,7 @@ namespace SIN {
 	//-----------------------------------------------------------------
 
 	void ParserManage::Manage_Statement_Error (const int lineNo, ASTNode **_error, LexAndBisonParseArguments *_lbpa)
-	{
-		_lbpa->parsingFlags.stmtError = true;
-		*_error = NULL; 
-	}
+		{	*_error = NULL; }
 
 
 	//////////////////////////////////////////////////////////

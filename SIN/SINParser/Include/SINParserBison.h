@@ -80,11 +80,9 @@
      DOT_EXCl_MARK = 296,
      DOT_AT = 297,
      DOT_HASH = 298,
-     DOT_KEYS_MEMBER = 299,
-     DOT_SIZE_MEMBER = 300,
-     KEYS_MEMBER = 301,
-     SIZE_MEMBER = 302,
-     UMINUS = 303
+     KEYS_MEMBER = 299,
+     SIZE_MEMBER = 300,
+     UMINUS = 301
    };
 #endif
 /* Tokens.  */
@@ -129,11 +127,9 @@
 #define DOT_EXCl_MARK 296
 #define DOT_AT 297
 #define DOT_HASH 298
-#define DOT_KEYS_MEMBER 299
-#define DOT_SIZE_MEMBER 300
-#define KEYS_MEMBER 301
-#define SIZE_MEMBER 302
-#define UMINUS 303
+#define KEYS_MEMBER 299
+#define SIZE_MEMBER 300
+#define UMINUS 301
 
 
 
