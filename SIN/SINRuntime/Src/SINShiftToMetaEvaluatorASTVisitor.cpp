@@ -35,6 +35,30 @@ namespace SIN {
 	
 	//-----------------------------------------------------------------
 
+	void ShiftToMetaEvaluatorASTVisitor::Visit(MetaParseASTNode& _node)	{ 
+		SINASSERT(_node.NumberOfChildren() == 1);
+
+		//We  are going to copy all  the sub tree from this node and down.
+		ASTCloneVisitor clone;
+		_node.Accept(&clone);
+
+		//conect the new sub tree to current tree.
+		if(parent)
+			*parent << clone.Root();
+		
+		if(!root)
+			root = clone.Root();
+		
+		//splice my list with the list that contains the new nodes. 
+		//We do this because we do not want to have memory leaks
+		nodesList->splice(nodesList->end(), *clone.TakeNodesList());
+		clone.DeleteList();
+	}
+
+
+	
+	//-----------------------------------------------------------------
+
 	void ShiftToMetaEvaluatorASTVisitor::Visit(MetaPreserveASTNode& _node)	{ 
 		SINASSERT(_node.NumberOfChildren() == 1);
 
@@ -55,6 +79,9 @@ namespace SIN {
 		//Conect the Clone visitor root to my tree.
 		if (parent)
 			*parent << cloneRoot;
+
+		if(!root)
+			root = cloneRoot;
 
 		//splice my list with the list that contains the new nodes. 
 		//We do this because we do not want to have memory leaks
