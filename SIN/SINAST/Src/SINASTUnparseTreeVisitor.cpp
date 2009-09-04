@@ -38,11 +38,19 @@
 #define SIN_UNPARSE_TREE_VISITOR_TWO_CHILDREN_VISIT_DEFINITION(NODENAME, SYMBOL_S, SYMBOL_M, SYMBOL_E)	\
 	void ASTUnparseTreeVisitor::Visit(NODENAME##ASTNode & _node) {										\
 		SINASSERT(_node.NumberOfChildren() == 2);														\
-		ASTNode::iterator kid = _node.begin();															\
 		unparsedString +=  to_string(SYMBOL_S);															\
+																										\
+		ASTNode::iterator kid = _node.begin();															\
+																										\
+		if (static_cast<ASTNode &>(*kid).HasLeftParenthesis())											\
+			unparsedString +=  to_string("(");															\
+																										\
 		static_cast<ASTNode &>(*kid++).Accept(this);													\
 		unparsedString +=  to_string(SYMBOL_M);															\
-		static_cast<ASTNode &>(*kid++).Accept(this);													\
+		static_cast<ASTNode &>(*kid).Accept(this);														\
+																										\
+		if (static_cast<ASTNode &>(*kid).HasRightParenthesis())											\
+			unparsedString +=  to_string(")");															\
 		unparsedString +=  to_string(SYMBOL_E);															\
 	}
 
@@ -58,7 +66,7 @@
 												type != SINASTNODES_IF_TYPE			&&					\
 												type != SINASTNODES_IFELSE_TYPE							\
 												)														\
-												unparsedString +=  to_string(";\n");						\
+												unparsedString +=  to_string(";\n");					\
 										}																\
 										else
 
@@ -132,7 +140,10 @@ namespace SIN {
 
 	//-----------------------------------------------------------------
 
-	ASTUnparseTreeVisitor::ASTUnparseTreeVisitor(void) : unparsedString(""), indexedObjectFunctionCounter(0) {}
+	ASTUnparseTreeVisitor::ASTUnparseTreeVisitor(void) : 
+		unparsedString(""), 
+		indexedObjectFunctionCounter(0) 
+	{}
 
 	//-----------------------------------------------------------------
 
@@ -314,20 +325,20 @@ namespace SIN {
 	SIN_UNPARSE_TREE_VISITOR_WITH_ONE_CHILD_VISIT_DEFINITION(MetaParseString, ".@ "	, ""		)
 
 
-	SIN_UNPARSE_TREE_VISITOR_TWO_CHILDREN_VISIT_DEFINITION(Assign	, "(", " = ", ")"		)
-	SIN_UNPARSE_TREE_VISITOR_TWO_CHILDREN_VISIT_DEFINITION(Add		, "(", " + ", ")"		)
-	SIN_UNPARSE_TREE_VISITOR_TWO_CHILDREN_VISIT_DEFINITION(Sub		, "(", " - ", ")"		)
-	SIN_UNPARSE_TREE_VISITOR_TWO_CHILDREN_VISIT_DEFINITION(Mul		, "(", " * ", ")"		)
-	SIN_UNPARSE_TREE_VISITOR_TWO_CHILDREN_VISIT_DEFINITION(Div		, "(", " / ", ")"		)
-	SIN_UNPARSE_TREE_VISITOR_TWO_CHILDREN_VISIT_DEFINITION(Mod		, "(", " % ", ""		)
-	SIN_UNPARSE_TREE_VISITOR_TWO_CHILDREN_VISIT_DEFINITION(Lt		, "(", " < ", ")"		)
-	SIN_UNPARSE_TREE_VISITOR_TWO_CHILDREN_VISIT_DEFINITION(Gt		, "(", " > ", ")"		)
-	SIN_UNPARSE_TREE_VISITOR_TWO_CHILDREN_VISIT_DEFINITION(Le		, "(", " <= ", ")"		)
-	SIN_UNPARSE_TREE_VISITOR_TWO_CHILDREN_VISIT_DEFINITION(Ge		, "(", " >= ", ")"		)
-	SIN_UNPARSE_TREE_VISITOR_TWO_CHILDREN_VISIT_DEFINITION(Eq		, "(", " == ", ")"		)
-	SIN_UNPARSE_TREE_VISITOR_TWO_CHILDREN_VISIT_DEFINITION(Ne		, "(", " != ", ")"		)
-	SIN_UNPARSE_TREE_VISITOR_TWO_CHILDREN_VISIT_DEFINITION(And		, "(", " and ", ")"		)
-	SIN_UNPARSE_TREE_VISITOR_TWO_CHILDREN_VISIT_DEFINITION(Or		, "(", " or ", ")"		)
+	SIN_UNPARSE_TREE_VISITOR_TWO_CHILDREN_VISIT_DEFINITION(Assign	, "", " = ", ""			)
+	SIN_UNPARSE_TREE_VISITOR_TWO_CHILDREN_VISIT_DEFINITION(Add		, "", " + ", ""			)
+	SIN_UNPARSE_TREE_VISITOR_TWO_CHILDREN_VISIT_DEFINITION(Sub		, "", " - ", ""			)
+	SIN_UNPARSE_TREE_VISITOR_TWO_CHILDREN_VISIT_DEFINITION(Mul		, "", " * ", ""			)
+	SIN_UNPARSE_TREE_VISITOR_TWO_CHILDREN_VISIT_DEFINITION(Div		, "", " / ", ""			)
+	SIN_UNPARSE_TREE_VISITOR_TWO_CHILDREN_VISIT_DEFINITION(Mod		, "", " % ", ""			)
+	SIN_UNPARSE_TREE_VISITOR_TWO_CHILDREN_VISIT_DEFINITION(Lt		, "", " < ", ""			)
+	SIN_UNPARSE_TREE_VISITOR_TWO_CHILDREN_VISIT_DEFINITION(Gt		, "", " > ", ""			)
+	SIN_UNPARSE_TREE_VISITOR_TWO_CHILDREN_VISIT_DEFINITION(Le		, "", " <= ", ""		)
+	SIN_UNPARSE_TREE_VISITOR_TWO_CHILDREN_VISIT_DEFINITION(Ge		, "", " >= ", ""		)
+	SIN_UNPARSE_TREE_VISITOR_TWO_CHILDREN_VISIT_DEFINITION(Eq		, "", " == ", ""		)
+	SIN_UNPARSE_TREE_VISITOR_TWO_CHILDREN_VISIT_DEFINITION(Ne		, "", " != ", ""		)
+	SIN_UNPARSE_TREE_VISITOR_TWO_CHILDREN_VISIT_DEFINITION(And		, "", " and ", ""		)
+	SIN_UNPARSE_TREE_VISITOR_TWO_CHILDREN_VISIT_DEFINITION(Or		, "", " or ", ""		)
 	SIN_UNPARSE_TREE_VISITOR_TWO_CHILDREN_VISIT_DEFINITION(NormalCall, "", "", ""			)
 	SIN_UNPARSE_TREE_VISITOR_TWO_CHILDREN_VISIT_DEFINITION(CallMember, "", ".", ""			)
 	SIN_UNPARSE_TREE_VISITOR_TWO_CHILDREN_VISIT_DEFINITION(CallIndex, "", "[", "]"			)
