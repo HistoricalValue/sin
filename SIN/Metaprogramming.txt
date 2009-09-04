@@ -17,3 +17,17 @@ f() -> [x]
 ---> .![x]
 ---> x
 
+====================== TRICKS ==================
+- Instead of doing the ugly...
+	if_node = makeIfNode();
+	setIfNodeExpression(if_node, makeExpression(..));
+  Do this!
+	code = .< something(); >.;
+	if_code = .< if(true) { .~code ; } >.;
+  And if you insist on having the if_code first (or as a modular addition)
+	function prependIf(code) {
+		return .< if(true) { .~code ; } >.;
+	}
+	genericCodeAddition = prependIf;
+	code = genericCodeAddition(.< something(); >.);
+

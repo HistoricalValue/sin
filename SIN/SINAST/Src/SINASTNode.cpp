@@ -6,7 +6,7 @@
 #include "SINASTTreeVisualisationVisitor.h"
 #include "SINAssert.h"
 #include "SINAlloc.h"
-
+#include "SINASTCloneVisitor.h"
 
 namespace SIN {
 
@@ -87,6 +87,25 @@ namespace SIN {
 
 	String const to_string(ASTNode const &_node) 
 		{	return to_string(_node.Name());	}
+
+	//---------------------------------------------------
+
+	void DeleteAST(ASTNode* const _root_p) {
+		ASTNode::iterator ite(_root_p->begin());
+		ASTNode::iterator const end(_root_p->end());
+		for (; ite != end; ++ite)
+			DeleteAST(static_cast<ASTNode*>(&*ite));
+		SINDELETE(_root_p);
+	}
+
+	//---------------------------------------------------
+
+	ASTNode* CopyAST(ASTNode* const _root) {
+		ASTCloneVisitor cloner;
+		_root->Accept(&cloner);
+		SINDELETE(cloner.TakeNodesList());
+		return cloner.Root();
+	}
 
 	//---------------------------------------------------
 

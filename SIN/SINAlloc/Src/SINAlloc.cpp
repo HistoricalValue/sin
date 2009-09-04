@@ -48,6 +48,9 @@ namespace SIN {
 					if (SINALLOC_IS_VALID_CHUNK_AND_CACHE_RESULT(_memory_chunk, deletee)) {
 						deallocations.push_back(std::pair<const Chunk, const Chunk>(deletee->second, Chunk(_memory_chunk, 0, _file, _line)));
 
+						// memset zero
+						memset(_memory_chunk, 0x00, deletee->second.Size());
+
 						SINALLOC_DEALLOCATED(deletee->second.Size());
 						chunks_map.erase(deletee);
 						cache.is_valid = false;

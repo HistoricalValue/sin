@@ -893,7 +893,7 @@ namespace SIN {
 		// Lookup and prepare env about where to assign
 		kid0.Accept(this);
 		SINASSERT(memory != 0x00);
-		assignFromTemporary(_node, value_temporary);
+		assignFromTemporary(_node, value_temporary); // TODO continue here (fix memcell AST copy constrr)
 
 		// Expression evaluation result
 		memory = value_temporary;
@@ -1242,31 +1242,43 @@ namespace SIN {
 
 	//-----------------------------------------------------------------
 	void TreeEvaluationVisitor::Visit(MetaParseASTNode & _node) {
-		SINASSERT(_node.NumberOfChildren() == 1);
+		ASTNode::iterator kite(_node.begin());
 		ShiftToMetaEvaluatorASTVisitor stmev(*this);
-		static_cast<ASTNode&>(*_node.begin()).Accept(&stmev);
-		// TODO deal with result
-		SINASSERT(!"Not implemented (fully)");
-		SINASSERT(false);	//TODO edw na sunexisoume. 8ewritika prepei na paroume to new dendro apo ton
-		//ShiftMeta kai na to kolisoume se auto pou exoume twra
+		static_cast<ASTNode&>(*kite++).Accept(&stmev);
+		SINASSERT(kite == _node.end()); // only 1 child
+		SINDELETE(stmev.TakeNodesList());
+		insertTemporary(memory = SINEWCLASS(MemoryCellAST, (stmev.Root())));
 	}
 
 	//-----------------------------------------------------------------
 
 	void TreeEvaluationVisitor::Visit(MetaPreserveASTNode & _node) {
-		// TODO implement
-		SINASSERT(!"Not implemented");
+		ASTNode::iterator kite(_node.begin());
+		String const child_desc = static_cast<ASTNode&>(*kite).Name();
+		EVALUATE_AND_ADVANCE(kite);
+		SINASSERT(kite == _node.end()); // only 1 child
+		SINASSERT(memory != 0x00);
+		if (memory->Type() != MemoryCell::AST_MCT)
+			ERRO((to_string("Try to preserve-code on non-code \"") << child_desc << '"').c_str());
+		// Nothing else to do, we caused the stores AST to be looked up.
+		// memory and lookuped stay as set by the evaluation of the child
 	}
 
 	//-----------------------------------------------------------------
 
 	void TreeEvaluationVisitor::Visit(MetaEvaluateASTNode & _node) {
-		SINASSERT(_node.NumberOfChildren() == 1);
+		ASTNode::iterator kite(_node.begin());
+		String const child_desc = static_cast<ASTNode&>(*kite).Name();
+		EVALUATE_AND_ADVANCE(kite);
+		SINASSERT(kite == _node.end()); // only 1 child
+		SINASSERT(memory != 0x00);
+		if (memory->Type() != MemoryCell::AST_MCT)
+			ERRO((to_string("Evaluating ") << child_desc << " which is not of type \"metacode\"").c_str());
 
-		EVAL_EXPR(static_cast<ASTNode &>(*_node.begin()));
-		SINASSERT(memory->Type() == MemoryCell::AST_MCT);		//TODO run time Error
-
-		SINASSERT(false);	//TODO edw na sunexisoume. Den 3erw ti 8a kanoume malon 8elei new memory call
+		// The resulting AST has been inserted as a temporary before, or is stored as a variable.
+		// We simply have to execute it
+		static_cast<MemoryCellAST*>(memory)->GetValue()->Accept(this);
+		// this should set memory and lookued and everything
 	}
 
 	//-----------------------------------------------------------------

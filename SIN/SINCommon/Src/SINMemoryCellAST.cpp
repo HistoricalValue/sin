@@ -3,14 +3,33 @@
 #include "SINAlloc.h"
 #include "SINAssert.h"
 #include "SINASTUnparseTreeVisitor.h"
+#include "SINASTNode.h"
 
 
 namespace SIN {
 
+	MemoryCellAST::MemoryCellAST(Types::Metacode_t const& node):
+		MemoryCell(),
+		value(node)
+	{ }
+
+	//-----------------------------------------------------------------
+
+	MemoryCellAST::~MemoryCellAST(void) {
+		DeleteAST(value);
+	}
+
+	//-----------------------------------------------------------------
+
+	MemoryCellAST::MemoryCellAST(const MemoryCellAST & other):
+		MemoryCell(),
+		value(CopyAST(other.value))
+	{ }
+
 	//-----------------------------------------------------------------
 
 	MemoryCell * MemoryCellAST::Clone(void) const
-		{ return SINEW(MemoryCellAST); }
+		{ return SINEWCLASS(MemoryCellAST, (*this)); }
 	
 
 	//-----------------------------------------------------------------
@@ -26,7 +45,7 @@ namespace SIN {
 		unparser.DisableNewLine();
 		
 		value->Accept(&unparser);
-		return String(to_string("code:") + unparser.UnparsedString()); 
+		return unparser.UnparsedString(); 
 	}
 		
 

@@ -1,2 +1,28 @@
 a = b = c = d = e = 2;
 a = (((a and b) or (c or d)) and e);
+
+function prependIf(condition, code) {
+	return .<  if (.~condition) { .~code ; } >.;
+}
+
+code = prependIf( .< true ; >. , .< println("OMG MIN MOY PEIS OTI THA EKTYPOTHEIS!!!"); >. );
+
+.!.~ code;
+
+
+
+(function (code) { println(.!.~code); })
+( .< 3; >. );
+
+
+// This should work once the .< .< .~a ; >. ; >. ; issue is fixed
+/* .!.<
+
+(function (code) { println(.!.<.~code;>.); })
+( .< 3; >. );
+
+>.; */
+
+
+
+

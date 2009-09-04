@@ -1,6 +1,6 @@
 NEXT TODO TICKET                                ||
 (please take a number and wait in the line...)  ||
-Next number: 60                                 ||
+Next number: 61                                 ||
 +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-//
 
 
@@ -28,15 +28,12 @@ Next number: 60                                 ||
 *[046 2009-08-30/21:13] Make use of deprecated functions be logged
 *[047 2009-08-30/23:26] Make unary pre- and post- increment/decrement operators.
 *[048 2009-08-31/00:21] Use the koutsop unary ops
-
 *[052 2009-09-01/01:25] Delete temporaries at the end of statements.
 *[053 2009-09-01/12:59] Implement const variables.
 *[054 2009-09-01/13:02] Make correct checks for assigning to a const variable
-*[055 2009-09-01/13:04] Refactor all member access evaluation to reuse the common code
-*[056 2009-09-01/13:04] Change in grammar the rule parse string. Convert STRING to Expression
-
 *[058 2009-09-02/14:45] Define .~ for lvalues which do not return ASTs (generic Expressins etc)
-*[059 2009-09-02/15:01] Make cloned memcellASTs clone their tree
+*[060 2009-09-04/13:34] Remove all unused and duplicated ASTNodes (NotASTNode, ... )
+
 
 ---logging---
 *[010] LoggerFactory base should internally keep a list of produced loggers
@@ -178,3 +175,9 @@ Next number: 60                                 ||
 							|	FUNCTION '(' idlist ')' block
 		}
   [ koutsop, ilapost 2009-09-02 | done]
+*[056 2009-09-01/13:04] Change in grammar the rule parse string. Convert STRING to Expression
+  [ koutsop 2009-09-04 | done ]
+*[055 2009-09-01/13:04] Refactor all member access evaluation to reuse the common code
+  [ rudolf 2009-09-04 | done ]
+*[059 2009-09-02/15:01] Make cloned memcellASTs clone their tree
+  [ rudolf 2009-09-04/15:25 | done]

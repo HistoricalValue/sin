@@ -3,15 +3,15 @@
 
 #include "SINMemoryCell.h"
 #include "SINTypes.h"
+#include <list>
 
 namespace SIN {
 
 	class MemoryCellAST : public MemoryCell {
 	public:
-		MemoryCellAST(void) : MemoryCell() {}
-		MemoryCellAST(Types::Metacode_t const& node) : MemoryCell(), value(node) {}
-		
-		~MemoryCellAST() {}
+		MemoryCellAST(Types::Metacode_t const& node);
+		MemoryCellAST(const MemoryCellAST&);
+		~MemoryCellAST(void);
 
 
 		virtual MemoryCell *		Clone(void) const;
@@ -21,8 +21,6 @@ namespace SIN {
 		
 		void						SetValue (Types::Metacode_t const&);
 		Types::Metacode_t			GetValue (void) const;
-
-
 
 	private:
 		Types::Metacode_t value;
