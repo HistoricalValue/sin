@@ -25,6 +25,9 @@ namespace SIN {
 
 
 		struct ParsingFalgs {
+			bool stmtError;
+
+			ParsingFalgs() : stmtError(true) {}
 		} parsingFlags;
 
 
