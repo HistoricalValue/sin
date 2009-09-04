@@ -166,7 +166,7 @@ namespace SIN {
 	void ASTUnparseTreeVisitor::Visit(BlockASTNode & _node) {
 		unparsedString +=  to_string("{\n");
 		VISTI_SIN_CODE_OR_BLOCK();
-		unparsedString += to_string("}\n");
+		unparsedString += to_string("}");
 	}
 
 	//-----------------------------------------------------------------
