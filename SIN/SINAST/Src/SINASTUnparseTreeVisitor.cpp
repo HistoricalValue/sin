@@ -140,7 +140,8 @@ namespace SIN {
 
 	//-----------------------------------------------------------------
 
-	ASTUnparseTreeVisitor::ASTUnparseTreeVisitor(void) : 
+	ASTUnparseTreeVisitor::ASTUnparseTreeVisitor(void) :
+		newLine("\n"),
 		unparsedString(""), 
 		indexedObjectFunctionCounter(0) 
 	{}
@@ -164,7 +165,7 @@ namespace SIN {
 	//-----------------------------------------------------------------
 	
 	void ASTUnparseTreeVisitor::Visit(BlockASTNode & _node) {
-		unparsedString +=  to_string("{\n");
+		unparsedString +=  to_string("{") + newLine;
 		VISTI_SIN_CODE_OR_BLOCK();
 		unparsedString += to_string("}");
 	}
@@ -207,7 +208,7 @@ namespace SIN {
 	void ASTUnparseTreeVisitor::Visit(IfElseASTNode & _node) {	
 		SINASSERT(_node.NumberOfChildren() == 3);
 		UNPARSE_STMT("if (", ")");
-		unparsedString +=  to_string("else\n");
+		unparsedString +=  to_string("else") + newLine;
 		static_cast<ASTNode &>(*(++kid)).Accept(this);
 	}
 
@@ -273,20 +274,6 @@ namespace SIN {
 			static_cast<ASTNode &>(*_node.begin()).Accept(this);
 	}
 
-/*
-	void ASTUnparseTreeVisitor::Visit(UnaryNotASTNode & _node) {	
-		unparsedString +=  to_string("not") + to_string(" (");
-		static_cast<ASTNode &>(*_node.begin()).Accept(this);
-		unparsedString +=  to_string(")");
-	}
-	
-	void ASTUnparseTreeVisitor::Visit(UnaryMinASTNode & _node) {	
-		unparsedString +=  to_string("not") + to_string(" -");
-		static_cast<ASTNode &>(*_node.begin()).Accept(this);
-		unparsedString +=  to_string(")");
-	}
-*/
-
 
 	SIN_UNPARSE_TREE_VISITOR_WITH_NO_CHILDREN_VISIT_DEFINITION(Number	, ""		, ""		)
 	SIN_UNPARSE_TREE_VISITOR_WITH_NO_CHILDREN_VISIT_DEFINITION(String	, "\""		, "\""		)
@@ -296,7 +283,7 @@ namespace SIN {
 	SIN_UNPARSE_TREE_VISITOR_WITH_NO_CHILDREN_VISIT_DEFINITION(ID		, ""		, ""		)
 	SIN_UNPARSE_TREE_VISITOR_WITH_NO_CHILDREN_VISIT_DEFINITION(Break	, ""		, ""		)
 	SIN_UNPARSE_TREE_VISITOR_WITH_NO_CHILDREN_VISIT_DEFINITION(Continue	, ""		, ""		)
-	SIN_UNPARSE_TREE_VISITOR_WITH_NO_CHILDREN_VISIT_DEFINITION(Semicolon, ""		, "\n"		)
+	SIN_UNPARSE_TREE_VISITOR_WITH_NO_CHILDREN_VISIT_DEFINITION(Semicolon, ""		, newLine	)
 	SIN_UNPARSE_TREE_VISITOR_WITH_NO_CHILDREN_VISIT_DEFINITION(LocalID	, "local "	, ""		)
 	SIN_UNPARSE_TREE_VISITOR_WITH_NO_CHILDREN_VISIT_DEFINITION(GlobalID	, "global "	, ""		)
 
@@ -313,8 +300,8 @@ namespace SIN {
 	SIN_UNPARSE_TREE_VISITOR_WITH_ONE_CHILD_VISIT_DEFINITION(PostIncr	, ""		, "++"		)
 	SIN_UNPARSE_TREE_VISITOR_WITH_ONE_CHILD_VISIT_DEFINITION(PreDecr	, "--"		, ""		)
 	SIN_UNPARSE_TREE_VISITOR_WITH_ONE_CHILD_VISIT_DEFINITION(PostDecr	, ""		,"--"		)
-	SIN_UNPARSE_TREE_VISITOR_WITH_ONE_CHILD_VISIT_DEFINITION(UnaryMin	, "- ("		, ")"		)
-	SIN_UNPARSE_TREE_VISITOR_WITH_ONE_CHILD_VISIT_DEFINITION(UnaryNot	, "not ("	, ")"		)
+	SIN_UNPARSE_TREE_VISITOR_WITH_ONE_CHILD_VISIT_DEFINITION(UnaryMin	, "- "		, ""		)
+	SIN_UNPARSE_TREE_VISITOR_WITH_ONE_CHILD_VISIT_DEFINITION(UnaryNot	, "not "	, ""		)
 	SIN_UNPARSE_TREE_VISITOR_WITH_ONE_CHILD_VISIT_DEFINITION(ObjectKeys	, ""		, ".$keys"	)
 	SIN_UNPARSE_TREE_VISITOR_WITH_ONE_CHILD_VISIT_DEFINITION(ObjectSize	, ""		, ".$size"	)
 	SIN_UNPARSE_TREE_VISITOR_WITH_ONE_CHILD_VISIT_DEFINITION(UnindexedMember, ""	, ""		)	
