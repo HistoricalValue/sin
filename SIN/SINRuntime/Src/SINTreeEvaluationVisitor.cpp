@@ -1084,6 +1084,24 @@ namespace SIN {
 
 	//-----------------------------------------------------------------
 
+	void TreeEvaluationVisitor::Visit(ExpressionCallASTNode & _node) {
+		SINASSERT(false);
+		/*ASTITER(kite);
+		ASTNode& lambda_astnode = ASTPP(kite);
+		SINASSERT(lambda_astnode.Type() == SINASTNODES_FUNCTION_TYPE);
+		ASTNode& actual_args_astnode = ASTPP(kite);
+		ASTEND(kite);
+
+		EVAL_EXPR(lambda_astnode);
+		SINASSERT(memory->Type() == MemoryCell::FUNCTION_MCT);
+		// TODO insert a new field in LambdaASTNode and don't use Name() as
+		// a description
+		performCall(memory, lambda_astnode.Name(), _node.AssociatedFileName(), _node.AssociatedFileLine(),
+				actual_args_astnode); // memory is set in here (a temporary of the return value)*/
+	}
+
+	//-----------------------------------------------------------------
+
 	void TreeEvaluationVisitor::Visit(FunctionASTNode & _node) {
 		// Generally, the function must be added as a value to the current
 		// scope.

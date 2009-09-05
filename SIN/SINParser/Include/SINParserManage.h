@@ -30,10 +30,10 @@ namespace SIN {
 		
 		//////////////////////////////////////////////////////////
 		// Manage Call
-		static void Manage_Call_CallCallSuffix						(const int lineNo, ASTNode *_call, ASTNode *_callsuffix, ASTNode **_retcall, LexAndBisonParseArguments *_lbpa);
-		static void Manage_Call_LValueCallSuffix					(const int lineNo, ASTNode *_lvalue, ASTNode *_callsuffix, ASTNode **_retcall, LexAndBisonParseArguments *_lbpa);
-		static void Manage_Call_FunctionDefinitionExpressionList	(const int lineNo, ASTNode *_funcdef, ASTNode *_elist, ASTNode **_retcall, LexAndBisonParseArguments *_lbpa);
-		
+		static void Manage_Call_CallCallSuffix			(const int lineNo, ASTNode *_call, ASTNode *_callsuffix, ASTNode **_retcall, LexAndBisonParseArguments *_lbpa);
+		static void Manage_Call_LValueCallSuffix		(const int lineNo, ASTNode *_lvalue, ASTNode *_callsuffix, ASTNode **_retcall, LexAndBisonParseArguments *_lbpa);
+		static void Manage_Call_ExpressionCall			(const int lineNo, ASTNode *_expr, ASTNode *_elist, ASTNode **_retcall, LexAndBisonParseArguments *_lbpa);
+		static void Manage_Call_FunctionDefinitionCall	(const int lineNo, ASTNode *_funcdef, ASTNode *_elist, ASTNode **_retcall, LexAndBisonParseArguments *_lbpa);
 		
 		//////////////////////////////////////////////////////////
 		// Manage Call Suffix

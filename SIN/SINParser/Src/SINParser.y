@@ -145,6 +145,7 @@ expr:			assignexpr 					{	SIN::ParserManage::Manage_Expression_AssignExpression(
 				|	metaexpr				{	SIN::ParserManage::Manage_Expression_MetaExpression(yylineno, $1, &($$), &fabpa);					}
 				|	DOT_HASH	metaexpr	{	SIN::ParserManage::Manage_Expression_UnparseMetaExpression(yylineno, $2, &($$), &fabpa);			}
 				|	term					{	SIN::ParserManage::Manage_Expression_Term(yylineno, $1, &($$), &fabpa);							}
+
 				;
 				
 				
@@ -194,9 +195,9 @@ lvalue:			ID 								{	SIN::ParserManage::Manage_LValue_ID(yylineno, $1, &($$), 
 
     
 member:			lvalue DOT ID					{	SIN::ParserManage::Manage_Member_LValueID(yylineno, $1, $3, &($$), &fabpa);			}
+				|	lvalue	'[' expr ']'		{	SIN::ParserManage::Manage_Member_LValueExpression(yylineno, $1, $3, &($$), &fabpa);	}
 				|	lvalue DOT KEYS_MEMBER		{	SIN::ParserManage::Manage_Member_LValueKEYS(yylineno, $1, &($$), &fabpa);			}
 				|	lvalue DOT SIZE_MEMBER		{	SIN::ParserManage::Manage_Member_LValueSIZE(yylineno, $1, &($$), &fabpa);			}
-				|	lvalue	'[' expr ']'		{	SIN::ParserManage::Manage_Member_LValueExpression(yylineno, $1, $3, &($$), &fabpa);	}
 				|	call	DOT ID				{	SIN::ParserManage::Manage_Member_CallID(yylineno, $1, $3, &($$), &fabpa);			}
 				|	call	'[' expr ']'		{	SIN::ParserManage::Manage_Member_CallExpression(yylineno, $1, $3, &($$), &fabpa);	}
 				;
@@ -204,9 +205,10 @@ member:			lvalue DOT ID					{	SIN::ParserManage::Manage_Member_LValueID(yylineno
 
 
 	
-call:			call callsuffix						{	SIN::ParserManage::Manage_Call_CallCallSuffix(yylineno, $1, $2, &($$), &fabpa);						}
-				|	lvalue callsuffix				{	SIN::ParserManage::Manage_Call_LValueCallSuffix(yylineno, $1, $2, &($$), &fabpa);					}
-				|	'(' funcdef ')' '(' elist ')'	{	SIN::ParserManage::Manage_Call_FunctionDefinitionExpressionList(yylineno, $2, $5, &($$), &fabpa);	}
+call:			call callsuffix						{	SIN::ParserManage::Manage_Call_CallCallSuffix(yylineno, $1, $2, &($$), &fabpa);			}
+				|	lvalue callsuffix				{	SIN::ParserManage::Manage_Call_LValueCallSuffix(yylineno, $1, $2, &($$), &fabpa);		}
+				|	'(' expr ')'	'(' elist ')'	{	SIN::ParserManage::Manage_Call_ExpressionCall(yylineno, $2, $5, &($$), &fabpa);			}
+				|	'(' funcdef ')' '(' elist ')'	{	SIN::ParserManage::Manage_Call_FunctionDefinitionCall(yylineno, $2, $5, &($$), &fabpa);	}
 				;
 
 

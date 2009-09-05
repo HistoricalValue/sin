@@ -255,6 +255,11 @@ namespace SIN {
 			static_cast<ASTNode &>(*_node.begin()).Accept(this);
 	}
 
+	void ASTUnparseTreeVisitor::Visit(ExpressionCallASTNode & _node) {	
+		SINASSERT(false);
+	}
+
+
 
 	SIN_UNPARSE_TREE_VISITOR_WITH_NO_CHILDREN_VISIT_DEFINITION(Number	, ""		, ""		)
 	SIN_UNPARSE_TREE_VISITOR_WITH_NO_CHILDREN_VISIT_DEFINITION(String	, "\""		, "\""		)

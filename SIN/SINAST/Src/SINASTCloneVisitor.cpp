@@ -232,9 +232,9 @@ namespace SIN {
 
 
 
-
-
-
+	void ASTCloneVisitor::Visit(ExpressionCallASTNode& _node)	{
+		SINASSERT(false);
+	}
 
 
 
