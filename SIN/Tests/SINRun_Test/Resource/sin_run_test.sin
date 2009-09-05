@@ -17,3 +17,60 @@ lamda();
 //(.~f)(5);
 
 
+function pow(b, p) {
+	if (p == 0)
+		result = .< 1 >.;
+	else if (p == 1)
+		result = .< .~b >.; // could also be just "b"
+	else
+		result = .< .~b * .~pow(b, p-1) >.;
+	return result;
+}
+
+code = pow(.< 4 >., 5);
+
+println(.#.~code);
+
+println(.!.~code);
+
+
+// String manipulation equivalent
+function spow(b, p) {
+	if (p == 0)
+		result = "1";
+	else if (p == 1)
+		result = b;
+	else
+		result = b + " * " + spow(b, p-1);
+	return result;
+}
+
+println(spow("4", 5));
+
+
+a = b = c = d = e = 2;
+a = (((a and b) or (c or d)) and e);
+
+function prependIf(condition, code) {
+	return .<  if (.~condition) { .~code ; } >.;
+}
+
+code = prependIf( .< true >. , .< println("OMG MIN MOY PEIS OTI THA EKTYPOTHEIS!!!"); >. );
+
+println("Executing: ", .#.~code);
+.!.~ code;
+
+
+
+(function (code) { println(.!.~code); })
+( .< 3  >. );
+
+
+cry = .<
+
+(function (code) { println(.!.<.~code>.); })
+( .< 3 >. );
+
+>.;
+println("Executing: ", .#.~cry);
+.!.~cry;
