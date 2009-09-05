@@ -14,8 +14,9 @@ function bazaar_pull {
 
 branches=(
     'sftp://TURBO_X@shadowx/tmp/CS540/'
-    'sftp://TURBO_X@shadowx/cygdrive/f/repos/sin/trunk'
+    'sftp://TURBO_X@shadowx/cygdrive/f/repos/sin/trunk/'
     'sftp://TURBO_X@shadowx/cygdrive/c/Temp/CS540_bzr/'
+    'sftp://TURBO_X@shadowx/cygdrive/e/repos/sin/'
 )
 
 if [ "$1" = 'pls' ] # pull-shadowx
