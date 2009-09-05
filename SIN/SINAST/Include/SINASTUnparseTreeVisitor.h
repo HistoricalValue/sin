@@ -121,7 +121,7 @@ namespace SIN {
 		String const&	UnparsedString(void) const	{ return unparsedString; }
 	
 		void	EnableNewLine(void)		{ newLine = to_string("\n"); }
-		void	DisableNewLine(void)	{ newLine = to_string("\n"); }
+		void	DisableNewLine(void)	{ newLine = to_string(""); }
 	private:
 		String	newLine;
 		String	unparsedString;

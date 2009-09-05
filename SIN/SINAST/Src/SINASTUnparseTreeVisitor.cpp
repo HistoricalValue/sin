@@ -66,7 +66,7 @@
 												type != SINASTNODES_IF_TYPE			&&					\
 												type != SINASTNODES_IFELSE_TYPE							\
 												)														\
-												unparsedString +=  to_string(";\n");					\
+												unparsedString +=  to_string(";") + newLine;			\
 										}																\
 										else
 
