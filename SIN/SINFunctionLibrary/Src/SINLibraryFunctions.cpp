@@ -128,6 +128,7 @@ namespace SIN {
 					filememcell(filememcell const& _o): file(_o.file) { }
 					filememcell* Clone(void) const { return SINEWCLASS(filememcell, (*this)); }
 					String const ToString(void) const { return file.path; }
+					bool ToBoolean(void) const { return true; }
 					id_t ID(void) const { return &id; }
 					static void id(void) { }
 					virtual bool operator ==(MemoryCell const&) const { SINASSERT(!"Not implemented"); return false; }
