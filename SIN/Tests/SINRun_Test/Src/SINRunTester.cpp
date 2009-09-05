@@ -24,6 +24,7 @@
 #include "SINShiftToMetaEvaluatorASTVisitor.h"
 #include "SINASTUnparseTreeVisitor.h"
 #include "SINASTCloneVisitor.h"
+#include "SINRunTimeError.h"
 
 
 #define SIN_TESTS_RUN_RUN(NAME)               SINTESTS_RUNTEST(NAME)
@@ -174,10 +175,17 @@ namespace SIN {
 				globalSymTable->Insert("fileread",       SINEWCLASS(MemoryCellLibFunction, (&fileread)));
 
 				
-
 				TreeEvaluationVisitor eval(&lib, &vs);
-				root->Accept(&eval);
-
+				
+				try {
+					root->Accept(&eval);
+				} catch(SIN::RunTimeError rte) {
+					static_cast<OutputStream&>(STDOUT) << rte.CompleteMessage() << "\n";
+					exit(-1);
+				} catch(...) {
+					static_cast<OutputStream&>(STDOUT) << "Unexpected exception" << "\n";
+					exit(-1);
+				}
 				//ShiftToMetaEvaluatorASTVisitor shifter(eval);
 				//root->Accept(&shifter);
 				//shifter.Root()->Accept(&metaVisualVisitor);
