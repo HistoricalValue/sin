@@ -230,42 +230,6 @@ namespace SIN {
 	}
 
 
-
-
-	void ASTCloneVisitor::Visit(ExpressionCallASTNode& _node)	{
-		SINASSERT(false);
-	}
-
-
-
-
-
-
-	//-----------------------------------------------------------------
-/*
-	void ASTCloneVisitor::Visit(AssignASTNode& _node)	{
-		SINASSERT(nodesList != 0x00);												
-		SINASSERT(_node.NumberOfChildren() == 2);									
-		
-		AssignASTNode * newNode = SINEWCLASS(AssignASTNode, (_node));		
-		nodesList->push_back(newNode);												
-		
-		if (parent)				
-			*parent << newNode;	
-		if (!root)				
-			root = newNode;
-
-		parent = newNode;															
-		ASTNode::iterator kid = _node.begin();	
-
-		static_cast<ASTNode&>(*kid++).Accept(this);									
-		parent = newNode;															
-		static_cast<ASTNode&>(*kid++).Accept(this);
-	}
-*/
-
-
-
 	SIN_VISIT_DEFINITION_FOR_NODE_WITH_ZERO_CHILD(Number				)
 	SIN_VISIT_DEFINITION_FOR_NODE_WITH_ZERO_CHILD(String				)
 	SIN_VISIT_DEFINITION_FOR_NODE_WITH_ZERO_CHILD(Nil					)
@@ -313,6 +277,7 @@ namespace SIN {
 	SIN_VISIT_DEFINITION_FOR_NODE_WITH_TWO_CHILDREN(Assign				)
 	SIN_VISIT_DEFINITION_FOR_NODE_WITH_TWO_CHILDREN(While				)
 	SIN_VISIT_DEFINITION_FOR_NODE_WITH_TWO_CHILDREN(FuncdefCall			)
+	SIN_VISIT_DEFINITION_FOR_NODE_WITH_TWO_CHILDREN(ExpressionCall		)
 	SIN_VISIT_DEFINITION_FOR_NODE_WITH_TWO_CHILDREN(Function			)
 	SIN_VISIT_DEFINITION_FOR_NODE_WITH_TWO_CHILDREN(LamdaFunction		)
 	SIN_VISIT_DEFINITION_FOR_NODE_WITH_TWO_CHILDREN(ObjectIndex			)

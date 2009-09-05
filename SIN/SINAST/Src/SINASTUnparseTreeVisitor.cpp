@@ -255,12 +255,6 @@ namespace SIN {
 			static_cast<ASTNode &>(*_node.begin()).Accept(this);
 	}
 
-	void ASTUnparseTreeVisitor::Visit(ExpressionCallASTNode & _node) {	
-		SINASSERT(false);
-	}
-
-
-
 	SIN_UNPARSE_TREE_VISITOR_WITH_NO_CHILDREN_VISIT_DEFINITION(Number	, ""		, ""		)
 	SIN_UNPARSE_TREE_VISITOR_WITH_NO_CHILDREN_VISIT_DEFINITION(String	, "\""		, "\""		)
 	SIN_UNPARSE_TREE_VISITOR_WITH_NO_CHILDREN_VISIT_DEFINITION(Nil		, ""		, ""		)
@@ -316,6 +310,7 @@ namespace SIN {
 	SIN_UNPARSE_TREE_VISITOR_TWO_CHILDREN_VISIT_DEFINITION(CallMember, "", ".", ""			)
 	SIN_UNPARSE_TREE_VISITOR_TWO_CHILDREN_VISIT_DEFINITION(CallIndex, "", "[", "]"			)
 	SIN_UNPARSE_TREE_VISITOR_TWO_CHILDREN_VISIT_DEFINITION(FuncdefCall, "", "", ""			)
+	SIN_UNPARSE_TREE_VISITOR_TWO_CHILDREN_VISIT_DEFINITION(ExpressionCall, "(", ")", ""		)	
 	SIN_UNPARSE_TREE_VISITOR_TWO_CHILDREN_VISIT_DEFINITION(Function,	  to_string("function ") + _node.Name(), "", ""	)	
 	SIN_UNPARSE_TREE_VISITOR_TWO_CHILDREN_VISIT_DEFINITION(LamdaFunction, "(function ", 	"", " )")
 

@@ -561,8 +561,8 @@ static const yytype_int8 yyrhs[] =
       -1,    66,    -1,    65,    15,     4,    -1,    65,     6,    60,
        7,    -1,    65,    15,    53,    -1,    65,    15,    54,    -1,
       67,    15,     4,    -1,    67,     6,    60,     7,    -1,    67,
-      68,    -1,    65,    68,    -1,    10,    82,    11,    10,    71,
-      11,    -1,    10,    60,    11,    10,    71,    11,    -1,    69,
+      68,    -1,    65,    68,    -1,    10,    60,    11,    10,    71,
+      11,    -1,    10,    82,    11,    10,    71,    11,    -1,    69,
       -1,    70,    -1,    10,    71,    11,    -1,    16,     4,    10,
       71,    11,    -1,    60,    72,    -1,    -1,    14,    60,    72,
       -1,    -1,     6,     7,    -1,     6,    74,     7,    -1,    60,
@@ -692,7 +692,7 @@ static const yytype_uint8 yydefact[] =
        0,   101,   103,     0,     0,     0,    57,     0,    70,    68,
       71,    61,    77,     0,     0,     0,    79,    81,     0,     0,
      104,     0,     0,     0,     0,   100,     0,    73,     0,     0,
-     101,    82,    65,    64,     0,   107,     0,     0,   103,    94,
+     101,    82,    64,    65,     0,   107,     0,     0,   103,    94,
       72,    69,   101,     0,    80,   105,    71,    92,   102,     0,
        0,     0,     0,    90,     0,    88,   109
 };
@@ -2046,17 +2046,17 @@ yyreduce:
 
   case 62:
 
-    {	SIN::ParserManage::Manage_Call_CallCallSuffix(yylineno, (yyvsp[(1) - (2)].AST), (yyvsp[(2) - (2)].AST), &((yyval.AST)), &fabpa);						}
+    {	SIN::ParserManage::Manage_Call_CallCallSuffix(yylineno, (yyvsp[(1) - (2)].AST), (yyvsp[(2) - (2)].AST), &((yyval.AST)), &fabpa);			}
     break;
 
   case 63:
 
-    {	SIN::ParserManage::Manage_Call_LValueCallSuffix(yylineno, (yyvsp[(1) - (2)].AST), (yyvsp[(2) - (2)].AST), &((yyval.AST)), &fabpa);					}
+    {	SIN::ParserManage::Manage_Call_LValueCallSuffix(yylineno, (yyvsp[(1) - (2)].AST), (yyvsp[(2) - (2)].AST), &((yyval.AST)), &fabpa);		}
     break;
 
   case 64:
 
-    {	SIN::ParserManage::Manage_Call_FunctionDefinitionCall(yylineno, (yyvsp[(2) - (6)].AST), (yyvsp[(5) - (6)].AST), &((yyval.AST)), &fabpa);	}
+    {	SIN::ParserManage::Manage_Call_ExpressionCall(yylineno, (yyvsp[(2) - (6)].AST), (yyvsp[(5) - (6)].AST), &((yyval.AST)), &fabpa);			}
     break;
 
   case 65:

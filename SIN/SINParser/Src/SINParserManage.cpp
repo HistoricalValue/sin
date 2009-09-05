@@ -172,8 +172,7 @@ namespace SIN {
 	//-----------------------------------------------------------------
 
 	void ParserManage::Manage_Call_ExpressionCall	(const int lineNo, ASTNode *_expr, ASTNode *_elist, ASTNode **_retcall, LexAndBisonParseArguments *_lbpa) {
-		SINASSERT(false);
-		*_retcall = SINEWCLASS(FuncdefCallASTNode, ("funcdef call", _lbpa->GetFileName(), lineNo));
+		*_retcall = SINEWCLASS(ExpressionCallASTNode, ("Expression call", _lbpa->GetFileName(), lineNo));
 		_lbpa->AppendToNodeList(*_retcall);
 
 		**_retcall << _expr;
