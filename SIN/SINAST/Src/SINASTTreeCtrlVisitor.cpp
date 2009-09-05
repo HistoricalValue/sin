@@ -9,7 +9,7 @@
 #include "SINTreeNode.h"
 #include "SINConstants.h"
 #include "SINLoggerManager.h"
-
+/*
 #define SIN_ASTTreeCtrlVisitor_LoggerName "SIN::ASTTreeCtrlVisitor"
 
 #define SIN_ASTTreeCtrlVisitor_IdentationSequence "    "
@@ -18,7 +18,7 @@
 	void ASTTreeCtrlVisitor::Visit(NODENAME##ASTNode & _node) {		\
 		Visit(static_cast<ASTNode &>(_node));						\
 	}
-
+*/
 namespace SIN {
 
 	ASTTreeCtrlVisitor::ASTTreeCtrlVisitor(OutputStream& _out):
@@ -45,7 +45,7 @@ namespace SIN {
 	}
 
 	//-----------------------------------------------------------------
-	
+	/*
 	SIN_AST_TREE_CTRL_DEFAULT_VISIT_DEFINITION(Number	)
 	SIN_AST_TREE_CTRL_DEFAULT_VISIT_DEFINITION(String	)
 	SIN_AST_TREE_CTRL_DEFAULT_VISIT_DEFINITION(Nil		)
@@ -124,7 +124,7 @@ namespace SIN {
 	SIN_AST_TREE_CTRL_DEFAULT_VISIT_DEFINITION(MetaUnparse		)
 	SIN_AST_TREE_CTRL_DEFAULT_VISIT_DEFINITION(MetaParseString	)
 	SIN_AST_TREE_CTRL_DEFAULT_VISIT_DEFINITION(SinCode			)
-
+*/
 	
 
 } // namespace SIN

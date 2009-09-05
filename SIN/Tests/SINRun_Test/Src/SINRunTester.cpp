@@ -76,7 +76,7 @@ namespace SIN {
 
 			void RunFileTest::TestLogic(void) {
 				ParserAPI test;
-				test.ParseFile(FILE_PATH);
+				TRY(test.ParseFile(FILE_PATH) == 0);
 				if (test.HasError()) {
 					__list_parsing_errors(test);
 					ASSERT(!test.HasError()); // certain failure here, to stop the test
@@ -96,7 +96,7 @@ namespace SIN {
 				BufferedOutputStream metatxt(_metatxt); 
 				
 
-				//ASTTreeCtrlVisitor						ctrlvis(ctrltxt);
+				ASTTreeCtrlVisitor						ctrlvis(ctrltxt);
 				ASTTreeVisualisationVisitor				visitor(fouttxt);
 				//ASTTreeVisualisationVisitor				metaVisualVisitor(metatxt);
 				//ASTMITTreeVisualizerXMLProducerVisitor	mitvis(foutxml);
@@ -104,7 +104,7 @@ namespace SIN {
 				//ASTUnparseTreeVisitor					uparseVisitor;
 				//
 				root->Accept(&visitor);
-				//root->Accept(&ctrlvis);
+				root->Accept(&ctrlvis);
 				//root->Accept(&mitvis);
 				//root->Accept(&uparseVisitor);
 				//root->Accept(&cloneVisitor);
