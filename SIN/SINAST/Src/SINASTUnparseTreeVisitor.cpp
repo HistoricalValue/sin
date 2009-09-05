@@ -171,25 +171,6 @@ namespace SIN {
 	}
 
 	//-----------------------------------------------------------------
-	
-	void ASTUnparseTreeVisitor::Visit(FunctionASTNode & _node) {
-		SINASSERT(_node.NumberOfChildren() == 2);
-		
-		bool lamda = _node.Name()[0] == '$' || indexedObjectFunctionCounter;
-		if (lamda)		//we have a lamda id
-			unparsedString += to_string("(function ");
-		else
-			unparsedString += to_string("function ") + _node.Name();
-
-		ASTNode::iterator kid = _node.begin();				
-		static_cast<ASTNode &>(*kid++).Accept(this);		
-		static_cast<ASTNode &>(*kid++).Accept(this);		
-
-		if (lamda)
-			unparsedString += to_string(" )");
-	}
-
-	//-----------------------------------------------------------------
 
 	void ASTUnparseTreeVisitor::Visit(WhileASTNode & _node) {	
 		SINASSERT(_node.NumberOfChildren() == 2);
@@ -330,6 +311,9 @@ namespace SIN {
 	SIN_UNPARSE_TREE_VISITOR_TWO_CHILDREN_VISIT_DEFINITION(CallMember, "", ".", ""			)
 	SIN_UNPARSE_TREE_VISITOR_TWO_CHILDREN_VISIT_DEFINITION(CallIndex, "", "[", "]"			)
 	SIN_UNPARSE_TREE_VISITOR_TWO_CHILDREN_VISIT_DEFINITION(FuncdefCall, "", "", ""			)
+	SIN_UNPARSE_TREE_VISITOR_TWO_CHILDREN_VISIT_DEFINITION(Function,	  to_string("function ") + _node.Name(), "", ""	)	
+	SIN_UNPARSE_TREE_VISITOR_TWO_CHILDREN_VISIT_DEFINITION(LamdaFunction, "(function ", 	"", " )")
+
 
 
 	SIN_UNPARSE_TREE_VISITOR_OBJECT_ACCESS_VISIT_DEFINITION(ObjectMember, ".", "")
@@ -344,7 +328,6 @@ namespace SIN {
 	//Auta pote den 8a kalestoun. Ite epidei einai syndactic sugar, ite epidei den brika kanenan kanona :D
 	SIN_UNPARSE_TREE_VISITOR_DEFAULT_VISIT_DEFINITION(Not			)
 	SIN_UNPARSE_TREE_VISITOR_DEFAULT_VISIT_DEFINITION(MethodCall	)	
-	SIN_UNPARSE_TREE_VISITOR_DEFAULT_VISIT_DEFINITION(LamdaFunction	)
 	SIN_UNPARSE_TREE_VISITOR_DEFAULT_VISIT_DEFINITION(ExpressionList)
 
 
