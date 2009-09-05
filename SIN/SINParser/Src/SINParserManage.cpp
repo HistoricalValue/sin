@@ -491,6 +491,26 @@ namespace SIN {
 	// Manage function definition
 
 
+	void ParserManage::Manage_FunctionValueDefinition (const int lineNo, ASTNode *_idlist, ASTNode *_block, ASTNode **_retfuncdef, LexAndBisonParseArguments *_lbpa) {
+		*_retfuncdef = SINEWCLASS(	LamdaFunctionASTNode, 
+									(	String("$lamda") + to_string(_lbpa->parsingCounters.nextLamdaFunctionId++), 
+										_lbpa->GetFileName(), 
+										lineNo
+									)
+								);
+		_lbpa->AppendToNodeList(*_retfuncdef);
+
+		ASTNode *arguments = SINEWCLASS(FormalArgumentsASTNode, ("Formal Arguments", _lbpa->GetFileName(), lineNo));
+		_lbpa->AppendToNodeList(arguments);
+
+		if (_idlist != 0x00)
+			*arguments + _idlist;
+
+		**_retfuncdef << arguments << _block;
+
+		--_lbpa->parsingCounters.functions;	
+	}
+
 	//-----------------------------------------------------------------
 	
 	void ParserManage::Manage_FunctionDefinition_Function (const int lineNo, char *_id, ASTNode *_idlist, ASTNode *_block, ASTNode **_retfuncdef, LexAndBisonParseArguments *_lbpa) {

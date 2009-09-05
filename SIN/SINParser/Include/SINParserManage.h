@@ -86,6 +86,7 @@ namespace SIN {
 
 		//////////////////////////////////////////////////////////
 		// Manage function definition
+		static void Manage_FunctionValueDefinition				(const int lineNo, ASTNode *_idlist, ASTNode *_block, ASTNode **_retfuncdef, LexAndBisonParseArguments *_lbpa);
 		static void Manage_FunctionDefinition_Function			(const int lineNo, char *_id, ASTNode *_idlist, ASTNode *_block, ASTNode **_retfuncdef, LexAndBisonParseArguments *_lbpa);
 		static void Manage_FunctionDefinition_LamdaFunction		(const int lineNo, ASTNode *_idlist, ASTNode *_block, ASTNode **_retfuncdef, LexAndBisonParseArguments *_lbpa);
 

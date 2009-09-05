@@ -62,7 +62,7 @@
 %type <AST> stmt ifstmt whilestmt forstmt returnstmt block
 %type <AST> expr assignexpr term metaexpr
 %type <AST> lvalue primary
-%type <AST> call objectdef funcdef objectfuncdef const
+%type <AST> call objectdef funcdef fvaluedef objectfuncdef const
 %type <AST> member
 %type <AST> callsuffix elist
 %type <AST> normalcall methodcall
@@ -180,7 +180,7 @@ assignexpr:		lvalue ASSIGN expr				{	SIN::ParserManage::Manage_AssignExpression(
 primary:		lvalue							{	SIN::ParserManage::Manage_Primary_LValue(yylineno, $1, &($$), &fabpa);							}
 				|	call						{	SIN::ParserManage::Manage_Primary_Call(yylineno, $1, &($$), &fabpa);							}
 				|	objectdef					{	SIN::ParserManage::Manage_Primary_ObjectDefinition(yylineno, $1, &($$), &fabpa);				}
-				|	'(' funcdef ')'				{	SIN::ParserManage::Manage_Primary_FunctionDefinitionParentheses(yylineno, $2, &($$), &fabpa);	}
+				|	'(' fvaluedef ')'			{	SIN::ParserManage::Manage_Primary_FunctionDefinitionParentheses(yylineno, $2, &($$), &fabpa);	}
 				|	const						{	SIN::ParserManage::Manage_Primary_Constant(yylineno, $1, &($$), &fabpa);						}
 				;
 
@@ -208,9 +208,8 @@ member:			lvalue DOT ID					{	SIN::ParserManage::Manage_Member_LValueID(yylineno
 call:			call callsuffix						{	SIN::ParserManage::Manage_Call_CallCallSuffix(yylineno, $1, $2, &($$), &fabpa);			}
 				|	lvalue callsuffix				{	SIN::ParserManage::Manage_Call_LValueCallSuffix(yylineno, $1, $2, &($$), &fabpa);		}
 				|	'(' expr ')'	'(' elist ')'	{	SIN::ParserManage::Manage_Call_ExpressionCall(yylineno, $2, $5, &($$), &fabpa);			}
-				|	'(' funcdef ')' '(' elist ')'	{	SIN::ParserManage::Manage_Call_FunctionDefinitionCall(yylineno, $2, $5, &($$), &fabpa);	}
-				;
-
+				|	'(' fvaluedef ')' '(' elist ')'	{	SIN::ParserManage::Manage_Call_FunctionDefinitionCall(yylineno, $2, $5, &($$), &fabpa);	}
+				; 
 
 
 callsuffix:		normalcall							{	SIN::ParserManage::Manage_CallSuffix_NormalCall(yylineno, $1, &($$), &fabpa);	}
@@ -275,6 +274,12 @@ objectfuncdef:	FUNCTION							{	++fabpa.parsingCounters.functions;														
 				ID	'(' idlist ')' block			{	SIN::ParserManage::Manage_FunctionDefinition_Function(yylineno, $3, $5, $7, &($$), &fabpa);		}
 				|	FUNCTION						{	++fabpa.parsingCounters.functions;																}
 					'(' idlist ')' block			{	SIN::ParserManage::Manage_FunctionDefinition_LamdaFunction(yylineno, $4, $6, &($$), &fabpa);	}
+				;
+
+fvaluedef:		FUNCTION							{	++fabpa.parsingCounters.functions;																}
+				ID	'(' idlist ')' block			{	SIN::ParserManage::Manage_FunctionValueDefinition(yylineno, $5, $7, &($$), &fabpa);		}
+				|	FUNCTION						{	++fabpa.parsingCounters.functions;																}
+					'(' idlist ')' block			{	SIN::ParserManage::Manage_FunctionValueDefinition(yylineno, $4, $6, &($$), &fabpa);	}
 				;
 
 				
