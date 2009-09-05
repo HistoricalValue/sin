@@ -1,3 +1,74 @@
+//f = .< function foo() { println("Hello forld"); } >. ;
+//.!.< if (.~f) (.~f)(); >. ;
+
+tested_code = nil;
+
+//eepc = .<
+//evaluation_party_code = .<
+function veval(code) {
+	println("-----------------------------\n// *** Evaluating - tested_code = ", code, ": ", .!.<.~code>.);
+	tested_code = code;
+}
+
+//a = .< 3 >. ;
+//veval(a);
+//veval(.< (function (){ println(.~a); })() >.);
+
+//>.; 
+//.!.<.~evaluation_party_code>.;
+
+//>.;
+//.!.< .~eepc >.;
+
+//.< function () { 4; } >.;
+// .< 5; >. ;
+
+
+//============ Libfuncs test ============//
+hello_msg = .< "Hello Boola." >.;
+test_sequence = (function (test_code) { veval(.< .~test_code >.); });
+test_sequence(.< print(.~hello_msg)   >.);
+test_sequence(.< println(.~hello_msg) >.);
+test_sequence(.< tostring(tested_code)  >.);
+test_sequence(.< 34 >.);
+test_sequence(.< strtonum(.#.<.~tested_code>.)  >.);
+test_sequence(.< typeof(tested_code) >.);
+test_sequence(.< typeof(.~tested_code) >.);
+// strsavetofile, input, fileopen, fileclose, filewrite, fileread do not want to be tested now
+argument_related_libfunc = .< totalarguments >.;
+test_sequence(.< (function argnum_babler() { a=.!.<.~argument_related_libfunc>.; return a(); })(0,1,2,3,4) >.);
+argument_related_libfunc = .< arguments >.;
+test_sequence(.< .~tested_code >.);
+
+val = tested_code;
+println("\n\n\n Tested code is: \n ------------- ", typeof(val), "\n", val , "\n -------------");
+val = .#.<.~val>. + ";";
+println(" Unparsing it gives: \n ------------- ", typeof(val), "\n", val, "\n -------------");
+val = .@val;
+println(" Compiling it gives: \n ------------- ", typeof(val), "\n", val, "'n -------------");
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 println(.<( function () { } )>.);
 
 println(.<function A(){}>.);

@@ -58,7 +58,7 @@ namespace SIN {
 
 			void ParserFileTestTest::TestLogic(void) {
 				ParserAPI test;
-				TIME(TRY(test.ParseFile(FILE_PATH) == 0))
+				TIME(test.ParseFile(FILE_PATH));
 				if (test.HasError()) {
 					__list_parsing_errors(test);
 					ASSERT(!test.HasError()); // certain failure here, to stop the test
@@ -74,6 +74,7 @@ namespace SIN {
 				ASTMITTreeVisualizerXMLProducerVisitor mitvis(foutxml);
 				TIME(root->Accept(&visitor))
 				TIME(root->Accept(&mitvis))
+				test.DeleteListAndAST();
 			}
 
 

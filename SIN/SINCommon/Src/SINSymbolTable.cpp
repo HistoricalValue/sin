@@ -223,4 +223,24 @@ namespace SIN {
 		return eh;
 	}
 
+	
+	//-----------------------------------------------------------------
+	// in given scope
+	SymbolTable::EntryHandler& SymbolTable::for_each_symbol_in_scope(scope_id scope, SymbolTable::EntryHandler& eh) const {
+		ASSERT_GIVEN_SCOPE(scope);
+		CallableToEntryHolderAdaptor cteha(eh);
+		table[scope].for_each_argument(cteha);
+		return eh;
+	}
+
+	
+
+	//-----------------------------------------------------------------
+	// in given scope
+	const SymbolTable::EntryHandler& SymbolTable::for_each_symbol_in_scope(scope_id scope, const SymbolTable::EntryHandler& eh) const {
+		ASSERT_GIVEN_SCOPE(scope);
+		table[scope].for_each_argument(CallableToEntryHolderAdaptor(eh));
+		return eh;
+	}
+
 }

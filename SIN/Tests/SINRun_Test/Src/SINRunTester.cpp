@@ -76,7 +76,7 @@ namespace SIN {
 
 			void RunFileTest::TestLogic(void) {
 				ParserAPI test;
-				TRY(test.ParseFile(FILE_PATH) == 0);
+				test.ParseFile(FILE_PATH);
 				if (test.HasError()) {
 					__list_parsing_errors(test);
 					ASSERT(!test.HasError()); // certain failure here, to stop the test

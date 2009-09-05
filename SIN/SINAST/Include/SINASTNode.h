@@ -94,9 +94,11 @@ namespace SIN {
 	
 	}; // class ASTNode
 	extern String const to_string(SIN::ASTNode const &_val);
-	void DeleteAST(ASTNode* root_p);
-	ASTNode* CopyAST(ASTNode* root_p);
+	void DeleteAST(ASTNode* root_p); inline void ASTDelete(ASTNode* const _root_p) { DeleteAST(_root_p); }
+	ASTNode* CopyAST(ASTNode* root_p); inline ASTNode* ASTCopy(ASTNode* const _root_p) { return CopyAST(_root_p); }
 	String const UnparseAST(ASTNode& root, bool no_new_line = false);
+										inline String const ASTUnparse(ASTNode& _root, bool _no_new_line = false)
+											{ return UnparseAST(_root, _no_new_line); }
 	///***************	ASTNodeFactory	***************
 	
 	class ASTNodeFactory {

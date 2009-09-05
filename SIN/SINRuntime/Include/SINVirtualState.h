@@ -12,6 +12,7 @@
 #include <deque>
 #include "SINFunction.h"
 #include "SINEnvironment.h"
+#include "SINAlloc.h"
 
 #ifdef _DEBUG
 #define INVAR SINASSERT(curr_frame >= 0u); SINASSERT(curr_frame < stack.size());
@@ -28,13 +29,12 @@ namespace SIN {
 			print_handler_t GetPrintHandler(void) const { return print_handler; }
 			void Print(String const& _msg) { (*print_handler)(_msg); }
 
-			// ReturnValue has to be Memcell::Assign-ed !!! if used
-			MemoryCell* ReturnValue(void) const { return retval; }
-			void ReturnValueNil(void) { retval = &nil; }
-			void ReturnValueString(String const& _s) { str.SetValue(_s); retval = &str; }
-			void ReturnValueNumber(Types::Number_t const& _num) { num.SetValue(_num); retval = &num; }
-			void ReturnValueObject(Types::Object_t const& _obj_inst) { obj.SetValue(_obj_inst); retval = &obj; }
-			void ReturnValueResource(MemoryCellNativeResource* const& _r) { retval = _r; }
+			void ReturnValue(MemoryCell* value);
+			void  ReturnValueNil(void) { ReturnValue(SINEW(MemoryCellNil)); }
+			void  ReturnValueString(Types::String_t const& _s) { ReturnValue(SINEWCLASS(MemoryCellString, (_s))); }
+			void  ReturnValueNumber(Types::Number_t const& _num) { ReturnValue(SINEWCLASS(MemoryCellNumber, (_num))); }
+			void  ReturnValueObject(Types::Object_t const& _obj_inst) { ReturnValue(SINEWCLASS(MemoryCellObject, (_obj_inst))); }
+			void  ReturnValueResource(MemoryCellNativeResource* const& _r) { ReturnValue(_r); }
 
 			struct Error {
 				String const message;
@@ -82,20 +82,14 @@ namespace SIN {
 			SymbolTable& BaseStable(void) { return BaseFrame().env.stable; }
 			Namer& BaseAvrilNamer(void) { return BaseFrame().env.avrilNamer; }
 
-			VirtualState(void): print_handler(0x00), retval(&nil), nil(), str(), num(), obj(), r(),
+			VirtualState(void): print_handler(0x00),
 				stack(1, Frame()), curr_frame(0u), errors(), base_frame(0x00)
 			{
 				base_frame = &stack.front();
 			}
-			~VirtualState(void) { obj.SetValue(0x00); }
+			~VirtualState(void) { }
 		private:
 			print_handler_t print_handler;
-			MemoryCell* retval;
-			MemoryCellNil nil;
-			MemoryCellString str;
-			MemoryCellNumber num;
-			MemoryCellObject obj;
-			MemoryCellNativeResource* r;
 
 			//typedef std::deque<Frame> stack_t;
 			// Debugging
