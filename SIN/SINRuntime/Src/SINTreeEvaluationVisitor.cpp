@@ -82,10 +82,10 @@
 
 //---------------------------------------------------------------------------------------------------
 
-#define EVAL_EXPR(EXPR)			{ASTNode& expr = (EXPR); expr.Accept(this);							\
-								 ASSERT_AFTER_EXPRESSION_EVALUATION_CONDITIONS(expr);}
-#define EVAL_BLOCK(BLOCK)		{ASTNode& block = (BLOCK); block.Accept(this);											\
-								 ASSERT_AFTER_BLOCK_EVALUATION_CONDITIONS(block);}
+#define EVAL_EXPR(EXPR)			{ASTNode& ___expr = (EXPR); ___expr.Accept(this);			\
+								 ASSERT_AFTER_EXPRESSION_EVALUATION_CONDITIONS(___expr);}
+#define EVAL_BLOCK(BLOCK)		{ASTNode& ___block = (BLOCK); ___block.Accept(this);		\
+								 ASSERT_AFTER_BLOCK_EVALUATION_CONDITIONS(___block);}
 #define EVAL(CODE)				 CODE.Accept(this)
 
 //---------------------------------------------------------------------------------------------------
@@ -1107,19 +1107,17 @@ namespace SIN {
 	//-----------------------------------------------------------------
 
 	void TreeEvaluationVisitor::Visit(ExpressionCallASTNode & _node) {
-		SINASSERT(false);
-		/*ASTITER(kite);
-		ASTNode& lambda_astnode = ASTPP(kite);
-		SINASSERT(lambda_astnode.Type() == SINASTNODES_FUNCTION_TYPE);
+		ASTITER(kite);
+		ASTNode& expr = ASTPP(kite);
 		ASTNode& actual_args_astnode = ASTPP(kite);
 		ASTEND(kite);
 
-		EVAL_EXPR(lambda_astnode);
-		SINASSERT(memory->Type() == MemoryCell::FUNCTION_MCT);
+		EVAL_EXPR(expr);
+		SINASSERT(memory->Type() == MemoryCell::FUNCTION_MCT || memory->Type() == MemoryCell::LIB_FUNCTION_MCT);
 		// TODO insert a new field in LambdaASTNode and don't use Name() as
 		// a description
-		performCall(memory, lambda_astnode.Name(), _node.AssociatedFileName(), _node.AssociatedFileLine(),
-				actual_args_astnode); // memory is set in here (a temporary of the return value)*/
+		performCall(memory, expr.Name(), _node.AssociatedFileName(), _node.AssociatedFileLine(),
+				actual_args_astnode); // memory is set in here (a temporary of the return value)
 	}
 
 	//-----------------------------------------------------------------
