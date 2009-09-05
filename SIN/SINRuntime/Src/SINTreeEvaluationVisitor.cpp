@@ -49,8 +49,11 @@
 
 //---------------------------------------------------------------------------------------------------
 
-#define ERROR(MSG, FILE, LINE)	vs->AppendError(MSG, FILE, LINE);			\
-								throw RunTimeError(MSG, FILE, LINE)
+#define ERROR(MSG, FILE, LINE)	if (true) {									\
+									vs->AppendError(MSG, FILE, LINE);		\
+									throw RunTimeError(MSG, FILE, LINE);	\
+								}											\
+								else
 
 //---------------------------------------------------------------------------------------------------
 
