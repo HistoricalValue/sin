@@ -1,6 +1,11 @@
 //f = .< function foo() { println("Hello forld"); } >. ;
 //.!.< if (.~f) (.~f)(); >. ;
 
+function valtocode(val) {
+	str = "\"" + val + "\";";
+	return .@str;
+}
+
 tested_code = nil;
 
 //eepc = .<
@@ -36,16 +41,18 @@ test_sequence(.< typeof(tested_code) >.);
 test_sequence(.< typeof(.~tested_code) >.);
 // strsavetofile, input, fileopen, fileclose, filewrite, fileread do not want to be tested now
 argument_related_libfunc = .< totalarguments >.;
-test_sequence(.< (function argnum_babler() { a=.!.<.~argument_related_libfunc>.; return a(); })(0,1,2,3,4) >.);
+str = "\"" + .#.<.~argument_related_libfunc>. + "\";";
+strval = .@str;
+test_sequence(.< (function argnum_babler() { .~valtocode(tostring(argument_related_libfunc)); a=.!.<.~argument_related_libfunc>.; return a(); })(0,1,2,3,4) >.);
 argument_related_libfunc = .< arguments >.;
 test_sequence(.< .~tested_code >.);
 
-val = tested_code;
+val = argument_related_libfunc ;
 println("\n\n\n Tested code is: \n ------------- ", typeof(val), "\n", val , "\n -------------");
 val = .#.<.~val>. + ";";
 println(" Unparsing it gives: \n ------------- ", typeof(val), "\n", val, "\n -------------");
 val = .@val;
-println(" Compiling it gives: \n ------------- ", typeof(val), "\n", val, "'n -------------");
+println(" Compiling it gives: \n ------------- ", typeof(val), "\n", val, "\n -------------");
 
 
 
