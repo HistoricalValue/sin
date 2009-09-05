@@ -142,6 +142,11 @@
 
 #define ASSERT_RESULT_IS_CODE(NODE)		___ASSERT_RESULT_IS_SOMETHING(NODE, AST_MCT,    "code"  )
 #define ASSERT_RESULT_IS_STRING(NODE)	___ASSERT_RESULT_IS_SOMETHING(NODE, STRING_MCT, "string")
+#define ASSERT_RESULT_IS_NUMBER(NODE)	___ASSERT_RESULT_IS_SOMETHING(NODE, NUMBER_MCT, "number")
+
+//---------------------------------------------------------------------------------------------------
+
+#define AST_GET_ONLY_ONE_CHILD(ITER) ASTITER(ITER); ASTNode& kid0 = ASTPP(ITER); ASTEND(ITER);
 
 //---------------------------------------------------------------------------------------------------
 
@@ -1183,12 +1188,10 @@ namespace SIN {
 	//-----------------------------------------------------------------
 
 	void TreeEvaluationVisitor::Visit(PreIncrASTNode & _node) {
-		SINASSERT(_node.NumberOfChildren() == 1);
+		AST_GET_ONLY_ONE_CHILD(kid);
 
-		ASTNode::iterator kid = _node.begin();
-
-		static_cast<ASTNode&>(*kid).Accept(this);
-		SINASSERT(memory->Type() == MemoryCell::NUMBER_MCT);
+		ASSERT_RESULT_IS_NUMBER(_node);
+		EVAL_EXPR(kid0);
 		MemoryCellNumber *tmpmemcell1 = static_cast<MemoryCellNumber*>(memory);
 
 		tmpmemcell1->SetValue(tmpmemcell1->GetValue() + 1);
@@ -1200,12 +1203,10 @@ namespace SIN {
 	//-----------------------------------------------------------------
 
 	void TreeEvaluationVisitor::Visit(PostIncrASTNode & _node)  {
-		SINASSERT(_node.NumberOfChildren() == 1);
+		AST_GET_ONLY_ONE_CHILD(kid);
 
-		ASTNode::iterator kid = _node.begin();
-
-		static_cast<ASTNode&>(*kid).Accept(this);
-		SINASSERT(memory->Type() == MemoryCell::NUMBER_MCT);
+		ASSERT_RESULT_IS_NUMBER(_node);
+		EVAL_EXPR(kid0);
 		MemoryCellNumber *tmpmemcell1 = static_cast<MemoryCellNumber*>(memory);
 
 		insertTemporary(memory = tmpmemcell1->Clone());
@@ -1216,12 +1217,10 @@ namespace SIN {
 	//-----------------------------------------------------------------
 
 	void TreeEvaluationVisitor::Visit(PreDecrASTNode & _node){
-		SINASSERT(_node.NumberOfChildren() == 1);
+		AST_GET_ONLY_ONE_CHILD(kid);
 
-		ASTNode::iterator kid = _node.begin();
-
-		static_cast<ASTNode&>(*kid).Accept(this);
-		SINASSERT(memory->Type() == MemoryCell::NUMBER_MCT);
+		ASSERT_RESULT_IS_NUMBER(_node);
+		EVAL_EXPR(kid0);
 		MemoryCellNumber *tmpmemcell1 = static_cast<MemoryCellNumber*>(memory);
 
 		tmpmemcell1->SetValue(tmpmemcell1->GetValue() - 1);
@@ -1233,12 +1232,10 @@ namespace SIN {
 	//-----------------------------------------------------------------
 
 	void TreeEvaluationVisitor::Visit(PostDecrASTNode & _node) {
-		SINASSERT(_node.NumberOfChildren() == 1);
+		AST_GET_ONLY_ONE_CHILD(kid);
 
-		ASTNode::iterator kid = _node.begin();
-
-		static_cast<ASTNode&>(*kid).Accept(this);
-		SINASSERT(memory->Type() == MemoryCell::NUMBER_MCT);
+		ASSERT_RESULT_IS_NUMBER(_node);
+		EVAL_EXPR(kid0);
 		MemoryCellNumber *tmpmemcell1 = static_cast<MemoryCellNumber*>(memory);
 
 		insertTemporary(memory = tmpmemcell1->Clone());
@@ -1249,11 +1246,9 @@ namespace SIN {
 	//-----------------------------------------------------------------
 
 	void TreeEvaluationVisitor::Visit(UnaryNotASTNode & _node) {
-		SINASSERT(_node.NumberOfChildren() == 1);
+		AST_GET_ONLY_ONE_CHILD(kid);
 
-		ASTNode::iterator kid = _node.begin();
-
-		static_cast<ASTNode&>(*kid).Accept(this);
+		EVAL_EXPR(kid0);
 		SINASSERT(memory != 0x00);
 		insertTemporary(memory = SINEWCLASS(MemoryCellBool, (! memory->ToBoolean())));
 		lookuped = 0x00;
@@ -1262,12 +1257,10 @@ namespace SIN {
 	//-----------------------------------------------------------------
 
 	void TreeEvaluationVisitor::Visit(UnaryMinASTNode & _node) {
-		SINASSERT(_node.NumberOfChildren() == 1);
+		AST_GET_ONLY_ONE_CHILD(kid);
 
-		ASTNode::iterator kid = _node.begin();
-
-		static_cast<ASTNode&>(*kid).Accept(this);
-		SINASSERT(memory->Type() == MemoryCell::NUMBER_MCT);
+		EVAL_EXPR(kid0);
+		ASSERT_RESULT_IS_NUMBER(_node);
 		MemoryCellNumber* num = static_cast<MemoryCellNumber*>(memory = memory->Clone());
 		insertTemporary(memory);
 
