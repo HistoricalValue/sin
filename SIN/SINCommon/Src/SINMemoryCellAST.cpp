@@ -41,11 +41,7 @@ namespace SIN {
 	//-----------------------------------------------------------------
 
 	const String MemoryCellAST::ToString(void) const {
-		ASTUnparseTreeVisitor unparser;
-		unparser.DisableNewLine();
-		
-		value->Accept(&unparser);
-		return unparser.UnparsedString(); 
+		return UnparseAST(*value, true); 
 	}
 		
 

@@ -96,14 +96,14 @@ namespace SIN {
 				BufferedOutputStream metatxt(_metatxt); 
 				
 
-				///*ASTTreeCtrlVisitor						ctrlvis(ctrltxt);
-				//ASTTreeVisualisationVisitor				visitor(fouttxt);
+				//ASTTreeCtrlVisitor						ctrlvis(ctrltxt);
+				ASTTreeVisualisationVisitor				visitor(fouttxt);
 				//ASTTreeVisualisationVisitor				metaVisualVisitor(metatxt);
 				//ASTMITTreeVisualizerXMLProducerVisitor	mitvis(foutxml);
 				//ASTCloneVisitor							cloneVisitor;
 				//ASTUnparseTreeVisitor					uparseVisitor;
 				//
-				//root->Accept(&visitor);
+				root->Accept(&visitor);
 				//root->Accept(&ctrlvis);
 				//root->Accept(&mitvis);
 				//root->Accept(&uparseVisitor);
@@ -119,7 +119,7 @@ namespace SIN {
 
 				//
 
-				//static_cast<OutputStream&>(STDOUT) << "\n\n" << unpasedString2 << "\n\n\n";*/
+				//static_cast<OutputStream&>(STDOUT) << "\n\n" << unpasedString2 << "\n\n\n";
 
 				foutxml.flush();
 				fouttxt.flush();

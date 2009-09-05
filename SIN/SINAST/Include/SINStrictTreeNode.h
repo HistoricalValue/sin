@@ -65,14 +65,10 @@ namespace SIN {
 		typedef iterator_base<StrictTreeNode> iterator;
 		typedef iterator_base<StrictTreeNode const> const_iterator;
 		
-		inline iterator const begin(void) { return iterator(first_child); }
-		inline iterator const end(void) { return iterator(0x00); }
-		inline iterator const rbegin(void) { return iterator(last_child); }
-		inline iterator const rend(void) { return iterator(0x00); }
-		inline const_iterator const begin(void) const { return const_iterator(first_child); }
-		inline const_iterator const end(void) const { return const_iterator(0x00); }
-		inline const_iterator const rbegin(void) const { return const_iterator(last_child); }
-		inline const_iterator const rend(void) const { return const_iterator(0x00); }
+		inline iterator const begin(void) const { return iterator(first_child); }
+		inline iterator const end(void) const { return iterator(0x00); }
+		inline iterator const rbegin(void) const { return iterator(last_child); }
+		inline iterator const rend(void) const { return iterator(0x00); }
 
 
 		// functor returns false to stop iterating
