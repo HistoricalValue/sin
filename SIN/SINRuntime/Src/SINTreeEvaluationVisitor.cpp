@@ -102,7 +102,7 @@
 	if (memory != 0x00 || lookuped != 0x00)					\
 		ERROR((												\
 			to_string("Using an expression (\"") <<			\
-			UnparseAST(EVALED) << '"' <<					\
+			UnparseAST(EVALED, true) << '"' <<				\
 			(EVALED.Type() == SINASTNODES_METAEVALUATE_TYPE?\
 				(to_string(" -> \"") << UnparseAST(*evalMeta(AST(EVALED.begin()))->GetValue(), true) << '"') :	\
 				(to_string("(not code, was ") << EVALED.Type() << ')') ) <<										\
@@ -115,7 +115,7 @@
 	if (memory == 0x00)											\
 		ERROR((													\
 			to_string("Using a statement (\"") <<				\
-			UnparseAST(EVALED) << '"' <<						\
+			UnparseAST(EVALED, true) << '"' <<					\
 			(EVALED.Type() == SINASTNODES_METAEVALUATE_TYPE?	\
 				(to_string(" -> \"") << UnparseAST(*evalMeta(AST(EVALED.begin()))->GetValue(), true) << '"') :	\
 				(to_string("(not code, was ") << EVALED.Type() << ')') ) <<										\
@@ -126,13 +126,17 @@
 
 //---------------------------------------------------------------------------------------------------
 
-#define ASSERT_RESULT_IS_CODE(NODE)																				\
-	if (memory->Type() != MemoryCell::AST_MCT)																	\
+#define ___ASSERT_RESULT_IS_SOMETHING(NODE,MEMCELL_TYPE,TYPE_STR)												\
+	if (memory->Type() != MemoryCell::MEMCELL_TYPE)																\
 		ERROR(																									\
-			(to_string("Evaluation of \"") << UnparseAST(NODE, true) << "\" does not result in code").c_str(),	\
+			(to_string("Evaluation of \"") << UnparseAST(NODE, true) << "\" does not result in" TYPE_STR).		\
+				c_str(),																						\
 			NODE.AssociatedFileName().c_str(),																	\
 			NODE.AssociatedFileLine()																			\
 			)
+
+#define ASSERT_RESULT_IS_CODE(NODE)		___ASSERT_RESULT_IS_SOMETHING(NODE, AST_MCT,    "code"  )
+#define ASSERT_RESULT_IS_STRING(NODE)	___ASSERT_RESULT_IS_SOMETHING(NODE, STRING_MCT, "string")
 
 //---------------------------------------------------------------------------------------------------
 
@@ -192,6 +196,19 @@ namespace SIN {
 
 		static inline bool notNil(MemoryCell const* const _memcell) {
 			return _memcell->Type() != MemoryCell::NIL_MCT;
+		}
+
+		static inline String const __concat_parsing_errors(ParserAPI const& _papi) {
+			String result;
+			for (
+				LexAndBisonParseArguments::Errors::const_iterator ite = _papi.GetErrors().begin(),
+					end = _papi.GetErrors().end();
+				ite != end;
+				++ite
+			)
+				result += (to_string("Parsing error: line ") << ite->second <<
+					": " << ite->first);
+			return result;
 		}
 	} // namespace
 
@@ -1409,18 +1426,29 @@ namespace SIN {
 	//-----------------------------------------------------------------
 
 	void TreeEvaluationVisitor::Visit(MetaParseStringASTNode & _node) {
-		SINASSERT(_node.NumberOfChildren() == 1);
+		ASTITER(kite);
+		ASTNode& a_string = ASTPP(kite);
+		ASTEND(kite);
+
 //---------->  WARNING	<--------------//
-		ParserAPI test;		//Wen this object die, it will destroy the AST.
+		ParserAPI test;		//Wen this object dies, it will destroy the AST.
 //---------->  WARNING	<--------------//
 
-		EVAL_EXPR(static_cast<ASTNode &>(*_node.begin()));
-		SINASSERT(memory->Type() == MemoryCell::STRING_MCT);
+		EVAL_EXPR(a_string);
+		ASSERT_RESULT_IS_STRING(_node);
 
-		test.ParseText(static_cast<MemoryCellString *>(memory)->GetValue().c_str());
-		ASTNode* root = test.GetAST();
+		test.ParseText(memory->ToString().c_str());
+		if (!test.HasError()) {
+			ASTNode* root = test.GetAST();
 
-		SINASSERT(false);	//TODO edw na sunexisoume. Den 3erw ti 8a kanoume malon 8elei new memory call
+			insertTemporary(memory = SINEWCLASS(MemoryCellAST, (CopyAST(test.GetAST()))));
+			lookuped = 0x00;
+		}
+		else {
+			ERRO((to_string("Parsing \"") << memory->ToString() << "\" fails. Parser messages: "
+				<< SIN::ENDL << __concat_parsing_errors(test)));
+			BLOCK_EVALUATION;
+		}
 	}
 
 	//-----------------------------------------------------------------

@@ -41,6 +41,8 @@ namespace SIN {
 		
 		EntryHandler&		for_each_symbol(      EntryHandler&) const; // in current scope
 		const EntryHandler& for_each_symbol(const EntryHandler&) const; // in current scope
+		EntryHandler&		for_each_symbol_in_scope(scope_id,       EntryHandler&) const; // in given scope
+		const EntryHandler& for_each_symbol_in_scope(scope_id, const EntryHandler&) const; // in given scope
 
 
 		SymbolTable(void);

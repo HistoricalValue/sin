@@ -114,7 +114,7 @@ namespace SIN {
 			}
 			// input ------------------------------------------------------------
 			//SIN_LIBRARYFUNCTIONS_DEFAULTS_AND_LIBFUNC(input);
-			// openfile ---------------------------------------------------------
+			// fileopen ---------------------------------------------------------
 			namespace {
 				struct file {
 					String const path;
@@ -187,8 +187,13 @@ namespace SIN {
 			}
 			// totalarguments ---------------------------------------------------
 			SIN_LIBRARYFUNCTIONS_DEFAULTS_AND_LIBFUNC(totalarguments) {
-				_vs.ReturnValueNumber(_vs.Down().CurrentStable().NumberOfSymbols());
-				_vs.Top();
+				if (_vs.InCall()) {
+					size_t const num_args = _vs.Down().CurrentStable().NumberOfSymbols(0);
+					_vs.Top();
+					_vs.ReturnValueNumber(num_args);
+				}
+				else
+					_vs.AppendError("arguments() called not from within a function", "", 0u);
 			}
 			// arguments --------------------------------------------------------
 			namespace {
@@ -196,6 +201,8 @@ namespace SIN {
 					ArgumentToTableCopier(Types::Object* _obj): obj(_obj) { }
 					virtual bool operator ()(SymbolTable::name_t const& _name, SymbolTable::elem_t const& _value) const {
 						obj->SetValue(_name, _value->Clone());
+						if (_value->Type() == MemoryCell::OBJECT_MCT)
+							static_cast<MemoryCellObject&>(*_value).GetValue()->IncrementReferenceCounter();
 						return true;
 					}
 				private:
@@ -204,8 +211,9 @@ namespace SIN {
 			} // namespace
 			SIN_LIBRARYFUNCTIONS_DEFAULTS_AND_LIBFUNC(arguments) {
 				if (_vs.InCall()) {
-					Types::Object* obj_inst_p = SINEW(Types::Object);
-					_vs.CurrentStable().for_each_symbol(ArgumentToTableCopier(obj_inst_p));
+					Types::Object_t obj_inst_p = SINEW(Types::Object);
+					_vs.Down().CurrentStable().for_each_symbol_in_scope(0, ArgumentToTableCopier(obj_inst_p));
+					_vs.Top();
 					_vs.ReturnValueObject(obj_inst_p);
 				}
 				else
