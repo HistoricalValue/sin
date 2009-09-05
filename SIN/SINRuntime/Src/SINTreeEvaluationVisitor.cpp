@@ -29,6 +29,7 @@
 #include "SINShiftToMetaEvaluatorASTVisitor.h"
 #include "SINParserAPI.h"
 #include "SINASTUnparseTreeVisitor.h"
+#include "SINRunTimeError.h"
 
 
 //---------------------------------------------------------------------------------------------------
@@ -48,7 +49,8 @@
 
 //---------------------------------------------------------------------------------------------------
 
-#define ERROR(MSG, FILE, LINE) vs->AppendError(MSG, FILE, LINE)
+#define ERROR(MSG, FILE, LINE)	vs->AppendError(MSG, FILE, LINE);			\
+								throw RunTimeError(MSG, FILE, LINE)
 
 //---------------------------------------------------------------------------------------------------
 
@@ -1433,7 +1435,7 @@ namespace SIN {
 //---------->  WARNING	<--------------//
 
 		EVAL_EXPR(static_cast<ASTNode &>(*_node.begin()));
-		SINASSERT(memory->Type() == MemoryCell::STRING_MCT);
+		SINASSERT(memory->Type() == MemoryCell::STRING_MCT);		//TODORUNTIME ERRO
 
 		test.ParseText(static_cast<MemoryCellString *>(memory)->GetValue().c_str());
 		ASTNode* root = test.GetAST();

@@ -159,6 +159,10 @@
 				>
 			</File>
 			<File
+				RelativePath="..\..\Src\SINRunTimeError.cpp"
+				>
+			</File>
+			<File
 				RelativePath="..\..\Src\SINShiftToMetaEvaluatorASTVisitor.cpp"
 				>
 			</File>
@@ -290,6 +294,10 @@
 			>
 			<File
 				RelativePath="..\..\Include\SINPreserveASTEvaluatorVisitor.h"
+				>
+			</File>
+			<File
+				RelativePath="..\..\Include\SINRunTimeError.h"
 				>
 			</File>
 			<File
