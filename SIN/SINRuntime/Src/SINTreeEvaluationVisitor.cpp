@@ -40,21 +40,11 @@
 
 //---------------------------------------------------------------------------------------------------
 
-static inline void __visit_kids_serially(SIN::ASTNode&_node, SIN::TreeEvaluationVisitor*_this){
-	SIN::ASTNode::iterator const end(_node.end());
-	for(ASTITER(kid); kid != end; ++kid)
-		AST(kid).Accept(_this);
-}
-
-#ifdef _DEBUG
-#define VISIT_KIDS_SERIALLY __visit_kids_serially(_node, this)
-#else
 #define VISIT_KIDS_SERIALLY							\
 		ASTNode::iterator const end(_node.end());	\
 		for(ASTITER(kid); kid != end; ++kid)		\
 			AST(kid).Accept(this)					\
 
-#endif
 
 //---------------------------------------------------------------------------------------------------
 
@@ -87,10 +77,10 @@ static inline void __visit_kids_serially(SIN::ASTNode&_node, SIN::TreeEvaluation
 
 //---------------------------------------------------------------------------------------------------
 
-#define EVAL_EXPR(EXPR)			{EXPR.Accept(this);											\
-								 ASSERT_AFTER_EXPRESSION_EVALUATION_CONDITIONS;}
-#define EVAL_BLOCK(BLOCK)		{BLOCK.Accept(this);											\
-								 ASSERT_AFTER_BLOCK_EVALUATION_CONDITIONS;}
+#define EVAL_EXPR(EXPR)			{ASTNode& expr = (EXPR); expr.Accept(this);							\
+								 ASSERT_AFTER_EXPRESSION_EVALUATION_CONDITIONS(expr);}
+#define EVAL_BLOCK(BLOCK)		{ASTNode& block = (BLOCK); block.Accept(this);											\
+								 ASSERT_AFTER_BLOCK_EVALUATION_CONDITIONS(block);}
 #define EVAL(CODE)				 CODE.Accept(this)
 
 //---------------------------------------------------------------------------------------------------
@@ -108,8 +98,41 @@ static inline void __visit_kids_serially(SIN::ASTNode&_node, SIN::TreeEvaluation
 //---------------------------------------------------------------------------------------------------
 
 #define BLOCK_EVALUATION								memory = 0x00; lookuped = 0x00
-#define ASSERT_AFTER_BLOCK_EVALUATION_CONDITIONS		SINASSERT(memory == 0x00); SINASSERT(lookuped == 0x00)
-#define ASSERT_AFTER_EXPRESSION_EVALUATION_CONDITIONS	SINASSERT(memory != 0x00);
+#define ASSERT_AFTER_BLOCK_EVALUATION_CONDITIONS(EVALED)	\
+	if (memory != 0x00 || lookuped != 0x00)					\
+		ERROR((												\
+			to_string("Using an expression (\"") <<			\
+			UnparseAST(EVALED) << '"' <<					\
+			(EVALED.Type() == SINASTNODES_METAEVALUATE_TYPE?\
+				(to_string(" -> \"") << UnparseAST(*evalMeta(AST(EVALED.begin()))->GetValue(), true) << '"') :	\
+				(to_string("(not code, was ") << EVALED.Type() << ')') ) <<										\
+			") in place of an statement"					\
+		).c_str(),											\
+		EVALED.AssociatedFileName().c_str(),				\
+		EVALED.AssociatedFileLine())
+
+#define ASSERT_AFTER_EXPRESSION_EVALUATION_CONDITIONS(EVALED)	\
+	if (memory == 0x00)											\
+		ERROR((													\
+			to_string("Using a statement (\"") <<				\
+			UnparseAST(EVALED) << '"' <<						\
+			(EVALED.Type() == SINASTNODES_METAEVALUATE_TYPE?	\
+				(to_string(" -> \"") << UnparseAST(*evalMeta(AST(EVALED.begin()))->GetValue(), true) << '"') :	\
+				(to_string("(not code, was ") << EVALED.Type() << ')') ) <<										\
+			") in place of an expression"						\
+		).c_str(),												\
+		EVALED.AssociatedFileName().c_str(),					\
+		EVALED.AssociatedFileLine())
+
+//---------------------------------------------------------------------------------------------------
+
+#define ASSERT_RESULT_IS_CODE(NODE)																				\
+	if (memory->Type() != MemoryCell::AST_MCT)																	\
+		ERROR(																									\
+			(to_string("Evaluation of \"") << UnparseAST(NODE, true) << "\" does not result in code").c_str(),	\
+			NODE.AssociatedFileName().c_str(),																	\
+			NODE.AssociatedFileLine()																			\
+			)
 
 //---------------------------------------------------------------------------------------------------
 
@@ -621,6 +644,20 @@ namespace SIN {
 		String const member_id = SINPTR(memory)->ToString();
 		objectLookup(_node, member_id); // memory and lookuped set in here
 	}
+
+	//-----------------------------------------------------------------
+
+	inline MemoryCellAST* TreeEvaluationVisitor::evalMeta(ASTNode& _node) {
+		_node.Accept(this);
+		ASSERT_AFTER_EXPRESSION_EVALUATION_CONDITIONS(_node);
+		ASSERT_RESULT_IS_CODE(_node);
+		return
+			static_cast<MemoryCellAST*>( static_cast<MemoryCell*>(
+				insertTemporary(SINEWCLASS(MemoryCellAST, (static_cast<MemoryCellAST*>(memory)->GetValue())))
+			) );
+	}
+
+	//-----------------------------------------------------------------
 	// ---- Privates end ----- //
 
 	//-----------------------------------------------------------------

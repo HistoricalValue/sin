@@ -13,7 +13,7 @@ println("Executing: ", .#.~code);
 
 
 (function (code) { println(.!.~code); })
-( .< 3 >. );
+( .< 3  >. );
 
 
 .!.<

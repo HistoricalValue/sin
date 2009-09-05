@@ -100,11 +100,22 @@ namespace SIN {
 
 	//---------------------------------------------------
 
-	ASTNode* CopyAST(ASTNode* const _root) {
+	ASTNode* CopyAST(ASTNode* const _root_p) {
 		ASTCloneVisitor cloner;
-		_root->Accept(&cloner);
+		_root_p->Accept(&cloner);
 		SINDELETE(cloner.TakeNodesList());
 		return cloner.Root();
+	}
+
+	//---------------------------------------------------
+
+	String const UnparseAST(ASTNode& _root, bool _nnn) {
+		ASTUnparseTreeVisitor unparser;
+		if (_nnn)
+			unparser.DisableNewLine();
+		
+		_root.Accept(&unparser);
+		return unparser.UnparsedString();
 	}
 
 	//---------------------------------------------------

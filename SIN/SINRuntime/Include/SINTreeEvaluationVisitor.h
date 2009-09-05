@@ -8,6 +8,7 @@
 #include "SINLibrary.h"
 #include "SINVirtualState.h"
 #include "SINNamer.h"
+#include "SINMemoryCellAST.h"
 
 namespace SIN{
 
@@ -150,6 +151,9 @@ namespace SIN{
 		void objectLookup(ASTNode& parent_node, String const& member_id); // eval(parent_node.first_child)-> Object
 		void evalObjectMemberAccess(ASTNode& parent_node); //eval(first_child)->Obj, second_child.NAME()-> ID
 		void evalObjectIndexAccess(ASTNode& parent_node); //eval(first_child)->Obj, eval(second_child).ToString->ID
+		// evaluation and evaluation utilities
+		MemoryCellAST* evalMeta(ASTNode& node); // creates a temporary of code and returns it
+
 		// Unusable
 		TreeEvaluationVisitor(const TreeEvaluationVisitor&);
 	};
