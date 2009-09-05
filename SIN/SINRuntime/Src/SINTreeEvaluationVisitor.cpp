@@ -1434,7 +1434,7 @@ namespace SIN {
 		ASTNode & kid = ASTPP(kite);
 		ASTEND(kite); // only 1 child
 		EVAL_EXPR(kid);
-		SINASSERT(memory->Type() == MemoryCell::AST_MCT);
+		ASSERT_RESULT_IS_CODE(_node);
 
 		ASTUnparseTreeVisitor unparser;
 		static_cast<MemoryCellAST*>(memory)->GetValue()->Accept(&unparser);
