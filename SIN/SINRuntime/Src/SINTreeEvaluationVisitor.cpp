@@ -1145,8 +1145,7 @@ namespace SIN {
 				"\" is not possible because there is a variable defined with that name in the same scope",
 				_node.AssociatedFileName().c_str(), _node.AssociatedFileLine());
 
-		memory = result; // TODO add again a different node for Value-functions and make this a BLOCK_EVALUATION
-		lookuped = 0x00;
+		BLOCK_EVALUATION;
 	}
 
 	//-----------------------------------------------------------------

@@ -1,6 +1,3 @@
-//f = .< function foo() { println("Hello forld"); } >. ;
-//.!.< if (.~f) (.~f)(); >. ;
-
 function valtocode(val) {
 	str = "\"" + val + "\";";
 	return .@str;
@@ -8,25 +5,14 @@ function valtocode(val) {
 
 tested_code = nil;
 
-//eepc = .<
-//evaluation_party_code = .<
 function veval(code) {
 	println("-----------------------------\n// *** Evaluating - tested_code = ", code, ": ", .!.<.~code>.);
 	tested_code = code;
 }
 
-//a = .< 3 >. ;
-//veval(a);
-//veval(.< (function (){ println(.~a); })() >.);
 
-//>.; 
-//.!.<.~evaluation_party_code>.;
-
-//>.;
-//.!.< .~eepc >.;
-
-//.< function () { 4; } >.;
-// .< 5; >. ;
+.< function () { 4; } >.;
+ .< 5; >. ;
 
 
 //============ Libfuncs test ============//

@@ -11,11 +11,6 @@ namespace SIN {
 	}
 	MemoryCellNativeResource::~MemoryCellNativeResource(void) { }
 
-
-	bool MemoryCellNativeResource::ToBoolean(void) const
-		{ SINASSERT(!"Check this if is corect?"); return true; }
-
-
 	enum MemoryCell::MemoryCellType MemoryCellNativeResource::Type(void) const {
 		return NATIVE_RESOURCE_MCT;
 	}
