@@ -1,3 +1,27 @@
+function inspect(val_code) {
+	val = .!.<.~val_code>.;
+	println(val_code, "(", typeof(val), "): ", val);
+}
+
+Customer = [
+	"id": 0,
+	"new": (function (class, name_) {
+		return [
+			"name": name_,
+			"id": class.id++
+		];
+		})
+];
+
+inspect(.<Customer.id>.);
+inspect(.<Customer.id++>.);
+
+nl = "\n";
+jon = Customer..new("Jonathon Bumpton");
+JR = Customer..new("Jonathon Rumpton");
+
+println(jon, nl, JR);
+
 function valtocode(val) {
 	str = "\"" + val + "\";";
 	return .@str;

@@ -76,6 +76,7 @@ namespace SIN {
 			//------------------------------------------------------------------
 
 			void RunFileTest::TestLogic(void) {
+				ASTNode* root;
 				ParserAPI test;
 				test.ParseFile(FILE_PATH);
 				if (test.HasError()) {
@@ -87,13 +88,17 @@ namespace SIN {
 					test0.ParseFile("sin_run_test.sin");
 					if (test0.HasError()) {
 						logger->Notice("Parsing errors for file ./sin_run_test.sin");
-						__list_parsing_errors(test);
+						__list_parsing_errors(test0);
 						ASSERT(!test0.HasError()); // certain failure here, to stop the test
 					}
+					else {
+						logger->Notice("fallback sin_run_test.sin passed");
+						root = test0.GetAST();
+					}
 				}
-				ASTNode* root = test.GetAST();
+				else
+					root = test.GetAST();
 				ASSERT(root != 0x00);
-				
 				
 				FileOutputStream _foutxml("RunTreeVisualisation.xml", FileOutputStream::Mode::Truncate());
 				FileOutputStream _fouttxt("RunTreeVisualisation.txt", FileOutputStream::Mode::Truncate());
