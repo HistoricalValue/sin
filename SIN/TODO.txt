@@ -1,6 +1,6 @@
 NEXT TODO TICKET                                ||
 (please take a number and wait in the line...)  ||
-Next number: 65                                 ||
+Next number: 67                                 ||
 +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-//
 
 
@@ -38,6 +38,7 @@ Next number: 65                                 ||
 *[063 2009-09-04/22:30]	Correct lib function totalarguments
 *[064 2009-09-05/01:50] Add statements and parentheses in AST
 *[065 2009-09-05/13:39] Fix inserting global variables from different environments
+*[066 2009-09-05/19:54(GMT-8)] Eliminate memory leaks from metacode
 
 ---logging---
 *[010] LoggerFactory base should internally keep a list of produced loggers
