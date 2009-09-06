@@ -1190,8 +1190,8 @@ namespace SIN {
 	void TreeEvaluationVisitor::Visit(PreIncrASTNode & _node) {
 		AST_GET_ONLY_ONE_CHILD(kid);
 
-		ASSERT_RESULT_IS_NUMBER(_node);
 		EVAL_EXPR(kid0);
+		ASSERT_RESULT_IS_NUMBER(_node);
 		MemoryCellNumber *tmpmemcell1 = static_cast<MemoryCellNumber*>(memory);
 
 		tmpmemcell1->SetValue(tmpmemcell1->GetValue() + 1);
@@ -1205,8 +1205,8 @@ namespace SIN {
 	void TreeEvaluationVisitor::Visit(PostIncrASTNode & _node)  {
 		AST_GET_ONLY_ONE_CHILD(kid);
 
-		ASSERT_RESULT_IS_NUMBER(_node);
 		EVAL_EXPR(kid0);
+		ASSERT_RESULT_IS_NUMBER(_node);
 		MemoryCellNumber *tmpmemcell1 = static_cast<MemoryCellNumber*>(memory);
 
 		insertTemporary(memory = tmpmemcell1->Clone());
@@ -1219,8 +1219,8 @@ namespace SIN {
 	void TreeEvaluationVisitor::Visit(PreDecrASTNode & _node){
 		AST_GET_ONLY_ONE_CHILD(kid);
 
-		ASSERT_RESULT_IS_NUMBER(_node);
 		EVAL_EXPR(kid0);
+		ASSERT_RESULT_IS_NUMBER(_node);
 		MemoryCellNumber *tmpmemcell1 = static_cast<MemoryCellNumber*>(memory);
 
 		tmpmemcell1->SetValue(tmpmemcell1->GetValue() - 1);
@@ -1234,8 +1234,8 @@ namespace SIN {
 	void TreeEvaluationVisitor::Visit(PostDecrASTNode & _node) {
 		AST_GET_ONLY_ONE_CHILD(kid);
 
-		ASSERT_RESULT_IS_NUMBER(_node);
 		EVAL_EXPR(kid0);
+		ASSERT_RESULT_IS_NUMBER(_node);
 		MemoryCellNumber *tmpmemcell1 = static_cast<MemoryCellNumber*>(memory);
 
 		insertTemporary(memory = tmpmemcell1->Clone());
