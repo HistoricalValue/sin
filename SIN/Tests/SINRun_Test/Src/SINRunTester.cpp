@@ -79,8 +79,17 @@ namespace SIN {
 				ParserAPI test;
 				test.ParseFile(FILE_PATH);
 				if (test.HasError()) {
+					logger->Notice("Parsing errors for file " FILE_PATH);
 					__list_parsing_errors(test);
-					ASSERT(!test.HasError()); // certain failure here, to stop the test
+					// Try another file
+					logger->Notice("trying \"./sin_tun_test.sin\"");
+					ParserAPI test0;
+					test0.ParseFile("sin_run_test.sin");
+					if (test0.HasError()) {
+						logger->Notice("Parsing errors for file ./sin_run_test.sin");
+						__list_parsing_errors(test);
+						ASSERT(!test0.HasError()); // certain failure here, to stop the test
+					}
 				}
 				ASTNode* root = test.GetAST();
 				ASSERT(root != 0x00);
