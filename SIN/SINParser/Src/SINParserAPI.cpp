@@ -40,6 +40,7 @@ namespace SIN {
 		labpa.SetFileName(_filepath);
         if (PrepareForFile(_filepath.c_str()) == 0 && yyparse(labpa) == 0)
 			return 0;
+		labpa.SetError(LexAndBisonParseArguments::ErrorInfo("Could not parse file",0));
 		return -1;
     }
     
