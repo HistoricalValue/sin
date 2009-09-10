@@ -4,11 +4,12 @@
 #ifdef _DEBUG
 #include <cstdlib>
 #include <map>
+#include <list>
+#include <setjmp.h>
+#include <algorithm>
 #include "SINAssert.h"
 #include <memory>
 #include "Common.h"
-#include <list>
-#include <setjmp.h>
 
 #define SINALLOC_ALLOCATION_TYPE_VARIABLE	(1 << 0)
 #define SINALLOC_ALLOCATION_TYPE_ARRAY		(1 << 1)
@@ -19,17 +20,36 @@
 #define SINALLOC_DEALLOCATE(POINTER)		(free(POINTER))
 #define SINALLOC_CURRENTLY_ALLOCATED		(totally_allocated - totally_freed)
 #define SINALLOC_UPDATE_MAXIMUM_ALLOCATED	SINASSERT(totally_allocated > totally_freed); maximum_allocated = maximum_allocated > SINALLOC_CURRENTLY_ALLOCATED ? maximum_allocated : SINALLOC_CURRENTLY_ALLOCATED
+// TODO remove after refactoring (SINALLOC_VALIDATOR_ALLOCATED)
 #define SINALLOC_ALLOCATED(S)				totally_allocated += (S); SINALLOC_UPDATE_MAXIMUM_ALLOCATED
-#define SINALLOC_DEALLOCATED(S)				totally_freed += (S)
+#define SINALLOC_VALIDATOR_ALLOCATED(S)		totally_allocated += (S); SINALLOC_UPDATE_MAXIMUM_ALLOCATED
+#define SINALLOC_DEALLOCATED(S)				totally_freed += (S) // TODO remove after refactoring
+#define SINALLOC_VALIDATOR_DEALLOCATED(S)	totally_freed += (S)
 #define SINALLOC_IS_VALID_CHUNK_AND_CACHE_RESULT(C,SAVETO)	\
-											(SAVETO = chunks_map.find(C)) != chunks_map.end()
-#define SINALLOC_MAKE_A_DEFAULT_ALLOCATOR	Allocator<void>(P_singletons_p->allocator)
+											(SAVETO = chunks_map.find(C)) != chunks_map.end() // TODO remove after refactoring
+#define SINALLOC_VALIDATOR_IS_VALID_CHUNK_AND_CACHE_RESULT(C,SAVETO) \
+	((SAVETO = std::find_if(chunks_set.begin(), chunks_set.end(), ChunkMemoryComparator<ChunkMemoryComparatorType_Equator>(C))) != chunks_set.end())
+#define SINALLOC_MAKE_A_DEFAULT_ALLOCATOR	Allocator<void>(P_singletons_p->allocator) // TODO remove after refactoring
+#define SINALLOC_CREATE_UNMANAGED_ALLOCATOR	Allocator<void>(P_singletons_p->allocator)
 
 namespace SIN {
 	namespace Alloc {
 		// *********************** Implementation private ***************** //
 		namespace {
-			class MemoryChunkValidator {
+			enum ChunkMemoryComparatorType { ChunkMemoryComparatorType_Equator = 0 };
+			template <ChunkMemoryComparatorType> struct ChunkMemoryComparator;
+			template <> struct ChunkMemoryComparator<ChunkMemoryComparatorType_Equator> {
+				bool operator ()(Chunk_refactored const& _other) const {
+					return memory == _other.memory;
+				}
+				ChunkMemoryComparator<ChunkMemoryComparatorType_Equator>(void const* const _memory): memory(_memory) { }
+				~ChunkMemoryComparator<ChunkMemoryComparatorType_Equator>(void);
+				ChunkMemoryComparator<ChunkMemoryComparatorType_Equator>(ChunkMemoryComparator<ChunkMemoryComparatorType_Equator> const& _other): memory(_other.memory) { }
+			private:
+				void const* const memory;
+			}; // struct ChunkMemoryComparator
+
+			class MemoryChunkValidator { // TODO remove after refactoring (MemoryChunkValidator_replacement)
 			public:
 				typedef unsigned long int memory_count_t;
 
@@ -119,12 +139,107 @@ namespace SIN {
 					volatile bool is_valid_chunk; // was last memory chunk validated valid
 				}; volatile Cache cache;
 			}; // class MemoryChunkValidator
+			class MemoryChunkValidator_refactored { // TODO rename after refactoring
+			public:
+				typedef unsigned long int memory_count_t;
 
-			typedef unsigned char AllocationType;
-			typedef std::pair<void*, AllocationType> AllocationTypeEntry;
-			typedef Allocator<AllocationTypeEntry> AllocationsTypesMapAllocator;
-			typedef std::map<void*, AllocationType, std::less<void*>, AllocationsTypesMapAllocator> AllocationsTypesMap;
-			static struct Singletons {
+				inline void Register(void* const _memory_chunk, size_t const& _size, char const* _file, unsigned int const& _line, AllocationType_refactored const& _allocation_type) {
+					SINASSERT(_memory_chunk != 0x00);
+					SINASSERT(!IsValid(_memory_chunk) || !"Reallocating to memory address -- probably not SINDELETEd");
+					chunks_set.insert(Chunk_refactored(_memory_chunk, _size, _file, _line, _allocation_type));
+					cache.is_valid = false;
+					SINALLOC_VALIDATOR_ALLOCATED(_size);
+				}
+				inline void Unregister(void* const _memory_chunk, char const* const _file, unsigned int const _line, AllocationType_refactored const& _allocation_type) {
+					ChunksSet::iterator deletee;
+					if (SINALLOC_VALIDATOR_IS_VALID_CHUNK_AND_CACHE_RESULT(_memory_chunk, deletee)) {
+						SINASSERT(deletee->allocation_type == _allocation_type);
+						size_t const chunk_size = deletee->size;
+						deallocations.push_back(DeallocationPair_refactored(
+							*deletee,
+							Chunk_refactored(_memory_chunk, chunk_size, _file, _line, _allocation_type)
+							));
+
+						// memset zero
+						memset(_memory_chunk, 0x00, chunk_size);
+
+						SINALLOC_VALIDATOR_DEALLOCATED(chunk_size);
+						chunks_set.erase(deletee);
+						cache.is_valid = false;
+					}
+					else
+						SINASSERT(false);
+				}
+
+				inline bool  IsValid(void* const _memory_chunk) const {
+					cache.is_valid = true;
+					return
+						(
+							cache.is_valid					&&
+							cache.chunk == _memory_chunk	&&
+							cache.is_valid_chunk
+						) ||
+						(
+							(cache.is_valid = true)	&&
+							//(cache.is_valid_chunk = (std::find(chunks_set.begin(), chunks_set.end(),
+							//	ChunkMemoryComparator<ChunkMemoryComparatorType_Equator>(_memory_chunk))
+							//	!= chunks_set.end()))
+							(cache.is_valid_chunk = (std::find_if(
+									chunks_set.begin(),
+									chunks_set.end(),
+									ChunkMemoryComparator<ChunkMemoryComparatorType_Equator>(_memory_chunk)
+								) != chunks_set.end()))
+						);
+						//chunks_map.find(_memory_chunk) != chunks_map.end();
+				}
+
+				inline memory_count_t const TotallyAllocated(void) const
+					{ return totally_allocated; }
+				inline memory_count_t const TotallyFreed(void) const
+					{ return totally_freed; }
+				inline memory_count_t const MaximunAllocated(void) const {
+					SINASSERT(TotallyAllocated() >= TotallyFreed());
+					return maximum_allocated;
+				}
+				inline memory_count_t const RemainingToBeFreed(void) const {
+					SINASSERT(TotallyAllocated() >= TotallyFreed());
+					return TotallyAllocated() - TotallyFreed();
+				}
+				inline bool const MemoryLeaking(void) const
+					{ return RemainingToBeFreed() > 0; }
+
+				inline ChunksSet const& UnfreedChunks(void) const
+					{ return chunks_set; }
+				inline DeallocationsList_refactored const& Deallocations(void) const
+					{ return deallocations; }
+
+				MemoryChunkValidator_refactored(MemoryAllocator* _unmanaged_mallocator_p):
+				chunks_set(std::less<Chunk_refactored>(), Allocator<Chunk_refactored>(_unmanaged_mallocator_p)),
+				totally_allocated(0),
+				totally_freed(0),
+				maximum_allocated(0),
+				deallocations(Allocator<Chunk_refactored>(_unmanaged_mallocator_p))
+				{ }
+			private:
+				ChunksSet chunks_set;
+
+				memory_count_t totally_allocated;
+				memory_count_t totally_freed;
+				memory_count_t maximum_allocated;
+
+				DeallocationsList_refactored deallocations;
+
+				mutable struct Cache {
+					bool is_valid; // is the cache valid (or is it outdated?)
+					void* chunk; // last memory chunk validated
+					bool is_valid_chunk; // was last memory chunk validated valid
+				} cache;
+			}; // class MemoryChunkValidator_replacement
+
+			typedef std::pair<void*, AllocationType> AllocationTypeEntry; // TODO remove after refactoring
+			typedef Allocator<AllocationTypeEntry> AllocationsTypesMapAllocator; // TODO remove after refactoring
+			typedef std::map<void*, AllocationType, std::less<void*>, AllocationsTypesMapAllocator> AllocationsTypesMap; // TODO remove after refactoring
+			static struct Singletons { // TODO remove after refactoring (Singletons_refactored)
 				MemoryAllocator* allocator;
 				MemoryChunkValidator* validator;
 				AllocationsTypesMap* allocations_types;
@@ -138,11 +253,51 @@ namespace SIN {
 					void Reset(void) { file = "(undefined)"; line = 0u; }
 				}* next_delete_info;
 			}* P_singletons_p = 0x00; // struct Singletons
+			static struct Singletons_refactored { // TODO rename after refactoring
+				MemoryAllocator* unmanaged_mallocator_p; // polymorphism
+				MemoryChunkValidator_refactored validator; // no polymorphism
+				struct NextDeleteInfo {
+					MemoryAllocator* unmanaged_mallocator_p;
+					String file;
+					unsigned int line;
+					NextDeleteInfo(MemoryAllocator* _unmanaged_mallocator_p): unmanaged_mallocator_p(_unmanaged_mallocator_p), file(_unmanaged_mallocator_p), line(0u) { }
+					NextDeleteInfo(NextDeleteInfo const& _o): unmanaged_mallocator_p(_o.unmanaged_mallocator_p), file(_o.unmanaged_mallocator_p), line(_o.line) { SINASSERT(!"not yet"); }
+					~NextDeleteInfo(void) { }
+					void Reset(void) { file = "(undefined)"; line = 0u; }
+				} next_delete_info;
+				Singletons_refactored(MemoryAllocator* const _unmanaged_mallocator_p):
+					unmanaged_mallocator_p(_unmanaged_mallocator_p),
+					validator(_unmanaged_mallocator_p),
+					next_delete_info(_unmanaged_mallocator_p)
+					{ }
+			}* P_singletons_refactored_p = 0x00; // struct Singletons_refactored TODO rename after refactoring
 			static bool P_initialised = false;
 		} // namespace 
 
+		// *********************** Chunk_refactored // TODO rename after refactoring // implementation *********************** //
+		inline Chunk_refactored::Chunk_refactored(void* const& _memory, size_t const _size, char const* const _file, unsigned int const& _line, AllocationType_refactored const& _allocation_type): // TODO rename after refactoring
+				file(_file), line(_line), memory(_memory), size(_size), allocation_type(_allocation_type)
+				{ }
+		inline bool Chunk_refactored::operator <(Chunk_refactored const& _other) const // TODO rename after refactoring
+				{ return memory < _other.memory; }
 		// *********************** Global functions *********************** //
-		bool Initialise(void) {
+		bool Initialise_refactored(void) { // TODO rename after refacoring
+			if (!P_initialised) {
+				MemoryAllocator* const unmanaged_mallocator = SINALLOC_ALLOCATE(1, MemoryAllocator);
+				bool nobody_failed = unmanaged_mallocator != 0x00;
+				new(unmanaged_mallocator) MemoryAllocator;
+				if (nobody_failed) {
+					nobody_failed = (P_singletons_refactored_p = SINALLOC_ALLOCATE(1, struct Singletons_refactored)) != 0x00;
+					if (nobody_failed)
+						new(P_singletons_refactored_p) Singletons_refactored(unmanaged_mallocator);
+				}
+				P_initialised = nobody_failed;
+			}
+			else
+				SINASSERT(false);
+			return P_initialised;
+		}
+		bool Initialise(void) { // TODO remove after refactoring (Initialise_refactored)
 			if (!P_initialised) {
 				P_singletons_p = SINALLOC_ALLOCATE(1, struct Singletons);
 				bool nobody_failed = (P_singletons_p != 0x00);
@@ -171,7 +326,19 @@ namespace SIN {
 			return P_initialised;
 		}
 
-		void CleanUp(void) {
+		void CleanUp_refactored(void) { // TODO rename after refactoring
+			if (P_initialised) {
+				MemoryAllocator*const unmanaged_mallocator_p = P_singletons_refactored_p->unmanaged_mallocator_p;
+				P_singletons_refactored_p->~Singletons_refactored();
+				SINALLOC_DEALLOCATE(P_singletons_p);
+				SINALLOC_DEALLOCATE(unmanaged_mallocator_p);
+				P_initialised = false;
+			}
+			else
+				SINASSERT(false);
+		}
+
+		void CleanUp(void) { // TODO remove after refactoring (CleanUp_refactored)
 			if (P_initialised) {
 				SINALLOC_DEALLOCATE(P_singletons_p);
 				P_initialised = false;
@@ -247,9 +414,14 @@ namespace SIN {
 			return Chunk(0x00, 0x00, "", 0x00);
 		}
 
-		Allocator<void> CreateADefaultAllocator(void) {
+		Allocator<void> CreateADefaultAllocator(void) { // TODO remove after refactoring (CreateUnmanagedAllocator)
 			SINASSERT(P_initialised);
-			return SINALLOC_MAKE_A_DEFAULT_ALLOCATOR;
+			return SINALLOC_MAKE_A_DEFAULT_ALLOCATOR; // TODO remove after refactoring (SINALLOC_CREATE_UNMANAGED_ALLOCATOR)
+		}
+
+		Allocator<void> CreateUnmanagedAllocator(void) {
+			SINASSERT(P_initialised);
+			return SINALLOC_CREATE_UNMANAGED_ALLOCATOR;
 		}
 
 		template <typename _PredT>
