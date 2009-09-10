@@ -2,11 +2,12 @@
 #define __SIN_ALLOC_H__
 
 #include <map>
-#include "SINAssert.h"
 #include <string>
 #include <cstring>
-#include "SINAllocator.h"
 #include <list>
+#include <set>
+#include "SINAssert.h"
+#include "SINAllocator.h"
 
 #ifdef _MSC_VER // compiling with Microsoft Visual Studio
 //disable the error: C++ exception specification ignored except to indicate a function is not __declspec(nothrow)
@@ -31,11 +32,13 @@ namespace SIN { namespace Alloc {
 	extern size_t MaximumAllocated(void);
 
 	extern bool IsArrayAllocated(void*);
-	extern bool IsValid(void*);
+	extern bool IsValid(void*); // TODO remove after refactoring
+	extern bool IsValid_replacement(void const*); // TODO rename after refactoring
 
-	extern Allocator<void> CreateADefaultAllocator(void);
+	extern Allocator<void> CreateADefaultAllocator(void); // TODO remove after refactoring (CreateUnmanagedAllocator)
+	extern Allocator<void> CreateUnmanagedAllocator(void);
 
-	class Chunk {
+	class Chunk { // TODO remove after refactoring (Chunk_refactored)
 		String file; // file allocated in
 		unsigned int line; // line in file
 		void* memory; // memory chunk
@@ -49,16 +52,36 @@ namespace SIN { namespace Alloc {
 		inline void* const Memory(void) const { return memory; }
 		inline size_t const Size(void) const  { return size; }
 	}; // class Pointer
+	typedef unsigned char AllocationType; // TODO remove after refactoring (AllocationType_refactored)
+	enum AllocationType_refactored { VariableAllocationType, ArrayAllocationType }; // TODO rename after refactoring
+	class Chunk_refactored {
+	public:
+		String file; // file allocated in
+		unsigned int line; // line in file
+		void* memory; // memory chunk
+		size_t size;
+		AllocationType_refactored allocation_type;
+		Chunk_refactored(void* const&, size_t, char const* const, unsigned int const&, AllocationType_refactored const&);
+		bool operator <(Chunk_refactored const& _other) const;
+	}; // class Chunk
 
-	typedef std::map<void*, Chunk, std::less<void*>, Allocator<std::pair<void*, Chunk> > > ChunksMap;
-	extern ChunksMap const UndeallocatedChunks(void);
+	typedef std::map<void*, Chunk, std::less<void*>, Allocator<std::pair<void*, Chunk> > > ChunksMap; // TODO remove after refactoring
+	typedef std::set<Chunk_refactored, std::less<Chunk_refactored>, Allocator<Chunk_refactored> > ChunksSet;
+	extern ChunksMap const UndeallocatedChunks(void); // TODO remove after refactoring
+	extern ChunksSet const UndeallocatedChunks_repl(void); // TODO rename after refactoring
 	extern Chunk const ChunkInformation(void* _ptr);
 
-	typedef std::pair<const Chunk, const Chunk> DeallocationPair;
-	typedef std::list<DeallocationPair, Allocator<DeallocationPair> > DeallocationsList;
-	extern DeallocationsList DeallocatedChunks(void);
-	extern DeallocationsList DeallocatedChunksByMemory(void*);
-	extern DeallocationsList DeallocatedChunksByFileLine(char const*, unsigned int);
+	typedef std::pair<const Chunk, const Chunk> DeallocationPair; // TODO remove after refactoring
+	typedef std::list<DeallocationPair, Allocator<DeallocationPair> > DeallocationsList; // TODO remove after refactoring
+	extern DeallocationsList DeallocatedChunks(void); // TODO remove after refactoring
+	extern DeallocationsList DeallocatedChunksByMemory(void*); // TODO remove after refactoring
+	extern DeallocationsList DeallocatedChunksByFileLine(char const*, unsigned int); // TODO remove after refactoring
+
+	typedef std::pair<const Chunk_refactored, const Chunk_refactored> DeallocationPair_refactored; // TODO rename after refactoring
+	typedef std::list<DeallocationPair_refactored, Allocator<DeallocationPair_refactored> > DeallocationsList_refactored; // TODO rename after refactoring
+	extern DeallocationsList_refactored DeallocatedChunks_refactored(void); // TODO rename after refactoring
+	extern DeallocationsList_refactored DeallocatedChunksByMemory_refactored(void*); // TODO rename after refactoring
+	extern DeallocationsList_refactored DeallocatedChunksByFileLine_refactoreds(char const*, unsigned int); // TODO rename after refactoring
 
 	template <typename T> inline T* ValidateAndUse(T* _ptr) {
 		T* result = _ptr;
